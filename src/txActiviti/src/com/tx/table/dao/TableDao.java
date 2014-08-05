@@ -4,43 +4,72 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
+import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tx.table.domain.ConfTableInfo;
+import com.tx.table.domain.ConfTable;
 
 /**
  * 流水表表结构管理DAO
  */
-@Transactional
+@Component
+@Transactional(rollbackFor = Exception.class)
 public class TableDao {
 	/**
 	 * JdbcTemplate
 	 */
+	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	/**
-     * log4j
-     */
-    private Logger logger = Logger.getLogger(TableDao.class);
 	
     /**
-     * 流水表结构管理表List
+     * 业务表管理表信息查询
      * 
      * @param sql
      * @return
      */
-    public List<ConfTableInfo> queryConfFlowTableManageList(String sql) {
+    public List<ConfTable> queryConfTableList(String sql) {
        try{
-           return jdbcTemplate.query(sql, ParameterizedBeanPropertyRowMapper.newInstance(ConfTableInfo.class));
+           return getJdbcTemplate().query(sql, ParameterizedBeanPropertyRowMapper.newInstance(ConfTable.class));
            }catch (Exception e){
            return null;
        }
     }
+    /**
+     * 插入数据-业务表管理表
+     * 
+     * @param list
+     * @param sql
+     */
+	public int insertConfTable(final List<ConfTable> list, String sql) {
+		try{
+	          jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+	             @Override
+	             public int getBatchSize() {
+	              return list.size();    //这个方法设定更新记录数，通常List里面存放的都是我们要更新的，所以返回list.size()；
+	             }
+	              @Override
+	              public void setValues(PreparedStatement ps, int i)
+	                      throws SQLException {
+	            	  ConfTable bean = list.get(i);
+	            	  ps.setString(1, bean.getUuId());
+	                  ps.setString(2, bean.getTableName());
+	                  ps.setString(3, bean.getTableNameComment());
+	              }
+	          });
+	          return 1;
+	      }catch (Exception e){
+	          return 0;
+	      }
+	}
+	
+		
+		
 //    /**
 //     * 统计表结构管理表List
 //     * 
@@ -267,7 +296,6 @@ public class TableDao {
             jdbcTemplate.execute(sql);
             return 1;
         } catch (Exception e) {
-            logger.error("================执行脚本出错：" + sql + " Exception:" + e.toString());
             return 0;
         }
     }
@@ -279,11 +307,12 @@ public class TableDao {
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
-	/**
-	 * 设置JdbcTemplate
-	 * @param dataSource
-	 */
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
+    /**
+     * @param jdbcTemplate
+     *            JdbcTemplate.
+     */
+    @Resource
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 }

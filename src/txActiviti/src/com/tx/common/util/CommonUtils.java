@@ -11,7 +11,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 共用方法类
@@ -37,7 +38,7 @@ public class CommonUtils {
     /**
      * Log4j
      */
-    private static Logger logger = Logger.getLogger(CommonUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(CommonUtils.class);
     
 	/**
 	 * 导出Excel方法
@@ -101,45 +102,6 @@ public class CommonUtils {
         return (null == str || "".equals(str) || "null".equals(str)) ? true : false;
     }
     
-//    /**
-//     * list转换JSON字符串
-//     * @param beanList
-//     * @param datePattern
-//     * @return
-//     */
-//    @SuppressWarnings("unchecked")
-//    public static JSONArray getJsonFromList(List beanList, String datePattern) {
-//        if (datePattern == null || "".equals(datePattern)) {
-//            datePattern = Constants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS;
-//        }
-//        JsonConfig jsonConfig = configJson(null, datePattern);
-//        JSONArray array = JSONArray.fromObject(beanList, jsonConfig);
-//        return array;
-//    }
-//    /**
-//     * Bean转换JSON字符串
-//     * @param beanList
-//     * @param datePattern
-//     * @return
-//     */
-//    public static JSONObject getJsonFromBean(Object bean, String datePattern) {
-//        if (datePattern == null || "".equals(datePattern)) {
-//            datePattern = Constants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS;
-//        }
-//        JsonConfig jsonConfig = configJson(null, datePattern);
-//        JSONObject jsonObject = JSONObject.fromObject(bean, jsonConfig);
-//        return jsonObject;
-//    }
-//    /**
-//     * JSON字符串转换List对象
-//     * @param beanList
-//     * @param datePattern
-//     * @return
-//     */
-//    @SuppressWarnings({"deprecation", "unchecked" })
-//    public static Object getListFromJson(String jsonStr, Class clazz) {
-//        return JSONArray.toList(JSONArray.fromObject(jsonStr), clazz);
-//    }
     /**
      * Double格式化,返回一位小数
      * @param temp
@@ -167,21 +129,4 @@ public class CommonUtils {
         strOne = strOne + strTwo;
         return strOne;
     }
-    
-//    /**
-//     * 创建JSON配置对象
-//     * @param excludes
-//     * @param datePattern
-//     * @return
-//     */
-//    private static JsonConfig configJson(String[] excludes, String datePattern) {
-//        JsonConfig jsonConfig = new JsonConfig();
-//        if (excludes != null) {
-//            jsonConfig.setExcludes(excludes);
-//        }
-//        jsonConfig.setIgnoreDefaultExcludes(false);
-//        jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
-//        jsonConfig.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor(datePattern));
-//        return jsonConfig;
-//    }
 }

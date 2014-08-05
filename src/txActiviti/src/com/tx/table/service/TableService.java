@@ -1,10 +1,15 @@
-package com.tx.table.manager;
+package com.tx.table.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.tx.common.util.CommonUtils;
 import com.tx.table.dao.TableDao;
-import com.tx.table.domain.ConfTableInfo;
+import com.tx.table.domain.ConfTable;
 
 /**
  * 流水表表结构管理 service
@@ -12,27 +17,40 @@ import com.tx.table.domain.ConfTableInfo;
  * @author JiangBo
  *
  */
-public class TableManager {
+@Service
+@Transactional(rollbackFor = Exception.class)
+public class TableService {
 	
 	/**
 	 * 实例化公用DAO
 	 */
+	@Autowired  
+	@Qualifier("tableDao")  
 	private TableDao dao;
 	
 	/**
-     * 流水表表结构管理List
+     * 业务表管理表信息查询
      * 
      * @param string
      * @return
      */
-    public List<ConfTableInfo> queryConfFlowTableManageList(String tableName) {
-        String sql = " select t.*,t.columnValue columnValueOld, t.typeValue typeValueOld from tx_conf_flow_table_Manage t ";
+    public List<ConfTable> queryConfTableList(String tableName) {
+        String sql = " select * from TX_CONF_TABLE ";
         if (!CommonUtils.isNull(tableName)) {
-            sql = sql + " where t.tableName='" + tableName + "' ";
+        	sql = sql + " WHERE tableName='" + tableName +"' ";
         }
-        sql = sql + " order by t.columnNo ";
-        return dao.queryConfFlowTableManageList(sql);
+        return dao.queryConfTableList(sql);
     }
+    /**
+     * 插入数据-业务表管理表
+     * @param tableName
+     */
+	public void insertConfTable(List<ConfTable> list) {
+		String sql = "insert into TX_CONF_TABLE(" +
+		        " uuid, tablename, tablenamecomment) " +
+		        " values(?, ?, ?)";
+		        dao.insertConfTable(list, sql);
+	}
 //    /**
 //     * 统计表表结构管理List
 //     * 
@@ -53,10 +71,10 @@ public class TableManager {
      * @param string
      * @return
      */
-    public List<ConfTableInfo> queryConfFlowTableNameList() {
+    public List<ConfTable> queryConfFlowTableNameList() {
         String sql = "  select tableName, min(tableNameComment) tableNameComment from tx_conf_flow_table_Manage ";
         sql = sql + " group by tableName ";
-        return dao.queryConfFlowTableManageList(sql);
+        return dao.queryConfTableList(sql);
     }
 //    /**
 //     * 统计表表名List
@@ -172,16 +190,10 @@ public class TableManager {
         return dao.execute(sql);
     }
 	/**
-	 * 取得DAO
-	 * @return the DAO
-	 */
-	public TableDao getDao() {
-		return dao;
-	}
-	/**
 	 * 设置DAO
 	 * @param dao the DAO to set
 	 */
+    @Autowired(required= false) 
 	public void setDao(TableDao dao) {
 		this.dao = dao;
 	}

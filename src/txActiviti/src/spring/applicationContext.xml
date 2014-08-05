@@ -8,8 +8,9 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 通用配置：加载application.properties，自动扫描bean，其他初始化。-->
-    
-	<context:component-scan base-package="com.mossle">
+    <!--  JiangBo change 扫描从com根路径开始因为追加的代码不再mossle路径下
+	<context:component-scan base-package="com.mossle"> -->
+	<context:component-scan base-package="com">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 

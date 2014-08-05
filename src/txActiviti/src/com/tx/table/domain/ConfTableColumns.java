@@ -1,12 +1,12 @@
 package com.tx.table.domain;
 
 /**
- * 流水表结构管理表 Bean, 对应 tx_conf_flow_table_manage表
+ * 业务表字段结构管理Bean, 对应 tx_conf_table_columns表
  * 
  * @author JiangBo
  *
  */
-public class ConfTableInfo {
+public class ConfTableColumns {
     // 表名
     private String tableName;
     // 表名含义

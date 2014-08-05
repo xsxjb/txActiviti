@@ -8,7 +8,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /***********************************************
@@ -21,7 +22,7 @@ public class UtilDateFormat {
     /**
      * log4j
      */
-    private static Logger logger = Logger.getLogger(UtilDateFormat.class);
+    private static Logger logger = LoggerFactory.getLogger(UtilDateFormat.class);
 	/****************************获得日期的一系列方法*************************************/
 	/**
 	 * 获得服务器当前时间

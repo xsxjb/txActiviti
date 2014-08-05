@@ -42,13 +42,13 @@
                 </ul>
               </li>
               <!-- 后台功能 -->
-              <li class="dropdown ${currentHeader == 'scope' ? 'active' : ''}">
+              <li class="dropdown ${currentHeader == 'manage' ? 'active' : ''}">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">manage <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="#"><i class="icon-user"></i>组织权限管理</a></li>
                   <li><a href="#"><i class="icon-user"></i>菜单管理</a></li>
                   <li class="divider"></li>
-				  <li><a href="#"><i class="icon-user"></i>表存储设计器</a></li>
+				  <li><a href="${scopePrefix}/table/conf-table-show.do"><i class="icon-user"></i>表存储设计器</a></li>
 				  <li><a href="#"><i class="icon-user"></i>表单设计器</a></li>
                 </ul>
               </li>

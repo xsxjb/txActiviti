@@ -19,7 +19,7 @@
 
 		<footer id="m-footer" class="text-center">
 		  <hr>
-		  &copy;Mossle
+		  &copy;天翔
 		</footer>
       </aside>
       <!-- end of sidebar -->

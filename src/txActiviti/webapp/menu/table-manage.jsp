@@ -4,18 +4,19 @@
 
         <div class="accordion-group">
           <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#m-sidebar" href="#collapseOne">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#m-sidebar" href="#collapse-cms">
               <i class="icon-user"></i>
-              <span class="title">管理</span>
+              <span class="title">业务组件</span>
             </a>
           </div>
-          <div id="collapseOne" class="accordion-body collapse ${currentMenu == 'demo' ? 'in' : ''}">
+          <div id="collapse-cms" class="accordion-body collapse ${currentMenu == 'cms' ? 'in' : ''}">
             <ul class="accordion-inner nav nav-list">
-              <li><a href="${ctx}/demo/demo.do">列表</a></li>
-              <li><a href="${ctx}/demo/demo!input.do">添加</a></li>
+			  <li><a href="${scopePrefix}/table/conf-table-show.do">表存储设计器</a></li>
+			  <li><a href="#">表单设计器</a></li>
             </ul>
           </div>
         </div>
+
 		<footer id="m-footer" class="text-center">
 		  <hr>
 		  &copy;天翔

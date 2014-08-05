@@ -1,56 +1,95 @@
 package com.tx.table.web;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-import com.tx.table.manager.TableManager;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.mossle.core.spring.MessageHelper;
+import com.tx.table.domain.ConfTable;
+import com.tx.table.service.TableService;
 
 /**
- * 数据库表结构
+ * 数据库表结构管理
  * 
  * @author JiangBo
  * 
  */
 @Controller
-@RequestMapping("tableManage")
+@RequestMapping("table")
 public class TableManageController {
 
     // 共用Service,可以查询热力站,热源,BPM等基础信息
-    private TableManager tableManager;
+    private TableService tableService;
     // 表名
     private String tableName;
     // 更新字段
     private String updateData;
-    // 流水表表结构信息
-    private String tableManageInfo;
-    // 表名信息
-    private String tableNameComboInfo;
+    
+    private MessageHelper messageHelper;
 
-//    /**
-//     * 取得流水表结构信息
-//     * 
-//     * @return
-//     */
-//    @RequestMapping("queryTableInfo")
-//    public void queryFlowTableManage() {
-//        // 取得表结构信息。
-//        List<ConfTableInfo> list = tableManager.queryConfFlowTableManageList(tableName);
-//        JSONArray jsonArray = CommonUtils.getJsonFromList(list, null);
-//        tableManageInfo = jsonArray.toString();
-//        super.responsePrint(tableManageInfo);
-//    }
-//    /**
-//     * 取得统计表结构信息
-//     * 
-//     * @return
-//     */
-//    public void queryReportTableManage() {
-//        // 取得表结构信息。
-//        List<ConfReportTableManage> list = tableManageService.queryConfReportTableManageList(tableName);
-//        JSONArray jsonArray = CommonUtils.getJsonFromList(list, null);
-//        tableManageInfo = jsonArray.toString();
-//        super.responsePrint(tableManageInfo);
-//    }
+    /**
+     * 业务表管理表信息查询
+     * 
+     * @return
+     */
+    @RequestMapping("conf-table-show")
+    public String confTableShow(Model model) {
+        // 取得表结构信息。
+        List<ConfTable> list = tableService.queryConfTableList(tableName);
+        // 表结构信息
+        model.addAttribute("tableInfoList", list);
+        
+        return "../jsp/table/conf-table-show"; 
+    }
+    /**
+     * 表字段结构管理表信息查询
+     * 
+     * @return
+     */
+    @RequestMapping("conf-table-detail-show")
+    public String queryReportTableManage(Model model) {
+    	// 取得表结构信息。
+        List<ConfTable> list = tableService.queryConfTableList(tableName);
+        // 表结构信息
+        model.addAttribute("tableInfoList", list);
+        // 取得表结构信息。
+        return "../jsp/table/conf-table-detail-show";
+    }
+    
+    /**
+     * 新建一张新表
+     * 
+     * @return
+     */
+    @RequestMapping("conf-table-insert")
+    public String confTableInsert(Model model) {
+        return "../jsp/table/conf-table-insert"; 
+    }
+    
+    /**
+     * 保存新建表信息
+     * 
+     * @return
+     */
+    @RequestMapping("conf-table-save")
+    public String confTableSave(@ModelAttribute ConfTable confTable, RedirectAttributes redirectAttributes) {
+    	List<ConfTable> list = new ArrayList<ConfTable>();
+    	confTable.setUuId(UUID.randomUUID().toString());
+    	list.add(confTable);
+    	tableService.insertConfTable(list);
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
+        return "redirect:/table/conf-table-show.do";
+    }
+    
+    
 //    /**
 //     * 查询统计表SQL文管理数据
 //     * 
@@ -438,32 +477,13 @@ public class TableManageController {
     public void setUpdateData(String updateData) {
         this.updateData = updateData;
     }
-    /**
-     * 取得tableManageInfo
-     * @return the tableManageInfo
-     */
-    public String getTableManageInfo() {
-        return tableManageInfo;
-    }
-    /**
-     * 设置tableManageInfo
-     * @param tableManageInfo the tableManageInfo to set
-     */
-    public void setTableManageInfo(String tableManageInfo) {
-        this.tableManageInfo = tableManageInfo;
-    }
-    /**
-     * 取得tableNameComboInfo
-     * @return the tableNameComboInfo
-     */
-    public String getTableNameComboInfo() {
-        return tableNameComboInfo;
-    }
-    /**
-     * 设置tableNameComboInfo
-     * @param tableNameComboInfo the tableNameComboInfo to set
-     */
-    public void setTableNameComboInfo(String tableNameComboInfo) {
-        this.tableNameComboInfo = tableNameComboInfo;
+
+    @Resource
+	public void setTableService(TableService tableService) {
+		this.tableService = tableService;
+	}
+    @Resource
+    public void setMessageHelper(MessageHelper messageHelper) {
+        this.messageHelper = messageHelper;
     }
 }
