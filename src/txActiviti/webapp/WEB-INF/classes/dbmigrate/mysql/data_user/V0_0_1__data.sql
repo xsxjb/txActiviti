@@ -19,3 +19,16 @@ INSERT INTO USER_BASE(ID,USERNAME,PASSWORD,DISPLAY_NAME,STATUS,REF,USER_REPO_ID,
 INSERT INTO USER_ATTR(ID,STRING_VALUE,USER_BASE_ID,USER_SCHEMA_ID) VALUES(1,'lingo.mossle@gmail.com',1,1);
 INSERT INTO USER_ATTR(ID,STRING_VALUE,USER_BASE_ID,USER_SCHEMA_ID) VALUES(2,'12345678901',1,2);
 
+UPDATE USER_BASE set email='lingo.mossle@gmail.com' where id=1;
+UPDATE USER_BASE set email='vivian.mossle@gmail.com' where id=2;
+UPDATE USER_BASE set email='demo.mossle@gmail.com' where id=3;
+UPDATE USER_BASE set email='demo.mossle@gmail.com' where id=4;
+UPDATE USER_BASE set email='demo.mossle@gmail.com' where id=5;
+UPDATE USER_BASE set email='demo.mossle@gmail.com' where id=6;
+UPDATE USER_BASE set email='demo.mossle@gmail.com' where id=7;
+
+UPDATE USER_BASE set mobile='18012345678';
+
+delete from USER_ATTR;
+
+delete from USER_SCHEMA;
