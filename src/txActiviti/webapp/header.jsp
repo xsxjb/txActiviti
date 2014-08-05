@@ -41,6 +41,17 @@
                   <li><a href="${scopePrefix}/party/tree-list.do"><i class="icon-user"></i>系统配置</a></li>
                 </ul>
               </li>
+              <!-- 后台功能 -->
+              <li class="dropdown ${currentHeader == 'scope' ? 'active' : ''}">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">manage <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon-user"></i>组织权限管理</a></li>
+                  <li><a href="#"><i class="icon-user"></i>菜单管理</a></li>
+                  <li class="divider"></li>
+				  <li><a href="#"><i class="icon-user"></i>表存储设计器</a></li>
+				  <li><a href="#"><i class="icon-user"></i>表单设计器</a></li>
+                </ul>
+              </li>
             </ul>
 
             <ul class="nav pull-right">
