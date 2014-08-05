@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tx.common.util.CommonUtils;
 import com.tx.table.dao.TableDao;
 import com.tx.table.domain.ConfTable;
+import com.tx.table.domain.ConfTableColumns;
 
 /**
  * 流水表表结构管理 service
@@ -42,88 +43,36 @@ public class TableService {
         return dao.queryConfTableList(sql);
     }
     /**
+     * 表字段结构管理表信息查询
+     * 
+     * @param tableName
+     * @return
+     */
+	public List<ConfTableColumns> queryConfTableColumns(String tableName) {
+		String sql = " select * from TX_CONF_TABLE_COLUMNS ";
+        if (!CommonUtils.isNull(tableName)) {
+        	sql = sql + " WHERE tableName='" + tableName +"' ";
+        }
+        return dao.queryConfTableColumns(sql);
+	}
+    /**
      * 插入数据-业务表管理表
      * @param tableName
      */
 	public void insertConfTable(List<ConfTable> list) {
-		String sql = "insert into TX_CONF_TABLE(" +
-		        " uuid, tablename, tablenamecomment) " +
-		        " values(?, ?, ?)";
-		        dao.insertConfTable(list, sql);
+		String sql = "insert into TX_CONF_TABLE("
+				+ " uuid, tablename, tablenamecomment) " + " values(?, ?, ?)";
+		dao.insertConfTable(list, sql);
 	}
-//    /**
-//     * 统计表表结构管理List
-//     * 
-//     * @param string
-//     * @return
-//     */
-//    public List<ConfTableInfo> queryConfReportTableManageList(String tableName) {
-//        String sql = " select t.*,t.columnValue columnValueOld, t.typeValue typeValueOld from tx_conf_report_table_Manage t ";
-//        if (!CommonUtils.isNull(tableName)) {
-//            sql = sql + " where t.tableName='" + tableName + "' ";
-//        }
-//        sql = sql + " order by t.columnNo ";
-//        return dao.queryConfReportTableManageList(sql);
-//    }
-    /**
-     * 流水表表名List
+	/**
+     * 删除业务表管理表数据
      * 
-     * @param string
-     * @return
+     * @param list
      */
-    public List<ConfTable> queryConfFlowTableNameList() {
-        String sql = "  select tableName, min(tableNameComment) tableNameComment from tx_conf_flow_table_Manage ";
-        sql = sql + " group by tableName ";
-        return dao.queryConfTableList(sql);
-    }
-//    /**
-//     * 统计表表名List
-//     * 
-//     * @param string
-//     * @return
-//     */
-//    public List<ConfTableInfo> queryConfReportTableNameList() {
-//        String sql = "  select tableName, min(tableNameComment) tableNameComment from tx_conf_report_table_Manage ";
-//        sql = sql + " group by tableName ";
-//        return dao.queryConfReportTableManageList(sql);
-//    }
-//    /**
-//     * 取得统计表SQL文信息
-//     * 
-//     * @param tableName
-//     * @return
-//     */
-//    public List<ConfReportSQLManage> queryReportSqlManage(String tableName) {
-//        String sql = "  select * from tx_conf_report_sql_manage ";
-//        if (!CommonUtils.isNull(tableName)) {
-//            sql = sql + " WHERE tableName ='" + tableName + "'";
-//        }
-//        return dao.queryReportSqlManage(sql);
-//    }
-//    /**
-//     * 插入 流水表表结构管理表
-//     * @param list
-//     */
-//    public void insertFlowTableManage(List<ConfTableInfo> list) {
-//        String sql = "insert into tx_conf_flow_table_Manage(" +
-//        " tablename, tablenamecomment, columnno, columnvalue, columnname, " +
-//        " typekey, typevalue ) " +
-//        " values(" + 
-//        " ?, ?, ?, ?, ?, ?, ?)";
-//        dao.batchInsertFlowTableManage(list, sql);
-//    }
-//    /**
-//     * 插入 流水表表结构管理表
-//     * @param list
-//     */
-//    public void insertReportTableManage(List<ConfReportTableManage> list) {
-//        String sql = "insert into tx_conf_report_table_Manage(" +
-//        " tablename, tablenamecomment, columnno, columnvalue, columnname, " +
-//        " typekey, typevalue ) " +
-//        " values(" + 
-//        " ?, ?, ?, ?, ?, ?, ?)";
-//        dao.batchInsertReportTableManage(list, sql);
-//    }
+	public void deleteConfTable(List<String> list) {
+		String sql = "delete from TX_CONF_TABLE WHERE uuid = ? ";
+		dao.batchDeleteConfTable(list, sql);
+	}
 //    /**
 //     * 更新 流水表表结构管理表
 //     * @param list
@@ -133,47 +82,6 @@ public class TableService {
 //        " columnno = ?, columnvalue = ?, columnname = ?, " +
 //        " typekey = ?, typevalue = ? WHERE tablename = ? AND columnvalue = ?";
 //        dao.batchUpdateFlowTableManage(list, sql);
-//    }
-//    /**
-//     * 更新 统计表表结构管理表
-//     * @param list
-//     */
-//    public void updateReportTableManage(List<ConfReportTableManage> list) {
-//        String sql = "update tx_conf_report_table_Manage set " +
-//        " columnno = ?, columnvalue = ?, columnname = ?, columnSQL = ?, " +
-//        " typekey = ?, typevalue = ? WHERE tablename = ? AND columnvalue = ?";
-//        dao.batchUpdateReportTableManage(list, sql);
-//    }
-//    /**
-//     * 更新统计表SQL文管理
-//     * 
-//     * @param bean
-//     */
-//    public void updateReportSQLManage(ConfReportSQLManage bean) {
-//        String sql = "update tx_conf_report_sql_manage set " +
-//        " insertSql = '" + bean.getInsertSql().replaceAll("'", "''") +
-//        "', selectSql = '" + bean.getSelectSql().replaceAll("'", "''") + 
-//        "', selectFromSql = '" + bean.getSelectFromSql().replaceAll("'", "''") + 
-//        "' WHERE tablename = '" + bean.getTableName() + "'";
-//        dao.update(sql);
-//    }
-//    /**
-//     * 删除流水表表结构信息
-//     * @param list
-//     */
-//    public void deleteFlowTableManage(List<ConfTableInfo> list) {
-//        String sql = "delete from tx_conf_flow_table_Manage " +
-//        " where tablename = ? AND columnvalue = ? ";
-//        dao.batchDeleteFlowTableManage(list, sql);
-//    }
-//    /**
-//     * 删除统计表表结构信息
-//     * @param list
-//     */
-//    public void deleteReportTableManage(List<ConfReportTableManage> list) {
-//        String sql = "delete from tx_conf_report_table_Manage " +
-//        " where tablename = ? AND columnvalue = ? ";
-//        dao.batchDeleteReportTableManage(list, sql);
 //    }
     /**
      * 更新数据

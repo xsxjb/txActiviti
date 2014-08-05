@@ -12,20 +12,8 @@
     <script type="text/javascript">
 		var config = {
 		    id: 'tableModelGrid',
-		    pageNo: ${page.pageNo},
-		    pageSize: ${page.pageSize},
-		    totalCount: ${page.totalCount},
-		    resultSize: ${page.resultSize},
-		    pageCount: ${page.pageCount},
-		    orderBy: '${page.orderBy == null ? "" : page.orderBy}',
-		    asc: ${page.asc},
-		    params: {
-		        'filter_LIKES_cmsCommentname': '${param.filter_LIKES_cmsCommentname}',
-		        'filter_EQI_status': '${param.filter_EQI_status}'
-		    },
 			selectedItemClass: 'selectedItem',
-			gridFormId: 'cmsCommentGridForm',
-			exportUrl: 'cms-comment-export.do'
+			gridFormId: 'tableGridForm'
 		};
 		
 		var table;
@@ -47,7 +35,6 @@
 
 	<!-- start of main -->
     <section id="m-main" class="span10">
-	  
 		    <article class="m-widget-2">
                  <header class="header">
 				  <h4 class="title"><i class="icon-user"></i>表存储模型</h4>
@@ -57,34 +44,37 @@
 				</header>
 				<div class="pull-left">
 				  <region:region-permission permission="cmsComment:create">
-				  <button class="btn btn-small a-insert" onclick="location.href='conf-table-insert.do'">新建</button>
+				  	<button class="btn btn-small a-insert" onclick="location.href='conf-table-insert.do'">新建</button>
 				  </region:region-permission>
 				  <region:region-permission permission="cmsComment:delete">
-				  <button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
+				  	<button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
 				  </region:region-permission>
-				  <button class="btn btn-small a-export" onclick="table.exportExcel()">导出</button>
 				</div>
 		        <div class="content">
-				  <table class="m-table table-hover" id=“tableModelGrid” >
-					<thead>
-					  <tr>
-						<th>表存储模型</th>
-						<th>表名</th>
-						<th>唯一标识</th>
-					  </tr>
-					</thead>
-					<tbody>
-					<c:forEach items="${tableInfoList}" var="item">
-					  <tr>
-					    <td>
-					        <a href="javascript:void(window.open('${scopePrefix}/table/conf-table-detail-show.do?processInstanceId=${item.tableName}','newwindow','location=0,resizable=yes,directories=0,width=800, height=600'))" class="btn btn-small btn-primary">${item.tableName}</a>
-						</td>
-						<td>${item.tableNameComment}</td>
-						<td>${item.uuId}</td>
-					  </tr>
-					  </c:forEach>
-					</tbody>
-				  </table>
+			        <form id="tableGridForm" name="tableGridForm" method='post' action="conf-table-remove.do" class="m-form-blank">
+						<table class="m-table table-hover" id=“tableModelGrid” >
+							<thead>
+							  <tr>
+							    <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+								<th>表存储模型</th>
+								<th>表名</th>
+								<th>唯一标识</th>
+							  </tr>
+							</thead>
+							<tbody>
+							<c:forEach items="${tableInfoList}" var="item">
+							  <tr>
+							    <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.uuId}"></td>
+							    <td>
+							        <a href="javascript:void(window.open('${scopePrefix}/table/conf-table-detail-show.do?processInstanceId=${item.tableName}','newwindow','location=0,resizable=yes,directories=0,width=800, height=600'))" class="btn btn-small btn-primary">${item.tableName}</a>
+								</td>
+								<td>${item.tableNameComment}</td>
+								<td>${item.uuId}</td>
+							  </tr>
+							  </c:forEach>
+							</tbody>
+						</table>
+					</form>
 				</div>
 			  </article>	
 			</div>

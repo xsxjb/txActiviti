@@ -2,18 +2,26 @@ package com.tx.table.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mossle.core.hibernate.PropertyFilter;
+import com.mossle.core.page.Page;
 import com.mossle.core.spring.MessageHelper;
+import com.mossle.ext.export.TableModel;
+import com.mossle.user.persistence.domain.UserBase;
 import com.tx.table.domain.ConfTable;
+import com.tx.table.domain.ConfTableColumns;
 import com.tx.table.service.TableService;
 
 /**
@@ -55,9 +63,9 @@ public class TableManageController {
      * @return
      */
     @RequestMapping("conf-table-detail-show")
-    public String queryReportTableManage(Model model) {
+    public String queryConfTableDetail(Model model) {
     	// 取得表结构信息。
-        List<ConfTable> list = tableService.queryConfTableList(tableName);
+        List<ConfTableColumns> list = tableService.queryConfTableColumns(tableName);
         // 表结构信息
         model.addAttribute("tableInfoList", list);
         // 取得表结构信息。
@@ -88,7 +96,17 @@ public class TableManageController {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/table/conf-table-show.do";
     }
-    
+    /**
+     * 删除业务表管理表信息
+     * 
+     * @return
+     */
+    @RequestMapping("conf-table-remove")
+    public String confTableRemove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+    	tableService.deleteConfTable(selectedItem);
+    	messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+        return "redirect:/table/conf-table-show.do";
+    }
     
 //    /**
 //     * 查询统计表SQL文管理数据
