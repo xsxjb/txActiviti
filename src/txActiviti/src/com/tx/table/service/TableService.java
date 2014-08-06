@@ -49,7 +49,7 @@ public class TableService {
      * @return
      */
 	public List<ConfTableColumns> queryConfTableColumns(String tableName) {
-		String sql = " select * from TX_CONF_TABLE_COLUMNS ";
+		String sql = " SELECT tableName, columnValue,columnValue columnValueOld, columnName, columnType, columnType columnTypeOld, columnSize, ISNULL, defaultValue, columnNo FROM TX_CONF_TABLE_COLUMNS ";
         if (!CommonUtils.isNull(tableName)) {
         	sql = sql + " WHERE tableName='" + tableName +"' ";
         }
@@ -65,6 +65,19 @@ public class TableService {
 		dao.insertConfTable(list, sql);
 	}
 	/**
+     * 插入数据-表列字段结构管理表
+     * 
+     * @param list
+     */
+	public void insertConfTableColumns(List<ConfTableColumns> list) {
+		String sql = " insert into TX_CONF_TABLE_COLUMNS ("
+				+ " tableName,columnValue,columnName,columnType,columnSize,"
+				+ " IsNull,defaultValue,columnNo) "
+				+ " values(?, ?, ?, ?, ?,"
+				+ " ?, ?, ?)";
+		dao.insertConfTableColumns(list, sql);
+	}
+	/**
      * 删除业务表管理表数据
      * 
      * @param list
@@ -73,16 +86,6 @@ public class TableService {
 		String sql = "delete from TX_CONF_TABLE WHERE uuid = ? ";
 		dao.batchDeleteConfTable(list, sql);
 	}
-//    /**
-//     * 更新 流水表表结构管理表
-//     * @param list
-//     */
-//    public void updateFlowTableManage(List<ConfTableInfo> list) {
-//        String sql = "update tx_conf_flow_table_Manage set " +
-//        " columnno = ?, columnvalue = ?, columnname = ?, " +
-//        " typekey = ?, typevalue = ? WHERE tablename = ? AND columnvalue = ?";
-//        dao.batchUpdateFlowTableManage(list, sql);
-//    }
     /**
      * 更新数据
      * @param sql

@@ -82,6 +82,38 @@ public class TableDao {
 	      }
 	}
 	/**
+     * 插入数据-表列字段结构管理表
+     * 
+     * @param list
+     * @param sql
+     */
+	public int insertConfTableColumns(final List<ConfTableColumns> list, String sql) {
+		try{
+	          jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+	             @Override
+	             public int getBatchSize() {
+	              return list.size();    //这个方法设定更新记录数，通常List里面存放的都是我们要更新的，所以返回list.size()；
+	             }
+	              @Override
+	              public void setValues(PreparedStatement ps, int i)
+	                      throws SQLException {
+	            	  ConfTableColumns bean = list.get(i);
+	                  ps.setString(1, bean.getTableName());
+	            	  ps.setString(2, bean.getColumnValue());
+	                  ps.setString(3, bean.getColumnName());
+	                  ps.setString(4, bean.getColumnType());
+	                  ps.setString(5, bean.getColumnSize());
+	                  ps.setString(6, bean.getIsNull());
+	                  ps.setString(7, bean.getDefaultValue());
+	                  ps.setInt(8, bean.getColumnNo());
+	              }
+	          });
+	          return 1;
+	      }catch (Exception e){
+	          return 0;
+	      }
+	}
+	/**
      * 删除业务表管理表数据
      * 
      * @param selectedItem
@@ -106,38 +138,7 @@ public class TableDao {
           return 0;
       }
 	}
-		
-//    /**
-//     * 批量更新流水表表结构管理表
-//     * @param list
-//     * @param sql
-//     */
-//    public int batchUpdateFlowTableManage(final List<ConfFlowTableManage> list, String sql) {
-//        try{
-//            jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
-//               @Override
-//               public int getBatchSize() {
-//                return list.size();    //这个方法设定更新记录数，通常List里面存放的都是我们要更新的，所以返回list.size()；
-//               }
-//                @Override
-//                public void setValues(PreparedStatement ps, int i)
-//                        throws SQLException {
-//                    ConfFlowTableManage bean = list.get(i);
-//                    ps.setInt(SQL_1, bean.getColumnNo());
-//                    ps.setString(SQL_2, bean.getColumnValue());
-//                    ps.setString(SQL_3, bean.getColumnName());
-//                    ps.setString(SQL_4, bean.getTypeKey());
-//                    ps.setString(SQL_5, bean.getTypeValue());
-//                    ps.setString(SQL_6, bean.getTableName());
-//                    ps.setString(SQL_7, bean.getColumnValueOld());
-//                }
-//            });
-//            return 1;
-//        }catch (Exception e){
-//            logger.error("==========批量插入流水表表结构管理表 Exception:" + e.toString());
-//            return 0;
-//        }
-//    }
+
     /**
      * 更新
      * 

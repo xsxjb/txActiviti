@@ -66,7 +66,11 @@
 							  <tr>
 							    <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.uuId}"></td>
 							    <td>
-							        <a href="javascript:void(window.open('${scopePrefix}/table/conf-table-detail-show.do?processInstanceId=${item.tableName}','newwindow','location=0,resizable=yes,directories=0,width=800, height=600'))" class="btn btn-small btn-primary">${item.tableName}</a>
+							        <!-- 
+							            <a href="javascript:void(window.open('${scopePrefix}/table/conf-table-detail-show.do?tableName=${item.tableName}','newwindow','location=0,resizable=yes,directories=0,width=800, height=600'))" class="btn btn-small btn-primary">${item.tableName}</a>
+							         -->
+							        <a href="conf-table-detail-show.do?tableName=${item.tableName}" class="btn btn-small btn-primary">${item.tableName}</a>
+								    
 								</td>
 								<td>${item.tableNameComment}</td>
 								<td>${item.uuId}</td>

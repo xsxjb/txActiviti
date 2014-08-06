@@ -7,7 +7,7 @@ package com.tx.table.domain;
  *
  */
 public class ConfTable {
-	// 表名
+	// UUID
     private String uuId;
     // 表名
     private String tableName;

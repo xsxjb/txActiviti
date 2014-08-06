@@ -6,7 +6,7 @@
 <html lang="en">
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title><spring:message code="demo.demo.input.title" text="你好"/></title>
+    <title><spring:message code="demo.demo.input.title" text="表列字段设置"/></title>
     <!-- Bootstrap -->
     <%@include file="/common/s.jsp"%>
     
@@ -68,86 +68,89 @@
 	</style>
   </head>
   <body>
-	<div class="row-fluid m-widget-container-2">
-	  <div class="span12">
-		    <article class="m-widget-2">
-                 <header class="header">
-				  <h4 class="title"><i class="icon-user"></i>表字段</h4>
+      <%@include file="/header/table.jsp"%>
+      <div class="row-fluid">
+	  <%@include file="/menu/table-manage.jsp"%>
+	      <!-- start of main -->
+	      <section id="m-main" class="span10">
+			  <article class="m-widget">
+		        <header class="header">
+				  <h4 class="title">添加</h4>
 				  <div class="ctrl">
-				    <a class="btn"><i class="icon-chevron-up"></i></a>
+				    <a class="btn"><i id="bpmCategorySearchIcon" class="icon-chevron-up"></i></a>
+				  </div>
+				</header>
+		        <div id="bpmCategorySearch" class="content content-inner">
+				    <form name="tableForm" method="post" action="${scopePrefix}/table/conf-table-columns-save.do?tableName=${tableName}" class="form-inline">
+					    <label for="columnValue">字段名:</label>
+					    <input type="text" id="columnValue" name="columnValue" value="" class="input-small" >
+					    <label for="columnName">字段标题:</label>
+					    <input type="text" id="columnName" name="columnName" value=""  class="input-small" >
+					    <label for="columnType">字段类型:</label>
+					    <td> <select id="columnType" name="columnType" class="form-control" >
+						      <option>VARCHAR</option>
+						      <option>INT</option>
+						      <option>DOUBLE</option>
+						      <option>NUMBER</option>
+						  </select>
+						</td>
+					    <label for="columnSize">长度:</label>
+					    <input type="text" id="columnSize" name="columnSize" value="" class="input-small"  >
+					    <label for="isNull">允许空:</label>
+					    <input type="text" id="isNull" name="isNull" value=""  class="input-small" >
+					    <label for="defaultValue">默认值:</label>
+					    <input type="text" id="defaultValue" name="defaultValue" value=""  class="input-small" >
+					    <label for="columnNo">字段排序编号:</label>
+					    <input type="text" id="columnNo" name="columnNo" value=""  class="input-small" >
+						<button class="btn a-cancel" onclick="document.tableForm.submit()">保存</button>
+						<button type="button" onclick="history.back();" class="btn a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+				    </form>
+				</div>
+			  </article>
+	        <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+		    <article class="m-widget-2">
+		         <header class="header">
+				  <h4 class="title">表列字段</h4>
+				  <div class="ctrl">
+				    <a class="btn"><i id="bpmCategorySearchIcon" class="icon-chevron-up"></i></a>
 				  </div>
 				</header>
 		        <div class="content">
-				  <table class="m-table table-hover table-bordered table-striped">
+		          <table class="m-table table-hover table-bordered table-striped">
 					<thead>
 					  <tr>
-					    <th>No</th>
+					    <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 						<th>字段</th>
-						<th>字段名</th>
+						<th>字段标题</th>
 						<th>类型</th>
 						<th>长度</th>
 						<th>允许空</th>
 						<th>默认值</th>
 						<th>排序</th>
-						<th>模型唯一标识</th>
 					  </tr>
 					</thead>
 					<tbody>
 					<c:forEach items="${tableInfoList}" var="item">
 					  <tr>
+					    <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.columnValue}"></td>
 					    <td>
-						    <span class="input-group-addon">
-					            <input type="checkbox">
-					        </span>
-				        </td>
-					    <td>
-					    <a href="${scopePrefix}/table/workspace-viewHistory.do?processInstanceId=${item.tableName}" class="btn btn-small btn-primary">${item.tableName}</a>
+					    <a href="${scopePrefix}/table/workspace-viewHistory.do?processInstanceId=${item.columnValue}" class="btn btn-small btn-primary">${item.columnValue}</a>
 						</td>
+						<td>${item.columnName}</td>
+						 <td>${item.columnType}</td>
+						<td>${item.columnSize}</td>
+						<td>${item.isNull}</td>
+						<td>${item.defaultValue}</td>
 						<td>${item.columnNo}</td>
-						<td>${item.tableName}</td>
-						<td>${item.tableName}</td>
-						<td>${item.tableName}</td>
-						<td>${item.tableName}</td>
-						<td>${item.tableName}</td>
-						<td>${item.tableName}</td>
 					  </tr>
 					  </c:forEach>
-					  
-					  <tr>
-					    <td>
-					        <button id="submitButton" class="btn a-submit"><spring:message code='core.input.save' text='保存'/></button>
-					     </td>
-					    <td>
-					        <input id="cms-comment_1" type="text" name="tableName" value="" class="input-small"  maxlength="50" >
-						</td>
-						<td>
-							<input id="cms-comment_2" type="text" name="columnNo" value="" size="20" class="text input-small"  maxlength="50" >
-						</td>
-						<td>
-						    <div class="controls">
-							  <input id="cms-comment_3" type="text" name="columnNo" value="" size="20" class="text input-small"  maxlength="50" />
-						    </div>
-						</td>
-						<td>
-							<input id="cms-comment_4" type="text" name="columnNo" value=""  class="text input-small"  maxlength="50" />
-						</td>
-						<td>
-							<input id="cms-comment_5" type="text" name="columnNo" value=""  class="text input-small"  maxlength="50" />
-						</td>
-						<td>
-							<input id="cms-comment_6" type="text" name="columnNo" value=""  class="text input-small"  maxlength="50" />
-						</td>
-						<td>
-							<input id="cms-comment_7" type="text" name="columnNo" value=""  class="text input-small"  maxlength="50" />
-						</td>
-					  </tr>
 					  
 					</tbody>
 				  </table>
 				</div>
 			  </article>	
-			</div>
-			
-	  </div>
+	    </section>
+    <!-- end of main -->
+	</div>			
   </body>
 </html>
