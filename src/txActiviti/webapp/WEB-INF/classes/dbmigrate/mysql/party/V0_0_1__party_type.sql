@@ -1,8 +1,0 @@
-
-CREATE TABLE PARTY_TYPE(
-        ID BIGINT auto_increment,
-        NAME VARCHAR(50),
-	PERSON INTEGER,
-	SCOPE_ID VARCHAR(50),
-        CONSTRAINT PK_PARTY_TYPE PRIMARY KEY(ID)
-) engine=innodb;

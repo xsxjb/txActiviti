@@ -53,7 +53,18 @@ public class TableService {
         if (!CommonUtils.isNull(tableName)) {
         	sql = sql + " WHERE tableName='" + tableName +"' ";
         }
+        sql = sql + " ORDER bY columnNo ";
         return dao.queryConfTableColumns(sql);
+	}
+	/**
+     * 表列字段结构管理表信息查询
+     * @param tableName
+     * @param columnValue
+     * @return
+     */
+	public ConfTableColumns queryConfTableColumn(String tableName, String columnValue) {
+		String sql = " SELECT tableName, columnValue,columnValue columnValueOld, columnName, columnType, columnType columnTypeOld, columnSize, ISNULL, defaultValue, columnNo FROM TX_CONF_TABLE_COLUMNS WHERE tableName='" + tableName +"' AND columnValue ='" + columnValue + "' ";
+		return dao.queryConfTableColumn(sql);
 	}
     /**
      * 插入数据-业务表管理表
@@ -85,6 +96,26 @@ public class TableService {
 	public void deleteConfTable(List<String> list) {
 		String sql = "delete from TX_CONF_TABLE WHERE uuid = ? ";
 		dao.batchDeleteConfTable(list, sql);
+	}
+	/**
+     * 删除表列字段管理表信息
+     * 
+     * @param selectedItem
+     */
+	public void deleteConfColumnsTable(List<String> list, String tableName) {
+		String sql = "delete from TX_CONF_TABLE_COLUMNS WHERE tableName = ? AND columnValue = ?";
+		dao.batchDeleteConfTableColumns(list, tableName, sql);
+	}
+	/**
+     * 变更/修改表列字段管理表信息
+     * 
+     * @param tableName
+     * @param columnValue
+     */
+	public void updateConfTableColumns(String tableName, ConfTableColumns bean) {
+		String sql = " UPDATE TX_CONF_TABLE_COLUMNS SET ";
+		// TODO
+		dao.update(sql);
 	}
     /**
      * 更新数据

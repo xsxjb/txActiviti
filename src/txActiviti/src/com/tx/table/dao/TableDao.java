@@ -42,6 +42,23 @@ public class TableDao {
        }
     }
     /**
+     * 表列字段结构管理表信息查询
+     * @param sql
+     * @return
+     */
+	public ConfTableColumns queryConfTableColumn(String sql) {
+		try {
+			List<ConfTableColumns> list = getJdbcTemplate().query(sql,ParameterizedBeanPropertyRowMapper.newInstance(ConfTableColumns.class));
+			if (list.size() > 0) {
+				return list.get(0);
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			return null;
+		}
+	}
+    /**
      * 表字段结构管理表信息查询
      * 
      * @param sql
@@ -138,7 +155,31 @@ public class TableDao {
           return 0;
       }
 	}
-
+	/**
+     * 删除表列字段管理表信息
+     * @param list
+     * @param sql
+     */
+	public int batchDeleteConfTableColumns(final List<String> list, final String tableName, String sql) {
+		try{
+	          jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+	             @Override
+	             public int getBatchSize() {
+	              return list.size();    //这个方法设定更新记录数，通常List里面存放的都是我们要更新的，所以返回list.size()；
+	             }
+	              @Override
+	              public void setValues(PreparedStatement ps, int i)
+	                      throws SQLException {
+	            	  String columnValue = list.get(i);
+	            	  ps.setString(1, tableName);
+	                  ps.setString(2, columnValue);
+	              }
+	          });
+	          return 1;
+	      }catch (Exception e){
+	          return 0;
+	      }
+	}
     /**
      * 更新
      * 

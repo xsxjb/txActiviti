@@ -62,7 +62,21 @@ public class TableManageController {
         // 取得表结构信息
         return "../jsp/table/conf-table-detail-show";
     }
-    
+    /**
+     * 表列字段结构管理表信息查询
+     * 
+     * @return
+     */
+    @RequestMapping("conf-table-column-show")
+    public String queryConfTableColumn(@RequestParam("tableName") String tableName, @RequestParam("columnValue") String columnValue, Model model) {
+    	// 取得表结构信息
+        ConfTableColumns bean = tableService.queryConfTableColumn(tableName, columnValue);
+        // 表结构信息
+        model.addAttribute("beanInfo", bean);
+        model.addAttribute("tableName", tableName);
+        // 取得表结构信息
+        return "../jsp/table/conf-table-column-show";
+    }
     /**
      * 新建一张业务表页面跳转
      * 
@@ -99,6 +113,7 @@ public class TableManageController {
     public String confTableColumnsSave(@ModelAttribute ConfTableColumns confTableColumns, @RequestParam("tableName") String tableName, RedirectAttributes redirectAttributes) {
     	List<ConfTableColumns> list = new ArrayList<ConfTableColumns>();
     	confTableColumns.setTableName(tableName.toUpperCase());//转成大写
+    	confTableColumns.setColumnValue(confTableColumns.getColumnValue().toUpperCase());//转成大写
     	list.add(confTableColumns);
     	tableService.insertConfTableColumns(list);
     	// 在数据库中修改(更新/追加)指定的业务表的数据列
@@ -118,7 +133,28 @@ public class TableManageController {
     	messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
         return "redirect:/table/conf-table-show.do";
     }
-
+    /**
+     * 删除表列字段管理表信息
+     * 
+     * @return
+     */
+    @RequestMapping("conf-table-columns-remove")
+    public String confTableColumnsRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam("tableName") String tableName, RedirectAttributes redirectAttributes) {
+    	tableService.deleteConfColumnsTable(selectedItem, tableName);
+    	messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+        return "redirect:/table/conf-table-detail-show.do?tableName=" + tableName;
+    }
+    /**
+     * 变更/修改表列字段管理表信息
+     * 
+     * @return
+     */
+    @RequestMapping("conf-table-columns-update")
+    public String confTableColumnsUpdate(@ModelAttribute ConfTableColumns confTableColumns, @RequestParam("tableName") String tableName, RedirectAttributes redirectAttributes) {
+    	tableService.updateConfTableColumns(tableName, confTableColumns);
+    	messageHelper.addFlashMessage(redirectAttributes, "core.success.update", "更新成功");
+        return "redirect:/table/conf-table-detail-show.do?tableName=" + tableName;
+    }
     /**
      * 在数据库中创建一张业务表
      * @param list

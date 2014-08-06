@@ -28,7 +28,7 @@
   </head>
 
   <body>
-    <%@include file="/header/cms.jsp"%>
+    <%@include file="/header/table.jsp"%>
 
     <div class="row-fluid">
 	  <%@include file="/menu/table-manage.jsp"%>
@@ -43,16 +43,16 @@
 				  </div>
 				</header>
 				<div class="pull-left">
-				  <region:region-permission permission="cmsComment:create">
+				  <region:region-permission permission="tableComment:create">
 				  	<button class="btn btn-small a-insert" onclick="location.href='conf-table-insert.do'">新建</button>
 				  </region:region-permission>
-				  <region:region-permission permission="cmsComment:delete">
+				  <region:region-permission permission="tableComment:delete">
 				  	<button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
 				  </region:region-permission>
 				</div>
 		        <div class="content">
 			        <form id="tableGridForm" name="tableGridForm" method='post' action="conf-table-remove.do" class="m-form-blank">
-						<table class="m-table table-hover" id=“tableModelGrid” >
+						<table class="m-table table-hover table-bordered" id=“tableModelGrid” >
 							<thead>
 							  <tr>
 							    <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
