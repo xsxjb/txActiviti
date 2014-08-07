@@ -29,20 +29,19 @@
 
   <body>
     <%@include file="/header/table.jsp"%>
-
     <div class="row-fluid">
-	  <%@include file="/menu/table-manage.jsp"%>
+    <%@include file="/menu/table-manage.jsp"%>
 
-	<!-- start of main -->
-    <section id="m-main" class="span10">
-		    <article class="m-widget-2">
-                 <header class="header">
-				  <h4 class="title"><i class="icon-user"></i>表存储模型</h4>
+		<!-- start of main -->
+		<section id="m-main" class="span10">
+			  <article class="m-widget">
+		        <header class="header">
+				  <h4 class="title">表存储模型</h4>
 				  <div class="ctrl">
-				    <a class="btn"><i class="icon-chevron-up"></i></a>
+				    <a class="btn"><i id="bpmCategorySearchIcon" class="icon-chevron-up"></i></a>
 				  </div>
 				</header>
-				<div class="pull-left">
+				<div id="tableCategorySearch" class="content content-inner">
 				  <region:region-permission permission="tableComment:create">
 				  	<button class="btn btn-small a-insert" onclick="location.href='conf-table-insert.do'">新建</button>
 				  </region:region-permission>
@@ -50,7 +49,7 @@
 				  	<button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
 				  </region:region-permission>
 				</div>
-		        <div class="content">
+		        <div class="content content-inner">
 			        <form id="tableGridForm" name="tableGridForm" method='post' action="conf-table-remove.do" class="m-form-blank">
 						<table class="m-table table-hover table-bordered" id=“tableModelGrid” >
 							<thead>
