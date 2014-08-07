@@ -115,11 +115,26 @@ public class TableManageController {
     	confTableColumns.setTableName(tableName.toUpperCase());//转成大写
     	confTableColumns.setColumnValue(confTableColumns.getColumnValue().toUpperCase());//转成大写
     	list.add(confTableColumns);
+    	// 插入
     	tableService.insertConfTableColumns(list);
     	// 在数据库中修改(更新/追加)指定的业务表的数据列
-    	alterTable(confTableColumns);
+    	alterTableColumn(confTableColumns);
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         
+        return "redirect:/table/conf-table-detail-show.do?tableName=" + tableName;
+    }
+    /**
+     * 变更/修改表列字段管理表信息
+     * 
+     * @return
+     */
+    @RequestMapping("conf-table-columns-update")
+    public String confTableColumnsUpdate(@ModelAttribute ConfTableColumns confTableColumns, @RequestParam("tableName") String tableName, RedirectAttributes redirectAttributes) {
+    	confTableColumns.setColumnValue(confTableColumns.getColumnValue().toUpperCase());
+    	tableService.updateConfTableColumns(tableName, confTableColumns);
+    	messageHelper.addFlashMessage(redirectAttributes, "core.success.update", "更新成功");
+    	// 更改表结构
+    	alterTableColumn(confTableColumns);
         return "redirect:/table/conf-table-detail-show.do?tableName=" + tableName;
     }
     /**
@@ -142,17 +157,10 @@ public class TableManageController {
     public String confTableColumnsRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam("tableName") String tableName, RedirectAttributes redirectAttributes) {
     	tableService.deleteConfColumnsTable(selectedItem, tableName);
     	messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-        return "redirect:/table/conf-table-detail-show.do?tableName=" + tableName;
-    }
-    /**
-     * 变更/修改表列字段管理表信息
-     * 
-     * @return
-     */
-    @RequestMapping("conf-table-columns-update")
-    public String confTableColumnsUpdate(@ModelAttribute ConfTableColumns confTableColumns, @RequestParam("tableName") String tableName, RedirectAttributes redirectAttributes) {
-    	tableService.updateConfTableColumns(tableName, confTableColumns);
-    	messageHelper.addFlashMessage(redirectAttributes, "core.success.update", "更新成功");
+    	// 在数据库中(删除)指定的业务表的数据列
+    	for (String columnValue : selectedItem) {
+    		alterDropTableColumns(tableName, columnValue);
+    	}
         return "redirect:/table/conf-table-detail-show.do?tableName=" + tableName;
     }
     /**
@@ -169,7 +177,7 @@ public class TableManageController {
      * 在数据库中修改(更新/追加)指定的业务表的数据列
      * @param list
      */
-    private void alterTable(ConfTableColumns bean) {
+    private void alterTableColumn(ConfTableColumns bean) {
     	String defaultStr = "";
     	if (bean.getColumnType().indexOf("number") >= 0) {
 		    defaultStr = " default 0";
@@ -194,14 +202,29 @@ public class TableManageController {
 		    }
 	    	
 		    // 修改数据列类型
-			if (!bean.getColumnType().equals(bean.getColumnTypeOld())) {
+			if (!bean.getColumnType().equals(bean.getColumnTypeOld())
+					|| (CommonUtils.isNull(bean.getColumnSize()) && !bean.getColumnSize().equals(bean.getColumnSizeOld()))) {
 				String sql = "ALTER TABLE " + bean.getTableName() + " MODIFY " + bean.getColumnValue() + " " + bean.getColumnType();
+				if (!CommonUtils.isNull(bean.getColumnSize())) {
+					sql = sql + "(" + bean.getColumnSize() + ")";
+				}
 				if (0 == tableService.execute(sql)) {
 		            return;
 		        }
 			}
 		}
     }
+    /**
+     * 删除指定表中的指定列字段-在指定表的表结构中删除列
+     * @param tableName
+     * @param columnValue
+     */
+    private void alterDropTableColumns(String tableName, String columnValue) {
+    	String sql = "ALTER TABLE " + tableName + " DROP COLUMN " + columnValue;
+        if (0 == tableService.execute(sql)) {
+            return;
+        }
+	}
     /**
      * 注入 table service
      * @param tableService

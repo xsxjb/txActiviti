@@ -113,8 +113,11 @@ public class TableService {
      * @param columnValue
      */
 	public void updateConfTableColumns(String tableName, ConfTableColumns bean) {
+		// 存储数据
 		String sql = " UPDATE TX_CONF_TABLE_COLUMNS SET ";
-		// TODO
+		sql = sql + " columnName='"+bean.getColumnName()+"', columnType='"+bean.getColumnType()+"', columnSize='"+bean.getColumnSize()+"', ";
+		sql = sql + " isNull='"+bean.getIsNull()+"', defaultValue='"+bean.getDefaultValue()+"', columnNo='"+bean.getColumnNo()+"'";
+		sql = sql + " WHERE tableName='"+tableName+"' AND columnValue='"+bean.getColumnValue()+"'";
 		dao.update(sql);
 	}
     /**

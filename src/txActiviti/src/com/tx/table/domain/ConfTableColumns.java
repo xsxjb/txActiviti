@@ -21,6 +21,8 @@ public class ConfTableColumns {
 	private String columnTypeOld;
 	// 长度
 	private String columnSize;
+	// 数据库中的-长度
+	private String columnSizeOld;
 	// 允许空
 	private String isNull;
 	// 默认值
@@ -146,5 +148,17 @@ public class ConfTableColumns {
 	 */
 	public void setColumnNo(int columnNo) {
 		this.columnNo = columnNo;
+	}
+	/**
+	 * @return the columnSizeOld
+	 */
+	public String getColumnSizeOld() {
+		return columnSizeOld;
+	}
+	/**
+	 * @param columnSizeOld the columnSizeOld to set
+	 */
+	public void setColumnSizeOld(String columnSizeOld) {
+		this.columnSizeOld = columnSizeOld;
 	}
 }

@@ -17,7 +17,7 @@ CREATE TABLE TX_CONF_TABLE_COLUMNS (
 		columnName VARCHAR(128),
 		columnType VARCHAR(32),
 		columnSize VARCHAR(8),
-		IsNull VARCHAR(8),
+		isNull VARCHAR(8),
 		defaultValue VARCHAR(32),
 		columnNo INTEGER,
         CONSTRAINT PK_TX_CONF_TABLE_COL PRIMARY KEY(tableName,COLUMNVALUE)

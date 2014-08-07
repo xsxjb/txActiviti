@@ -9,37 +9,6 @@
     <%@include file="/common/meta.jsp"%>
     <title>编辑表列字段信息</title>
     <%@include file="/common/s.jsp"%>
-    <script type="text/javascript">
-$(function() {
-    $("#tableForm").validate({
-        submitHandler: function(form) {
-			bootbox.animate(false);
-			var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
-            form.submit();
-        },
-        errorClass: 'validate-error',
-        rules: {
-            username: {
-                remote: {
-                    url: 'user-base-checkUsername.do',
-                    data: {
-                        <c:if test="${model != null}">
-                        id: function() {
-                            return $('#user-base_id').val();
-                        }
-                        </c:if>
-                    }
-                }
-            }
-        },
-        messages: {
-            username: {
-                remote: "<spring:message code='user.user.input.duplicate' text='存在重复账号'/>"
-            }
-        }
-    });
-})
-    </script>
   </head>
 
   <body>
@@ -57,9 +26,9 @@ $(function() {
 		<div class="content content-inner">
 			<form id="tableForm" method="post" action="conf-table-columns-update.do?tableName=${tableName}" class="form-horizontal">
 			  <div class="control-group">
-			    <label class="control-label" for="table-columnValue"><spring:message code="user.user.input.username" text="字段名"/></label>
+			    <label class="control-label" for="table-columnValue">字段名</label>
 				<div class="controls">
-				  <input id="table-columnValue" type="text" name="columnValue" value="${beanInfo.columnValue}" size="40" class="text required" maxlength="50">
+				  <input id="table-columnValue" type="text" name="columnValue" value="${beanInfo.columnValue}" size="40" class="text required"  readonly >
 			    </div>
 			  </div>
 			  <div class="control-group">
@@ -71,7 +40,12 @@ $(function() {
 			  <div class="control-group">
 			    <label class="control-label" for="table-columnType">字段类型</label>
 				<div class="controls">
-				  <input id="table-columnType" type="text" name="columnType" value="${beanInfo.columnType}" size="40" class="text required" >
+					<select id="columnType" name="columnType" class="span2" value="${beanInfo.columnType}" >
+					      <option ${beanInfo.columnType == "VARCHAR" ? 'selected' : ''} >VARCHAR</option>
+					      <option ${beanInfo.columnType == "INT" ? 'selected' : ''} >INT</option>
+					      <option ${beanInfo.columnType == "DOUBLE" ? 'selected' : ''} >DOUBLE</option>
+					      <option ${beanInfo.columnType == "NUMBER" ? 'selected' : ''} >NUMBER</option>
+					  </select>
 			    </div>
 			  </div>
 			  <div class="control-group">
@@ -83,7 +57,10 @@ $(function() {
 			  <div class="control-group">
 			    <label class="control-label" for="table-isNull">允许空</label>
 				<div class="controls">
-				  <input id="table-isNull" type="text" name="isNull" value="${beanInfo.isNull}">
+					<select id="isNull" name="isNull" class="span1" >
+					      <option ${beanInfo.isNull == "是" ? 'selected' : ''}  value="是">是</option>
+					      <option ${beanInfo.isNull == "否" ? 'selected' : ''}  value="否">否</option>
+					  </select>
 			    </div>
 			  </div>
 			  <div class="control-group">

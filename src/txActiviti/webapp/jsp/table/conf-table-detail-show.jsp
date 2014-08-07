@@ -42,32 +42,39 @@
 				</header>
 		        <div id="bpmCategorySearch" class="content content-inner">
 				    <form name="tableForm" method="post" action="${scopePrefix}/table/conf-table-columns-save.do?tableName=${tableName}" class="form-inline">
-					    <label for="columnValue">字段名:</label>
-					    <input type="text" id="columnValue" name="columnValue" value="" class="input-small" >
-					    <label for="columnName">字段标题:</label>
-					    <input type="text" id="columnName" name="columnName" value=""  class="input-small" >
-					    <label for="columnType">字段类型:</label>
-					    <td> <select id="columnType" name="columnType" class="span2" >
-						      <option>VARCHAR</option>
-						      <option>INT</option>
-						      <option>DOUBLE</option>
-						      <option>NUMBER</option>
-						  </select>
-						</td>
-					    <label for="columnSize">长度:</label>
-					    <input type="text" id="columnSize" name="columnSize" value="" class="input-small"  >
-					    <label for="isNull">允许空:</label>
-					    <td> <select id="isNull" name="isNull" class="span1" >
-						      <option>是</option>
-						      <option>否</option>
-						  </select>
-						</td>
-					    <label for="defaultValue">默认值:</label>
-					    <input type="text" id="defaultValue" name="defaultValue" value=""  class="input-small" >
-					    <label for="columnNo">字段排序编号:</label>
-					    <input type="text" id="columnNo" name="columnNo" value=""  class="input-small" >
-						<button class="btn a-cancel" onclick="document.tableForm.submit()">保存</button>
-						<button type="button" onclick="history.back();" class="btn a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+					    <div class="control-group">
+						    <label for="columnValue">字段名:</label>
+						    <input type="text" id="columnValue" name="columnValue" value="" class="span2" >
+						    <label for="columnName">字段标题:</label>
+						    <input type="text" id="columnName" name="columnName" value=""  class="span2" >
+					    </div>
+					    <div class="control-group">
+						    <label for="columnType">字段类型:</label>
+						    <td> <select id="columnType" name="columnType" class="span2" >
+							      <option>VARCHAR</option>
+							      <option>INT</option>
+							      <option>DOUBLE</option>
+							      <option>NUMBER</option>
+							  </select>
+							</td>
+						    <label for="columnSize">长度:</label>
+						    <input type="text" id="columnSize" name="columnSize" value="" class="span1"  >
+						    <label for="isNull">允许空:</label>
+						    <td>
+							      <select id="isNull" name="isNull" class="span1" >
+								      <option>是</option>
+								      <option>否</option>
+								  </select>
+							</td>
+						    <label for="defaultValue">默认值:</label>
+						    <input type="text" id="defaultValue" name="defaultValue" value=""  class="input-small" >
+						    <label for="columnNo">字段排序编号:</label>
+						    <input type="text" id="columnNo" name="columnNo" value=""  class="span1" >
+						 </div>
+						 <div class="control-group">
+							<button class="btn a-cancel" onclick="document.tableForm.submit()">保存</button>
+							<button type="button" onclick="history.back();" class="btn a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+				        </div>
 				    </form>
 				</div>
 			  </article>
