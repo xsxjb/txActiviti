@@ -1,10 +1,15 @@
+-------------------------------------------------------------------------------
+--  流程分类
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CATEGORY(
 	ID BIGINT auto_increment,
 	NAME VARCHAR(200),
 	PRIORITY INTEGER,
         CONSTRAINT PK_BPM_CATEGORY PRIMARY KEY(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程定义-流程管理
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CONF_BASE(
 	ID BIGINT auto_increment,
 	PROCESS_DEFINITION_ID VARCHAR(200),
@@ -12,7 +17,9 @@ CREATE TABLE BPM_CONF_BASE(
 	PROCESS_DEFINITION_VERSION INT,
         CONSTRAINT PK_BPM_CONF_BASE PRIMARY KEY(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程定义-分类管理
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_PROCESS(
 	ID BIGINT auto_increment,
 	NAME VARCHAR(200),
@@ -27,7 +34,9 @@ CREATE TABLE BPM_PROCESS(
 ) engine=innodb;
 
 ALTER TABLE BPM_PROCESS ADD CONSTRAINT FK_BPM_PROCESS_CONF_BASE FOREIGN KEY(CONF_BASE_ID) REFERENCES BPM_CONF_BASE(ID);
-
+-------------------------------------------------------------------------------
+--  流程代理信息表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_DELEGATE_INFO(
 	ID BIGINT auto_increment,
 	ASSIGNEE VARCHAR(200),
@@ -38,7 +47,9 @@ CREATE TABLE BPM_DELEGATE_INFO(
 	STATUS INTEGER,
         CONSTRAINT PK_BPM_DELEGATE_INFO PRIMARY KEY(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程代理历史信息表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_DELEGATE_HISTORY(
 	ID BIGINT auto_increment,
 	ASSIGNEE VARCHAR(200),
@@ -48,7 +59,9 @@ CREATE TABLE BPM_DELEGATE_HISTORY(
 	STATUS INTEGER,
         CONSTRAINT PK_BPM_DELEGATE_HISTORY PRIMARY KEY(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程任务配置表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_TASK_CONF(
 	ID BIGINT auto_increment,
 	BUSINESS_KEY VARCHAR(200),
@@ -56,7 +69,9 @@ CREATE TABLE BPM_TASK_CONF(
 	ASSIGNEE VARCHAR(200),
         CONSTRAINT PK_BPM_TASK_CONF PRIMARY KEY(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程任务管理表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_TASK_DEF(
 	ID BIGINT auto_increment,
 	TASK_DEFINITION_KEY VARCHAR(200),
@@ -66,7 +81,9 @@ CREATE TABLE BPM_TASK_DEF(
         CONSTRAINT PK_BPM_TASK_DEF PRIMARY KEY(ID),
         CONSTRAINT FK_BPM_TASK_DEF_ID FOREIGN KEY(PROCESS_ID) REFERENCES BPM_PROCESS(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程邮件模板表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_MAIL_TEMPLATE(
 	ID BIGINT auto_increment,
 	NAME VARCHAR(50),
@@ -74,7 +91,9 @@ CREATE TABLE BPM_MAIL_TEMPLATE(
 	CONTENT VARCHAR(200),
         CONSTRAINT PK_BPM_MAIL_TEMPLATE PRIMARY KEY(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程任务通知管理表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_TASK_DEF_NOTICE(
 	ID BIGINT auto_increment,
 	TASK_DEFINITION_KEY VARCHAR(200),
@@ -87,7 +106,9 @@ CREATE TABLE BPM_TASK_DEF_NOTICE(
         CONSTRAINT FK_BPM_TASK_DEF_NOTICE_PROCESS FOREIGN KEY(PROCESS_ID) REFERENCES BPM_PROCESS(ID),
         CONSTRAINT FK_BPM_TASK_DEF_NOTICE_TEMPLATE FOREIGN KEY(TEMPLATE_ID) REFERENCES BPM_MAIL_TEMPLATE(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程分类定义配置表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CONF_NODE(
 	ID BIGINT auto_increment,
 	CODE VARCHAR(200),
@@ -104,7 +125,9 @@ CREATE TABLE BPM_CONF_NODE(
         CONSTRAINT PK_BPM_CONF_NODE PRIMARY KEY(ID),
         CONSTRAINT FK_BPM_CONF_NODE_CONF_BASE FOREIGN KEY(CONF_BASE_ID) REFERENCES BPM_CONF_BASE(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程分类定义配置人员表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CONF_USER(
 	ID BIGINT auto_increment,
 	VALUE VARCHAR(200),
@@ -115,7 +138,9 @@ CREATE TABLE BPM_CONF_USER(
         CONSTRAINT PK_BPM_CONF_USER PRIMARY KEY(ID),
         CONSTRAINT FK_BPM_CONF_USER_NODE FOREIGN KEY(NODE_ID) REFERENCES BPM_CONF_NODE(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程分类定义配置事件表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CONF_LISTENER(
 	ID BIGINT auto_increment,
 	VALUE VARCHAR(200),
@@ -126,7 +151,9 @@ CREATE TABLE BPM_CONF_LISTENER(
         CONSTRAINT PK_BPM_CONF_LISTENER PRIMARY KEY(ID),
         CONSTRAINT FK_BPM_CONF_LISTENER_NODE FOREIGN KEY(NODE_ID) REFERENCES BPM_CONF_NODE(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程分类定义配置规则表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CONF_RULE(
 	ID BIGINT auto_increment,
 	VALUE VARCHAR(200),
@@ -134,7 +161,9 @@ CREATE TABLE BPM_CONF_RULE(
         CONSTRAINT PK_BPM_CONF_RULE PRIMARY KEY(ID),
         CONSTRAINT FK_BPM_CONF_RULE_NODE FOREIGN KEY(NODE_ID) REFERENCES BPM_CONF_NODE(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程分类定义配置表单表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CONF_FORM(
 	ID BIGINT auto_increment,
 	VALUE VARCHAR(200),
@@ -146,7 +175,9 @@ CREATE TABLE BPM_CONF_FORM(
         CONSTRAINT PK_BPM_CONF_FORM PRIMARY KEY(ID),
         CONSTRAINT FK_BPM_CONF_FORM_NODE FOREIGN KEY(NODE_ID) REFERENCES BPM_CONF_NODE(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程分类定义配置操作表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CONF_OPERATION(
 	ID BIGINT auto_increment,
 	VALUE VARCHAR(200),
@@ -155,7 +186,9 @@ CREATE TABLE BPM_CONF_OPERATION(
         CONSTRAINT PK_BPM_CONF_OPERATION PRIMARY KEY(ID),
         CONSTRAINT FK_BPM_CONF_OPERATION_NODE FOREIGN KEY(NODE_ID) REFERENCES BPM_CONF_NODE(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程分类定义配置提醒表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CONF_NOTICE(
 	ID BIGINT auto_increment,
 	TYPE INT,
@@ -167,7 +200,9 @@ CREATE TABLE BPM_CONF_NOTICE(
         CONSTRAINT FK_BPM_CONF_NOTICE_NODE FOREIGN KEY(NODE_ID) REFERENCES BPM_CONF_NODE(ID),
         CONSTRAINT FK_BPM_CONF_NOTICE_TEMPLATE FOREIGN KEY(TEMPLATE_ID) REFERENCES BPM_MAIL_TEMPLATE(ID)
 ) engine=innodb;
-
+-------------------------------------------------------------------------------
+--  流程关联配置表
+-------------------------------------------------------------------------------
 CREATE TABLE BPM_CONF_COUNTERSIGN(
 	ID BIGINT auto_increment,
 	SEQUENTIAL INT,

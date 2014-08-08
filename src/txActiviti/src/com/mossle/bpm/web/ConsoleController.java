@@ -112,19 +112,16 @@ public class ConsoleController {
      */
     @RequestMapping("console-deploy")
     public String deploy(@RequestParam("xml") String xml) throws Exception {
-        RepositoryService repositoryService = processEngine
-                .getRepositoryService();
-        ByteArrayInputStream bais = new ByteArrayInputStream(
-                xml.getBytes("UTF-8"));
-        Deployment deployment = repositoryService.createDeployment()
-                .addInputStream("process.bpmn20.xml", bais).deploy();
+        RepositoryService repositoryService = processEngine.getRepositoryService();
+        // 格式化XML文件内容
+        ByteArrayInputStream bais = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+        Deployment deployment = repositoryService.createDeployment().addInputStream("process.bpmn20.xml", bais).deploy();
         List<ProcessDefinition> processDefinitions = repositoryService
                 .createProcessDefinitionQuery()
                 .deploymentId(deployment.getId()).list();
 
         for (ProcessDefinition processDefinition : processDefinitions) {
-            processEngine.getManagementService().executeCommand(
-                    new SyncProcessCmd(processDefinition.getId()));
+            processEngine.getManagementService().executeCommand(new SyncProcessCmd(processDefinition.getId()));
         }
 
         return "redirect:/bpm/console-listProcessDefinitions.do";

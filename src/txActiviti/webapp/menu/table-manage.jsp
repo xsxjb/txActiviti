@@ -9,10 +9,11 @@
               <span class="title">业务组件</span>
             </a>
           </div>
-          <div id="collapse-cms" class="accordion-body collapse ${currentMenu == 'cms' ? 'in' : ''}">
+          <div id="collapse-cms" class="accordion-body collapse ${currentMenu == 'table' ? 'in' : ''}">
             <ul class="accordion-inner nav nav-list">
 			  <li><a href="${scopePrefix}/table/conf-table-show.do">表存储设计器</a></li>
 			  <li><a href="#">表单设计器</a></li>
+			  <li><a href="#">流程设计器</a></li>
             </ul>
           </div>
         </div>

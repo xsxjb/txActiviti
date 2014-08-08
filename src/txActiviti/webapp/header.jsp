@@ -50,6 +50,7 @@
                   <li class="divider"></li>
 				  <li><a href="${scopePrefix}/table/conf-table-show.do"><i class="icon-user"></i>表存储设计器</a></li>
 				  <li><a href="#"><i class="icon-user"></i>表单设计器</a></li>
+				  <li><a href="#"><i class="icon-user"></i>流程设计器</a></li>
                 </ul>
               </li>
             </ul>
