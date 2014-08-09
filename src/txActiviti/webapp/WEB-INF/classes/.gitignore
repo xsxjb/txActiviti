@@ -6,3 +6,5 @@
 /logback
 /logback.xml
 /org
+/properties.lst
+/spring
