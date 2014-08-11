@@ -1,137 +1,138 @@
 package com.tx.codeGenerate.code;
 
+/**
+ * 表列字段Bean
+ * 
+ * @author JiangBo
+ *
+ */
 public class Columnt
 {
   public static final String OPTION_REQUIRED = "required:true";
   public static final String OPTION_NUMBER_INSEX = "precision:2,groupSeparator:','";
-  private String a;
-  private String b;
-  private String c = "";
-  private String d = "";
-  private String e = "";
-  private String f = "";
-  private String g = "";
-  private String h = "";
-  private String i;
-  private String j;
-  private String k;
+  private String fieldDbName;
+  private String fieldName;
+  private String filedComment = "";
+  private String fieldType = "";
+  private String classType = "";
+  private String classType_row = "";
+  private String optionType = "";
+  private String charmaxLength = "";
+  private String precision;
+  private String scale;
+  private String nullable;
 
   public String getNullable()
   {
-    return this.k;
+    return this.nullable;
   }
 
   public void setNullable(String paramString)
   {
-    this.k = paramString;
+    this.nullable = paramString;
   }
 
   public String getPrecision()
   {
-    return this.i;
+    return this.precision;
   }
 
   public String getScale()
   {
-    return this.j;
+    return this.scale;
   }
 
   public void setPrecision(String paramString)
   {
-    this.i = paramString;
+    this.precision = paramString;
   }
 
   public void setScale(String paramString)
   {
-    this.j = paramString;
+    this.scale = paramString;
   }
 
   public String getOptionType()
   {
-    return this.g;
+    return this.optionType;
   }
 
   public void setOptionType(String paramString)
   {
-    this.g = paramString;
+    this.optionType = paramString;
   }
 
   public String getClassType()
   {
-    return this.e;
+    return this.classType;
   }
 
   public void setClassType(String paramString)
   {
-    this.e = paramString;
+    this.classType = paramString;
   }
 
   public String getFieldType()
   {
-    return this.d;
+    return this.fieldType;
   }
 
   public void setFieldType(String paramString)
   {
-    this.d = paramString;
+    this.fieldType = paramString;
   }
 
   public String getFieldName()
   {
-    return this.b;
+    return this.fieldName;
   }
 
   public void setFieldName(String paramString)
   {
-    this.b = paramString;
+    this.fieldName = paramString;
   }
 
   public String getFiledComment()
   {
-    return this.c;
+    return this.filedComment;
   }
 
   public void setFiledComment(String paramString)
   {
-    this.c = paramString;
+    this.filedComment = paramString;
   }
 
   public String getClassType_row()
   {
-    if ((this.e != null) && (this.e.indexOf("easyui-") >= 0))
-      return this.e.replaceAll("easyui-", "");
-    return this.f;
+    if ((this.classType != null) && (this.classType.indexOf("easyui-") >= 0))
+      return this.classType.replaceAll("easyui-", "");
+    return this.classType_row;
   }
 
   public void setClassType_row(String paramString)
   {
-    this.f = paramString;
+    this.classType_row = paramString;
   }
 
   public String getCharmaxLength()
   {
-    if ((this.h == null) || ("0".equals(this.h)))
+    if ((this.charmaxLength == null) || ("0".equals(this.charmaxLength)))
       return "";
-    return this.h;
+    return this.charmaxLength;
   }
 
   public void setCharmaxLength(String paramString)
   {
-    this.h = paramString;
+    this.charmaxLength = paramString;
   }
 
   public String getFieldDbName()
   {
-    return this.a;
+    return this.fieldDbName;
   }
 
   public void setFieldDbName(String paramString)
   {
-    this.a = paramString;
+    this.fieldDbName = paramString;
   }
 }
-
-/* Location:           C:\Users\Administrator\Desktop\commons-cg-2.1.jar
- * Qualified Name:     com.code.Columnt
- * JD-Core Version:    0.5.4
- */

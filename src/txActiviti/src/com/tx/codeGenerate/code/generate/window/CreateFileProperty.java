@@ -1,87 +1,102 @@
 package com.tx.codeGenerate.code.generate.window;
 
-public class CreateFileProperty
-{
-  private boolean jdField_a_of_type_Boolean;
-  private boolean b;
-  private boolean c;
-  private boolean d;
-  private boolean e;
-  private boolean f;
-  private String jdField_a_of_type_JavaLangString;
-
-  public boolean isActionFlag()
-  {
-    return this.jdField_a_of_type_Boolean;
-  }
-
-  public boolean isServiceIFlag()
-  {
-    return this.b;
-  }
-
-  public boolean isEntityFlag()
-  {
-    return this.c;
-  }
-
-  public boolean isPageFlag()
-  {
-    return this.d;
-  }
-
-  public boolean isServiceImplFlag()
-  {
-    return this.e;
-  }
-
-  public void setActionFlag(boolean paramBoolean)
-  {
-    this.jdField_a_of_type_Boolean = paramBoolean;
-  }
-
-  public void setServiceIFlag(boolean paramBoolean)
-  {
-    this.b = paramBoolean;
-  }
-
-  public void setEntityFlag(boolean paramBoolean)
-  {
-    this.c = paramBoolean;
-  }
-
-  public void setPageFlag(boolean paramBoolean)
-  {
-    this.d = paramBoolean;
-  }
-
-  public void setServiceImplFlag(boolean paramBoolean)
-  {
-    this.e = paramBoolean;
-  }
-
-  public boolean isJspFlag()
-  {
-    return this.f;
-  }
-
-  public void setJspFlag(boolean paramBoolean)
-  {
-    this.f = paramBoolean;
-  }
-
-  public String getJspMode()
-  {
-    return this.jdField_a_of_type_JavaLangString;
-  }
-
-  public void setJspMode(String paramString)
-  {
-    this.jdField_a_of_type_JavaLangString = paramString;
-  }
-}
-
-/* Location:           C:\Users\Administrator\Desktop\commons-cg-2.1.jar
- * Qualified Name:     com.code.generate.window.CreateFileProperty
- * JD-Core Version:    0.5.4
+/**
+ * 创建文件标识bean
+ * 
+ * @author JiangBo
+ * 
  */
+public class CreateFileProperty {
+    // 
+    private boolean actionFlag;
+    private boolean serviceIFlag;
+    private boolean entityFlag;
+    private boolean pageFlag;
+    private boolean serviceImplFlag;
+    private boolean jspFlag;
+    private String jspMode;
+    /**
+     * @return the actionFlag
+     */
+    public boolean isActionFlag() {
+        return actionFlag;
+    }
+    /**
+     * @param actionFlag the actionFlag to set
+     */
+    public void setActionFlag(boolean actionFlag) {
+        this.actionFlag = actionFlag;
+    }
+    /**
+     * @return the serviceIFlag
+     */
+    public boolean isServiceIFlag() {
+        return serviceIFlag;
+    }
+    /**
+     * @param serviceIFlag the serviceIFlag to set
+     */
+    public void setServiceIFlag(boolean serviceIFlag) {
+        this.serviceIFlag = serviceIFlag;
+    }
+    /**
+     * @return the entityFlag
+     */
+    public boolean isEntityFlag() {
+        return entityFlag;
+    }
+    /**
+     * @param entityFlag the entityFlag to set
+     */
+    public void setEntityFlag(boolean entityFlag) {
+        this.entityFlag = entityFlag;
+    }
+    /**
+     * @return the pageFlag
+     */
+    public boolean isPageFlag() {
+        return pageFlag;
+    }
+    /**
+     * @param pageFlag the pageFlag to set
+     */
+    public void setPageFlag(boolean pageFlag) {
+        this.pageFlag = pageFlag;
+    }
+    /**
+     * @return the serviceImplFlag
+     */
+    public boolean isServiceImplFlag() {
+        return serviceImplFlag;
+    }
+    /**
+     * @param serviceImplFlag the serviceImplFlag to set
+     */
+    public void setServiceImplFlag(boolean serviceImplFlag) {
+        this.serviceImplFlag = serviceImplFlag;
+    }
+    /**
+     * @return the jspFlag
+     */
+    public boolean isJspFlag() {
+        return jspFlag;
+    }
+    /**
+     * @param jspFlag the jspFlag to set
+     */
+    public void setJspFlag(boolean jspFlag) {
+        this.jspFlag = jspFlag;
+    }
+    /**
+     * @return the jspMode
+     */
+    public String getJspMode() {
+        return jspMode;
+    }
+    /**
+     * @param jspMode the jspMode to set
+     */
+    public void setJspMode(String jspMode) {
+        this.jspMode = jspMode;
+    }
+}

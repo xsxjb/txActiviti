@@ -18,6 +18,12 @@ import com.tx.codeGenerate.code.Columnt;
 import com.tx.codeGenerate.util.CodeResourceUtil;
 import com.tx.codeGenerate.util.TableConvert;
 
+/**
+ * JSP通用数据文件
+ * 
+ * @author JiangBo
+ * 
+ */
 public class DbFiledToJspUtil {
 
     private static final Log a_org_apache_commons_logging_Log_static_fld = LogFactory.getLog(DbFiledToJspUtil.class);
@@ -41,8 +47,14 @@ public class DbFiledToJspUtil {
         }
     }
 
-    public List readTableColumn(String s) {
-        ArrayList arraylist = new ArrayList();
+    /**
+     * 读取指定表名的表字段List
+     * 
+     * @param s
+     * @return
+     */
+    public List<Columnt> readTableColumn(String s) {
+        ArrayList<Columnt> arraylist = new ArrayList<Columnt>();
         try {
             Class.forName(CodeResourceUtil.DIVER_NAME);
             a_java_sql_Connection_fld = DriverManager.getConnection(CodeResourceUtil.URL, CodeResourceUtil.USERNAME,
@@ -143,17 +155,23 @@ public class DbFiledToJspUtil {
             }
         } catch (SQLException sqlexception2) {
         }
-        ArrayList arraylist1 = new ArrayList();
+        ArrayList<Columnt> arraylist1 = new ArrayList<Columnt>();
         for (int k = arraylist.size() - 1; k >= 0; k--) {
-            Columnt columnt1 = (Columnt) arraylist.get(k);
+            Columnt columnt1 = arraylist.get(k);
             arraylist1.add(columnt1);
         }
 
         return arraylist1;
     }
 
-    public List readOriginalTableColumn(String s) {
-        ArrayList arraylist = new ArrayList();
+    /**
+     * 读取表字段List(原值)
+     * 
+     * @param s
+     * @return
+     */
+    public List<Columnt> readOriginalTableColumn(String s) {
+        ArrayList<Columnt> arraylist = new ArrayList<Columnt>();
         try {
             Class.forName(CodeResourceUtil.DIVER_NAME);
             a_java_sql_Connection_fld = DriverManager.getConnection(CodeResourceUtil.URL, CodeResourceUtil.USERNAME,

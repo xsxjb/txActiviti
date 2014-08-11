@@ -18,12 +18,15 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-// Referenced classes of package com.code.generate:
-//            ICallBack
-
+/**
+ * 代码生成工厂类
+ * 
+ * @author JiangBo
+ *
+ */
 public class CodeFactory {
 
-    private ICallBack a;
+    private ICallBack callBack;
 
     public CodeFactory() {
     }
@@ -38,18 +41,25 @@ public class CodeFactory {
         return configuration;
     }
 
-    public void generateFile(String s, String s1, Map map) {
+    /**
+     * 生成文件
+     * 
+     * @param templateName
+     * @param type
+     * @param data
+     */
+    public void generateFile(String templateName, String type, Map<String, Object> data) {
         try {
-            String s2 = map.get("entityPackage").toString();
-            String s3 = map.get("entityName").toString();
-            String s4 = getCodePath(s1, s2, s3);
-            String s5 = StringUtils.substringBeforeLast(s4, "/");
-            Template template = getConfiguration().getTemplate(s);
-            FileUtils.forceMkdir(new File((new StringBuilder(String.valueOf(s5))).append("/").toString()));
-            OutputStreamWriter outputstreamwriter = new OutputStreamWriter(new FileOutputStream(s4),
+            String entityPackage = data.get("entityPackage").toString();
+            String entityName = data.get("entityName").toString();
+            String fileNamePath = getCodePath(type, entityPackage, entityName);
+            String fileDir = StringUtils.substringBeforeLast(fileNamePath, "/");
+            Template template = getConfiguration().getTemplate(templateName);
+            FileUtils.forceMkdir(new File(fileDir + "/"));
+            OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(fileNamePath),
                     CodeResourceUtil.SYSTEM_ENCODING);
-            template.process(map, outputstreamwriter);
-            outputstreamwriter.close();
+            template.process(data, out);
+            out.close();
         } catch (TemplateException templateexception) {
             templateexception.printStackTrace();
         } catch (IOException ioexception) {
@@ -58,76 +68,104 @@ public class CodeFactory {
     }
 
     public static String getProjectPath() {
-        String s = (new StringBuilder(String.valueOf(System.getProperty("user.dir").replace("\\", "/")))).append("/")
-                .toString();
-        return s;
+        String path = System.getProperty("user.dir").replace("\\", "/") + "/";
+        return path;
     }
 
+    /**
+     * 取得类路径
+     * 
+     * @return
+     */
     public String getClassPath() {
-        String s = Thread.currentThread().getContextClassLoader().getResource("./").getPath();
-        return s;
+        String path = Thread.currentThread().getContextClassLoader().getResource("./").getPath();
+        return path;
     }
 
+    /**
+     * main方法
+     * 
+     * @param args
+     */
     public static void main(String args[]) {
         System.out.println(getProjectPath());
     }
 
+    /**
+     * 取得模板路径
+     * 
+     * @return
+     */
     public String getTemplatePath() {
-        String s = (new StringBuilder(String.valueOf(getClassPath()))).append(CodeResourceUtil.TEMPLATEPATH).toString();
-        return s;
+        String path = getClassPath() + CodeResourceUtil.TEMPLATEPATH;
+        return path;
     }
 
-    public String getCodePath(String s, String s1, String s2) {
-        String s3 = getProjectPath();
-        StringBuilder stringbuilder = new StringBuilder();
-        if (StringUtils.isNotBlank(s)) {
-            String s4 = CodeType.valueOf(s).getValue();
-            stringbuilder.append(s3);
-            if ("jsp".equals(s))
-                stringbuilder.append(CodeResourceUtil.JSPPATH);
-            else
-                stringbuilder.append(CodeResourceUtil.CODEPATH);
-            // 判断相等(忽略大小写)
-            if ("Action".equalsIgnoreCase(s4)) {
-                stringbuilder.append(StringUtils.lowerCase("action"));
-            } else if ("ServiceImpl".equalsIgnoreCase(s4)) {
-                stringbuilder.append(StringUtils.lowerCase("service/impl"));
-            } else if ("ServiceI".equalsIgnoreCase(s4)) {
-                stringbuilder.append(StringUtils.lowerCase("service"));
-            } else {
-                stringbuilder.append(StringUtils.lowerCase(s4));
+    /**
+     * 取得代码路径
+     * 
+     * @return
+     */
+    public String getCodePath(String type, String entityPackage, String entityName) {
+        String path = getProjectPath();
+        StringBuilder str = new StringBuilder();
+        if (StringUtils.isNotBlank(type)) {
+            String codeType = CodeType.valueOf(type).getValue();
+            str.append(path);
+            // JSP文件路径
+            if (("jsp".equals(type)) || ("jspList".equals(type))) {
+                str.append(CodeResourceUtil.JSPPATH);
             }
-            stringbuilder.append("/");
-            stringbuilder.append(StringUtils.lowerCase(s1));
-            stringbuilder.append("/");
-            if ("jsp".equals(s)) {
-                String s5 = StringUtils.capitalize(s2);
-                stringbuilder.append(CodeStringUtils.getInitialSmall(s5));
-                stringbuilder.append(s4);
-                stringbuilder.append(".jsp");
+            else {
+                str.append(CodeResourceUtil.CODEPATH);
+            }
+            // 判断相等(忽略大小写)
+            if ("Action".equalsIgnoreCase(codeType)) {
+                str.append(StringUtils.lowerCase("action"));
+            } else if ("ServiceImpl".equalsIgnoreCase(codeType)) {
+                str.append(StringUtils.lowerCase("service/impl"));
+            } else if ("ServiceI".equalsIgnoreCase(codeType)) {
+                str.append(StringUtils.lowerCase("service"));
+            } else if (!"List".equalsIgnoreCase(codeType)) {
+                str.append(StringUtils.lowerCase(codeType));
+            }
+            str.append("/");
+            str.append(StringUtils.lowerCase(entityPackage));
+            str.append("/");
+            if ("jsp".equals(type) || ("jspList".equals(type))) {
+                String jspName = StringUtils.capitalize(entityName);
+                str.append(CodeStringUtils.getInitialSmall(jspName));
+                str.append(codeType);
+                str.append(".jsp");
             } else {
-                stringbuilder.append(StringUtils.capitalize(s2));
-                stringbuilder.append(s4);
-                stringbuilder.append(".java");
+                str.append(StringUtils.capitalize(entityName));
+                str.append(codeType);
+                str.append(".java");
             }
         } else {
             throw new IllegalArgumentException("type is null");
         }
-        return stringbuilder.toString();
+        return str.toString();
     }
 
-    public void invoke(String s, String s1) {
-        Object obj = new HashMap();
-        obj = a.execute();
-        generateFile(s, s1, ((Map) (obj)));
+    /**
+     * invoke
+     * 
+     * @param templateFileName
+     * @param type
+     */
+    public void invoke(String templateFileName, String type) {
+        Map<String, Object> data = new HashMap<String, Object>();
+        data = callBack.execute();
+        generateFile(templateFileName, type, data);
     }
 
     public ICallBack getCallBack() {
-        return a;
+        return callBack;
     }
 
     public void setCallBack(ICallBack icallback) {
-        a = icallback;
+        callBack = icallback;
     }
 
     /**
@@ -137,25 +175,32 @@ public class CodeFactory {
      *
      */
     public enum CodeType {
-        //注：枚举写在最前面，否则编译出错
-        serviceImpl("serviceImpl", 0, "ServiceImpl"), dao("dao", 1, "Dao"), service("service", 2, "ServiceI"), action("action", 3, "Action"), page("page", 4, "Page"), entity("entity", 5, "Entity"), jsp("jsp", 6, ""), comparator("comparator", 7, "Comparator");
-        // 成员变量  
-        private String name;  
-        private int index; 
-        private String value;
-        private static final CodeType codeTypes[];
-        static {
-            codeTypes = (new CodeType[] {serviceImpl, dao, service, action, page, entity, jsp, comparator });
+        serviceImpl("ServiceImpl"), service("ServiceI"), controller("Controller"), page("Page"), entity("Entity"), jsp(""), jspList("List");
+        // 成员变量 
+        private String type;
+
+        private CodeType(String type) {
+            this.type = type;
         }
         public String getValue() {
-            return value;
+            return this.type;
         }
-        // 构造方法  
-        private CodeType(String name, int index, String value) {
-            this.name = name;
-            this.index = index;
-            this.value = value;
-        }
+//        private String name;  
+//        private int index; 
+//        private String value;
+//        private static final CodeType codeTypes[];
+//        static {
+//            codeTypes = (new CodeType[] {serviceImpl, dao, service, action, page, entity, jsp, comparator });
+//        }
+//        public String getValue() {
+//            return value;
+//        }
+//        // 构造方法  
+//        private CodeType(String name, int index, String value) {
+//            this.name = name;
+//            this.index = index;
+//            this.value = value;
+//        }
     }
 }
 

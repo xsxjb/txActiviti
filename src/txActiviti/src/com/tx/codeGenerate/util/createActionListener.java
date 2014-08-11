@@ -16,11 +16,12 @@ import com.tx.codeGenerate.code.DbEntity.DbFiledToJspUtil;
 import com.tx.codeGenerate.code.generate.CodeGenerate;
 import com.tx.codeGenerate.code.generate.window.CodeWindow;
 import com.tx.codeGenerate.code.generate.window.CreateFileProperty;
+
 /**
  * 自动代码生成器windows页面退出按钮,退出事件监听器
  * 
  * @author JiangBo
- *
+ * 
  */
 public final class createActionListener implements ActionListener {
     private JLabel titleInfo_JLabel;
@@ -40,14 +41,14 @@ public final class createActionListener implements ActionListener {
     private JCheckBox page_CheckBox;
     private JCheckBox entity_CheckBox;
 
-    public createActionListener(CodeWindow paramCodeWindow,
-            JTextField packageName_TextField, JLabel titleInfo_JLabel,
-            JTextField entity_TextField, JTextField tableNameRemark_TextField,
-            JTextField tableName_TextField, JTextField rowNumber_TextField,
-            JComboBox keyType_ComboBox, JTextField keySequence_TextField, 
-            JRadioButton jspDetail_RadioButton, JRadioButton jspRow_RadioButton,
-            JCheckBox action_CheckBox, JCheckBox jsp_CheckBox,
-            JCheckBox serviceI_CheckBox, JCheckBox serviceImpl_CheckBox,
+    /**
+     * 构造函数
+     */
+    public createActionListener(CodeWindow paramCodeWindow, JTextField packageName_TextField, JLabel titleInfo_JLabel,
+            JTextField entity_TextField, JTextField tableNameRemark_TextField, JTextField tableName_TextField,
+            JTextField rowNumber_TextField, JComboBox keyType_ComboBox, JTextField keySequence_TextField,
+            JRadioButton jspDetail_RadioButton, JRadioButton jspRow_RadioButton, JCheckBox action_CheckBox,
+            JCheckBox jsp_CheckBox, JCheckBox serviceI_CheckBox, JCheckBox serviceImpl_CheckBox,
             JCheckBox page_CheckBox, JCheckBox entity_CheckBox) {
         this.titleInfo_JLabel = titleInfo_JLabel;
         this.packageName_TextField = packageName_TextField;
@@ -67,8 +68,9 @@ public final class createActionListener implements ActionListener {
         this.entity_CheckBox = entity_CheckBox;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Action输入验证证
+     */
     public void actionPerformed(ActionEvent actionEvent) {
         if (StringUtils.isBlank(this.packageName_TextField.getText())) {
             this.titleInfo_JLabel.setForeground(Color.red);
@@ -90,7 +92,8 @@ public final class createActionListener implements ActionListener {
             this.titleInfo_JLabel.setText("表名不能为空！");
             return;
         }
-        if ("sequence".equals(this.keyType_ComboBox.getSelectedItem().toString()) && StringUtils.isBlank(this.keySequence_TextField.getText())) {
+        if ("sequence".equals(this.keyType_ComboBox.getSelectedItem().toString())
+                && StringUtils.isBlank(this.keySequence_TextField.getText())) {
             this.titleInfo_JLabel.setForeground(Color.red);
             this.titleInfo_JLabel.setText("主键生成策略为sequence时，序列号不能为空！");
             return;
@@ -113,13 +116,15 @@ public final class createActionListener implements ActionListener {
         if (this.entity_CheckBox.isSelected())
             localCreateFileProperty.setEntityFlag(true);
         try {
+            // 如果表中有输入表名的表存在
             boolean bool = new DbFiledToJspUtil().checkTableExist(this.tableName_TextField.getText());
             if (bool) {
-                new CodeGenerate(
-                        this.packageName_TextField.getText(), this.entity_TextField.getText(), 
-                        this.tableName_TextField.getText(), this.tableNameRemark_TextField.getText(), 
-                        localCreateFileProperty, Integer.parseInt(this.rowNumber_TextField.getText()), this.keyType_ComboBox.getSelectedItem().toString(), 
-                        this.keySequence_TextField.getText()).generateToFile();
+                // 自动生成Java，JSP代码
+                new CodeGenerate(this.packageName_TextField.getText(), this.entity_TextField.getText(),
+                        this.tableName_TextField.getText(), this.tableNameRemark_TextField.getText(),
+                        localCreateFileProperty, Integer.parseInt(this.rowNumber_TextField.getText()),
+                        this.keyType_ComboBox.getSelectedItem().toString(), this.keySequence_TextField.getText())
+                        .generateToFile();
                 this.titleInfo_JLabel.setForeground(Color.red);
                 this.titleInfo_JLabel.setText("成功生成增删改查->功能：" + this.tableNameRemark_TextField.getText());
             } else {

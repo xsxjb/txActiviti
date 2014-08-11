@@ -1,4 +1,4 @@
-package ${bussiPackage}.page.${entityPackage};
+package com.tx.${bussiPackage}.page.${entityPackage};
 
 import java.math.BigDecimal;
 import java.util.Date;

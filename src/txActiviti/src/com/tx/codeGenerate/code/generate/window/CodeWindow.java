@@ -26,43 +26,46 @@ public class CodeWindow extends JFrame {
      * serialVersionUID
      */
     private static final long serialVersionUID = 1L;
-    private static String jdField_a_of_type_JavaLangString = "test";
-    private static String b = "TestEntity";
-    private static String c = "t00_company";
-    private static String d = "分公司";
-    private static int jdField_a_of_type_Int = 1;
-    private static String e = "uuid";
-    private static String f = "";
-    String[] jdField_a_of_type_ArrayOfJavaLangString = {
-            "uuid", "identity", "sequence" };
+    // 行字段数目
+    private static int rowNumberInt = 1;
+    // 主键生成策略
+    String[] keyTypes = {"uuid", "identity", "sequence" };
 
+    /**
+     * 构造函数
+     */
     public CodeWindow() {
         JPanel localJPanel = new JPanel();
         setContentPane(localJPanel);
         localJPanel.setLayout(new GridLayout(14, 2));
-        JLabel title_Label = new JLabel("提示:");
-        JLabel titleInfo_JLabel = new JLabel();
-        JLabel packageName_Label = new JLabel("包名（小写）：");
-        JTextField packageName_TextField = new JTextField("tx");
-        JLabel entity_JLabel = new JLabel("实体类名（首字母大写）：");
-        JTextField entity_TextField = new JTextField("TxTest");
-        JLabel tableName_JLabel = new JLabel("表名：");
-        JTextField tableName_TextField = new JTextField(20);
+        JLabel infolbl = new JLabel("提示:");
+        JLabel showlbl = new JLabel();
+        JLabel packagebl = new JLabel("包名（小写）：");
+        JTextField packagefld = new JTextField("tx");
+        JLabel entitylbl = new JLabel("实体类名（首字母大写）：");
+        JTextField entityfld = new JTextField("TxTest");
+        JLabel tablejbl = new JLabel("表名：");
+        JTextField tablefld = new JTextField(20);
+        
         JLabel keyType_Label = new JLabel("主键生成策略：");
-        JComboBox keyType_ComboBox = new JComboBox(this.jdField_a_of_type_ArrayOfJavaLangString);
+        JComboBox keyType_ComboBox = new JComboBox(this.keyTypes);
         JLabel keySequence_Label = new JLabel("主键SEQUENCE：(oracle序列名)");
         JTextField keySequence_TextField = new JTextField(20);
-        JLabel tableNameRemark_Label = new JLabel("功能描述：");
-        JTextField tableNameRemark_TextField = new JTextField("tx_test1");
-        JLabel rowNumber_Label = new JLabel("行字段数目：");
-        JTextField rowNumber_TextField = new JTextField();
-        rowNumber_TextField.setText(String.valueOf(jdField_a_of_type_Int));
+        
+        JLabel titlelbl = new JLabel("功能描述：");
+        JTextField titlefld = new JTextField("tx_test1");
+        
+        JLabel fieldRowNumlbl = new JLabel("行字段数目：");
+        JTextField fieldRowNumfld = new JTextField();
+        fieldRowNumfld.setText(String.valueOf(rowNumberInt));
+        
         ButtonGroup localButtonGroup = new ButtonGroup();
-        JRadioButton jspDetail_RadioButton = new JRadioButton("JSP详细页面编辑模板");
-        jspDetail_RadioButton.setSelected(true);
-        JRadioButton jspRow_RadioButton = new JRadioButton("JSP行编辑模板");
-        localButtonGroup.add(jspDetail_RadioButton);
-        localButtonGroup.add(jspRow_RadioButton);
+        JRadioButton jsp = new JRadioButton("Table风格(form)");
+        jsp.setSelected(true);
+        JRadioButton jsp_row = new JRadioButton("Div风格(form)");
+        localButtonGroup.add(jsp);
+        localButtonGroup.add(jsp_row);
+        
         JCheckBox action_CheckBox = new JCheckBox("Action");
         action_CheckBox.setSelected(true);
         JCheckBox jsp_CheckBox = new JCheckBox("Jsp");
@@ -73,41 +76,43 @@ public class CodeWindow extends JFrame {
         serviceImpl_CheckBox.setSelected(true);
         JCheckBox page_CheckBox = new JCheckBox("Page");
         page_CheckBox.setSelected(true);
-        JCheckBox entity_CheckBox = new JCheckBox("Entity");
-        entity_CheckBox.setSelected(true);
-        localJPanel.add(title_Label);
-        localJPanel.add(titleInfo_JLabel);
-        localJPanel.add(packageName_Label);
-        localJPanel.add(packageName_TextField);
-        localJPanel.add(entity_JLabel);
-        localJPanel.add(entity_TextField);
-        localJPanel.add(tableName_JLabel);
-        localJPanel.add(tableName_TextField);
+        JCheckBox entityButton = new JCheckBox("Entity");
+        entityButton.setSelected(true);
+        
+        localJPanel.add(infolbl);
+        localJPanel.add(showlbl);
+        localJPanel.add(packagebl);
+        localJPanel.add(packagefld);
+        localJPanel.add(entitylbl);
+        localJPanel.add(entityfld);
+        localJPanel.add(tablejbl);
+        localJPanel.add(tablefld);
         localJPanel.add(keyType_Label);
         localJPanel.add(keyType_ComboBox);
         localJPanel.add(keySequence_Label);
         localJPanel.add(keySequence_TextField);
-        localJPanel.add(tableNameRemark_Label);
-        localJPanel.add(tableNameRemark_TextField);
-        localJPanel.add(rowNumber_Label);
-        localJPanel.add(rowNumber_TextField);
+        localJPanel.add(titlelbl);
+        localJPanel.add(titlefld);
+        localJPanel.add(fieldRowNumlbl);
+        localJPanel.add(fieldRowNumfld);
         localJPanel.add(action_CheckBox);
         localJPanel.add(jsp_CheckBox);
         localJPanel.add(serviceI_CheckBox);
         localJPanel.add(serviceImpl_CheckBox);
         localJPanel.add(page_CheckBox);
-        localJPanel.add(entity_CheckBox);
-        localJPanel.add(jspDetail_RadioButton);
-        localJPanel.add(jspRow_RadioButton);
+        localJPanel.add(entityButton);
+        localJPanel.add(jsp);
+        localJPanel.add(jsp_row);
         // 自动代码生成按钮
         JButton createButton = new JButton("生成");
-        createButton.addActionListener(new createActionListener(this, packageName_TextField, titleInfo_JLabel, entity_TextField, tableNameRemark_TextField,
-                tableName_TextField, rowNumber_TextField, keyType_ComboBox, keySequence_TextField, jspDetail_RadioButton,
-                jspRow_RadioButton, action_CheckBox, jsp_CheckBox, serviceI_CheckBox, serviceImpl_CheckBox,
-                page_CheckBox, entity_CheckBox));
+        createButton.addActionListener(new createActionListener(this, packagefld, showlbl, entityfld, titlefld,
+                tablefld, fieldRowNumfld, keyType_ComboBox, keySequence_TextField, jsp,
+                jsp_row, action_CheckBox, jsp_CheckBox, serviceI_CheckBox, serviceImpl_CheckBox,
+                page_CheckBox, entityButton));
         // 退出按钮
         JButton exitButton = new JButton("退出");
         exitButton.addActionListener(new exitActionListener(this));
+        
         localJPanel.add(createButton);
         localJPanel.add(exitButton);
         setTitle("代码生成器[单表模型]");

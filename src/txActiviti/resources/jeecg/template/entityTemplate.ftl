@@ -1,4 +1,4 @@
-package ${bussiPackage}.entity.${entityPackage};
+package com.tx.${bussiPackage}.entity.${entityPackage};
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 /**   
  * @Title: Entity
  * @Description: ${ftl_description}
- * @author zhangdaihao
+ * @author JiangBo
  * @date ${ftl_create_time}
  * @version V1.0   
  *
