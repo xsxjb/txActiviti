@@ -175,7 +175,7 @@ public class CodeFactory {
      *
      */
     public enum CodeType {
-        serviceImpl("ServiceImpl"), service("ServiceI"), controller("Controller"), page("Page"), entity("Entity"), jsp(""), jspList("List");
+        serviceImpl("ServiceImpl"), service("Service"), controller("Controller"), page("Page"), entity("Entity"), jsp(""), jspList("List");
         // 成员变量 
         private String type;
 
