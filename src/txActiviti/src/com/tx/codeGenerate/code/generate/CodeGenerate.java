@@ -149,7 +149,7 @@ public class CodeGenerate implements ICallBack {
         // JSP文件
         if (createFileProperty.isJspFlag()) {
             if ("01".equals(createFileProperty.getJspMode())) {
-                codeFactory.invoke("jspLineFeedTemplate.ftl", "jsp");
+                codeFactory.invoke("jspTemplate.ftl", "jsp");
             }
             if ("02".equals(createFileProperty.getJspMode())) {
                 codeFactory.invoke("jspRowEditTemplate.ftl", "jsp");

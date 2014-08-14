@@ -34,6 +34,7 @@
 	<bean id="applicationContextHelper" class="com.mossle.core.spring.ApplicationContextHelper"/>
 
 	<bean id="exportor" class="com.mossle.ext.export.CsvExportor"/>
+	<bean id="ibExportor" class="com.tx.common.export.IbCsvExportor"/>
 
 	<bean id="storeConnector" class="com.mossle.ext.store.FileStoreConnector">
 		<property name="baseDir" value="${store.baseDir}"/>

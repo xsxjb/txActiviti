@@ -1,4 +1,4 @@
-package com.tx.${bussiPackage}.entity.${entityPackage};
+package ${bussiPackage}.entity.${entityPackage};
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -16,14 +16,12 @@ import javax.persistence.SequenceGenerator;
  * @Title: Entity
  * @Description: ${ftl_description}
  * @author JiangBo
- * @date ${ftl_create_time}
- * @version V1.0   
  *
  */
 @Entity
-@Table(name = "${tableName}", schema = "")
-@SuppressWarnings("serial")
+@Table(name = "${tableName}")
 public class ${entityName}Entity implements java.io.Serializable {
+    private static final long serialVersionUID = 0L;
 	<#list originalColumns as po>
 	/**${po.filedComment}*/
 	private ${po.fieldType} ${po.fieldName};

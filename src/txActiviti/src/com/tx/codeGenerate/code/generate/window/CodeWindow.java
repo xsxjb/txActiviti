@@ -73,9 +73,9 @@ public class CodeWindow extends JFrame {
         JCheckBox serviceI_CheckBox = new JCheckBox("ServiceI");
         serviceI_CheckBox.setSelected(true);
         JCheckBox serviceImpl_CheckBox = new JCheckBox("ServiceImpl");
-        serviceImpl_CheckBox.setSelected(true);
+        serviceImpl_CheckBox.setSelected(false);
         JCheckBox page_CheckBox = new JCheckBox("Page");
-        page_CheckBox.setSelected(true);
+        page_CheckBox.setSelected(false);
         JCheckBox entityButton = new JCheckBox("Entity");
         entityButton.setSelected(true);
         

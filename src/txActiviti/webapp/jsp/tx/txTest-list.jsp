@@ -12,20 +12,20 @@
     <script type="text/javascript">
 		var config = {
 		    id: 'codeGrid',
-		    pageNo: ${"$" + "{page.pageNo}"},
-		    pageSize: ${"$" + "{page.pageSize}"},
-		    totalCount:${"$" + "{page.totalCount}"},
-		    resultSize: ${"$" + "{page.resultSize}"},
-		    pageCount: ${"$" + "{page.pageCount}"},
-		    orderBy: '${"$" + "{page.orderBy == null ? "+ "''" +" : page.orderBy}"}',
-		    asc: ${"$" + "{page.asc}"},
+		    pageNo: ${page.pageNo},
+		    pageSize: ${page.pageSize},
+		    totalCount:${page.totalCount},
+		    resultSize: ${page.resultSize},
+		    pageCount: ${page.pageCount},
+		    orderBy: '${page.orderBy == null ? '' : page.orderBy}',
+		    asc: ${page.asc},
 		    params: {
-		        'filter_LIKES_username': '${"$" + "{param.filter_LIKES_username}"}',
-		        'filter_EQI_status': '${"$" + "{param.filter_EQI_status}"}'
+		        'filter_LIKES_username': '${param.filter_LIKES_username}',
+		        'filter_EQI_status': '${param.filter_EQI_status}'
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm',
-			exportUrl: '${entityName?uncap_first}-export.do'
+			exportUrl: 'txTest-export.do'
 		};
 
 		var table;
@@ -52,14 +52,14 @@
 			  </div>
 			</header>
 	        <div id="userSearch" class="content content-inner">
-			  <form name="userForm" method="post" action="${entityName?uncap_first}-list.do" class="form-inline">
+			  <form name="userForm" method="post" action="txTest-list.do" class="form-inline">
 			    <label for="user_username"><spring:message code='user.user.list.search.username' text='账号'/>:</label>
-			    <input type="text" id="user_username" name="filter_LIKES_username" value="${'$' + '{param.filter_LIKES_username}'}">
+			    <input type="text" id="user_username" name="filter_LIKES_username" value="${param.filter_LIKES_username}">
 			    <label for="user_enabled"><spring:message code='user.user.list.search.status' text='状态'/>:</label>
 			    <select id="user_enabled" name="filter_EQI_status" class="input-mini">
 				  <option value=""></option>
-				  <option value="1" ${"$" + "{param.filter_EQI_status == 1 ? 'selected' : ''}"}><spring:message code='user.user.list.search.enabled.true' text='启用'/></option>
-				  <option value="0" ${"$" + "{param.filter_EQI_status == 0 ? 'selected' : ''}"}><spring:message code='user.user.list.search.enabled.false' text='禁用'/></option>
+				  <option value="1" ${param.filter_EQI_status == 1 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.true' text='启用'/></option>
+				  <option value="0" ${param.filter_EQI_status == 0 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.false' text='禁用'/></option>
 			    </select>
 				<button class="btn btn-small" onclick="document.userForm.submit()">查询</button>
 			  </form>
@@ -68,7 +68,7 @@
 		  <article class="m-blank">
 	    <div class="pull-left">
 		  <region:region-permission permission="user:create">
-		  <button class="btn btn-small a-insert" onclick="location.href='${entityName?uncap_first}-input.do'">新建</button>
+		  <button class="btn btn-small a-insert" onclick="location.href='txTest-input.do'">新建</button>
 		  </region:region-permission>
 		  <region:region-permission permission="user:delete">
 		  <button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
@@ -93,26 +93,24 @@
 			  <h4 class="title"><spring:message code="user.user.list.title" text="用户列表"/></h4>
 			</header>
 			<div class="content">
-					<form id="gridForm" name="gridForm" method='post' action="${entityName?uncap_first}-remove.do" class="m-form-blank">
+					<form id="gridForm" name="gridForm" method='post' action="txTest-remove.do" class="m-form-blank">
 					  <table id="codeGrid" class="m-table table-hover">
 					    <thead>
 					      <tr>
 					        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-						        <#list columns as po>
-						                <th class="sorting" name="${po.filedComment}">${po.filedComment}</th>
-						        </#list>
-					        <th width="80">${"&nbsp"};</th>
+						                <th class="sorting" name="name">name</th>
+						                <th class="sorting" name="no">no</th>
+					        <th width="80">&nbsp;</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					      <c:forEach items="${'$' + '{page.result}'}" var="item">
+					      <c:forEach items="${page.result}" var="item">
 					      <tr>
-					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
-					        <#list columns as po>
-						        <td>${"$" + "{item.${po.fieldName}}"}</td>
-					        </#list>
+					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+						        <td>${item.name}</td>
+						        <td>${item.no}</td>
 					        <td>
-					          <a href="${entityName?uncap_first}-input.do?id=${'$' + '{item.id}'}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+					          <a href="txTest-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>
 					      </tr>
 					      </c:forEach>
@@ -126,9 +124,9 @@
 			  共100条记录 显示1到10条记录
 			</div>
 			<div class="btn-group m-pagination pull-right">
-			  <button class="btn btn-small">${"&lt"};</button>
+			  <button class="btn btn-small">&lt;</button>
 			  <button class="btn btn-small">1</button>
-			  <button class="btn btn-small">${"&gt"};</button>
+			  <button class="btn btn-small">&gt;</button>
 			</div>
 		    <div class="m-clear"></div>
 	      </article>

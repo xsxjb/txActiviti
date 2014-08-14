@@ -1,143 +1,142 @@
-package com.tx.${bussiPackage}.controller.${entityPackage};
-import java.util.List;
+package ${bussiPackage}.controller.${entityPackage};
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import org.jeecgframework.core.common.controller.BaseController;
-import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
-import com.tx.common.model.json.AjaxJson;
-import com.tx.common.model.json.DataGrid;
-import org.jeecgframework.core.constant.Globals;
-import com.tx.common.util.StringUtil;
-import org.jeecgframework.tag.core.easyui.TagUtil;
-import org.jeecgframework.web.system.pojo.base.TSDepart;
-import com.tx.common.util.MyBeanUtils;
+import com.mossle.core.spring.MessageHelper;
+import com.tx.common.export.IbExportor;
+import com.tx.common.export.IbTableModel;
+import com.tx.common.hibernate.IbPropertyFilter;
+import com.tx.common.page.IbPage;
 
-import com.tx.${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
-import com.tx.${bussiPackage}.service.${entityPackage}.${entityName}Service;
+import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
+import ${bussiPackage}.service.${entityPackage}.${entityName}Service;
 
 /**   
  * @Title: Controller
  * @Description: ${ftl_description}
  * @author JiangBo
- * @date ${ftl_create_time}
- * @version V1.0   
  *
  */
 @Controller
-@RequestMapping("/${entityName?uncap_first}Controller")
+@RequestMapping("${entityName?uncap_first}")
 public class ${entityName}Controller {
-	/**
-	 * Logger for this class
-	 */
-	private static Logger logger = LoggerFactory.getLogger(${entityName}Controller.class);
 
-	@Autowired
-	private ${entityName}Service ${entityName?uncap_first}Service;
-	private String message;
-	
-	public String getMessage() {
-		return message;
-	}
+    private MessageHelper messageHelper;
+    private IbExportor exportor;
+    private ${entityName}Service ${entityName?uncap_first}Service;
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    @RequestMapping("${entityName?uncap_first}-list")
+    public String list(@ModelAttribute IbPage page, @RequestParam Map<String, Object> parameterMap, Model model) {
+        // 查询条件Filter过滤器
+        List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
+        // 根据条件查询数据
+        page = ${entityName?uncap_first}Service.getCommonDao().pagedQuery(page, propertyFilters);
+        model.addAttribute("page", page);
+        // 返回JSP
+        return "../jsp/${entityPackage}/${entityName?uncap_first}-list";
+    }
+    
+    /**
+     * 插入
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("${entityName?uncap_first}-input")
+    public String input(@RequestParam(value = "id", required = false) Long id, Model model) {
+        ${entityName}Entity entity = null;
+        if (id != null) {
+            entity = ${entityName?uncap_first}Service.getCommonDao().get(id);
+        } else {
+            entity = new ${entityName}Entity();
+        }
+        model.addAttribute("model", entity);
+        
+        return "../jsp/${entityPackage}/${entityName?uncap_first}-input";
+    }
+
+    /**
+     * 保存
+     * 
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("${entityName?uncap_first}-save")
+    public String save(@ModelAttribute ${entityName}Entity entity, RedirectAttributes redirectAttributes) throws Exception {
+        // 先进行校验
+        // 再进行数据复制
+        String id = entity.getId();
+        if (id != null) {
+            ${entityName?uncap_first}Service.update(entity);
+        } else {
+            ${entityName?uncap_first}Service.insert(entity);
+        }
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
+        return "redirect:/${entityPackage}/${entityName?uncap_first}-list.do";
+    }
+   /**
+     * 删除
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("${entityName?uncap_first}-remove")
+    public String remove(@RequestParam("selectedItem") List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+        List<${entityName}Entity> entitys = ${entityName?uncap_first}Service.getCommonDao().findByIds(selectedItem);
+        for (${entityName}Entity entity : entitys) {
+            ${entityName?uncap_first}Service.remove(entity);
+        }
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+
+        return "redirect:/${entityPackage}/${entityName?uncap_first}-list.do";
+    }
 
 
-	/**
-	 * ${ftl_description}列表 页面跳转
-	 * 
-	 * @return
-	 */
-	@RequestMapping(params = "${entityName?uncap_first}")
-	public ModelAndView ${entityName?uncap_first}(HttpServletRequest request) {
-		return new ModelAndView("${bussiPackage?replace(".","/")}/${entityPackage}/${entityName?uncap_first}List");
-	}
+    /**
+     * 导出Excel
+     * 
+     * @param page
+     * @param parameterMap
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("${entityName?uncap_first}-export")
+    public void export(@ModelAttribute IbPage page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) throws Exception {
+        List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
+        page = ${entityName?uncap_first}Service.getCommonDao().pagedQuery(page, propertyFilters);
+        IbTableModel tableModel = new IbTableModel();
+        tableModel.setName("导出${tableName}");
+        // 
+        tableModel.addHeaders("id");
+        tableModel.setData((List) page.getResult());
+        exportor.export(response, tableModel);
+    }
+    
+    // ======================================================================
+    @Resource
+    public void setMessageHelper(MessageHelper messageHelper) {
+        this.messageHelper = messageHelper;
+    }
 
-	/**
-	 * easyui AJAX请求数据
-	 * 
-	 * @param request
-	 * @param response
-	 * @param dataGrid
-	 * @param user
-	 */
+    @Resource
+    public void setIbExportor(IbExportor exportor) {
+        this.exportor = exportor;
+    }
 
-	@RequestMapping(params = "datagrid")
-	public void datagrid(${entityName}Entity ${entityName?uncap_first},HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-//		CriteriaQuery cq = new CriteriaQuery(${entityName}Entity.class, dataGrid);
-//		//查询条件组装器
-//		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, ${entityName?uncap_first}, request.getParameterMap());
-//		this.${entityName?uncap_first}Service.getDataGridReturn(cq, true);
-//		TagUtil.datagrid(response, dataGrid);
-	}
-
-	/**
-	 * 删除${ftl_description}
-	 * 
-	 * @return
-	 */
-	@RequestMapping(params = "del")
-	@ResponseBody
-	public AjaxJson del(${entityName}Entity ${entityName?uncap_first}, HttpServletRequest request) {
-		AjaxJson j = new AjaxJson();
-		message = "${ftl_description}删除成功";
-		${entityName?uncap_first}Service.delete(${entityName?uncap_first});
-		
-		j.setMsg(message);
-		return j;
-	}
-
-
-	/**
-	 * 添加${ftl_description}
-	 * 
-	 * @param ids
-	 * @return
-	 */
-	@RequestMapping(params = "save")
-	@ResponseBody
-	public AjaxJson save(${entityName}Entity ${entityName?uncap_first}, HttpServletRequest request) {
-		AjaxJson j = new AjaxJson();
-		if (StringUtil.isNotEmpty(${entityName?uncap_first}.getId())) {
-			message = "${ftl_description}更新成功";
-			${entityName}Entity t = ${entityName?uncap_first}Service.get(${entityName}Entity.class, ${entityName?uncap_first}.getId());
-			try {
-				MyBeanUtils.copyBeanNotNull2Bean(${entityName?uncap_first}, t);
-				${entityName?uncap_first}Service.saveOrUpdate(t);
-			} catch (Exception e) {
-				e.printStackTrace();
-				message = "${ftl_description}更新失败";
-			}
-		} else {
-			message = "${ftl_description}添加成功";
-			${entityName?uncap_first}Service.save(${entityName?uncap_first});
-		}
-		j.setMsg(message);
-		return j;
-	}
-
-	/**
-	 * ${ftl_description}列表页面跳转
-	 * 
-	 * @return
-	 */
-	@RequestMapping(params = "addorupdate")
-	public ModelAndView addorupdate(${entityName}Entity ${entityName?uncap_first}, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(${entityName?uncap_first}.getId())) {
-			${entityName?uncap_first} = ${entityName?uncap_first}Service.getEntity(${entityName}Entity.class, ${entityName?uncap_first}.getId());
-			req.setAttribute("${entityName?uncap_first}Page", ${entityName?uncap_first});
-		}
-		return new ModelAndView("${bussiPackage?replace(".","/")}/${entityPackage}/${entityName?uncap_first}");
-	}
+    @Resource
+    public void set${entityName}Service(${entityName}Service ${entityName?uncap_first}Service) {
+        this.${entityName?uncap_first}Service = ${entityName?uncap_first}Service;
+    }
+    
 }

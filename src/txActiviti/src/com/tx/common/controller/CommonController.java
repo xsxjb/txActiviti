@@ -1,4 +1,4 @@
-package ${bussiPackage}.controller.${entityPackage};
+package com.tx.common.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -14,56 +14,49 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mossle.core.spring.MessageHelper;
+import com.tx.common.entity.CommonEntity;
 import com.tx.common.export.IbExportor;
 import com.tx.common.export.IbTableModel;
 import com.tx.common.hibernate.IbPropertyFilter;
 import com.tx.common.page.IbPage;
+import com.tx.common.service.CommonService;
 
-import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
-import ${bussiPackage}.service.${entityPackage}.${entityName}Service;
-
-/**   
- * @Title: Controller
- * @Description: ${ftl_description}
- * @author JiangBo
- *
- */
 @Controller
-@RequestMapping("${entityName?uncap_first}")
-public class ${entityName}Controller {
-
+@RequestMapping("common")
+public class CommonController {
     private MessageHelper messageHelper;
     private IbExportor exportor;
-    private ${entityName}Service ${entityName?uncap_first}Service;
+    private CommonService commonService;
 
-    @RequestMapping("${entityName?uncap_first}-list")
+    @RequestMapping("common-list")
     public String list(@ModelAttribute IbPage page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
         // 根据条件查询数据
-        page = ${entityName?uncap_first}Service.getCommonDao().pagedQuery(page, propertyFilters);
+        page = commonService.getCommonDao().pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "../jsp/${entityPackage}/${entityName?uncap_first}-list";
+        return "../jsp/common/common-list";
     }
-    
+
     /**
      * 插入
      * @param id
      * @param model
      * @return
      */
-    @RequestMapping("${entityName?uncap_first}-input")
-    public String input(@RequestParam(value = "id", required = false) Long id, Model model) {
-        ${entityName}Entity entity = null;
+    @RequestMapping("common-input")
+    public String input(@RequestParam(value = "id", required = false)
+    Long id, Model model) {
+        CommonEntity commonEntity = null;
         if (id != null) {
-            entity = ${entityName?uncap_first}Service.getCommonDao().get(id);
+            commonEntity = commonService.getCommonDao().get(id);
         } else {
-            entity = new ${entityName}Entity();
+            commonEntity = new CommonEntity();
         }
-        model.addAttribute("model", entity);
+        model.addAttribute("model", commonEntity);
         
-        return "../jsp/${entityPackage}/${entityName?uncap_first}-input";
+        return "../jsp/common/common-input";
     }
 
     /**
@@ -72,34 +65,35 @@ public class ${entityName}Controller {
      * @return
      * @throws Exception
      */
-    @RequestMapping("${entityName?uncap_first}-save")
-    public String save(@ModelAttribute ${entityName}Entity entity, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("common-save")
+    public String save(@ModelAttribute CommonEntity commonEntity, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         // 再进行数据复制
-        String id = entity.getId();
+        Long id = commonEntity.getId();
         if (id != null) {
-            ${entityName?uncap_first}Service.update(entity);
+            commonService.update(commonEntity);
         } else {
-            ${entityName?uncap_first}Service.insert(entity);
+            commonService.insert(commonEntity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/${entityPackage}/${entityName?uncap_first}-list.do";
+        return "redirect:/common/common-list.do";
     }
-   /**
+
+    /**
      * 删除
      * @param selectedItem
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("${entityName?uncap_first}-remove")
+    @RequestMapping("common-remove")
     public String remove(@RequestParam("selectedItem") List<Long> selectedItem, RedirectAttributes redirectAttributes) {
-        List<${entityName}Entity> entitys = ${entityName?uncap_first}Service.getCommonDao().findByIds(selectedItem);
-        for (${entityName}Entity entity : entitys) {
-            ${entityName?uncap_first}Service.remove(entity);
+        List<CommonEntity> commonEntitys = commonService.getCommonDao().findByIds(selectedItem);
+        for (CommonEntity commonEntity : commonEntitys) {
+            commonService.remove(commonEntity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/${entityPackage}/${entityName?uncap_first}-list.do";
+        return "redirect:/common/common-list.do";
     }
 
 
@@ -111,18 +105,17 @@ public class ${entityName}Controller {
      * @param response
      * @throws Exception
      */
-    @RequestMapping("${entityName?uncap_first}-export")
+    @RequestMapping("common-export")
     public void export(@ModelAttribute IbPage page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) throws Exception {
         List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
-        page = ${entityName?uncap_first}Service.getCommonDao().pagedQuery(page, propertyFilters);
+        page = commonService.getCommonDao().pagedQuery(page, propertyFilters);
         IbTableModel tableModel = new IbTableModel();
-        tableModel.setName("导出${tableName}");
-        // 
-        tableModel.addHeaders("id");
+        tableModel.setName("commonEntity");
+        tableModel.addHeaders("id", "username", "status");
         tableModel.setData((List) page.getResult());
         exportor.export(response, tableModel);
     }
-    
+
     // ======================================================================
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
@@ -135,8 +128,7 @@ public class ${entityName}Controller {
     }
 
     @Resource
-    public void set${entityName}Service(${entityName}Service ${entityName?uncap_first}Service) {
-        this.${entityName?uncap_first}Service = ${entityName?uncap_first}Service;
+    public void setCommonService(CommonService commonService) {
+        this.commonService = commonService;
     }
-    
 }
