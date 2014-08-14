@@ -14,21 +14,15 @@ import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
  * @author JiangBo
  *
  */
-public class ${entityName}Service {
-
-    /**
-     * 实例化DAO
-     */
-    @Autowired  
-    @Qualifier("commonDao")  
-	public CommonDao<${entityName}Entity> commonDao = null;
-	
+@Service
+@Transactional
+public class ${entityName}Service extends CommonDao<${entityName}Entity> {
 	/**
      * 更新
      * @param entity
      */
     public <T> void update(T entity) {
-        commonDao.save(entity);
+        save(entity);
     }
 
     /**
@@ -36,30 +30,13 @@ public class ${entityName}Service {
      * @param entity
      */
     public <T> void insert(T entity) {
-        commonDao.save(entity);
+        saveInsert(entity);
     }
     /**
      * 删除
      * @param entity
      */
-    public <T> void remove(T entity) {
-        commonDao.remove(entity);
-
-    }
-    /**
-     * 设置DAO
-     * @param dao the DAO to set
-     */
-    @Autowired(required= false) 
-    public void setCommonDao(CommonDao<${entityName}Entity> commonDao) {
-        this.commonDao = commonDao;
-    }
-
-    /**
-     * 取得DAO
-     * @return the commonDao
-     */
-    public CommonDao<${entityName}Entity> getCommonDao() {
-        return commonDao;
+    public void remove(${entityName}Entity entity) {
+        remove(entity);
     }
 }

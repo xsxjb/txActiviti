@@ -18,6 +18,7 @@ import com.tx.common.export.IbExportor;
 import com.tx.common.export.IbTableModel;
 import com.tx.common.hibernate.IbPropertyFilter;
 import com.tx.common.page.IbPage;
+import com.tx.common.util.CommonUtils;
 
 import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
 import ${bussiPackage}.service.${entityPackage}.${entityName}Service;
@@ -41,10 +42,10 @@ public class ${entityName}Controller {
         // 查询条件Filter过滤器
         List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
         // 根据条件查询数据
-        page = ${entityName?uncap_first}Service.getCommonDao().pagedQuery(page, propertyFilters);
+        page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "../jsp/${entityPackage}/${entityName?uncap_first}-list";
+        return "../jsp/codebpm/${entityPackage}/${entityName?uncap_first}-list";
     }
     
     /**
@@ -54,16 +55,16 @@ public class ${entityName}Controller {
      * @return
      */
     @RequestMapping("${entityName?uncap_first}-input")
-    public String input(@RequestParam(value = "id", required = false) Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         ${entityName}Entity entity = null;
-        if (id != null) {
-            entity = ${entityName?uncap_first}Service.getCommonDao().get(id);
+        if (!CommonUtils.isNull(id)) {
+            entity = ${entityName?uncap_first}Service.get(id);
         } else {
             entity = new ${entityName}Entity();
         }
         model.addAttribute("model", entity);
         
-        return "../jsp/${entityPackage}/${entityName?uncap_first}-input";
+        return "../jsp/codebpm/${entityPackage}/${entityName?uncap_first}-input";
     }
 
     /**
@@ -77,13 +78,14 @@ public class ${entityName}Controller {
         // 先进行校验
         // 再进行数据复制
         String id = entity.getId();
-        if (id != null) {
-            ${entityName?uncap_first}Service.update(entity);
-        } else {
+        if (CommonUtils.isNull(id)) {
+            entity.setId(UUID.randomUUID().toString());
             ${entityName?uncap_first}Service.insert(entity);
+        } else {
+            ${entityName?uncap_first}Service.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/${entityPackage}/${entityName?uncap_first}-list.do";
+        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do";
     }
    /**
      * 删除
@@ -93,13 +95,13 @@ public class ${entityName}Controller {
      */
     @RequestMapping("${entityName?uncap_first}-remove")
     public String remove(@RequestParam("selectedItem") List<Long> selectedItem, RedirectAttributes redirectAttributes) {
-        List<${entityName}Entity> entitys = ${entityName?uncap_first}Service.getCommonDao().findByIds(selectedItem);
+        List<${entityName}Entity> entitys = ${entityName?uncap_first}Service.findByIds(selectedItem);
         for (${entityName}Entity entity : entitys) {
             ${entityName?uncap_first}Service.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/${entityPackage}/${entityName?uncap_first}-list.do";
+        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do";
     }
 
 
@@ -114,7 +116,7 @@ public class ${entityName}Controller {
     @RequestMapping("${entityName?uncap_first}-export")
     public void export(@ModelAttribute IbPage page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) throws Exception {
         List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
-        page = ${entityName?uncap_first}Service.getCommonDao().pagedQuery(page, propertyFilters);
+        page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
         IbTableModel tableModel = new IbTableModel();
         tableModel.setName("导出${tableName}");
         // 

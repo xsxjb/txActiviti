@@ -52,6 +52,7 @@ public class CodeFactory {
         try {
             String entityPackage = data.get("entityPackage").toString();
             String entityName = data.get("entityName").toString();
+            // 取得生成文件路径
             String fileNamePath = getCodePath(type, entityPackage, entityName);
             String fileDir = StringUtils.substringBeforeLast(fileNamePath, "/");
             Template template = getConfiguration().getTemplate(templateName);
@@ -114,9 +115,11 @@ public class CodeFactory {
             str.append(path);
             // JSP文件路径
             if (("jsp".equals(type)) || ("jspList".equals(type))) {
-                str.append(CodeResourceUtil.JSPPATH);
-            }
-            else {
+                String jspPath = CodeResourceUtil.JSPPATH;
+                // 设置JSP路径
+                jspPath = jspPath.replace("/com/tx", "");
+                str.append(jspPath);
+            } else {
                 str.append(CodeResourceUtil.CODEPATH);
             }
             // 判断相等(忽略大小写)
@@ -136,6 +139,12 @@ public class CodeFactory {
                 String jspName = StringUtils.capitalize(entityName);
                 str.append(CodeStringUtils.getInitialSmall(jspName));
                 str.append(codeType);
+                // 显示页面 还是插入页面
+                if ("jsp".equals(type)) {
+                    str.append("-list");
+                } if ("jspList".equals(type)) {
+                    str.append("-input");
+                }
                 str.append(".jsp");
             } else {
                 str.append(StringUtils.capitalize(entityName));
@@ -175,7 +184,7 @@ public class CodeFactory {
      *
      */
     public enum CodeType {
-        serviceImpl("ServiceImpl"), service("Service"), controller("Controller"), page("Page"), entity("Entity"), jsp(""), jspList("List");
+        serviceImpl("ServiceImpl"), service("Service"), controller("Controller"), page("Page"), entity("Entity"), jsp(""), jspList("");
         // 成员变量 
         private String type;
 

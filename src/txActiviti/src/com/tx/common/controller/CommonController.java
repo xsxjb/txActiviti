@@ -33,7 +33,7 @@ public class CommonController {
         // 查询条件Filter过滤器
         List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
         // 根据条件查询数据
-        page = commonService.getCommonDao().pagedQuery(page, propertyFilters);
+        page = commonService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
         return "../jsp/common/common-list";
@@ -50,7 +50,7 @@ public class CommonController {
     Long id, Model model) {
         CommonEntity commonEntity = null;
         if (id != null) {
-            commonEntity = commonService.getCommonDao().get(id);
+            commonEntity = commonService.get(id);
         } else {
             commonEntity = new CommonEntity();
         }
@@ -87,7 +87,7 @@ public class CommonController {
      */
     @RequestMapping("common-remove")
     public String remove(@RequestParam("selectedItem") List<Long> selectedItem, RedirectAttributes redirectAttributes) {
-        List<CommonEntity> commonEntitys = commonService.getCommonDao().findByIds(selectedItem);
+        List<CommonEntity> commonEntitys = commonService.findByIds(selectedItem);
         for (CommonEntity commonEntity : commonEntitys) {
             commonService.remove(commonEntity);
         }
@@ -108,7 +108,7 @@ public class CommonController {
     @RequestMapping("common-export")
     public void export(@ModelAttribute IbPage page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) throws Exception {
         List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
-        page = commonService.getCommonDao().pagedQuery(page, propertyFilters);
+        page = commonService.pagedQuery(page, propertyFilters);
         IbTableModel tableModel = new IbTableModel();
         tableModel.setName("commonEntity");
         tableModel.addHeaders("id", "username", "status");

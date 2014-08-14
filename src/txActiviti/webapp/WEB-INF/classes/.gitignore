@@ -1,7 +1,11 @@
+/bpmn2
 /dbmigrate
 /jeecg
 /logback
+/logback.xml
+/org
+/properties.lst
+/spring
 /application.mysql.properties
 /application.properties
-/bpmn2
 /com

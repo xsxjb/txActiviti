@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * @author Lingo
  */
 @Entity
-@Table(name = "USER_BASE1")
+@Table(name = "USER_BASE")
 public class CommonEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
