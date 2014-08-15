@@ -2,6 +2,19 @@
       <!-- start of sidebar -->
       <aside id="m-sidebar" class="accordion span2" data-spy="affix" data-offset-top="100">
 
+       <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#m-sidebar" href="#dashboard-left">
+              <i class="icon-user"></i>
+              <span class="title">常用</span>
+            </a>
+          </div>
+          <div id="dashboard-left" class="accordion-body collapse ${currentMenu == 'dashboard' ? 'in' : ''}">
+            <ul class="accordion-inner nav nav-list">
+			  <li><a href="${scopePrefix}/dashboard/dashboard.do"><i class="icon-user"></i>首页</a></li>
+            </ul>
+          </div>
+        </div>
         <div class="accordion-group">
           <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#m-sidebar" href="#collapse-bpm-process">
@@ -152,6 +165,19 @@
             <ul class="accordion-inner nav nav-list">
 			  <li><a href="${scopePrefix}/meeting/meeting-room-list.do"><i class="icon-user"></i>会议室管理</a></li>
 			  <li><a href="${scopePrefix}/meeting/meeting-info-list.do"><i class="icon-user"></i>会议预定</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#m-sidebar" href="#collapse-chart">
+              <i class="icon-user"></i>
+              <span class="title">流程管理</span>
+            </a>
+          </div>
+          <div id="collapse-chart" class="accordion-body collapse ${currentMenu == 'report' ? 'in' : ''}">
+            <ul class="accordion-inner nav nav-list">
+			  <li><a href="${scopePrefix}/report/chart-mostActiveProcess.do"><i class="icon-user"></i>最活跃流程</a></li>
             </ul>
           </div>
         </div>
