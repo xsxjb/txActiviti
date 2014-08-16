@@ -15,8 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mossle.core.spring.MessageHelper;
 import com.tx.common.util.CommonUtils;
-import com.tx.table.domain.ConfTable;
-import com.tx.table.domain.ConfTableColumns;
+import com.tx.table.entity.ConfTable;
+import com.tx.table.entity.ConfTableColumns;
 import com.tx.table.service.TableService;
 
 /**

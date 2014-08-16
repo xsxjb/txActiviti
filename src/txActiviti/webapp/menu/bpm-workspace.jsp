@@ -12,6 +12,7 @@
           <div id="dashboard-left" class="accordion-body collapse ${currentMenu == 'dashboard' ? 'in' : ''}">
             <ul class="accordion-inner nav nav-list">
 			  <li><a href="${scopePrefix}/dashboard/dashboard.do"><i class="icon-user"></i>首页</a></li>
+			  <li><a href="../jsp/table/conf-table-show.jsp"><i class="icon-user"></i>介绍</a></li>
             </ul>
           </div>
         </div>

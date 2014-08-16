@@ -43,13 +43,19 @@ $(function() {
   <input id="table-uuId" type="hidden" name="uuId" value="${model.uuId}">
   </c:if>
   <div class="control-group">
-    <label class="control-label" for="cms-comment_cmsCommentname">表名称:</label>
+    <label class="control-label" for="table-packageName">所在模块:</label>
+	<div class="controls">
+	  <input id="table-packageName" type="text" name="packageName" value="${model.packageName}" size="40" class="text required" minlength="2" maxlength="50">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="table-tableName">表名称:</label>
 	<div class="controls">
 	  <input id="table-tableName" type="text" name="tableName" value="${model.tableName}" size="40" class="text required" minlength="2" maxlength="50">
     </div>
   </div>
   <div class="control-group">
-    <label class="control-label" for="cms-comment_cmsCommentname">标 题:</label>
+    <label class="control-label" for="table-tableNameComment">标 题:</label>
 	<div class="controls">
 	  <input id="table-tableNameComment" type="text" name="tableNameComment" value="${model.tableNameComment}" size="40" class="text required" minlength="2" maxlength="50">
     </div>

@@ -1,4 +1,4 @@
-package com.tx.table.domain;
+package com.tx.table.entity;
 
 /**
  * 业务表字段结构管理Bean, 对应 tx_conf_table_columns表

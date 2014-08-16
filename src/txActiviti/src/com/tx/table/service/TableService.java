@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tx.common.util.CommonUtils;
 import com.tx.table.dao.TableDao;
-import com.tx.table.domain.ConfTable;
-import com.tx.table.domain.ConfTableColumns;
+import com.tx.table.entity.ConfTable;
+import com.tx.table.entity.ConfTableColumns;
 
 /**
  * 流水表表结构管理 service
@@ -36,7 +36,7 @@ public class TableService {
      * @return
      */
     public List<ConfTable> queryConfTableList(String tableName) {
-        String sql = " select * from TX_CONF_TABLE ";
+        String sql = " select * from IB_CONF_TABLE ";
         if (!CommonUtils.isNull(tableName)) {
         	sql = sql + " WHERE tableName='" + tableName +"' ";
         }
@@ -71,8 +71,8 @@ public class TableService {
      * @param tableName
      */
 	public void insertConfTable(List<ConfTable> list) {
-		String sql = "insert into TX_CONF_TABLE("
-				+ " uuid, tablename, tablenamecomment) " + " values(?, ?, ?)";
+		String sql = "insert into IB_CONF_TABLE("
+				+ " uuid, packagename, tablename, tablenamecomment) " + " values(?, ?, ?, ?)";
 		dao.insertConfTable(list, sql);
 	}
 	/**
@@ -94,7 +94,7 @@ public class TableService {
      * @param list
      */
 	public void deleteConfTable(List<String> list) {
-		String sql = "delete from TX_CONF_TABLE WHERE uuid = ? ";
+		String sql = "delete from IB_CONF_TABLE WHERE uuid = ? ";
 		dao.batchDeleteConfTable(list, sql);
 	}
 	/**
@@ -114,7 +114,7 @@ public class TableService {
      */
 	public void updateConfTableColumns(String tableName, ConfTableColumns bean) {
 		// 存储数据
-		String sql = " UPDATE TX_CONF_TABLE_COLUMNS SET ";
+		String sql = " UPDATE IB_CONF_TABLE_COLUMNS SET ";
 		sql = sql + " columnName='"+bean.getColumnName()+"', columnType='"+bean.getColumnType()+"', columnSize='"+bean.getColumnSize()+"', ";
 		sql = sql + " isNull='"+bean.getIsNull()+"', defaultValue='"+bean.getDefaultValue()+"', columnNo='"+bean.getColumnNo()+"'";
 		sql = sql + " WHERE tableName='"+tableName+"' AND columnValue='"+bean.getColumnValue()+"'";

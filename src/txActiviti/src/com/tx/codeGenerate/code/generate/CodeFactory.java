@@ -141,9 +141,9 @@ public class CodeFactory {
                 str.append(codeType);
                 // 显示页面 还是插入页面
                 if ("jsp".equals(type)) {
-                    str.append("-list");
-                } if ("jspList".equals(type)) {
                     str.append("-input");
+                } if ("jspList".equals(type)) {
+                    str.append("-list");
                 }
                 str.append(".jsp");
             } else {

@@ -37,6 +37,6 @@ public class ${entityName}Service extends CommonDao<${entityName}Entity> {
      * @param entity
      */
     public void remove(${entityName}Entity entity) {
-        remove(entity);
+        super.remove(entity);
     }
 }

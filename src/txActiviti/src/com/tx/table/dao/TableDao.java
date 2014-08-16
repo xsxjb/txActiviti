@@ -13,8 +13,8 @@ import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tx.table.domain.ConfTable;
-import com.tx.table.domain.ConfTableColumns;
+import com.tx.table.entity.ConfTable;
+import com.tx.table.entity.ConfTableColumns;
 
 /**
  * 流水表表结构管理DAO
@@ -89,8 +89,9 @@ public class TableDao {
 	                      throws SQLException {
 	            	  ConfTable bean = list.get(i);
 	            	  ps.setString(1, bean.getUuId());
-	                  ps.setString(2, bean.getTableName());
-	                  ps.setString(3, bean.getTableNameComment());
+	            	  ps.setString(2, bean.getPackageName());
+	                  ps.setString(3, bean.getTableName());
+	                  ps.setString(4, bean.getTableNameComment());
 	              }
 	          });
 	          return 1;

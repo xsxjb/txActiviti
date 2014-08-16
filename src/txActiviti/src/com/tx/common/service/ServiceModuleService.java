@@ -4,11 +4,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tx.common.dao.CommonDao;
-import com.tx.common.entity.CommonEntity;
-
+import com.tx.common.entity.ConfServiceModuleEntity;
+/**
+ * 业务模块组件service
+ * 
+ * @author JiangBo
+ *
+ */
 @Service
 @Transactional
-public class CommonService extends CommonDao<CommonEntity> {
+public class ServiceModuleService extends CommonDao<ConfServiceModuleEntity> {
 
     /**
      * 更新

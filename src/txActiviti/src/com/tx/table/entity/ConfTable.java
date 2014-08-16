@@ -1,7 +1,7 @@
-package com.tx.table.domain;
+package com.tx.table.entity;
 
 /**
- * 业务表管理Bean, 对应 tx_conf_table表
+ * 业务表管理Bean, 对应 ib_conf_table表
  * 
  * @author JiangBo
  *
@@ -9,6 +9,8 @@ package com.tx.table.domain;
 public class ConfTable {
 	// UUID
     private String uuId;
+    // 模块包名
+    private String packageName;
     // 表名
     private String tableName;
     // 表名含义
@@ -55,4 +57,16 @@ public class ConfTable {
 	public void setUuId(String uuId) {
 		this.uuId = uuId;
 	}
+    /**
+     * @return the packageName
+     */
+    public String getPackageName() {
+        return packageName;
+    }
+    /**
+     * @param packageName the packageName to set
+     */
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
 }

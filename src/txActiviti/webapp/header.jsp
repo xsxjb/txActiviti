@@ -50,6 +50,8 @@
                   <li><a href="#"><i class="icon-user"></i>组织权限管理</a></li>
                   <li><a href="#"><i class="icon-user"></i>菜单管理</a></li>
                   <li class="divider"></li>
+                  <li><a href="${scopePrefix}/serviceModule/serviceModule-show.do"><i class="icon-user"></i>业务模块组件</a></li>
+                  <li class="divider"></li>
 				  <li><a href="${scopePrefix}/table/conf-table-show.do"><i class="icon-user"></i>表存储设计器</a></li>
 				  <li><a href="#"><i class="icon-user"></i>表单设计器</a></li>
 				  <li><a href="#"><i class="icon-user"></i>流程设计器</a></li>

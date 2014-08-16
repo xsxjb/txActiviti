@@ -95,7 +95,7 @@ public class ${entityName}Controller {
      * @return
      */
     @RequestMapping("${entityName?uncap_first}-remove")
-    public String remove(@RequestParam("selectedItem") List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<${entityName}Entity> entitys = ${entityName?uncap_first}Service.findByIds(selectedItem);
         for (${entityName}Entity entity : entitys) {
             ${entityName?uncap_first}Service.remove(entity);
