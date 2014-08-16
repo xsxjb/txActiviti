@@ -22,7 +22,7 @@ public class ${entityName}Service extends CommonDao<${entityName}Entity> {
      * @param entity
      */
     public <T> void update(T entity) {
-        save(entity);
+        super.save(entity);
     }
 
     /**
@@ -30,7 +30,7 @@ public class ${entityName}Service extends CommonDao<${entityName}Entity> {
      * @param entity
      */
     public <T> void insert(T entity) {
-        saveInsert(entity);
+        super.saveInsert(entity);
     }
     /**
      * 删除

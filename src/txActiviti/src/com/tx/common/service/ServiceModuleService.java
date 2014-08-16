@@ -20,7 +20,7 @@ public class ServiceModuleService extends CommonDao<ConfServiceModuleEntity> {
      * @param entity
      */
     public <T> void update(T entity) {
-        save(entity);
+        super.save(entity);
     }
 
     /**
@@ -28,7 +28,7 @@ public class ServiceModuleService extends CommonDao<ConfServiceModuleEntity> {
      * @param entity
      */
     public <T> void insert(T entity) {
-        save(entity);
+        super.saveInsert(entity);
     }
     /**
      * 删除

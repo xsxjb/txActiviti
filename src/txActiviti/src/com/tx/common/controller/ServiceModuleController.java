@@ -1,31 +1,25 @@
 package com.tx.common.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mossle.core.page.Page;
-import com.mossle.party.domain.PartyEntity;
-import com.mossle.party.domain.PartyStruct;
-import com.mossle.party.domain.PartyStructType;
-import com.mossle.party.manager.PartyStructManager;
-import com.mossle.party.manager.PartyStructTypeManager;
-import com.mossle.party.service.PartyService;
+import com.mossle.core.spring.MessageHelper;
+import com.tx.common.entity.ConfServiceModuleEntity;
+import com.tx.common.hibernate.IbPropertyFilter;
+import com.tx.common.page.IbPage;
 import com.tx.common.service.ServiceModuleService;
+import com.tx.common.util.CommonUtils;
 
 /**
  * 业务模块组件用controller。业务模块下包括各个业务模块的内容。
@@ -36,14 +30,10 @@ import com.tx.common.service.ServiceModuleService;
  */
 @Controller
 @RequestMapping("serviceModule")
-@Path("serviceModule")
 public class ServiceModuleController {
+    private MessageHelper messageHelper;
     private ServiceModuleService serviceModuleService;
     
-    private PartyService partyService;
-    private PartyStructTypeManager partyStructTypeManager;
-    private PartyStructManager partyStructManager;
-
     @RequestMapping("serviceModule-show")
     public String show(@RequestParam Map<String, Object> parameterMap, Model model) {
         model.addAttribute("parentId", 0);
@@ -59,125 +49,125 @@ public class ServiceModuleController {
      */
     @RequestMapping("serviceModule-action")
     public String moduleAction(Model model, @RequestParam(value = "packageName", required = false) String packageName,
-            @RequestParam(value = "entityId", required = false) String entityId) {
+            @RequestParam(value = "typeId", required = false) String typeId) {
         if ("root".equals(packageName)) {
             // 返回添加业务组件管理页面
-            return "../jsp/common/serviceModule-list";
+            return "redirect:/serviceModule/serviceModule-list.do";
         }
-        if (packageName.indexOf("Table") > -1) {
-            // 跳转到表单存储页面
+        if ("Table".equals(typeId)) {
+            // 跳转到表存储页面
             return "redirect:/table/conf-table-show.do?packageName=" + packageName;
         }
-//        init(model, partyStructTypeId, partyEntityId);
-//        String hql = "from PartyStruct where childEntity.partyType.type=1 and parentEntity.id=?";
-//        page = partyStructTypeManager.pagedQuery(hql, page.getPageNo(),
-//                page.getPageSize(), partyEntityId);
-//        model.addAttribute("page", page);
-        
+        if ("Form".equals(typeId)) {
+            // 跳转到表单页面
+            return "redirect:/table/conf-table-show.do?packageName=" + packageName;
+        }
+        if ("Bpm".equals(typeId)) {
+            // 跳转到表单页面
+            return "redirect:/table/conf-table-show.do?packageName=" + packageName;
+        }
         // 返回JSP
         return "../jsp/common/serviceModule-show";
     }
+    
+    @RequestMapping("serviceModule-list")
+    public String list(@ModelAttribute IbPage page, @RequestParam Map<String, Object> parameterMap, Model model) {
+        // 父结点ID为0的是业务分类模块
+        parameterMap.put("filter_EQS_parentid", "0");
+        // 查询条件Filter过滤器
+        List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
+        // 根据条件查询数据
+        page = serviceModuleService.pagedQuery(page, propertyFilters);
+        model.addAttribute("page", page);
+        // 返回JSP
+        return "../jsp/common/serviceModule-list";
+    }
+    
     /**
-     * 
-     * @param partyStructTypeId
+     * 插入
+     * @param id
+     * @param model
      * @return
      */
-    @POST
-    @Path("tree")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Map> tree(@QueryParam("partyStructTypeId") long partyStructTypeId) {
-        List<PartyEntity> partyEntities = partyService.getTopPartyEntities(partyStructTypeId);
-        return generatePartyEntities(partyEntities, partyStructTypeId);
-    }
-    public List<Map> generatePartyEntities(List<PartyEntity> partyEntities,
-            long partyStructTypeId) {
-        if (partyEntities == null) {
-            return null;
-        }
-        List<Map> list = new ArrayList<Map>();
-        try {
-            for (PartyEntity partyEntity : partyEntities) {
-                list.add(generatePartyEntity(partyEntity, partyStructTypeId));
-            }
-        } catch (Exception ex) {
-        }
-        return list;
-    }
-    public Map<String, Object> generatePartyEntity(PartyEntity partyEntity,
-            long partyStructTypeId) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        try {
-            map.put("id", partyEntity.getId());
-            map.put("name", partyEntity.getName());
-            map.put("ref", partyEntity.getRef());
-            List<PartyStruct> partyStructs = partyStructManager.find(
-                    "from PartyStruct where parentEntity=? order by priority",
-                    partyEntity);
-            List<PartyEntity> partyEntities = new ArrayList<PartyEntity>();
-            for (PartyStruct partyStruct : partyStructs) {
-                if (partyStruct.getPartyStructType().getId() == partyStructTypeId) {
-                    PartyEntity childPartyEntity = partyStruct.getChildEntity();
-
-                    if (childPartyEntity.getPartyType().getType() == 0) {
-                        partyEntities.add(childPartyEntity);
-                    }
-                }
-            }
-            if (partyEntities.isEmpty()) {
-                map.put("open", false);
-            } else {
-                map.put("open", true);
-                map.put("children", generatePartyEntities(partyEntities, partyStructTypeId));
-            }
-            return map;
-        } catch (Exception ex) {
-            return map;
-        }
-    }
-    /**
-     * 
-     * @param model
-     * @param partyStructTypeId
-     * @param partyEntityId
-     */
-    private void init(Model model, Long partyStructTypeId, Long partyEntityId) {
-        List<PartyStructType> partyStructTypes = partyStructTypeManager.getAll(
-                "priority", true);
-        PartyStructType partyStructType = null;
-
-        if (partyStructTypeId == null) {
-            partyStructType = partyStructTypes.get(0);
-            partyStructTypeId = partyStructType.getId();
+    @RequestMapping("serviceModule-input")
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
+        ConfServiceModuleEntity entity = null;
+        if (!CommonUtils.isNull(id)) {
+            entity = serviceModuleService.get(id);
         } else {
-            partyStructType = partyStructTypeManager.get(partyStructTypeId);
+            entity = new ConfServiceModuleEntity();
         }
-        if (partyEntityId == null) {
-            partyEntityId = partyService.getTopPartyEntities(partyStructTypeId)
-                    .get(0).getId();
+        model.addAttribute("model", entity);
+        
+        return "../jsp/common/serviceModule-input";
+    }
+
+    /**
+     * 保存
+     * 
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("serviceModule-save")
+    public String save(@ModelAttribute ConfServiceModuleEntity entity, RedirectAttributes redirectAttributes) throws Exception {
+        String id = entity.getId();
+        if (CommonUtils.isNull(id)) {
+            entity.setId(UUID.randomUUID().toString());
+            serviceModuleService.insert(entity);
+            // 表
+            ConfServiceModuleEntity tableEntity = new ConfServiceModuleEntity();
+            tableEntity.setId(UUID.randomUUID().toString());
+            tableEntity.setParentid(entity.getId());
+            tableEntity.setPackagename(entity.getPackagename());
+            tableEntity.setModulename("表存储设计器");
+            tableEntity.setTypeid("Table");
+            // 表单
+            ConfServiceModuleEntity formEntity = new ConfServiceModuleEntity();
+            formEntity.setId(UUID.randomUUID().toString());
+            formEntity.setParentid(entity.getId());
+            formEntity.setPackagename(entity.getPackagename());
+            formEntity.setModulename("表单设计器");
+            formEntity.setTypeid("Form");
+            // 流程
+            ConfServiceModuleEntity bpmEntity = new ConfServiceModuleEntity();
+            bpmEntity.setId(UUID.randomUUID().toString());
+            bpmEntity.setParentid(entity.getId());
+            bpmEntity.setPackagename(entity.getPackagename());
+            bpmEntity.setModulename("流程设计器");
+            bpmEntity.setTypeid("Bpm");
+            // 插入
+            serviceModuleService.insert(tableEntity);
+            serviceModuleService.insert(formEntity);
+            serviceModuleService.insert(bpmEntity);
+        } else {
+            serviceModuleService.update(entity);
         }
-        model.addAttribute("partyStructType", partyStructType);
-        model.addAttribute("partyStructTypeId", partyStructTypeId);
-        model.addAttribute("partyEntityId", partyEntityId);
-        model.addAttribute("partyStructTypes", partyStructTypes);
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
+        return "redirect:/serviceModule/serviceModule-list.do";
+    }
+   /**
+     * 删除
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("serviceModule-remove")
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+        List<ConfServiceModuleEntity> entitys = serviceModuleService.findByIds(selectedItem);
+        for (ConfServiceModuleEntity entity : entitys) {
+            serviceModuleService.remove(entity);
+        }
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+
+        return "redirect:/serviceModule/serviceModule-list.do";
     }
     // ======================================================================
     @Resource
-    public void setPartyStructTypeManager(
-            PartyStructTypeManager partyStructTypeManager) {
-        this.partyStructTypeManager = partyStructTypeManager;
-    }
-    @Resource
-    public void setPartyService(PartyService partyService) {
-        this.partyService = partyService;
-    }
-    @Resource
-    public void setPartyStructManager(PartyStructManager partyStructManager) {
-        this.partyStructManager = partyStructManager;
-    }
-
-    
-    @Resource
     public void setServiceModuleService(ServiceModuleService serviceModuleService) {
         this.serviceModuleService = serviceModuleService;
+    }
+    @Resource
+    public void setMessageHelper(MessageHelper messageHelper) {
+        this.messageHelper = messageHelper;
     }
 }

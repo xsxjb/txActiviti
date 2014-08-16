@@ -30,7 +30,7 @@
 			},
 			callback: {
 				onClick: function(event, treeId, treeNode) {
-					location.href = '${scopePrefix}/serviceModule/serviceModule-action.do?packageName=' +  treeNode.packageName + '&entityId=' + treeNode.id;
+					location.href = '${scopePrefix}/serviceModule/serviceModule-action.do?packageName=' +  treeNode.packageName + '&typeId=' + treeNode.typeId;
 				}
 			}
 		};

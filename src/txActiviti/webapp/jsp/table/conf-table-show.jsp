@@ -43,14 +43,14 @@
 				</header>
 				<div id="tableCategorySearch" class="content content-inner">
 				  <region:region-permission permission="tableComment:create">
-				  	<button class="btn btn-small a-insert" onclick="location.href='conf-table-insert.do'">新建</button>
+				  	<button class="btn btn-small a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}'">新建</button>
 				  </region:region-permission>
 				  <region:region-permission permission="tableComment:delete">
 				  	<button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
 				  </region:region-permission>
 				</div>
 		        <div class="content content-inner">
-			        <form id="tableGridForm" name="tableGridForm" method='post' action="conf-table-remove.do" class="m-form-blank">
+			        <form id="tableGridForm" name="tableGridForm" method='post' action="conf-table-remove.do?packageName=${packageName}" class="m-form-blank">
 						<table class="m-table table-hover table-bordered" id=“tableModelGrid” >
 							<thead>
 							  <tr>

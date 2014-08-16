@@ -39,11 +39,12 @@ public class TableManageController {
      * @return
      */
     @RequestMapping("conf-table-show")
-    public String confTableShow(Model model) {
+    public String confTableShow(@RequestParam("packageName") String packageName, Model model) {
         // 取得表结构信息。
         List<ConfTable> list = tableService.queryConfTableList(null);
         // 表结构信息
         model.addAttribute("tableInfoList", list);
+        model.addAttribute("packageName", packageName);
         
         return "../jsp/table/conf-table-show"; 
     }
@@ -83,7 +84,8 @@ public class TableManageController {
      * @return
      */
     @RequestMapping("conf-table-insert")
-    public String confTableInsert(Model model) {
+    public String confTableInsert(@RequestParam("packageName") String packageName, Model model) {
+        model.addAttribute("packageName", packageName);
         return "../jsp/table/conf-table-insert"; 
     }
     
@@ -102,7 +104,7 @@ public class TableManageController {
     	// 在数据库中创建一张业务表
 		createTable(confTable);
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/table/conf-table-show.do";
+        return "redirect:/table/conf-table-show.do?packageName="+confTable.getPackageName();
     }
     /**
      * 保存表列字段结构信息
@@ -143,10 +145,10 @@ public class TableManageController {
      * @return
      */
     @RequestMapping("conf-table-remove")
-    public String confTableRemove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+    public String confTableRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam("packageName") String packageName, RedirectAttributes redirectAttributes) {
     	tableService.deleteConfTable(selectedItem);
     	messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-        return "redirect:/table/conf-table-show.do";
+        return "redirect:/table/conf-table-show.do?packageName="+packageName;
     }
     /**
      * 删除表列字段管理表信息

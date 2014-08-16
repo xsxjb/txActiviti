@@ -1,7 +1,7 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/taglibs.jsp"%>
 <%pageContext.setAttribute("currentHeader", "table");%>
-<%pageContext.setAttribute("currentMenu", "table");%>
+<%pageContext.setAttribute("currentMenu", "serviceModule");%>
 <!doctype html>
 <html>
 
@@ -27,7 +27,7 @@ $(function() {
     <%@include file="/header/table.jsp"%>
 
     <div class="row-fluid">
-	  <%@include file="/menu/table-manage.jsp"%>
+	  <%@include file="/menu/serviceModule.jsp"%>
 
 	<!-- start of main -->
     <section id="m-main" class="span10">
@@ -45,7 +45,7 @@ $(function() {
   <div class="control-group">
     <label class="control-label" for="table-packageName">所在模块:</label>
 	<div class="controls">
-	  <input id="table-packageName" type="text" name="packageName" value="${model.packageName}" size="40" class="text required" minlength="2" maxlength="50">
+	  <input id="table-packageName" type="text" name="packageName" value="${packageName}" size="40" class="text required" readonly >
     </div>
   </div>
   <div class="control-group">

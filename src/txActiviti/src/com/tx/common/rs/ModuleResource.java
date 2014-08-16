@@ -37,8 +37,9 @@ public class ModuleResource {
         List<ConfServiceModuleEntity> entities = serviceModuleService.find(hql);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("id", 0);
-        map.put("name", "业务模块组件");
+        map.put("name", "业务模块(增删改)");
         map.put("packageName", "root");
+        map.put("typeId", "root");
         map.put("open", "true");
         map.put("children",generateEntities(entities, 0));
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -79,6 +80,7 @@ public class ModuleResource {
             map.put("id", partyEntity.getId());
             map.put("name", partyEntity.getModulename());
             map.put("packageName", partyEntity.getPackagename());
+            map.put("typeId", partyEntity.getTypeid());
             map.put("open", "true");
             // 查询子节点
             String hql = "from ConfServiceModuleEntity where parentid = ? ";
