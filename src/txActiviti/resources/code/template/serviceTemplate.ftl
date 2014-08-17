@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tx.common.dao.CommonDao;
+import com.ibusiness.common.dao.CommonDao;
 import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
 
 /**   

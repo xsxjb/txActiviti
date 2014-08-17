@@ -2,7 +2,7 @@ package com.tx.${bussiPackage}.page.${entityPackage};
 
 import java.math.BigDecimal;
 import java.util.Date;
-import com.tx.common.page.BasePage;
+import com.ibusiness.common.page.BasePage;
 <#include "/include/pageInclude.ftl">
 /**   
  * @Title: Page

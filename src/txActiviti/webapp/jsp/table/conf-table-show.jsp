@@ -56,8 +56,8 @@
 							  <tr>
 							    <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 								<th>所在模块</th>
-								<th>表存储模型</th>
 								<th>表名</th>
+								<th>标题</th>
 								<th>唯一标识</th>
 								<th width="80">&nbsp;</th>
 							  </tr>

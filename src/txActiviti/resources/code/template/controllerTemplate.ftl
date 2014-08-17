@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mossle.core.spring.MessageHelper;
-import com.tx.common.export.IbExportor;
-import com.tx.common.export.IbTableModel;
-import com.tx.common.hibernate.IbPropertyFilter;
-import com.tx.common.page.IbPage;
-import com.tx.common.util.CommonUtils;
+import com.ibusiness.common.export.IbExportor;
+import com.ibusiness.common.export.IbTableModel;
+import com.ibusiness.common.hibernate.IbPropertyFilter;
+import com.ibusiness.common.page.IbPage;
+import com.ibusiness.common.util.CommonUtils;
 
 import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
 import ${bussiPackage}.service.${entityPackage}.${entityName}Service;
