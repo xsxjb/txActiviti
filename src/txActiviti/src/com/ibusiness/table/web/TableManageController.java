@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mossle.core.spring.MessageHelper;
+import com.ibusiness.common.entity.ConfServiceModuleEntity;
+import com.ibusiness.common.service.ServiceModuleService;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.table.entity.ConfTable;
 import com.ibusiness.table.entity.ConfTableColumns;
 import com.ibusiness.table.service.TableService;
+import com.mossle.core.spring.MessageHelper;
 
 /**
  * 数据库表结构管理
@@ -31,6 +33,7 @@ public class TableManageController {
 
     // 共用Service,可以查询热力站,热源,BPM等基础信息
     private TableService tableService;
+    private ServiceModuleService serviceModuleService;
     private MessageHelper messageHelper;
 
     /**
@@ -41,7 +44,7 @@ public class TableManageController {
     @RequestMapping("conf-table-show")
     public String confTableShow(@RequestParam("packageName") String packageName, Model model) {
         // 取得表结构信息。
-        List<ConfTable> list = tableService.queryConfTableList(null);
+        List<ConfTable> list = tableService.queryConfTableList(packageName);
         // 表结构信息
         model.addAttribute("tableInfoList", list);
         model.addAttribute("packageName", packageName);
@@ -103,6 +106,20 @@ public class TableManageController {
     	tableService.insertConfTable(list);
     	// 在数据库中创建一张业务表
 		createTable(confTable);
+		// 向业务模块树结构中添加一个节点
+		String hql = "from ConfServiceModuleEntity csm where packagename='"+confTable.getPackageName()+"' and typeid='Table'";
+		List<ConfServiceModuleEntity> entitys = serviceModuleService.find(hql);
+		if (null != entitys && entitys.size() > 0) {
+		    ConfServiceModuleEntity csmEntity = new ConfServiceModuleEntity();
+		    csmEntity.setId(UUID.randomUUID().toString());
+		    csmEntity.setPackagename(entitys.get(0).getPackagename());
+		    csmEntity.setModulename(confTable.getTableNameComment());
+		    csmEntity.setSubname(confTable.getTableName());
+		    csmEntity.setParentid(entitys.get(0).getId());
+		    csmEntity.setTypeid("tables");
+		    // 插入
+	        serviceModuleService.insert(csmEntity);
+		}
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/table/conf-table-show.do?packageName="+confTable.getPackageName();
     }
@@ -235,6 +252,10 @@ public class TableManageController {
 	public void setTableService(TableService tableService) {
 		this.tableService = tableService;
 	}
+    @Resource
+    public void setServiceModuleService(ServiceModuleService serviceModuleService) {
+        this.serviceModuleService = serviceModuleService;
+    }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;

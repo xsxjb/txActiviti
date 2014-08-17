@@ -1,11 +1,11 @@
 package com.ibusiness.common.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.ws.rs.Path;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mossle.core.spring.MessageHelper;
 import com.ibusiness.common.entity.ConfServiceModuleEntity;
 import com.ibusiness.common.hibernate.IbPropertyFilter;
 import com.ibusiness.common.page.IbPage;
 import com.ibusiness.common.service.ServiceModuleService;
 import com.ibusiness.common.util.CommonUtils;
+import com.mossle.core.spring.MessageHelper;
 
 /**
  * 业务模块组件用controller。业务模块下包括各个业务模块的内容。
@@ -153,13 +153,30 @@ public class ServiceModuleController {
      */
     @RequestMapping("serviceModule-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+        // 删除指定业务模块
+        serviceModuleRemoveList(selectedItem);
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+        return "redirect:/serviceModule/serviceModule-list.do";
+    }
+    /**
+     * 删除指定业务模块
+     * 
+     * @param selectedItem
+     */
+    private void serviceModuleRemoveList(List<String> selectedItem) {
+        List<String> items = new ArrayList<String>();
         List<ConfServiceModuleEntity> entitys = serviceModuleService.findByIds(selectedItem);
         for (ConfServiceModuleEntity entity : entitys) {
+            String hql = "from ConfServiceModuleEntity csm WHERE csm.parentid=?";
+            List<ConfServiceModuleEntity> list = serviceModuleService.find(hql, entity.getId());
+            for (ConfServiceModuleEntity bean : list) {
+                items.add(bean.getId());
+            }
             serviceModuleService.remove(entity);
         }
-        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-
-        return "redirect:/serviceModule/serviceModule-list.do";
+        if (items.size() > 0) {
+            serviceModuleRemoveList(items);
+        }
     }
     // ======================================================================
     @Resource

@@ -55,9 +55,9 @@
 							<thead>
 							  <tr>
 							    <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-								<th>所在模块</th>
 								<th>表名</th>
 								<th>标题</th>
+								<th>所在模块</th>
 								<th>唯一标识</th>
 								<th width="80">&nbsp;</th>
 							  </tr>
@@ -66,9 +66,9 @@
 							<c:forEach items="${tableInfoList}" var="item">
 							    <tr>
 								    <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.uuId}"></td>
-									<td>${item.packageName}</td>
 									<td>${item.tableName}</td>
 									<td>${item.tableNameComment}</td>
+									<td>${item.packageName}</td>
 									<td>${item.uuId}</td>
 									<td>
 							          <a href="conf-table-detail-show.do?tableName=${item.tableName}" class="a-update"><spring:message code="core.list.edit" text="编辑表字段"/></a>

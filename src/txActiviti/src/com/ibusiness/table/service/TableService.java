@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ibusiness.common.dao.CommonDao;
+import com.ibusiness.common.entity.ConfServiceModuleEntity;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.table.dao.TableDao;
 import com.ibusiness.table.entity.ConfTable;
@@ -35,10 +37,10 @@ public class TableService {
      * @param string
      * @return
      */
-    public List<ConfTable> queryConfTableList(String tableName) {
+    public List<ConfTable> queryConfTableList(String packageName) {
         String sql = " select * from IB_CONF_TABLE ";
-        if (!CommonUtils.isNull(tableName)) {
-        	sql = sql + " WHERE tableName='" + tableName +"' ";
+        if (!CommonUtils.isNull(packageName)) {
+        	sql = sql + " WHERE packageName='" + packageName +"' ";
         }
         return dao.queryConfTableList(sql);
     }

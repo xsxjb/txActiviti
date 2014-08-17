@@ -23,8 +23,10 @@ public class ConfServiceModuleEntity implements java.io.Serializable {
     private java.lang.String packagename;
     /**modulename*/
     private java.lang.String modulename;
-    /**modulename*/
+    /**parentid*/
     private java.lang.String parentid;
+    /**subname*/
+    private java.lang.String subname;
     /**typeid*/
     private java.lang.String typeid;
     
@@ -108,5 +110,19 @@ public class ConfServiceModuleEntity implements java.io.Serializable {
      */
     public void setParentid(java.lang.String parentid) {
         this.parentid = parentid;
+    }
+
+    /**
+     * @return the subname
+     */
+    public java.lang.String getSubname() {
+        return subname;
+    }
+
+    /**
+     * @param subname the subname to set
+     */
+    public void setSubname(java.lang.String subname) {
+        this.subname = subname;
     }
 }
