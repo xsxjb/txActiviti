@@ -8,12 +8,13 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 /**
- * dataSource proxy 代理dataSource
+ * dataSource proxy.
  * 
  * @author Lingo
  */
-public class DataSourceProxy implements DataSource {
+public class DataSourceProxy extends MockDataSource {
     private DataSource targetDataSource;
+
     /**
      * get connection.
      * 

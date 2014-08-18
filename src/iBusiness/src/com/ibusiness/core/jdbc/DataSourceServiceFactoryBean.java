@@ -1,22 +1,24 @@
 package com.ibusiness.core.jdbc;
 
 import java.lang.reflect.Method;
+
 import java.util.Collection;
 import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.InitializingBean;
 
 import com.ibusiness.core.util.BeanUtils;
 import com.ibusiness.core.util.StringUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.InitializingBean;
+
 /**
  * 构造DataSourceService.
  * 
- * @author JiangBo
+ * @author Lingo
  */
 public class DataSourceServiceFactoryBean implements FactoryBean, InitializingBean, DisposableBean {
     private static Logger logger = LoggerFactory.getLogger(DataSourceServiceFactoryBean.class);
@@ -85,20 +87,6 @@ public class DataSourceServiceFactoryBean implements FactoryBean, InitializingBe
         }
 
         this.defaultPrefix = defaultPrefix;
-    }
-
-    /**
-     * @return the dataSourceService
-     */
-    public DataSourceService getDataSourceService() {
-        return dataSourceService;
-    }
-
-    /**
-     * @param dataSourceService the dataSourceService to set
-     */
-    public void setDataSourceService(DataSourceService dataSourceService) {
-        this.dataSourceService = dataSourceService;
     }
 
     public String export() {

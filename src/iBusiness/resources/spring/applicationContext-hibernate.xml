@@ -3,13 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="sessionFactory" class="com.mossle.core.hibernate.RecoverableSessionFactoryBean" depends-on="databaseMigrator">
+    <bean id="sessionFactory" class="com.ibusiness.core.hibernate.RecoverableSessionFactoryBean" depends-on="databaseMigrator">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="${application.domain.packages}"/>
 		<property name="hibernateProperties" ref="applicationProperties"/>
     </bean>
 
-	<bean id="transactionManager" class="com.mossle.core.hibernate.ReadOnlyTransactionManager">
+	<bean id="transactionManager" class="com.ibusiness.core.hibernate.ReadOnlyTransactionManager">
 		<property name="platformTransactionManager">
 			<bean class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 				<property name="sessionFactory" ref="sessionFactory" />

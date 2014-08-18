@@ -43,9 +43,9 @@
 	<!-- activiti工作流 
 	<import resource="applicationContext-activiti.xml"/>
 	-->
-    <!-- 用户账号，多租户，用户，用户权限暴露接口的配置，包括相关的缓存
+    <!-- 用户账号，多租户，用户，用户权限暴露接口的配置，包括相关的缓存-->
 	<import resource="applicationContext-bridge.xml"/>
-	 -->
+	 
 	<!-- 本地缓存和远程缓存的策略 
 	<import resource="applicationContext-cache.xml"/>
 	-->
