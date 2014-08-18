@@ -1,3 +1,0 @@
-<%
-	response.sendError(401);
-%>
