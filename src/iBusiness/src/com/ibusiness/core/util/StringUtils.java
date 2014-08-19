@@ -13,23 +13,23 @@ public class StringUtils {
     protected StringUtils() {
     }
     public static boolean isEmpty(String text) {
-        return StringUtils.isEmpty(text);
+        return org.apache.commons.lang3.StringUtils.isEmpty(text);
     }
 
     public static boolean isBlank(String text) {
-        return StringUtils.isBlank(text);
+        return org.apache.commons.lang3.StringUtils.isBlank(text);
     }
 
     public static boolean isNotBlank(String text) {
-        return StringUtils.isNotBlank(text);
+        return org.apache.commons.lang3.StringUtils.isNotBlank(text);
     }
 
     public static String capitalize(String text) {
-        return StringUtils.capitalize(text);
+        return org.apache.commons.lang3.StringUtils.capitalize(text);
     }
 
     public static String substring(String text, int offset, int limit) {
-        return StringUtils.substring(text, offset,
+        return org.apache.commons.lang3.StringUtils.substring(text, offset,
                 limit);
     }
 
@@ -39,16 +39,16 @@ public class StringUtils {
     }
 
     public static String substringAfter(String text, String token) {
-        return StringUtils.substringAfter(text, token);
+        return org.apache.commons.lang3.StringUtils.substringAfter(text, token);
     }
 
     public static String[] splitByWholeSeparator(String text, String separator) {
-        return StringUtils.splitByWholeSeparator(text,
+        return org.apache.commons.lang3.StringUtils.splitByWholeSeparator(text,
                 separator);
     }
 
     public static String join(List list, String separator) {
-        return StringUtils.join(list, separator);
+        return org.apache.commons.lang3.StringUtils.join(list, separator);
     }
 
     public static String escapeHtml(String text) {

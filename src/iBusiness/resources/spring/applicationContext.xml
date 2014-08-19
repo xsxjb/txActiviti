@@ -43,21 +43,21 @@
 	<!-- activiti工作流 
 	<import resource="applicationContext-activiti.xml"/>
 	-->
-    <!-- 用户账号，多租户，用户，用户权限暴露接口的配置，包括相关的缓存-->
-	<import resource="applicationContext-bridge.xml"/>
+    <!-- 用户账号，多租户，用户，用户权限暴露接口的配置，包括相关的缓存
+	<import resource="applicationContext-bridge.xml"/>-->
 	 
-	<!-- 本地缓存和远程缓存的策略 
+	<!-- 本地缓存和远程缓存的策略 -->
 	<import resource="applicationContext-cache.xml"/>
-	-->
+	
     <!-- 对应web.xml中的compositeFilter，这里配置系统的Filter和Servlet -->
 	<import resource="applicationContext-filter.xml"/>
 	
     <!-- 审计日志。（还没用到）
 	<import resource="applicationContext-inspektr.xml"/>
 	 -->
-    <!-- 异步的消息订阅与发布 
+    <!-- 异步的消息订阅与发布 -->
 	<import resource="applicationContext-jms.xml"/>
-	-->
+	
 	<!-- 把一些bean导出成jmx 
 	<import resource="applicationContext-jmx.xml"/>
 	-->

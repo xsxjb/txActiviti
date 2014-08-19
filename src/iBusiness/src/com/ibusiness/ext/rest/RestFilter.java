@@ -1,4 +1,4 @@
-package com.ibusiness.core.ext.rest;
+package com.ibusiness.ext.rest;
 
 import java.io.IOException;
 import java.io.InputStream;

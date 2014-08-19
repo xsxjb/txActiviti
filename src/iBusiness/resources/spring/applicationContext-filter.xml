@@ -11,8 +11,8 @@
 				<ref bean="javasimonFilter"/>
 				<!-- <ref bean="scopeFilter"/>
 				<ref bean="cmsFilter"/>
-				 -->
-				<ref bean="springSecurityFilterChainProxy"/>
+				 
+				<ref bean="springSecurityFilterChainProxy"/>-->
 				<ref bean="openSessionInViewFilter"/>
 				<ref bean="auditTrailFilter"/>
 				<ref bean="restFilter"/>
@@ -52,7 +52,7 @@
 			</map>
 		</property>
 	</bean>
-    <!-- -->
+    <!-- 
 	<bean id="scopeFilter" class="com.ibusiness.core.servlet.ProxyFilter">
 		<property name="name" value="scope"/>
 		<property name="filter">
@@ -62,7 +62,7 @@
 			</bean>
 		</property>
 		<property name="enable" value="${filter.scope.enable}"/>
-	</bean>
+	</bean>-->
 	
     <!-- 
 	<bean id="cmsFilter" class="com.ibusiness.core.servlet.ProxyFilter">
@@ -75,11 +75,11 @@
 		<property name="enable" value="${filter.cms.enable}"/>
 	</bean>
 	-->
-
+<!-- 
 	<bean id="springSecurityFilterChainProxy" class="com.ibusiness.core.servlet.ProxyFilter">
 		<property name="name" value="security"/>
 		<property name="filter" ref="springSecurityFilterChain"/>
-	</bean>
+	</bean> -->
 
 	<bean id="openSessionInViewFilter" class="com.ibusiness.core.servlet.ProxyFilter">
 		<property name="name" value="hibernate"/>
