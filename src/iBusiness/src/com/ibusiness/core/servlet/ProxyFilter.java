@@ -16,11 +16,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 /**
+ * requestUri(path)过滤
+ * 如果在黑名单中，直接略过
+ * 如果符合redirect规则，进行跳转
+ * 如果都没问题，才会继续进行判断
  * 
  * @author JiangBo
  *
  */
 public class ProxyFilter implements Filter {
+    // encode, i18n
     private String name;
     private Filter filter;
     private UrlPatternMatcher urlPatternMatcher = UrlPatternMatcher.DEFAULT_MATCHER;

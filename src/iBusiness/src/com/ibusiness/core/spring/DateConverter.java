@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.core.convert.converter.Converter;
 /**
- * 日期转换qi
+ * 日期转换器,负责把字符串转换成Date
  * @author JiangBo
  *
  */

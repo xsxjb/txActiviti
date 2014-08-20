@@ -28,6 +28,7 @@ public class UrlResourcePopulator {
 
         logger.info("refresh url resource");
 
+        // 所请求资源所需要的权限
         LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> requestMap = null;
         requestMap = new LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>();
 
@@ -38,6 +39,7 @@ public class UrlResourcePopulator {
                     SecurityConfig.createListFromCommaDelimitedString(value));
         }
 
+        // 加载资源与权限的对应关系
         FilterInvocationSecurityMetadataSource source = new DefaultFilterInvocationSecurityMetadataSource(
                 requestMap);
         filterSecurityInterceptor.setSecurityMetadataSource(source);

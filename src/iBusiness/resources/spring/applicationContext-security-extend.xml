@@ -36,11 +36,13 @@
 	
 	<!-- ===============临时 end================================ -->
 	
+	<!-- 配置过滤器 -->
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 		<constructor-arg>
 			<list>
 				<bean class="com.ibusiness.security.client.AuthenticatedVoter"/>
 				<bean class="com.ibusiness.security.perm.PermissionVoter">
+				    <property name="permissionChecker" ref="permissionChecker"/>
 				</bean>
 			</list>
 		</constructor-arg>
@@ -55,7 +57,8 @@
 		<property name="userAuthConnector" ref="userAuthConnector"/>
 		<property name="debug" value="${security.autologin.enabled}"/>
 	</bean>
-
+	
+    <!-- 用户的密码加密或解密 -->
 	<bean id="passwordEncoder" class="com.ibusiness.security.util.PasswordEncoderFactoryBean">
 		<property name="type" value="${security.passwordencoder.type}"/>
 		<property name="salt" value="${security.passwordencoder.salt}"/>

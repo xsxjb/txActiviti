@@ -21,12 +21,12 @@
         <property name="properties" ref="applicationProperties"/>
     </bean>
 
-	<!-- 国际化 -->
+	<!-- 国际化 定义上下文返回的消息的国际化 -->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames" value="${application.i18n.packages}"/>
 	</bean>
 
-    <!-- 进行国际化的消息提示时 -->
+    <!-- 消息提示时进行国际化 -->
 	<bean id="messageHelper" class="com.ibusiness.core.spring.MessageHelper"/>
     <!-- 在ApplicationContext环境外获取bean的工具类 -->
 	<bean id="applicationContextHelper" class="com.ibusiness.core.spring.ApplicationContextHelper"/>
@@ -37,9 +37,9 @@
 	<import resource="applicationContext-springmvc.xml"/>
 	<!-- 数据库持久层hibernate -->
 	<import resource="applicationContext-hibernate.xml"/>
-	<!-- 模块间交互的定制服务 
-	<import resource="applicationContext-service.xml"/>
-	-->
+	<!-- 模块间交互的定制服务
+	<import resource="applicationContext-service.xml"/> -->
+	
 	<!-- activiti工作流 
 	<import resource="applicationContext-activiti.xml"/>
 	-->

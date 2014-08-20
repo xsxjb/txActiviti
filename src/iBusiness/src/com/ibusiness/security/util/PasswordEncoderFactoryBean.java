@@ -9,10 +9,14 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class PasswordEncoderFactoryBean implements FactoryBean,
-        InitializingBean {
-    private static Logger logger = LoggerFactory
-            .getLogger(PasswordEncoderFactoryBean.class);
+/**
+ * 对密码进行MD5编码
+ * 
+ * @author JiangBo
+ * 
+ */
+public class PasswordEncoderFactoryBean implements FactoryBean, InitializingBean {
+    private static Logger logger = LoggerFactory.getLogger(PasswordEncoderFactoryBean.class);
     private String type;
     private PasswordEncoder passwordEncoder;
     private CharSequence salt;

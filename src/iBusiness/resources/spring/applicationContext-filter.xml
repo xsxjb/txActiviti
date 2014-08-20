@@ -3,16 +3,22 @@
 	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- 混合过滤器 -->
 	<bean id="compositeFilter" class="com.ibusiness.core.servlet.CompositeFilter">
 		<property name="filters">
 			<list>
+			    <!-- 字符过滤器requestUri(path)过滤  -->
 				<ref bean="characterEncodingFilter"/>
-				<!-- <ref bean="acceptLanguageHeaderFilter"/> -->
+				<!-- 语言过滤器  -->
+				<ref bean="acceptLanguageHeaderFilter"/>
+				<!-- 监控Java应用程序过滤器 -->
 				<ref bean="javasimonFilter"/>
-				<!-- <ref bean="scopeFilter"/>
-				<ref bean="cmsFilter"/>
-				 
-				<ref bean="springSecurityFilterChainProxy"/>-->
+				<!-- 应用管理过滤器
+				<ref bean="scopeFilter"/> -->
+				<!-- 通知公告过滤器
+				<ref bean="cmsFilter"/>-->
+				 <!-- 拦截所有的访问请求进行权限校验和访问控制过滤器 -->
+				<ref bean="springSecurityFilterChainProxy"/>
 				<ref bean="openSessionInViewFilter"/>
 				<ref bean="auditTrailFilter"/>
 				<ref bean="restFilter"/>
@@ -75,11 +81,11 @@
 		<property name="enable" value="${filter.cms.enable}"/>
 	</bean>
 	-->
-<!-- 
+    <!-- 拦截所有的访问请求进行权限校验和访问控制过滤器 -->
 	<bean id="springSecurityFilterChainProxy" class="com.ibusiness.core.servlet.ProxyFilter">
 		<property name="name" value="security"/>
 		<property name="filter" ref="springSecurityFilterChain"/>
-	</bean> -->
+	</bean> 
 
 	<bean id="openSessionInViewFilter" class="com.ibusiness.core.servlet.ProxyFilter">
 		<property name="name" value="hibernate"/>

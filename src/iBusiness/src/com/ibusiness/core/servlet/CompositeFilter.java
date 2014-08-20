@@ -11,7 +11,12 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
+/**
+ * 混合过滤器
+ * 
+ * @author JiangBo
+ *
+ */
 public class CompositeFilter implements Filter {
     private List<? extends Filter> filters = new ArrayList<Filter>();
 

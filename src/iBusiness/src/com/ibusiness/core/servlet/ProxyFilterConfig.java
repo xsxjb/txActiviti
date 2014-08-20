@@ -6,7 +6,12 @@ import java.util.Map;
 
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
-
+/**
+ * 过滤器代理配置文件
+ * 
+ * @author JiangBo
+ *
+ */
 public class ProxyFilterConfig implements FilterConfig {
     private String filterName;
     private ServletContext servletContext;
