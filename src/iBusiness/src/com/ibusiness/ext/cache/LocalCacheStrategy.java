@@ -3,6 +3,12 @@ package com.ibusiness.ext.cache;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 本地cache策略
+ * 
+ * @author JiangBo
+ * 
+ */
 public class LocalCacheStrategy implements CacheStrategy {
     private Map<String, Cache> cacheMap = new HashMap<String, Cache>();
 

@@ -16,23 +16,27 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.web.filter.GenericFilterBean;
 
+/**
+ * 自动登录过滤器
+ * 
+ * @author JiangBo
+ * 
+ */
 public class AutoLoginFilter extends GenericFilterBean {
     private UserDetailsService userDetailsService;
     private boolean enabled = false;
     private String defaultUserName;
 
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+            ServletException {
         if (enabled && (SpringSecurityUtils.getCurrentUser() == null)) {
-            UserDetails userDetails = userDetailsService
-                    .loadUserByUsername(defaultUserName);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(defaultUserName);
 
             if (userDetails == null) {
                 throw new UsernameNotFoundException(defaultUserName);
             }
 
-            SpringSecurityUtils.saveUserDetailsToContext(userDetails,
-                    (HttpServletRequest) request);
+            SpringSecurityUtils.saveUserDetailsToContext(userDetails, (HttpServletRequest) request);
         }
 
         chain.doFilter(request, response);

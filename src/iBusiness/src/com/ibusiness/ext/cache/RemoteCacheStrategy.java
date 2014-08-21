@@ -1,8 +1,11 @@
 package com.ibusiness.ext.cache;
 
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * 远程cache策略
+ * 
+ * @author JiangBo
+ *
+ */
 public class RemoteCacheStrategy implements CacheStrategy {
     private Cache cache = new MapCache();
 

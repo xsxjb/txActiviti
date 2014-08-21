@@ -13,6 +13,7 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 
+    <!-- 运行时执行类型转换的API -->
 	<mvc:annotation-driven conversion-service="conversionService" >
 		<mvc:message-converters register-defaults="true">
 			<!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
@@ -22,7 +23,7 @@
   		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-	<!-- 定义JSP文件的位置 -->
+	<!-- 重定向到目标URL(定义JSP文件的位置) 加上定义好的前缀和后缀 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/content/"/>
 		<property name="suffix" value=".jsp"/>
@@ -34,12 +35,15 @@
 
 	<!-- 定义无需Controller的url<->view直接映射 -->
 	<mvc:view-controller path="/" view-name="index.jsp"/>
-
+    <!-- 通用的多部分解析器 上传文件等用 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="utf-8"/>
 		<property name="maxUploadSize" value="100000"/>
 	</bean>
-
+    
+    <!-- 启用注解驱动格式化功能
+        FormattingConversionServiceFactoryBean用于在spring上下文中构造一个FormattingConversionSerivce 
+           通过这个类即可以注册自定义转换器，还可以注册自定义注解驱动逻辑。-->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>

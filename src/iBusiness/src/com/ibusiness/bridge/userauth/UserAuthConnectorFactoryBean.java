@@ -15,10 +15,13 @@ import com.ibusiness.api.userauth.MockUserAuthConnector;
 import com.ibusiness.api.userauth.UserAuthCache;
 import com.ibusiness.api.userauth.UserAuthConnector;
 import com.ibusiness.api.userauth.UserAuthConnectorWrapper;
-
+/**
+ * 用户权限连接器工厂bean
+ * @author JiangBo
+ *
+ */
 public class UserAuthConnectorFactoryBean implements FactoryBean {
-    private static Logger logger = LoggerFactory
-            .getLogger(UserAuthConnectorFactoryBean.class);
+    private static Logger logger = LoggerFactory.getLogger(UserAuthConnectorFactoryBean.class);
     private UserAuthConnector userAuthConnector;
     private ScopeConnector scopeConnector;
     private UserConnector userConnector;
@@ -73,8 +76,7 @@ public class UserAuthConnectorFactoryBean implements FactoryBean {
             logger.debug("use cache for UserAuthConnector");
 
             UserAuthConnectorWrapper userAuthConnectorWrapper = new UserAuthConnectorWrapper();
-            userAuthConnectorWrapper
-                    .setUserAuthConnector(databaseUserAuthConnector);
+            userAuthConnectorWrapper.setUserAuthConnector(databaseUserAuthConnector);
 
             userAuthConnectorWrapper.setUserAuthCache(userAuthCache);
             userAuthConnector = userAuthConnectorWrapper;

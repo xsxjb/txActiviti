@@ -39,26 +39,26 @@
 		</header>
 
 		<div class="content content-inner">
-
-<form id="userForm" name="f" method="post" action="${scopePrefix}/j_spring_security_check" class="form-horizontal">
-  <div class="control-group">
-    <label class="control-label" for="username"><spring:message code="core.login.username" text="账号"/></label>
-	<div class="controls">
-      <input type='text' id="username" name='j_username' class="text" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="password"><spring:message code="core.login.password" text="密码"/></label>
-	<div class="controls">
-      <input type='password' id="password" name='j_password' class="text" value=''>
-    </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <input class="btn" name="submit" type="submit" value="<spring:message code='core.login.submit' text='提交'/>"/>
-    </div>
-  </div>
-</form>
+				<!-- 并监听默认的URL  j_spring_security_check 提交登陆信息的URL地址-->
+				<form id="userForm" name="f" method="post" action="${scopePrefix}/j_spring_security_check" class="form-horizontal">
+				  <div class="control-group">
+				    <label class="control-label" for="username"><spring:message code="core.login.username" text="账号"/></label>
+					<div class="controls">
+				      <input type='text' id="username" name='j_username' class="text" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}">
+				    </div>
+				  </div>
+				  <div class="control-group">
+				    <label class="control-label" for="password"><spring:message code="core.login.password" text="密码"/></label>
+					<div class="controls">
+				      <input type='password' id="password" name='j_password' class="text" value=''>
+				    </div>
+				  </div>
+				  <div class="control-group">
+				    <div class="controls">
+				      <input class="btn" name="submit" type="submit" value="<spring:message code='core.login.submit' text='提交'/>"/>
+				    </div>
+				  </div>
+				</form>
         </div>
       </article>
 

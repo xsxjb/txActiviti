@@ -13,7 +13,12 @@ import com.ibusiness.security.api.UrlSourceFetcher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * 从HTTP中提取URL
+ * 
+ * @author JiangBo
+ *
+ */
 public class HttpUrlSourceFetcher implements UrlSourceFetcher {
     private static Logger logger = LoggerFactory
             .getLogger(HttpUrlSourceFetcher.class);

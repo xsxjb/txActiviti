@@ -14,10 +14,13 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import org.springframework.util.Assert;
-
+/**
+ * 
+ * @author JiangBo
+ *
+ */
 public class ScopeConnectorFactoryBean implements FactoryBean {
-    private static Logger logger = LoggerFactory
-            .getLogger(ScopeConnectorFactoryBean.class);
+    private static Logger logger = LoggerFactory.getLogger(ScopeConnectorFactoryBean.class);
     private ScopeConnector scopeConnector;
     private String type = "database";
     private JdbcTemplate jdbcTemplate;

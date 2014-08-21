@@ -6,7 +6,12 @@ import javax.annotation.Resource;
 import com.ibusiness.ext.message.Subscribable;
 
 import org.springframework.util.Assert;
-
+/**
+ * 资源订阅
+ * 
+ * @author JiangBo
+ *
+ */
 public class ResourceSubscriber implements Subscribable<String> {
     private String scopeId = "1";
     private ResourceDetailsMonitor resourceDetailsMonitor;

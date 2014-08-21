@@ -24,12 +24,16 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.util.Assert;
 
 public class SpringSecurityUtils {
-    private static Logger logger = LoggerFactory
-            .getLogger(SpringSecurityUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(SpringSecurityUtils.class);
 
     protected SpringSecurityUtils() {
     }
 
+    /**
+     * 取得当前用户
+     * 
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static <T extends UserDetails> T getCurrentUser() {
         Authentication authentication = getAuthentication();
@@ -102,11 +106,9 @@ public class SpringSecurityUtils {
      * @param request
      *            用于获取用户IP地址信息,可为Null.
      */
-    public static void saveUserDetailsToContext(UserDetails userDetails,
-            HttpServletRequest request) {
-        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(
-                userDetails, userDetails.getPassword(),
-                userDetails.getAuthorities());
+    public static void saveUserDetailsToContext(UserDetails userDetails, HttpServletRequest request) {
+        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(userDetails,
+                userDetails.getPassword(), userDetails.getAuthorities());
 
         if (request != null) {
             authentication.setDetails(new WebAuthenticationDetails(request));
@@ -115,11 +117,10 @@ public class SpringSecurityUtils {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    public static void saveUserDetailsToContext(UserDetails userDetails,
-            HttpServletRequest request, SecurityContext securityContext) {
-        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(
-                userDetails, userDetails.getPassword(),
-                userDetails.getAuthorities());
+    public static void saveUserDetailsToContext(UserDetails userDetails, HttpServletRequest request,
+            SecurityContext securityContext) {
+        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(userDetails,
+                userDetails.getPassword(), userDetails.getAuthorities());
 
         if (request != null) {
             authentication.setDetails(new WebAuthenticationDetails(request));
@@ -225,8 +226,7 @@ public class SpringSecurityUtils {
             return Collections.EMPTY_LIST;
         }
 
-        Collection<? extends GrantedAuthority> grantedAuthorityList = authentication
-                .getAuthorities();
+        Collection<? extends GrantedAuthority> grantedAuthorityList = authentication.getAuthorities();
 
         List<String> authorities = new ArrayList<String>();
 
@@ -331,8 +331,7 @@ public class SpringSecurityUtils {
         Object principal = authentication.getPrincipal();
 
         if (!(principal instanceof SpringSecurityUserAuth)) {
-            logger.debug("principal[{}] is not SpringSecurityUserAuth",
-                    principal);
+            logger.debug("principal[{}] is not SpringSecurityUserAuth", principal);
 
             return Collections.EMPTY_LIST;
         }
@@ -349,8 +348,7 @@ public class SpringSecurityUtils {
     /**
      * 取得当前用户的id，如果当前用户与未登录，则返回null.
      */
-    public static SpringSecurityUserAuth getCurrentUser(
-            SecurityContext securityContext) {
+    public static SpringSecurityUserAuth getCurrentUser(SecurityContext securityContext) {
         Assert.notNull(securityContext, "securityContext cannot be null");
 
         Authentication authentication = securityContext.getAuthentication();

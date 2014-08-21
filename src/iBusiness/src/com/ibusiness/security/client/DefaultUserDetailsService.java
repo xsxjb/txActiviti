@@ -16,14 +16,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 /**
- * 取得用户的权限 
+ * 取得用户的权限
+ * 
  * @author JiangBo
- *
+ * 
  */
 public class DefaultUserDetailsService implements UserDetailsService {
-    private static Logger logger = LoggerFactory
-            .getLogger(DefaultUserDetailsService.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultUserDetailsService.class);
     private UserAuthConnector userAuthConnector;
     private String defaultPassword;
     private BeanMapper beanMapper = new BeanMapper();
@@ -32,13 +33,9 @@ public class DefaultUserDetailsService implements UserDetailsService {
     /**
      * 遇到的问题.
      * 
-     * 主要流程为 
-     * 1.判断用户是否存在 
-     * 2.读取用户权限 
-     * 3.创建UserDetails
+     * 主要流程为 1.判断用户是否存在 2.读取用户权限 3.创建UserDetails
      */
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.debug("username : {}", username);
 
         if (debug) {
@@ -52,8 +49,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
         }
 
         try {
-            UserAuthDTO userAuthDto = userAuthConnector.findByUsername(
-                    username, ScopeHolder.getScopeId());
+            UserAuthDTO userAuthDto = userAuthConnector.findByUsername(username, ScopeHolder.getScopeId());
 
             SpringSecurityUserAuth userAuthResult = new SpringSecurityUserAuth();
             beanMapper.copy(userAuthDto, userAuthResult);

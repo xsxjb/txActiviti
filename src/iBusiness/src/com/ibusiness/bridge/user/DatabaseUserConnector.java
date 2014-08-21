@@ -23,9 +23,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import org.springframework.util.Assert;
 
+/**
+ * 用户数据连接器
+ * 
+ * @author JiangBo
+ * 
+ */
 public class DatabaseUserConnector implements UserConnector {
-    private static Logger logger = LoggerFactory
-            .getLogger(DatabaseUserConnector.class);
+    private static Logger logger = LoggerFactory.getLogger(DatabaseUserConnector.class);
     private JdbcTemplate jdbcTemplate;
     private Map<String, String> aliasMap = new HashMap<String, String>();
 
@@ -61,8 +66,7 @@ public class DatabaseUserConnector implements UserConnector {
 
     public UserDTO findByUsername(String username, String userRepoRef) {
         try {
-            Map<String, Object> map = jdbcTemplate.queryForMap(
-                    sqlFindByUsername, username, userRepoRef);
+            Map<String, Object> map = jdbcTemplate.queryForMap(sqlFindByUsername, username, userRepoRef);
 
             return convertUserDTO(map);
         } catch (EmptyResultDataAccessException ex) {
@@ -75,8 +79,7 @@ public class DatabaseUserConnector implements UserConnector {
 
     public UserDTO findByRef(String ref, String userRepoRef) {
         try {
-            Map<String, Object> map = jdbcTemplate.queryForMap(sqlFindByRef,
-                    ref, userRepoRef);
+            Map<String, Object> map = jdbcTemplate.queryForMap(sqlFindByRef, ref, userRepoRef);
 
             return convertUserDTO(map);
         } catch (EmptyResultDataAccessException ex) {
@@ -90,13 +93,11 @@ public class DatabaseUserConnector implements UserConnector {
     public Page pagedQuery(Page page, Map<String, Object> parameters) {
         Map<String, Object> parameterMap = this.convertAlias(parameters);
 
-        List<PropertyFilter> propertyFilters = PropertyFilter
-                .buildFromMap(parameterMap);
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         StringBuilder buff = new StringBuilder();
         List<Object> paramList = new ArrayList<Object>();
         boolean checkWhere = sqlPagedQuerySelect.toLowerCase().indexOf("where") == -1;
-        PropertyFilterUtils.buildConfigurations(propertyFilters, buff,
-                paramList, checkWhere);
+        PropertyFilterUtils.buildConfigurations(propertyFilters, buff, paramList, checkWhere);
         logger.debug("propertyFilters : {}", propertyFilters);
         logger.debug("buff : {}", buff);
         logger.debug("paramList : {}", paramList);
@@ -104,16 +105,13 @@ public class DatabaseUserConnector implements UserConnector {
 
         String sql = buff.toString();
         String countSql = sqlPagedQueryCount + " " + sql;
-        String selectSql = sqlPagedQuerySelect + " " + sql + " limit "
-                + page.getStart() + "," + page.getPageSize();
+        String selectSql = sqlPagedQuerySelect + " " + sql + " limit " + page.getStart() + "," + page.getPageSize();
         logger.debug("countSql : {}", countSql);
         logger.debug("selectSql : {}", selectSql);
 
         Object[] params = paramList.toArray();
-        int totalCount = jdbcTemplate.queryForObject(countSql, Integer.class,
-                params);
-        List<Map<String, Object>> list = jdbcTemplate.queryForList(selectSql,
-                params);
+        int totalCount = jdbcTemplate.queryForObject(countSql, Integer.class, params);
+        List<Map<String, Object>> list = jdbcTemplate.queryForList(selectSql, params);
         List<UserDTO> userDtos = new ArrayList<UserDTO>();
 
         for (Map<String, Object> map : list) {

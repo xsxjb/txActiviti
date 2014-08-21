@@ -16,27 +16,27 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * 应用管理数据连接器
+ * 
+ * @author JiangBo
+ * 
+ */
 public class DatabaseScopeConnector implements ScopeConnector {
-    private static Logger logger = LoggerFactory
-            .getLogger(DatabaseScopeConnector.class);
+    private static Logger logger = LoggerFactory.getLogger(DatabaseScopeConnector.class);
     private JdbcTemplate jdbcTemplate;
 
     // ~
     private String sqlFindById = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type"
-            + " from SCOPE_INFO where id=?";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO where id=?";
     private String sqlFindByCode = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type"
-            + " from SCOPE_INFO where code=?";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO where code=?";
     private String sqlFindByRef = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type"
-            + " from SCOPE_INFO where ref=?";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO where ref=?";
     private String sqlFindAll = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type"
-            + " from SCOPE_INFO";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO";
     private String sqlFindSharedScopes = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type"
-            + " from SCOPE_INFO where shared=1";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO where shared=1";
 
     public ScopeDTO findById(String id) {
         try {
@@ -50,10 +50,12 @@ public class DatabaseScopeConnector implements ScopeConnector {
         }
     }
 
+    /**
+     * 根据传入的应用编码查询，不合法的编码不与以加载--权限控制
+     */
     public ScopeDTO findByCode(String code) {
         try {
-            Map<String, Object> map = jdbcTemplate.queryForMap(sqlFindByCode,
-                    code);
+            Map<String, Object> map = jdbcTemplate.queryForMap(sqlFindByCode, code);
 
             return convertScopeDto(map);
         } catch (EmptyResultDataAccessException ex) {
@@ -66,8 +68,7 @@ public class DatabaseScopeConnector implements ScopeConnector {
 
     public ScopeDTO findByRef(String ref) {
         try {
-            Map<String, Object> map = jdbcTemplate.queryForMap(sqlFindByRef,
-                    ref);
+            Map<String, Object> map = jdbcTemplate.queryForMap(sqlFindByRef, ref);
 
             return convertScopeDto(map);
         } catch (EmptyResultDataAccessException ex) {
@@ -92,8 +93,7 @@ public class DatabaseScopeConnector implements ScopeConnector {
 
     public List<ScopeDTO> findSharedScopes() {
         List<ScopeDTO> scopeDtos = new ArrayList<ScopeDTO>();
-        List<Map<String, Object>> list = jdbcTemplate
-                .queryForList(sqlFindSharedScopes);
+        List<Map<String, Object>> list = jdbcTemplate.queryForList(sqlFindSharedScopes);
 
         for (Map<String, Object> map : list) {
             ScopeDTO scopeDto = convertScopeDto(map);

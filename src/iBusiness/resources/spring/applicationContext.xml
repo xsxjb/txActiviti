@@ -49,7 +49,7 @@
 	<!-- 本地缓存和远程缓存的策略 -->
 	<import resource="applicationContext-cache.xml"/>
 	
-    <!-- 对应web.xml中的compositeFilter，这里配置系统的Filter和Servlet -->
+    <!-- 对应web.xml(applicationContext-filter.xml)中的compositeFilter，这里配置系统的Filter和Servlet -->
 	<import resource="applicationContext-filter.xml"/>
 	
     <!-- 审计日志。（还没用到）

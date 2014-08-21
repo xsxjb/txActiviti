@@ -1,7 +1,11 @@
 package com.ibusiness.security.util;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+/**
+ * MD5密码
+ * @author JiangBo
+ *
+ */
 public class Md5PasswordEncoder implements PasswordEncoder {
     private org.springframework.security.authentication.encoding.Md5PasswordEncoder md5PasswordEncoder = new org.springframework.security.authentication.encoding.Md5PasswordEncoder();
     private CharSequence salt;
@@ -18,7 +22,6 @@ public class Md5PasswordEncoder implements PasswordEncoder {
     }
 
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        return md5PasswordEncoder.isPasswordValid(encodedPassword,
-                rawPassword.toString(), salt);
+        return md5PasswordEncoder.isPasswordValid(encodedPassword, rawPassword.toString(), salt);
     }
 }

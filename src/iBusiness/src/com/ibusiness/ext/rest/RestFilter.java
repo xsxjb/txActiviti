@@ -51,12 +51,11 @@ public class RestFilter implements Filter {
     public void destroy() {
     }
 
-    public void doFilter(ServletRequest req, ServletResponse res,
-            FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws IOException,
+            ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
 
-        ApplicationContext ctx = ApplicationContextHelper
-                .getApplicationContext();
+        ApplicationContext ctx = ApplicationContextHelper.getApplicationContext();
         Map<String, Object> map = ctx.getBeansWithAnnotation(Path.class);
 
         for (Object object : map.values()) {
@@ -64,8 +63,7 @@ public class RestFilter implements Filter {
 
             for (Method method : clz.getDeclaredMethods()) {
                 if (this.matches(request, method)) {
-                    Map<String, String> parameters = parseBody(request
-                            .getInputStream());
+                    Map<String, String> parameters = parseBody(request.getInputStream());
                     this.invokeMethod(request, res, object, method, parameters);
 
                     return;
@@ -76,8 +74,7 @@ public class RestFilter implements Filter {
         filterChain.doFilter(req, res);
     }
 
-    public Map<String, String> parseBody(InputStream inputStream)
-            throws IOException {
+    public Map<String, String> parseBody(InputStream inputStream) throws IOException {
         String body = IoUtils.readString(inputStream);
         body = URLDecoder.decode(body, "UTF-8");
         logger.debug("body : {}", body);
@@ -101,8 +98,8 @@ public class RestFilter implements Filter {
         return parameters;
     }
 
-    public void invokeMethod(HttpServletRequest request, ServletResponse res,
-            Object object, Method method, Map<String, String> parameters) {
+    public void invokeMethod(HttpServletRequest request, ServletResponse res, Object object, Method method,
+            Map<String, String> parameters) {
         try {
             List arguments = new ArrayList();
 
@@ -138,11 +135,9 @@ public class RestFilter implements Filter {
                     if (value != null) {
                         if (parameterTypeArray[i] == String.class) {
                             arguments.add(value);
-                        } else if ((parameterTypeArray[i] == Long.class)
-                                || (parameterTypeArray[i] == long.class)) {
+                        } else if ((parameterTypeArray[i] == Long.class) || (parameterTypeArray[i] == long.class)) {
                             arguments.add(Long.parseLong(value));
-                        } else if ((parameterTypeArray[i] == Integer.class)
-                                || (parameterTypeArray[i] == int.class)) {
+                        } else if ((parameterTypeArray[i] == Integer.class) || (parameterTypeArray[i] == int.class)) {
                             arguments.add(Integer.parseInt(value));
                         }
                     } else {
@@ -157,31 +152,26 @@ public class RestFilter implements Filter {
 
             Object result = method.invoke(object, arguments.toArray());
             res.setContentType(MediaType.APPLICATION_JSON);
-            res.getOutputStream().write(
-                    jsonMapper.toJson(result).getBytes("UTF-8"));
+            res.getOutputStream().write(jsonMapper.toJson(result).getBytes("UTF-8"));
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
     }
 
     public boolean matches(HttpServletRequest request, Method method) {
-        if ("GET".equalsIgnoreCase(request.getMethod())
-                && (method.getAnnotation(GET.class) == null)) {
+        if ("GET".equalsIgnoreCase(request.getMethod()) && (method.getAnnotation(GET.class) == null)) {
             return false;
         }
 
-        if ("POST".equalsIgnoreCase(request.getMethod())
-                && (method.getAnnotation(POST.class) == null)) {
+        if ("POST".equalsIgnoreCase(request.getMethod()) && (method.getAnnotation(POST.class) == null)) {
             return false;
         }
 
-        if ("PUT".equalsIgnoreCase(request.getMethod())
-                && (method.getAnnotation(PUT.class) == null)) {
+        if ("PUT".equalsIgnoreCase(request.getMethod()) && (method.getAnnotation(PUT.class) == null)) {
             return false;
         }
 
-        if ("DELETE".equalsIgnoreCase(request.getMethod())
-                && (method.getAnnotation(DELETE.class) == null)) {
+        if ("DELETE".equalsIgnoreCase(request.getMethod()) && (method.getAnnotation(DELETE.class) == null)) {
             return false;
         }
 
@@ -194,8 +184,7 @@ public class RestFilter implements Filter {
         String path = "/";
 
         if (method.getDeclaringClass().getAnnotation(Path.class) != null) {
-            path += method.getDeclaringClass().getAnnotation(Path.class)
-                    .value();
+            path += method.getDeclaringClass().getAnnotation(Path.class).value();
         }
 
         if (method.getAnnotation(Path.class) != null) {
@@ -232,16 +221,14 @@ public class RestFilter implements Filter {
         return false;
     }
 
-    public String getPathParam(HttpServletRequest request, String name,
-            Method method) {
+    public String getPathParam(HttpServletRequest request, String name, Method method) {
         String prefix = request.getContextPath() + "/rs";
         String requestPath = request.getRequestURI().substring(prefix.length());
 
         String path = "/";
 
         if (method.getDeclaringClass().getAnnotation(Path.class) != null) {
-            path += method.getDeclaringClass().getAnnotation(Path.class)
-                    .value();
+            path += method.getDeclaringClass().getAnnotation(Path.class).value();
         }
 
         if (method.getAnnotation(Path.class) != null) {
