@@ -11,8 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ibusiness.api.scope.ScopeConnector;
-import com.ibusiness.api.scope.ScopeHolder;
+import com.ibusiness.security.api.scope.ScopeHolder;
 
 /**
  * 不实际使用多租户的伪造版本.

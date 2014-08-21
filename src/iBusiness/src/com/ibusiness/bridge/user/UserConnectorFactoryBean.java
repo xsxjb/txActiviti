@@ -4,17 +4,10 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import com.ibusiness.api.user.UserCache;
-import com.ibusiness.api.user.UserConnector;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.InitializingBean;
-
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import org.springframework.util.Assert;
 
 /**

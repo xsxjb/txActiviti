@@ -1,10 +1,7 @@
-package com.ibusiness.api.userauth;
+package com.ibusiness.bridge.userauth;
 
-import java.util.List;
-
-import com.ibusiness.api.userauth.UserAuthCache;
-import com.ibusiness.api.userauth.UserAuthConnector;
-import com.ibusiness.api.userauth.UserAuthDTO;
+import com.ibusiness.security.api.userauth.UserAuthConnector;
+import com.ibusiness.security.api.userauth.UserAuthDTO;
 
 public class UserAuthConnectorWrapper implements UserAuthConnector {
     private UserAuthConnector userAuthConnector;

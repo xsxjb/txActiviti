@@ -6,11 +6,11 @@
   <head>
     <%@include file="/common/meta.jsp"%>
     <title>dashboard</title>
-    <%@include file="/common/s.jsp"%>
+    <%@include file="/common/center.jsp"%>
   </head>
 
   <body>
-    <%@include file="/header/dashboard.jsp"%>
+    <%@include file="/header/header-portal.jsp"%>
     <div class="row-fluid">
     <!-- start of main -->
     <section id="m-main" class="span12" style="float:right">

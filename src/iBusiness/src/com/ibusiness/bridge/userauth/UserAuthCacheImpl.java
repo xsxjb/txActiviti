@@ -1,11 +1,14 @@
 package com.ibusiness.bridge.userauth;
 
-import com.ibusiness.api.userauth.UserAuthCache;
-import com.ibusiness.api.userauth.UserAuthDTO;
-
 import com.ibusiness.core.ext.cache.Cache;
 import com.ibusiness.core.ext.cache.CacheStrategy;
-
+import com.ibusiness.security.api.userauth.UserAuthDTO;
+/**
+ * 用户权限缓存实现类
+ * 
+ * @author JiangBo
+ *
+ */
 public class UserAuthCacheImpl implements UserAuthCache {
     private CacheStrategy cacheStrategy;
     private Cache cache;

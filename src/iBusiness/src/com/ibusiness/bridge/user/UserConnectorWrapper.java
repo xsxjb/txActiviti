@@ -1,13 +1,9 @@
 package com.ibusiness.bridge.user;
 
-import java.util.List;
 import java.util.Map;
 
-import com.ibusiness.api.user.UserCache;
-import com.ibusiness.api.user.UserConnector;
-import com.ibusiness.api.user.UserDTO;
-
 import com.ibusiness.page.Page;
+
 
 public class UserConnectorWrapper implements UserConnector {
     private UserConnector userConnector;

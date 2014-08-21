@@ -1,12 +1,11 @@
 package com.ibusiness.bridge.scope;
 
-import com.ibusiness.api.scope.ScopeCache;
-import com.ibusiness.api.scope.ScopeDTO;
 
 import com.ibusiness.core.ext.cache.Cache;
 import com.ibusiness.core.ext.cache.CacheStrategy;
+import com.ibusiness.security.api.scope.ScopeDTO;
 /**
- * 应用管理缓存实现类
+ * 应用管理缓存实现类 
  * 
  * @author JiangBo
  *

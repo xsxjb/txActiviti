@@ -42,7 +42,7 @@
     <bean id="userCache" class="com.ibusiness.bridge.user.UserCacheImpl">
 		<property name="cacheStrategy" ref="remoteCacheStrategy"/>
 	</bean>
-    <!--  -->
+    <!-- 帐号/用户连接器工厂 -->
 	<bean id="userConnector" class="com.ibusiness.bridge.user.UserConnectorFactoryBean">
 		<property name="type" value="${bridge.user.type}"/>
 		<property name="userCache" ref="userCache"/>

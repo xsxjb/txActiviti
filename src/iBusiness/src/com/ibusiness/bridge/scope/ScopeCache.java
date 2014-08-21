@@ -1,4 +1,7 @@
-package com.ibusiness.api.scope;
+package com.ibusiness.bridge.scope;
+
+import com.ibusiness.security.api.scope.ScopeDTO;
+
 /**
  * 应用管理缓存接口
  * 

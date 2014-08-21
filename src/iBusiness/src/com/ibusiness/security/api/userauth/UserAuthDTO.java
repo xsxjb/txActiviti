@@ -1,16 +1,30 @@
-package com.ibusiness.api.userauth;
+package com.ibusiness.security.api.userauth;
 
 import java.util.List;
-
+/**
+ * �û�Ȩ�� DTO
+ * 
+ * @author JiangBo
+ *
+ */
 public class UserAuthDTO {
+    // ���
     private String id;
+    // ��Χ
     private String scopeId;
+    // �û���
     private String username;
+    // ����
     private String password;
+    // ����
     private String ref;
+    // ��ʾ��
     private String displayName;
+    // ״̬
     private String status;
+    // ���
     private List<String> permissions;
+    // Ȩ��
     private List<String> roles;
 
     public String getId() {

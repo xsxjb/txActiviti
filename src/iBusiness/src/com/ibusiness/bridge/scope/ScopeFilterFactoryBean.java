@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.util.Assert;
 
-import com.ibusiness.api.scope.ScopeConnector;
-
 /**
  * 应用管理过滤器
  * 
@@ -25,7 +23,6 @@ public class ScopeFilterFactoryBean implements FactoryBean {
     @PostConstruct
     public void afterPropertiesSet() {
         Assert.notNull(type, "type cannot be null");
-
         if ("mock".equals(type)) {
             processMock();
         } else if ("prefix".equals(type)) {
@@ -51,12 +48,18 @@ public class ScopeFilterFactoryBean implements FactoryBean {
         scopeFilter = prefixScopeFilter;
     }
 
+    /**
+     * 应用编码过滤器
+     */
     public void processHeaderCode() {
         HeaderCodeScopeFilter headerCodeScopeFilter = new HeaderCodeScopeFilter();
         headerCodeScopeFilter.setScopeConnector(scopeConnector);
         scopeFilter = headerCodeScopeFilter;
     }
 
+    /**
+     * 应用 引用 过滤器
+     */
     public void processHeaderRef() {
         HeaderRefScopeFilter headerRefScopeFilter = new HeaderRefScopeFilter();
         headerRefScopeFilter.setScopeConnector(scopeConnector);

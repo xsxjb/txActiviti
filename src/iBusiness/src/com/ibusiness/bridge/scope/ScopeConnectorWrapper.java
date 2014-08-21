@@ -2,16 +2,13 @@ package com.ibusiness.bridge.scope;
 
 import java.util.List;
 
-import com.ibusiness.api.scope.ScopeCache;
-import com.ibusiness.api.scope.ScopeConnector;
-import com.ibusiness.api.scope.ScopeDTO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibusiness.security.api.scope.ScopeDTO;
+
 public class ScopeConnectorWrapper implements ScopeConnector {
-    private static Logger logger = LoggerFactory
-            .getLogger(ScopeConnectorWrapper.class);
+    private static Logger logger = LoggerFactory.getLogger(ScopeConnectorWrapper.class);
     private ScopeConnector scopeConnector;
     private ScopeCache scopeCache;
 

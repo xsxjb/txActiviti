@@ -1,4 +1,4 @@
-package com.ibusiness.api.user;
+package com.ibusiness.bridge.user;
 
 public class UserDTO {
     /** 用户在数据库里的唯一标识. */

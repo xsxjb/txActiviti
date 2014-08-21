@@ -2,17 +2,14 @@ package com.ibusiness.security.client;
 
 import java.util.Collections;
 
-import com.ibusiness.api.scope.ScopeHolder;
-import com.ibusiness.api.userauth.UserAuthConnector;
-import com.ibusiness.api.userauth.UserAuthDTO;
-
+import com.ibusiness.security.api.scope.ScopeHolder;
+import com.ibusiness.security.api.userauth.UserAuthConnector;
+import com.ibusiness.security.api.userauth.UserAuthDTO;
 import com.ibusiness.core.mapper.BeanMapper;
-
 import com.ibusiness.security.impl.SpringSecurityUserAuth;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

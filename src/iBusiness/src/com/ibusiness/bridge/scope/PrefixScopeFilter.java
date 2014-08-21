@@ -1,7 +1,6 @@
 package com.ibusiness.bridge.scope;
 
 import java.io.IOException;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,28 +13,27 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ibusiness.api.scope.ScopeConnector;
-import com.ibusiness.api.scope.ScopeDTO;
-import com.ibusiness.api.scope.ScopeHolder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.ibusiness.security.api.scope.ScopeDTO;
+import com.ibusiness.security.api.scope.ScopeHolder;
+
 /**
  * 应用管理前缀过滤器
  * 
  * @author JiangBo
- *
+ * 
  */
 public class PrefixScopeFilter implements Filter {
-    private static Logger logger = LoggerFactory
-            .getLogger(PrefixScopeFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(PrefixScopeFilter.class);
     private Set<String> excludes = new HashSet<String>();
     private String defaultScopeCode = "default";
     private ScopeConnector scopeConnector;
     private ScopeDTO mockScopeDto = new ScopeDTO();
 
     public PrefixScopeFilter() {
-        // 设置合法的前缀
+        // 设置有权限访问的合法URL的前缀
         excludes.add("s");
         excludes.add("plugin");
         excludes.add("common");
@@ -59,8 +57,7 @@ public class PrefixScopeFilter implements Filter {
     /**
      * http://localhost:8080/ctx/default/model/service.do
      */
-    public void doFilter(ServletRequest servletRequest,
-            ServletResponse servletResponse, FilterChain filterChain)
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
@@ -91,41 +88,34 @@ public class PrefixScopeFilter implements Filter {
                     this.jumpToDefaultPage(request, response, scopeCode);
                 } else {
                     String realUri = ctx + checkUri;
-                    logger.debug("checkUri : {}, realUri : {}", checkUri,
-                            realUri);
-                    this.doWithScope(scopeCode, realUri, request, response,
-                            filterChain);
+                    logger.debug("checkUri : {}, realUri : {}", checkUri, realUri);
+                    this.doWithScope(scopeCode, realUri, request, response, filterChain);
                 }
             }
         }
     }
 
-    public void doWithScope(String scopeCode, String uri,
-            HttpServletRequest request, HttpServletResponse response,
+    public void doWithScope(String scopeCode, String uri, HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
         try {
             ScopeHolder.setScopeDto(scopeConnector.findByCode(scopeCode));
 
-            request.setAttribute("scopePrefix", request.getContextPath() + "/"
-                    + scopeCode);
-            filterChain.doFilter(new ScopeHttpServletRequestWrapper(request,
-                    scopeCode), new ScopeHttpServletResponseWrapper(request,
-                    response, scopeCode));
+            request.setAttribute("scopePrefix", request.getContextPath() + "/" + scopeCode);
+            filterChain.doFilter(new ScopeHttpServletRequestWrapper(request, scopeCode),
+                    new ScopeHttpServletResponseWrapper(request, response, scopeCode));
         } finally {
             ScopeHolder.clear();
         }
     }
 
-    public void doWithoutScope(HttpServletRequest request,
-            HttpServletResponse response, FilterChain filterChain)
+    public void doWithoutScope(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         filterChain.doFilter(request, response);
     }
 
-    public void jumpToDefaultPage(HttpServletRequest request,
-            HttpServletResponse response, String scopeCode) throws IOException {
-        response.sendRedirect(request.getContextPath() + "/" + scopeCode
-                + "/index.do");
+    public void jumpToDefaultPage(HttpServletRequest request, HttpServletResponse response, String scopeCode)
+            throws IOException {
+        response.sendRedirect(request.getContextPath() + "/" + scopeCode + "/index.do");
     }
 
     public String getScopeFromUri(String uri) {

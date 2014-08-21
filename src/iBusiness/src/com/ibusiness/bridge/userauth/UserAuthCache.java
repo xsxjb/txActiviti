@@ -1,5 +1,13 @@
-package com.ibusiness.api.userauth;
+package com.ibusiness.bridge.userauth;
 
+import com.ibusiness.security.api.userauth.UserAuthDTO;
+
+/**
+ * 用户权限缓存接口
+ * 
+ * @author JiangBo
+ *
+ */
 public interface UserAuthCache {
     UserAuthDTO findByUsername(String username, String scopeId);
 

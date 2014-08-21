@@ -1,4 +1,4 @@
-package com.ibusiness.api.user;
+package com.ibusiness.bridge.user;
 /**
  * 帐号/用户缓存接口
  * 

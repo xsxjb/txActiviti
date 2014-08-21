@@ -1,5 +1,10 @@
-package com.ibusiness.api.userauth;
-
+package com.ibusiness.security.api.userauth;
+/**
+ * 用户权限连接器接口
+ * 
+ * @author JiangBo
+ *
+ */
 public interface UserAuthConnector {
     UserAuthDTO findByUsername(String username, String scopeId);
 

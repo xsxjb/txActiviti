@@ -4,8 +4,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
-import com.ibusiness.api.userauth.UserAuthConnector;
-import com.ibusiness.api.userauth.UserAuthDTO;
+import com.ibusiness.security.api.userauth.UserAuthConnector;
+import com.ibusiness.security.api.userauth.UserAuthDTO;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.security.impl.SpringSecurityUserAuth;
 import com.ibusiness.security.util.SpringSecurityUtils;

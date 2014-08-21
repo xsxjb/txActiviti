@@ -2,17 +2,10 @@ package com.ibusiness.bridge.scope;
 
 import javax.annotation.PostConstruct;
 
-import com.ibusiness.api.scope.ScopeCache;
-import com.ibusiness.api.scope.ScopeConnector;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.InitializingBean;
-
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import org.springframework.util.Assert;
 /**
  * 应用管理连接器工厂Bean
@@ -52,7 +45,7 @@ public class ScopeConnectorFactoryBean implements FactoryBean {
 
     public void processDatabase() {
         Assert.notNull(jdbcTemplate, "jdbcTemplate cannot be null");
-
+        // 
         DatabaseScopeConnector databaseScopeConnector = new DatabaseScopeConnector();
         databaseScopeConnector.setJdbcTemplate(jdbcTemplate);
 
@@ -78,7 +71,7 @@ public class ScopeConnectorFactoryBean implements FactoryBean {
 
         if (scopeCache != null) {
             logger.debug("use cache for ScopeConnector");
-
+            // 应用管理链接器
             ScopeConnectorWrapper scopeConnectorWrapper = new ScopeConnectorWrapper();
             scopeConnectorWrapper.setScopeConnector(databaseScopeConnector);
             scopeConnectorWrapper.setScopeCache(scopeCache);

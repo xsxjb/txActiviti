@@ -3,12 +3,11 @@ package com.ibusiness.security.impl;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.ibusiness.api.userauth.UserAuthDTO;
+import com.ibusiness.security.api.userauth.UserAuthDTO;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

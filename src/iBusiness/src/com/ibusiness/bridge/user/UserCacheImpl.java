@@ -1,12 +1,9 @@
 package com.ibusiness.bridge.user;
 
-import com.ibusiness.api.user.UserCache;
-import com.ibusiness.api.user.UserDTO;
-
 import com.ibusiness.core.ext.cache.Cache;
 import com.ibusiness.core.ext.cache.CacheStrategy;
 /**
- * 帐号/用户缓存接口实现类
+ * 帐号/用户缓存接口实现类 
  * @author JiangBo
  *
  */

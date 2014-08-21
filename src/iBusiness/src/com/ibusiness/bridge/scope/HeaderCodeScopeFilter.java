@@ -11,9 +11,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ibusiness.api.scope.ScopeConnector;
-import com.ibusiness.api.scope.ScopeHolder;
-
+import com.ibusiness.security.api.scope.ScopeHolder;
+/**
+ * 应用管理编码过滤器
+ * 
+ * @author JiangBo
+ *
+ */
 public class HeaderCodeScopeFilter implements Filter {
     private String defaultScopeCode = "default";
     private ScopeConnector scopeConnector;
@@ -28,8 +32,7 @@ public class HeaderCodeScopeFilter implements Filter {
     /**
      * http://localhost:8080/ctx/model/service.do x-scope-code: default
      */
-    public void doFilter(ServletRequest servletRequest,
-            ServletResponse servletResponse, FilterChain filterChain)
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;

@@ -1,5 +1,10 @@
-package com.ibusiness.api.scope;
-
+package com.ibusiness.security.api.scope;
+/**
+ * 应用管理
+ * 
+ * @author JiangBo
+ *
+ */
 public class ScopeHolder {
     private static ThreadLocal<ScopeDTO> scopeThreadLocal = new ThreadLocal<ScopeDTO>();
 

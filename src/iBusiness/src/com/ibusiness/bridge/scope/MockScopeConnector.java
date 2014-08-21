@@ -1,25 +1,20 @@
 package com.ibusiness.bridge.scope;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import com.ibusiness.api.scope.ScopeConnector;
-import com.ibusiness.api.scope.ScopeDTO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-
+import com.ibusiness.security.api.scope.ScopeDTO;
+/**
+ * 应用连接器实现类
+ * 
+ * @author JiangBo
+ *
+ */
 public class MockScopeConnector implements ScopeConnector {
-    private static Logger logger = LoggerFactory
-            .getLogger(MockScopeConnector.class);
+    private static Logger logger = LoggerFactory.getLogger(MockScopeConnector.class);
     private ScopeDTO scopeDto;
 
     public MockScopeConnector() {

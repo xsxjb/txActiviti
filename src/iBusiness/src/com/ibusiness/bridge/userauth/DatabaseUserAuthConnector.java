@@ -1,27 +1,20 @@
-package com.ibusiness.api.userauth;
+package com.ibusiness.bridge.userauth;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import com.ibusiness.api.scope.ScopeConnector;
-import com.ibusiness.api.scope.ScopeDTO;
-import com.ibusiness.api.user.UserConnector;
-import com.ibusiness.api.user.UserDTO;
-import com.ibusiness.api.userauth.UserAuthConnector;
-import com.ibusiness.api.userauth.UserAuthDTO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.springframework.dao.EmptyResultDataAccessException;
-
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import org.springframework.util.Assert;
+
+import com.ibusiness.bridge.scope.ScopeConnector;
+import com.ibusiness.bridge.user.UserConnector;
+import com.ibusiness.bridge.user.UserDTO;
+import com.ibusiness.security.api.scope.ScopeDTO;
+import com.ibusiness.security.api.userauth.UserAuthConnector;
+import com.ibusiness.security.api.userauth.UserAuthDTO;
 /**
  * 用户权限数据连接器
  * 

@@ -1,5 +1,10 @@
-package com.ibusiness.api.scope;
-
+package com.ibusiness.security.api.scope;
+/**
+ * 应用DTO
+ * 
+ * @author JiangBo
+ *
+ */
 public class ScopeDTO {
     /** 普通的管理后台的类型. */
     public static final int TYPE_NORMAL = 0;

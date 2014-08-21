@@ -7,21 +7,15 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import com.ibusiness.api.user.UserConnector;
-import com.ibusiness.api.user.UserDTO;
-
-import com.ibusiness.page.PropertyFilter;
-import com.ibusiness.page.PropertyFilterUtils;
-import com.ibusiness.page.Page;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.dao.EmptyResultDataAccessException;
-
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import org.springframework.util.Assert;
+
+import com.ibusiness.page.Page;
+import com.ibusiness.page.PropertyFilter;
+import com.ibusiness.page.PropertyFilterUtils;
 
 /**
  * 用户数据连接器
@@ -34,17 +28,21 @@ public class DatabaseUserConnector implements UserConnector {
     private JdbcTemplate jdbcTemplate;
     private Map<String, String> aliasMap = new HashMap<String, String>();
 
-    // ~
+    // 用户表-通过ID查询
     private String sqlFindById = "select id as id,username as username,status as status,"
             + "display_name as display_name,email as email,mobile as mobile,user_repo_id as user_repo_ref"
             + " from USER_BASE where id=?";
+    // 用户表-通过帐号, 用户库列表ID查询
     private String sqlFindByUsername = "select ub.id as id,ub.username as username,ub.status as status,"
             + "display_name as display_name,email as email,mobile as mobile,user_repo_id as user_repo_ref"
             + " from USER_BASE ub where ub.username=? and ub.user_repo_id=?";
+    // 用户表-通过 引用, 用户库列表ID查询
     private String sqlFindByRef = "select ub.id as id,ub.username as username,ub.status as status,"
             + "display_name as display_name,email as email,mobile as mobile,user_repo_id as user_repo_ref"
             + " from USER_BASE ub where ub.ref=? and ub.user_repo_id=?";
+    // 用户表-总行数
     private String sqlPagedQueryCount = "select count(*) from USER_BASE";
+    // 用户表-全部数据
     private String sqlPagedQuerySelect = "select id as id,username as username,status as status,"
             + "display_name as display_name,email as email,mobile as mobile,user_repo_id as user_repo_ref"
             + " from USER_BASE";

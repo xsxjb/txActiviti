@@ -8,13 +8,9 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
 
-import com.ibusiness.api.scope.ScopeConnector;
-import com.ibusiness.api.user.UserConnector;
-import com.ibusiness.api.userauth.DatabaseUserAuthConnector;
-import com.ibusiness.api.userauth.MockUserAuthConnector;
-import com.ibusiness.api.userauth.UserAuthCache;
-import com.ibusiness.api.userauth.UserAuthConnector;
-import com.ibusiness.api.userauth.UserAuthConnectorWrapper;
+import com.ibusiness.bridge.scope.ScopeConnector;
+import com.ibusiness.bridge.user.UserConnector;
+import com.ibusiness.security.api.userauth.UserAuthConnector;
 /**
  * 用户权限连接器工厂bean
  * 

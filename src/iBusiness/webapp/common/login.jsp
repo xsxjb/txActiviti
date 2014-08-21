@@ -6,7 +6,7 @@
   <head>
     <%@include file="/common/meta.jsp"%>
     <title><spring:message code="core.login.title" text="登录"/></title>
-	<%@include file="/common/s.jsp"%>
+	<%@include file="/common/center.jsp"%>
   </head>
 
   <body onload='document.f.j_username.focus();'>

@@ -1,29 +1,18 @@
 package com.ibusiness.bridge.user;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Resource;
-
-import com.ibusiness.api.user.UserConnector;
-import com.ibusiness.api.user.UserDTO;
-
-import com.ibusiness.page.PropertyFilter;
-import com.ibusiness.page.PropertyFilterUtils;
-import com.ibusiness.page.Page;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import org.springframework.util.Assert;
-
+import com.ibusiness.page.Page;
+/**
+ * 用户连接器实现类
+ * 
+ * @author JiangBo
+ *
+ */
 public class MockUserConnector implements UserConnector {
     private static Logger logger = LoggerFactory
             .getLogger(MockUserConnector.class);

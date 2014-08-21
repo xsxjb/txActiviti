@@ -1,9 +1,15 @@
-package com.ibusiness.api.user;
+package com.ibusiness.bridge.user;
 
 import java.util.Map;
 
 import com.ibusiness.page.Page;
 
+/**
+ * 用户连接器接口
+ * 
+ * @author JiangBo
+ *
+ */
 public interface UserConnector {
     /**
      * 根据唯一标识获取用户信息.
