@@ -15,14 +15,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
- * requestUri(path)过滤
- * 如果在黑名单中，直接略过
- * 如果符合redirect规则，进行跳转
- * 如果都没问题，才会继续进行判断
+ * 代理过滤器
  * 
  * @author JiangBo
- *
+ * 
  */
 public class ProxyFilter implements Filter {
     // encode, i18n
@@ -41,16 +39,19 @@ public class ProxyFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {
         if (enable) {
-            ProxyFilterConfig proxyFilterConfig = new ProxyFilterConfig(
-                    config.getServletContext());
+            // 设置代理过滤器配置信息
+            ProxyFilterConfig proxyFilterConfig = new ProxyFilterConfig(config.getServletContext());
             proxyFilterConfig.setFilterName(name);
             proxyFilterConfig.setMap(map);
             filter.init(proxyFilterConfig);
         }
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+    /**
+     * 过滤器接口方法中增加过滤条件.
+     */
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+            ServletException {
         if (enable) {
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse res = (HttpServletResponse) response;
@@ -58,17 +59,15 @@ public class ProxyFilter implements Filter {
             String requestUri = req.getRequestURI();
             String path = requestUri.substring(contextPath.length());
 
-            // 如果在黑名单中，直接略过
+            // 如果在黑名单(不包括范围)中，直接略过
             if (isExcluded(path)) {
                 chain.doFilter(request, response);
-
                 return;
             }
 
             // 如果符合redirect规则，进行跳转
             if (urlPatternMatcher.shouldRedirect(path)) {
                 res.sendRedirect(contextPath + path + "/");
-
                 return;
             }
 
@@ -83,13 +82,17 @@ public class ProxyFilter implements Filter {
         }
     }
 
+    /**
+     * 判断是否在黑名单(不包括范围)中，直接略过
+     * @param path
+     * @return
+     */
     protected boolean isExcluded(String path) {
         for (UrlPatternMatcher exclude : excludes) {
             if (exclude.matches(path)) {
                 return true;
             }
         }
-
         return false;
     }
 

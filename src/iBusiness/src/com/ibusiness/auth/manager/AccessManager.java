@@ -5,7 +5,7 @@ import java.util.List;
 import com.ibusiness.auth.domain.Access;
 import com.ibusiness.auth.domain.Perm;
 
-import com.ibusiness.core.hibernate.HibernateEntityDao;
+import com.ibusiness.page.HibernateEntityDao;
 
 import org.springframework.stereotype.Service;
 

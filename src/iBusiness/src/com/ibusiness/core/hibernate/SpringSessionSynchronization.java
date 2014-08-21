@@ -17,7 +17,12 @@ import org.springframework.orm.hibernate4.SessionHolder;
 
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-
+/**
+ * SpringSession当前线程管理。
+ * 判断有没有一个事务，如果没有事务则启动一个事务，并把事务与当前线程绑定。
+ * @author JiangBo
+ *
+ */
 @SuppressWarnings("deprecation")
 class SpringSessionSynchronization implements TransactionSynchronization,
         Ordered {

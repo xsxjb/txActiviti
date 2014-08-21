@@ -16,9 +16,9 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * 构造DataSourceService.
+ * 数据源服务工厂类,构造DataSourceService.通过dataSourceService的getDataSource提供数据源对象
  * 
- * @author Lingo
+ * @author JiangBo
  */
 public class DataSourceServiceFactoryBean implements FactoryBean, InitializingBean, DisposableBean {
     private static Logger logger = LoggerFactory.getLogger(DataSourceServiceFactoryBean.class);

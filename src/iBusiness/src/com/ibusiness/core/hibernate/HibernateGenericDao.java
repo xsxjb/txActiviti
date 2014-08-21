@@ -1,9 +1,7 @@
 package com.ibusiness.core.hibernate;
 
 import java.io.Serializable;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.List;
 import java.util.Map;
 
@@ -13,14 +11,11 @@ import com.ibusiness.core.util.ReflectUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -377,7 +372,7 @@ public class HibernateGenericDao extends HibernateBasicDao {
 
         Object result = criteria.uniqueResult();
 
-        return HibernateUtils.getNumber(result) == 0;
+        return getNumber(result) == 0;
     }
 
     // ============================================================================================
@@ -409,7 +404,7 @@ public class HibernateGenericDao extends HibernateBasicDao {
         Object result = criteria.setProjection(Projections.rowCount())
                 .uniqueResult();
 
-        return HibernateUtils.getNumber(result);
+        return getNumber(result);
     }
 
     /**
@@ -425,7 +420,7 @@ public class HibernateGenericDao extends HibernateBasicDao {
     public Integer getCount(String hql, Object... values) {
         Object result = createQuery(hql, values).uniqueResult();
 
-        return HibernateUtils.getNumber(result);
+        return getNumber(result);
     }
 
     /**
@@ -441,7 +436,7 @@ public class HibernateGenericDao extends HibernateBasicDao {
     public Integer getCount(String hql, Map<String, Object> map) {
         Object result = createQuery(hql, map).uniqueResult();
 
-        return HibernateUtils.getNumber(result);
+        return getNumber(result);
     }
 
     // ============================================================================================
@@ -473,5 +468,19 @@ public class HibernateGenericDao extends HibernateBasicDao {
     @Transactional
     public int batchUpdate(String hql, Map<String, Object> map) {
         return this.createQuery(hql, map).executeUpdate();
+    }
+    /**
+     * get number for count.
+     * 
+     * @param result
+     *            Object
+     * @return Integer
+     */
+    private static Integer getNumber(Object result) {
+        if (result == null) {
+            return 0;
+        } else {
+            return ((Number) result).intValue();
+        }
     }
 }

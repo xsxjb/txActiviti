@@ -37,12 +37,7 @@
 	<import resource="applicationContext-springmvc.xml"/>
 	<!-- 数据库持久层hibernate -->
 	<import resource="applicationContext-hibernate.xml"/>
-	<!-- 模块间交互的定制服务
-	<import resource="applicationContext-service.xml"/> -->
 	
-	<!-- activiti工作流 
-	<import resource="applicationContext-activiti.xml"/>
-	-->
     <!-- 用户账号，多租户，用户，用户权限暴露接口的配置，包括相关的缓存
 	<import resource="applicationContext-bridge.xml"/>-->
 	 
@@ -52,17 +47,11 @@
     <!-- 对应web.xml(applicationContext-filter.xml)中的compositeFilter，这里配置系统的Filter和Servlet -->
 	<import resource="applicationContext-filter.xml"/>
 	
-    <!-- 审计日志。（还没用到）
-	<import resource="applicationContext-inspektr.xml"/>
-	 -->
     <!-- 异步的消息订阅与发布 -->
 	<import resource="applicationContext-jms.xml"/>
 	
 	<!-- 把一些bean导出成jmx 
 	<import resource="applicationContext-jmx.xml"/>
-	-->
-	<!-- 邮件配置 
-	<import resource="applicationContext-mail.xml"/>
 	-->
 	<!-- 基于spring的定时任务 
 	<import resource="applicationContext-scheduler.xml"/>

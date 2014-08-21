@@ -34,12 +34,6 @@
 		</then>
 	</if>
 
-	<if condition='${log.mail.enable}'>
-		<then>
-			<include resource="logback/mail.xml" />
-		</then>
-	</if>
-
 	<if condition='${log.inspektr.enable}'>
 		<then>
 			<include resource="logback/inspektr.xml" />
@@ -57,11 +51,6 @@
 		<if condition='${log.file.enable}'>
 			<then>
 		        <appender-ref ref="FILE" />
-			</then>
-		</if>
-		<if condition='${log.mail.enable}'>
-			<then>
-		        <appender-ref ref="MAIL" />
 			</then>
 		</if>
     </root>

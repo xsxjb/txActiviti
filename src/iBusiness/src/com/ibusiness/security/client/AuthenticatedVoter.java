@@ -16,9 +16,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.switchuser.SwitchUserGrantedAuthority;
 
+/**
+ * 验证器投票器。参与授权的投票。
+ * Authenticated获取权限信息投票通过，或拒绝，或弃权
+ * @author JiangBo
+ * 
+ */
 public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
-    private static Logger logger = LoggerFactory
-            .getLogger(AuthenticatedVoter.class);
+    private static Logger logger = LoggerFactory.getLogger(AuthenticatedVoter.class);
     public static final String IS_GUEST = "IS_GUEST";
     public static final String IS_USER = "IS_USER";
     public static final String IS_LOGINED = "IS_LOGINED";
@@ -37,16 +42,14 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
     }
 
     public boolean supports(ConfigAttribute attribute) {
-        return (attribute.getAttribute() != null)
-                && ALLOWED_ATTRIBUTES.contains(attribute.getAttribute());
+        return (attribute.getAttribute() != null) && ALLOWED_ATTRIBUTES.contains(attribute.getAttribute());
     }
 
     public boolean supports(Class<?> clazz) {
         return true;
     }
 
-    public int vote(Authentication authentication, Object object,
-            Collection<ConfigAttribute> attributes) {
+    public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> attributes) {
         int result = ACCESS_ABSTAIN;
 
         for (ConfigAttribute attribute : attributes) {
@@ -90,7 +93,7 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
         return result;
     }
 
-    // ~ ======================================================================
+    // ======================================================================
     public boolean isGuest(Authentication authentication, String attribute) {
         return IS_GUEST.equals(attribute);
     }
@@ -116,14 +119,13 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
         return notGuest;
     }
 
-    // ~ ======================================================================
+    // ======================================================================
     public boolean isSwitched(Authentication authentication, String attribute) {
         if (!IS_SWITCHED.equals(attribute)) {
             return false;
         }
 
-        Collection<? extends GrantedAuthority> authorities = authentication
-                .getAuthorities();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         for (GrantedAuthority auth : authorities) {
             if (auth instanceof SwitchUserGrantedAuthority) {
@@ -136,14 +138,12 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 
     public boolean isRemembered(Authentication authentication, String attribute) {
         return IS_REMEMBERED.equals(attribute)
-                && RememberMeAuthenticationToken.class
-                        .isAssignableFrom(authentication.getClass());
+                && RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
     }
 
-    // ~ ======================================================================
+    // ======================================================================
     public boolean isOnlyGuest(Authentication authentication, String attribute) {
         return IS_GUEST.equals(attribute)
-                && AnonymousAuthenticationToken.class
-                        .isAssignableFrom(authentication.getClass());
+                && AnonymousAuthenticationToken.class.isAssignableFrom(authentication.getClass());
     }
 }

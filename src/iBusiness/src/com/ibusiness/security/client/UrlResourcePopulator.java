@@ -16,7 +16,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import org.springframework.util.Assert;
-
+/**
+ * 资源方法填充器
+ * 资源访问权限类型为'URL'的数据的填充器
+ * 
+ * @author JiangBo
+ *
+ */
 public class UrlResourcePopulator {
     private static Logger logger = LoggerFactory
             .getLogger(UrlResourcePopulator.class);

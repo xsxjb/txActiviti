@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Role .
+ * 角色管理表.
  * 
  * @author Lingo
  */
@@ -25,19 +25,19 @@ import javax.persistence.Table;
 public class Role implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
-    /** null. */
+    /** 编号. */
     private Long id;
 
-    /** null. */
+    /** 角色模板编号. */
     private RoleDef roleDef;
 
-    /** null. */
+    /** 角色名. */
     private String name;
 
-    /** null. */
+    /** 备注. */
     private String descn;
 
-    /** null. */
+    /** 范围. */
     private String scopeId;
 
     /** . */

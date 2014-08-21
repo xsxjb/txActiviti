@@ -6,7 +6,12 @@ import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-
+/**
+ * 代理servlet配置信息(ProxyServlet类init初始化用)
+ * 
+ * @author JiangBo
+ *
+ */
 public class ProxyServletConfig implements ServletConfig {
     private String servletName;
     private ServletContext servletContext;

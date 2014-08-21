@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 代理servlet。servletMap参数的对象代理类
+ * 
+ * @author JiangBo
+ * 
+ */
 public class ProxyServlet implements Servlet {
     private static Logger logger = LoggerFactory.getLogger(ProxyServlet.class);
     private final String name;
@@ -34,8 +40,7 @@ public class ProxyServlet implements Servlet {
         this(name, servlet, Collections.EMPTY_MAP, enable);
     }
 
-    public ProxyServlet(String name, Servlet servlet, Map<String, String> map,
-            boolean enable) {
+    public ProxyServlet(String name, Servlet servlet, Map<String, String> map, boolean enable) {
         this.name = name;
         this.servlet = servlet;
         this.map = map;
@@ -44,8 +49,7 @@ public class ProxyServlet implements Servlet {
 
     public void init(ServletConfig config) throws ServletException {
         if (enable) {
-            ProxyServletConfig proxyServletConfig = new ProxyServletConfig(
-                    config.getServletContext());
+            ProxyServletConfig proxyServletConfig = new ProxyServletConfig(config.getServletContext());
             proxyServletConfig.setServletName(name);
             proxyServletConfig.setMap(map);
             servlet.init(proxyServletConfig);
@@ -56,16 +60,14 @@ public class ProxyServlet implements Servlet {
         return servlet.getServletConfig();
     }
 
-    public void service(ServletRequest req, ServletResponse res)
-            throws ServletException, IOException {
+    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
         logger.trace("{}", name);
 
         if (enable) {
             servlet.service(req, res);
         } else {
             logger.trace("skip");
-            ((HttpServletResponse) res)
-                    .sendError(HttpServletResponse.SC_NOT_FOUND);
+            ((HttpServletResponse) res).sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -79,7 +81,7 @@ public class ProxyServlet implements Servlet {
         }
     }
 
-    // ~ ==================================================
+    // ==================================================
     public String getName() {
         return name;
     }

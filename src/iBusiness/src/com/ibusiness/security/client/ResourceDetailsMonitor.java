@@ -14,10 +14,14 @@ import org.springframework.security.access.method.DelegatingMethodSecurityMetada
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 import org.springframework.util.Assert;
-
+/**
+ * 资源详细监控
+ * 
+ * @author JiangBo
+ *
+ */
 public class ResourceDetailsMonitor implements InitializingBean {
-    private static Logger logger = LoggerFactory
-            .getLogger(ResourceDetailsMonitor.class);
+    private static Logger logger = LoggerFactory.getLogger(ResourceDetailsMonitor.class);
     private UrlSourceFetcher urlSourceFetcher;
     private MethodSourceFetcher methodSourceFetcher;
     private DelegatingMethodSecurityMetadataSource delegatingMethodSecurityMetadataSource;
@@ -27,6 +31,7 @@ public class ResourceDetailsMonitor implements InitializingBean {
     private boolean debug;
 
     public void afterPropertiesSet() {
+        // Spring 断言
         Assert.notNull(urlSourceFetcher);
         Assert.notNull(methodSourceFetcher);
         Assert.notNull(filterSecurityInterceptor);
@@ -47,10 +52,8 @@ public class ResourceDetailsMonitor implements InitializingBean {
         Map<String, String> urlResourceMap = urlSourceFetcher.getSource(null);
         urlResourcePopulator.execute(filterSecurityInterceptor, urlResourceMap);
 
-        Map<String, String> methodResourceMap = methodSourceFetcher
-                .getSource(null);
-        methodResourcePopulator.execute(delegatingMethodSecurityMetadataSource,
-                methodResourceMap);
+        Map<String, String> methodResourceMap = methodSourceFetcher.getSource(null);
+        methodResourcePopulator.execute(delegatingMethodSecurityMetadataSource, methodResourceMap);
     }
 
     // ~ ======================================================================
@@ -67,8 +70,7 @@ public class ResourceDetailsMonitor implements InitializingBean {
         this.delegatingMethodSecurityMetadataSource = delegatingMethodSecurityMetadataSource;
     }
 
-    public void setFilterSecurityInterceptor(
-            FilterSecurityInterceptor filterSecurityInterceptor) {
+    public void setFilterSecurityInterceptor(FilterSecurityInterceptor filterSecurityInterceptor) {
         this.filterSecurityInterceptor = filterSecurityInterceptor;
     }
 

@@ -1,4 +1,4 @@
-package com.ibusiness.core.hibernate;
+package com.ibusiness.page;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,14 +27,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 /**
- * hibernate utils.
+ * hibernate utils.工具类
  * 
  * @author Lingo
  */
 public class HibernateUtils {
     /** logger. */
-    private static Logger logger = LoggerFactory
-            .getLogger(HibernateUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(HibernateUtils.class);
 
     /** protected constructor. */
     protected HibernateUtils() {
@@ -67,14 +66,11 @@ public class HibernateUtils {
         Assert.hasText(hql);
 
         if (hql.toLowerCase(Locale.ENGLISH).indexOf("distinct") != -1) {
-            logger.warn(
-                    "there is a distinct in paged query hql : [{}], this maybe cause an unexpected result",
-                    hql);
+            logger.warn("there is a distinct in paged query hql : [{}], this maybe cause an unexpected result", hql);
         }
 
         int beginPos = hql.toLowerCase(Locale.CHINA).indexOf("from");
-        Assert.isTrue(beginPos != -1, " hql : " + hql
-                + " must has a keyword 'from'");
+        Assert.isTrue(beginPos != -1, " hql : " + hql + " must has a keyword 'from'");
 
         return hql.substring(beginPos);
     }
@@ -90,8 +86,7 @@ public class HibernateUtils {
     public static String removeOrders(String hql) {
         Assert.hasText(hql);
 
-        Pattern p = Pattern.compile("order\\s*by[\\w|\\W|\\s|\\S]*",
-                Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("order\\s*by[\\w|\\W|\\s|\\S]*", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(hql);
         StringBuffer sb = new StringBuffer();
 
@@ -141,8 +136,7 @@ public class HibernateUtils {
         if (criteria instanceof CriteriaImpl) {
             return ((CriteriaImpl) criteria).getProjection();
         } else {
-            throw new IllegalArgumentException(criteria
-                    + " is not a CriteriaImpl");
+            throw new IllegalArgumentException(criteria + " is not a CriteriaImpl");
         }
     }
 
@@ -180,8 +174,7 @@ public class HibernateUtils {
      *            MatchType
      * @return Criterion
      */
-    public static Criterion buildCriterion(String propertyName,
-            Object propertyValue, MatchType matchType) {
+    public static Criterion buildCriterion(String propertyName, Object propertyValue, MatchType matchType) {
         Assert.hasText(propertyName, "propertyName不能为空");
 
         Criterion criterion = null;
@@ -194,8 +187,7 @@ public class HibernateUtils {
             break;
 
         case LIKE:
-            criterion = Restrictions.like(propertyName, (String) propertyValue,
-                    MatchMode.ANYWHERE);
+            criterion = Restrictions.like(propertyName, (String) propertyValue, MatchMode.ANYWHERE);
 
             break;
 
@@ -220,8 +212,7 @@ public class HibernateUtils {
             break;
 
         case IN:
-            criterion = Restrictions.in(propertyName,
-                    (Collection) propertyValue);
+            criterion = Restrictions.in(propertyName, (Collection) propertyValue);
 
             break;
 
@@ -247,16 +238,15 @@ public class HibernateUtils {
         for (PropertyFilter filter : filters) {
             // 只有一个属性需要比较的情况.
             if (!filter.hasMultiProperties()) {
-                Criterion criterion = buildCriterion(filter.getPropertyName(),
-                        filter.getMatchValue(), filter.getMatchType());
+                Criterion criterion = buildCriterion(filter.getPropertyName(), filter.getMatchValue(),
+                        filter.getMatchType());
                 criterionList.add(criterion);
             } else {
                 // 包含多个属性需要比较的情况,进行or处理.
                 Disjunction disjunction = Restrictions.disjunction();
 
                 for (String param : filter.getPropertyNames()) {
-                    Criterion criterion = buildCriterion(param,
-                            filter.getMatchValue(), filter.getMatchType());
+                    Criterion criterion = buildCriterion(param, filter.getMatchValue(), filter.getMatchType());
                     disjunction.add(criterion);
                 }
 
@@ -267,8 +257,7 @@ public class HibernateUtils {
         return criterionList.toArray(new Criterion[criterionList.size()]);
     }
 
-    public static void buildQuery(StringBuilder buff,
-            PropertyFilter propertyFilter) {
+    public static void buildQuery(StringBuilder buff, PropertyFilter propertyFilter) {
         if (buff.toString().toLowerCase().indexOf("where") == -1) {
             buff.append(" where ");
         } else {

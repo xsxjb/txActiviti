@@ -2,7 +2,7 @@ package com.ibusiness.security.util;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 /**
- * MD5密码
+ * MD5密码编译器
  * @author JiangBo
  *
  */

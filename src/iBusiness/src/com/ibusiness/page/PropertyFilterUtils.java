@@ -1,8 +1,12 @@
-package com.ibusiness.core.hibernate;
+package com.ibusiness.page;
 
 import java.util.Collection;
 import java.util.List;
-
+/**
+ * 查询条件字段过滤器 工具类
+ * @author JiangBo
+ *
+ */
 public class PropertyFilterUtils {
     protected PropertyFilterUtils() {
     }

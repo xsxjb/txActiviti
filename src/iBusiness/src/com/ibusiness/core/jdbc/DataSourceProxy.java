@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 /**
- * dataSource proxy.
+ * dataSource代理.
  * 
  * @author Lingo
  */

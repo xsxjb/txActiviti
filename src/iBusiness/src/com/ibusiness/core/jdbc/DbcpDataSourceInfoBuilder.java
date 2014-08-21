@@ -10,7 +10,12 @@ import org.slf4j.LoggerFactory;
 
 import com.ibusiness.core.util.PropertiesUtils;
 import com.ibusiness.core.util.StringUtils;
-
+/**
+ * 创建数据库连接池信息
+ * 
+ * @author JiangBo
+ *
+ */
 public class DbcpDataSourceInfoBuilder {
     public static final int VALID_LENGTH = 3;
     private Logger logger = LoggerFactory.getLogger(DbcpDataSourceInfoBuilder.class);
@@ -56,8 +61,7 @@ public class DbcpDataSourceInfoBuilder {
         return map.values();
     }
 
-    public void tryToSetProperty(String name, String propertyName,
-            String propertyValue) {
+    public void tryToSetProperty(String name, String propertyName, String propertyValue) {
         DataSourceInfo dataSourceInfo = map.get(name);
 
         if (dataSourceInfo == null) {
@@ -66,7 +70,6 @@ public class DbcpDataSourceInfoBuilder {
             map.put(name, dataSourceInfo);
         }
 
-        PropertiesUtils.tryToSetProperty(dataSourceInfo, propertyName,
-                propertyValue);
+        PropertiesUtils.tryToSetProperty(dataSourceInfo, propertyName, propertyValue);
     }
 }

@@ -13,7 +13,11 @@ import com.ibusiness.api.userauth.UserAuthDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+/**
+ * 用户权限
+ * @author JiangBo
+ *
+ */
 public class SpringSecurityUserAuth extends UserAuthDTO implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -42,7 +46,7 @@ public class SpringSecurityUserAuth extends UserAuthDTO implements UserDetails {
         return true;
     }
 
-    // ~ ==================================================
+    // ==================================================
     public void setPermissions(List<String> permissions) {
         super.setPermissions(permissions);
 

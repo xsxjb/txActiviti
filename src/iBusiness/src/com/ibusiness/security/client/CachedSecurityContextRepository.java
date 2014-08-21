@@ -1,49 +1,48 @@
 package com.ibusiness.security.client;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.ibusiness.api.userauth.UserAuthConnector;
-import com.ibusiness.api.userauth.UserAuthDTO;
-
-import com.ibusiness.core.mapper.BeanMapper;
-
-import com.ibusiness.security.impl.SpringSecurityUserAuth;
-import com.ibusiness.security.util.SpringSecurityUtils;
-
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
-public class CachedSecurityContextRepository extends
-        HttpSessionSecurityContextRepository {
+import com.ibusiness.api.userauth.UserAuthConnector;
+import com.ibusiness.api.userauth.UserAuthDTO;
+import com.ibusiness.core.mapper.BeanMapper;
+import com.ibusiness.security.impl.SpringSecurityUserAuth;
+import com.ibusiness.security.util.SpringSecurityUtils;
+
+/**
+ * 负责从SecurityContextRepository获取或存储SecurityContext。 
+ * SecurityContext代表了用户安全和认证过的session
+ * 
+ * @author JiangBo
+ * 
+ */
+public class CachedSecurityContextRepository extends HttpSessionSecurityContextRepository {
     private UserAuthConnector userAuthConnector;
     private BeanMapper beanMapper = new BeanMapper();
     private boolean debug;
 
-    public SecurityContext loadContext(
-            HttpRequestResponseHolder requestResponseHolder) {
-        SecurityContext securityContext = super
-                .loadContext(requestResponseHolder);
+    /**
+     * 获取SecurityContext
+     */
+    public SecurityContext loadContext(HttpRequestResponseHolder requestResponseHolder) {
+        SecurityContext securityContext = super.loadContext(requestResponseHolder);
 
         if (debug) {
             return securityContext;
         }
 
         if (securityContext != null) {
-            SpringSecurityUserAuth userAuthInSession = SpringSecurityUtils
-                    .getCurrentUser(securityContext);
+            SpringSecurityUserAuth userAuthInSession = SpringSecurityUtils.getCurrentUser(securityContext);
 
             if (userAuthInSession != null) {
-                UserAuthDTO userAuthInCache = userAuthConnector.findById(
-                        userAuthInSession.getId(),
+                UserAuthDTO userAuthInCache = userAuthConnector.findById(userAuthInSession.getId(),
                         userAuthInSession.getScopeId());
 
                 SpringSecurityUserAuth userAuthResult = new SpringSecurityUserAuth();
                 beanMapper.copy(userAuthInCache, userAuthResult);
 
-                SpringSecurityUtils.saveUserDetailsToContext(userAuthResult,
-                        null, securityContext);
+                SpringSecurityUtils.saveUserDetailsToContext(userAuthResult, null, securityContext);
             } else {
                 logger.debug("userAuthInSession is null");
             }

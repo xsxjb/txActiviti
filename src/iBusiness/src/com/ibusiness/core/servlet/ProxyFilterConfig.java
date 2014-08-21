@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 /**
- * 过滤器代理配置文件
+ * 代理过滤器配置信息(ProxyFilter类init初始化用)
  * 
  * @author JiangBo
  *

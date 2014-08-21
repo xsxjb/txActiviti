@@ -8,6 +8,12 @@ import java.io.OutputStream;
 
 import org.springframework.core.io.Resource;
 
+/**
+ * IO工具类
+ * 
+ * @author JiangBo
+ * 
+ */
 public class IoUtils {
     private static final int DEFAULT_BUFFER_SIZE = 1024;
 
@@ -22,8 +28,7 @@ public class IoUtils {
         return readString(is, "UTF-8");
     }
 
-    public static String readString(InputStream is, String encoding)
-            throws IOException {
+    public static String readString(InputStream is, String encoding) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         copyStream(is, baos);
 
@@ -32,14 +37,12 @@ public class IoUtils {
         return text;
     }
 
-    public static void copyFileToOutputStream(String fileLocation,
-            OutputStream os) throws IOException {
+    public static void copyFileToOutputStream(String fileLocation, OutputStream os) throws IOException {
         FileInputStream fis = new FileInputStream(fileLocation);
         copyStream(fis, os);
     }
 
-    public static void copyStream(InputStream is, OutputStream os)
-            throws IOException {
+    public static void copyStream(InputStream is, OutputStream os) throws IOException {
         if (is == null) {
             throw new IllegalArgumentException("InputStream is null");
         }

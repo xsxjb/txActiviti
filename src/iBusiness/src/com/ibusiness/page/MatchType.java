@@ -1,7 +1,7 @@
-package com.ibusiness.core.hibernate;
+package com.ibusiness.page;
 
 /**
- * MatchType.
+ * MatchType.查询条件枚举类
  * 
  * @author Lingo
  */

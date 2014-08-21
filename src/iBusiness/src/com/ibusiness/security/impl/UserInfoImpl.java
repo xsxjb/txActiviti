@@ -6,14 +6,28 @@ import java.util.Map;
 
 import com.ibusiness.security.api.UserInfo;
 
+/**
+ * 用户信息实体
+ * 
+ * @author JiangBo
+ * 
+ */
 public class UserInfoImpl implements UserInfo {
+    // 编号
     private String id;
+    // 帐号
     private String username;
+    // 显示名
     private String displayName;
+    // 密码
     private String password;
+    // 范围
     private String scopeId;
+    // 权限
     private List<String> authorities;
+    // 属性
     private List<String> attributes;
+    // 
     private Map<String, Object> extra = new HashMap<String, Object>();
 
     public String getId() {

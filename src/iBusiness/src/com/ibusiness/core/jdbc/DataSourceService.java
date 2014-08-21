@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 数据源服务类，通过getDataSource提供数据源对象
  * 
  * @author JiangBo
  *

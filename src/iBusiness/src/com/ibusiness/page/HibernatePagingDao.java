@@ -1,23 +1,20 @@
-package com.ibusiness.core.hibernate;
+package com.ibusiness.page;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.ibusiness.core.page.Page;
+import com.ibusiness.core.hibernate.HibernateGenericDao;
+import com.ibusiness.page.Page;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projection;
-
 import org.hibernate.internal.CriteriaImpl;
-
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.util.Assert;
 
 /**

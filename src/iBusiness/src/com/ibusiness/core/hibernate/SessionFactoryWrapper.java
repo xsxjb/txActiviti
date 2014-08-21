@@ -70,9 +70,16 @@ import org.hibernate.stat.spi.StatisticsImplementor;
 import org.hibernate.type.Type;
 import org.hibernate.type.TypeResolver;
 
+/**
+ * session工厂封装类
+ * 
+ * @author JiangBo
+ * 
+ */
 @SuppressWarnings("deprecation")
 public class SessionFactoryWrapper implements SessionFactoryImplementor {
     private SessionFactoryImplementor sessionFactoryImplementor;
+    // SpringSession上下文
     private SpringSessionContext springSessionContext;
 
     public SessionFactoryWrapper() {
@@ -83,8 +90,8 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         if (sessionFactory instanceof SessionFactoryImplementor) {
             this.sessionFactoryImplementor = (SessionFactoryImplementor) sessionFactory;
         } else {
-            throw new IllegalStateException("the type of sessionFactory["
-                    + sessionFactory + "] is not SessionFactoryImplementor");
+            throw new IllegalStateException("the type of sessionFactory[" + sessionFactory
+                    + "] is not SessionFactoryImplementor");
         }
     }
 
@@ -160,8 +167,7 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         throw new UnsupportedOperationException();
     }
 
-    public void evict(Class persistentClass, Serializable id)
-            throws HibernateException {
+    public void evict(Class persistentClass, Serializable id) throws HibernateException {
         throw new UnsupportedOperationException();
     }
 
@@ -169,8 +175,7 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         throw new UnsupportedOperationException();
     }
 
-    public void evictEntity(String entityName, Serializable id)
-            throws HibernateException {
+    public void evictEntity(String entityName, Serializable id) throws HibernateException {
         throw new UnsupportedOperationException();
     }
 
@@ -178,8 +183,7 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         throw new UnsupportedOperationException();
     }
 
-    public void evictCollection(String roleName, Serializable id)
-            throws HibernateException {
+    public void evictCollection(String roleName, Serializable id) throws HibernateException {
         throw new UnsupportedOperationException();
     }
 
@@ -195,8 +199,7 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         return sessionFactoryImplementor.getDefinedFilterNames();
     }
 
-    public FilterDefinition getFilterDefinition(String filterName)
-            throws HibernateException {
+    public FilterDefinition getFilterDefinition(String filterName) throws HibernateException {
         return sessionFactoryImplementor.getFilterDefinition(filterName);
     }
 
@@ -226,8 +229,7 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         return sessionFactoryImplementor.getProperties();
     }
 
-    public EntityPersister getEntityPersister(String entityName)
-            throws MappingException {
+    public EntityPersister getEntityPersister(String entityName) throws MappingException {
         return sessionFactoryImplementor.getEntityPersister(entityName);
     }
 
@@ -235,8 +237,7 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         return sessionFactoryImplementor.getEntityPersisters();
     }
 
-    public CollectionPersister getCollectionPersister(String role)
-            throws MappingException {
+    public CollectionPersister getCollectionPersister(String role) throws MappingException {
         return sessionFactoryImplementor.getCollectionPersister(role);
     }
 
@@ -264,8 +265,7 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         return sessionFactoryImplementor.getReturnTypes(queryString);
     }
 
-    public String[] getReturnAliases(String queryString)
-            throws HibernateException {
+    public String[] getReturnAliases(String queryString) throws HibernateException {
         return sessionFactoryImplementor.getReturnAliases(queryString);
     }
 
@@ -285,8 +285,7 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         return sessionFactoryImplementor.getQueryCache();
     }
 
-    public QueryCache getQueryCache(String regionName)
-            throws HibernateException {
+    public QueryCache getQueryCache(String regionName) throws HibernateException {
         return sessionFactoryImplementor.getQueryCache(regionName);
     }
 
@@ -343,8 +342,7 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
     }
 
     public Set<String> getCollectionRolesByEntityParticipant(String entityName) {
-        return sessionFactoryImplementor
-                .getCollectionRolesByEntityParticipant(entityName);
+        return sessionFactoryImplementor.getCollectionRolesByEntityParticipant(entityName);
     }
 
     public EntityNotFoundDelegate getEntityNotFoundDelegate() {
@@ -384,15 +382,12 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         return sessionFactoryImplementor.getIdentifierType(className);
     }
 
-    public String getIdentifierPropertyName(String className)
-            throws MappingException {
+    public String getIdentifierPropertyName(String className) throws MappingException {
         return sessionFactoryImplementor.getIdentifierPropertyName(className);
     }
 
-    public Type getReferencedPropertyType(String className, String propertyName)
-            throws MappingException {
-        return sessionFactoryImplementor.getReferencedPropertyType(className,
-                propertyName);
+    public Type getReferencedPropertyType(String className, String propertyName) throws MappingException {
+        return sessionFactoryImplementor.getReferencedPropertyType(className, propertyName);
     }
 
     public NamedQueryRepository getNamedQueryRepository() {
@@ -403,15 +398,11 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
         return sessionFactoryImplementor.iterateEntityNameResolvers();
     }
 
-    public void registerNamedSQLQueryDefinition(String name,
-            NamedSQLQueryDefinition definition) {
-        sessionFactoryImplementor.registerNamedSQLQueryDefinition(name,
-                definition);
+    public void registerNamedSQLQueryDefinition(String name, NamedSQLQueryDefinition definition) {
+        sessionFactoryImplementor.registerNamedSQLQueryDefinition(name, definition);
     }
 
-    public void registerNamedQueryDefinition(String name,
-            NamedQueryDefinition definition) {
-        sessionFactoryImplementor
-                .registerNamedQueryDefinition(name, definition);
+    public void registerNamedQueryDefinition(String name, NamedQueryDefinition definition) {
+        sessionFactoryImplementor.registerNamedQueryDefinition(name, definition);
     }
 }

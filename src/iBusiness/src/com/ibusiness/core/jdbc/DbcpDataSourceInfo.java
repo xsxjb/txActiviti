@@ -3,7 +3,7 @@ package com.ibusiness.core.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
- * 数据库连接池
+ * 数据库连接池信息
  * 
  * @author JiangBo
  *

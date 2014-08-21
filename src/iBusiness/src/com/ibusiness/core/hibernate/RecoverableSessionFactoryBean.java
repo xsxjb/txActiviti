@@ -16,16 +16,18 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
-
-public class RecoverableSessionFactoryBean implements FactoryBean,
-        DisposableBean, InitializingBean {
+/**
+ * session工厂 连接Spring与Hibern ate的桥梁
+ */
+public class RecoverableSessionFactoryBean implements FactoryBean, DisposableBean, InitializingBean {
     /** logger. */
-    private static Logger logger = LoggerFactory
-            .getLogger(RecoverableSessionFactoryBean.class);
+    private static Logger logger = LoggerFactory.getLogger(RecoverableSessionFactoryBean.class);
+    // 
     private SessionFactoryWrapper sessionFactoryWrapper;
     private DataSource dataSource;
     private Properties hibernateProperties;
     private String[] packagesToScan;
+    // 连接Spring与Hibern ate的桥梁
     private LocalSessionFactoryBean localSessionFactoryBean;
 
     public void afterPropertiesSet() throws IOException {

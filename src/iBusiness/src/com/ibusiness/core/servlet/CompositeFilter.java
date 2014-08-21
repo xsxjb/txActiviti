@@ -12,7 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 /**
- * 混合过滤器
+ * 混合过滤器,总过滤器
  * 
  * @author JiangBo
  *

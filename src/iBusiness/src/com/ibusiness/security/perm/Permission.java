@@ -1,5 +1,11 @@
 package com.ibusiness.security.perm;
 
+/**
+ * 许可对象
+ * 
+ * @author JiangBo
+ * 
+ */
 public class Permission {
     private String resource;
     private String operation;

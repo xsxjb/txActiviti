@@ -18,12 +18,21 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * servlet过滤器
+ * 
+ * @author JiangBo
+ * 
+ */
 public class ServletFilter extends ProxyFilter {
     private static Logger logger = LoggerFactory.getLogger(ServletFilter.class);
     private Map<UrlPatternMatcher, Servlet> servletMap = Collections.EMPTY_MAP;
 
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain filterChain) throws IOException, ServletException {
+    /**
+     * 过滤器接口方法中增加过滤条件.
+     */
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException,
+            ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
@@ -32,8 +41,7 @@ public class ServletFilter extends ProxyFilter {
         String path = requestUri.substring(contextPath.length());
         logger.trace("path : {}", path);
 
-        for (Map.Entry<UrlPatternMatcher, Servlet> entry : servletMap
-                .entrySet()) {
+        for (Map.Entry<UrlPatternMatcher, Servlet> entry : servletMap.entrySet()) {
             UrlPatternMatcher urlPatternMatcher = entry.getKey();
 
             // 如果符合redirect规则，进行跳转
@@ -44,12 +52,10 @@ public class ServletFilter extends ProxyFilter {
 
                 return;
             }
-
             if (urlPatternMatcher.matches(path)) {
                 logger.trace("{} match {}", urlPatternMatcher, path);
-
-                PathHttpServletRequestWrapper requestWrapper = new PathHttpServletRequestWrapper(
-                        req, urlPatternMatcher.getUrlPattern());
+                PathHttpServletRequestWrapper requestWrapper = new PathHttpServletRequestWrapper(req,
+                        urlPatternMatcher.getUrlPattern());
                 Servlet servlet = entry.getValue();
                 logger.trace("invoke {}", servlet);
                 servlet.service(requestWrapper, response);
@@ -62,17 +68,14 @@ public class ServletFilter extends ProxyFilter {
     }
 
     public void init(FilterConfig filterConfig) throws ServletException {
-        for (Map.Entry<UrlPatternMatcher, Servlet> entry : servletMap
-                .entrySet()) {
+        for (Map.Entry<UrlPatternMatcher, Servlet> entry : servletMap.entrySet()) {
             Servlet servlet = entry.getValue();
-            servlet.init(new ProxyServletConfig(filterConfig
-                    .getServletContext()));
+            servlet.init(new ProxyServletConfig(filterConfig.getServletContext()));
         }
     }
 
     public void destroy() {
-        for (Map.Entry<UrlPatternMatcher, Servlet> entry : servletMap
-                .entrySet()) {
+        for (Map.Entry<UrlPatternMatcher, Servlet> entry : servletMap.entrySet()) {
             Servlet servlet = entry.getValue();
             servlet.destroy();
         }
@@ -82,8 +85,7 @@ public class ServletFilter extends ProxyFilter {
         servletMap = new HashMap<UrlPatternMatcher, Servlet>();
 
         for (Map.Entry<String, Servlet> entry : urlPatternMap.entrySet()) {
-            UrlPatternMatcher urlPatternMatcher = UrlPatternMatcher
-                    .create(entry.getKey());
+            UrlPatternMatcher urlPatternMatcher = UrlPatternMatcher.create(entry.getKey());
             servletMap.put(urlPatternMatcher, entry.getValue());
         }
     }

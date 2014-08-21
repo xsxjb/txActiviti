@@ -1,4 +1,4 @@
-package com.ibusiness.core.hibernate;
+package com.ibusiness.page;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ibusiness.core.page.Page;
+import com.ibusiness.page.Page;
 import com.ibusiness.core.util.GenericsUtils;
 
 import org.hibernate.Criteria;

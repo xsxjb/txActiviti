@@ -16,28 +16,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * RoleDef .
+ * 角色模板管理表.
  * 
- * @author Lingo
+ * @author JaingBo
  */
 @Entity
 @Table(name = "AUTH_ROLE_DEF")
 public class RoleDef implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
-    /** null. */
+    /** 编号. */
     private Long id;
 
-    /** null. */
+    /** 角色名. */
     private String name;
 
-    /** null. */
+    /** 备注. */
     private String descn;
 
-    /** null. */
+    /** 范围. */
     private String scopeId;
 
-    /** . */
+    /** 角色. */
     private Set<Role> roles = new HashSet<Role>(0);
 
     /** . */

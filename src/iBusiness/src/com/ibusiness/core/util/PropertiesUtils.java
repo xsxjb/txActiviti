@@ -6,19 +6,21 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * (以.properties结尾)配置文件工具类
+ * 
+ * @author JiangBo
+ *
+ */
 public class PropertiesUtils {
-    private static Logger logger = LoggerFactory
-            .getLogger(PropertiesUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(PropertiesUtils.class);
 
     protected PropertiesUtils() {
     }
 
-    public static void bindProperties(Object object, Properties properties,
-            String prefix) {
+    public static void bindProperties(Object object, Properties properties, String prefix) {
         if (properties == null) {
-            throw new IllegalArgumentException(
-                    "there is no properties setting.");
+            throw new IllegalArgumentException("there is no properties setting.");
         }
 
         logger.debug("prefix : {}", prefix);
@@ -37,8 +39,7 @@ public class PropertiesUtils {
         }
     }
 
-    public static void tryToSetProperty(Object object, String propertyName,
-            String propertyValue) {
+    public static void tryToSetProperty(Object object, String propertyName, String propertyValue) {
         String setterName = ReflectUtils.getSetterMethodName(propertyName);
         Method[] methods = object.getClass().getMethods();
 
@@ -57,27 +58,19 @@ public class PropertiesUtils {
         }
     }
 
-    private static void invokeMethod(Object object, Method method,
-            Class parameterType, String propertyValue) {
+    private static void invokeMethod(Object object, Method method, Class parameterType, String propertyValue) {
         logger.debug("match method : {}, {}", method, propertyValue);
 
         if (parameterType == String.class) {
             BeanUtils.safeInvokeMethod(object, method, propertyValue);
-        } else if ((parameterType == Integer.class)
-                || (parameterType == int.class)) {
-            BeanUtils.safeInvokeMethod(object, method,
-                    Integer.parseInt(propertyValue));
-        } else if ((parameterType == Long.class)
-                || (parameterType == long.class)) {
-            BeanUtils.safeInvokeMethod(object, method,
-                    Long.parseLong(propertyValue));
-        } else if ((parameterType == Boolean.class)
-                || (parameterType == boolean.class)) {
-            BeanUtils.safeInvokeMethod(object, method,
-                    Boolean.valueOf(propertyValue));
+        } else if ((parameterType == Integer.class) || (parameterType == int.class)) {
+            BeanUtils.safeInvokeMethod(object, method, Integer.parseInt(propertyValue));
+        } else if ((parameterType == Long.class) || (parameterType == long.class)) {
+            BeanUtils.safeInvokeMethod(object, method, Long.parseLong(propertyValue));
+        } else if ((parameterType == Boolean.class) || (parameterType == boolean.class)) {
+            BeanUtils.safeInvokeMethod(object, method, Boolean.valueOf(propertyValue));
         } else {
-            logger.info("cannot process parameterType : [" + parameterType
-                    + "]");
+            logger.info("cannot process parameterType : [" + parameterType + "]");
         }
     }
 }

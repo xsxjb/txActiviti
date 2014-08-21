@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.commons.beanutils.converters.DateConverter;
 
 /**
- * convert utils.
+ * convert utils 对象转换工具类.
  * 
  * @author Lingo
  */

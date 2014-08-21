@@ -7,12 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.ibusiness.security.impl.SpringSecurityUserAuth;
-import com.ibusiness.security.spi.UserStatusDetails;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -20,9 +16,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-
 import org.springframework.util.Assert;
 
+import com.ibusiness.security.impl.SpringSecurityUserAuth;
+/**
+ * Spring security 共用类
+ * 
+ * @author JiangBo
+ *
+ */
 public class SpringSecurityUtils {
     private static Logger logger = LoggerFactory.getLogger(SpringSecurityUtils.class);
 

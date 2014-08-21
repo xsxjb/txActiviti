@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import com.ibusiness.core.mapper.BeanMapper;
 
 /**
- * dataSource wrapper.
+ * dataSource封装类.
  * 
  * @author Lingo
  */

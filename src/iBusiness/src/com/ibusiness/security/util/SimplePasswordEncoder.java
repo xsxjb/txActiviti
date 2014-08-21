@@ -1,7 +1,12 @@
 package com.ibusiness.security.util;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+/**
+ * 简单密码编译器
+ * 
+ * @author JiangBo
+ *
+ */
 public class SimplePasswordEncoder {
     private PasswordEncoder passwordEncoder;
 

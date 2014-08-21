@@ -1,4 +1,4 @@
-package com.ibusiness.core.hibernate;
+package com.ibusiness.page;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +15,7 @@ import com.ibusiness.core.util.StringUtils;
 import org.springframework.util.Assert;
 
 /**
- * property filter.
+ * property filter.查询条件字段过滤器
  * 
  * @author Lingo
  */
@@ -51,47 +51,37 @@ public class PropertyFilter {
      */
     public PropertyFilter(final String filterName, final String value) {
         String firstPart = StringUtils.substringBefore(filterName, "_");
-        String matchTypeCode = StringUtils.substring(firstPart, 0,
-                firstPart.length() - 1);
-        String propertyTypeCode = StringUtils.substring(firstPart,
-                firstPart.length() - 1, firstPart.length());
+        String matchTypeCode = StringUtils.substring(firstPart, 0, firstPart.length() - 1);
+        String propertyTypeCode = StringUtils.substring(firstPart, firstPart.length() - 1, firstPart.length());
 
         try {
             matchType = Enum.valueOf(MatchType.class, matchTypeCode);
         } catch (RuntimeException e) {
-            throw new IllegalArgumentException("filter名称" + filterName
-                    + "没有按规则编写,无法得到属性比较类型.", e);
+            throw new IllegalArgumentException("filter名称" + filterName + "没有按规则编写,无法得到属性比较类型.", e);
         }
 
         try {
-            propertyClass = Enum.valueOf(PropertyType.class, propertyTypeCode)
-                    .getValue();
+            propertyClass = Enum.valueOf(PropertyType.class, propertyTypeCode).getValue();
         } catch (RuntimeException e) {
-            throw new IllegalArgumentException("filter名称" + filterName
-                    + "没有按规则编写,无法得到属性值类型.", e);
+            throw new IllegalArgumentException("filter名称" + filterName + "没有按规则编写,无法得到属性值类型.", e);
         }
 
         String propertyNameStr = StringUtils.substringAfter(filterName, "_");
-        Assert.isTrue(StringUtils.isNotBlank(propertyNameStr), "filter名称"
-                + filterName + "没有按规则编写,无法得到属性名称.");
-        propertyNames = StringUtils.splitByWholeSeparator(propertyNameStr,
-                PropertyFilter.OR_SEPARATOR);
+        Assert.isTrue(StringUtils.isNotBlank(propertyNameStr), "filter名称" + filterName + "没有按规则编写,无法得到属性名称.");
+        propertyNames = StringUtils.splitByWholeSeparator(propertyNameStr, PropertyFilter.OR_SEPARATOR);
 
         if (matchType == MatchType.IN) {
             this.matchValue = convertStringToCollection(value, propertyClass);
         } else {
-            this.matchValue = ConvertUtils.convertStringToObject(value,
-                    propertyClass);
+            this.matchValue = ConvertUtils.convertStringToObject(value, propertyClass);
         }
     }
 
-    private <T> Collection<T> convertStringToCollection(String text,
-            Class<T> propertyClass) {
+    private <T> Collection<T> convertStringToCollection(String text, Class<T> propertyClass) {
         List<T> list = new ArrayList<T>();
 
         for (String value : text.split(",")) {
-            list.add((T) ConvertUtils.convertStringToObject(value,
-                    propertyClass));
+            list.add((T) ConvertUtils.convertStringToObject(value, propertyClass));
         }
 
         return list;
@@ -104,8 +94,7 @@ public class PropertyFilter {
      *            HttpServletRequest
      * @return list
      */
-    public static List<PropertyFilter> buildFromHttpRequest(
-            final HttpServletRequest request) {
+    public static List<PropertyFilter> buildFromHttpRequest(final HttpServletRequest request) {
         return buildFromHttpRequest(request, "filter_");
     }
 
@@ -118,22 +107,18 @@ public class PropertyFilter {
      *            String
      * @return list
      */
-    public static List<PropertyFilter> buildFromHttpRequest(
-            final HttpServletRequest request, final String filterPrefix) {
+    public static List<PropertyFilter> buildFromHttpRequest(final HttpServletRequest request, final String filterPrefix) {
         // 从request中获取含属性前缀名的参数,构造去除前缀名后的参数Map.
-        Map<String, Object> filterParamMap = ServletUtils
-                .getParametersStartingWith(request, filterPrefix);
+        Map<String, Object> filterParamMap = ServletUtils.getParametersStartingWith(request, filterPrefix);
 
         return build(filterParamMap);
     }
 
-    public static List<PropertyFilter> buildFromMap(
-            Map<String, Object> parameterMap) {
+    public static List<PropertyFilter> buildFromMap(Map<String, Object> parameterMap) {
         return buildFromMap(parameterMap, "filter_");
     }
 
-    public static List<PropertyFilter> buildFromMap(
-            Map<String, Object> parameterMap, String filterPrefix) {
+    public static List<PropertyFilter> buildFromMap(Map<String, Object> parameterMap, String filterPrefix) {
         Map<String, Object> filterParamMap = new TreeMap<String, Object>();
 
         for (Map.Entry<String, Object> entry : parameterMap.entrySet()) {
@@ -195,8 +180,7 @@ public class PropertyFilter {
 
     /** @return property name. */
     public String getPropertyName() {
-        Assert.isTrue(propertyNames.length == 1,
-                "There are not only one property in this filter.");
+        Assert.isTrue(propertyNames.length == 1, "There are not only one property in this filter.");
 
         return propertyNames[0];
     }

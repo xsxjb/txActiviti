@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 /**
- * 扩展Apache Commons BeanUtils, 提供一些反射方面缺失功能的封装.
+ * 扩展Apache Commons BeanUtils, 提供一些反射方面缺失功能的封装.工具类
  * 
  * @author JiangBo
  */

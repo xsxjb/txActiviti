@@ -2,6 +2,12 @@ package com.ibusiness.security.perm;
 
 import com.ibusiness.security.util.SpringSecurityUtils;
 
+/**
+ * 许可 check
+ * 
+ * @author JiangBo
+ * 
+ */
 public class PermissionChecker {
     private PermissionMatcher permissionMatcher = new PermissionMatcher();
 

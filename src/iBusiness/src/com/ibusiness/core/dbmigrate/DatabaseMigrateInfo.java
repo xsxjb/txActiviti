@@ -1,8 +1,17 @@
 package com.ibusiness.core.dbmigrate;
 
+/**
+ * DatabaseMigrate信息实体bean
+ * 
+ * @author JiangBo
+ * 
+ */
 public class DatabaseMigrateInfo implements Comparable<DatabaseMigrateInfo> {
+    // 名
     private String name;
+    // 
     private String table;
+    // 表所在位置
     private String location;
     private boolean enabled = true;
 

@@ -1,4 +1,4 @@
-package com.ibusiness.core.hibernate;
+package com.ibusiness.page;
 
 public class EntityRemovedEvent extends EntityEvent {
     private static final long serialVersionUID = 0L;

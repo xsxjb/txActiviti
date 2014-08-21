@@ -1,4 +1,4 @@
-package com.ibusiness.core.hibernate;
+package com.ibusiness.page;
 
 import org.springframework.context.ApplicationEvent;
 

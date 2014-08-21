@@ -10,7 +10,12 @@ import org.hibernate.context.spi.CurrentSessionContext;
 import org.springframework.orm.hibernate4.SessionHolder;
 
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-
+/**
+ * SpringSession上下文
+ * 
+ * @author JiangBo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class SpringSessionContext implements CurrentSessionContext {
     private final SessionFactory sessionFactory;

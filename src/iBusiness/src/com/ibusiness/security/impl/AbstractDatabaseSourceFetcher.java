@@ -5,7 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-
+/**
+ * 数据提取抽象类,其它数据提取类的父类。
+ * 
+ * @author JiangBo
+ *
+ */
 public class AbstractDatabaseSourceFetcher {
     private String query;
     private JdbcTemplate jdbcTemplate;

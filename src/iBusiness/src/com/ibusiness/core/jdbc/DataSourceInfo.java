@@ -1,6 +1,6 @@
 package com.ibusiness.core.jdbc;
 /**
- * 数据源信息
+ * 数据源信息接口
  * 
  * @author JiangBo
  *

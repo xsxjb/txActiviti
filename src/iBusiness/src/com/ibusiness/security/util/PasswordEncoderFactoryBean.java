@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * 对密码进行MD5编码
+ * MD5密码编译器工厂类,对密码+ salt进行MD5编码
  * 
  * @author JiangBo
  * 

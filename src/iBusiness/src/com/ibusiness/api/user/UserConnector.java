@@ -2,7 +2,7 @@ package com.ibusiness.api.user;
 
 import java.util.Map;
 
-import com.ibusiness.core.page.Page;
+import com.ibusiness.page.Page;
 
 public interface UserConnector {
     /**

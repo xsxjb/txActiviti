@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 /**
- * mock dataSource.
+ * mock模拟 dataSource.
  * 
  * @author Lingo
  */

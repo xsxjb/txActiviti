@@ -7,7 +7,7 @@ import com.ibusiness.api.user.UserCache;
 import com.ibusiness.api.user.UserConnector;
 import com.ibusiness.api.user.UserDTO;
 
-import com.ibusiness.core.page.Page;
+import com.ibusiness.page.Page;
 
 public class UserConnectorWrapper implements UserConnector {
     private UserConnector userConnector;

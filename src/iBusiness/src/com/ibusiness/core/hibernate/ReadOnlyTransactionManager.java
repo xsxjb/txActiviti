@@ -18,19 +18,15 @@ import org.springframework.transaction.TransactionStatus;
  */
 public class ReadOnlyTransactionManager implements PlatformTransactionManager {
     /** logger. */
-    private static Logger logger = LoggerFactory
-            .getLogger(ReadOnlyTransactionManager.class);
+    private static Logger logger = LoggerFactory.getLogger(ReadOnlyTransactionManager.class);
     private PlatformTransactionManager platformTransactionManager;
     private boolean readOnly;
 
-    public TransactionStatus getTransaction(TransactionDefinition definition)
-            throws TransactionException {
+    public TransactionStatus getTransaction(TransactionDefinition definition) throws TransactionException {
         if (readOnly) {
-            TransactionDefinition readOnlyTransactionDefinition = new ReadOnlyTransactionDefinition(
-                    definition);
+            TransactionDefinition readOnlyTransactionDefinition = new ReadOnlyTransactionDefinition(definition);
 
-            return platformTransactionManager
-                    .getTransaction(readOnlyTransactionDefinition);
+            return platformTransactionManager.getTransaction(readOnlyTransactionDefinition);
         } else {
             return platformTransactionManager.getTransaction(definition);
         }
@@ -45,8 +41,7 @@ public class ReadOnlyTransactionManager implements PlatformTransactionManager {
         platformTransactionManager.rollback(status);
     }
 
-    public void setPlatformTransactionManager(
-            PlatformTransactionManager platformTransactionManager) {
+    public void setPlatformTransactionManager(PlatformTransactionManager platformTransactionManager) {
         this.platformTransactionManager = platformTransactionManager;
     }
 

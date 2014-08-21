@@ -1,9 +1,9 @@
-package com.ibusiness.core.hibernate;
+package com.ibusiness.page;
 
 import java.util.Date;
 
 /**
- * property type.
+ * property type.字段类型枚举类
  * 
  * @author Lingo
  */

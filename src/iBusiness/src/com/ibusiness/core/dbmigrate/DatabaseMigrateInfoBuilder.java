@@ -14,25 +14,39 @@ import com.ibusiness.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 创建DatabaseMigrate信息实体类
+ * 
+ * @author JiangBo
+ * 
+ */
 public class DatabaseMigrateInfoBuilder {
     public static final int VALID_LENGTH = 3;
     public static final String DEFAULT_PREFIX = "dbmigrate";
-    private Logger logger = LoggerFactory
-            .getLogger(DatabaseMigrateInfoBuilder.class);
+    private Logger logger = LoggerFactory.getLogger(DatabaseMigrateInfoBuilder.class);
     private String defaultPrefix = DEFAULT_PREFIX;
     private Properties properties;
     private Map<String, DatabaseMigrateInfo> map = new HashMap<String, DatabaseMigrateInfo>();
 
+    /**
+     * 构造函数传入配置文件信息
+     * 
+     * @param properties
+     */
     public DatabaseMigrateInfoBuilder(Properties properties) {
         this(DEFAULT_PREFIX, properties);
     }
 
-    public DatabaseMigrateInfoBuilder(String defaultPrefix,
-            Properties properties) {
+    public DatabaseMigrateInfoBuilder(String defaultPrefix, Properties properties) {
         this.defaultPrefix = defaultPrefix;
         this.properties = properties;
     }
 
+    /**
+     * 根据配置文件信息创建DatabaseMigrate信息实体
+     * 
+     * @return
+     */
     public Collection<DatabaseMigrateInfo> build() {
         logger.debug("defaultPrefix : {}", defaultPrefix);
 
@@ -49,8 +63,7 @@ public class DatabaseMigrateInfoBuilder {
             String[] array = key.split("\\.");
 
             if (array.length != VALID_LENGTH) {
-                logger.debug("skip invalid key : length({}), {}", array.length,
-                        key);
+                logger.debug("skip invalid key : length({}), {}", array.length, key);
 
                 continue;
             }
@@ -70,15 +83,13 @@ public class DatabaseMigrateInfoBuilder {
             this.tryToSetProperty(name, property, value);
         }
 
-        List<DatabaseMigrateInfo> list = new ArrayList<DatabaseMigrateInfo>(
-                map.values());
+        List<DatabaseMigrateInfo> list = new ArrayList<DatabaseMigrateInfo>(map.values());
         Collections.sort(list);
 
         return list;
     }
 
-    public void tryToSetProperty(String name, String propertyName,
-            String propertyValue) {
+    public void tryToSetProperty(String name, String propertyName, String propertyValue) {
         DatabaseMigrateInfo databaseMigrateInfo = map.get(name);
 
         if (databaseMigrateInfo == null) {
@@ -87,7 +98,6 @@ public class DatabaseMigrateInfoBuilder {
             map.put(name, databaseMigrateInfo);
         }
 
-        PropertiesUtils.tryToSetProperty(databaseMigrateInfo, propertyName,
-                propertyValue);
+        PropertiesUtils.tryToSetProperty(databaseMigrateInfo, propertyName, propertyValue);
     }
 }

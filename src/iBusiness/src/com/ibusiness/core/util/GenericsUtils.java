@@ -7,11 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Generics的util类. 来自www.springside.org.cn
+ * 泛型工具类 Generics的util类. 来自www.springside.org.cn
  * 
- * @author sshwsfc
- * @since 2007-03-14
- * @version 1.0
+ * @author JiangBo
  */
 public class GenericsUtils {
     /**
@@ -53,8 +51,7 @@ public class GenericsUtils {
         }
 
         if (!(genType instanceof ParameterizedType)) {
-            logger.warn("{}'s superclass not ParameterizedType",
-                    clazz.getSimpleName());
+            logger.warn("{}'s superclass not ParameterizedType", clazz.getSimpleName());
 
             return Object.class;
         }
@@ -62,17 +59,14 @@ public class GenericsUtils {
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 
         if ((index >= params.length) || (index < 0)) {
-            logger.warn(
-                    "Index: {}, Size of {}'s Parameterized Type: {}",
-                    new Object[] { index, clazz.getSimpleName(), params.length });
+            logger.warn("Index: {}, Size of {}'s Parameterized Type: {}", new Object[] {
+                    index, clazz.getSimpleName(), params.length });
 
             return Object.class;
         }
 
         if (!(params[index] instanceof Class)) {
-            logger.warn(
-                    "{} not set the actual class on superclass generic parameter",
-                    clazz.getSimpleName());
+            logger.warn("{} not set the actual class on superclass generic parameter", clazz.getSimpleName());
 
             return Object.class;
         }

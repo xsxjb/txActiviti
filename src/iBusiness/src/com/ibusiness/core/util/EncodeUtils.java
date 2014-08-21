@@ -10,7 +10,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
 /**
- * encode utils.
+ * encode utils 编码相关工具类.
  * 
  * @author Lingo
  */

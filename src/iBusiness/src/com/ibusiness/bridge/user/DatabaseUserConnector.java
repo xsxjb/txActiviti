@@ -10,9 +10,9 @@ import javax.annotation.Resource;
 import com.ibusiness.api.user.UserConnector;
 import com.ibusiness.api.user.UserDTO;
 
-import com.ibusiness.core.hibernate.PropertyFilter;
-import com.ibusiness.core.hibernate.PropertyFilterUtils;
-import com.ibusiness.core.page.Page;
+import com.ibusiness.page.PropertyFilter;
+import com.ibusiness.page.PropertyFilterUtils;
+import com.ibusiness.page.Page;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
