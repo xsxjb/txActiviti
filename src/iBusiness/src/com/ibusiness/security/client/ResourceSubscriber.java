@@ -3,8 +3,6 @@ package com.ibusiness.security.client;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-import com.ibusiness.ext.message.Subscribable;
-
 import org.springframework.util.Assert;
 /**
  * 资源订阅
@@ -12,7 +10,7 @@ import org.springframework.util.Assert;
  * @author JiangBo
  *
  */
-public class ResourceSubscriber implements Subscribable<String> {
+public class ResourceSubscriber {
     private String scopeId = "1";
     private ResourceDetailsMonitor resourceDetailsMonitor;
 

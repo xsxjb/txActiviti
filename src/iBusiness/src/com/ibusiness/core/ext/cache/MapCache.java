@@ -1,8 +1,13 @@
-package com.ibusiness.ext.cache;
+package com.ibusiness.core.ext.cache;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+/**
+ * cache接口实现类
+ * 
+ * @author JiangBo
+ *
+ */
 public class MapCache implements Cache {
     private Map<String, Object> map = new ConcurrentHashMap<String, Object>();
 

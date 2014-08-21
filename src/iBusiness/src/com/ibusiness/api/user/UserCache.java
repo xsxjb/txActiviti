@@ -1,5 +1,10 @@
 package com.ibusiness.api.user;
-
+/**
+ * 帐号/用户缓存接口
+ * 
+ * @author JiangBo
+ *
+ */
 public interface UserCache {
     UserDTO findById(String id);
 

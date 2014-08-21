@@ -1,5 +1,10 @@
-package com.ibusiness.ext.cache;
-
+package com.ibusiness.core.ext.cache;
+/**
+ * cache接口
+ * 
+ * @author JiangBo
+ *
+ */
 public interface Cache {
     <T> T get(String key);
 

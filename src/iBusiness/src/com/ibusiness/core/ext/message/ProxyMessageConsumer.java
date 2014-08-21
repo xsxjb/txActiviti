@@ -1,4 +1,4 @@
-package com.ibusiness.ext.message;
+package com.ibusiness.core.ext.message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +8,18 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
-import javax.jms.TextMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * JMS用于接收消息
+ * 
+ * @author JiangBo
+ * 
+ */
 public class ProxyMessageConsumer implements MessageConsumer {
-    private static Logger logger = LoggerFactory
-            .getLogger(ProxyMessageConsumer.class);
+    private static Logger logger = LoggerFactory.getLogger(ProxyMessageConsumer.class);
     private ProxySession session;
     private Destination destination;
     private List<String> data = new ArrayList<String>();
@@ -32,10 +36,8 @@ public class ProxyMessageConsumer implements MessageConsumer {
         return null;
     }
 
-    public void setMessageListener(MessageListener listener)
-            throws JMSException {
-        throw new UnsupportedOperationException("setMessageListener("
-                + listener + ")");
+    public void setMessageListener(MessageListener listener) throws JMSException {
+        throw new UnsupportedOperationException("setMessageListener(" + listener + ")");
     }
 
     public Message receive() throws JMSException {

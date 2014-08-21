@@ -1,4 +1,4 @@
-package com.ibusiness.ext.rest;
+package com.ibusiness.core.ext.rest;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +41,12 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.context.ApplicationContext;
 
+/**
+ * 其它过滤器,访问"/rs/*"下的类 直接返回数据,类似于ajax call
+ * 
+ * @author JiangBo
+ * 
+ */
 public class RestFilter implements Filter {
     private static Logger logger = LoggerFactory.getLogger(RestFilter.class);
     private JsonMapper jsonMapper = new JsonMapper();

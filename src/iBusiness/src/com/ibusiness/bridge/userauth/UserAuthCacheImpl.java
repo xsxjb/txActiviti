@@ -3,8 +3,8 @@ package com.ibusiness.bridge.userauth;
 import com.ibusiness.api.userauth.UserAuthCache;
 import com.ibusiness.api.userauth.UserAuthDTO;
 
-import com.ibusiness.ext.cache.Cache;
-import com.ibusiness.ext.cache.CacheStrategy;
+import com.ibusiness.core.ext.cache.Cache;
+import com.ibusiness.core.ext.cache.CacheStrategy;
 
 public class UserAuthCacheImpl implements UserAuthCache {
     private CacheStrategy cacheStrategy;

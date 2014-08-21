@@ -97,7 +97,7 @@
 	<bean id="restFilter" class="com.ibusiness.core.servlet.ProxyFilter">
 		<property name="name" value="rest"/>
 		<property name="filter">
-			<bean class="com.ibusiness.ext.rest.RestFilter"/>
+			<bean class="com.ibusiness.core.ext.rest.RestFilter"/>
 		</property>
 		<property name="urlPattern" value="/rs/*"/>
 	</bean>

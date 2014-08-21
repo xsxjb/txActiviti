@@ -2,42 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-<!-- ==============临时 begin==================================== -->
-    <bean id="scopeCache" class="com.ibusiness.bridge.scope.ScopeCacheImpl">
-		<property name="cacheStrategy" ref="localCacheStrategy"/>
-	</bean>
-	<!-- 应用管理连接器 -->
-	<bean id="scopeConnector" class="com.ibusiness.bridge.scope.ScopeConnectorFactoryBean">
-		<property name="type" value="${bridge.scope.type}"/>
-		<property name="scopeCache" ref="scopeCache"/>
-		<property name="jdbcTemplate" ref="jdbcTemplate"/>
-	</bean>
-	<!-- ================================================== -->
-	<bean id="userAuthCache" class="com.ibusiness.bridge.userauth.UserAuthCacheImpl">
-		<property name="cacheStrategy" ref="remoteCacheStrategy"/>
-	</bean>
-	<!-- 用户权限连接器 -->
-    <bean id="userAuthConnector" class="com.ibusiness.bridge.userauth.UserAuthConnectorFactoryBean">
-		<property name="type" value="${bridge.userauth.type}"/>
-		<property name="userAuthCache" ref="userAuthCache"/>
-		<property name="jdbcTemplate" ref="jdbcTemplate"/>
-		<property name="userConnector" ref="userConnector"/>
-		<property name="scopeConnector" ref="scopeConnector"/>
-	</bean>
-	<!-- ================================================== -->
-	<bean id="userCache" class="com.ibusiness.bridge.user.UserCacheImpl">
-		<property name="cacheStrategy" ref="remoteCacheStrategy"/>
-	</bean>
-
-	<bean id="userConnector" class="com.ibusiness.bridge.user.UserConnectorFactoryBean">
-		<property name="type" value="${bridge.user.type}"/>
-		<property name="userCache" ref="userCache"/>
-		<property name="jdbcTemplate" ref="jdbcTemplate"/>
-	</bean>
-	
-	<!-- ===============临时 end================================ -->
-	
 	<!-- 配置过滤器 -->
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 		<constructor-arg>
@@ -98,8 +62,8 @@
 		<property name="methodSourceFetcher" ref="${security.method.fetcher}MethodSourceFetcher"/>
     </bean>
     
-    <!-- 资源订阅 -->
-	<bean id="resourceSubscriber" class="com.ibusiness.security.client.ResourceSubscriber"/>
+    <!-- 资源订阅 
+	<bean id="resourceSubscriber" class="com.ibusiness.security.client.ResourceSubscriber"/>-->
     <!-- 资源包发布 -->
 	<bean id="resourcePublisher" class="com.ibusiness.security.client.ResourcePublisher"/>
 	

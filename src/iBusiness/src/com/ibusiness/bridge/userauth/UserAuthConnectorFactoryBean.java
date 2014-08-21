@@ -17,6 +17,7 @@ import com.ibusiness.api.userauth.UserAuthConnector;
 import com.ibusiness.api.userauth.UserAuthConnectorWrapper;
 /**
  * 用户权限连接器工厂bean
+ * 
  * @author JiangBo
  *
  */

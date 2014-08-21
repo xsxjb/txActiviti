@@ -1,4 +1,4 @@
-package com.ibusiness.ext.message;
+package com.ibusiness.core.ext.message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,20 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.Topic;
-
+/**
+ * 代理ConnectionFactory创建一个受管理对象
+ * 
+ * JMS程序要经过以下步骤才能开始创建和使用消息
+ * 1、通过JNDI查询ConnectionFactory
+ * 2、用ConnectionFactory创建一个Connection
+ * 3、用Connection创建一个或多个Session
+ * 4、通过JNDI查询一个或多个Destination
+ * 5、用Session和Destination创建对应的MessageProducer和MessageConsumer
+ * 6、启动Connection
+ * 
+ * @author JiangBo
+ *
+ */
 public class ProxyConnectionFactory implements ConnectionFactory {
     private Map<String, List<String>> data = new HashMap<String, List<String>>();
     private ProxyConnection connection;

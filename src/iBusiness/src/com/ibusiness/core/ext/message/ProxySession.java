@@ -1,4 +1,4 @@
-package com.ibusiness.ext.message;
+package com.ibusiness.core.ext.message;
 
 import java.io.Serializable;
 

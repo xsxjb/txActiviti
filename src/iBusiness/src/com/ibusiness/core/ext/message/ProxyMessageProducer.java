@@ -1,11 +1,16 @@
-package com.ibusiness.ext.message;
+package com.ibusiness.core.ext.message;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.TextMessage;
-
+/**
+ * JMS用于发送消息
+ * 
+ * @author JiangBo
+ *
+ */
 public class ProxyMessageProducer implements MessageProducer {
     private ProxySession session;
     private Destination defaultDestination;

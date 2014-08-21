@@ -17,9 +17,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import org.springframework.util.Assert;
 
+/**
+ * 帐号/用户连接器工厂bean
+ * 
+ * @author JiangBo
+ * 
+ */
 public class UserConnectorFactoryBean implements FactoryBean {
-    private static Logger logger = LoggerFactory
-            .getLogger(UserConnectorFactoryBean.class);
+    private static Logger logger = LoggerFactory.getLogger(UserConnectorFactoryBean.class);
     private UserConnector userConnector;
     private String type = "database";
     private JdbcTemplate jdbcTemplate;

@@ -3,9 +3,14 @@ package com.ibusiness.bridge.scope;
 import com.ibusiness.api.scope.ScopeCache;
 import com.ibusiness.api.scope.ScopeDTO;
 
-import com.ibusiness.ext.cache.Cache;
-import com.ibusiness.ext.cache.CacheStrategy;
-
+import com.ibusiness.core.ext.cache.Cache;
+import com.ibusiness.core.ext.cache.CacheStrategy;
+/**
+ * 应用管理缓存实现类
+ * 
+ * @author JiangBo
+ *
+ */
 public class ScopeCacheImpl implements ScopeCache {
     private CacheStrategy cacheStrategy;
     private Cache cache;

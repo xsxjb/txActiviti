@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import org.springframework.util.Assert;
 /**
+ * 应用管理连接器工厂Bean
  * 
  * @author JiangBo
  *

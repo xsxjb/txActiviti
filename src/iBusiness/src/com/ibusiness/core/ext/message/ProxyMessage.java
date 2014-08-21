@@ -1,11 +1,17 @@
-package com.ibusiness.ext.message;
+package com.ibusiness.core.ext.message;
 
 import java.util.Enumeration;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
-
+/**
+ * 代理消息
+ * JMS根据不同应用的用途定义了多种消息类型Message由Header、Properties和Body三个部分组成。
+ * 
+ * @author JiangBo
+ *
+ */
 public class ProxyMessage implements Message {
     public String getJMSMessageID() throws JMSException {
         return null;

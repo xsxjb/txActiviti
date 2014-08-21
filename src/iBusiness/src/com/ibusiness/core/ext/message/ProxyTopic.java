@@ -1,8 +1,13 @@
-package com.ibusiness.ext.message;
+package com.ibusiness.core.ext.message;
 
 import javax.jms.JMSException;
 import javax.jms.Topic;
-
+/**
+ * Topic是对应Pub/Sub消息的目标地址。
+ * 
+ * @author JiangBo
+ *
+ */
 public class ProxyTopic implements Topic {
     private String name;
 

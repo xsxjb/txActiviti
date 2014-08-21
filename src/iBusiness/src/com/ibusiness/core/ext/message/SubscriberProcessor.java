@@ -1,4 +1,4 @@
-package com.ibusiness.ext.message;
+package com.ibusiness.core.ext.message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,34 +19,34 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.jms.listener.adapter.MessageListenerAdapter;
 
+/**
+ * 订阅处理器
+ * 
+ * @author JiangBo
+ * 
+ */
 public class SubscriberProcessor implements ApplicationContextAware {
-    private static Logger logger = LoggerFactory
-            .getLogger(SubscriberProcessor.class);
+    private static Logger logger = LoggerFactory.getLogger(SubscriberProcessor.class);
     private ApplicationContext applicationContext;
     private ConnectionFactory connectionFactory;
     private List<DefaultMessageListenerContainer> defaultMessageListenerContainers = new ArrayList<DefaultMessageListenerContainer>();
 
     @PostConstruct
     public void afterPropertiesSet() {
-        Map<String, Subscribable> subscribableMap = applicationContext
-                .getBeansOfType(Subscribable.class);
+        Map<String, Subscribable> subscribableMap = applicationContext.getBeansOfType(Subscribable.class);
 
         for (Subscribable subscribable : subscribableMap.values()) {
             logger.info("subscribable : " + subscribable);
 
             DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
-            defaultMessageListenerContainers
-                    .add(defaultMessageListenerContainer);
+            defaultMessageListenerContainers.add(defaultMessageListenerContainer);
             defaultMessageListenerContainer.setPubSubDomain(true);
-            defaultMessageListenerContainer
-                    .setConnectionFactory(connectionFactory);
-            defaultMessageListenerContainer.setDestinationName(subscribable
-                    .getTopic());
+            defaultMessageListenerContainer.setConnectionFactory(connectionFactory);
+            defaultMessageListenerContainer.setDestinationName(subscribable.getTopic());
 
             MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter();
             messageListenerAdapter.setDelegate(subscribable);
-            defaultMessageListenerContainer
-                    .setMessageListener(messageListenerAdapter);
+            defaultMessageListenerContainer.setMessageListener(messageListenerAdapter);
             defaultMessageListenerContainer.afterPropertiesSet();
             defaultMessageListenerContainer.start();
         }

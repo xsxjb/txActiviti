@@ -3,9 +3,13 @@ package com.ibusiness.bridge.user;
 import com.ibusiness.api.user.UserCache;
 import com.ibusiness.api.user.UserDTO;
 
-import com.ibusiness.ext.cache.Cache;
-import com.ibusiness.ext.cache.CacheStrategy;
-
+import com.ibusiness.core.ext.cache.Cache;
+import com.ibusiness.core.ext.cache.CacheStrategy;
+/**
+ * 帐号/用户缓存接口实现类
+ * @author JiangBo
+ *
+ */
 public class UserCacheImpl implements UserCache {
     private CacheStrategy cacheStrategy;
     private Cache cache;

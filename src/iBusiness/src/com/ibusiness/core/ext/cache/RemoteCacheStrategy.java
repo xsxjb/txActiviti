@@ -1,4 +1,4 @@
-package com.ibusiness.ext.cache;
+package com.ibusiness.core.ext.cache;
 
 /**
  * 远程cache策略

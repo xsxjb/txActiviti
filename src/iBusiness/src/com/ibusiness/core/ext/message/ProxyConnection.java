@@ -1,4 +1,4 @@
-package com.ibusiness.ext.message;
+package com.ibusiness.core.ext.message;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionConsumer;
@@ -12,6 +12,12 @@ import javax.jms.ServerSessionPool;
 import javax.jms.Session;
 import javax.jms.Topic;
 
+/**
+ * Connection链接代理
+ * 
+ * @author JiangBo
+ * 
+ */
 public class ProxyConnection implements Connection {
     private ProxyConnectionFactory connectionFactory;
     private ProxySession proxySession;
@@ -21,8 +27,7 @@ public class ProxyConnection implements Connection {
         proxySession = new ProxySession(this);
     }
 
-    public Session createSession(boolean transacted, int acknowledgeMode)
-            throws JMSException {
+    public Session createSession(boolean transacted, int acknowledgeMode) throws JMSException {
         return proxySession;
     }
 
@@ -41,8 +46,7 @@ public class ProxyConnection implements Connection {
         return null;
     }
 
-    public void setExceptionListener(ExceptionListener listener)
-            throws JMSException {
+    public void setExceptionListener(ExceptionListener listener) throws JMSException {
     }
 
     public void start() throws JMSException {
@@ -54,15 +58,13 @@ public class ProxyConnection implements Connection {
     public void close() throws JMSException {
     }
 
-    public ConnectionConsumer createConnectionConsumer(Destination destination,
-            String messageSelector, ServerSessionPool sessionPool,
-            int maxMessages) throws JMSException {
+    public ConnectionConsumer createConnectionConsumer(Destination destination, String messageSelector,
+            ServerSessionPool sessionPool, int maxMessages) throws JMSException {
         return null;
     }
 
-    public ConnectionConsumer createDurableConnectionConsumer(Topic topic,
-            String subscriptionName, String messageSelector,
-            ServerSessionPool sessionPool, int maxMessages) throws JMSException {
+    public ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName,
+            String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException {
         return null;
     }
 
@@ -75,8 +77,7 @@ public class ProxyConnection implements Connection {
         return connectionFactory.getMessage(destinationName);
     }
 
-    public MessageConsumer createConsumer(Destination destination,
-            ProxySession session) {
+    public MessageConsumer createConsumer(Destination destination, ProxySession session) {
         return connectionFactory.createConsumer(destination, session);
     }
 
