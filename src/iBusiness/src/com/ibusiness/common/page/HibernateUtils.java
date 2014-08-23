@@ -1,4 +1,4 @@
-package com.ibusiness.page;
+package com.ibusiness.common.page;
 
 import java.util.ArrayList;
 import java.util.Collection;

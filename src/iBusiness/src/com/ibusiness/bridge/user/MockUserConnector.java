@@ -1,12 +1,7 @@
 package com.ibusiness.bridge.user;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.ibusiness.page.Page;
 /**
  * 用户连接器实现类
  * 

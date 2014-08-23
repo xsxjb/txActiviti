@@ -1,11 +1,8 @@
-package com.ibusiness.page;
+package com.ibusiness.common.page;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import com.ibusiness.core.hibernate.HibernateGenericDao;
-import com.ibusiness.page.Page;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -16,6 +13,8 @@ import org.hibernate.criterion.Projection;
 import org.hibernate.internal.CriteriaImpl;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
+import com.ibusiness.core.hibernate.HibernateGenericDao;
 
 /**
  * 提供分页查询功能.

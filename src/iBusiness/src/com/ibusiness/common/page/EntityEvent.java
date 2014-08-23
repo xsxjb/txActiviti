@@ -1,4 +1,4 @@
-package com.ibusiness.page;
+package com.ibusiness.common.page;
 
 import org.springframework.context.ApplicationEvent;
 

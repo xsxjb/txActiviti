@@ -1,8 +1,6 @@
 package com.ibusiness.bridge.user;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -12,10 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
-
-import com.ibusiness.page.Page;
-import com.ibusiness.page.PropertyFilter;
-import com.ibusiness.page.PropertyFilterUtils;
 
 /**
  * 用户数据连接器

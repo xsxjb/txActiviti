@@ -1,25 +1,19 @@
-package com.ibusiness.page;
+package com.ibusiness.common.page;
 
 import java.io.Serializable;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ibusiness.page.Page;
-import com.ibusiness.core.util.GenericsUtils;
-
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.criterion.Criterion;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.transaction.annotation.Transactional;
+
+import com.ibusiness.core.util.GenericsUtils;
 
 /**
  * 使用泛型的hibernate基类.

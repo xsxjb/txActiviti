@@ -1,8 +1,5 @@
 package com.ibusiness.bridge.user;
 
-import java.util.Map;
-
-import com.ibusiness.page.Page;
 
 
 public class UserConnectorWrapper implements UserConnector {

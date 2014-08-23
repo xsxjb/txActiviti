@@ -1,4 +1,4 @@
-package com.ibusiness.page;
+package com.ibusiness.common.page;
 
 public class EntityUpdatedEvent extends EntityEvent {
     private static final long serialVersionUID = 0L;
