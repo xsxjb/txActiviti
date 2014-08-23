@@ -1,5 +1,4 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
-
     <c:if test="${not empty flashMessages}">
 	<div id="m-success-message" style="display:none;">
 	  <ul>
@@ -25,8 +24,6 @@
               <li class="divider-vertical"></li>
               <li class="${currentHeader == 'dashboard' ? 'active' : currentHeader == 'bpm-workspace' ? 'active' : ''}"><a href="${scopePrefix}/dashboard/dashboard.do">首页</a></li>
               <!-- 
-              <li class="${currentHeader == 'bpm-workspace' ? 'active' : ''}"><a href="${scopePrefix}/bpm/workspace-home.do">个人事务</a></li>
-              <li class="${currentHeader == 'report' ? 'active' : ''}"><a href="${scopePrefix}/report/chart-mostActiveProcess.do">统计报表</a></li>
                -->
               <li class="dropdown ${currentHeader == 'scope' ? 'active' : ''}">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">系统管理 <b class="caret"></b></a>

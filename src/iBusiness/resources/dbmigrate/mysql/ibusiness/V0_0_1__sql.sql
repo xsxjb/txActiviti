@@ -25,7 +25,7 @@ CREATE TABLE IB_CONF_TABLE(
 /*==============================================================*/
 /* config table columns info 业务表字段结构管理表   */
 /*==============================================================*/
-CREATE TABLE TX_CONF_TABLE_COLUMNS (
+CREATE TABLE IB_CONF_TABLE_COLUMNS (
 		tableName VARCHAR(128),
 		columnValue VARCHAR(128),
 		columnName VARCHAR(128),
@@ -35,4 +35,27 @@ CREATE TABLE TX_CONF_TABLE_COLUMNS (
 		defaultValue VARCHAR(32),
 		columnNo INTEGER,
         CONSTRAINT PK_TX_CONF_TABLE_COL PRIMARY KEY(tableName,COLUMNVALUE)
+) ENGINE=INNODB;
+
+/*==============================================================*/
+/* IB_CONF_FORM–表单管理表   */
+/*==============================================================*/
+CREATE TABLE IB_CONF_FORM (
+		UUID VARCHAR(64),
+		PACKAGENAME VARCHAR(128),
+		FORMNAME VARCHAR(128),
+		FORMTITLE VARCHAR(128),
+        CONSTRAINT PK_TX_CONF_TABLE_COL PRIMARY KEY(UUID)
+) ENGINE=INNODB;
+
+/*==============================================================*/
+/* IB_CONF_FORM_TABLE-表单对应数据表管理表   */
+/*==============================================================*/
+CREATE TABLE IB_CONF_FORM_TABLE (
+		PACKAGENAME VARCHAR(128),
+		FORMNAME VARCHAR(128),
+		TABLENAME VARCHAR(128),
+		TABLETYPE VARCHAR(32),
+		PARENTTABLENAME VARCHAR(128),
+        CONSTRAINT PK_TX_CONF_TABLE_COL PRIMARY KEY(FORMNAME, TABLENAME)
 ) ENGINE=INNODB;

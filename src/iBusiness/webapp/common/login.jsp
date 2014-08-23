@@ -2,7 +2,7 @@
 <%@include file="/common/taglibs.jsp"%>
 <!doctype html>
 <html lang="en">
-
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
     <%@include file="/common/meta.jsp"%>
     <title><spring:message code="core.login.title" text="登录"/></title>
