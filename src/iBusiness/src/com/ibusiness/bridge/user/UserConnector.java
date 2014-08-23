@@ -1,8 +1,5 @@
 package com.ibusiness.bridge.user;
 
-import java.util.Map;
-
-import com.ibusiness.page.Page;
 
 /**
  * 用户连接器接口
@@ -39,8 +36,8 @@ public interface UserConnector {
      */
     UserDTO findByRef(String ref, String userRepoRef);
 
-    /**
-     * 分页查询用户.
-     */
-    Page pagedQuery(Page page, Map<String, Object> parameters);
+//    /**
+//     * 分页查询用户.
+//     */
+//    Page pagedQuery(Page page, Map<String, Object> parameter);
 }

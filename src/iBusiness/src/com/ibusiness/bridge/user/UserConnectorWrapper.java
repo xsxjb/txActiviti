@@ -70,9 +70,9 @@ public class UserConnectorWrapper implements UserConnector {
         return userDto;
     }
 
-    public Page pagedQuery(Page page, Map<String, Object> parameters) {
-        return userConnector.pagedQuery(page, parameters);
-    }
+//    public Page pagedQuery(Page page, Map<String, Object> parameters) {
+//        return userConnector.pagedQuery(page, parameters);
+//    }
 
     public void setUserConnector(UserConnector userConnector) {
         this.userConnector = userConnector;

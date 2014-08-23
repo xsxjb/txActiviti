@@ -88,39 +88,39 @@ public class DatabaseUserConnector implements UserConnector {
         }
     }
 
-    public Page pagedQuery(Page page, Map<String, Object> parameters) {
-        Map<String, Object> parameterMap = this.convertAlias(parameters);
-
-        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        StringBuilder buff = new StringBuilder();
-        List<Object> paramList = new ArrayList<Object>();
-        boolean checkWhere = sqlPagedQuerySelect.toLowerCase().indexOf("where") == -1;
-        PropertyFilterUtils.buildConfigurations(propertyFilters, buff, paramList, checkWhere);
-        logger.debug("propertyFilters : {}", propertyFilters);
-        logger.debug("buff : {}", buff);
-        logger.debug("paramList : {}", paramList);
-        logger.debug("checkWhere : {}", checkWhere);
-
-        String sql = buff.toString();
-        String countSql = sqlPagedQueryCount + " " + sql;
-        String selectSql = sqlPagedQuerySelect + " " + sql + " limit " + page.getStart() + "," + page.getPageSize();
-        logger.debug("countSql : {}", countSql);
-        logger.debug("selectSql : {}", selectSql);
-
-        Object[] params = paramList.toArray();
-        int totalCount = jdbcTemplate.queryForObject(countSql, Integer.class, params);
-        List<Map<String, Object>> list = jdbcTemplate.queryForList(selectSql, params);
-        List<UserDTO> userDtos = new ArrayList<UserDTO>();
-
-        for (Map<String, Object> map : list) {
-            userDtos.add(convertUserDTO(map));
-        }
-
-        page.setTotalCount(totalCount);
-        page.setResult(userDtos);
-
-        return page;
-    }
+//    public Page pagedQuery(Page page, Map<String, Object> parameters) {
+//        Map<String, Object> parameterMap = this.convertAlias(parameters);
+//
+//        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+//        StringBuilder buff = new StringBuilder();
+//        List<Object> paramList = new ArrayList<Object>();
+//        boolean checkWhere = sqlPagedQuerySelect.toLowerCase().indexOf("where") == -1;
+//        PropertyFilterUtils.buildConfigurations(propertyFilters, buff, paramList, checkWhere);
+//        logger.debug("propertyFilters : {}", propertyFilters);
+//        logger.debug("buff : {}", buff);
+//        logger.debug("paramList : {}", paramList);
+//        logger.debug("checkWhere : {}", checkWhere);
+//
+//        String sql = buff.toString();
+//        String countSql = sqlPagedQueryCount + " " + sql;
+//        String selectSql = sqlPagedQuerySelect + " " + sql + " limit " + page.getStart() + "," + page.getPageSize();
+//        logger.debug("countSql : {}", countSql);
+//        logger.debug("selectSql : {}", selectSql);
+//
+//        Object[] params = paramList.toArray();
+//        int totalCount = jdbcTemplate.queryForObject(countSql, Integer.class, params);
+//        List<Map<String, Object>> list = jdbcTemplate.queryForList(selectSql, params);
+//        List<UserDTO> userDtos = new ArrayList<UserDTO>();
+//
+//        for (Map<String, Object> map : list) {
+//            userDtos.add(convertUserDTO(map));
+//        }
+//
+//        page.setTotalCount(totalCount);
+//        page.setResult(userDtos);
+//
+//        return page;
+//    }
 
     protected UserDTO convertUserDTO(Map<String, Object> map) {
         if ((map == null) || map.isEmpty()) {

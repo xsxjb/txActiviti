@@ -14,7 +14,7 @@ public class portalController {
     public String list(Model model) {
         String userId = SpringSecurityUtils.getCurrentUserId();
 
-        return "portal/portal";
+        return "base/portal/portal.jsp";
     }
 
     // ~ ==================================================
