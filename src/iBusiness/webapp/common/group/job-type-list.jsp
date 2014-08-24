@@ -1,17 +1,17 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<%pageContext.setAttribute("currentHeader", "user");%>
-<%pageContext.setAttribute("currentMenu", "user");%>
+<%pageContext.setAttribute("currentHeader", "group-sys");%>
+<%pageContext.setAttribute("currentMenu", "job");%>
 <!doctype html>
-<html>
+<html lang="en">
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title><spring:message code="user.user.list.title" text="用户列表"/></title>
+    <title>职务类型列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 var config = {
-    id: 'userGrid',
+    id: 'orgGrid',
     pageNo: ${page.pageNo},
     pageSize: ${page.pageSize},
     totalCount: ${page.totalCount},
@@ -20,12 +20,12 @@ var config = {
     orderBy: '${page.orderBy == null ? "" : page.orderBy}',
     asc: ${page.asc},
     params: {
-        'filter_LIKES_username': '${param.filter_LIKES_username}',
+        'filter_LIKES_orgname': '${param.filter_LIKES_orgname}',
         'filter_EQI_status': '${param.filter_EQI_status}'
     },
 	selectedItemClass: 'selectedItem',
-	gridFormId: 'userGridForm',
-	exportUrl: 'user-base-export.do'
+	gridFormId: 'orgGridForm',
+	exportUrl: 'job-type-export.do'
 };
 
 var table;
@@ -43,6 +43,7 @@ $(function() {
     <%@include file="/header/header-portal.jsp"%>
 
     <div class="row">
+    <%@include file="/menu/scope.jsp"%>
 
 	<!-- start of main -->
     <section id="m-main" class="span10">
@@ -51,21 +52,15 @@ $(function() {
         <header class="header">
 		  <h4 class="title">查询</h4>
 		  <div class="ctrl">
-			<a class="btn"><i id="userSearchIcon" class="icon-chevron-up"></i></a>
+			<a class="btn"><i id="orgSearchIcon" class="icon-chevron-up"></i></a>
 		  </div>
 		</header>
-        <div id="userSearch" class="content content-inner">
+        <div id="orgSearch" class="content content-inner">
 
-		  <form name="userForm" method="post" action="user-base-list.do" class="form-inline">
-		    <label for="user_username"><spring:message code='user.user.list.search.username' text='账号'/>:</label>
-		    <input type="text" id="user_username" name="filter_LIKES_username" value="${param.filter_LIKES_username}">
-		    <label for="user_enabled"><spring:message code='user.user.list.search.status' text='状态'/>:</label>
-		    <select id="user_enabled" name="filter_EQI_status" class="input-mini">
-			  <option value=""></option>
-			  <option value="1" ${param.filter_EQI_status == 1 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.true' text='启用'/></option>
-			  <option value="0" ${param.filter_EQI_status == 0 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.false' text='禁用'/></option>
-		    </select>
-			<button class="btn btn-small" onclick="document.userForm.submit()">查询</button>
+		  <form name="orgForm" method="post" action="job-type-list.do" class="form-inline">
+		    <label for="org_orgname"><spring:message code='org.org.list.search.orgname' text='账号'/>:</label>
+		    <input type="text" id="org_orgname" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
+			<button class="btn btn-small" onclick="document.orgForm.submit()">查询</button>
 		  </form>
 
 		</div>
@@ -73,10 +68,10 @@ $(function() {
 
 	  <article class="m-blank">
 	    <div class="pull-left">
-		  <region:region-permission permission="user:create">
-		  <button class="btn btn-small a-insert" onclick="location.href='user-base-input.do'">新建</button>
+		  <region:region-permission permission="org:create">
+		  <button class="btn btn-small a-insert" onclick="location.href='job-type-input.do'">新建</button>
 		  </region:region-permission>
-		  <region:region-permission permission="user:delete">
+		  <region:region-permission permission="org:delete">
 		  <button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
 		  </region:region-permission>
 		  <button class="btn btn-small a-export" onclick="table.exportExcel()">导出</button>
@@ -97,20 +92,18 @@ $(function() {
 
       <article class="m-widget">
         <header class="header">
-		  <h4 class="title"><spring:message code="user.user.list.title" text="用户列表"/></h4>
+		  <h4 class="title">职务类型列表</h4>
 		</header>
 		<div class="content">
 
-			<form id="userGridForm" name="userGridForm" method='post' action="user-base-remove.do" class="m-form-blank">
-			  <table id="userGrid" class="table table-hover table-bordered">
+			<form id="orgGridForm" name="orgGridForm" method='post' action="job-type-remove.do" class="m-form-blank">
+			  <table id="orgGrid" class="table table-hover table-bordered">
 			    <thead>
 			      <tr>
 			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			        <th class="sorting" name="id"><spring:message code="user.user.list.id" text="编号"/></th>
-			        <th class="sorting" name="username"><spring:message code="user.user.list.username" text="账号"/></th>
-			        <th class="sorting" name="displayName">显示名</th>
-			        <th class="sorting" name="status"><spring:message code="user.user.list.status" text="状态"/></th>
-			        <th class="sorting" name="ref"><spring:message code="user.user.list.ref" text="引用"/></th>
+			        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
+			        <th class="sorting" name="name">名称</th>
+			        <th class="sorting" name="name">上级</th>
 			        <th width="80">&nbsp;</th>
 			      </tr>
 			    </thead>
@@ -120,18 +113,17 @@ $(function() {
 			      <tr>
 			        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 			        <td>${item.id}</td>
-			        <td>${item.username}</td>
-			        <td>${item.displayName}</td>
-			        <td>${item.status == 1 ? '启用' : '禁用'}</td>
-			        <td>${item.ref}</td>
+			        <td>${item.name}</td>
+			        <td>${item.jobType.name}</td>
 			        <td>
-			          <a href="user-base-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+			          <a href="job-type-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 			        </td>
 			      </tr>
 			      </c:forEach>
 			    </tbody>
 			  </table>
 			</form>
+
         </div>
       </article>
 
@@ -148,6 +140,8 @@ $(function() {
 
 	    <div class="m-clear"></div>
       </article>
+
+      <div class="m-spacer"></div>
 
     </section>
 	<!-- end of main -->

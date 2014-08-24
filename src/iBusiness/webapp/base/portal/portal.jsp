@@ -12,39 +12,14 @@
 
   <body>
     <%@include file="/header/header-portal.jsp"%>
-    <div class="row-fluid">
     <!-- start of main -->
     <section id="m-main" class="span12" style="float:right">
 		    <div class="container-fluid">
-				<div class="row-fluid">
+				<div class="row">
 					<div class="span12">
 						<h3 class="text-center">
 							iBusiness hello world
 						</h3>
-						<div class="row-fluid">
-							<div class="span4">
-							</div>
-							<div class="span4">
-							</div>
-							<div class="span4">
-							</div>
-						</div>
-						<div class="row-fluid">
-							<div class="span4">
-							</div>
-							<div class="span4">
-							</div>
-							<div class="span4">
-							</div>
-						</div>
-						<div class="row-fluid">
-							<div class="span4">
-							</div>
-							<div class="span4">
-							</div>
-							<div class="span4">
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

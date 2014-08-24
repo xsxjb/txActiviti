@@ -12,17 +12,15 @@
   <body onload='document.f.j_username.focus();'>
 
     <!-- start of header bar -->
-    <div class="navbar navbar-inverse">
-      <div class="navbar-inner">
+    <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
-          <a href="${scopePrefix}/" class="brand">iBusiness</a>
+          <a href="${scopePrefix}/" class="navbar-brand">iBusiness</a>
         </div>
-      </div><!-- /navbar-inner -->
-    </div>
+    </nav>
     <!-- end of header bar -->
 
-	<div class="row-fluid">
-	  <div class="span3"></div>
+	<div class="row">
+	<div class="span3"></div>
 
 	<!-- start of main -->
     <section class="span6">
@@ -35,25 +33,25 @@
 
       <article class="m-widget">
         <header class="header">
-		  <h4 class="title"><spring:message code="core.login.title" text="登录"/></h4>
+		  <h3 class="title"><strong><spring:message code="core.login.title" text="登录"/></strong></h3>
 		</header>
 
 		<div class="content content-inner">
 				<!-- 并监听默认的URL  j_spring_security_check 提交登陆信息的URL地址-->
 				<form id="userForm" name="f" method="post" action="${scopePrefix}/j_spring_security_check" class="form-horizontal">
-				  <div class="control-group">
+				  <div class="form-group">
 				    <label class="control-label" for="username"><spring:message code="core.login.username" text="账号"/></label>
 					<div class="controls">
 				      <input type='text' id="username" name='j_username' class="text" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}">
 				    </div>
 				  </div>
-				  <div class="control-group">
+				  <div class="form-group">
 				    <label class="control-label" for="password"><spring:message code="core.login.password" text="密码"/></label>
 					<div class="controls">
 				      <input type='password' id="password" name='j_password' class="text" value=''>
 				    </div>
 				  </div>
-				  <div class="control-group">
+				  <div class="form-group">
 				    <div class="controls">
 				      <input class="btn" name="submit" type="submit" value="<spring:message code='core.login.submit' text='提交'/>"/>
 				    </div>
