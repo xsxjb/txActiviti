@@ -54,15 +54,15 @@ $(function() {
 		  <h4 class="title"><spring:message code="user.user.input.title" text="编辑用户"/></h4>
 		</header>
 		<div class="content content-inner">
-				<form id="userForm" method="post" action="user-base-save.do?operationMode=STORE" class="form-horizontal">
+			<form id="userForm" method="post" action="user-base-save.do?operationMode=STORE" class="form-horizontal">
 				  <input id="user-base_userRepoId" type="hidden" name="userRepoId" value="1">
 				  <c:if test="${model != null}">
 				  <input id="user-base_id" type="hidden" name="id" value="${model.id}">
 				  </c:if>
 				  <div class="form-group">
-				    <label class="control-label" for="user-base_username"><spring:message code="user.user.input.username" text="账号"/></label>
-					<div class="controls">
-					  <input id="user-base_username" type="text" name="username" value="${model.username}" size="40" class="text required" minlength="2" maxlength="50">
+				    <label class="control-label" for="user-base_username">账号</label>
+				    <div class="controls" >
+				    <input id="user-base_username" type="text" name="username" value="${model.username}" size="40" class="text" minlength="2" maxlength="50">
 				    </div>
 				  </div>
 				  <c:if test="${model == null || model.password == null}">

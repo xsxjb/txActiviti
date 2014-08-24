@@ -208,7 +208,7 @@ public class RoleDefController {
 
         model.addAttribute("roleDts", roleDtos);
 
-        return "auth/role-def-manage";
+        return "common/auth/role-def-manage.jsp";
     }
 
     @RequestMapping("role-def-sync")
