@@ -8,25 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * OrgDepartment .
+ * 部门表实体Department .
  * 
- * @author Lingo
+ * @author JiangBo
  */
 @Entity
-@Table(name = "ORG_DEPARTMENT")
+@Table(name = "IB_DEPARTMENT")
 public class OrgDepartment implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
-    /** null. */
+    /** 编号. */
     private Long id;
 
-    /** null. */
-    private String code;
+    /** 公司编号. */
+    private Long companyid;
 
-    /** null. */
+    /** 部门名称. */
     private String name;
 
-    /** null. */
+    /** 备注. */
     private String descn;
 
     /** null. */
@@ -41,9 +41,9 @@ public class OrgDepartment implements java.io.Serializable {
     public OrgDepartment() {
     }
 
-    public OrgDepartment(String code, String name, String descn,
+    public OrgDepartment(Long companyid, String name, String descn,
             Integer status, String ref, String scopeId) {
-        this.code = code;
+        this.companyid = companyid;
         this.name = name;
         this.descn = descn;
         this.status = status;
@@ -67,18 +67,18 @@ public class OrgDepartment implements java.io.Serializable {
         this.id = id;
     }
 
-    /** @return null. */
-    @Column(name = "CODE", length = 50)
-    public String getCode() {
-        return this.code;
+    /**
+     * @return the companyid
+     */
+    public Long getCompanyid() {
+        return companyid;
     }
 
     /**
-     * @param code
-     *            null.
+     * @param companyid the companyid to set
      */
-    public void setCode(String code) {
-        this.code = code;
+    public void setCompanyid(Long companyid) {
+        this.companyid = companyid;
     }
 
     /** @return null. */

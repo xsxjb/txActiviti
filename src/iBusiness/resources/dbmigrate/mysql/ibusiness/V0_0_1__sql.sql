@@ -59,3 +59,47 @@ CREATE TABLE IB_CONF_FORM_TABLE (
 		PARENTTABLENAME VARCHAR(128),
         CONSTRAINT PK_TX_CONF_TABLE_COL PRIMARY KEY(FORMNAME, TABLENAME)
 ) ENGINE=INNODB;
+
+-------------------------------------------------------------------------------
+--  公司 company
+-------------------------------------------------------------------------------
+CREATE TABLE IB_COMPANY(
+        ID BIGINT auto_increment,
+        NAME VARCHAR(200),
+	    DESCN VARCHAR(200),
+        STATUS INTEGER,
+	    REF VARCHAR(200),
+	    SCOPE_ID VARCHAR(50),
+        CONSTRAINT PK_ORG_COMPANY PRIMARY KEY(ID)
+) engine=innodb;
+
+-------------------------------------------------------------------------------
+--  部门 department
+-------------------------------------------------------------------------------
+CREATE TABLE IB_DEPARTMENT(
+        ID BIGINT auto_increment,
+        COMPANYID BIGINT,
+        NAME VARCHAR(200),
+	    DESCN VARCHAR(200),
+        STATUS INTEGER,
+	    REF VARCHAR(200),
+	    SCOPE_ID VARCHAR(50),
+        CONSTRAINT PK_ORG_DEPARTMENT PRIMARY KEY(ID)
+) engine=innodb;
+
+-------------------------------------------------------------------------------
+--  小组 group
+-------------------------------------------------------------------------------
+CREATE TABLE IB_GROUP(
+        ID BIGINT auto_increment,
+        COMPANYID BIGINT,
+        DEPTID BIGINT,
+        NAME VARCHAR(200),
+	    DESCN VARCHAR(200),
+        STATUS INTEGER,
+	    REF VARCHAR(200),
+	    SCOPE_ID VARCHAR(50),
+        CONSTRAINT PK_ORG_GROUP PRIMARY KEY(ID)
+) engine=innodb;
+
+

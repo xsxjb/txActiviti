@@ -96,31 +96,31 @@ $(function() {
 		</header>
 		<div class="content">
 
-<form id="orgGridForm" name="orgGridForm" method='post' action="job-title-remove.do" class="m-form-blank">
-  <table id="orgGrid" class="table table-hover table-bordered">
-    <thead>
-      <tr>
-        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
-        <th class="sorting" name="name">名称</th>
-        <th width="80">&nbsp;</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <c:forEach items="${page.result}" var="item">
-      <tr>
-        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-        <td>${item.id}</td>
-        <td>${item.name}</td>
-        <td>
-          <a href="job-title-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
-        </td>
-      </tr>
-      </c:forEach>
-    </tbody>
-  </table>
-</form>
+			<form id="orgGridForm" name="orgGridForm" method='post' action="job-title-remove.do" class="m-form-blank">
+			  <table id="orgGrid" class="table table-hover table-bordered">
+			    <thead>
+			      <tr>
+			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
+			        <th class="sorting" name="name">名称</th>
+			        <th width="80">&nbsp;</th>
+			      </tr>
+			    </thead>
+			
+			    <tbody>
+			      <c:forEach items="${page.result}" var="item">
+			      <tr>
+			        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+			        <td>${item.id}</td>
+			        <td>${item.name}</td>
+			        <td>
+			          <a href="job-title-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+			        </td>
+			      </tr>
+			      </c:forEach>
+			    </tbody>
+			  </table>
+			</form>
 
         </div>
       </article>

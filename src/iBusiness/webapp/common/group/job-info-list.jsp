@@ -24,18 +24,10 @@ var config = {
         'filter_EQI_status': '${param.filter_EQI_status}'
     },
 	selectedItemClass: 'selectedItem',
-	gridFormId: 'orgGridForm',
-	exportUrl: 'job-info-export.do'
+	gridFormId: 'orgGridForm'	
 };
 
-var table;
-
-$(function() {
-	table = new Table(config);
-    table.configPagination('.m-pagination');
-    table.configPageInfo('.m-page-info');
-    table.configPageSize('.m-page-size');
-});
+var table = new Table(config);
     </script>
   </head>
 
@@ -48,7 +40,7 @@ $(function() {
 	<!-- start of main -->
     <section id="m-main" class="span10">
 
-	  <article class="m-widget">
+	  <div class="form-group has-warning">
         <header class="header">
 		  <h4 class="title">查询</h4>
 		  <div class="ctrl">
@@ -56,17 +48,15 @@ $(function() {
 		  </div>
 		</header>
         <div id="orgSearch" class="content content-inner">
-
 		  <form name="orgForm" method="post" action="job-info-list.do" class="form-inline">
 		    <label for="org_orgname"><spring:message code='org.org.list.search.orgname' text='账号'/>:</label>
 		    <input type="text" id="org_orgname" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
 			<button class="btn btn-small" onclick="document.orgForm.submit()">查询</button>
 		  </form>
-
 		</div>
-	  </article>
+	  </div>
 
-	  <article class="m-blank">
+	  <article class="m-widget">
 	    <div class="pull-left">
 		  <region:region-permission permission="org:create">
 		  <button class="btn btn-small a-insert" onclick="location.href='job-info-input.do'">新建</button>

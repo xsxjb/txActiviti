@@ -43,6 +43,7 @@ $(function() {
     <%@include file="/header/header-portal.jsp"%>
 
     <div class="row">
+    <%@include file="/menu/scope.jsp"%>
 
 	<!-- start of main -->
     <section id="m-main" class="span10">

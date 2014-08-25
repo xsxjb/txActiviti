@@ -46,6 +46,7 @@ $(function() {
     <%@include file="/header/header-portal.jsp"%>
 
     <div class="row">
+    <div class="span2"></div>
 
 	<!-- start of main -->
     <section id="m-main" class="span10">

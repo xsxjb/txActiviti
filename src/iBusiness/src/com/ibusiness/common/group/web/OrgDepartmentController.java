@@ -33,9 +33,7 @@ public class OrgDepartmentController {
     private BeanMapper beanMapper = new BeanMapper();
 
     @RequestMapping("org-department-list")
-    public String list(@ModelAttribute
-    Page page, @RequestParam
-    Map<String, Object> parameterMap, Model model) {
+    public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
         page = orgDepartmentDao.pagedQuery(page, propertyFilters);
@@ -52,7 +50,7 @@ public class OrgDepartmentController {
             model.addAttribute("model", orgDepartment);
         }
 
-        return "group/org-department-input";
+        return "common/group/org-department-input.jsp";
     }
 
     @RequestMapping("org-department-save")

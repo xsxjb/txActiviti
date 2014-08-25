@@ -46,6 +46,7 @@ $(function() {
     <%@include file="/header/header-portal.jsp"%>
 
     <div class="row">
+    <%@include file="/menu/scope.jsp"%>
 
 	<!-- start of main -->
     <section id="m-main" class="span10">
@@ -62,9 +63,21 @@ $(function() {
   <input id="org_id" type="hidden" name="id" value="${model.id}">
   </c:if>
   <div class="form-group">
-    <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="名称"/></label>
+    <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="小组名称"/></label>
 	<div class="controls">
 	  <input id="org_orgname" type="text" name="name" value="${model.name}" size="40" class="text required" minlength="2" maxlength="50">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="org_companyid"><spring:message code="org.org.input.orgname" text="公司编号"/></label>
+	<div class="controls">
+	  <input id="org_companyid" type="text" name="companyid" value="${model.companyid}" size="40" class="text required" minlength="2" maxlength="50">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="部门编号"/></label>
+	<div class="controls">
+	  <input id="org_deptid" type="text" name="deptid" value="${model.deptid}" size="40" class="text required" minlength="2" maxlength="50">
     </div>
   </div>
   <div class="form-group">

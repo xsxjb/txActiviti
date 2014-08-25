@@ -24,18 +24,10 @@ var config = {
         'filter_EQI_status': '${param.filter_EQI_status}'
     },
 	selectedItemClass: 'selectedItem',
-	gridFormId: 'orgGridForm',
-	exportUrl: 'job-user-export.do'
+	gridFormId: 'orgGridForm'
 };
 
-var table;
-
-$(function() {
-	table = new Table(config);
-    table.configPagination('.m-pagination');
-    table.configPageInfo('.m-page-info');
-    table.configPageSize('.m-page-size');
-});
+var table = new Table(config);
     </script>
   </head>
 

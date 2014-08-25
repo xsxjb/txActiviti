@@ -8,25 +8,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * OrgCompany .
+ * 公司表实体Company .
  * 
- * @author Lingo
+ * @author JiangBo
  */
 @Entity
-@Table(name = "ORG_COMPANY")
+@Table(name = "IB_COMPANY")
 public class OrgCompany implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
-    /** null. */
+    /** 编号. */
     private Long id;
 
-    /** null. */
-    private String code;
-
-    /** null. */
+    /** 公司名称. */
     private String name;
 
-    /** null. */
+    /** 备注. */
     private String descn;
 
     /** null. */
@@ -41,9 +38,8 @@ public class OrgCompany implements java.io.Serializable {
     public OrgCompany() {
     }
 
-    public OrgCompany(String code, String name, String descn, Integer status,
+    public OrgCompany(String name, String descn, Integer status,
             String ref, String scopeId) {
-        this.code = code;
         this.name = name;
         this.descn = descn;
         this.status = status;
@@ -65,20 +61,6 @@ public class OrgCompany implements java.io.Serializable {
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /** @return null. */
-    @Column(name = "CODE", length = 50)
-    public String getCode() {
-        return this.code;
-    }
-
-    /**
-     * @param code
-     *            null.
-     */
-    public void setCode(String code) {
-        this.code = code;
     }
 
     /** @return null. */

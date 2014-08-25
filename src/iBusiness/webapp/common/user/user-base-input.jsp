@@ -46,9 +46,10 @@ $(function() {
     <%@include file="/header/header-portal.jsp"%>
 
     <div class="row">
+    <div class="span2"></div>
 
 	<!-- start of main -->
-    <section id="m-main" class="span12">
+    <section id="m-main" class="span10">
       <article class="m-widget">
         <header class="header">
 		  <h4 class="title"><spring:message code="user.user.input.title" text="编辑用户"/></h4>

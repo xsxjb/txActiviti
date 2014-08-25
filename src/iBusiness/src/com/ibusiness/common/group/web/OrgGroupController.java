@@ -52,7 +52,7 @@ public class OrgGroupController {
             model.addAttribute("model", orgGroup);
         }
 
-        return "group/org-group-input";
+        return "common/group/org-group-input.jsp";
     }
 
     @RequestMapping("org-group-save")

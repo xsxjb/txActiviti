@@ -24,18 +24,10 @@ var config = {
         'filter_EQI_status': '${param.filter_EQI_status}'
     },
 	selectedItemClass: 'selectedItem',
-	gridFormId: 'orgGridForm',
-	exportUrl: 'org-group-export.do'
+	gridFormId: 'orgGridForm'
 };
 
-var table;
-
-$(function() {
-	table = new Table(config);
-    table.configPagination('.m-pagination');
-    table.configPageInfo('.m-page-info');
-    table.configPageSize('.m-page-size');
-});
+var table = new Table(config);
     </script>
   </head>
 
@@ -108,7 +100,9 @@ $(function() {
       <tr>
         <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
         <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
-        <th class="sorting" name="name">名称</th>
+        <th class="sorting" name="name">小组名称</th>
+        <th class="sorting" name="companyid">公司编号</th>
+        <th class="sorting" name="deptid">部门编号</th>
         <th width="80">&nbsp;</th>
       </tr>
     </thead>
@@ -119,6 +113,8 @@ $(function() {
         <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
         <td>${item.id}</td>
         <td>${item.name}</td>
+        <td>${item.companyid}</td>
+        <td>${item.deptid}</td>
         <td>
           <a href="org-group-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
         </td>
