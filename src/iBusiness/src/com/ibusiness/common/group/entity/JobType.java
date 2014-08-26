@@ -20,7 +20,7 @@ import javax.persistence.Table;
  * @author JiangBo
  */
 @Entity
-@Table(name = "JOB_TYPE")
+@Table(name = "IB_JOB_TYPE")
 public class JobType implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 

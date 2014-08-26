@@ -94,7 +94,6 @@ var table = new Table(config);
         <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
         <th class="sorting" name="name">职务名称</th>
         <th class="sorting" name="name">职位类型</th>
-        <th class="sorting" name="name">职位级别</th>
         <th width="80">&nbsp;</th>
       </tr>
     </thead>
@@ -106,7 +105,6 @@ var table = new Table(config);
         <td>${item.id}</td>
         <td>${item.jobTitle.name}</td>
         <td>${item.jobType.name}</td>
-        <td>${item.jobLevel.name}</td>
         <td>
           <a href="job-info-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
         </td>

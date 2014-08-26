@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * @author JiangBo
  */
 @Entity
-@Table(name = "JOB_TITLE")
+@Table(name = "IB_JOB_TITLE")
 public class JobTitle implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 

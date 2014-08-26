@@ -92,6 +92,18 @@ $(function() {
 					  <input id="user-base_displayName" type="text" name="displayName" value="${model.displayName}" size="40" class="text required" minlength="2" maxlength="50">
 				    </div>
 				  </div>
+				  
+				  <div class="form-group">
+				    <label class="control-label" for="job_level">职位</label>
+					<div class="controls">
+					  <select id="job_level" name="jobId">
+					  <c:forEach items="${jobInfos}" var="item">
+					    <option value="${item.id}" ${item.id==model.jobInfo.id ? 'selected' : ''}>${item.jobTitle.name}</option>
+					  </c:forEach>
+					  </select>
+				    </div>
+				  </div>
+  
 				  <div class="form-group">
 				    <label class="control-label" for="user-base_email">邮箱</label>
 					<div class="controls">

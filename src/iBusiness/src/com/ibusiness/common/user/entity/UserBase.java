@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ibusiness.common.group.entity.JobInfo;
+
 /**
  * UserBase用户表.
  * 
@@ -45,14 +47,17 @@ public class UserBase implements java.io.Serializable {
     /** 引用. */
     private String ref;
 
-    /** null. */
+    /** 范围. */
     private String scopeId;
 
-    /** null. */
+    /** 邮箱. */
     private String email;
 
-    /** null. */
+    /** 手机. */
     private String mobile;
+    
+    /** 职务管理表. */
+    private JobInfo jobInfo;
 
     /** . */
     private Set<UserAttr> userAttrs = new HashSet<UserAttr>(0);
@@ -62,7 +67,7 @@ public class UserBase implements java.io.Serializable {
 
     public UserBase(UserRepo userRepo, String username, String displayName,
             String password, Integer status, String ref, String scopeId,
-            String email, String mobile, Set<UserAttr> userAttrs) {
+            String email, String mobile, JobInfo jobInfo, Set<UserAttr> userAttrs) {
         this.userRepo = userRepo;
         this.username = username;
         this.displayName = displayName;
@@ -72,6 +77,7 @@ public class UserBase implements java.io.Serializable {
         this.scopeId = scopeId;
         this.email = email;
         this.mobile = mobile;
+        this.jobInfo = jobInfo;
         this.userAttrs = userAttrs;
     }
 
@@ -217,7 +223,7 @@ public class UserBase implements java.io.Serializable {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
-
+    
     /** @return . */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userBase")
     public Set<UserAttr> getUserAttrs() {
@@ -230,5 +236,20 @@ public class UserBase implements java.io.Serializable {
      */
     public void setUserAttrs(Set<UserAttr> userAttrs) {
         this.userAttrs = userAttrs;
+    }
+
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "JOB_INFO_ID")
+    public JobInfo getJobInfo() {
+        return this.jobInfo;
+    }
+
+    /**
+     * @param jobInfo
+     *            null.
+     */
+    public void setJobInfo(JobInfo jobInfo) {
+        this.jobInfo = jobInfo;
     }
 }

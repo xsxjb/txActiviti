@@ -37,9 +37,16 @@ public class JobInfoController {
     private JobTypeDao jobTypeDao;
     private JobTitleDao jobTitleDao;
 
+    /**
+     * 职务管理查询
+     * 
+     * @param page
+     * @param parameterMap
+     * @param model
+     * @return
+     */
     @RequestMapping("job-info-list")
-    public String list(@ModelAttribute
-    Page page, @RequestParam
+    public String list(@ModelAttribute Page page, @RequestParam
     Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
@@ -65,11 +72,8 @@ public class JobInfoController {
     }
 
     @RequestMapping("job-info-save")
-    public String save(@ModelAttribute
-    JobInfo jobInfo, @RequestParam("jobTitleId")
-    long jobTitleId, @RequestParam("jobTypeId")
-    long jobTypeId, @RequestParam("jobLevelId")
-    long jobLevelId, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute JobInfo jobInfo, @RequestParam("jobTitleId") long jobTitleId, 
+            @RequestParam("jobTypeId") long jobTypeId, RedirectAttributes redirectAttributes) {
         JobInfo dest = null;
         Long id = jobInfo.getId();
 

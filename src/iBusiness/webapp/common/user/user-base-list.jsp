@@ -1,7 +1,7 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
 <%pageContext.setAttribute("currentHeader", "user");%>
-<%pageContext.setAttribute("currentMenu", "user");%>
+<%pageContext.setAttribute("currentMenu", "job");%>
 <!doctype html>
 <html>
 
@@ -111,7 +111,7 @@ $(function() {
 			        <th class="sorting" name="username"><spring:message code="user.user.list.username" text="账号"/></th>
 			        <th class="sorting" name="displayName">显示名</th>
 			        <th class="sorting" name="status"><spring:message code="user.user.list.status" text="状态"/></th>
-			        <th class="sorting" name="ref"><spring:message code="user.user.list.ref" text="引用"/></th>
+			        <th class="sorting" name="ref"><spring:message code="user.user.list.ref" text="职务"/></th>
 			        <th width="80">&nbsp;</th>
 			      </tr>
 			    </thead>
@@ -124,7 +124,7 @@ $(function() {
 			        <td>${item.username}</td>
 			        <td>${item.displayName}</td>
 			        <td>${item.status == 1 ? '启用' : '禁用'}</td>
-			        <td>${item.ref}</td>
+			        <td>${item.jobInfo.jobTitle.name}</td>
 			        <td>
 			          <a href="user-base-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 			        </td>

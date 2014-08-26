@@ -27,6 +27,7 @@ $(function() {
     <%@include file="/header/header-portal.jsp"%>
 
     <div class="row">
+    <%@include file="/menu/scope.jsp"%>
 
 	<!-- start of main -->
     <section id="m-main" class="span10">
@@ -47,16 +48,6 @@ $(function() {
 	<div class="controls">
 	  <select id="job_title" name="jobTitleId">
 	  <c:forEach items="${jobTitles}" var="item">
-	    <option value="${item.id}">${item.name}</option>
-	  </c:forEach>
-	  </select>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label" for="job_level">职级</label>
-	<div class="controls">
-	  <select id="job_level" name="jobLevelId">
-	  <c:forEach items="${jobLevels}" var="item">
 	    <option value="${item.id}">${item.name}</option>
 	  </c:forEach>
 	  </select>

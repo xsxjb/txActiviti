@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 /**
  * UserAttr .
  * 
- * @author Lingo
+ * @author JiangBo
  */
 @Entity
 @Table(name = "USER_ATTR")

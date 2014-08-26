@@ -32,9 +32,9 @@ CREATE TABLE USER_SCHEMA(
         CONSTRAINT FK_USER_SCHEMA_REPO FOREIGN KEY(USER_REPO_ID) REFERENCES USER_REPO(ID)
 ) engine=innodb;
 
--------------------------------------------------------------------------------
---  user base
--------------------------------------------------------------------------------
+/*==============================================================*/
+/* user base 用户表   */
+/*==============================================================*/
 CREATE TABLE USER_BASE(
         ID BIGINT auto_increment,
         USERNAME VARCHAR(50),
@@ -46,6 +46,7 @@ CREATE TABLE USER_BASE(
 		SCOPE_ID VARCHAR(50),
 		email varchar(100),
 		mobile varchar(50),
+		JOB_INFO_ID BIGINT,
         CONSTRAINT PK_USER_BASE PRIMARY KEY(ID),
         CONSTRAINT FK_USER_BASE_REPO FOREIGN KEY(USER_REPO_ID) REFERENCES USER_REPO(ID)
 ) engine=innodb;

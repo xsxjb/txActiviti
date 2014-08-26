@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.bridge.user.UserCache;
 import com.ibusiness.bridge.user.UserDTO;
+import com.ibusiness.common.group.dao.JobInfoDao;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.user.dao.UserBaseDao;
@@ -47,6 +48,8 @@ public class UserBaseController {
     private BeanMapper beanMapper = new BeanMapper();
     private SimplePasswordEncoder simplePasswordEncoder;
     private UserService userService;
+    // 职务管理表DAO
+    private JobInfoDao jobInfoDao;
 
     /**
      * 查看
@@ -64,7 +67,6 @@ public class UserBaseController {
         UserRepo userRepo = userRepoDao.findUniqueBy("code", ScopeHolder.getScopeCode());
         propertyFilters.add(new PropertyFilter("EQL_userRepo.id", Long.toString(userRepo.getId())));
         page = userBaseDao.pagedQuery(page, propertyFilters);
-
         List<UserBase> userBases = (List<UserBase>) page.getResult();
         List<UserBaseWrapper> userBaseWrappers = new ArrayList<UserBaseWrapper>();
 
@@ -86,8 +88,7 @@ public class UserBaseController {
      * @return
      */
     @RequestMapping("user-base-input")
-    public String input(@RequestParam(value = "id", required = false)
-    Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) Long id, Model model) {
         UserBase userBase = null;
 
         if (id != null) {
@@ -102,6 +103,8 @@ public class UserBaseController {
         UserBaseWrapper userBaseWrapper = new UserBaseWrapper(userBase);
         model.addAttribute("model", userBase);
         model.addAttribute("userBaseWrapper", userBaseWrapper);
+        // 设置职务管理下拉数据
+        model.addAttribute("jobInfos", jobInfoDao.getAll());
 
         return "common/user/user-base-input.jsp";
     }
@@ -118,11 +121,9 @@ public class UserBaseController {
      * @throws Exception
      */
     @RequestMapping("user-base-save")
-    public String save(@ModelAttribute
-    UserBase userBase, @RequestParam(value = "confirmPassword", required = false)
-    String confirmPassword, @RequestParam("userRepoId")
-    Long userRepoId, @RequestParam
-    Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
+    public String save(@ModelAttribute UserBase userBase, @RequestParam(value = "confirmPassword", required = false)
+    String confirmPassword, @RequestParam("userRepoId") Long userRepoId, @RequestParam("jobId") long jobId,
+    @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         if (userBase.getPassword() != null) {
             if (!userBase.getPassword().equals(confirmPassword)) {
@@ -147,9 +148,11 @@ public class UserBaseController {
             dest = userBaseDao.get(id);
             dest.setStatus(0);
             beanMapper.copy(userBase, dest);
+            dest.setJobInfo(jobInfoDao.get(jobId));
             userService.updateUser(dest, userRepoId, parameters);
         } else {
             dest = userBase;
+            dest.setJobInfo(jobInfoDao.get(jobId));
             userService.insertUser(dest, userRepoId, parameters);
         }
 
@@ -281,5 +284,9 @@ public class UserBaseController {
     @Resource
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+    @Resource
+    public void setJobInfoDao(JobInfoDao jobInfoDao) {
+        this.jobInfoDao = jobInfoDao;
     }
 }
