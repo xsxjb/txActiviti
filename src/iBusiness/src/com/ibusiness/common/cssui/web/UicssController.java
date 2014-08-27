@@ -1,38 +1,40 @@
-package com.ibusiness.common.portal.web;
+package com.ibusiness.common.cssui.web;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ibusiness.common.user.dao.UserBaseDao;
 import com.ibusiness.common.user.entity.UserBase;
 import com.ibusiness.security.util.SpringSecurityUtils;
+
 /**
- * 登录后首页controller
+ * UI CSS样式设置
  * 
  * @author JiangBo
  *
  */
 @Controller
-@RequestMapping("portal")
-public class portalController {
-
+@RequestMapping("uicss")
+public class UicssController {
     private UserBaseDao userBaseDao;
-    
-    @RequestMapping("portal")
-    public String list(Model model, HttpSession session) {
-        // 当前座席ID
+    /**
+     * 设置 UI CSS样式
+     */
+    @RequestMapping("uicss-save")
+    public String save(@RequestParam("userCSS") String userCSS, HttpSession session) {
+
         String userId = SpringSecurityUtils.getCurrentUserId();
         UserBase userBase = userBaseDao.get(Long.parseLong(userId));
+        userBase.setCss(userCSS);
+        userBaseDao.save(userBase);
         // 设置request
         session.setAttribute("userCSS",userBase.getCss());
-        return "base/portal/portal.jsp";
+        return "redirect:/portal/portal.do";
     }
-    
-    // ==================================================
     /**
      * @return the userBaseDao
      */
@@ -40,5 +42,4 @@ public class portalController {
     public void setUserBaseDao(UserBaseDao userBaseDao) {
         this.userBaseDao = userBaseDao;
     }
-
 }

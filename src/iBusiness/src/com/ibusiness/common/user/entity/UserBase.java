@@ -58,6 +58,9 @@ public class UserBase implements java.io.Serializable {
     
     /** 职务管理表. */
     private JobInfo jobInfo;
+    
+    /** 对应页面的css样式 */
+    private String css;
 
     /** . */
     private Set<UserAttr> userAttrs = new HashSet<UserAttr>(0);
@@ -67,7 +70,7 @@ public class UserBase implements java.io.Serializable {
 
     public UserBase(UserRepo userRepo, String username, String displayName,
             String password, Integer status, String ref, String scopeId,
-            String email, String mobile, JobInfo jobInfo, Set<UserAttr> userAttrs) {
+            String email, String mobile, JobInfo jobInfo, Set<UserAttr> userAttrs, String css) {
         this.userRepo = userRepo;
         this.username = username;
         this.displayName = displayName;
@@ -79,6 +82,7 @@ public class UserBase implements java.io.Serializable {
         this.mobile = mobile;
         this.jobInfo = jobInfo;
         this.userAttrs = userAttrs;
+        this.css = css;
     }
 
     /** @return null. */
@@ -251,5 +255,20 @@ public class UserBase implements java.io.Serializable {
      */
     public void setJobInfo(JobInfo jobInfo) {
         this.jobInfo = jobInfo;
+    }
+
+    /**
+     * @return the css
+     */
+    @Column(name = "CSS", length = 64)
+    public String getCss() {
+        return css;
+    }
+
+    /**
+     * @param css the css to set
+     */
+    public void setCss(String css) {
+        this.css = css;
     }
 }

@@ -153,6 +153,8 @@ public class UserBaseController {
         } else {
             dest = userBase;
             dest.setJobInfo(jobInfoDao.get(jobId));
+            // 设置默认的css样式
+            dest.setCss("Cerulean");
             userService.insertUser(dest, userRepoId, parameters);
         }
 
