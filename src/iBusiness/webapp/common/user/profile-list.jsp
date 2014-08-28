@@ -70,7 +70,7 @@ $(function() {
   <div class="form-group">
     <label class="control-label" for="user-base_displayName">显示名</label>
 	<div class="controls">
-	  <input id="user-base_displayName" type="text" name="displayName" value="${model.displayName}" size="40" class="text required" minlength="2" maxlength="50">
+	  <input id="user-base_displayName" type="text" name="displayName" value="${model.displayName}"  class="text required" minlength="2" maxlength="50">
     </div>
   </div>
   <div class="form-group">
@@ -89,14 +89,14 @@ $(function() {
   <div class="form-group">
     <label class="control-label" for="user-base_${item.code}">${item.name}</label>
 	<div class="controls">
-	  <input id="user-base_${item.code}" type="text" name="_user_attr_${item.code}" size="40" class="text" maxlength="50" value="${item.value}">
+	  <input id="user-base_${item.code}" type="text" name="_user_attr_${item.code}"  class="text" maxlength="50" value="${item.value}">
     </div>
   </div>
   </c:forEach>
   <div class="form-group">
     <div class="controls">
-      <button id="submitButton" class="btn a-submit"><spring:message code='core.input.save' text='保存'/></button>
-      <button type="button" onclick="history.back();" class="btn a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
     </div>
   </div>
 </form>

@@ -42,9 +42,9 @@
   </c:forEach>
   <div class="control-group">
     <div class="controls">
-      <button id="submitButton" class="btn a-submit"><spring:message code='core.input.save' text='保存'/></button>
+      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
 	  &nbsp;
-      <button type="button" onclick="history.back();" class="btn"><spring:message code='core.input.back' text='返回'/></button>
+      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
     </div>
   </div>
 </form>

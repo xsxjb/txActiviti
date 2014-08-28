@@ -10,7 +10,7 @@
             </a>
           </div>
           <div id="collapse-group" class="panel-collapse collapse ${currentMenu == 'group' ? 'in' : ''}">
-            <ul class="panel-body nav nav-list">
+            <ul class="nav nav-pills nav-stacked">
 			  <li><a href="${scopePrefix}/group/org-company-list.do"><i class="icon-user"></i>公司</a></li>
 			  <li><a href="${scopePrefix}/group/org-department-list.do"><i class="icon-user"></i>部门</a></li>
 			  <li><a href="${scopePrefix}/group/org-group-list.do"><i class="icon-user"></i>小组</a></li>

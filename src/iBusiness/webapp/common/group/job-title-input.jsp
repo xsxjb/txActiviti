@@ -26,45 +26,29 @@ $(function() {
   <body>
     <%@include file="/header/header-portal.jsp"%>
 
-    <div class="row">
-    <%@include file="/menu/scope.jsp"%>
+    <div class="span2"></div>
 
 	<!-- start of main -->
-    <section id="m-main" class="span10">
-
-      <article class="m-widget">
-        <header class="header">
-		  <h4 class="title">编辑职位名称</h4>
-		</header>
-
-		<div class="content content-inner">
-
-<form id="orgForm" method="post" action="job-title-save.do" class="form-horizontal">
-  <c:if test="${model != null}">
-  <input id="org_id" type="hidden" name="id" value="${model.id}">
-  </c:if>
-  <div class="form-group">
-    <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="名称"/></label>
-	<div class="controls">
-	  <input id="org_orgname" type="text" name="name" value="${model.name}" size="40" class="text required" minlength="1" maxlength="50">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="controls">
-      <button id="submitButton" class="btn a-submit"><spring:message code='core.input.save' text='保存'/></button>
-      <button type="button" onclick="history.back();" class="btn"><spring:message code='core.input.back' text='返回'/></button>
-    </div>
-  </div>
-</form>
-
+	<div class="panel panel-default span10"> 
+        <div class="panel-heading"><h4 class="title">编辑职位名称</h4></div>
+        <div class="panel-body">
+	        <form id="orgForm" method="post" action="job-title-save.do" class="form-horizontal">
+			  <c:if test="${model != null}">
+			  <input id="org_id" type="hidden" name="id" value="${model.id}">
+			  </c:if>
+			  <p>
+			      <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="名称"/></label>
+				  <input id="org_orgname" type="text" name="name" value="${model.name}"  class="text required"  maxlength="50">
+			  </p>
+			  <p>
+			      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+			      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
+			  </p>
+			</form>
+        
         </div>
-      </article>
-
-      <div class="m-spacer"></div>
-
-    </section>
+    </div>
 	<!-- end of main -->
-	</div>
 
   </body>
 

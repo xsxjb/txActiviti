@@ -58,7 +58,7 @@ $(function() {
 		  <form name="roleDefForm" method="post" action="role-def-list.do" class="form-inline">
 		    <label for="roleDef_name"><spring:message code='auth.roleDef.list.search.name' text='名称'/>:</label>
 		    <input type="text" id="roleDef_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
-			<button class="btn btn-small" onclick="document.permForm.submit()">查询</button>
+			<button class="btn btn-default" onclick="document.permForm.submit()">查询</button>
 		  </form>
 
 		</div>
@@ -66,7 +66,7 @@ $(function() {
 
 	  <article class="m-blank">
 	    <div class="pull-left">
-		  <button class="btn btn-small a-submit" onclick="location.href='role-def-sync.do?id=${param.id}'">同步</button>
+		  <button class="btn btn-default a-submit" onclick="location.href='role-def-sync.do?id=${param.id}'">同步</button>
 		</div>
 
 		<div class="pull-right">
@@ -123,9 +123,9 @@ $(function() {
 		</div>
 
 		<div class="btn-group m-pagination pull-right">
-		  <button class="btn btn-small">&lt;</button>
-		  <button class="btn btn-small">1</button>
-		  <button class="btn btn-small">&gt;</button>
+		  <button class="btn btn-default">&lt;</button>
+		  <button class="btn btn-default">1</button>
+		  <button class="btn btn-default">&gt;</button>
 		</div>
 
 	    <div class="m-clear"></div>

@@ -4,7 +4,7 @@
 <%pageContext.setAttribute("currentMenu", "group");%>
 <!doctype html>
 <html lang="en">
-
+   
   <head>
     <%@include file="/common/meta.jsp"%>
     <title>公司列表</title>
@@ -42,111 +42,67 @@ $(function() {
   <body>
     <%@include file="/header/header-portal.jsp"%>
 
-    <div class="row">
-    <%@include file="/menu/scope.jsp"%>
+    <div class="span2"></div>
     
 	<!-- start of main -->
-    <section id="m-main" class="span10">
-
-	  <article class="m-widget">
-        <header class="header">
-		  <h4 class="title">查询</h4>
-		  <div class="ctrl">
-			<a class="btn"><i id="orgSearchIcon" class="icon-chevron-up"></i></a>
-		  </div>
-		</header>
-        <div id="orgSearch" class="content content-inner">
-
-		  <form name="orgForm" method="post" action="org-company-list.do" class="form-inline">
-		    <label for="org_orgname"><spring:message code='org.org.list.search.orgname' text='账号'/>:</label>
-		    <input type="text" id="org_orgname" name="filter_LIKES_orgname" value="${param.filter_LIKES_orgname}">
-		    <label for="org_enabled"><spring:message code='org.org.list.search.status' text='状态'/>:</label>
-		    <select id="org_enabled" name="filter_EQI_status" class="input-mini">
-			  <option value=""></option>
-			  <option value="1" ${param.filter_EQI_status == 1 ? 'selected' : ''}><spring:message code='org.org.list.search.enabled.true' text='启用'/></option>
-			  <option value="0" ${param.filter_EQI_status == 0 ? 'selected' : ''}><spring:message code='org.org.list.search.enabled.false' text='禁用'/></option>
-		    </select>
-			<button class="btn btn-small" onclick="document.orgForm.submit()">查询</button>
-		  </form>
-
-		</div>
-	  </article>
-
-	  <article class="m-blank">
-	    <div class="pull-left">
-		  <region:region-permission permission="org:create">
-		  <button class="btn btn-small a-insert" onclick="location.href='org-company-input.do'">新建</button>
-		  </region:region-permission>
-		  <region:region-permission permission="org:delete">
-		  <button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
-		  </region:region-permission>
-		</div>
-
-		<div class="pull-right">
-		  每页显示
-		  <select class="m-page-size">
-		    <option value="10">10</option>
-		    <option value="20">20</option>
-		    <option value="50">50</option>
-		  </select>
-		  条
-		</div>
-
-	    <div class="m-clear"></div>
-	  </article>
-
-      <article class="m-widget">
-        <header class="header">
-		  <h4 class="title">公司列表</h4>
-		</header>
-		<div class="content">
-
-<form id="orgGridForm" name="orgGridForm" method='post' action="org-company-remove.do" class="m-form-blank">
-  <table id="orgGrid" class="table table-hover table-bordered">
-    <thead>
-      <tr>
-        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
-        <th class="sorting" name="name">名称</th>
-        <th width="80">&nbsp;</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <c:forEach items="${page.result}" var="item">
-      <tr>
-        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-        <td>${item.id}</td>
-        <td>${item.name}</td>
-        <td>
-          <a href="org-company-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
-        </td>
-      </tr>
-      </c:forEach>
-    </tbody>
-  </table>
-</form>
-
-        </div>
-      </article>
+    <div class="panel panel-default span10">
+        <div class="panel-heading"><h4 class="title">公司列表</h4></div>
+        <div class="panel-body">
+		    <div class="pull-left">
+			  <button class="btn btn-default btn-sm a-insert" onclick="location.href='org-company-input.do'">新建</button>
+			  <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+			</div>
+			<div class="pull-right">
+			  每页显示
+			  <select class="m-page-size">
+			    <option value="10">10</option>
+			    <option value="20">20</option>
+			    <option value="50">50</option>
+			  </select>
+			  条
+			</div>
+	    	<div class="m-clear"></div>
+	    </div>
+			<form id="orgGridForm" name="orgGridForm" method='post' action="org-company-remove.do" class="m-form-blank">
+			  <table id="orgGrid" class="table table-hover table-bordered">
+			    <thead>
+			      <tr>
+			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
+			        <th class="sorting" name="name">名称</th>
+			        <th width="80">&nbsp;</th>
+			      </tr>
+			    </thead>
+			
+			    <tbody>
+			      <c:forEach items="${page.result}" var="item">
+			      <tr>
+			        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+			        <td>${item.id}</td>
+			        <td>${item.name}</td>
+			        <td>
+			          <a href="org-company-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+			        </td>
+			      </tr>
+			      </c:forEach>
+			    </tbody>
+			  </table>
+			</form>
 
 	  <article>
-	    <div class="m-page-info pull-left">
-		  共100条记录 显示1到10条记录
-		</div>
-
-		<div class="btn-group m-pagination pull-right">
-		  <button class="btn btn-small">&lt;</button>
-		  <button class="btn btn-small">1</button>
-		  <button class="btn btn-small">&gt;</button>
-		</div>
-
-	    <div class="m-clear"></div>
+		    <div class="m-page-info pull-left">
+			  共100条记录 显示1到10条记录
+			</div>
+	
+			<div class="btn-group m-pagination pull-right">
+				  <button class="btn btn-default">&lt;</button>
+				  <button class="btn btn-default">1</button>
+				  <button class="btn btn-default">&gt;</button>
+			</div>
+	
+		    <div class="m-clear"></div>
       </article>
-
       <div class="m-spacer"></div>
-
-    </section>
 	<!-- end of main -->
 	</div>
 

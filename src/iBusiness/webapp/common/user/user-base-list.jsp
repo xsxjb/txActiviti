@@ -43,65 +43,53 @@ $(function() {
     <%@include file="/header/header-portal.jsp"%>
 
     <div class="row">
-    <%@include file="/menu/scope.jsp"%>
+    <div class="span1"></div>
 
 	<!-- start of main -->
-    <section id="m-main" class="span10">
-
-	  <article class="m-widget">
-        <header class="header">
-		  <h4 class="title">查询</h4>
-		  <div class="ctrl">
-			<a class="btn"><i id="userSearchIcon" class="icon-chevron-up"></i></a>
-		  </div>
-		</header>
-        <div id="userSearch" class="content content-inner">
-
-		  <form name="userForm" method="post" action="user-base-list.do" class="form-inline">
-		    <label for="user_username"><spring:message code='user.user.list.search.username' text='账号'/>:</label>
-		    <input type="text" id="user_username" name="filter_LIKES_username" value="${param.filter_LIKES_username}">
-		    <label for="user_enabled"><spring:message code='user.user.list.search.status' text='状态'/>:</label>
-		    <select id="user_enabled" name="filter_EQI_status" class="input-mini">
-			  <option value=""></option>
-			  <option value="1" ${param.filter_EQI_status == 1 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.true' text='启用'/></option>
-			  <option value="0" ${param.filter_EQI_status == 0 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.false' text='禁用'/></option>
-		    </select>
-			<button class="btn btn-small" onclick="document.userForm.submit()">查询</button>
-		  </form>
-
-		</div>
-	  </article>
-
-	  <article class="m-blank">
-	    <div class="pull-left">
-		  <region:region-permission permission="user:create">
-		  <button class="btn btn-small a-insert" onclick="location.href='user-base-input.do'">新建</button>
-		  </region:region-permission>
-		  <region:region-permission permission="user:delete">
-		  <button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
-		  </region:region-permission>
-		  <button class="btn btn-small a-export" onclick="table.exportExcel()">导出</button>
-		</div>
-
-		<div class="pull-right">
-		  每页显示
-		  <select class="m-page-size">
-		    <option value="10">10</option>
-		    <option value="20">20</option>
-		    <option value="50">50</option>
-		  </select>
-		  条
-		</div>
-
-	    <div class="m-clear"></div>
-	  </article>
-
-      <article class="m-widget">
-        <header class="header">
-		  <h4 class="title"><spring:message code="user.user.list.title" text="用户列表"/></h4>
-		</header>
+	<div class="panel panel-default span11">
+        <div class="panel-heading"><h5 class="title">查询</h5></div>
+          <div class="panel-body">
+	          <div id="userSearch" class="content content-inner">
+			  <form name="userForm" method="post" action="user-base-list.do" class="form-inline">
+			     <p>
+				    <label for="user_username"><spring:message code='user.user.list.search.username' text='账号'/>:</label>
+				    <input type="text" id="user_username" name="filter_LIKES_username" value="${param.filter_LIKES_username}">
+			    </p>
+			    <p>
+				    <label for="user_enabled"><spring:message code='user.user.list.search.status' text='状态'/>:</label>
+				    <select id="user_enabled" name="filter_EQI_status" class="">
+					  <option value=""></option>
+					  <option value="1" ${param.filter_EQI_status == 1 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.true' text='启用'/></option>
+					  <option value="0" ${param.filter_EQI_status == 0 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.false' text='禁用'/></option>
+				    </select>
+				    <button class="btn btn-default btn-sm" onclick="document.userForm.submit()">查询</button>
+			    </p>
+			  </form>
+			</div>
+          
+          </div>
+        <div class="panel-heading"><h5 class="title">用户列表</h5></div>
+          <div class="panel-body">
+			    <div class="pull-left">
+			        <p>
+					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='user-base-input.do'">新建</button>
+					    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+					    <button class="btn btn-default btn-sm a-export" onclick="table.exportExcel()">导出</button>
+				    </p>
+				</div>
+				<div class="pull-right">
+				  每页显示
+				  <select class="m-page-size">
+				    <option value="5">5</option>
+				    <option value="10">10</option>
+				    <option value="50">50</option>
+				    <option value="100">100</option>
+				  </select>
+				  条
+				</div>
+				<div class="m-clear"></div>
+	    </div>
 		<div class="content">
-
 			<form id="userGridForm" name="userGridForm" method='post' action="user-base-remove.do" class="m-form-blank">
 			  <table id="userGrid" class="table table-hover table-bordered">
 			    <thead>
@@ -134,23 +122,18 @@ $(function() {
 			  </table>
 			</form>
         </div>
-      </article>
-
 	  <article>
 	    <div class="m-page-info pull-left">
 		  共100条记录 显示1到10条记录
 		</div>
-
 		<div class="btn-group m-pagination pull-right">
-		  <button class="btn btn-small">&lt;</button>
-		  <button class="btn btn-small">1</button>
-		  <button class="btn btn-small">&gt;</button>
+		  <button class="btn btn-default btn-sm">&lt;</button>
+		  <button class="btn btn-default btn-sm">1</button>
+		  <button class="btn btn-default btn-sm">&gt;</button>
 		</div>
-
 	    <div class="m-clear"></div>
       </article>
-
-    </section>
+    </div>
 	<!-- end of main -->
 	</div>
 

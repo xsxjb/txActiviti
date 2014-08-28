@@ -42,61 +42,27 @@ $(function() {
   <body>
     <%@include file="/header/header-portal.jsp"%>
 
-    <div class="row">
-    <%@include file="/menu/scope.jsp"%>
+    <div class="span2"></div>
 
 	<!-- start of main -->
-    <section id="m-main" class="span10">
-
-	  <article class="m-widget">
-        <header class="header">
-		  <h4 class="title">查询</h4>
-		  <div class="ctrl">
-			<a class="btn"><i id="orgSearchIcon" class="icon-chevron-up"></i></a>
-		  </div>
-		</header>
-        <div id="orgSearch" class="content content-inner">
-
-		  <form name="orgForm" method="post" action="job-title-list.do" class="form-inline">
-		    <label for="org_orgname"><spring:message code='org.org.list.search.orgname' text='账号'/>:</label>
-		    <input type="text" id="org_orgname" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
-			<button class="btn btn-small" onclick="document.orgForm.submit()">查询</button>
-		  </form>
-
-		</div>
-	  </article>
-
-	  <article class="m-blank">
-	    <div class="pull-left">
-		  <region:region-permission permission="org:create">
-		  <button class="btn btn-small a-insert" onclick="location.href='job-title-input.do'">新建</button>
-		  </region:region-permission>
-		  <region:region-permission permission="org:delete">
-		  <button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
-		  </region:region-permission>
-		  <button class="btn btn-small a-export" onclick="table.exportExcel()">导出</button>
-		</div>
-
-		<div class="pull-right">
-		  每页显示
-		  <select class="m-page-size">
-		    <option value="10">10</option>
-		    <option value="20">20</option>
-		    <option value="50">50</option>
-		  </select>
-		  条
-		</div>
-
-	    <div class="m-clear"></div>
-	  </article>
-
-      <article class="m-widget">
-        <header class="header">
-		  <h4 class="title">职位名称管理</h4>
-		</header>
-		<div class="content">
-
-			<form id="orgGridForm" name="orgGridForm" method='post' action="job-title-remove.do" class="m-form-blank">
+	<div class="panel panel-default span10">
+        <div class="panel-heading"><h5 class="title">职位名称管理</h5></div>
+        <div class="panel-body">
+            <div class="pull-left">
+	          <button class="btn btn-default a-insert" onclick="location.href='job-title-input.do'">新建</button>
+			  <button class="btn btn-default a-remove" onclick="table.removeAll()">删除</button>
+            </div>
+            <div class="pull-right">
+				  每页显示
+				  <select class="m-page-size">
+				    <option value="10">10</option>
+				    <option value="20">20</option>
+				    <option value="50">50</option>
+				  </select>
+				  条
+			</div>
+        </div>
+        <form id="orgGridForm" name="orgGridForm" method='post' action="job-title-remove.do" class="m-form-blank">
 			  <table id="orgGrid" class="table table-hover table-bordered">
 			    <thead>
 			      <tr>
@@ -121,30 +87,16 @@ $(function() {
 			    </tbody>
 			  </table>
 			</form>
-
-        </div>
-      </article>
-
-	  <article>
-	    <div class="m-page-info pull-left">
+        <div class="m-page-info pull-left">
 		  共100条记录 显示1到10条记录
 		</div>
 
 		<div class="btn-group m-pagination pull-right">
-		  <button class="btn btn-small">&lt;</button>
-		  <button class="btn btn-small">1</button>
-		  <button class="btn btn-small">&gt;</button>
+		  <button class="btn btn-default">&lt;</button>
+		  <button class="btn btn-default">1</button>
+		  <button class="btn btn-default">&gt;</button>
 		</div>
-
-	    <div class="m-clear"></div>
-      </article>
-
-      <div class="m-spacer"></div>
-
-    </section>
+    </div>
 	<!-- end of main -->
-	</div>
-
   </body>
-
 </html>
