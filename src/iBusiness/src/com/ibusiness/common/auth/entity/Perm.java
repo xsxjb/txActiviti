@@ -17,9 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Perm .
+ * Perm 标签级权限管理.
  * 
- * @author Lingo
+ * @author JiangBo
  */
 @Entity
 @Table(name = "AUTH_PERM")
@@ -29,7 +29,7 @@ public class Perm implements java.io.Serializable {
     /** null. */
     private Long id;
 
-    /** null. */
+    /** 权限类别. */
     private PermType permType;
 
     /** null. */

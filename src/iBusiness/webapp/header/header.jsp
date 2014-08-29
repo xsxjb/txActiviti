@@ -91,6 +91,8 @@
 	                  <li class="divider"></li>
 	                  <li class="dropdown-submenu"><a href="#"><i class="icon-user"></i>角色管理</a>
 	                         <ul class="dropdown-menu panel-body nav nav-list">
+	                              <li><a href="${scopePrefix}/auth/perm-type-list.do"><i class="icon-user"></i>授权分类</a></li>
+	                              <li><a href="${scopePrefix}/auth/perm-list.do"><i class="icon-user"></i>标签级授权管理</a></li>
 	                              <li><a href="${scopePrefix}/auth/role-def-list.do"><i class="icon-user"></i>角色模板</a></li>
 	                         </ul>
 	                  </li>
@@ -119,43 +121,41 @@
 
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                  <sec:authentication property="principal.displayName" />
-                  <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a href="${scopePrefix}/user/change-password-input.do">修改密码</a></li>
-                  <li><a href="${scopePrefix}/user/profile-list.do">个人信息</a></li>
-                  <li class="divider"></li>
-                  <li><a href="${scopePrefix}/j_spring_security_logout">退出</a></li>
-                </ul>
+	                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+	                  <sec:authentication property="principal.displayName" />
+	                  <b class="caret"></b>
+	                </a>
+	                <ul class="dropdown-menu">
+	                  <li><a href="${scopePrefix}/user/change-password-input.do">修改密码</a></li>
+	                  <li><a href="${scopePrefix}/user/profile-list.do">个人信息</a></li>
+	                  <li class="divider"></li>
+	                  <li><a href="${scopePrefix}/j_spring_security_logout">退出</a></li>
+	                </ul>
                 </li>
-            </ul>
-            
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">皮肤切换</a>
-                <ul class="dropdown-menu">
-                  <li class="divider"></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cerulean">Cerulean</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Slate">Slate</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cosmo">Cosmo</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cyborg">Cyborg</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Darkly">Darkly</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Flatly">Flatly</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Superhero">Superhero</a></li>
-				  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=United">United</a></li>
-				  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Yeti">Yeti</a></li>
-                  <li class="divider"></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Journal">Journal</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Lumen">Lumen</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Paper">Paper</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Readable">Readable</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Sandstone">Sandstone</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Simplex">Simplex</a></li>
-                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Spacelab">Spacelab</a></li>
-                  <li class="divider"></li>
-                </ul>
+                
+                <li class="dropdown">
+	                <a data-toggle="dropdown" class="dropdown-toggle" href="#">皮肤切换</a>
+	                <ul class="dropdown-menu">
+	                  <li class="divider"></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cerulean">Cerulean</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Slate">Slate</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cosmo">Cosmo</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cyborg">Cyborg</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Darkly">Darkly</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Flatly">Flatly</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Superhero">Superhero</a></li>
+					  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=United">United</a></li>
+					  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Yeti">Yeti</a></li>
+	                  <li class="divider"></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Journal">Journal</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Lumen">Lumen</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Paper">Paper</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Readable">Readable</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Sandstone">Sandstone</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Simplex">Simplex</a></li>
+	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Spacelab">Spacelab</a></li>
+	                  <li class="divider"></li>
+	                </ul>
               </li>
             </ul>
               

@@ -62,8 +62,8 @@
 		<property name="methodSourceFetcher" ref="${security.method.fetcher}MethodSourceFetcher"/>
     </bean>
     
-    <!-- 资源订阅 
-	<bean id="resourceSubscriber" class="com.ibusiness.security.client.ResourceSubscriber"/>-->
+    <!-- 资源订阅 -->
+	<bean id="resourceSubscriber" class="com.ibusiness.security.client.ResourceSubscriber"/>
     <!-- 资源包发布 -->
 	<bean id="resourcePublisher" class="com.ibusiness.security.client.ResourcePublisher"/>
 	

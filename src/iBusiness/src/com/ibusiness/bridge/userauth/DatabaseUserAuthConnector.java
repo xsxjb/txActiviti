@@ -27,14 +27,16 @@ public class DatabaseUserAuthConnector implements UserAuthConnector {
     private ScopeConnector scopeConnector;
     private UserConnector userConnector;
 
-    // ~
+    //
     private String sqlFindPassword = "select password from USER_BASE where id=?";
+    // 
     private String sqlFindPermissions = "select p.code as permission"
             + " from AUTH_USER_STATUS us,AUTH_USER_ROLE ur,AUTH_ROLE r,AUTH_PERM_ROLE_DEF pr,AUTH_PERM p"
             + " where us.id=ur.user_status_id and ur.role_id=r.id and r.role_def_id=pr.role_def_id and pr.perm_id=p.id"
             + " and us.ref=? and us.scope_id=?";
-    private String sqlFindRoles = "select r.name as role" + " from AUTH_USER_STATUS us,AUTH_USER_ROLE ur,AUTH_ROLE r"
-            + " where us.id=ur.user_status_id and ur.role_id=r.id" + " and us.ref=? and us.scope_id=?";
+    // 用户权限查询语句
+    private String sqlFindRoles = "select r.name as role" + " from USER_BASE ub, AUTH_ROLE_DEF r"
+            + " where ub.role_def_id=r.id" + " and ub.ref=? and ub.scope_id=?";
 
     public UserAuthDTO findByUsername(String username, String scopeId) {
         ScopeDTO scopeDto = scopeConnector.findById(scopeId);

@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -37,20 +36,15 @@ public class RoleDef implements java.io.Serializable {
     private String scopeId;
 
     /** . */
-    private Set<Role> roles = new HashSet<Role>(0);
-
-    /** . */
     private Set<Perm> perms = new HashSet<Perm>(0);
 
     public RoleDef() {
     }
 
-    public RoleDef(String name, String descn, String scopeId, Set<Role> roles,
-            Set<Perm> perms) {
+    public RoleDef(String name, String descn, String scopeId, Set<Perm> perms) {
         this.name = name;
         this.descn = descn;
         this.scopeId = scopeId;
-        this.roles = roles;
         this.perms = perms;
     }
 
@@ -110,20 +104,6 @@ public class RoleDef implements java.io.Serializable {
      */
     public void setScopeId(String scopeId) {
         this.scopeId = scopeId;
-    }
-
-    /** @return . */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roleDef")
-    public Set<Role> getRoles() {
-        return this.roles;
-    }
-
-    /**
-     * @param roles
-     *            .
-     */
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     /** @return . */

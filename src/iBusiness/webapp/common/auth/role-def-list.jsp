@@ -68,7 +68,7 @@ $(function() {
 		          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 		          <th class="sorting" name="id"><spring:message code="auth.roleDef.list.id" text="编号"/></th>
 		          <th class="sorting" name="name"><spring:message code="auth.roleDef.list.name" text="名称"/></th>
-		          <th width="150">&nbsp;</th>
+		          <th width="120">&nbsp;</th>
 		        </tr>
 		      </thead>
 		      <tbody>
@@ -83,9 +83,6 @@ $(function() {
 					</region:region-permission>
 					<region:region-permission permission="roleDef:auth">
 		            <a href="role-perm-input.do?id=${item.id}" class="a-config"><spring:message code="auth.roleDef.list.perm" text="设置权限"/></a>
-					</region:region-permission>
-					<region:region-permission permission="roleDef:auth">
-		            <a href="role-def-manage.do?id=${item.id}" class="a-manage"><spring:message code="auth.roleDef.list.perm" text="管理"/></a>
 					</region:region-permission>
 		          </td>
 		        </tr>

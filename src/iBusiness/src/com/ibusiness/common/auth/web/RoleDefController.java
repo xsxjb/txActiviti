@@ -1,6 +1,5 @@
 package com.ibusiness.common.auth.web;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,16 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ibusiness.bridge.scope.ScopeConnector;
 import com.ibusiness.common.auth.component.CheckRoleException;
 import com.ibusiness.common.auth.component.RoleDefChecker;
-import com.ibusiness.common.auth.dao.RoleDao;
 import com.ibusiness.common.auth.dao.RoleDefDao;
-import com.ibusiness.common.auth.entity.Role;
 import com.ibusiness.common.auth.entity.RoleDef;
-import com.ibusiness.common.auth.suppor.RoleDTO;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.security.api.scope.ScopeDTO;
 import com.ibusiness.security.api.scope.ScopeHolder;
 /**
  * 角色管理
@@ -41,7 +36,6 @@ import com.ibusiness.security.api.scope.ScopeHolder;
 public class RoleDefController {
     private static Logger logger = LoggerFactory.getLogger(RoleDefController.class);
     private RoleDefDao roleDefDao;
-    private RoleDao roleDao;
     private MessageHelper messageHelper;
     private RoleDefChecker roleDefChecker;
     private BeanMapper beanMapper = new BeanMapper();
@@ -154,140 +148,10 @@ public class RoleDefController {
         return result;
     }
 
-    @RequestMapping("role-def-manage")
-    public String manage(@RequestParam("id") Long id, Model model) throws Exception {
-        RoleDef roleDef = roleDefDao.get(id);
-        List<Role> roles = roleDao.findBy("roleDef.id", id);
-
-        ScopeDTO currentScope = ScopeHolder.getScopeDto();
-        List<ScopeDTO> scopeDtos;
-
-        if (currentScope.isShared()) {
-            scopeDtos = scopeConnector.findAll();
-        } else {
-            scopeDtos = new ArrayList<ScopeDTO>();
-            scopeDtos.add(currentScope);
-        }
-
-        List<RoleDTO> roleDtos = new ArrayList<RoleDTO>();
-
-        for (ScopeDTO scopeDto : scopeDtos) {
-            Role existedRole = null;
-
-            for (Role role : roles) {
-                if (role.getScopeId().equals(scopeDto.getId())) {
-                    existedRole = role;
-
-                    break;
-                }
-            }
-
-            if (existedRole == null) {
-                RoleDTO roleDto = new RoleDTO();
-                roleDto.setName(roleDef.getName());
-                roleDto.setScopeId(scopeDto.getId());
-                roleDto.setStatus("added");
-                roleDtos.add(roleDto);
-            } else {
-                RoleDTO roleDto = new RoleDTO();
-                roleDto.setName(roleDef.getName());
-                roleDto.setId(existedRole.getId());
-                roleDto.setScopeId(scopeDto.getId());
-                roleDto.setStatus("existed");
-                roleDtos.add(roleDto);
-            }
-        }
-
-        for (Role role : roles) {
-            boolean existed = false;
-
-            for (ScopeDTO scopeDto : scopeDtos) {
-                if (role.getScopeId().equals(scopeDto.getId())) {
-                    existed = true;
-
-                    break;
-                }
-            }
-
-            if (!existed) {
-                RoleDTO roleDto = new RoleDTO();
-                roleDto.setName(roleDef.getName());
-                roleDto.setId(role.getId());
-                roleDto.setScopeId(role.getScopeId());
-                roleDto.setStatus("removed");
-                roleDtos.add(roleDto);
-            }
-        }
-
-        model.addAttribute("roleDts", roleDtos);
-
-        return "common/auth/role-def-manage.jsp";
-    }
-
-    @RequestMapping("role-def-sync")
-    public String sync(@RequestParam("id")
-    Long id) throws Exception {
-        RoleDef roleDef = roleDefDao.get(id);
-        List<Role> roles = roleDao.findBy("roleDef.id", id);
-
-        ScopeDTO currentScope = ScopeHolder.getScopeDto();
-        List<ScopeDTO> scopeDtos;
-
-        if (currentScope.isShared()) {
-            scopeDtos = scopeConnector.findAll();
-        } else {
-            scopeDtos = new ArrayList<ScopeDTO>();
-            scopeDtos.add(currentScope);
-        }
-
-        for (ScopeDTO scopeDto : scopeDtos) {
-            Role existedRole = null;
-
-            for (Role role : roles) {
-                if (role.getScopeId().equals(scopeDto.getId())) {
-                    existedRole = role;
-
-                    break;
-                }
-            }
-
-            if (existedRole == null) {
-                Role role = new Role();
-                role.setName(roleDef.getName());
-                role.setRoleDef(roleDef);
-                role.setScopeId(scopeDto.getId());
-                roleDao.save(role);
-            }
-        }
-
-        for (Role role : roles) {
-            boolean existed = false;
-
-            for (ScopeDTO scopeDto : scopeDtos) {
-                if (role.getScopeId().equals(scopeDto.getId())) {
-                    existed = true;
-
-                    break;
-                }
-            }
-
-            if (!existed) {
-                roleDao.remove(role);
-            }
-        }
-
-        return "redirect:/auth/role-def-manage.do?id=" + id;
-    }
-
     // ~ ======================================================================
     @Resource
     public void setRoleDefDao(RoleDefDao roleDefDao) {
         this.roleDefDao = roleDefDao;
-    }
-
-    @Resource
-    public void setRoleDao(RoleDao roleDao) {
-        this.roleDao = roleDao;
     }
 
     @Resource

@@ -46,13 +46,13 @@ public class UserStatus implements java.io.Serializable {
     private String scopeId;
 
     /** . */
-    private Set<Role> roles = new HashSet<Role>(0);
+    private Set<RoleDef> roles = new HashSet<RoleDef>(0);
 
     public UserStatus() {
     }
 
     public UserStatus(String username, String password, Integer status,
-            String ref, String userRepoRef, String scopeId, Set<Role> roles) {
+            String ref, String userRepoRef, String scopeId, Set<RoleDef> roles) {
         this.username = username;
         this.password = password;
         this.status = status;
@@ -165,7 +165,7 @@ public class UserStatus implements java.io.Serializable {
     /** @return . */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "AUTH_USER_ROLE", joinColumns = { @JoinColumn(name = "USER_STATUS_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", nullable = false, updatable = false) })
-    public Set<Role> getRoles() {
+    public Set<RoleDef> getRoles() {
         return this.roles;
     }
 
@@ -173,7 +173,7 @@ public class UserStatus implements java.io.Serializable {
      * @param roles
      *            .
      */
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<RoleDef> roles) {
         this.roles = roles;
     }
 }

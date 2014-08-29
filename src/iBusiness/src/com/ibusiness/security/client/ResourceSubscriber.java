@@ -4,11 +4,12 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.springframework.util.Assert;
+
 /**
  * 资源订阅
  * 
  * @author JiangBo
- *
+ * 
  */
 public class ResourceSubscriber {
     private String scopeId = "1";
@@ -34,8 +35,7 @@ public class ResourceSubscriber {
     }
 
     @Resource
-    public void setResourceDetailsMonitor(
-            ResourceDetailsMonitor resourceDetailsMonitor) {
+    public void setResourceDetailsMonitor(ResourceDetailsMonitor resourceDetailsMonitor) {
         this.resourceDetailsMonitor = resourceDetailsMonitor;
     }
 }

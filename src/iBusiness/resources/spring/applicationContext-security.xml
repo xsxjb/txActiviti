@@ -6,7 +6,6 @@
 
 	<!-- 该路径下的资源不用过滤 -->
 	<!-- 不要过滤图片等静态资源，其中**代表可以跨越目录，*不可以跨越目录 -->
-	<http security="none" pattern="/s/**" />
 	<http security="none" pattern="/plugin/**" />
 	<http security="none" pattern="/favicon.ico" />
 	<http security="none" pattern="/**/*.js" />

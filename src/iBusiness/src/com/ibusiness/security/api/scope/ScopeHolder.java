@@ -1,6 +1,6 @@
 package com.ibusiness.security.api.scope;
 /**
- * 应用管理
+ * 应用范围管理
  * 
  * @author JiangBo
  *
