@@ -87,6 +87,14 @@ $(function() {
 					  </select>
 				  </p>
 				  <p>
+				    <label class="control-label" for="role_def">角色:</label>
+					  <select id="role_def" name="roleId">
+						  <c:forEach items="${roleDefs}" var="item">
+						    <option value="${item.id}" ${item.id==model.roleDef.id ? 'selected' : ''}>${item.name}</option>
+						  </c:forEach>
+					  </select>
+				  </p>
+				  <p>
 				      <label class="control-label" for="user-base_email">邮箱:</label>
 					  <input id="user-base_email" type="text" name="email" value="${model.email}">
 				  </p>

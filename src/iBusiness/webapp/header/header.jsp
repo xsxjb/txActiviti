@@ -65,23 +65,13 @@
 		    <a class="navbar-brand" href="${scopePrefix}/">天翔</a>
 		    </div>
 		    
+		    <!-- 系统管理  -->
 		    <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
               <li class="${currentHeader == 'dashboard' ? 'active' : currentHeader == 'bpm-workspace' ? 'active' : ''}"><a href="${scopePrefix}/portal/portal.do">首页</a></li>
               <li class="dropdown ${currentHeader == 'scope' ? 'active' : ''}">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">系统管理 <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="${scopePrefix}/user/user-base-list.do"><i class="icon-user"></i>用户管理</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#"><i class="icon-user"></i>权限管理</a></li>
-                  <li class="divider"></li>
-                </ul>
-              </li>
-              <!-- 后台功能 -->
-              <li class="dropdown ${currentHeader == 'manage' ? 'active' : ''}">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">后台管理<b class="caret"></b></a>
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">系统管理<b class="caret"></b></a>
                 <ul class="dropdown-menu multi-level">
-	                  <li class="divider"></li>
 	                  <li class="dropdown-submenu"><a href="#"><i class="icon-user"></i>组织管理</a>
 	                         <ul class="dropdown-menu  panel-body nav nav-list">
 	                             <li><a href="${scopePrefix}/group/org-company-list.do"><i class="icon-user"></i>公司</a></li>
@@ -105,9 +95,16 @@
 	                         </ul>
 	                  </li>
 	                  <li class="divider"></li>
-	                  
-	                  
+                  	  <li><a href="${scopePrefix}/auth/access-list.do"><i class="icon-user"></i>权限管理</a></li>
+	                  <li class="divider"></li>
 	                  <li><a href="#"><i class="icon-user"></i>菜单管理</a></li>
+	                  <li class="divider"></li>
+                </ul>
+              </li>
+              <!-- 后台功能 -->
+              <li class="dropdown ${currentHeader == 'manage' ? 'active' : ''}">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">后台管理<b class="caret"></b></a>
+                <ul class="dropdown-menu multi-level">
 	                  <li class="divider"></li>
 	                  <li><a href="${scopePrefix}/serviceModule/serviceModule-show.do"><i class="icon-user"></i>业务模块组件</a></li>
 	                  <li class="divider"></li>
@@ -115,6 +112,7 @@
 					  <li><a href="#"><i class="icon-user"></i>表单设计器</a></li>
 					  <li><a href="#"><i class="icon-user"></i>流程设计器</a></li>
 					  <li><a href="#"><i class="icon-user"></i>通用表单</a></li>
+					  <li class="divider"></li>
                 </ul>
               </li>
             </ul>
@@ -134,12 +132,9 @@
                 </li>
             </ul>
             
-            
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                               皮肤切换
-                </a>
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">皮肤切换</a>
                 <ul class="dropdown-menu">
                   <li class="divider"></li>
                   <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cerulean">Cerulean</a></li>

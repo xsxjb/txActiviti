@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.bridge.user.UserCache;
 import com.ibusiness.bridge.user.UserDTO;
+import com.ibusiness.common.auth.dao.RoleDefDao;
 import com.ibusiness.common.group.dao.JobInfoDao;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
@@ -50,6 +51,8 @@ public class UserBaseController {
     private UserService userService;
     // 职务管理表DAO
     private JobInfoDao jobInfoDao;
+    // 角色模板表DAO
+    private RoleDefDao roleDefDao;
 
     /**
      * 查看
@@ -105,6 +108,8 @@ public class UserBaseController {
         model.addAttribute("userBaseWrapper", userBaseWrapper);
         // 设置职务管理下拉数据
         model.addAttribute("jobInfos", jobInfoDao.getAll());
+        // 角色模板管理下拉数据
+        model.addAttribute("roleDefs", roleDefDao.getAll());
 
         return "common/user/user-base-input.jsp";
     }
@@ -123,6 +128,7 @@ public class UserBaseController {
     @RequestMapping("user-base-save")
     public String save(@ModelAttribute UserBase userBase, @RequestParam(value = "confirmPassword", required = false)
     String confirmPassword, @RequestParam("userRepoId") Long userRepoId, @RequestParam("jobId") long jobId,
+    @RequestParam("roleId") long roleId,
     @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         if (userBase.getPassword() != null) {
@@ -148,7 +154,10 @@ public class UserBaseController {
             dest = userBaseDao.get(id);
             dest.setStatus(0);
             beanMapper.copy(userBase, dest);
+            // 保存职务信息
             dest.setJobInfo(jobInfoDao.get(jobId));
+            // 保存角色信息
+            dest.setRoleDef(roleDefDao.get(roleId));
             userService.updateUser(dest, userRepoId, parameters);
         } else {
             dest = userBase;
@@ -290,5 +299,9 @@ public class UserBaseController {
     @Resource
     public void setJobInfoDao(JobInfoDao jobInfoDao) {
         this.jobInfoDao = jobInfoDao;
+    }
+    @Resource
+    public void setRoleDefDao(RoleDefDao roleDefDao) {
+        this.roleDefDao = roleDefDao;
     }
 }

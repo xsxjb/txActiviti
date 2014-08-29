@@ -30,7 +30,12 @@ import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeDTO;
 import com.ibusiness.security.api.scope.ScopeHolder;
-
+/**
+ * 角色管理
+ * 
+ * @author JiangBo
+ *
+ */
 @Controller
 @RequestMapping("auth")
 public class RoleDefController {
@@ -42,6 +47,14 @@ public class RoleDefController {
     private BeanMapper beanMapper = new BeanMapper();
     private ScopeConnector scopeConnector;
 
+    /**
+     * 角色列表
+     * 
+     * @param page
+     * @param parameterMap
+     * @param model
+     * @return
+     */
     @RequestMapping("role-def-list")
     public String list(@ModelAttribute
     Page page, @RequestParam

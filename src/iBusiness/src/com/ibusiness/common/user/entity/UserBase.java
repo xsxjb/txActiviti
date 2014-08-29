@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ibusiness.common.auth.entity.RoleDef;
 import com.ibusiness.common.group.entity.JobInfo;
 
 /**
@@ -59,6 +60,9 @@ public class UserBase implements java.io.Serializable {
     /** 职务管理表. */
     private JobInfo jobInfo;
     
+    /** 角色模板管理表. */
+    private RoleDef roleDef;
+    
     /** 对应页面的css样式 */
     private String css;
 
@@ -70,7 +74,7 @@ public class UserBase implements java.io.Serializable {
 
     public UserBase(UserRepo userRepo, String username, String displayName,
             String password, Integer status, String ref, String scopeId,
-            String email, String mobile, JobInfo jobInfo, Set<UserAttr> userAttrs, String css) {
+            String email, String mobile, JobInfo jobInfo, Set<UserAttr> userAttrs, String css, RoleDef roleDef) {
         this.userRepo = userRepo;
         this.username = username;
         this.displayName = displayName;
@@ -83,6 +87,7 @@ public class UserBase implements java.io.Serializable {
         this.jobInfo = jobInfo;
         this.userAttrs = userAttrs;
         this.css = css;
+        this.roleDef = roleDef;
     }
 
     /** @return null. */
@@ -270,5 +275,21 @@ public class UserBase implements java.io.Serializable {
      */
     public void setCss(String css) {
         this.css = css;
+    }
+
+    /**
+     * @return the roleDef
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ROLE_DEF_ID")
+    public RoleDef getRoleDef() {
+        return roleDef;
+    }
+
+    /**
+     * @param roleDef the roleDef to set
+     */
+    public void setRoleDef(RoleDef roleDef) {
+        this.roleDef = roleDef;
     }
 }
