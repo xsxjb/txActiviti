@@ -49,7 +49,9 @@ $(function() {
         <div class="panel-heading"><h4 class="title">公司列表</h4></div>
         <div class="panel-body">
 		    <div class="pull-left">
-			  <button class="btn btn-default btn-sm a-insert" onclick="location.href='org-company-input.do'">新建</button>
+		        <tags:hasPerm value="userattr">
+			    	<button class="btn btn-default btn-sm a-insert" onclick="location.href='org-company-input.do'">新建</button>
+			    </tags:hasPerm>
 			  <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 			</div>
 			<div class="pull-right">

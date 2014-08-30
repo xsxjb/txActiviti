@@ -20,7 +20,7 @@ import com.ibusiness.common.group.entity.JobInfo;
 /**
  * UserBase用户表.
  * 
- * @author Lingo
+ * @author JiangBo
  */
 @Entity
 @Table(name = "USER_BASE")

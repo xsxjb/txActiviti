@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ibusiness.bridge.user.UserCache;
 import com.ibusiness.bridge.user.UserDTO;
 import com.ibusiness.common.auth.dao.RoleDefDao;
+import com.ibusiness.common.auth.dao.UserStatusDao;
+import com.ibusiness.common.auth.entity.UserStatus;
 import com.ibusiness.common.group.dao.JobInfoDao;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
@@ -53,6 +55,8 @@ public class UserBaseController {
     private JobInfoDao jobInfoDao;
     // 角色模板表DAO
     private RoleDefDao roleDefDao;
+    // 用户状态表DAO
+    private UserStatusDao userStatusDao;
 
     /**
      * 查看
@@ -128,7 +132,7 @@ public class UserBaseController {
     @RequestMapping("user-base-save")
     public String save(@ModelAttribute UserBase userBase, @RequestParam(value = "confirmPassword", required = false)
     String confirmPassword, @RequestParam("userRepoId") Long userRepoId, @RequestParam("jobId") long jobId,
-    @RequestParam("roleId") long roleId,
+    @RequestParam("roleId") Long roleId,
     @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         if (userBase.getPassword() != null) {
@@ -158,7 +162,12 @@ public class UserBaseController {
             dest.setJobInfo(jobInfoDao.get(jobId));
             // 保存角色信息
             dest.setRoleDef(roleDefDao.get(roleId));
+            // 更新用户基础信息
             userService.updateUser(dest, userRepoId, parameters);
+            // 更新用户状态表信息
+            UserStatus userStatus = userStatusDao.get(id);
+            userStatus.setUserRepoId(roleId);
+            userStatusDao.save(userStatus);
         } else {
             dest = userBase;
             dest.setJobInfo(jobInfoDao.get(jobId));
@@ -303,5 +312,9 @@ public class UserBaseController {
     @Resource
     public void setRoleDefDao(RoleDefDao roleDefDao) {
         this.roleDefDao = roleDefDao;
+    }
+    @Resource
+    public void setUserStatusDao(UserStatusDao userStatusDao) {
+        this.userStatusDao = userStatusDao;
     }
 }

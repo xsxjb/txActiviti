@@ -15,9 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
- * UserStatus .
+ * UserStatus 用户状态表.
  * 
- * @author Lingo
+ * @author JiangBo
  */
 @Entity
 @Table(name = "AUTH_USER_STATUS")
@@ -40,6 +40,9 @@ public class UserStatus implements java.io.Serializable {
     private String ref;
 
     /** null. */
+    private Long userRepoId;
+    
+    /** null. */
     private String userRepoRef;
 
     /** null. */
@@ -52,12 +55,13 @@ public class UserStatus implements java.io.Serializable {
     }
 
     public UserStatus(String username, String password, Integer status,
-            String ref, String userRepoRef, String scopeId, Set<RoleDef> roles) {
+            String ref, String userRepoRef,Long userRepoId, String scopeId, Set<RoleDef> roles) {
         this.username = username;
         this.password = password;
         this.status = status;
         this.ref = ref;
         this.userRepoRef = userRepoRef;
+        this.userRepoId = userRepoId;
         this.scopeId = scopeId;
         this.roles = roles;
     }
@@ -146,6 +150,21 @@ public class UserStatus implements java.io.Serializable {
      */
     public void setUserRepoRef(String userRepoRef) {
         this.userRepoRef = userRepoRef;
+    }
+
+    /**
+     * @return the userRepoId
+     */
+    @Column(name = "USER_REPO_ID")
+    public Long getUserRepoId() {
+        return userRepoId;
+    }
+
+    /**
+     * @param userRepoId the userRepoId to set
+     */
+    public void setUserRepoId(Long userRepoId) {
+        this.userRepoId = userRepoId;
     }
 
     /** @return null. */

@@ -25,6 +25,12 @@ import com.ibusiness.common.auth.entity.RoleDef;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
 
+/**
+ * 权限设置
+ * 
+ * @author JiangBo
+ * 
+ */
 @Controller
 @RequestMapping("auth")
 public class RolePermController {
@@ -35,6 +41,15 @@ public class RolePermController {
     private MessageHelper messageHelper;
     private RoleDefChecker roleDefChecker;
 
+    /**
+     * 保存
+     * 
+     * @param id
+     * @param model
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
     @RequestMapping("role-perm-save")
     public String save(@RequestParam("id")
     Long id, Model model, @RequestParam(value = "selectedItem", required = false)
@@ -65,9 +80,14 @@ public class RolePermController {
         return "redirect:/auth/role-perm-input.do?id=" + id;
     }
 
+    /**
+     * 
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping("role-perm-input")
-    public String input(@RequestParam("id")
-    Long id, Model model) {
+    public String input(@RequestParam("id") Long id, Model model) {
         RoleDef roleDef = roleDefDao.get(id);
         List<Long> selectedItem = new ArrayList<Long>();
 

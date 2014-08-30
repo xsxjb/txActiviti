@@ -15,7 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * UserAttr .
+ * UserAttr 用户表和用户属性表子表.
  * 
  * @author JiangBo
  */

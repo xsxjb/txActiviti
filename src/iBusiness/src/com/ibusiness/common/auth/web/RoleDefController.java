@@ -25,11 +25,12 @@ import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
+
 /**
  * 角色管理
  * 
  * @author JiangBo
- *
+ * 
  */
 @Controller
 @RequestMapping("auth")
@@ -50,8 +51,7 @@ public class RoleDefController {
      * @return
      */
     @RequestMapping("role-def-list")
-    public String list(@ModelAttribute
-    Page page, @RequestParam
+    public String list(@ModelAttribute Page page, @RequestParam
     Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
@@ -72,38 +72,39 @@ public class RoleDefController {
         return "common/auth/role-def-input.jsp";
     }
 
+    /**
+     * 保存
+     * 
+     * @param roleDef
+     * @param redirectAttributes
+     * @return
+     */
     @RequestMapping("role-def-save")
     public String save(@ModelAttribute
     RoleDef roleDef, RedirectAttributes redirectAttributes) {
         try {
             // before check
             roleDefChecker.check(roleDef);
-
             // after invoke
             RoleDef dest = null;
             Long id = roleDef.getId();
-
             if (id != null) {
                 dest = roleDefDao.get(id);
+                roleDef.setPerms(null);
                 beanMapper.copy(roleDef, dest);
             } else {
                 dest = roleDef;
             }
-
             if (id == null) {
                 dest.setScopeId(ScopeHolder.getScopeId());
             }
-
             roleDefDao.save(dest);
-
             messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         } catch (CheckRoleException ex) {
             logger.warn(ex.getMessage(), ex);
             redirectAttributes.addFlashAttribute("message", ex.getMessage());
-
             return "common/auth/role-def-input.jsp";
         }
-
         return "redirect:/auth/role-def-list.do";
     }
 

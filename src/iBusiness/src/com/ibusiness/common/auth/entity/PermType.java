@@ -14,7 +14,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 /**
- * PermType .
+ * PermType 授权类型表.
  * 
  * @author Lingo
  */

@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * UserSchema .
+ * UserSchema 用户属性列表.
  * 
  * @author Lingo
  */

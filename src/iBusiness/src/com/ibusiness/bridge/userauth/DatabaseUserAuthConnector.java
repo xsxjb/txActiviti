@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
 
@@ -22,17 +20,16 @@ import com.ibusiness.security.api.userauth.UserAuthDTO;
  *
  */
 public class DatabaseUserAuthConnector implements UserAuthConnector {
-    private static Logger logger = LoggerFactory.getLogger(DatabaseUserAuthConnector.class);
     private JdbcTemplate jdbcTemplate;
     private ScopeConnector scopeConnector;
     private UserConnector userConnector;
 
     //
     private String sqlFindPassword = "select password from USER_BASE where id=?";
-    // 
+    // 权限和角色和用户资源关联
     private String sqlFindPermissions = "select p.code as permission"
-            + " from AUTH_USER_STATUS us,AUTH_USER_ROLE ur,AUTH_ROLE r,AUTH_PERM_ROLE_DEF pr,AUTH_PERM p"
-            + " where us.id=ur.user_status_id and ur.role_id=r.id and r.role_def_id=pr.role_def_id and pr.perm_id=p.id"
+            + " from AUTH_USER_STATUS us,AUTH_ROLE_DEF r,AUTH_PERM_ROLE_DEF pr,AUTH_PERM p"
+            + " where us.user_repo_id=r.id and r.id=pr.role_def_id and pr.perm_id=p.id"
             + " and us.ref=? and us.scope_id=?";
     // 用户权限查询语句
     private String sqlFindRoles = "select r.name as role" + " from USER_BASE ub, AUTH_ROLE_DEF r"
