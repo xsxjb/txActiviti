@@ -42,7 +42,7 @@ public class RolePermController {
     private RoleDefChecker roleDefChecker;
 
     /**
-     * 保存
+     * 标签权限保存
      * 
      * @param id
      * @param model
@@ -61,7 +61,12 @@ public class RolePermController {
         try {
             RoleDef roleDef = roleDefDao.get(id);
             roleDefChecker.check(roleDef);
-            roleDef.getPerms().clear();
+            // 清空非menu类型的,类型编号!=7
+            List<Perm> permList = permDao.find("from Perm where permType.id != ?", Long.parseLong("7"));
+            for (Perm perm : permList) {
+                roleDef.getPerms().remove(perm);
+            }
+//            roleDef.getPerms().clear();
 
             for (Long permId : selectedItem) {
                 Perm perm = permDao.get(permId);
@@ -81,6 +86,7 @@ public class RolePermController {
     }
 
     /**
+     * 标签权限设置
      * 
      * @param id
      * @param model
@@ -95,13 +101,77 @@ public class RolePermController {
             selectedItem.add(perm.getId());
         }
 
-        String hql = "from PermType where type=0 and scopeId=?";
+        String hql = "from PermType where id!=7 and type=0 and scopeId=?";
         List<PermType> permTypes = permTypeDao.find(hql, ScopeHolder.getScopeId());
         model.addAttribute("permTypes", permTypes);
         model.addAttribute("selectedItem", selectedItem);
         model.addAttribute("id", id);
 
         return "common/auth/role-perm-input.jsp";
+    }
+    
+    /**
+     * 菜单权限设置
+     * 
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("role-menu-input")
+    public String menuinput(@RequestParam("id") Long id, Model model) {
+        RoleDef roleDef = roleDefDao.get(id);
+        List<Long> selectedItem = new ArrayList<Long>();
+        for (Perm perm : roleDef.getPerms()) {
+            selectedItem.add(perm.getId());
+        }
+        String hql = "from PermType where id=7 and type=0 and scopeId=?";
+        List<PermType> permTypes = permTypeDao.find(hql, ScopeHolder.getScopeId());
+        model.addAttribute("permTypes", permTypes);
+        model.addAttribute("selectedItem", selectedItem);
+        model.addAttribute("id", id);
+        return "common/auth/role-menu-input.jsp";
+    }
+    /**
+     * 菜单权限保存
+     * 
+     * @param id
+     * @param model
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("role-menu-save")
+    public String menuSave(@RequestParam("id")
+    Long id, Model model, @RequestParam(value = "selectedItem", required = false)
+    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+        if (selectedItem == null) {
+            selectedItem = Collections.emptyList();
+        }
+
+        try {
+            RoleDef roleDef = roleDefDao.get(id);
+            roleDefChecker.check(roleDef);
+            // 只清空menu类型的,类型编号7
+            List<Perm> permList = permDao.find("from Perm where permType.id = ?", Long.parseLong("7"));
+            for (Perm perm : permList) {
+                roleDef.getPerms().remove(perm);
+            }
+
+            for (Long permId : selectedItem) {
+                Perm perm = permDao.get(permId);
+                roleDef.getPerms().add(perm);
+            }
+
+            roleDefDao.save(roleDef);
+            messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
+        } catch (CheckRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            messageHelper.addFlashMessage(redirectAttributes, ex.getMessage());
+
+            return input(id, model);
+        }
+
+        return "redirect:/auth/role-menu-input.do?id=" + id;
     }
 
     // ~ ======================================================================

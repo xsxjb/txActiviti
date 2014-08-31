@@ -7,7 +7,12 @@ import org.springframework.stereotype.Service;
 import com.ibusiness.common.auth.entity.Access;
 import com.ibusiness.common.auth.entity.Perm;
 import com.ibusiness.common.page.HibernateEntityDao;
-
+/**
+ * 资源访问权限表DAO
+ * 
+ * @author JiangBo
+ *
+ */
 @Service
 public class AccessDao extends HibernateEntityDao<Access> {
     private static final int PRIORITY_STEP = 10;

@@ -47,6 +47,7 @@ public class PermController {
     Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
+        propertyFilters.add(new PropertyFilter("NEQL_permType.id", "7"));
         page = permDao.pagedQuery(page, propertyFilters);
 
         model.addAttribute("page", page);

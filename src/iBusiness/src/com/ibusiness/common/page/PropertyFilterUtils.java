@@ -44,6 +44,12 @@ public class PropertyFilterUtils {
         MatchType matchType = propertyFilter.getMatchType();
 
         switch (matchType) {
+        case NEQ:
+            buff.append(propertyName).append("!=?");
+            params.add(propertyValue);
+
+            break;
+            
         case EQ:
             buff.append(propertyName).append("=?");
             params.add(propertyValue);

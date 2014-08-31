@@ -85,19 +85,19 @@
 	                              <li class="m-icn-view-users"><a href="${scopePrefix}/group/job-type-list.do">职务类型管理</a></li>
 								  <li class="m-icn-view-users"><a href="${scopePrefix}/group/job-title-list.do">职务名称管理</a></li>
 								  <li class="m-icn-view-users"><a href="${scopePrefix}/group/job-info-list.do">职务管理</a></li>
-								  <li><a href="${scopePrefix}/user/user-base-list.do"><i class="icon-user"></i>用户管理</a></li>
 	                         </ul>
 	                  </li>
 	                  <li class="divider"></li>
-	                  <li class="dropdown-submenu"><a href="#"><i class="icon-user"></i>角色管理</a>
+	                  <li class="dropdown-submenu"><a href="#"><i class="icon-user"></i>权限角色</a>
 	                         <ul class="dropdown-menu panel-body nav nav-list">
-	                              <li><a href="${scopePrefix}/auth/perm-type-list.do"><i class="icon-user"></i>授权分类</a></li>
-	                              <li><a href="${scopePrefix}/auth/perm-list.do"><i class="icon-user"></i>标签级授权管理</a></li>
+	                              <li><a href="${scopePrefix}/auth/perm-type-list.do"><i class="icon-user"></i>标签授权分类</a></li>
+	                              <li><a href="${scopePrefix}/auth/perm-list.do"><i class="icon-user"></i>标签授权管理</a></li>
+	                              <li><a href="${scopePrefix}/auth/access-list.do"><i class="icon-user"></i>菜单权限管理</a></li>
 	                              <li><a href="${scopePrefix}/auth/role-def-list.do"><i class="icon-user"></i>角色模板</a></li>
 	                         </ul>
 	                  </li>
 	                  <li class="divider"></li>
-                  	  <li><a href="${scopePrefix}/auth/access-list.do"><i class="icon-user"></i>权限管理</a></li>
+                  	  <li><a href="${scopePrefix}/user/user-base-list.do"><i class="icon-user"></i>用户管理</a></li>
 	                  <li class="divider"></li>
 	                  <li><a href="#"><i class="icon-user"></i>菜单管理</a></li>
 	                  <li class="divider"></li>

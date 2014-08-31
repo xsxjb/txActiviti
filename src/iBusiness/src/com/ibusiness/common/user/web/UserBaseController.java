@@ -18,8 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ibusiness.bridge.user.UserCache;
 import com.ibusiness.bridge.user.UserDTO;
 import com.ibusiness.common.auth.dao.RoleDefDao;
-import com.ibusiness.common.auth.dao.UserStatusDao;
-import com.ibusiness.common.auth.entity.UserStatus;
 import com.ibusiness.common.group.dao.JobInfoDao;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
@@ -55,8 +53,6 @@ public class UserBaseController {
     private JobInfoDao jobInfoDao;
     // 角色模板表DAO
     private RoleDefDao roleDefDao;
-    // 用户状态表DAO
-    private UserStatusDao userStatusDao;
 
     /**
      * 查看
@@ -164,10 +160,6 @@ public class UserBaseController {
             dest.setRoleDef(roleDefDao.get(roleId));
             // 更新用户基础信息
             userService.updateUser(dest, userRepoId, parameters);
-            // 更新用户状态表信息
-            UserStatus userStatus = userStatusDao.get(id);
-            userStatus.setUserRepoId(roleId);
-            userStatusDao.save(userStatus);
         } else {
             dest = userBase;
             dest.setJobInfo(jobInfoDao.get(jobId));
@@ -312,9 +304,5 @@ public class UserBaseController {
     @Resource
     public void setRoleDefDao(RoleDefDao roleDefDao) {
         this.roleDefDao = roleDefDao;
-    }
-    @Resource
-    public void setUserStatusDao(UserStatusDao userStatusDao) {
-        this.userStatusDao = userStatusDao;
     }
 }

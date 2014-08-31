@@ -68,7 +68,7 @@ $(function() {
 		          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 		          <th class="sorting" name="id"><spring:message code="auth.roleDef.list.id" text="编号"/></th>
 		          <th class="sorting" name="name"><spring:message code="auth.roleDef.list.name" text="名称"/></th>
-		          <th width="120">&nbsp;</th>
+		          <th width="200">&nbsp;</th>
 		        </tr>
 		      </thead>
 		      <tbody>
@@ -78,12 +78,9 @@ $(function() {
 		          <td>${item.id}</td>
 		          <td>${item.name}</td>
 		          <td>
-					<region:region-permission permission="roleDef:write">
-		            <a href="role-def-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>&nbsp;
-					</region:region-permission>
-					<region:region-permission permission="roleDef:auth">
-		            <a href="role-perm-input.do?id=${item.id}" class="a-config"><spring:message code="auth.roleDef.list.perm" text="设置权限"/></a>
-					</region:region-permission>
+		            <a href="role-def-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>&nbsp;&nbsp;
+		            <a href="role-menu-input.do?id=${item.id}" class="a-config"><spring:message code="auth.roleDef.list.perm" text="菜单权限"/></a>&nbsp;&nbsp;
+		            <a href="role-perm-input.do?id=${item.id}" class="a-config"><spring:message code="auth.roleDef.list.perm" text="标签权限"/></a>
 		          </td>
 		        </tr>
 		        </c:forEach>

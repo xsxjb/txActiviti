@@ -99,7 +99,7 @@ public class DatabaseUserFetcher implements UserFetcher {
     }
 
     /**
-     * 
+     * 权限列表
      * @param username
      * @param userRepoRef
      * @param scopeId
@@ -107,9 +107,9 @@ public class DatabaseUserFetcher implements UserFetcher {
      */
     public List<Map<String, Object>> fetchAuthoritieList(String username,
             String userRepoRef, String scopeId) {
-        String sqlAuthority = "SELECT p.code AS authority FROM AUTH_USER_STATUS us,AUTH_ROLE_DEF r,AUTH_PERM_ROLE_DEF pr,AUTH_PERM p "
-                + " WHERE us.user_repo_id=r.id AND r.id=pr.role_def_id AND pr.perm_id=p.id"
-                + " and username=? and user_repo_ref=? and r.scope_id=?";
+        String sqlAuthority = "SELECT p.code AS authority FROM USER_BASE us,AUTH_ROLE_DEF r,AUTH_PERM_ROLE_DEF pr,AUTH_PERM p "
+                + " WHERE us.role_def_id=r.id AND r.id=pr.role_def_id AND pr.perm_id=p.id"
+                + " and username=? and user_repo_id=? and r.scope_id=?";
 
         List<Map<String, Object>> authorityList = null;
 
@@ -137,8 +137,8 @@ public class DatabaseUserFetcher implements UserFetcher {
         List<Map<String, Object>> attributeList = null;
 
         try {
-            String sqlAttribute = "SELECT r.name AS attribute FROM AUTH_USER_STATUS us,AUTH_ROLE_DEF r  WHERE us.user_repo_id=r.id"
-                    + " and username=? and user_repo_ref=? and r.scope_id=?";
+            String sqlAttribute = "SELECT r.name AS attribute FROM USER_BASE us,AUTH_ROLE_DEF r  WHERE us.role_def_id=r.id"
+                    + " and username=? and user_repo_id=? and r.scope_id=?";
             attributeList = jdbcTemplate.queryForList(sqlAttribute, username,
                     userRepoRef, scopeId);
         } catch (Exception ex) {

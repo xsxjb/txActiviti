@@ -49,11 +49,14 @@ $(function() {
 				  </p>
 				  <p>
 					  <label class="control-label" for="access_perm"><spring:message code='auth.access.input.perm' text='权限'/>:</label>
-					  <select id="access_perm" name="permId">
+					  <input id="access_perm" type="text" name="permName" value="${model.perm.name}"  class="text required"  maxlength="200">
+					  <!-- 
+					  <select id="" name="">
 					    <c:forEach items="${perms}" var="item">
 					    <option value="${item.id}" ${model.perm.id==item.id ? 'selected' : ''}>${item.name}</option>
 						</c:forEach>
 					  </select>
+					   -->
 				  </p>
 				  <p>
 					  <label class="control-label" for="access_priority"><spring:message code='auth.access.input.priority' text='排序'/>:</label>

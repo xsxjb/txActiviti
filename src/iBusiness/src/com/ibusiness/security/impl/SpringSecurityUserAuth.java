@@ -18,6 +18,10 @@ import org.springframework.security.core.userdetails.UserDetails;
  *
  */
 public class SpringSecurityUserAuth extends UserAuthDTO implements UserDetails {
+    /**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = 1L;
     private Collection<? extends GrantedAuthority> authorities;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

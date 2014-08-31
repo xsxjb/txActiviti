@@ -28,8 +28,8 @@ public class DatabaseUserAuthConnector implements UserAuthConnector {
     private String sqlFindPassword = "select password from USER_BASE where id=?";
     // 权限和角色和用户资源关联
     private String sqlFindPermissions = "select p.code as permission"
-            + " from AUTH_USER_STATUS us,AUTH_ROLE_DEF r,AUTH_PERM_ROLE_DEF pr,AUTH_PERM p"
-            + " where us.user_repo_id=r.id and r.id=pr.role_def_id and pr.perm_id=p.id"
+            + " from USER_BASE us,AUTH_ROLE_DEF r,AUTH_PERM_ROLE_DEF pr,AUTH_PERM p"
+            + " where us.ROLE_DEF_ID=r.id and r.id=pr.role_def_id and pr.perm_id=p.id"
             + " and us.ref=? and us.scope_id=?";
     // 用户权限查询语句
     private String sqlFindRoles = "select r.name as role" + " from USER_BASE ub, AUTH_ROLE_DEF r"

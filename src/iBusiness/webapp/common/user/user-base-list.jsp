@@ -74,7 +74,6 @@ $(function() {
 			        <p>
 					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='user-base-input.do'">新建</button>
 					    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
-					    <button class="btn btn-default btn-sm a-export" onclick="table.exportExcel()">导出</button>
 				    </p>
 				</div>
 				<div class="pull-right">
@@ -100,7 +99,7 @@ $(function() {
 			        <th class="sorting" name="displayName">显示名</th>
 			        <th class="sorting" name="status"><spring:message code="user.user.list.status" text="状态"/></th>
 			        <th class="sorting" name="ref"><spring:message code="user.user.list.ref" text="职务"/></th>
-			        <th width="80">&nbsp;</th>
+			        <th width="60">&nbsp;</th>
 			      </tr>
 			    </thead>
 			

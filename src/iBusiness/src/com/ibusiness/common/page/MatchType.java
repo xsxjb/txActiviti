@@ -6,6 +6,8 @@ package com.ibusiness.common.page;
  * @author Lingo
  */
 public enum MatchType {
+    /** not equals !=. */
+    NEQ,
     /** equals. */
     EQ,
     /** like. */

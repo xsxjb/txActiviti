@@ -11,9 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Access .
+ * Access 资源访问权限表.
  * 
- * @author Lingo
+ * @author JiangBo
  */
 @Entity
 @Table(name = "AUTH_ACCESS")

@@ -181,6 +181,11 @@ public class HibernateUtils {
 
         // 根据MatchType构造criterion
         switch (matchType) {
+        case NEQ:
+            criterion = Restrictions.ne(propertyName, propertyValue);
+
+            break;
+            
         case EQ:
             criterion = Restrictions.eq(propertyName, propertyValue);
 
@@ -267,6 +272,11 @@ public class HibernateUtils {
         buff.append(propertyFilter.getPropertyName());
 
         switch (propertyFilter.getMatchType()) {
+        case NEQ:
+            buff.append(" !=:");
+
+            break;
+            
         case EQ:
             buff.append(" =:");
 

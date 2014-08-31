@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.common.auth.dao.AccessDao;
 import com.ibusiness.common.auth.dao.PermDao;
+import com.ibusiness.common.auth.dao.PermTypeDao;
 import com.ibusiness.common.auth.entity.Access;
 import com.ibusiness.common.auth.entity.Perm;
 import com.ibusiness.common.page.Page;
@@ -35,6 +36,7 @@ public class AccessController {
     private MessageHelper messageHelper;
     private BeanMapper beanMapper = new BeanMapper();
     private PermDao permDao;
+    private PermTypeDao permTypeDao;
     private ResourcePublisher resourcePublisher;
 
     /**
@@ -46,11 +48,20 @@ public class AccessController {
      * @return
      */
     @RequestMapping("access-list")
-    public String list(@ModelAttribute
-    Page page, @RequestParam
-    Map<String, Object> parameterMap, Model model) {
+    public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
+        // 只查看菜单相关的
+        List<Perm> permList= permDao.find("from Perm where permType.id = ?", Long.parseLong("7"));
+        String permIds = "";
+        for (Perm perm : permList) {
+            if (!"".equals(permIds)) {
+                permIds = permIds + ",";
+            }
+            permIds = permIds + perm.getId().toString();
+        }
+        propertyFilters.add(new PropertyFilter("INL_perm.id", permIds));
+        
         page = accessDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
 
@@ -64,15 +75,14 @@ public class AccessController {
      * @return
      */
     @RequestMapping("access-input")
-    public String input(@RequestParam(value = "id", required = false)
-    Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) Long id, Model model) {
         if (id != null) {
             Access access = accessDao.get(id);
             model.addAttribute("model", access);
         }
 
-        List<Perm> perms = permDao.findBy("scopeId", ScopeHolder.getScopeId());
-        model.addAttribute("perms", perms);
+//        List<Perm> perms = permDao.findBy("scopeId", ScopeHolder.getScopeId());
+//        model.addAttribute("perms", perms);
 
         return "common/auth/access-input.jsp";
     }
@@ -86,8 +96,7 @@ public class AccessController {
      * @return
      */
     @RequestMapping("access-save")
-    public String save(@ModelAttribute Access access, @RequestParam("permId")
-    Long permId, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute Access access, @RequestParam("permName") String permName, RedirectAttributes redirectAttributes) {
         // copy
         Access dest = null;
 
@@ -100,7 +109,16 @@ public class AccessController {
         }
 
         // foreign 授权管理
-        Perm perm = permDao.get(permId);
+        Perm perm = permDao.get(permName);
+        if (null == perm) {
+            perm.setCode("");;
+            perm.setName("");
+            perm.setPermType(permTypeDao.get(Long.parseLong("7")));
+            // 优先级
+            perm.setPriority(15);
+            perm.setScopeId("1");
+            permDao.save(dest);
+        }
         dest.setPerm(perm);
 
         if (id == null) {
@@ -146,7 +164,11 @@ public class AccessController {
     public void setPermDao(PermDao permDao) {
         this.permDao = permDao;
     }
-
+    @Resource
+    public void setPermTypeDao(PermTypeDao permTypeDao) {
+        this.permTypeDao = permTypeDao;
+    }
+    
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
