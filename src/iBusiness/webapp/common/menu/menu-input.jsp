@@ -20,10 +20,11 @@
 	<div class="panel panel-default span10">
         <div class="panel-heading"><h5 class="title">菜单管理</h5></div>
         <div class="panel-body">
-              <form id="accessForm" method="post" action="menu-save.do" class="form-horizontal">
+              <form id="menuForm" method="post" action="menu-save.do" class="form-horizontal">
 				  <c:if test="${model != null}">
 				      <input id="menu_id" type="hidden" name="id" value="${model.id}">
 				      <input id="menu_level" type="hidden" name="menuLevel" value="${model.menuLevel}">
+				      <input id="menu_parentId" type="hidden" name="parentId" value="${parentId}">
 				  </c:if>
 				  <p>
 					  <label class="control-label" for="menu_name">菜单名称:</label>

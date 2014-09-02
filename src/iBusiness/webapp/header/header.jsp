@@ -1,12 +1,12 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
     <c:if test="${not empty flashMessages}">
-	<div id="m-success-message" style="display:none;">
-	  <ul>
-	  <c:forEach items="${flashMessages}" var="item">
-	    <li>${item}</li>
-	  </c:forEach>
-	  </ul>
-	</div>
+		<div id="m-success-message" style="display:none;">
+		  <ul>
+		  <c:forEach items="${flashMessages}" var="item">
+		    <li>${item}</li>
+		  </c:forEach>
+		  </ul>
+		</div>
 	</c:if>
 	<!-- 菜单CSS样式 -->
 	<style type="text/css">
@@ -53,7 +53,6 @@
         }
     </style>
 	
-
     <!-- start of header bar -->
     <div class="navbar navbar-default">
 		  <div class="navbar-header">
@@ -63,60 +62,60 @@
 		      <span class="icon-bar"></span>
 		    </button>
 		    <a class="navbar-brand" href="${scopePrefix}/">天翔</a>
-		    </div>
-		    
+	    </div>
+	    <div class="navbar-collapse collapse navbar-responsive-collapse">
+		    <!-- 动态菜单部分 -->
 		    <!-- 系统管理  -->
-		    <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-              <li class="${currentHeader == 'dashboard' ? 'active' : currentHeader == 'bpm-workspace' ? 'active' : ''}"><a href="${scopePrefix}/portal/portal.do">首页</a></li>
-              <li class="dropdown ${currentHeader == 'scope' ? 'active' : ''}">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">系统管理<b class="caret"></b></a>
-                <ul class="dropdown-menu multi-level">
-	                  <li class="dropdown-submenu"><a href="#"><i class="icon-user"></i>组织管理</a>
-	                         <ul class="dropdown-menu  panel-body nav nav-list">
-	                             <li><a href="${scopePrefix}/group/org-company-list.do"><i class="icon-user"></i>公司</a></li>
-								  <li><a href="${scopePrefix}/group/org-department-list.do"><i class="icon-user"></i>部门</a></li>
-								  <li><a href="${scopePrefix}/group/org-group-list.do"><i class="icon-user"></i>小组</a></li>
-	                         </ul>
-	                  </li>
-	                  <li class="divider"></li>
-	                  <li class="dropdown-submenu"><a href="#"><i class="icon-user"></i>职务管理</a>
-	                         <ul class="dropdown-menu panel-body nav nav-list">
-	                              <li class="m-icn-view-users"><a href="${scopePrefix}/group/job-type-list.do">职务类型管理</a></li>
-								  <li class="m-icn-view-users"><a href="${scopePrefix}/group/job-title-list.do">职务名称管理</a></li>
-								  <li class="m-icn-view-users"><a href="${scopePrefix}/group/job-info-list.do">职务管理</a></li>
-	                         </ul>
-	                  </li>
-	                  <li class="divider"></li>
-	                  <li class="dropdown-submenu"><a href="#"><i class="icon-user"></i>权限角色</a>
-	                         <ul class="dropdown-menu panel-body nav nav-list">
-	                              <li><a href="${scopePrefix}/auth/perm-type-list.do"><i class="icon-user"></i>标签授权分类</a></li>
-	                              <li><a href="${scopePrefix}/auth/perm-list.do"><i class="icon-user"></i>标签授权管理</a></li>
-	                              <li><a href="${scopePrefix}/auth/access-list.do"><i class="icon-user"></i>菜单权限管理</a></li>
-	                              <li><a href="${scopePrefix}/auth/role-def-list.do"><i class="icon-user"></i>角色模板</a></li>
-	                         </ul>
-	                  </li>
-	                  <li class="divider"></li>
-                  	  <li><a href="${scopePrefix}/user/user-base-list.do"><i class="icon-user"></i>用户管理</a></li>
-	                  <li class="divider"></li>
-	                  <li><a href="${scopePrefix}/menu/menu-levelone-list.do"><i class="icon-user"></i>菜单管理</a></li>
-	                  <li class="divider"></li>
-                </ul>
-              </li>
-              <!-- 后台功能 -->
-              <li class="dropdown ${currentHeader == 'manage' ? 'active' : ''}">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">后台管理<b class="caret"></b></a>
-                <ul class="dropdown-menu multi-level">
-	                  <li class="divider"></li>
-	                  <li><a href="${scopePrefix}/serviceModule/serviceModule-show.do"><i class="icon-user"></i>业务模块组件</a></li>
-	                  <li class="divider"></li>
-					  <li><a href="${scopePrefix}/table/conf-table-show.do"><i class="icon-user"></i>表存储设计器</a></li>
-					  <li><a href="#"><i class="icon-user"></i>表单设计器</a></li>
-					  <li><a href="#"><i class="icon-user"></i>流程设计器</a></li>
-					  <li><a href="#"><i class="icon-user"></i>通用表单</a></li>
-					  <li class="divider"></li>
-                </ul>
-              </li>
+	            <c:forEach items="${menuItemList}" var="item">
+	                    <c:if test="${item.chiledItems == '[]'}">
+						        <li class="navbar-link">
+						        	<c:if test="${item.menuUrl == '#'}">
+								    	<a href="#"> ${item.menuName}</a>
+								    </c:if>
+								    <c:if test="${item.menuUrl != '#'}">
+								    	<a href="${scopePrefix}${item.menuUrl}"> ${item.menuName}</a>
+								    </c:if>
+						        </li>
+				        </c:if>
+						<!-- 有子节点的 -->
+						<c:if test="${item.chiledItems != '[]'}">
+						    <li class="navbar-link dropdown">
+							    <a data-toggle="dropdown" class="dropdown-toggle" href="#">${item.menuName} <b class="caret"></b></a>
+					            <ul class="dropdown-menu panel-body nav nav-list">
+						            <c:forEach items="${item.chiledItems}" var="son">
+										    <c:if test="${son.chiledItems == '[]'}">
+												<li>
+												    <c:if test="${son.menuUrl == '#'}">
+												    	<a href="#"> ${son.menuName}</a>
+												    </c:if>
+												    <c:if test="${son.menuUrl != '#'}">
+												    	<a href="${scopePrefix}${son.menuUrl}"> ${son.menuName}</a>
+												    </c:if>
+												</li>
+											</c:if>
+											<c:if test="${son.chiledItems != '[]'}">
+											    <li class="divider"></li>
+												<li class="dropdown-submenu"><a href="#"><i class="icon-user"></i>${son.menuName}</a>
+													<ul class="dropdown-menu  panel-body nav nav-list">
+														<c:forEach items="${son.chiledItems}" var="grandson">
+														    <li>
+															    <c:if test="${grandson.menuUrl == '#'}">
+															    	<a href="#"><i class="icon-user"></i>${grandson.menuName}</a>
+															    </c:if>
+															    <c:if test="${grandson.menuUrl != '#'}">
+															    	<a href="${scopePrefix}${grandson.menuUrl}"><i class="icon-user"></i>${grandson.menuName}</a>
+															    </c:if>
+															</li>
+														</c:forEach>
+													</ul>
+												</li>
+											</c:if>
+									</c:forEach>
+		                         </ul>
+	                         </li>
+						</c:if>
+				</c:forEach>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

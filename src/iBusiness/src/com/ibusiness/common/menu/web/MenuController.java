@@ -33,75 +33,27 @@ public class MenuController {
     private BeanMapper beanMapper = new BeanMapper();
     
     /**
-     * 一级菜单列表
+     * 级菜单列表
      * 
      * @param page
      * @param parameterMap
      * @param model
      * @return
      */
-    @RequestMapping("menu-levelone-list")
-    public String levelOneList(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
+    @RequestMapping("menu-list")
+    public String menuList(@ModelAttribute Page page, @RequestParam("menuLevel") String menuLevel, @RequestParam("menuLevelOne") String menuLevelOne, @RequestParam("menuLevelTwo") String menuLevelTwo, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        propertyFilters.add(new PropertyFilter("EQS_menuLevel", "1"));
+        propertyFilters.add(new PropertyFilter("EQS_menuLevel", menuLevel));
+        if ("2".equals(menuLevel)) {
+            propertyFilters.add(new PropertyFilter("EQS_ibMenu.id", menuLevelOne));
+        } else if ("3".equals(menuLevel)) {
+            propertyFilters.add(new PropertyFilter("EQS_ibMenu.id", menuLevelTwo));
+        }
         page = menuDao.pagedQuery(page, propertyFilters);
-        model.addAttribute("page1", page);
-        model.addAttribute("menuLevel", "1");
-        // 
-        List<Menu> menuList = menuDao.find("from Menu where menuLevel = '1'");
-        model.addAttribute("levelOneInfos", menuList);
-        // 
-        List<Menu> menu2List = menuDao.find("from Menu where menuLevel = '2'");
-        model.addAttribute("levelTwoInfos", menu2List);
-        
-        return "common/menu/menu-list.jsp";
-    }
-    
-    /**
-     * 二级菜单列表
-     * 
-     * @param page
-     * @param parameterMap
-     * @param model
-     * @return
-     */
-    @RequestMapping("menu-leveltwo-list")
-    public String levelTwoList(@ModelAttribute Page page, @RequestParam("menuLevelOne") String parentId, @RequestParam Map<String, Object> parameterMap, Model model) {
-        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        propertyFilters.add(new PropertyFilter("EQS_menuLevel", "2"));
-        propertyFilters.add(new PropertyFilter("EQS_ibMenu.id", parentId));
-        page = menuDao.pagedQuery(page, propertyFilters);
-        model.addAttribute("page2", page);
-        model.addAttribute("menuLevel", "2");
-        model.addAttribute("menuLevelOne", parentId);
-        // 
-        List<Menu> menuList = menuDao.find("from Menu where menuLevel = '1'");
-        model.addAttribute("levelOneInfos", menuList);
-        // 
-        List<Menu> menu2List = menuDao.find("from Menu where menuLevel = '2'");
-        model.addAttribute("levelTwoInfos", menu2List);
-
-        return "common/menu/menu-list.jsp";
-    }
-    
-    /**
-     * 三级菜单列表
-     * 
-     * @param page
-     * @param parameterMap
-     * @param model
-     * @return
-     */
-    @RequestMapping("menu-levelthree-list")
-    public String levelThreeList(@ModelAttribute Page page, @RequestParam("menuLevelOne") String menuLevelOne, @RequestParam("menuLevelTwo") String parentId, @RequestParam Map<String, Object> parameterMap, Model model) {
-        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        propertyFilters.add(new PropertyFilter("EQS_menuLevel", "3"));
-        propertyFilters.add(new PropertyFilter("EQS_ibMenu.id", parentId));
-        page = menuDao.pagedQuery(page, propertyFilters);
-        model.addAttribute("page3", page);
-        model.addAttribute("menuLevel", "3");
+        model.addAttribute("page", page);
+        model.addAttribute("menuLevel", menuLevel);
         model.addAttribute("menuLevelOne", menuLevelOne);
-        model.addAttribute("menuLevelTwo", parentId);
+        model.addAttribute("menuLevelTwo", menuLevelTwo);
         // 
         List<Menu> menuList = menuDao.find("from Menu where menuLevel = '1'");
         model.addAttribute("levelOneInfos", menuList);
@@ -119,15 +71,16 @@ public class MenuController {
      */
     @RequestMapping("menu-input")
     public String input(@RequestParam(value = "id", required = false) String id,
-            @RequestParam("menuLevel") String menuLevel,@RequestParam("parentId") String parentId, Model model) {
+            @RequestParam("menuLevel") String menuLevel,@RequestParam("menuLevelOne") String menuLevelOne,@RequestParam("menuLevelTwo") String menuLevelTwo, Model model) {
         if (id != null) {
             Menu menu = menuDao.get(id);
             model.addAttribute("model", menu);
+            model.addAttribute("parentId",menu.getIbMenu().getId());
         } else {
             Menu menu = new Menu();
             menu.setMenuLevel(menuLevel);
-            Menu parentMenu = menuDao.get(parentId);
-            menu.setIbMenu(parentMenu);
+            // 二级菜单的父菜单ID是一级菜单的ID,三级是二级的,一级菜单的父菜单ID是0
+            model.addAttribute("parentId", "2".equals(menuLevel) ? menuLevelOne : ("3".equals(menuLevel) ? menuLevelTwo: "0"));
             model.addAttribute("model", menu);
         }
         return "common/menu/menu-input.jsp";
@@ -142,7 +95,7 @@ public class MenuController {
      * @return
      */
     @RequestMapping("menu-save")
-    public String save(@ModelAttribute Menu menu, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute Menu menu, @RequestParam("parentId") String parentId, RedirectAttributes redirectAttributes) {
         // copy
         Menu dest = null;
         String id = menu.getId();
@@ -153,22 +106,45 @@ public class MenuController {
             dest = menu;
         }
         // 
-        if (id == null) {
+        if (id == null || "".equals(id)) {
             dest.setId(UUID.randomUUID().toString());
+            dest.setIbMenu(menuDao.get(parentId));
         }
+        dest.setMenuIframe("URL");
         // save
         menuDao.save(dest);
         if ("3".equals(dest.getMenuLevel())) {
-            String menuLevelOne = menuDao.get(dest.getIbMenu().getId()).getIbMenu().getId();
-            return "redirect:/menu/menu-levelthree-list.do?menuLevelOne=" + menuLevelOne + "&menuLevelTwo=" + dest.getIbMenu().getId();
+            String menuLevelOne = menuDao.get(parentId).getIbMenu().getId();
+            return "redirect:/menu/menu-list.do?menuLevel=3&menuLevelOne=" + menuLevelOne + "&menuLevelTwo=" + dest.getIbMenu().getId();
         } else if ("2".equals(dest.getMenuLevel())) {
-            return "redirect:/menu/menu-leveltwo-list.do?menuLevelOne=" + dest.getIbMenu().getId();
+            return "redirect:/menu/menu-list.do?menuLevel=2&menuLevelOne=" + parentId + "&menuLevelTwo=0";
         } else {
-            return "redirect:/menu/menu-levelone-list.do";
+            return "redirect:/menu/menu-list.do?menuLevel=1&menuLevelOne=0&menuLevelTwo=0";
         }
         
     }
-    
+    /**
+     * 删除
+     * 
+     * @param selectedItem
+     * @param menuLevel
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("menu-remove")
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+        List<Menu> menus = menuDao.findByIds(selectedItem);
+        Menu menu = menus.get(0);
+        menuDao.removeAll(menus);
+        if ("3".equals(menu.getMenuLevel())) {
+            String menuLevelOne = menuDao.get(menu.getIbMenu().getId()).getIbMenu().getId();
+            return "redirect:/menu/menu-list.do?menuLevel=3&menuLevelOne=" + menuLevelOne + "&menuLevelTwo=" + menu.getIbMenu().getId();
+        } else if ("2".equals(menu.getMenuLevel())) {
+            return "redirect:/menu/menu-list.do?menuLevel=2&menuLevelOne=" + menu.getIbMenu().getId() + "&menuLevelTwo=0";
+        } else {
+            return "redirect:/menu/menu-list.do?menuLevel=1&menuLevelOne=0&menuLevelTwo=0";
+        }
+    }
     // ======================================================================
     @Resource
     public void setMenuDao(MenuDao menuDao) {

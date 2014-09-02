@@ -1,10 +1,14 @@
 package com.ibusiness.common.menu.entity;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,6 +29,8 @@ public class Menu implements java.io.Serializable {
 	private String menuUrl;//菜单地址
 	private String menuIframe;//菜单地址打开方式
 	private String menuOrder;//菜单排序
+	// 一个父菜单项目对应多个叶子菜单项目
+	private List<Menu> chiledItems = new ArrayList<Menu>();
 	// 
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parentid")
@@ -36,7 +42,7 @@ public class Menu implements java.io.Serializable {
 		this.ibMenu = ibMenu;
 	}
 	@Id
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "id", nullable = false)
     public String getId() {
         return id;
     }
@@ -83,5 +89,11 @@ public class Menu implements java.io.Serializable {
 	public void setMenuIframe(String menuIframe) {
 		this.menuIframe = menuIframe;
 	}
-    
+	@OneToMany(mappedBy="ibMenu")
+    public List<Menu> getChiledItems() {
+        return this.chiledItems;
+    }
+    public void setChiledItems(List<Menu> chiledItems) {
+        this.chiledItems = chiledItems;
+    }
 }
