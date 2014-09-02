@@ -47,6 +47,7 @@ public class AccessController {
      * @param model
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("access-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
@@ -81,9 +82,6 @@ public class AccessController {
             model.addAttribute("model", access);
         }
 
-//        List<Perm> perms = permDao.findBy("scopeId", ScopeHolder.getScopeId());
-//        model.addAttribute("perms", perms);
-
         return "common/auth/access-input.jsp";
     }
 
@@ -95,8 +93,9 @@ public class AccessController {
      * @param redirectAttributes
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("access-save")
-    public String save(@ModelAttribute Access access, @RequestParam("permName") String permName, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute Access access, @RequestParam("permCode") String permCode, @RequestParam("permName") String permName, RedirectAttributes redirectAttributes) {
         // copy
         Access dest = null;
 
@@ -109,18 +108,23 @@ public class AccessController {
         }
 
         // foreign 授权管理
-        Perm perm = permDao.get(permName);
-        if (null == perm) {
-            perm.setCode("");;
-            perm.setName("");
+        List<Perm> permList = permDao.find("from Perm where code = ?", permCode);
+        Perm perm = new Perm();
+        if (null != permList && permList.size() > 0) {
+            perm = permList.get(0);
+            perm.setCode(permCode);
+            perm.setName(permName);
+        } else {
+            // 新建
+            perm.setCode(permCode);
+            perm.setName(permName);
             perm.setPermType(permTypeDao.get(Long.parseLong("7")));
             // 优先级
-            perm.setPriority(15);
             perm.setScopeId("1");
-            permDao.save(dest);
         }
+        // 
+        permDao.save(perm);
         dest.setPerm(perm);
-
         if (id == null) {
             dest.setScopeId(ScopeHolder.getScopeId());
         }

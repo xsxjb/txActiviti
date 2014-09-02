@@ -138,4 +138,16 @@ CREATE TABLE IB_JOB_INFO(
         CONSTRAINT FK_IB_JOB_INFO_TITLE FOREIGN KEY(TITLE_ID) REFERENCES IB_JOB_TITLE(ID)
 ) engine=innodb;
 
-
+/*==============================================================*/
+/*  菜单管理表 */
+/*==============================================================*/
+CREATE TABLE IB_MENU(
+        ID VARCHAR(64),
+        MENUNAME VARCHAR(256),
+		MENULEVEL VARCHAR(16),
+		MENUURL VARCHAR(256),
+		MENUIFRAME VARCHAR(16),
+		MENUORDER VARCHAR(16),
+		PARENTID VARCHAR(64),
+        CONSTRAINT PK_IB_MENU PRIMARY KEY(ID)
+) engine=innodb;

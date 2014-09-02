@@ -99,7 +99,7 @@
 	                  <li class="divider"></li>
                   	  <li><a href="${scopePrefix}/user/user-base-list.do"><i class="icon-user"></i>用户管理</a></li>
 	                  <li class="divider"></li>
-	                  <li><a href="#"><i class="icon-user"></i>菜单管理</a></li>
+	                  <li><a href="${scopePrefix}/menu/menu-levelone-list.do"><i class="icon-user"></i>菜单管理</a></li>
 	                  <li class="divider"></li>
                 </ul>
               </li>

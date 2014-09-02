@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.common.auth.dao.PermDao;
+import com.ibusiness.common.auth.dao.PermTypeDao;
 import com.ibusiness.common.auth.entity.Perm;
+import com.ibusiness.common.auth.entity.PermType;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.core.mapper.BeanMapper;
@@ -30,6 +32,7 @@ import com.ibusiness.security.api.scope.ScopeHolder;
 @RequestMapping("auth")
 public class PermController {
     private PermDao permDao;
+    private PermTypeDao permTypeDao;
     private MessageHelper messageHelper;
     private BeanMapper beanMapper = new BeanMapper();
 
@@ -68,7 +71,8 @@ public class PermController {
             Perm perm = permDao.get(id);
             model.addAttribute("model", perm);
         }
-
+        List<PermType> permTypes = permTypeDao.findBy("scopeId", ScopeHolder.getScopeId());
+        model.addAttribute("permTypes", permTypes);
         return "common/auth/perm-input.jsp";
     }
 
@@ -124,7 +128,10 @@ public class PermController {
     public void setPermDao(PermDao permDao) {
         this.permDao = permDao;
     }
-
+    @Resource
+    public void setPermTypeDao(PermTypeDao permTypeDao) {
+        this.permTypeDao = permTypeDao;
+    }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;

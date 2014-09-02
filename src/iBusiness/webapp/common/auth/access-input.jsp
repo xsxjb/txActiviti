@@ -34,7 +34,7 @@ $(function() {
         <div class="panel-body">
               <form id="accessForm" method="post" action="access-save.do" class="form-horizontal">
 				  <c:if test="${model != null}">
-				  <input id="access_id" type="hidden" name="id" value="${model.id}">
+				      <input id="access_id" type="hidden" name="id" value="${model.id}">
 				  </c:if>
 				  <p>
 					  <label class="control-label" for="access_type"><spring:message code='auth.access.input.type' text='类型'/>:</label>
@@ -48,7 +48,11 @@ $(function() {
 				      <input id="access_value" type="text" name="value" value="${model.value}"  class="text required"  maxlength="200">
 				  </p>
 				  <p>
-					  <label class="control-label" for="access_perm"><spring:message code='auth.access.input.perm' text='权限'/>:</label>
+					  <label class="control-label" for="perm_code">权限标签:</label>
+				      <input id="perm_code" type="text" name="permCode" value="${model.perm.code}" class="text">
+				  </p>
+				  <p>
+					  <label class="control-label" for="access_perm"><spring:message code='auth.access.input.perm' text='权限名称'/>:</label>
 					  <input id="access_perm" type="text" name="permName" value="${model.perm.name}"  class="text required"  maxlength="200">
 					  <!-- 
 					  <select id="" name="">
