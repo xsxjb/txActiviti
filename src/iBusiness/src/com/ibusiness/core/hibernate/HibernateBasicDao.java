@@ -1,14 +1,11 @@
 package com.ibusiness.core.hibernate;
 
 import java.io.Serializable;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
-
 import javax.transaction.Synchronization;
 
 import com.ibusiness.core.util.BeanUtils;
@@ -18,26 +15,18 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.criterion.Order;
-
 import org.hibernate.metadata.ClassMetadata;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.BeansException;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
-
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -214,7 +203,12 @@ public class HibernateBasicDao implements ApplicationContextAware {
         this.getSession().saveOrUpdate(entity);
         logger.debug("save entity: {}", entity);
     }
-
+    @Transactional
+    public void saveInsert(Object entity) {
+        Assert.notNull(entity, "Entity can not be null.");
+        this.getSession().save(entity);
+        logger.debug("save entity: {}", entity);
+    }
     /**
      * 删除一条记录.
      * 

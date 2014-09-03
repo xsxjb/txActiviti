@@ -23,4 +23,8 @@
     <!-- layout -->
     <script type="text/javascript" src="${ctx}/plugin/ibusiness/js/table.js"></script>
     
+    <!-- tree -->
+    <link rel="stylesheet" href="${ctx}/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css" />
+    <script type="text/javascript" src="${ctx}/plugin/ztree/jquery.ztree.all-3.5.min.js"></script>
+    
     

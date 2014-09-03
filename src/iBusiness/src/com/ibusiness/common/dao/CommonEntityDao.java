@@ -1,10 +1,8 @@
-package com.ibusiness.common.page;
+package com.ibusiness.common.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -12,7 +10,15 @@ import org.hibernate.criterion.Criterion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+import com.ibusiness.common.page.EntityCreatedEvent;
+import com.ibusiness.common.page.EntityRemovedEvent;
+import com.ibusiness.common.page.EntityUpdatedEvent;
+import com.ibusiness.common.page.HibernateUtils;
+import com.ibusiness.common.page.MatchType;
+import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.core.hibernate.HibernateGenericDao;
 import com.ibusiness.core.util.GenericsUtils;
 
 /**
@@ -22,15 +28,15 @@ import com.ibusiness.core.util.GenericsUtils;
  * @param <T>
  *            实体类型
  */
-public class HibernateEntityDao<T> extends HibernatePagingDao {
+public class CommonEntityDao<T> extends HibernateGenericDao {
     /** logger. */
-    private static Logger logger = LoggerFactory.getLogger(HibernateEntityDao.class);
+    private static Logger logger = LoggerFactory.getLogger(CommonEntityDao.class);
 
     /** 持久类的类型. */
     private Class<T> entityClass;
 
     /** 构造方法. */
-    public HibernateEntityDao() {
+    public CommonEntityDao() {
         this.entityClass = GenericsUtils.getSuperClassGenericType(this.getClass());
     }
 
@@ -40,7 +46,7 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      * @param sessionFactory
      *            SessionFactory
      */
-    public HibernateEntityDao(SessionFactory sessionFactory) {
+    public CommonEntityDao(SessionFactory sessionFactory) {
         this();
         super.setSessionFactory(sessionFactory);
     }
@@ -53,7 +59,7 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      * @param entityClass
      *            Class
      */
-    public HibernateEntityDao(SessionFactory sessionFactory, Class<T> entityClass) {
+    public CommonEntityDao(SessionFactory sessionFactory, Class<T> entityClass) {
         super(sessionFactory);
         this.entityClass = entityClass;
     }
@@ -78,7 +84,6 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
     // ============================================================================================
     // get, load, getAll, save, remove, removeById, removeAll
     // ============================================================================================
-
     /**
      * 获得一个实体类型的一条记录.
      * 
@@ -270,62 +275,6 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
     }
 
     // ============================================================================================
-    // getCount
-    // ============================================================================================
-
-    /**
-     * 获得总记录数.
-     * 
-     * @return 总数
-     */
-    @Transactional(readOnly = true)
-    public Integer getCount() {
-        return this.getCount(this.entityClass);
-    }
-
-    // ============================================================================================
-    // pagedQuery
-    // ============================================================================================
-
-    /**
-     * 分页查询函数，根据entityClass和查询条件参数创建默认的<code>Criteria</code>.
-     * 
-     * @param pageNo
-     *            当前页号
-     * @param pageSize
-     *            每页最大记录数
-     * @param criterions
-     *            条件
-     * @return 含总记录数和当前页数据的Page对象.
-     */
-    @Transactional(readOnly = true)
-    public Page pagedQuery(int pageNo, int pageSize, Criterion... criterions) {
-        return this.pagedQuery(this.entityClass, pageNo, pageSize, criterions);
-    }
-
-    /**
-     * 分页查询函数，根据entityClass和查询条件参数,排序参数创建默认的<code>Criteria</code>.
-     * 
-     * @param pageNo
-     *            当前页号
-     * @param pageSize
-     *            每页最大记录数
-     * @param orderBy
-     *            排序字段名
-     * @param isAsc
-     *            是否正序
-     * @param criterions
-     *            条件
-     * @return 含总记录数和当前页数据的Page对象.
-     */
-    @Transactional(readOnly = true)
-    public Page pagedQuery(int pageNo, int pageSize, String orderBy, boolean isAsc, Criterion... criterions) {
-        logger.debug("start");
-
-        return this.pagedQuery(this.entityClass, pageNo, pageSize, orderBy, isAsc, criterions);
-    }
-
-    // ============================================================================================
     // PropertyFilter
     // ============================================================================================
     /**
@@ -352,53 +301,5 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      */
     public List<T> find(List<PropertyFilter> propertyFilters) {
         return find(this.entityClass, HibernateUtils.buildCriterion(propertyFilters));
-    }
-
-    /**
-     * pagedQuery.
-     * 
-     * @param pageNo
-     *            int
-     * @param pageSize
-     *            int
-     * @param propertyFilters
-     *            list
-     * @return page
-     */
-    public Page pagedQuery(int pageNo, int pageSize, List<PropertyFilter> propertyFilters) {
-        return pagedQuery(this.entityClass, pageNo, pageSize, HibernateUtils.buildCriterion(propertyFilters));
-    }
-
-    /**
-     * pagedQuery.
-     * 
-     * @param page
-     *            Page
-     * @param propertyFilters
-     *            list
-     * @return page
-     */
-    public Page pagedQuery(Page page, List<PropertyFilter> propertyFilters) {
-        return pagedQuery(this.entityClass, page, HibernateUtils.buildCriterion(propertyFilters));
-    }
-
-    // ~ ======================================================================
-    // hql
-    public Page pagedQuery(String hql, Page page, List<PropertyFilter> propertyFilters) {
-        return pagedQuery(hql, page.getPageNo(), page.getPageSize(), propertyFilters);
-    }
-
-    public Page pagedQuery(String hql, int pageNo, int pageSize, List<PropertyFilter> propertyFilters) {
-        StringBuilder buff = new StringBuilder(hql);
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        for (PropertyFilter propertyFilter : propertyFilters) {
-            HibernateUtils.buildQuery(buff, propertyFilter);
-
-            String key = propertyFilter.getPropertyName().replaceAll("\\.", "_");
-            map.put(key, propertyFilter.getMatchValue());
-        }
-
-        return pagedQuery(buff.toString(), pageNo, pageSize, map);
     }
 }
