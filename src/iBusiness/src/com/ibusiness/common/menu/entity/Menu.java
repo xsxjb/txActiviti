@@ -1,15 +1,21 @@
 package com.ibusiness.common.menu.entity;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.ibusiness.common.auth.entity.RoleDef;
 
 /**
  *菜单权限表
@@ -31,6 +37,8 @@ public class Menu implements java.io.Serializable {
 	private String menuOrder;//菜单排序
 	// 一个父菜单项目对应多个叶子菜单项目
 	private List<Menu> chiledItems = new ArrayList<Menu>();
+	/** 角色. */
+    private Set<RoleDef> roleDefs = new HashSet<RoleDef>(0);
 	// 
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parentid")
@@ -95,5 +103,13 @@ public class Menu implements java.io.Serializable {
     }
     public void setChiledItems(List<Menu> chiledItems) {
         this.chiledItems = chiledItems;
+    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "IB_MENU_ROLE_DEF", joinColumns = { @JoinColumn(name = "MENU_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ROLE_DEF_ID", nullable = false, updatable = false) })
+    public Set<RoleDef> getRoleDefs() {
+        return this.roleDefs;
+    }
+    public void setRoleDefs(Set<RoleDef> roleDefs) {
+        this.roleDefs = roleDefs;
     }
 }

@@ -37,8 +37,29 @@ public class portalController {
         session.setAttribute("userCSS",userBase.getCss());
         
         // 菜单设置
-        String hql = "from Menu where menuLevel='1'";
-        List<Menu> menus = menuDao.find(hql);
+        String hql = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='1' AND ub.id=?";
+        List<Menu> menus = menuDao.find(hql, Long.parseLong(userId));
+        
+        String hql2 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='2' AND ub.id=?";
+        List<Menu> menus2 = menuDao.find(hql2, Long.parseLong(userId));
+        
+        String hql3 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='3' AND ub.id=?";
+        List<Menu> menus3 = menuDao.find(hql3, Long.parseLong(userId));
+        for (Menu menu1 : menus) {
+            menu1.getChiledItems().clear();
+            for (Menu menu2 : menus2) {
+                if(menu1.getId().equals(menu2.getIbMenu().getId())) {
+                    menu1.getChiledItems().add(menu2);
+                }
+                menu2.getChiledItems().clear();
+                for (Menu menu3 : menus3) {
+                    if (menu2.getId().equals(menu3.getIbMenu().getId())) {
+                        menu2.getChiledItems().add(menu3);
+                    }
+                }
+            }
+        }
+        
         session.setAttribute("menuItemList", menus);
         // 返回jsp
         return "base/portal/portal.jsp";

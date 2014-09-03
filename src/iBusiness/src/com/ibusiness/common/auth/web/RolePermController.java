@@ -22,6 +22,8 @@ import com.ibusiness.common.auth.dao.RoleDefDao;
 import com.ibusiness.common.auth.entity.Perm;
 import com.ibusiness.common.auth.entity.PermType;
 import com.ibusiness.common.auth.entity.RoleDef;
+import com.ibusiness.common.menu.dao.MenuDao;
+import com.ibusiness.common.menu.entity.Menu;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
 
@@ -40,6 +42,7 @@ public class RolePermController {
     private PermTypeDao permTypeDao;
     private MessageHelper messageHelper;
     private RoleDefChecker roleDefChecker;
+    private MenuDao menuDao;
 
     /**
      * 标签权限保存
@@ -66,7 +69,6 @@ public class RolePermController {
             for (Perm perm : permList) {
                 roleDef.getPerms().remove(perm);
             }
-//            roleDef.getPerms().clear();
 
             for (Long permId : selectedItem) {
                 Perm perm = permDao.get(permId);
@@ -117,16 +119,17 @@ public class RolePermController {
      * @param model
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("role-menu-input")
     public String menuinput(@RequestParam("id") Long id, Model model) {
         RoleDef roleDef = roleDefDao.get(id);
-        List<Long> selectedItem = new ArrayList<Long>();
-        for (Perm perm : roleDef.getPerms()) {
-            selectedItem.add(perm.getId());
+        List<String> selectedItem = new ArrayList<String>();
+        for (Menu menu : roleDef.getMenus()) {
+            selectedItem.add(menu.getId());
         }
-        String hql = "from PermType where id=7 and type=0 and scopeId=?";
-        List<PermType> permTypes = permTypeDao.find(hql, ScopeHolder.getScopeId());
-        model.addAttribute("permTypes", permTypes);
+        String hql = "from Menu where menuLevel='1'";
+        List<Menu> menus = menuDao.find(hql);
+        model.addAttribute("menus", menus);
         model.addAttribute("selectedItem", selectedItem);
         model.addAttribute("id", id);
         return "common/auth/role-menu-input.jsp";
@@ -143,7 +146,7 @@ public class RolePermController {
     @RequestMapping("role-menu-save")
     public String menuSave(@RequestParam("id")
     Long id, Model model, @RequestParam(value = "selectedItem", required = false)
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    List<String> selectedItem, RedirectAttributes redirectAttributes) {
         if (selectedItem == null) {
             selectedItem = Collections.emptyList();
         }
@@ -151,17 +154,12 @@ public class RolePermController {
         try {
             RoleDef roleDef = roleDefDao.get(id);
             roleDefChecker.check(roleDef);
-            // 只清空menu类型的,类型编号7
-            List<Perm> permList = permDao.find("from Perm where permType.id = ?", Long.parseLong("7"));
-            for (Perm perm : permList) {
-                roleDef.getPerms().remove(perm);
+            // 只清空menu类型
+            roleDef.getMenus().clear();
+            for (String menuId : selectedItem) {
+                Menu menu = menuDao.get(menuId);
+                roleDef.getMenus().add(menu);
             }
-
-            for (Long permId : selectedItem) {
-                Perm perm = permDao.get(permId);
-                roleDef.getPerms().add(perm);
-            }
-
             roleDefDao.save(roleDef);
             messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         } catch (CheckRoleException ex) {
@@ -194,7 +192,11 @@ public class RolePermController {
     public void setPermTypeDao(PermTypeDao permTypeDao) {
         this.permTypeDao = permTypeDao;
     }
-
+    @Resource
+    public void setMenuDao(MenuDao menuDao) {
+        this.menuDao = menuDao;
+    }
+    
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;

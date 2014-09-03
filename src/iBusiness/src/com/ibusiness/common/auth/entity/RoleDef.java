@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.ibusiness.common.menu.entity.Menu;
+
 /**
  * RoleDef 角色模板管理表.
  * 
@@ -37,15 +39,19 @@ public class RoleDef implements java.io.Serializable {
 
     /** . */
     private Set<Perm> perms = new HashSet<Perm>(0);
+    
+    /** 菜单. */
+    private Set<Menu> menus = new HashSet<Menu>(0);
 
     public RoleDef() {
     }
 
-    public RoleDef(String name, String descn, String scopeId, Set<Perm> perms) {
+    public RoleDef(String name, String descn, String scopeId, Set<Perm> perms, Set<Menu> menus) {
         this.name = name;
         this.descn = descn;
         this.scopeId = scopeId;
         this.perms = perms;
+        this.menus = menus;
     }
 
     /** @return null. */
@@ -112,12 +118,19 @@ public class RoleDef implements java.io.Serializable {
     public Set<Perm> getPerms() {
         return this.perms;
     }
-
     /**
      * @param perms
      *            .
      */
     public void setPerms(Set<Perm> perms) {
         this.perms = perms;
+    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "IB_MENU_ROLE_DEF", joinColumns = { @JoinColumn(name = "ROLE_DEF_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "MENU_ID", nullable = false, updatable = false) })
+    public Set<Menu> getMenus() {
+        return this.menus;
+    }
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
     }
 }
