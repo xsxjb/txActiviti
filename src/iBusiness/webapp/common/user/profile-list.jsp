@@ -45,61 +45,52 @@ $(function() {
   <body>
     <%@include file="/header/header-portal.jsp"%>
 
-    <div class="row">
+    <div class="span=1"></div>
 
 	<!-- start of main -->
+	<div class="panel panel-default span11">
+        <div class="panel-heading"><h4 class="title">编辑用户</h4></div>
+          <div class="panel-body">
+	          <form id="userForm" method="post" action="profile-save.do?operationMode=STORE" class="form-horizontal">
+					<input id="user-base_userRepoId" type="hidden" name="userRepoId" value="1">
+					<c:if test="${model != null}">
+					  	<input id="user-base_id" type="hidden" name="id" value="${model.id}">
+					</c:if>
+					<p>
+					      <label class="control-label" for="user-base_username"><spring:message code="user.user.input.username" text="账号"/></label>
+						  <div style="padding-top:5px;">${model.username}</div>
+					</p>
+					<p>
+					      <label class="control-label" for="user-base_displayName">显示名</label>
+						  <input id="user-base_displayName" type="text" name="displayName" value="${model.displayName}"  class="text required" minlength="2" maxlength="50">
+					</p>
+				    <p>
+					      <label class="control-label" for="user-base_email">邮箱</label>
+						  <input id="user-base_email" type="text" name="email" value="${model.email}">
+					</p>
+					<p>
+					      <label class="control-label" for="user-base_mobile">手机</label>
+						  <input id="user-base_mobile" type="text" name="mobile" value="${model.mobile}">
+					</p>
+					 <p>
+					      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+					      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+					</p>
+				</form>
+          </div>
+      </div>
+      
+      
+      
+      
     <section id="m-main" class="span12">
 
       <article class="m-widget">
         <header class="header">
-		  <h4 class="title"><spring:message code="user.user.input.title" text="编辑用户"/></h4>
+		  <h4 class="title"><spring:message code="user.user.input.title" text=""/></h4>
 		</header>
 		<div class="content content-inner">
-
-<form id="userForm" method="post" action="profile-save.do?operationMode=STORE" class="form-horizontal">
-  <input id="user-base_userRepoId" type="hidden" name="userRepoId" value="1">
-  <c:if test="${model != null}">
-  <input id="user-base_id" type="hidden" name="id" value="${model.id}">
-  </c:if>
-  <div class="form-group">
-    <label class="control-label" for="user-base_username"><spring:message code="user.user.input.username" text="账号"/></label>
-	<div class="controls">
-	  <div style="padding-top:5px;">${model.username}</div>
-	</div>
-  </div>
-  <div class="form-group">
-    <label class="control-label" for="user-base_displayName">显示名</label>
-	<div class="controls">
-	  <input id="user-base_displayName" type="text" name="displayName" value="${model.displayName}"  class="text required" minlength="2" maxlength="50">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label" for="user-base_email">邮箱</label>
-	<div class="controls">
-	  <input id="user-base_email" type="text" name="email" value="${model.email}">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label" for="user-base_mobile">手机</label>
-	<div class="controls">
-	  <input id="user-base_mobile" type="text" name="mobile" value="${model.mobile}">
-    </div>
-  </div>
-  <c:forEach items="${userBaseWrapper.userAttrWrappers}" var="item">
-  <div class="form-group">
-    <label class="control-label" for="user-base_${item.code}">${item.name}</label>
-	<div class="controls">
-	  <input id="user-base_${item.code}" type="text" name="_user_attr_${item.code}"  class="text" maxlength="50" value="${item.value}">
-    </div>
-  </div>
-  </c:forEach>
-  <div class="form-group">
-    <div class="controls">
-      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
-    </div>
-  </div>
-</form>
+			
 		</div>
       </article>
 

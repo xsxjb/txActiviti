@@ -1,6 +1,5 @@
 package com.ibusiness.common.user.web;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +25,8 @@ import com.ibusiness.common.user.dao.UserRepoDao;
 import com.ibusiness.common.user.entity.UserBase;
 import com.ibusiness.common.user.entity.UserRepo;
 import com.ibusiness.common.user.service.UserService;
-import com.ibusiness.common.user.support.UserBaseWrapper;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.core.util.ServletUtils;
 import com.ibusiness.security.api.scope.ScopeHolder;
 import com.ibusiness.security.util.SimplePasswordEncoder;
 
@@ -70,14 +67,7 @@ public class UserBaseController {
         UserRepo userRepo = userRepoDao.findUniqueBy("code", ScopeHolder.getScopeCode());
         propertyFilters.add(new PropertyFilter("EQL_userRepo.id", Long.toString(userRepo.getId())));
         page = userBaseDao.pagedQuery(page, propertyFilters);
-        List<UserBase> userBases = (List<UserBase>) page.getResult();
-        List<UserBaseWrapper> userBaseWrappers = new ArrayList<UserBaseWrapper>();
-
-        for (UserBase userBase : userBases) {
-            userBaseWrappers.add(new UserBaseWrapper(userBase));
-        }
-
-        page.setResult(userBaseWrappers);
+        
         model.addAttribute("page", page);
 
         return "common/user/user-base-list.jsp";
@@ -98,14 +88,11 @@ public class UserBaseController {
             userBase = userBaseDao.get(id);
         } else {
             userBase = new UserBase();
-
             UserRepo userRepo = userRepoDao.findUniqueBy("code", ScopeHolder.getScopeCode());
             userBase.setUserRepo(userRepo);
         }
 
-        UserBaseWrapper userBaseWrapper = new UserBaseWrapper(userBase);
         model.addAttribute("model", userBase);
-        model.addAttribute("userBaseWrapper", userBaseWrapper);
         // 设置职务管理下拉数据
         model.addAttribute("jobInfos", jobInfoDao.getAll());
         // 角色模板管理下拉数据
@@ -135,17 +122,12 @@ public class UserBaseController {
             if (!userBase.getPassword().equals(confirmPassword)) {
                 messageHelper.addFlashMessage(redirectAttributes, "user.user.input.passwordnotequals", "两次输入密码不符");
 
-                // TODO: 还要填充schema
-                return "user/user-base-input";
+                return "common/user/user-base-input.jsp";
             }
-
             if (simplePasswordEncoder != null) {
                 userBase.setPassword(simplePasswordEncoder.encode(userBase.getPassword()));
             }
         }
-
-        Map<String, Object> parameters = ServletUtils.getParametersStartingWith(parameterMap, "_user_attr_");
-
         // 再进行数据复制
         UserBase dest = null;
         Long id = userBase.getId();
@@ -159,13 +141,16 @@ public class UserBaseController {
             // 保存角色信息
             dest.setRoleDef(roleDefDao.get(roleId));
             // 更新用户基础信息
-            userService.updateUser(dest, userRepoId, parameters);
+            userService.updateUser(dest, userRepoId);
         } else {
             dest = userBase;
+            // 保存职务信息
             dest.setJobInfo(jobInfoDao.get(jobId));
+            // 保存角色信息
+            dest.setRoleDef(roleDefDao.get(roleId));
             // 设置默认的css样式
             dest.setCss("Cerulean");
-            userService.insertUser(dest, userRepoId, parameters);
+            userService.insertUser(dest, userRepoId);
         }
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
@@ -224,15 +209,6 @@ public class UserBaseController {
 
         if (!params.isEmpty()) {
             page = userBaseDao.pagedQuery(buff.toString(), page.getPageNo(), page.getPageSize(), params);
-
-            List<UserBase> userBases = (List<UserBase>) page.getResult();
-            List<UserBaseWrapper> userBaseWrappers = new ArrayList<UserBaseWrapper>();
-
-            for (UserBase userBase : userBases) {
-                userBaseWrappers.add(new UserBaseWrapper(userBase));
-            }
-
-            page.setResult(userBaseWrappers);
             model.addAttribute("page", page);
         }
 
@@ -249,9 +225,8 @@ public class UserBaseController {
      */
     @RequestMapping("user-base-checkUsername")
     @ResponseBody
-    public boolean checkUsername(@RequestParam("username")
-    String username, @RequestParam(value = "id", required = false)
-    Long id) throws Exception {
+    public boolean checkUsername(@RequestParam("username") String username, 
+            @RequestParam(value = "id", required = false) Long id) throws Exception {
         String hql = "from UserBase where username=?";
         Object[] params = {
             username };
@@ -263,7 +238,6 @@ public class UserBaseController {
         }
 
         boolean result = userBaseDao.findUnique(hql, params) == null;
-
         return result;
     }
 

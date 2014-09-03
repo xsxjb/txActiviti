@@ -106,12 +106,6 @@ $(function() {
 				      <label class="control-label" for="user-base_ref"><spring:message code="user.user.input.ref" text="引用"/>:</label>
 					  <input id="user-base_ref" type="text" name="ref" value="${model.ref}">
 				  </p>
-				  <c:forEach items="${userBaseWrapper.userAttrWrappers}" var="item">
-					  <p>
-					      <label class="control-label" for="user-base_${item.code}">${item.name}</label>
-						  <input id="user-base_${item.code}" type="text" name="_user_attr_${item.code}"  class="text" maxlength="50" value="${item.value}">
-				       </p>
-				  </c:forEach>
 				  <p>
 				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
 				      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>

@@ -14,10 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ibusiness.common.user.dao.UserBaseDao;
 import com.ibusiness.common.user.entity.UserBase;
 import com.ibusiness.common.user.service.UserService;
-import com.ibusiness.common.user.support.UserBaseWrapper;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.core.util.ServletUtils;
 import com.ibusiness.security.util.SpringSecurityUtils;
 
 /**
@@ -43,9 +41,7 @@ public class ProfileController {
     @RequestMapping("profile-list")
     public String list(Model model) {
         UserBase userBase = userBaseDao.findUniqueBy("username", SpringSecurityUtils.getCurrentUsername());
-        UserBaseWrapper userBaseWrapper = new UserBaseWrapper(userBase);
         model.addAttribute("model", userBase);
-        model.addAttribute("userBaseWrapper", userBaseWrapper);
 
         return "common/user/profile-list.jsp";
     }
@@ -61,23 +57,18 @@ public class ProfileController {
      * @throws Exception
      */
     @RequestMapping("profile-save")
-    public String save(@ModelAttribute
-    UserBase userBase, @RequestParam("userRepoId")
-    Long userRepoId, @RequestParam
-    Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
-        Map<String, Object> parameters = ServletUtils.getParametersStartingWith(parameterMap, "_user_attr_");
+    public String save(@ModelAttribute UserBase userBase, @RequestParam("userRepoId") Long userRepoId, 
+            @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
         Long id = userBase.getId();
-
         // 再进行数据复制
         UserBase dest = null;
-
         if (id != null) {
             dest = userBaseDao.get(id);
             beanMapper.copy(userBase, dest);
-            userService.updateUser(dest, userRepoId, parameters);
+            userService.updateUser(dest, userRepoId);
         } else {
             dest = userBase;
-            userService.insertUser(dest, userRepoId, parameters);
+            userService.insertUser(dest, userRepoId);
         }
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
