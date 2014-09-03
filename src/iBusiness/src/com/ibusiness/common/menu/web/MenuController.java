@@ -13,11 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.common.auth.dao.AccessDao;
+import com.ibusiness.common.auth.dao.PermDao;
+import com.ibusiness.common.auth.dao.PermTypeDao;
+import com.ibusiness.common.auth.entity.Access;
+import com.ibusiness.common.auth.entity.Perm;
 import com.ibusiness.common.menu.dao.MenuDao;
 import com.ibusiness.common.menu.entity.Menu;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.core.mapper.BeanMapper;
+import com.ibusiness.core.spring.MessageHelper;
+import com.ibusiness.security.api.scope.ScopeHolder;
+import com.ibusiness.security.client.ResourcePublisher;
 
 /**
  * 菜单控制器
@@ -31,6 +39,12 @@ public class MenuController {
 
     private MenuDao menuDao;
     private BeanMapper beanMapper = new BeanMapper();
+    // 权限相关
+    private AccessDao accessDao;
+    private MessageHelper messageHelper;
+    private PermDao permDao;
+    private PermTypeDao permTypeDao;
+    private ResourcePublisher resourcePublisher;
     
     /**
      * 级菜单列表
@@ -40,6 +54,7 @@ public class MenuController {
      * @param model
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("menu-list")
     public String menuList(@ModelAttribute Page page, @RequestParam("menuLevel") String menuLevel, @RequestParam("menuLevelOne") String menuLevelOne, @RequestParam("menuLevelTwo") String menuLevelTwo, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
@@ -77,6 +92,7 @@ public class MenuController {
             model.addAttribute("model", menu);
             model.addAttribute("parentId",menu.getIbMenu().getId());
         } else {
+            // 新建
             Menu menu = new Menu();
             menu.setMenuLevel(menuLevel);
             // 二级菜单的父菜单ID是一级菜单的ID,三级是二级的,一级菜单的父菜单ID是0
@@ -113,6 +129,11 @@ public class MenuController {
         dest.setMenuIframe("URL");
         // save
         menuDao.save(dest);
+        
+        // 保存菜单关联权限
+        saveAccessPerm(menu);
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
+        
         if ("3".equals(dest.getMenuLevel())) {
             String menuLevelOne = menuDao.get(parentId).getIbMenu().getId();
             return "redirect:/menu/menu-list.do?menuLevel=3&menuLevelOne=" + menuLevelOne + "&menuLevelTwo=" + dest.getIbMenu().getId();
@@ -121,7 +142,55 @@ public class MenuController {
         } else {
             return "redirect:/menu/menu-list.do?menuLevel=1&menuLevelOne=0&menuLevelTwo=0";
         }
-        
+    }
+    /**
+     * 保存菜单关联权限
+     * 
+     * @param menu
+     */
+    @SuppressWarnings("unchecked")
+    private void saveAccessPerm(Menu menu) {
+        // 如果菜单没有具体的URL那么不进行URL权限控制
+        if (menu.getMenuUrl().indexOf(".") < 0) {
+            return;
+        }
+        Access dest = new Access();
+        List<Access> accessList = accessDao.find("from Access where menuId = ?", menu.getId());
+        if (accessList != null && accessList.size() > 0) {
+            dest = accessList.get(0);
+        } else {
+            dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setMenuId(menu.getId());
+        }
+        // 资源value设置为菜单URL的.do之前的部分 + *
+        String urlValue = menu.getMenuUrl().substring(0,menu.getMenuUrl().indexOf("."));
+        dest.setValue(urlValue + "*");
+        dest.setType("URL");
+        dest.setPriority(10);
+        // 权限代码 设置为菜单UUID主键,防止重复
+        String permCode = menu.getId();
+        // foreign 授权管理
+        List<Perm> permList = permDao.find("from Perm where code = ?", permCode);
+        Perm perm = new Perm();
+        if (null != permList && permList.size() > 0) {
+            perm = permList.get(0);
+            perm.setCode(permCode);
+            perm.setName(menu.getMenuName());
+        } else {
+            // 新建
+            perm.setCode(permCode);
+            perm.setName(menu.getMenuName());
+            perm.setPermType(permTypeDao.get(Long.parseLong("7")));
+            // 优先级
+            perm.setScopeId("1");
+        }
+        //
+        permDao.save(perm);
+        dest.setPerm(perm);
+        // save
+        accessDao.save(dest);
+        // 发布资源包
+        resourcePublisher.publish();
     }
     /**
      * 删除
@@ -131,11 +200,21 @@ public class MenuController {
      * @param redirectAttributes
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("menu-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<Menu> menus = menuDao.findByIds(selectedItem);
         Menu menu = menus.get(0);
         menuDao.removeAll(menus);
+        for (Menu bean : menus) {
+            // 资源
+            List<Access> accesses = accessDao.find("from Access where menuId = ?", bean.getId());
+            accessDao.removeAll(accesses);
+            // 权限
+            List<Perm> perms = permDao.find("from Perm where code = ?", bean.getId());
+            accessDao.removeAll(perms);
+        }
+        
         if ("3".equals(menu.getMenuLevel())) {
             String menuLevelOne = menuDao.get(menu.getIbMenu().getId()).getIbMenu().getId();
             return "redirect:/menu/menu-list.do?menuLevel=3&menuLevelOne=" + menuLevelOne + "&menuLevelTwo=" + menu.getIbMenu().getId();
@@ -150,81 +229,25 @@ public class MenuController {
     public void setMenuDao(MenuDao menuDao) {
         this.menuDao = menuDao;
     }
-    
-//    /**
-//     * 拼装bootstrap头部菜单
-//     * @param pFunctions
-//     * @param functions
-//     * @return
-//     */
-//    public static String getBootstrapMenu(Map<Integer, List<TSFunction>> map) {
-//        StringBuffer menuString = new StringBuffer();
-//        menuString.append("<ul class=\"nav\">");
-//        List<TSFunction> pFunctions = (List<TSFunction>) map.get(0);
-//        if(pFunctions==null || pFunctions.size()==0){
-//            return "";
-//        }
-//        for (TSFunction pFunction : pFunctions) {
-//            //是否有子菜单
-//            boolean hasSub = pFunction.getTSFunctions().size()==0?false:true;
-//            
-//            //绘制一级菜单
-//            menuString.append(" <li class=\"dropdown\"> ");
-//            menuString.append("     <a href=\"javascript:;\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"> ");
-//            menuString.append("         <span class=\"bootstrap-icon\" style=\"background-image: url('"+pFunction.getTSIcon().getIconPath()+"')\"></span> "+pFunction.getFunctionName()+" ");
-//            if(hasSub){
-//                menuString.append("         <b class=\"caret\"></b> ");
-//            }
-//            menuString.append("     </a> ");
-//            //绘制二级菜单
-//            if(hasSub){
-//                menuString.append(getBootStrapChild(pFunction, 1, map));
-//            }
-//            menuString.append(" </li> ");
-//        }
-//        menuString.append("</ul>");
-//        return menuString.toString();
-//    }
-//    /**
-//    * @Title: getBootStrapChild
-//    * @Description: 递归获取bootstrap的子菜单
-//    *  @param parent
-//    *  @param level
-//    *  @param map
-//    * @return String    
-//    * @throws
-//     */
-//    private static String getBootStrapChild(TSFunction parent,int level,Map<Integer, List<TSFunction>> map){
-//        StringBuffer menuString = new StringBuffer();
-//        List<TSFunction> list = map.get(level);
-//        if(list==null || list.size()==0){
-//            return "";
-//        }
-//        menuString.append("     <ul class=\"dropdown-menu\"> ");
-//        for (TSFunction function : list) {
-//            // 父菜单ID
-//            if (function.getTSFunction().getId().equals(parent.getId())){
-//                boolean hasSub = function.getTSFunctions().size()!=0 && map.containsKey(level+1);
-//                String menu_url = function.getFunctionUrl();
-//                if(StringUtils.isNotEmpty(menu_url)){
-//                    menu_url += "&clickFunctionId="+function.getId();
-//                }
-//                menuString.append("     <li onclick=\"showContent(\'"+function.getFunctionName()+"\',\'"+menu_url+"\')\"  title=\""+function.getFunctionName()+"\" url=\""+function.getFunctionUrl()+"\" ");
-//                if(hasSub){
-//                    menuString.append(" class=\"dropdown-submenu\"");
-//                }
-//                menuString.append(" > ");
-//                menuString.append("         <a href=\"javascript:;\"> ");
-//                menuString.append("             <span class=\"bootstrap-icon\" style=\"background-image: url('"+function.getTSIcon().getIconPath()+"')\"></span>         ");
-//                menuString.append(function.getFunctionName());
-//                menuString.append("         </a> ");
-//                if(hasSub){
-//                    menuString.append(getBootStrapChild(function,level+1,map));
-//                }
-//                menuString.append("     </li> ");
-//            }
-//        }
-//        menuString.append("     </ul> ");
-//        return menuString.toString();
-//    }
+    // 权限相关
+    @Resource
+    public void setAccessDao(AccessDao accessDao) {
+        this.accessDao = accessDao;
+    }
+    @Resource
+    public void setPermDao(PermDao permDao) {
+        this.permDao = permDao;
+    }
+    @Resource
+    public void setPermTypeDao(PermTypeDao permTypeDao) {
+        this.permTypeDao = permTypeDao;
+    }
+    @Resource
+    public void setMessageHelper(MessageHelper messageHelper) {
+        this.messageHelper = messageHelper;
+    }
+    @Resource
+    public void setResourcePublisher(ResourcePublisher resourcePublisher) {
+        this.resourcePublisher = resourcePublisher;
+    }
 }
