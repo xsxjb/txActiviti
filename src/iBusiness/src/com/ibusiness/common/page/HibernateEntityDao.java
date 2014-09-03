@@ -24,16 +24,14 @@ import com.ibusiness.core.util.GenericsUtils;
  */
 public class HibernateEntityDao<T> extends HibernatePagingDao {
     /** logger. */
-    private static Logger logger = LoggerFactory
-            .getLogger(HibernateEntityDao.class);
+    private static Logger logger = LoggerFactory.getLogger(HibernateEntityDao.class);
 
     /** 持久类的类型. */
     private Class<T> entityClass;
 
     /** 构造方法. */
     public HibernateEntityDao() {
-        this.entityClass = GenericsUtils.getSuperClassGenericType(this
-                .getClass());
+        this.entityClass = GenericsUtils.getSuperClassGenericType(this.getClass());
     }
 
     /**
@@ -55,8 +53,7 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      * @param entityClass
      *            Class
      */
-    public HibernateEntityDao(SessionFactory sessionFactory,
-            Class<T> entityClass) {
+    public HibernateEntityDao(SessionFactory sessionFactory, Class<T> entityClass) {
         super(sessionFactory);
         this.entityClass = entityClass;
     }
@@ -206,10 +203,8 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      *            条件
      * @return Criteria
      */
-    public Criteria createCriteria(String orderBy, boolean isAsc,
-            Criterion... criterions) {
-        return this
-                .createCriteria(this.entityClass, orderBy, isAsc, criterions);
+    public Criteria createCriteria(String orderBy, boolean isAsc, Criterion... criterions) {
+        return this.createCriteria(this.entityClass, orderBy, isAsc, criterions);
     }
 
     // ============================================================================================
@@ -324,12 +319,10 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      * @return 含总记录数和当前页数据的Page对象.
      */
     @Transactional(readOnly = true)
-    public Page pagedQuery(int pageNo, int pageSize, String orderBy,
-            boolean isAsc, Criterion... criterions) {
+    public Page pagedQuery(int pageNo, int pageSize, String orderBy, boolean isAsc, Criterion... criterions) {
         logger.debug("start");
 
-        return this.pagedQuery(this.entityClass, pageNo, pageSize, orderBy,
-                isAsc, criterions);
+        return this.pagedQuery(this.entityClass, pageNo, pageSize, orderBy, isAsc, criterions);
     }
 
     // ============================================================================================
@@ -346,10 +339,8 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      *            MatchType
      * @return List
      */
-    public List<T> findBy(String propertyName, Object propertyValue,
-            MatchType matchType) {
-        return find(this.entityClass, HibernateUtils.buildCriterion(
-                propertyName, propertyValue, matchType));
+    public List<T> findBy(String propertyName, Object propertyValue, MatchType matchType) {
+        return find(this.entityClass, HibernateUtils.buildCriterion(propertyName, propertyValue, matchType));
     }
 
     /**
@@ -360,8 +351,7 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      * @return List
      */
     public List<T> find(List<PropertyFilter> propertyFilters) {
-        return find(this.entityClass,
-                HibernateUtils.buildCriterion(propertyFilters));
+        return find(this.entityClass, HibernateUtils.buildCriterion(propertyFilters));
     }
 
     /**
@@ -375,10 +365,8 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      *            list
      * @return page
      */
-    public Page pagedQuery(int pageNo, int pageSize,
-            List<PropertyFilter> propertyFilters) {
-        return pagedQuery(this.entityClass, pageNo, pageSize,
-                HibernateUtils.buildCriterion(propertyFilters));
+    public Page pagedQuery(int pageNo, int pageSize, List<PropertyFilter> propertyFilters) {
+        return pagedQuery(this.entityClass, pageNo, pageSize, HibernateUtils.buildCriterion(propertyFilters));
     }
 
     /**
@@ -391,28 +379,23 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
      * @return page
      */
     public Page pagedQuery(Page page, List<PropertyFilter> propertyFilters) {
-        return pagedQuery(this.entityClass, page,
-                HibernateUtils.buildCriterion(propertyFilters));
+        return pagedQuery(this.entityClass, page, HibernateUtils.buildCriterion(propertyFilters));
     }
 
     // ~ ======================================================================
     // hql
-    public Page pagedQuery(String hql, Page page,
-            List<PropertyFilter> propertyFilters) {
-        return pagedQuery(hql, page.getPageNo(), page.getPageSize(),
-                propertyFilters);
+    public Page pagedQuery(String hql, Page page, List<PropertyFilter> propertyFilters) {
+        return pagedQuery(hql, page.getPageNo(), page.getPageSize(), propertyFilters);
     }
 
-    public Page pagedQuery(String hql, int pageNo, int pageSize,
-            List<PropertyFilter> propertyFilters) {
+    public Page pagedQuery(String hql, int pageNo, int pageSize, List<PropertyFilter> propertyFilters) {
         StringBuilder buff = new StringBuilder(hql);
         Map<String, Object> map = new HashMap<String, Object>();
 
         for (PropertyFilter propertyFilter : propertyFilters) {
             HibernateUtils.buildQuery(buff, propertyFilter);
 
-            String key = propertyFilter.getPropertyName()
-                    .replaceAll("\\.", "_");
+            String key = propertyFilter.getPropertyName().replaceAll("\\.", "_");
             map.put(key, propertyFilter.getMatchValue());
         }
 

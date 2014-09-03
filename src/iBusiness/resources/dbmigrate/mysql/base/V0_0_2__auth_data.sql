@@ -1,3 +1,7 @@
+/*===============  SCOPE_INFO 应用管理表  =============================*/
+INSERT INTO SCOPE_INFO(ID,NAME,CODE,REF,SHARED,USER_REPO_REF,TYPE) VALUES(1,'默认','default','1',0,'1',0);
+INSERT INTO SCOPE_INFO(ID,NAME,CODE,REF,SHARED,USER_REPO_REF,TYPE) VALUES(2,'cms','cms','2',0,'1',1);
+
 /*-------------------------------------------------------------------------------*/
 /*--  role def 角色模板管理表 */
 /*-------------------------------------------------------------------------------*/
@@ -66,10 +70,8 @@ INSERT INTO AUTH_ACCESS(ID,TYPE,VALUE,PERM_ID,PRIORITY,SCOPE_ID) VALUES(6,'URL',
 INSERT INTO AUTH_ACCESS(ID,TYPE,VALUE,PERM_ID,PRIORITY,SCOPE_ID) VALUES(7,'URL','/j_spring_security_switch_user',21,4,'1');
 -- IS_AUTHENTICATED_ANONYMOUSLY
 INSERT INTO AUTH_ACCESS(ID,TYPE,VALUE,PERM_ID,PRIORITY,SCOPE_ID) VALUES(8,'URL','/rs/**',2,5,'1');
-
 -- userrepo
 INSERT INTO AUTH_ACCESS(ID,TYPE,VALUE,PERM_ID,PRIORITY,SCOPE_ID) VALUES(11,'URL','/user/user-repo*',22,11,'1');
 -- scope
 INSERT INTO AUTH_ACCESS(ID,TYPE,VALUE,PERM_ID,PRIORITY,SCOPE_ID) VALUES(12,'URL','/scope/**',23,12,'1');
-
 UPDATE AUTH_PERM SET PRIORITY=ID;

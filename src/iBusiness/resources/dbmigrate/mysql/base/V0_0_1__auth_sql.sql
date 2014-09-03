@@ -1,4 +1,18 @@
 /*-------------------------------------------------------------------------------*/
+/*--  scope info 应用管理表   */
+/*-------------------------------------------------------------------------------*/
+CREATE TABLE SCOPE_INFO(
+        ID BIGINT auto_increment,
+        NAME VARCHAR(50),
+		CODE VARCHAR(50),
+		REF VARCHAR(50),
+		SHARED INTEGER,
+		USER_REPO_REF VARCHAR(50),
+		TYPE INT,
+        CONSTRAINT PK_SCOPE_INFO PRIMARY KEY(ID)
+) engine=innodb;
+
+/*-------------------------------------------------------------------------------*/
 /*--  role def 角色模板管理表 */
 /*-------------------------------------------------------------------------------*/
 CREATE TABLE AUTH_ROLE_DEF(
