@@ -60,7 +60,7 @@ public class ComponentController {
         }
         if ("Form".equals(typeId)) {
             // 跳转到表单页面
-            return "redirect:/table/conf-table-list.do?packageName=" + packageName;
+            return "redirect:/form/conf-form-list.do?packageName=" + packageName;
         }
         if ("Bpm".equals(typeId)) {
             // 跳转到表单页面

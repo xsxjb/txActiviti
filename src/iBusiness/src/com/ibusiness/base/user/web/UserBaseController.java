@@ -60,9 +60,7 @@ public class UserBaseController {
      * @return
      */
     @RequestMapping("user-base-list")
-    public String list(@ModelAttribute
-    Page page, @RequestParam
-    Map<String, Object> parameterMap, Model model) {
+    public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         UserRepo userRepo = userRepoDao.findUniqueBy("code", ScopeHolder.getScopeCode());
         propertyFilters.add(new PropertyFilter("EQL_userRepo.id", Long.toString(userRepo.getId())));

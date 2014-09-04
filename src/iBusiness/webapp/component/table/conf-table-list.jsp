@@ -7,7 +7,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>评论列表</title>
+    <title>表存储列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -36,8 +36,8 @@
           <div class="panel-heading"><h4 class="title">表存储模型</h4></div>
             <div class="panel-body">
                 <div id="tableCategorySearch" class="content content-inner">
-				  	<button class="btn btn-small a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}'">新建</button>
-				  	<button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
+				  	<button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}'">新建</button>
+				  	<button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				</div>
             </div>
             <form id="tableGridForm" name="tableGridForm" method='post' action="conf-table-remove.do?packageName=${packageName}" class="m-form-blank">

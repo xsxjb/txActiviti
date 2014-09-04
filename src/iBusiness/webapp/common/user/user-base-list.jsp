@@ -24,8 +24,7 @@
 		        'filter_EQI_status': '${param.filter_EQI_status}'
 		    },
 			selectedItemClass: 'selectedItem',
-			gridFormId: 'userGridForm',
-			exportUrl: 'user-base-export.do'
+			gridFormId: 'userGridForm'
 		};
 		
 		var table;
