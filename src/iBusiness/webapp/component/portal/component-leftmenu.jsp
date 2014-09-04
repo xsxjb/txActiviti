@@ -10,7 +10,7 @@
               <span class="title">业务模块组件</span>
             </a>
           </div>
-          <div id="collapse-group" class="accordion-body collapse ${currentMenu == 'serviceModule' ? 'in' : ''}">
+          <div id="collapse-group" class="accordion-body collapse  in}">
             <ul id="treeMenu" class="ztree"></ul>
           </div>
         </div>

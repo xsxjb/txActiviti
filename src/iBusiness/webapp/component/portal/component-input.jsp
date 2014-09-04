@@ -26,7 +26,7 @@
 				  </c:if>
 				  
 					  <div class="control-group">
-					    <label class="control-label" for="code-packagename">模块包名</label>
+					    <label class="control-label" for="code-packagename">模块包名(全小写)</label>
 						<div class="controls">
 						  <input id="code-packagename" type="text" name="packagename" value="${model.packagename}" size="40" class="text required" minlength="2" maxlength="50">
 					    </div>

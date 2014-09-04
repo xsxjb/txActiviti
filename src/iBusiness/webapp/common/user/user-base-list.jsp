@@ -10,32 +10,32 @@
     <title><spring:message code="user.user.list.title" text="用户列表"/></title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
-var config = {
-    id: 'userGrid',
-    pageNo: ${page.pageNo},
-    pageSize: ${page.pageSize},
-    totalCount: ${page.totalCount},
-    resultSize: ${page.resultSize},
-    pageCount: ${page.pageCount},
-    orderBy: '${page.orderBy == null ? "" : page.orderBy}',
-    asc: ${page.asc},
-    params: {
-        'filter_LIKES_username': '${param.filter_LIKES_username}',
-        'filter_EQI_status': '${param.filter_EQI_status}'
-    },
-	selectedItemClass: 'selectedItem',
-	gridFormId: 'userGridForm',
-	exportUrl: 'user-base-export.do'
-};
-
-var table;
-
-$(function() {
-	table = new Table(config);
-    table.configPagination('.m-pagination');
-    table.configPageInfo('.m-page-info');
-    table.configPageSize('.m-page-size');
-});
+		var config = {
+		    id: 'userGrid',
+		    pageNo: ${page.pageNo},
+		    pageSize: ${page.pageSize},
+		    totalCount: ${page.totalCount},
+		    resultSize: ${page.resultSize},
+		    pageCount: ${page.pageCount},
+		    orderBy: '${page.orderBy == null ? "" : page.orderBy}',
+		    asc: ${page.asc},
+		    params: {
+		        'filter_LIKES_username': '${param.filter_LIKES_username}',
+		        'filter_EQI_status': '${param.filter_EQI_status}'
+		    },
+			selectedItemClass: 'selectedItem',
+			gridFormId: 'userGridForm',
+			exportUrl: 'user-base-export.do'
+		};
+		
+		var table;
+		
+		$(function() {
+			table = new Table(config);
+		    table.configPagination('.m-pagination');
+		    table.configPageInfo('.m-page-info');
+		    table.configPageSize('.m-page-size');
+		});
     </script>
   </head>
 
@@ -47,7 +47,7 @@ $(function() {
 
 	<!-- start of main -->
 	<div class="panel panel-default span11">
-        <div class="panel-heading"><h5 class="title">查询</h5></div>
+        <div class="panel-heading"><h4 class="title">查询</h4></div>
           <div class="panel-body">
 	          <div id="userSearch" class="content content-inner">
 			  <form name="userForm" method="post" action="user-base-list.do" class="form-inline">

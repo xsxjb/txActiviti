@@ -1,4 +1,4 @@
-package com.ibusiness.component.controller;
+package com.ibusiness.component.portal.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.util.CommonUtils;
-import com.ibusiness.component.dao.ComponentDao;
-import com.ibusiness.component.entity.ConfComponent;
+import com.ibusiness.component.portal.dao.ComponentDao;
+import com.ibusiness.component.portal.entity.ConfComponent;
 import com.ibusiness.core.spring.MessageHelper;
 
 /**
@@ -38,7 +38,7 @@ public class ComponentController {
     public String show(@RequestParam Map<String, Object> parameterMap, Model model) {
         model.addAttribute("parentId", 0);
         // 返回JSP
-        return "component/component-show.jsp";
+        return "component/portal/component-show.jsp";
     }
     /**
      * 菜单跳转控制方法
@@ -52,22 +52,22 @@ public class ComponentController {
             @RequestParam(value = "typeId", required = false) String typeId) {
         if ("root".equals(packageName)) {
             // 返回添加业务组件管理页面
-            return "redirect:/serviceModule/serviceModule-list.do";
+            return "redirect:/component/component-list.do";
         }
         if ("Table".equals(typeId)) {
             // 跳转到表存储页面
-            return "redirect:/table/conf-table-show.do?packageName=" + packageName;
+            return "redirect:/table/conf-table-list.do?packageName=" + packageName;
         }
         if ("Form".equals(typeId)) {
             // 跳转到表单页面
-            return "redirect:/table/conf-table-show.do?packageName=" + packageName;
+            return "redirect:/table/conf-table-list.do?packageName=" + packageName;
         }
         if ("Bpm".equals(typeId)) {
             // 跳转到表单页面
-            return "redirect:/table/conf-table-show.do?packageName=" + packageName;
+            return "redirect:/table/conf-table-list.do?packageName=" + packageName;
         }
         // 返回JSP
-        return "../jsp/common/serviceModule-show";
+        return "component/portal/component-show.jsp";
     }
     
     @RequestMapping("component-list")
@@ -80,7 +80,7 @@ public class ComponentController {
         page = componentDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "../jsp/common/serviceModule-list";
+        return "component/portal/component-list.jsp";
     }
     
     /**
@@ -89,7 +89,7 @@ public class ComponentController {
      * @param model
      * @return
      */
-    @RequestMapping("serviceModule-input")
+    @RequestMapping("component-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         ConfComponent entity = null;
         if (!CommonUtils.isNull(id)) {
@@ -99,7 +99,7 @@ public class ComponentController {
         }
         model.addAttribute("model", entity);
         
-        return "../jsp/common/serviceModule-input";
+        return "component/portal/component-input.jsp";
     }
 
     /**
@@ -143,7 +143,7 @@ public class ComponentController {
             componentDao.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/serviceModule/serviceModule-list.do";
+        return "redirect:/component/component-list.do";
     }
    /**
      * 删除
@@ -156,18 +156,19 @@ public class ComponentController {
         // 删除指定业务模块
         serviceModuleRemoveList(selectedItem);
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-        return "redirect:/serviceModule/serviceModule-list.do";
+        return "redirect:/component/component-list.do";
     }
     /**
      * 删除指定业务模块
      * 
      * @param selectedItem
      */
+    @SuppressWarnings("unchecked")
     private void serviceModuleRemoveList(List<String> selectedItem) {
         List<String> items = new ArrayList<String>();
         List<ConfComponent> entitys = componentDao.findByIds(selectedItem);
         for (ConfComponent entity : entitys) {
-            String hql = "from Component csm WHERE csm.parentid=?";
+            String hql = "from ConfComponent csm WHERE csm.parentid=?";
             List<ConfComponent> list = componentDao.find(hql, entity.getId());
             for (ConfComponent bean : list) {
                 items.add(bean.getId());

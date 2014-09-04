@@ -31,7 +31,7 @@ $(function() {
     <%@include file="/header/header-portal.jsp"%>
 
     <div class="row-fluid">
-	<%@include file="/leftmenu/component.jsp"%>
+	<%@include file="/component/portal/component-leftmenu.jsp"%>
 
 	<!-- start of main -->
     <section id="m-main" class="span10">
@@ -49,7 +49,7 @@ $(function() {
 		</div>
     </section>
 	<!-- end of main -->
-
+    </div>
   </body>
 
 </html>

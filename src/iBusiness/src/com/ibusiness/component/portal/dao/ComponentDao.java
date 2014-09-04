@@ -1,10 +1,10 @@
-package com.ibusiness.component.dao;
+package com.ibusiness.component.portal.dao;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ibusiness.common.page.HibernateEntityDao;
-import com.ibusiness.component.entity.ConfComponent;
+import com.ibusiness.component.portal.entity.ConfComponent;
 /**
  * 业务模块组件Dao
  * 

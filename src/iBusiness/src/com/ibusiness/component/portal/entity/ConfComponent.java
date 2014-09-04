@@ -1,4 +1,4 @@
-package com.ibusiness.component.entity;
+package com.ibusiness.component.portal.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -115,6 +115,7 @@ public class ConfComponent implements java.io.Serializable {
     /**
      * @return the subname
      */
+    @Column(name ="SUBNAME")
     public java.lang.String getSubname() {
         return subname;
     }

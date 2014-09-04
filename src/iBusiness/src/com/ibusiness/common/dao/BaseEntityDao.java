@@ -10,7 +10,6 @@ import org.hibernate.criterion.Criterion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import com.ibusiness.common.page.EntityCreatedEvent;
 import com.ibusiness.common.page.EntityRemovedEvent;
@@ -28,15 +27,16 @@ import com.ibusiness.core.util.GenericsUtils;
  * @param <T>
  *            实体类型
  */
-public class CommonEntityDao<T> extends HibernateGenericDao {
+public class BaseEntityDao<T> extends HibernateGenericDao {
     /** logger. */
-    private static Logger logger = LoggerFactory.getLogger(CommonEntityDao.class);
+    private static Logger logger = LoggerFactory.getLogger(BaseEntityDao.class);
 
     /** 持久类的类型. */
     private Class<T> entityClass;
 
     /** 构造方法. */
-    public CommonEntityDao() {
+    @SuppressWarnings("unchecked")
+    public BaseEntityDao() {
         this.entityClass = GenericsUtils.getSuperClassGenericType(this.getClass());
     }
 
@@ -46,7 +46,7 @@ public class CommonEntityDao<T> extends HibernateGenericDao {
      * @param sessionFactory
      *            SessionFactory
      */
-    public CommonEntityDao(SessionFactory sessionFactory) {
+    public BaseEntityDao(SessionFactory sessionFactory) {
         this();
         super.setSessionFactory(sessionFactory);
     }
@@ -59,7 +59,7 @@ public class CommonEntityDao<T> extends HibernateGenericDao {
      * @param entityClass
      *            Class
      */
-    public CommonEntityDao(SessionFactory sessionFactory, Class<T> entityClass) {
+    public BaseEntityDao(SessionFactory sessionFactory, Class<T> entityClass) {
         super(sessionFactory);
         this.entityClass = entityClass;
     }

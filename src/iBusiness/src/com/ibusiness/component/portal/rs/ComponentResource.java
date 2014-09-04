@@ -1,4 +1,4 @@
-package com.ibusiness.component.rs;
+package com.ibusiness.component.portal.rs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,8 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.ibusiness.component.dao.ComponentDao;
-import com.ibusiness.component.entity.ConfComponent;
+import com.ibusiness.component.portal.dao.ComponentDao;
+import com.ibusiness.component.portal.entity.ConfComponent;
 /**
  * 业务模块组件 左边树
  * @author JiangBo
@@ -29,6 +29,7 @@ public class ComponentResource {
     private static Logger logger = LoggerFactory.getLogger(ComponentResource.class);
     private ComponentDao componentDao;
 
+    @SuppressWarnings("unchecked")
     @POST
     @Path("tree")
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,6 +75,7 @@ public class ComponentResource {
      * @param partyStructTypeId
      * @return
      */
+    @SuppressWarnings("unchecked")
     private Map<String, Object> generateEntity(ConfComponent partyEntity, long partyStructTypeId) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -83,7 +85,7 @@ public class ComponentResource {
             map.put("typeId", partyEntity.getTypeid());
             map.put("open", "true");
             // 查询子节点
-            String hql = "from Component where parentid = ? ";
+            String hql = "from ConfComponent where parentid = ? ";
             List<ConfComponent> entities = componentDao.find(hql, partyEntity.getId());
             // 循环
             map.put("children", generateEntities(entities, partyStructTypeId));
