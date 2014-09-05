@@ -92,7 +92,21 @@ public class FormController {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/form/conf-form-list.do?packageName=" + confForm.getPackageName();
     }
-    
+    /**
+     * 删除
+     * 
+     * @param selectedItem
+     * @param menuLevel
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("conf-form-remove")
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+        List<ConfForm> forms = confFormDao.findByIds(selectedItem);
+        confFormDao.removeAll(forms);
+        
+        return "redirect:/form/conf-form-list.do?packageName=" + forms.get(0).getPackageName();
+    }
     /**
      * 注入 
      */

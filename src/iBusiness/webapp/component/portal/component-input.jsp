@@ -22,7 +22,7 @@
 				<form id="userForm" method="post" action="serviceModule-save.do" class="form-horizontal">
 				  <input id="user-base_userRepoId" type="hidden" name="userRepoId" value="1">
 				  <c:if test="${model != null}">
-				  <input id="code_id" type="hidden" name="id" value="${model.id}">
+				      <input id="code_id" type="hidden" name="id" value="${model.id}">
 				  </c:if>
 				  
 					  <div class="control-group">

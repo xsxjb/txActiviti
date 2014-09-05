@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.common.util.CommonUtils;
-import com.ibusiness.component.portal.dao.ComponentDao;
-import com.ibusiness.component.portal.entity.ConfComponent;
 import com.ibusiness.component.table.entity.ConfTable;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 import com.ibusiness.component.table.service.TableService;
@@ -33,7 +31,6 @@ public class TableController {
 
     // 共用Service,可以查询热力站,热源,BPM等基础信息
     private TableService tableService;
-    private ComponentDao componentDao;
     private MessageHelper messageHelper;
 
     /**
@@ -121,33 +118,8 @@ public class TableController {
         // 插入
         tableService.insertConfTableColumns(tableColumnsList);
         
-		// 向业务模块树结构中添加一个节点
-		insertComponent(confTable);
-		
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/table/conf-table-list.do?packageName="+confTable.getPackageName();
-    }
-    
-    /**
-     * 业务模块管理表中插入一条数据
-     * 
-     * @param confTable
-     */
-    @SuppressWarnings("unchecked")
-    private void insertComponent(ConfTable confTable) {
-        String hql = "from ConfComponent where packagename=? and typeid='Table'";
-		List<ConfComponent> entitys = componentDao.find(hql, confTable.getPackageName());
-		if (null != entitys && entitys.size() > 0) {
-		    ConfComponent csmEntity = new ConfComponent();
-		    csmEntity.setId(UUID.randomUUID().toString());
-		    csmEntity.setPackagename(entitys.get(0).getPackagename());
-		    csmEntity.setModulename(confTable.getTableNameComment());
-		    csmEntity.setSubname(confTable.getTableName());
-		    csmEntity.setParentid(entitys.get(0).getId());
-		    csmEntity.setTypeid("tables");
-		    // 插入
-	        componentDao.insert(csmEntity);
-		}
     }
     /**
      * 插入/变更/修改表列字段管理表信息
@@ -266,16 +238,11 @@ public class TableController {
 	}
     /**
      * 注入 table service
-     * @param tableService
      */
     @Resource
 	public void setTableService(TableService tableService) {
 		this.tableService = tableService;
 	}
-    @Resource
-    public void setComponentDao(ComponentDao componentDao) {
-        this.componentDao = componentDao;
-    }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;

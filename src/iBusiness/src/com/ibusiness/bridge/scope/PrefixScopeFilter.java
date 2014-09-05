@@ -34,7 +34,7 @@ public class PrefixScopeFilter implements Filter {
 
     public PrefixScopeFilter() {
         // 设置有权限访问的合法URL的前缀
-        excludes.add("s");
+        excludes.add("ajax");
         excludes.add("plugin");
         excludes.add("common");
         excludes.add("rs");

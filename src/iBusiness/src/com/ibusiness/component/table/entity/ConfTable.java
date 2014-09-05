@@ -1,11 +1,18 @@
 package com.ibusiness.component.table.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 业务表管理Bean, 对应 ib_conf_table表
  * 
  * @author JiangBo
  *
  */
+@Entity
+@Table(name = "IB_CONF_TABLE")
 public class ConfTable {
 	// UUID
     private String id;
@@ -18,6 +25,8 @@ public class ConfTable {
     /**
      * @return the id
      */
+    @Id
+    @Column(name = "ID", nullable = false)
     public String getId() {
         return id;
     }
@@ -31,6 +40,7 @@ public class ConfTable {
      * 取得tableName
      * @return the tableName
      */
+    @Column(name = "TABLENAME")
     public String getTableName() {
         return tableName;
     }
@@ -45,6 +55,7 @@ public class ConfTable {
      * 取得tableNameComment
      * @return the tableNameComment
      */
+    @Column(name = "TABLENAMECOMMENT")
     public String getTableNameComment() {
         return tableNameComment;
     }
@@ -58,6 +69,7 @@ public class ConfTable {
     /**
      * @return the packageName
      */
+    @Column(name = "PACKAGENAME")
     public String getPackageName() {
         return packageName;
     }

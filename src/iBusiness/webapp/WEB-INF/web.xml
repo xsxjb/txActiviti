@@ -45,4 +45,24 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/common/500.jsp</location>
     </error-page>
+    
+    <!-- 初始化设置 -->
+    <servlet>
+		<servlet-name>InitServlet</servlet-name>
+		<servlet-class>com.ibusiness.common.sevlet.InitServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>InitServlet</servlet-name>
+    	<url-pattern>/default/common/checkcode</url-pattern>
+  	</servlet-mapping>
+  	<!-- 验证码 -->
+  	<servlet>
+    	<servlet-name>captchaAjax</servlet-name>
+    	<servlet-class>com.ibusiness.common.sevlet.CaptchaAjax</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>captchaAjax</servlet-name>
+    	<url-pattern>/default/common/captchaAjax</url-pattern>
+  	</servlet-mapping>
+  	
 </web-app>

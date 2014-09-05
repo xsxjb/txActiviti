@@ -4,13 +4,37 @@
 <html lang="en">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-<%@include file="/common/meta.jsp"%>
-<title><spring:message code="core.login.title" text="登录" /></title>
-<%@include file="/common/center.jsp"%>
+	<%@include file="/common/meta.jsp"%>
+	<title><spring:message code="core.login.title" text="登录" /></title>
+	<%@include file="/common/center.jsp"%>
+	<script type="text/javascript">
+  		function checkcode(){
+  			$.ajax({
+					'url':'captchaAjax',
+					'type':'post',
+					'data':'inputcode=' + $('#codeinput').val(),
+					'dataType':'text',
+					'success':function(data){
+							var result=data;
+							if(result==1){
+									$('#checkcodemsg').css({color:"green"});
+									$('#checkcodemsg').text('验证码正确');
+									// 提交按钮可用
+									$("#input_commit").removeAttr('disabled');
+							}else{
+									$('#checkcodemsg').css({color:"red"});
+									$('#checkcodemsg').text('验证码错误，请重新输入');
+									// 提交按钮不可用
+									$("#input_commit").attr('disabled',' true');
+							}
+					}
+				});
+  		}
+  </script>
+
 </head>
 
 <body onload='document.f.j_username.focus();'>
-
 	<!-- start of header bar -->
 	<div class="navbar navbar-inverse">
 		<div class="navbar-header">
@@ -37,19 +61,29 @@
 				<br>
 				
 				<!-- 并监听默认的URL  j_spring_security_check 提交登陆信息的URL地址-->
-					<form id="userForm" name="f" method="post" action="${scopePrefix}/j_spring_security_check" class="form-horizontal">
-						<p>
-							  <label class="control-label" for="username"><spring:message code="core.login.username" text="账号" />:</label>
+				<form id="userForm" name="f" method="post" action="${scopePrefix}/j_spring_security_check" class="form-horizontal">
+						<div class="form-group">
+							  <label class="col-lg-2 control-label" for="username"><spring:message code="core.login.username" text="账号" />:</label>
 							  <input type='text' id="username" name='j_username' class="text required" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}">
-						</p>
-						<p>
-							  <label class="control-label" for="password"><spring:message code="core.login.password" text="密码" />:</label>
+						</div>
+						<div class="form-group">
+							  <label class="col-lg-2 control-label" for="password"><spring:message code="core.login.password" text="密码" />:</label>
 							  <input type='password' id="password" name='j_password' class="text" value=''>
-						</p>
-						<p>
-								<input class="btn btn-primary" name="submit" type="submit" value="<spring:message code='core.login.submit' text='提交'/>" />
-						</p>
-					</form>
+						</div>
+						<!-- 验证码 -->
+						<div class="form-group">
+						     <label class="col-lg-2 control-label" for="codeinput"><spring:message code="core.login.password" text="验证码"/></label>
+						     <input name="number" class="text" id="codeinput" onblur='checkcode()'/><span STYLE="color: red" id="checkcodemsg"></span><br/>
+					    </div>
+					    <div class="form-group">
+					     	 <img src="checkcode" id="img1"  />
+						     <a href="javascript:;"  onclick="document.getElementById('img1').src='${scopePrefix}/common/checkcode?' + Math.random();">看不清，换一个</a><br/>
+						</div>
+					    </div>
+						<div class="form-group">
+								<input id="input_commit" class=" btn btn-primary" name="submit" type="submit" value="<spring:message code='core.login.submit' text='提交'/>"  disabled="disable" />
+						</div>
+				  </form>
 	        </div>
         </div>
 		<!-- end of main -->

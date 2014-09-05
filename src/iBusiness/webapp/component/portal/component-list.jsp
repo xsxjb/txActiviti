@@ -46,47 +46,51 @@
 	<div class="panel panel-default span10">
         <div class="panel-heading"><h4 class="title">业务模块</h4></div>
           <div class="panel-body">
-	          <div class="pull-left">
-				  <button class="btn btn-small a-insert" onclick="location.href='component-input.do'">新建</button>
-				  <button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
+              <div class="form-group">
+		          <div class="pull-left">
+					  <button class="btn btn-small a-insert" onclick="location.href='component-input.do'">新建</button>
+					  <button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
+				  </div>
+				  <div class="pull-right">
+					  每页显示
+					  <select class="m-page-size">
+					    <option value="10">10</option>
+					    <option value="50">50</option>
+					    <option value="100">100</option>
+					  </select>
+					  条
+				  </div>
 			  </div>
-			  <div class="pull-right">
-				  每页显示
-				  <select class="m-page-size">
-				    <option value="10">10</option>
-				    <option value="50">50</option>
-				    <option value="100">100</option>
-				  </select>
-				  条
-			  </div>
-			  <form id="gridForm" name="gridForm" method='post' action="serviceModule-remove.do" class="m-form-blank">
-					  <table id="codeGrid" class="table table-hover table-bordered">
-					    <thead>
-					      <tr>
-					        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-						                <th class="sorting" name="packagename">模块包名(小写)</th>
-						                <th class="sorting" name="modulename">模块分类名</th>
-						                <th class="sorting" name="parentid">父节点ID</th>
-						                <th class="sorting" name="typeid">类型ID</th>
-					        <th width="80">&nbsp;</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      <c:forEach items="${page.result}" var="item">
-					      <tr>
-					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-						        <td>${item.packagename}</td>
-						        <td>${item.modulename}</td>
-						        <td>${item.parentid}</td>
-						        <td>${item.typeid}</td>
-					        <td>
-					          <a href="component-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
-					        </td>
-					      </tr>
-					      </c:forEach>
-					    </tbody>
-					  </table>
-				  </form>
+			  <div class="form-group">
+				  <form id="gridForm" name="gridForm" method='post' action="serviceModule-remove.do" class="m-form-blank">
+						  <table id="codeGrid" class="table table-hover table-bordered">
+						    <thead>
+						      <tr>
+						        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+							                <th class="sorting" name="packagename">模块包名(小写)</th>
+							                <th class="sorting" name="modulename">模块分类名</th>
+							                <th class="sorting" name="parentid">父节点ID</th>
+							                <th class="sorting" name="typeid">类型ID</th>
+						        <th width="80">&nbsp;</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+						      <c:forEach items="${page.result}" var="item">
+						      <tr>
+						        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+							        <td>${item.packagename}</td>
+							        <td>${item.modulename}</td>
+							        <td>${item.parentid}</td>
+							        <td>${item.typeid}</td>
+						        <td>
+						          <a href="component-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+						        </td>
+						      </tr>
+						      </c:forEach>
+						    </tbody>
+						  </table>
+					  </form>
+			      </div>
 				  <div class="m-page-info pull-left">
 			      共100条记录 显示1到10条记录
 			</div>
