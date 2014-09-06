@@ -51,16 +51,16 @@ $(function() {
 				  <form name="permForm" method="post" action="perm-list.do" class="form-inline">
 				    <label for="perm_name"><spring:message code="auth.perm.list.search.name" text="名称"/>:</label>
 				    <input type="text" id="perm_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
-					<button class="btn btn-small" onclick="document.permForm.submit()">查询</button>
+					<button class="btn btn-default btn-small" onclick="document.permForm.submit()">查询</button>
 				  </form>
 			</div>
         </div>
         <div class="panel-heading"><h4 class="title">标签级权限列表</h4></div>
         <div class="panel-body">
             <div class="pull-left">
-		        <button class="btn btn-small a-insert" onclick="location.href='perm-input.do'"><spring:message code="core.list.create" text="新建"/></button>
-			    <button class="btn btn-small a-remove" onclick="table.removeAll()"><spring:message code="core.list.delete" text="删除"/></button>
-			    <button class="btn btn-small a-batch" onclick="location.href='perm-batch-list.do'">批量</button>
+		        <button class="btn btn-default btn-small a-insert" onclick="location.href='perm-input.do'"><spring:message code="core.list.create" text="新建"/></button>
+			    <button class="btn btn-default btn-small a-remove" onclick="table.removeAll()"><spring:message code="core.list.delete" text="删除"/></button>
+			    <button class="btn btn-default btn-small a-batch" onclick="location.href='perm-batch-list.do'">批量</button>
 			 </div>
 			 <div class="pull-right">
 				  每页显示
@@ -106,9 +106,9 @@ $(function() {
 			  共100条记录 显示1到10条记录
 		  </div>
 		  <div class="btn-group m-pagination pull-right">
-			  <button class="btn btn-small">&lt;</button>
-			  <button class="btn btn-small">1</button>
-			  <button class="btn btn-small">&gt;</button>
+			  <button class="btn btn-default btn-small">&lt;</button>
+			  <button class="btn btn-default btn-small">1</button>
+			  <button class="btn btn-default btn-small">&gt;</button>
 		   </div>
     </div>
     

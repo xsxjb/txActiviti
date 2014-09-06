@@ -12,6 +12,7 @@
     <!-- jquery -->
     <script type="text/javascript" src="${ctx}/plugin/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugin/jquery/jquery-migrate-1.2.1.min.js"></script>
+    
 	<!-- bootstrap -->
     <script type="text/javascript" src="${ctx}/plugin/bootstrap/js/bootstrap.min.js"></script>
 

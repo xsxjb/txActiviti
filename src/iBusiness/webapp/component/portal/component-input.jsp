@@ -52,8 +52,8 @@
 				  
 				  <div class="control-group">
 				    <div class="controls">
-				      <button id="submitButton" class="btn a-submit"><spring:message code='core.input.save' text='保存'/></button>
-				      <button type="button" onclick="history.back();" class="btn a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+				      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 				    </div>
 				  </div>
 				</form>

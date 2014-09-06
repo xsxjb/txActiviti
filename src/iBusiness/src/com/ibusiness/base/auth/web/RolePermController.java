@@ -143,6 +143,7 @@ public class RolePermController {
      * @param redirectAttributes
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("role-menu-save")
     public String menuSave(@RequestParam("id")
     Long id, Model model, @RequestParam(value = "selectedItem", required = false)
@@ -156,9 +157,19 @@ public class RolePermController {
             roleDefChecker.check(roleDef);
             // 只清空menu类型
             roleDef.getMenus().clear();
+            // 清空menu类型的,类型编号=7
+            List<Perm> permList = permDao.find("from Perm where permType.id = ?", Long.parseLong("7"));
+            for (Perm perm : permList) {
+                roleDef.getPerms().remove(perm);
+            }
+            // 保存数据
             for (String menuId : selectedItem) {
                 Menu menu = menuDao.get(menuId);
                 roleDef.getMenus().add(menu);
+                List<Perm> permAddList = permDao.find("from Perm where permType.id = 7 AND code=?", menuId);
+                if (null!=permAddList && permAddList.size() > 0) {
+                    roleDef.getPerms().add(permAddList.get(0));
+                }
             }
             roleDefDao.save(roleDef);
             messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");

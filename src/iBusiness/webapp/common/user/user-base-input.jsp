@@ -48,7 +48,7 @@ $(function() {
     <div class="span2"> </div>
 	<!-- start of main -->
 	<div class="panel panel-default span10"> 
-        <div class="panel-heading"><h6 class="title">编辑用户</h6></div>
+        <div class="panel-heading"><h4 class="title">编辑用户</h4></div>
         <div class="panel-body">
         
         <form id="userForm" method="post" action="user-base-save.do?operationMode=STORE" class="form-horizontal">

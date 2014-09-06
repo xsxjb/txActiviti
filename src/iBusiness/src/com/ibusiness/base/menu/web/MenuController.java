@@ -22,6 +22,7 @@ import com.ibusiness.base.menu.dao.MenuDao;
 import com.ibusiness.base.menu.entity.Menu;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
@@ -47,7 +48,7 @@ public class MenuController {
     private ResourcePublisher resourcePublisher;
     
     /**
-     * 级菜单列表
+     * 菜单列表
      * 
      * @param page
      * @param parameterMap
@@ -127,11 +128,15 @@ public class MenuController {
             dest.setIbMenu(menuDao.get(parentId));
         }
         dest.setMenuIframe("URL");
+        if (CommonUtils.isNull(dest.getIconUrl())) {
+            dest.setIconUrl("imac/img/Appstore.png");
+        }
         // save
         menuDao.save(dest);
         
         // 保存菜单关联权限
-        saveAccessPerm(menu);
+        saveMenuPerm(menu);
+        
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         
         if ("3".equals(dest.getMenuLevel())) {
@@ -149,7 +154,7 @@ public class MenuController {
      * @param menu
      */
     @SuppressWarnings("unchecked")
-    private void saveAccessPerm(Menu menu) {
+    private void saveMenuPerm(Menu menu) {
         // 如果菜单没有具体的URL那么不进行URL权限控制
         if (menu.getMenuUrl().indexOf(".") < 0) {
             return;

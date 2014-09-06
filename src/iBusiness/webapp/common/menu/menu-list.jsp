@@ -65,8 +65,8 @@
 		            <input id="hidden_menuLevelOne" type="hidden" name="menuLevelOne" value="${menuLevelOne}">
 		            <input id="hidden_menuLevelTwo" type="hidden" name="menuLevelTwo" value="${menuLevelTwo}">
 				        <div class="pull-left">
-							  <button class="btn btn-small" onclick="location.href='menu-input.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val()">新建</button>
-							  <button class="btn btn-small a-remove" onclick="table.removeAll()"><spring:message code="core.list.delete" text="删除"/></button>
+							  <button class="btn btn-default btn-small" onclick="location.href='menu-input.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val()">新建</button>
+							  <button class="btn btn-default btn-small a-remove" onclick="table.removeAll()"><spring:message code="core.list.delete" text="删除"/></button>
 							  <!-- 一级父菜单 -->
 							  <c:if test="${menuLevel != 1}">
 							      <label class="control-label" for="select_levelone">一级菜单:</label>
@@ -86,7 +86,7 @@
 								  </select>
 						      </c:if>
 						      <c:if test="${menuLevel != 1}">
-						            <button class="btn btn-small" onclick="location.href='menu-list.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val() ">查询</button>
+						            <button class="btn btn-default btn-small" onclick="location.href='menu-list.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val() ">查询</button>
 						  	  </c:if>
 						</div>
 				        <div class="pull-right">
@@ -133,9 +133,9 @@
 						  		共100条记录 显示1到10条记录
 					</div>
 					<div class="btn-group m-pagination pull-right">
-							  <button class="btn btn-small">&lt;</button>
-							  <button class="btn btn-small">1</button>
-							  <button class="btn btn-small">&gt;</button>
+							  <button class="btn btn-default btn-small">&lt;</button>
+							  <button class="btn btn-default btn-small">1</button>
+							  <button class="btn btn-default btn-small">&gt;</button>
 					</div>
 
 		  </div>

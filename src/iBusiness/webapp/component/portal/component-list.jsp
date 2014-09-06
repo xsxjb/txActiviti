@@ -48,8 +48,8 @@
           <div class="panel-body">
               <div class="form-group">
 		          <div class="pull-left">
-					  <button class="btn btn-small a-insert" onclick="location.href='component-input.do'">新建</button>
-					  <button class="btn btn-small a-remove" onclick="table.removeAll()">删除</button>
+					  <button class="btn btn-default btn-small a-insert" onclick="location.href='component-input.do'">新建</button>
+					  <button class="btn btn-default btn-small a-remove" onclick="table.removeAll()">删除</button>
 				  </div>
 				  <div class="pull-right">
 					  每页显示
@@ -95,9 +95,9 @@
 			      共100条记录 显示1到10条记录
 			</div>
 			<div class="btn-group m-pagination pull-right">
-				  <button class="btn btn-small">&lt;</button>
-				  <button class="btn btn-small">1</button>
-				  <button class="btn btn-small">&gt;</button>
+				  <button class="btn btn-default btn-small">&lt;</button>
+				  <button class="btn btn-default btn-small">1</button>
+				  <button class="btn btn-default btn-small">&gt;</button>
 			</div>
           </div>
       </div>

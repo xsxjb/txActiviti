@@ -35,10 +35,14 @@ public class Menu implements java.io.Serializable {
 	private String menuUrl;//菜单地址
 	private String menuIframe;//菜单地址打开方式
 	private String menuOrder;//菜单排序
+	private String desktopIcon;//是否桌面显示
+	private String iconUrl;//对应图标
+	
 	// 一个父菜单项目对应多个叶子菜单项目
 	private List<Menu> chiledItems = new ArrayList<Menu>();
 	/** 角色. */
     private Set<RoleDef> roleDefs = new HashSet<RoleDef>(0);
+    
 	// 
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parentid")
@@ -97,7 +101,26 @@ public class Menu implements java.io.Serializable {
 	public void setMenuIframe(String menuIframe) {
 		this.menuIframe = menuIframe;
 	}
-	@OneToMany(mappedBy="ibMenu")
+    @Column(name = "DESKTOPICON")
+    public String getDesktopIcon() {
+        return desktopIcon;
+    }
+    @Column(name = "ICONURL")
+    public void setDesktopIcon(String desktopIcon) {
+        this.desktopIcon = desktopIcon;
+    }
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    /**
+     * @param iconUrl the iconUrl to set
+     */
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    @OneToMany(mappedBy="ibMenu")
     public List<Menu> getChiledItems() {
         return this.chiledItems;
     }
