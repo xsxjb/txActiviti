@@ -17,7 +17,7 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default span10">
-          <div class="panel-heading"><h4 class="title">编辑列字段</h4></div>
+          <div class="panel-heading"><h4 class="panel-title">编辑列字段</h4></div>
           <div class="panel-body">
 	          <form id="tableForm" method="post" action="conf-table-columns-update.do?tableName=${tableName}" class="form-horizontal">
 				  <div class="form-group">

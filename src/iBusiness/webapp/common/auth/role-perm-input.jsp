@@ -18,7 +18,7 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default span10">
-        <div class="panel-heading"><h5 class="title">设置权限</h5></div>
+        <div class="panel-heading"><h4 class="panel-title">设置权限</h4></div>
         <div class="panel-body">
        	 <form id="roleForm" method="post" action="role-perm-save.do" class="form-horizontal">
 			  <input type="hidden" name="id" value="${id}">

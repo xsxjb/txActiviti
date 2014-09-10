@@ -16,7 +16,7 @@
     <section id="m-main" class="span11">
       <article class="m-widget">
         <header class="header">
-		  <h4 class="title"><spring:message code="user.user.input.title" text="编辑分类"/></h4>
+		  <h4 class="panel-title"><spring:message code="user.user.input.title" text="编辑分类"/></h4>
 		</header>
 		<div class="content content-inner">
 				<form id="userForm" method="post" action="serviceModule-save.do" class="form-horizontal">
@@ -32,7 +32,7 @@
 					    </div>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label" for="code-modulename">模块分类名</label>
+					    <label class="control-label" for="code-modulename">模块分类名(中文)</label>
 						<div class="controls">
 						  <input id="code-modulename" type="text" name="modulename" value="${model.modulename}" size="40" class="text required" minlength="2" maxlength="50">
 					    </div>

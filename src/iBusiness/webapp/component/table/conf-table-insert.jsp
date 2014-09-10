@@ -1,7 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<%pageContext.setAttribute("currentHeader", "table");%>
-<%pageContext.setAttribute("currentMenu", "serviceModule");%>
 <!doctype html>
 <html>
 
@@ -25,54 +23,66 @@
 
   <body>
     <%@include file="/header/header-portal.jsp"%>
-
-    <div class="row-fluid">
-	  <%@include file="/component/portal/component-leftmenu.jsp"%>
+	<%@include file="/component/portal/component-leftmenu.jsp"%>
 
 	<!-- start of main -->
-    <section id="m-main" class="span10">
-
-      <article class="m-widget">
-        <header class="header">
-		  <h4 class="title">新建表存储模型</h4>
-		</header>
-		<div class="content content-inner">
-			<form id="tableCommentForm" method="post" action="conf-table-save.do" class="form-horizontal">
-			  <c:if test="${model != null}">
-			  <input id="table-uuId" type="hidden" name="uuId" value="${model.uuId}">
-			  </c:if>
-			  <div class="control-group">
-			    <label class="control-label" for="table-packageName">所在模块:</label>
-				<div class="controls">
-				    <label id="table-packageName" class="control-label" >${packageName}</label>
-				    <input id="hidden-packageName" type="hidden" name="packageName" value="${packageName}">
-			    </div>
-			  </div>
-			  <div class="control-group">
-			    <label class="control-label" for="table-tableName">表名称(大写):</label>
-				<div class="controls">
-				  <input id="table-tableName" type="text" name="tableName" value="${model.tableName}"  class="text required"  >
-			    </div>
-			  </div>
-			  <div class="control-group">
-			    <label class="control-label" for="table-tableNameComment">标 题:</label>
-				<div class="controls">
-				  <input id="table-tableNameComment" type="text" name="tableNameComment" value="${model.tableNameComment}"  class="text required"  >
-			    </div>
-			  </div>
-			  <div class="control-group">
-			    <div class="controls">
-			      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-			      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
-			    </div>
-			  </div>
-			</form>
-		</div>
-      </article>
-
-    </section>
+	<div class="panel panel-default span10">
+        <div class="panel-heading"><h4 class="panel-title">新建表存储模型</h4></div>
+        <div class="panel-body">
+        
+			<div class="content content-inner">
+				<form id="tableCommentForm" method="post" action="conf-table-save.do" class="form-horizontal">
+				  <c:if test="${model != null}">
+				  <input id="table-uuId" type="hidden" name="uuId" value="${model.uuId}">
+				  </c:if>
+				  <div class="form-group">
+				    <label class="col-lg-2 control-label" for="table-packageName">所在模块:</label>
+					<div class="controls">
+					    <label class="control-label"  id="table-packageName" >${packageName}</label>
+					    <input id="hidden-packageName" type="hidden" name="packageName" value="${packageName}">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-lg-2 control-label" for="table-tableName">表名称(大写):</label>
+					<div class="controls">
+					  <input id="table-tableName" type="text" name="tableName" value="${model.tableName}"  class="text required"  >
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-lg-2 control-label" for="table-tableNameComment">标 题:</label>
+					<div class="controls">
+					  <input id="table-tableNameComment" type="text" name="tableNameComment" value="${model.tableNameComment}"  class="text required"  >
+				    </div>
+				  </div>
+				  <!--  -->
+				  <div class="form-group">
+				    <label class="col-lg-2 control-label" for="table-type">表类型:</label>
+					<div class="col-lg-3">
+				          <select id="table-type" name="tableType"  class="form-control">
+						        <option value="1">单表</option>
+							    <option value="2">主表</option>
+							    <option value="3">子表</option>
+						   </select>
+				    </div>
+				  </div>
+				  <div class="control-group">
+				      <label class="col-lg-2 control-label" for="table-mainTable">子表对应主表:</label>
+					  <div class="controls">
+					      <input id="table-mainTable" type="text" name="mainTable" value=""  class="text required"  >
+				      </div>
+				  </div>
+				  
+				  <div class="control-group">
+				    <div class="controls">
+				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+				      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+				    </div>
+				  </div>
+				</form>
+			</div>
+        </div>
+    </div>
 	<!-- end of main -->
-	</div>
 
   </body>
 

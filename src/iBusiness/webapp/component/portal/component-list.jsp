@@ -44,24 +44,25 @@
 	
 	<!-- start of main -->
 	<div class="panel panel-default span10">
-        <div class="panel-heading"><h4 class="title">业务模块</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">业务模块</h4></div>
           <div class="panel-body">
-              <div class="form-group">
-		          <div class="pull-left">
-					  <button class="btn btn-default btn-small a-insert" onclick="location.href='component-input.do'">新建</button>
-					  <button class="btn btn-default btn-small a-remove" onclick="table.removeAll()">删除</button>
-				  </div>
-				  <div class="pull-right">
-					  每页显示
-					  <select class="m-page-size">
-					    <option value="10">10</option>
-					    <option value="50">50</option>
-					    <option value="100">100</option>
-					  </select>
-					  条
-				  </div>
+              <div class="pull-left">
+		           <p>
+					  <button class="btn btn-default  btn-sm a-insert" onclick="location.href='component-input.do'">新建</button>
+					  <button class="btn btn-default  btn-sm a-remove" onclick="table.removeAll()">删除</button>
+				  </p>
 			  </div>
-			  <div class="form-group">
+			  <div class="pull-right">
+				  每页显示
+				  <select class="m-page-size">
+				    <option value="10">10</option>
+				    <option value="50">50</option>
+				    <option value="100">100</option>
+				  </select>
+				  条
+			  </div>
+	   </div>
+	   <div class="content">
 				  <form id="gridForm" name="gridForm" method='post' action="serviceModule-remove.do" class="m-form-blank">
 						  <table id="codeGrid" class="table table-hover table-bordered">
 						    <thead>
@@ -90,15 +91,14 @@
 						    </tbody>
 						  </table>
 					  </form>
-			      </div>
 				  <div class="m-page-info pull-left">
-			      共100条记录 显示1到10条记录
-			</div>
-			<div class="btn-group m-pagination pull-right">
-				  <button class="btn btn-default btn-small">&lt;</button>
-				  <button class="btn btn-default btn-small">1</button>
-				  <button class="btn btn-default btn-small">&gt;</button>
-			</div>
+			     	 共100条记录 显示1到10条记录
+				  </div>
+				  <div class="btn-group m-pagination pull-right">
+						  <button class="btn btn-default  btn-sm">&lt;</button>
+						  <button class="btn btn-default  btn-sm">1</button>
+						  <button class="btn btn-default  btn-sm">&gt;</button>
+				  </div>
           </div>
       </div>
 	<!-- end of main -->

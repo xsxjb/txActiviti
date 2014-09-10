@@ -28,7 +28,7 @@ $(function() {
 
 	<!-- start of main -->
 	<div class="panel panel-default span10"> 
-        <div class="panel-heading"><h4 class="title">修改密码</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">修改密码</h4></div>
         <div class="panel-body">
           <form id="userForm" method="post" action="change-password-save.do?operationMode=STORE" class="form-horizontal">
 			  <div class="form-group">

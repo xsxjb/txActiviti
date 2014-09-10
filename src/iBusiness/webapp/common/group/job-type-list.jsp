@@ -46,11 +46,11 @@ $(function() {
 
 	<!-- start of main -->
 	<div class="panel panel-default span10">
-        <div class="panel-heading"><h5 class="title">职务类型列表</h5></div>
+        <div class="panel-heading"><h4 class="panel-title">职务类型列表</h4></div>
         <div class="panel-body">
 	        <div class="pull-left">
-	          <button class="btn btn-default a-insert" onclick="location.href='job-type-input.do'">新建</button>
-			  <button class="btn btn-default a-remove" onclick="table.removeAll()">删除</button>
+	          <button class="btn btn-default btn-sm a-insert" onclick="location.href='job-type-input.do'">新建</button>
+			  <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 	        </div>
 	        <div class="pull-right">
 			  每页显示
@@ -92,9 +92,9 @@ $(function() {
 		  共100条记录 显示1到10条记录
 		</div>
 		<div class="btn-group m-pagination pull-right">
-		  <button class="btn btn-default">&lt;</button>
-		  <button class="btn btn-default">1</button>
-		  <button class="btn btn-default">&gt;</button>
+		  <button class="btn btn-default btn-sm">&lt;</button>
+		  <button class="btn btn-default btn-sm">1</button>
+		  <button class="btn btn-default btn-sm">&gt;</button>
 		</div>
 			
     </div>

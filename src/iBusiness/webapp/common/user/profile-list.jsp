@@ -49,7 +49,7 @@ $(function() {
 
 	<!-- start of main -->
 	<div class="panel panel-default span11">
-        <div class="panel-heading"><h4 class="title">编辑用户</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">编辑用户</h4></div>
           <div class="panel-body">
 	          <form id="userForm" method="post" action="profile-save.do?operationMode=STORE" class="form-horizontal">
 					<input id="user-base_userRepoId" type="hidden" name="userRepoId" value="1">
@@ -87,7 +87,7 @@ $(function() {
 
       <article class="m-widget">
         <header class="header">
-		  <h4 class="title"><spring:message code="user.user.input.title" text=""/></h4>
+		  <h4 class="panel-title"><spring:message code="user.user.input.title" text=""/></h4>
 		</header>
 		<div class="content content-inner">
 			

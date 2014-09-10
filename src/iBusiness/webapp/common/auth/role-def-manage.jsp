@@ -48,7 +48,7 @@ $(function() {
 
 	  <article class="m-widget">
         <header class="header">
-		  <h4 class="title">查询</h4>
+		  <h4 class="panel-title">查询</h4>
 		  <div class="ctrl">
 			<a class="btn"><i id="roleDefSearchIcon" class="icon-chevron-up"></i></a>
 		  </div>
@@ -58,7 +58,7 @@ $(function() {
 		  <form name="roleDefForm" method="post" action="role-def-list.do" class="form-inline">
 		    <label for="roleDef_name"><spring:message code='auth.roleDef.list.search.name' text='名称'/>:</label>
 		    <input type="text" id="roleDef_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
-			<button class="btn btn-default" onclick="document.permForm.submit()">查询</button>
+			<button class="btn btn-default btn-sm" onclick="document.permForm.submit()">查询</button>
 		  </form>
 
 		</div>
@@ -66,7 +66,7 @@ $(function() {
 
 	  <article class="m-blank">
 	    <div class="pull-left">
-		  <button class="btn btn-default a-submit" onclick="location.href='role-def-sync.do?id=${param.id}'">同步</button>
+		  <button class="btn btn-default btn-sm a-submit" onclick="location.href='role-def-sync.do?id=${param.id}'">同步</button>
 		</div>
 
 		<div class="pull-right">
@@ -84,37 +84,34 @@ $(function() {
 
       <article class="m-widget">
         <header class="header">
-		  <h4 class="title"><spring:message code="auth.roleDef.list.title" text="角色列表"/></h4>
+		  <h4 class="panel-title"><spring:message code="auth.roleDef.list.title" text="角色列表"/></h4>
 		</header>
-		<div class="content">
-
-  <form id="roleDefGridForm" name="roleDefGridForm" method='post' action="role-def-remove.do" class="m-form-blank">
-    <table id="roleDefGrid" class="table table-hover table-bordered">
-      <thead>
-        <tr>
-          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-          <th class="sorting" name="id"><spring:message code="auth.roleDef.list.id" text="编号"/></th>
-          <th class="sorting" name="name"><spring:message code="auth.roleDef.list.name" text="名称"/></th>
-          <th class="sorting" name="name">状态</th>
-          <th width="150">&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        <c:forEach items="${roleDtos}" var="item">
-        <tr>
-          <td><input type="checkbox" class="selectedItem" name="selectedItem" value="${item.id}"></td>
-          <td>${item.id}</td>
-          <td>${item.name}</td>
-          <td>${item.status}</td>
-          <td>
-		    &nbsp;
-          </td>
-        </tr>
-        </c:forEach>
-      </tbody>
-    </table>
-  </form>
-
+		  <form id="roleDefGridForm" name="roleDefGridForm" method='post' action="role-def-remove.do" class="m-form-blank">
+		    <table id="roleDefGrid" class="table table-hover table-bordered">
+		      <thead>
+		        <tr>
+		          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+		          <th class="sorting" name="id"><spring:message code="auth.roleDef.list.id" text="编号"/></th>
+		          <th class="sorting" name="name"><spring:message code="auth.roleDef.list.name" text="名称"/></th>
+		          <th class="sorting" name="name">状态</th>
+		          <th width="150">&nbsp;</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <c:forEach items="${roleDtos}" var="item">
+		        <tr>
+		          <td><input type="checkbox" class="selectedItem" name="selectedItem" value="${item.id}"></td>
+		          <td>${item.id}</td>
+		          <td>${item.name}</td>
+		          <td>${item.status}</td>
+		          <td>
+				    &nbsp;
+		          </td>
+		        </tr>
+		        </c:forEach>
+		      </tbody>
+		    </table>
+		  </form>
       </article>
 
 	  <article>
@@ -123,9 +120,9 @@ $(function() {
 		</div>
 
 		<div class="btn-group m-pagination pull-right">
-		  <button class="btn btn-default">&lt;</button>
-		  <button class="btn btn-default">1</button>
-		  <button class="btn btn-default">&gt;</button>
+		  <button class="btn btn-default btn-sm">&lt;</button>
+		  <button class="btn btn-default btn-sm">1</button>
+		  <button class="btn btn-default btn-sm">&gt;</button>
 		</div>
 
 	    <div class="m-clear"></div>

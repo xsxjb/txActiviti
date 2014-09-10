@@ -46,7 +46,7 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default span11">
-        <div class="panel-heading"><h4 class="title">查询</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
           <div class="panel-body">
 	          <div id="userSearch" class="content content-inner">
 			  <form name="userForm" method="post" action="user-base-list.do" class="form-inline">
@@ -67,7 +67,7 @@
 			</div>
           
           </div>
-        <div class="panel-heading"><h5 class="title">用户列表</h5></div>
+        <div class="panel-heading"><h4 class="panel-title">用户列表</h4></div>
           <div class="panel-body">
 			    <div class="pull-left">
 			        <p>

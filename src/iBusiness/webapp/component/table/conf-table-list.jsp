@@ -33,7 +33,7 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default span10">
-          <div class="panel-heading"><h4 class="title">表存储模型</h4></div>
+          <div class="panel-heading"><h4 class="panel-title">表存储模型</h4></div>
             <div class="panel-body">
                 <div id="tableCategorySearch" class="content content-inner">
 				  	<button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}'">新建</button>

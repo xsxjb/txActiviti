@@ -32,7 +32,7 @@
                 <div class="icon" style="width:30px">
                       <a href="${scopePrefix}${item.menuUrl}">
                           <img src="${ctx}/plugin/ibusiness/${item.iconUrl}" title="${item.menuName}"  />
-                          <span>${item.menuName}</span>
+                          <span class="">${item.menuName}</span>
                        </a>
                  </div>
           </c:forEach>

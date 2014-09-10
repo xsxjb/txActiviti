@@ -52,7 +52,7 @@
 
 		<!-- start of main -->
 		<div class="panel panel-default span6"> 
-	        <div class="panel-heading"><h4 class="title">登录</h4></div>
+	        <div class="panel-heading"><h4 class="panel-title">登录</h4></div>
 	        <div class="panel-body">
 		        <div class="alert alert-dismissable  alert-warning"${param.error==true ? '' : 'style="display:none"'}>
 					<strong><spring:message code="core.login.failure" text="登陆失败" /></strong> &nbsp;
@@ -70,10 +70,10 @@
 							  <label class="col-lg-2 control-label" for="password"><spring:message code="core.login.password" text="密码" />:</label>
 							  <input type='password' id="password" name='j_password' class="text" value=''>
 						</div>
-						<!-- 验证码 -->
+						<!-- 验证码  -->
 						<div class="form-group">
 						     <label class="col-lg-2 control-label" for="codeinput"><spring:message code="core.login.password" text="验证码"/></label>
-						     <input name="number" class="text" id="codeinput" onblur='checkcode()'/><span STYLE="color: red" id="checkcodemsg"></span><br/>
+						     <input name="number" class="text" id="codeinput" onkeyup='checkcode()'/><span STYLE="color: red" id="checkcodemsg"></span><br/>
 					    </div>
 					    <div class="form-group">
 					     	 <img src="checkcode" id="img1"  />

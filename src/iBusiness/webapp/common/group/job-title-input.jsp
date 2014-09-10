@@ -30,7 +30,7 @@ $(function() {
 
 	<!-- start of main -->
 	<div class="panel panel-default span10"> 
-        <div class="panel-heading"><h4 class="title">编辑职位名称</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">编辑职位名称</h4></div>
         <div class="panel-body">
 	        <form id="orgForm" method="post" action="job-title-save.do" class="form-horizontal">
 			  <c:if test="${model != null}">

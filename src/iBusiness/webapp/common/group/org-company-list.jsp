@@ -46,7 +46,7 @@ $(function() {
     
 	<!-- start of main -->
     <div class="panel panel-default span10">
-        <div class="panel-heading"><h4 class="title">公司列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">公司列表</h4></div>
         <div class="panel-body">
 		    <div class="pull-left">
 		        <tags:hasPerm value="userattr">
@@ -97,9 +97,9 @@ $(function() {
 			</div>
 	
 			<div class="btn-group m-pagination pull-right">
-				  <button class="btn btn-default">&lt;</button>
-				  <button class="btn btn-default">1</button>
-				  <button class="btn btn-default">&gt;</button>
+				  <button class="btn btn-default btn-sm">&lt;</button>
+				  <button class="btn btn-default btn-sm">1</button>
+				  <button class="btn btn-default btn-sm">&gt;</button>
 			</div>
 	
 		    <div class="m-clear"></div>

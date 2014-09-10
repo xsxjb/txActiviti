@@ -48,7 +48,7 @@ $(function() {
     <div class="span2"> </div>
 	<!-- start of main -->
 	<div class="panel panel-default span10"> 
-        <div class="panel-heading"><h4 class="title">编辑用户</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">编辑用户</h4></div>
         <div class="panel-body">
         
         <form id="userForm" method="post" action="user-base-save.do?operationMode=STORE" class="form-horizontal">
@@ -56,60 +56,62 @@ $(function() {
 			  <c:if test="${model != null}">
 			  	<input id="user-base_id" type="hidden" name="id" value="${model.id}">
 			  </c:if>
-			  <p>
-			    <label class="control-label" for="user-base_username">账号:</label>
+			  <div class="form-group">
+			    <label class="col-lg-2 control-label" for="user-base_username">账号:</label>
 			    <input id="user-base_username" type="text" name="username" value="${model.username}"  class="text" >
-			   </p>
+			   </div>
 			   <c:if test="${model == null || model.password == null}">
-					<p>
-					    <label class="control-label" for="user-base_password"><spring:message code="user.user.input.password" text="密码"/>:</label>
+					<div class="form-group">
+					    <label class="col-lg-2 control-label" for="user-base_password"><spring:message code="user.user.input.password" text="密码"/>:</label>
 						 <input id="user-base_password" type="password" name="password" class="text required" maxlength="10">
-					 </p>
-					 <p>
-					    <label class="control-label" for="user-base_confirmPassword"><spring:message code="user.user.input.confirmpassword" text="验证密码"/>:</label>
+					 </div>
+					 <div class="form-group">
+					    <label class="col-lg-2 control-label" for="user-base_confirmPassword"><spring:message code="user.user.input.confirmpassword" text="验证密码"/>:</label>
 					    <input id="user-base_confirmPassword" type="password" name="confirmPassword" class="text required" maxlength="10" equalTo="#user-base_password">
-					 </p>
+					 </div>
 				 </c:if>
-				  <p>
-				      <label class="control-label" for="user-base_status"><spring:message code="user.user.input.enabled" text="启用"/>:</label>
+				 <div class="form-group">
+				      <label class="col-lg-2 control-label" for="user-base_status"><spring:message code="user.user.input.enabled" text="启用"/>:</label>
 					  <input id="user-base_status" type="checkbox" name="status" value="1" ${model.status == 1 ? 'checked' : ''}>
-				  </p>
-				  <p>
-				      <label class="control-label" for="user-base_displayName">显示名:</label>
+				  </div>
+				  <div class="form-group">
+				      <label class="col-lg-2 control-label" for="user-base_displayName">显示名:</label>
 					  <input id="user-base_displayName" type="text" name="displayName" value="${model.displayName}"  class="text required" minlength="2" maxlength="50">
-				  </p>
-				  <p>
-				    <label class="control-label" for="job_level">职位:</label>
-					  <select id="job_level" name="jobId">
-						  <c:forEach items="${jobInfos}" var="item">
-						    <option value="${item.id}" ${item.id==model.jobInfo.id ? 'selected' : ''}>${item.jobTitle.name}</option>
-						  </c:forEach>
-					  </select>
-				  </p>
-				  <p>
-				    <label class="control-label" for="role_def">角色:</label>
-					  <select id="role_def" name="roleId">
+				  </div>
+				  <div class="form-group">
+				    <label class="col-lg-2 control-label" for="job_level">职位:</label>
+				    <div class="col-lg-3">
+						  <select id="job_level" name="jobId" >
+							  <c:forEach items="${jobInfos}" var="item">
+							    <option value="${item.id}" ${item.id==model.jobInfo.id ? 'selected' : ''}>${item.jobTitle.name}</option>
+							  </c:forEach>
+						  </select>
+					  </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-lg-2 control-label" for="role_def">角色:</label>
+					  <select id="role_def" name="roleId" class="">
 						  <c:forEach items="${roleDefs}" var="item">
 						    <option value="${item.id}" ${item.id==model.roleDef.id ? 'selected' : ''}>${item.name}</option>
 						  </c:forEach>
 					  </select>
-				  </p>
-				  <p>
-				      <label class="control-label" for="user-base_email">邮箱:</label>
+				  </div>
+				  <div class="form-group">
+				      <label class="col-lg-2 control-label" for="user-base_email">邮箱:</label>
 					  <input id="user-base_email" type="text" name="email" value="${model.email}">
-				  </p>
-				  <p>
-				      <label class="control-label" for="user-base_mobile">手机:</label>
+				  </div>
+				  <div class="form-group">
+				      <label class="col-lg-2 control-label" for="user-base_mobile">手机:</label>
 					  <input id="user-base_mobile" type="text" name="mobile" value="${model.mobile}">
-				  </p>
-				  <p>
-				      <label class="control-label" for="user-base_ref"><spring:message code="user.user.input.ref" text="引用"/>:</label>
+				  </div>
+				  <div class="form-group">
+				      <label class="col-lg-2 control-label" for="user-base_ref"><spring:message code="user.user.input.ref" text="引用"/>:</label>
 					  <input id="user-base_ref" type="text" name="ref" value="${model.ref}">
-				  </p>
-				  <p>
+				  </div>
+				  <div class="form-group">
 				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
 				      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
-				  </p>
+				  </div>
 			 </form>
         </div>
 	<!-- end of main -->

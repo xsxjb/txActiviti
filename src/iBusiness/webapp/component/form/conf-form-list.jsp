@@ -12,6 +12,7 @@
     <script type="text/javascript">
 		var config = {
 			    id: 'formGrid',
+			    packageName:${packageName},
 			    pageNo: ${page.pageNo},
 			    pageSize: ${page.pageSize},
 			    totalCount: ${page.totalCount},
@@ -43,7 +44,7 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default span10">
-        <div class="panel-heading"><h5 class="title">表单列表</h5></div>
+        <div class="panel-heading"><h4 class="panel-title">表单列表</h4></div>
           <div class="panel-body">
 			    <div class="pull-left">
 			        <p>
@@ -54,7 +55,6 @@
 				<div class="pull-right">
 				  每页显示
 				  <select class="m-page-size">
-				    <option value="5">5</option>
 				    <option value="10">10</option>
 				    <option value="50">50</option>
 				    <option value="100">100</option>
@@ -69,25 +69,22 @@
 			    <thead>
 			      <tr>
 			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			        <th class="sorting"><spring:message code="user.user.list.id" text="编号"/></th>
 			        <th class="sorting"><spring:message code="user.user.list.packageName" text="包名"/></th>
-			        <th class="sorting">显示名</th>
 			        <th class="sorting" ><spring:message code="user.user.list.formName" text="表单名"/></th>
 			        <th class="sorting"><spring:message code="user.user.list.formTitle" text="表单标题"/></th>
 			        <th width="60">&nbsp;</th>
 			      </tr>
 			    </thead>
-			
+			    
 			    <tbody>
 			      <c:forEach items="${page.result}" var="item">
 			      <tr>
 			        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-			        <td>${item.id}</td>
 			        <td>${item.packageName}</td>
 			        <td>${item.formName}</td>
 			        <td>${item.formTitle}</td>
 			        <td>
-			          <a href="conf-form-input.do?id=${item.id}&packageName=${packageName}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+			          <a href="conf-form-input.do?formId=${item.id}&packageName=${packageName}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 			        </td>
 			      </tr>
 			      </c:forEach>

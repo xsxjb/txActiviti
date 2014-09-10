@@ -45,7 +45,7 @@ $(function() {
 
 	<!-- start of main -->
 	<div class="panel panel-default span10"> 
-        <div class="panel-heading"><h4 class="title">查询</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
         <div class="panel-body">
 	        <div id="permTypeSearch" class="content content-inner">
 			  <form name="permTypeForm" method="post" action="perm-type-list.do" class="form-inline">
@@ -55,7 +55,7 @@ $(function() {
 			  </form>
 			</div>
         </div>
-        <div class="panel-heading"><h4 class="title">权限类型列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">权限类型列表</h4></div>
         <div class="panel-body">
 			  <div class="pull-left">
 				  <button class="btn btn-default btn-small a-insert" onclick="location.href='perm-type-input.do'"><spring:message code="core.list.create" text="新建"/></button>

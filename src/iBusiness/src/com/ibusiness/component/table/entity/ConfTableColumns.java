@@ -1,13 +1,25 @@
 package com.ibusiness.component.table.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * 业务表字段结构管理Bean, 对应 ib_conf_table_columns表
  * 
  * @author JiangBo
  *
  */
-public class ConfTableColumns {
-	// 表名称
+@Entity
+@Table(name = "IB_CONF_TABLE_COLUMNS")
+public class ConfTableColumns implements java.io.Serializable {
+	/**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = 1L;
+    // 表名称
 	private String tableName;
 	// 字段名
 	private String columnValue;
@@ -32,6 +44,8 @@ public class ConfTableColumns {
 	/**
 	 * @return the tableName
 	 */
+	@Id
+    @Column(name = "TABLENAME", nullable = false)
 	public String getTableName() {
 		return tableName;
 	}
@@ -44,6 +58,8 @@ public class ConfTableColumns {
 	/**
 	 * @return the columnValue
 	 */
+	@Id
+    @Column(name = "COLUMNVALUE", nullable = false)
 	public String getColumnValue() {
 		return columnValue;
 	}
@@ -56,6 +72,7 @@ public class ConfTableColumns {
 	/**
 	 * @return the columnValueOld
 	 */
+	@Transient
 	public String getColumnValueOld() {
 		return columnValueOld;
 	}
@@ -68,6 +85,7 @@ public class ConfTableColumns {
 	/**
 	 * @return the columnName
 	 */
+	@Column(name = "COLUMNNAME")
 	public String getColumnName() {
 		return columnName;
 	}
@@ -80,6 +98,7 @@ public class ConfTableColumns {
 	/**
 	 * @return the columnType
 	 */
+	@Column(name = "COLUMNTYPE")
 	public String getColumnType() {
 		return columnType;
 	}
@@ -92,6 +111,7 @@ public class ConfTableColumns {
 	/**
 	 * @return the columnTypeOld
 	 */
+	@Transient
 	public String getColumnTypeOld() {
 		return columnTypeOld;
 	}
@@ -104,6 +124,7 @@ public class ConfTableColumns {
 	/**
 	 * @return the columnSize
 	 */
+	@Column(name = "COLUMNSIZE")
 	public String getColumnSize() {
 		return columnSize;
 	}
@@ -116,6 +137,7 @@ public class ConfTableColumns {
 	/**
 	 * @return the isNull
 	 */
+	@Column(name = "ISNULL")
 	public String getIsNull() {
 		return isNull;
 	}
@@ -128,6 +150,7 @@ public class ConfTableColumns {
 	/**
 	 * @return the defaultValue
 	 */
+	@Column(name = "DEFAULTVALUE")
 	public String getDefaultValue() {
 		return defaultValue;
 	}
@@ -140,6 +163,7 @@ public class ConfTableColumns {
 	/**
 	 * @return the columnNo
 	 */
+	@Column(name = "COLUMNNO")
 	public int getColumnNo() {
 		return columnNo;
 	}
@@ -152,6 +176,7 @@ public class ConfTableColumns {
 	/**
 	 * @return the columnSizeOld
 	 */
+	@Transient
 	public String getColumnSizeOld() {
 		return columnSizeOld;
 	}
