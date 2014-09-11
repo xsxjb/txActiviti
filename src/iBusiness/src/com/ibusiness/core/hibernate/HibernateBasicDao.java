@@ -209,6 +209,12 @@ public class HibernateBasicDao implements ApplicationContextAware {
         this.getSession().save(entity);
         logger.debug("save entity: {}", entity);
     }
+    @Transactional
+    public void update(Object entity) {
+        Assert.notNull(entity, "Entity can not be null.");
+        this.getSession().update(entity);
+        logger.debug("save entity: {}", entity);
+    }
     /**
      * 删除一条记录.
      * 

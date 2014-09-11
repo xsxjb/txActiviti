@@ -64,7 +64,7 @@ public class ComponentController {
         }
         if ("Bpm".equals(typeId)) {
             // 跳转到表单页面
-            return "redirect:/table/conf-table-list.do?packageName=" + packageName;
+            return "redirect:/bpmflow/bpm-flow-list.do?packageName=" + packageName;
         }
         // 返回JSP
         return "component/portal/component-show.jsp";

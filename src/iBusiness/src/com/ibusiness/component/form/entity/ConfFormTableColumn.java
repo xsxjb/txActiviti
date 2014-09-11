@@ -18,6 +18,8 @@ public class ConfFormTableColumn implements java.io.Serializable {
      * serialVersionUID
      */
     private static final long serialVersionUID = 1L;
+    // 模块包名
+    private String packageName;
     // 表单名称
     private String formName;
     // 表单字段名
@@ -28,8 +30,18 @@ public class ConfFormTableColumn implements java.io.Serializable {
     private String tableName;
     // 表字段名
     private String tableColumn;
-    // 模块包名
-    private String packageName;
+    // 组件类型
+    private String fcType;
+    // 录入宽度
+    private String fcWidth;
+    // 录入高度
+    private String fcHeight;
+    // 是否显示
+    private String fcDisplay;
+    // 是否编辑
+    private String fcEdit;
+    // 默认值-公式编辑
+    private String fcDefault;
 
     /**
      * @return the packageName
@@ -111,5 +123,83 @@ public class ConfFormTableColumn implements java.io.Serializable {
      */
     public void setTableColumn(String tableColumn) {
         this.tableColumn = tableColumn;
+    }
+    /**
+     * @return the fcType
+     */
+    @Column(name = "FCTYPE")
+    public String getFcType() {
+        return fcType;
+    }
+    /**
+     * @param fcType the fcType to set
+     */
+    public void setFcType(String fcType) {
+        this.fcType = fcType;
+    }
+    /**
+     * @return the fcWidth
+     */
+    @Column(name = "FCWIDTH")
+    public String getFcWidth() {
+        return fcWidth;
+    }
+    /**
+     * @param fcWidth the fcWidth to set
+     */
+    public void setFcWidth(String fcWidth) {
+        this.fcWidth = fcWidth;
+    }
+    /**
+     * @return the fcHeight
+     */
+    @Column(name = "FCHEIGHT")
+    public String getFcHeight() {
+        return fcHeight;
+    }
+    /**
+     * @param fcHeight the fcHeight to set
+     */
+    public void setFcHeight(String fcHeight) {
+        this.fcHeight = fcHeight;
+    }
+    /**
+     * @return the fcDisplay
+     */
+    @Column(name = "FCDISPLAY")
+    public String getFcDisplay() {
+        return fcDisplay;
+    }
+    /**
+     * @param fcDisplay the fcDisplay to set
+     */
+    public void setFcDisplay(String fcDisplay) {
+        this.fcDisplay = fcDisplay;
+    }
+    /**
+     * @return the fcEdit
+     */
+    @Column(name = "FCEDIT")
+    public String getFcEdit() {
+        return fcEdit;
+    }
+    /**
+     * @param fcEdit the fcEdit to set
+     */
+    public void setFcEdit(String fcEdit) {
+        this.fcEdit = fcEdit;
+    }
+    /**
+     * @return the fcDefault
+     */
+    @Column(name = "FCDEFAULT")
+    public String getFcDefault() {
+        return fcDefault;
+    }
+    /**
+     * @param fcDefault the fcDefault to set
+     */
+    public void setFcDefault(String fcDefault) {
+        this.fcDefault = fcDefault;
     }
 }

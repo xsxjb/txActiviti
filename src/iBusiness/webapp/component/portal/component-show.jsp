@@ -34,7 +34,7 @@ $(function() {
 	<%@include file="/component/portal/component-leftmenu.jsp"%>
 
 	<!-- start of main -->
-    <section id="m-main" class="span10">
+    <section id="m-main" class="col-md-10">
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span12">

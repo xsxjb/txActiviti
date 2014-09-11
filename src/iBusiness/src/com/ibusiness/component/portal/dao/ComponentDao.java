@@ -16,14 +16,6 @@ import com.ibusiness.component.portal.entity.ConfComponent;
 public class ComponentDao extends HibernateEntityDao<ConfComponent> {
 
     /**
-     * 更新
-     * @param entity
-     */
-    public <T> void update(T entity) {
-        super.save(entity);
-    }
-
-    /**
      * 插入
      * @param entity
      */

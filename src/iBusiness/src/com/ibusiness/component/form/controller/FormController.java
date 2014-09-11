@@ -138,7 +138,7 @@ public class FormController {
         return "component/form/conf-form-input.jsp";
     }
     /**
-     * 控件类型
+     * 字段组件信息列表
      * 
      * @param id
      * @param packageName
@@ -146,14 +146,15 @@ public class FormController {
      * @return
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping("conf-formLabel-input")
-    public String formLabelInput(@RequestParam(value = "formId", required = false) String formId, @RequestParam("packageName") String packageName, Model model) {
+    @RequestMapping("conf-formLabel-list")
+    public String formLabelList(@RequestParam(value = "formId", required = false) String formId, @RequestParam("packageName") String packageName, Model model) {
         ConfForm confForm = confFormDao.get(formId);
-        String hql = "from ConfFormTableColumn WHERE formName=?";
+        // 表单对应字段组件管理, ID主键字段不显示
+        String hql = "from ConfFormTableColumn WHERE formName=? AND tableColumn != 'ID'";
         List<ConfFormTableColumn> formTableColumnList = confFormTableColumnDao.find(hql, confForm.getFormName());
-        
         model.addAttribute("formTableColumns", formTableColumnList);
         model.addAttribute("formId", formId);
+        
         // 控制tab标签显示属性
         model.addAttribute("tabType", "formLabel");
         // 包名
@@ -162,14 +163,27 @@ public class FormController {
         return "component/form/conf-form-input.jsp";
     }
     /**
+     * 表单字段组件管理
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("conf-formLabel-input")
+    public String formLabelInput(@RequestParam(value = "formName", required = false) String formName, @RequestParam(value = "formColumn", required = false) String formColumn, @RequestParam("packageName") String packageName, Model model) {
+        // 表单对应字段组件管理
+        String hql = "from ConfFormTableColumn WHERE formName=? AND formColumn=? AND packageName=?";
+        List<ConfFormTableColumn> formTableColumnList = confFormTableColumnDao.find(hql, formName, formColumn, packageName);
+        if (null != formTableColumnList && formTableColumnList.size() > 0) {
+            model.addAttribute("model", formTableColumnList.get(0));
+        }
+        return "component/form/conf-formLabel-input.jsp";
+    }
+    /**
      * 保存
      * 
      * @return
      * @throws Exception
      */
     @RequestMapping("conf-form-save")
-    public String save(@ModelAttribute ConfForm confForm, 
-    @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
+    public String save(@ModelAttribute ConfForm confForm, @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
         String id = confForm.getId();
         if (CommonUtils.isNull(id)) {
             confForm.setId(UUID.randomUUID().toString());
@@ -208,7 +222,6 @@ public class FormController {
         confFormTable.setFormName(confForm.getFormName());
         confFormTable.setTableName(confTable.getTableName());
         confFormTable.setTableType(tableType);
-        
         confFormTableDao.saveInsert(confFormTable);
         
         // 表单对应字段管理表
@@ -227,6 +240,24 @@ public class FormController {
         
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/form/conf-formTables-input.do?packageName=" + packageName + "&formId="+formId;
+    }
+    /**
+     * 表单字段组件保存
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("conf-formLabel-save")
+    public String formLabelSave(ConfFormTableColumn model, @RequestParam("packageName") String packageName) {
+        // 更新
+        confFormTableColumnDao.update(model);
+        
+        // 查询表单编号
+        String formHql="from ConfForm where formName=?";
+        List<ConfForm> confForms = confFormDao.find(formHql, model.getFormName());
+        String formId = null;
+        if (null != confForms && confForms.size() > 0) {
+            formId = confForms.get(0).getId();
+        }
+        return "redirect:/form/conf-formLabel-list.do?packageName=" + packageName + "&formId=" + formId;
     }
     /**
      * 删除
