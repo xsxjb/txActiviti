@@ -29,12 +29,12 @@
       <div id="launchpad" style="width:100%">
           <!--***************************   ***********************************-->
           <c:forEach items="${deskMenuItems}" var="item">
-                <div class="icon" style="width:30px">
-                      <a href="${scopePrefix}${item.menuUrl}">
-                          <img src="${ctx}/plugin/ibusiness/${item.iconUrl}" title="${item.menuName}"  />
-                          <span class="">${item.menuName}</span>
-                       </a>
-                 </div>
+             <div class="icon" style="width:30px">
+                   <a href="${scopePrefix}${item.menuUrl}">
+                       <img src="${ctx}/plugin/ibusiness/${item.iconUrl}" title="${item.menuName}"  />
+                       <span class="badge">${item.menuName}</span>
+                    </a>
+              </div>
           </c:forEach>
       </div>
       

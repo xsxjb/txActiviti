@@ -99,7 +99,7 @@ public class TableController {
     public String confTableSave(@ModelAttribute ConfTable confTable, RedirectAttributes redirectAttributes) {
     	List<ConfTable> list = new ArrayList<ConfTable>();
     	confTable.setId(UUID.randomUUID().toString());
-    	confTable.setTableName(confTable.getTableName().toUpperCase());//转成大写
+    	confTable.setTableName("IB_" + confTable.getTableName().toUpperCase());//转成大写
     	list.add(confTable);
     	tableService.insertConfTable(list);
     	// 在数据库中创建一张业务表

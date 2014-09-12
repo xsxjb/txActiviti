@@ -28,15 +28,21 @@
 				  </c:if>
 				  <div class="form-group">
 					  <label class="col-lg-2 control-label" for="menu_name">菜单名称:</label>
-				      <input id="menu_name" type="text" name="menuName" value="${model.menuName}"  class="text required"  >
+					  <div class="col-lg-3">
+				          <input id="menu_name" type="text" name="menuName" value="${model.menuName}"  class="form-control" >
+				      </div>
 				  </div>
 				  <div class="form-group">
 					  <label class="col-lg-2 control-label" for="menu_url">URL:</label>
-				      <input id="menu_url" type="text" name="menuUrl" value="${model.menuUrl}" class="text">
+					  <div class="col-lg-3">
+					      <textarea class="form-control" id="menu_url" name="menuUrl" rows="3">${model.menuUrl}</textarea>
+					  </div>
 				  </div>
 				  <div class="form-group">
 					  <label class="col-lg-2 control-label" for="menu_order">菜单排序:</label>
-					  <input id="menu_order" type="text" name="menuOrder" value="${model.menuOrder}"  class="text required"  >
+					  <div class="col-lg-3">
+					      <input id="menu_order" type="text" name="menuOrder" value="${model.menuOrder}"  class="form-control" >
+					  </div>
 				  </div>
 				  <div class="form-group">
 				      <label class="col-lg-2 control-label" for="table-isNull">是否桌面显示</label>
@@ -49,13 +55,15 @@
 				  </div>
 				  <div class="form-group">
 					  <label class="col-lg-2 control-label" for="menu_iconUrl">显示图标:</label>
-					  <input id="menu_iconUrl" type="text" name="iconUrl" value="${model.iconUrl}"  class="text required"  >
+					  <div class="col-lg-3">
+					      <input id="menu_iconUrl" type="text" name="iconUrl" value="${model.iconUrl}"  class="form-control" >
+					  </div>
 				  </div>
 				  <div class="control-group">
-				    <div class="controls">
-				      <button id="submitButton" class=" btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+				    <div class="controls col-lg-10 col-lg-offset-2">
+				      <button id="submitButton" class=" btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					  &nbsp;
-				      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
+				      <button type="button" onclick="history.back();" class="btn btn-default btn-sm"><spring:message code='core.input.back' text='返回'/></button>
 				    </div>
 				  </div>
 				</form>

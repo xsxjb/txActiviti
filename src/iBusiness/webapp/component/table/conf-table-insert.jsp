@@ -45,7 +45,7 @@
 				  <div class="form-group">
 				    <label class="col-lg-2 control-label" for="table-tableName">表名称(大写):</label>
 					<div class="controls">
-					  <input id="table-tableName" type="text" name="tableName" value="${model.tableName}"  class="text required"  >
+					  IB_<input id="table-tableName" type="text" name="tableName" value="${model.tableName}"  class="text required"  >
 				    </div>
 				  </div>
 				  <div class="form-group">
