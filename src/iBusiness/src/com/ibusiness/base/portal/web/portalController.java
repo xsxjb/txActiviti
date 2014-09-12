@@ -36,7 +36,7 @@ public class portalController {
      */
     @RequestMapping("portal")
     public String list(Model model, HttpSession session) {
-        // 当前座席ID
+        // 当前用户ID
         String userId = SpringSecurityUtils.getCurrentUserId();
         UserBase userBase = userBaseDao.get(Long.parseLong(userId));
         // 设置当前用户CSS样式
