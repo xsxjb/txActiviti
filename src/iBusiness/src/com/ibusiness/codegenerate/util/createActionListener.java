@@ -14,11 +14,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.ibusiness.codegenerate.code.DbEntity.DbFiledToJspUtil;
 import com.ibusiness.codegenerate.code.generate.CodeGenerate;
-import com.ibusiness.codegenerate.window.CodeWindow;
-import com.ibusiness.codegenerate.window.CreateFileProperty;
+import com.ibusiness.codegenerate.code.window.CodeWindow;
+import com.ibusiness.codegenerate.code.window.CreateFileProperty;
 
 /**
- * 自动代码生成器windows页面退出按钮,退出事件监听器
+ * 自动代码生成器windows页面生成按钮,生成事件监听器
  * 
  * @author JiangBo
  * 

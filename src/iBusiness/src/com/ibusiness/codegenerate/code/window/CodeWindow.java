@@ -1,4 +1,4 @@
-package com.ibusiness.codegenerate.window;
+package com.ibusiness.codegenerate.code.window;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

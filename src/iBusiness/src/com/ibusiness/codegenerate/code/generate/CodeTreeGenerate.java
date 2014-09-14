@@ -10,10 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.ibusiness.codegenerate.code.NonceUtils;
 import com.ibusiness.codegenerate.code.DbEntity.DbFiledToJspUtil;
+import com.ibusiness.codegenerate.code.window.CreateFileProperty;
 import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.def.FtlDef;
-import com.ibusiness.codegenerate.window.CreateFileProperty;
 
 public class CodeTreeGenerate
   implements ICallBack

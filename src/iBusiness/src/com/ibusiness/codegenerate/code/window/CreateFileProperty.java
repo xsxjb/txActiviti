@@ -1,4 +1,4 @@
-package com.ibusiness.codegenerate.window;
+package com.ibusiness.codegenerate.code.window;
 
 /**
  * 创建文件标识bean

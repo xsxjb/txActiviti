@@ -56,13 +56,13 @@ $(function() {
 				  	<input id="org_id" type="hidden" name="id" value="${model.id}">
 				  </c:if>
 				  <p>
-				      <label class="control-label" for="org_companyname"><spring:message code="org.org.input.orgname" text="公司名称"/>:</label>
+				      <label class="control-label" for="org_companyname"><spring:message code="org.org.input.orgname" text="公司编号"/>:</label>
 				 </p>
 				 <p>
-					  <input id="org_companyname" type="text" name="name" value="${model.companyid}"  class="text required"   maxlength="50">
+					  <input id="org_companyname" type="text" name="companyid" value="${model.companyid}"  class="text required"   maxlength="50">
 				  </p>
 				  <p>
-				      <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="名称"/>:</label>
+				      <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="部门名称"/>:</label>
 				  </p>
 				 <p>
 				     <input id="org_orgname" type="text" name="name" value="${model.name}" class="text required" minlength="2" maxlength="50">

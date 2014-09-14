@@ -36,6 +36,8 @@ public class CodeResourceUtil {
     public static String ENTITY_URL_INX;
     public static String PAGE_URL_INX;
     public static String TEMPLATEPATH;
+    // 代码生成器,生成文件路径
+    public static String PROJECTPATH;
     public static String CODEPATH;
     public static String JSPPATH;
     public static String JEECG_GENERATE_TABLE_ID;
@@ -51,6 +53,7 @@ public class CodeResourceUtil {
         JEECG_FILED_CONVERT = getJEECG_FILED_CONVERT();
         SYSTEM_ENCODING = getSYSTEM_ENCODING();
         TEMPLATEPATH = getTEMPLATEPATH();
+        PROJECTPATH = getPROJECTPATH();
         source_root_package = getSourceRootPackage();
         web_root_package = getWebRootPackage();
         bussiPackage = getBussiPackage();
@@ -119,8 +122,19 @@ public class CodeResourceUtil {
         return configProperties.getString("page_package");
     }
 
+    /**
+     * 模板路径
+     * @return
+     */
     public static final String getTEMPLATEPATH() {
         return configProperties.getString("templatepath");
+    }
+    /**
+     * 代码生成器,生成文件路径
+     * @return
+     */
+    public static final String getPROJECTPATH() {
+        return configProperties.getString("project_path");
     }
 
     public static final String getSourceRootPackage() {

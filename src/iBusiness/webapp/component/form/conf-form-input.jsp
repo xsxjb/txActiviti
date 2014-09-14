@@ -182,7 +182,7 @@
 	        	  <!-- 代码生成 -->
 	        	  <div id="formCode" class="tab-pane fade ${tabType == 'formCode' ? 'active in' : ''}">
 		        	<div class="btn-group-vertical">
-					    <a class="btn btn-default" href="${scopePrefix}/form/conf-formLabel-list.do?packageName=${packageName}&formId=${formId}">一对一生成器</a>
+					    <a class="btn btn-default" href="${scopePrefix}/code/code-oneGUI-input.do?packageName=${packageName}&formId=${formId}">一对一生成器</a>
 					    <a class="btn btn-default" href="#">一对多生成器</a>
 					</div>
 	        	  </div>

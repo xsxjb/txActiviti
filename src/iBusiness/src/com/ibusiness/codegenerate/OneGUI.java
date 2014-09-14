@@ -1,6 +1,6 @@
 package com.ibusiness.codegenerate;
 
-import com.ibusiness.codegenerate.window.CodeWindow;
+import com.ibusiness.codegenerate.code.window.CodeWindow;
 
 /**
  * 代码生成器入口

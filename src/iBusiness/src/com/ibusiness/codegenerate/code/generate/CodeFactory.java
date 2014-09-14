@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -13,8 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.CodeStringUtils;
+import com.ibusiness.common.util.CommonUtils;
 
-import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
@@ -24,22 +23,27 @@ import freemarker.template.TemplateException;
  * @author JiangBo
  *
  */
-public class CodeFactory {
+public class CodeFactory extends BaseCodeFactory {
 
     private ICallBack callBack;
 
     public CodeFactory() {
     }
 
-    public Configuration getConfiguration() throws IOException {
-        Configuration configuration = new Configuration();
-        String s = getTemplatePath();
-        File file = new File(s);
-        configuration.setDirectoryForTemplateLoading(file);
-        configuration.setLocale(Locale.CHINA);
-        configuration.setDefaultEncoding("UTF-8");
-        return configuration;
-    }
+    /**
+     * 根据指定的模板文件路径，创建一个模板。
+     * @return
+     * @throws IOException
+     */
+//    public Configuration getConfiguration() throws IOException {
+//        Configuration configuration = new Configuration();
+//        String s = getTemplatePath();
+//        File file = new File(s);
+//        configuration.setDirectoryForTemplateLoading(file);
+//        configuration.setLocale(Locale.CHINA);
+//        configuration.setDefaultEncoding("UTF-8");
+//        return configuration;
+//    }
 
     /**
      * 生成文件
@@ -68,9 +72,26 @@ public class CodeFactory {
         }
     }
 
+//    public static String getProjectPath() {
+//        String path = System.getProperty("user.dir").replace("\\", "/") + "/";
+////        String path = "/";
+//        return path;
+//    }
+    /**
+     * 获取项目根目录
+     * 
+     * @return
+     */
     public static String getProjectPath() {
-        String path = System.getProperty("user.dir").replace("\\", "/") + "/";
-        return path;
+        String nowpath = CodeResourceUtil.PROJECTPATH; // 当前tomcat的bin目录的路径 如
+                        // D:\java\software\apache-tomcat-6.0.14\bin
+        String tempdir;
+        if (CommonUtils.isNull(nowpath)) {
+            nowpath = System.getProperty("user.dir");
+        }
+        tempdir = nowpath.replace("bin", "webapps"); // 把bin 文件夹变到 webapps文件里面
+        tempdir += "\\"; // 拼成D:\java\software\apache-tomcat-6.0.14\webapps\sz_pro
+        return tempdir;
     }
 
     /**
@@ -80,6 +101,9 @@ public class CodeFactory {
      */
     public String getClassPath() {
         String path = Thread.currentThread().getContextClassLoader().getResource("./").getPath();
+        if (path.indexOf("lib") > 0) {
+            path = "/WEB-INF/classes/";
+        }
         return path;
     }
 
