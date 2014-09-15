@@ -19,7 +19,7 @@
 			  <li class="${tabType == 'formBase' ? 'active' : ''} "><a href="${scopePrefix}/form/conf-form-input.do?packageName=${packageName}&formId=${formId}" >表单基础信息</a></li>
 			  <li class="${tabType == 'formTables' ? 'active' : ''}"><a href="${scopePrefix}/form/conf-formTables-input.do?packageName=${packageName}&formId=${formId}" >关联表字段</a></li>
 			  <li class="${tabType == 'formLabel' ? 'active' : ''}"><a href="${scopePrefix}/form/conf-formLabel-list.do?packageName=${packageName}&formId=${formId}">控件类型</a></li>
-			  <li class="${tabType == 'formCode' ? 'active' : ''}"><a href="${scopePrefix}/code/code-generate-list.do?packageName=${packageName}&formId=${formId}">代码生成</a></li>
+			  <li class="${tabType == 'formCode' ? 'active' : ''}"><a href="${scopePrefix}/code/code-generate-input.do?packageName=${packageName}&formId=${formId}">代码生成</a></li>
 			</ul>
 			<div id="tabContent" class="tab-content">
 			  <!-- 表单基础信息 -->
@@ -36,9 +36,14 @@
 							  </div>
 							  <div class="form-group">
 							      <label class="col-lg-2 control-label" for="form-formname">表单名称:</label>
-							      <div class="col-lg-3">
-								      <input id="form-formname" type="text" name="formName" value="${model.formName}"  class="form-control" >
-								  </div>
+							      <c:if test="${model.formName == null }">
+								      <div class="col-lg-3">
+									      <input id="form-formname" type="text" name="formName" value="${model.formName}"  class="form-control" >
+									  </div>
+							      </c:if>
+							      <c:if test="${model.formName != null}">
+							           <label class="control-label" id="form_form_name">${model.formName}</label>
+							      </c:if>
 							  </div>
 							  <div class="form-group">
 							      <label class="col-lg-2 control-label" for="form-formtitle">表单标题:</label>
@@ -179,12 +184,63 @@
 							</tbody>
 					  </table>
 	        	  </div>
-	        	  <!-- 代码生成 -->
+	        	  <!-- ======================= 代码生成=================================================== -->
 	        	  <div id="formCode" class="tab-pane fade ${tabType == 'formCode' ? 'active in' : ''}">
-		        	<div class="btn-group-vertical">
-					    <a class="btn btn-default" href="${scopePrefix}/code/code-oneGUI-input.do?packageName=${packageName}&formId=${formId}">一对一生成器</a>
-					    <a class="btn btn-default" href="#">一对多生成器</a>
-					</div>
+		        	    <div class="panel-heading"><h4 class="panel-title">一对一生成器</h4></div>
+					        <div class="panel-body">
+					              <form id="menuForm" method="post" action="code-generate-save.do" class="form-horizontal">
+									  <c:if test="${model != null}">
+									      <input type="hidden" name="formId" value="${formId}">
+									      <input type="hidden" name="packageName" value="${model.packageName}">
+									  </c:if>
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" >包名(小写):</label>
+										  <label class="control-label" >${model.packageName}</label>
+									  </div>
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" for="code_entityName">实体类名(首字母大写):</label>
+									      <input id="code_entityName" type="text" name="entityName" value="${model.entityName}" class="text">
+									  </div>
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" for="code_tableName">表名:</label>
+										  <input id="code_tableName" type="text" name="tableName" value="${model.tableName}"  class="text required"  >
+									  </div>
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" >主键生成策略:</label>
+										  <label class="control-label" >${model.keyType}</label>
+									  </div>
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" for="code_entityTitle">功能描述:</label>
+										  <input id="code_entityTitle" type="text" name="entityTitle" value="${model.entityTitle}"  class="text required"  >
+									  </div>
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" >行字段数目:</label>
+										  <label class="control-label" >${model.rowNumber}</label>
+									  </div>
+									  <div class="form-group">
+									        <label class="col-lg-2 control-label" >需要生成的代码:</label>
+									      <div class="checkbox">
+									          <label><input type="checkbox" name="selectedItem" value="checkboxController" <tags:contains items="${selectedItem}" item="checkboxController">checked</tags:contains>> Controller</label>
+									          <label><input type="checkbox" name="selectedItem"  value="checkboxEntity" <tags:contains items="${selectedItem}" item="checkboxEntity">checked</tags:contains>> Entity</label>
+									          <label><input type="checkbox" name="selectedItem"  value="checkboxJsp" <tags:contains items="${selectedItem}" item="checkboxJsp">checked</tags:contains>> Jsp</label>
+									          <label><input type="checkbox" name="selectedItem"  value="checkboxService" <tags:contains items="${selectedItem}" item="checkboxService">checked</tags:contains>> Service</label>
+									          <label><input type="checkbox" name="selectedItem"  value="checkboxServiceImp" <tags:contains items="${selectedItem}" item="checkboxServiceImp">checked</tags:contains>> ServiceImp</label>
+									       </div>
+									  </div>
+									  
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" >风格:</label>
+										  <label class="control-label" >${model.formStyle}</label>
+									  </div>
+									  <div class="control-group">
+									    <div class="controls">
+									      <button id="submitButton" class=" btn btn-default a-submit"><spring:message code='core.input.save' text='生成'/></button>
+										  &nbsp;
+									      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
+									    </div>
+									  </div>
+									</form>
+					        </div>
 	        	  </div>
 	         </div>
 	    </div>

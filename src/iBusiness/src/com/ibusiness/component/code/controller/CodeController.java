@@ -19,7 +19,10 @@ import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.dao.ConfFormTableDao;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTable;
+import com.ibusiness.component.table.dao.TableDao;
+import com.ibusiness.component.table.entity.ConfTable;
 import com.ibusiness.core.spring.MessageHelper;
+import com.ibusiness.core.util.StringUtils;
 
 /**
  * 代码生成器控制器
@@ -33,20 +36,16 @@ public class CodeController {
 
     private ConfFormTableDao confFormTableDao;
     private ConfFormDao confFormDao;
+    private TableDao tableDao;
     private MessageHelper messageHelper;
     
     /**
      * 生成器列表
      */
-    @RequestMapping("code-generate-list")
+    @RequestMapping("code-generate-input")
     public String codeGenerateList(@RequestParam("packageName") String packageName, @RequestParam("formId") String formId, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 控制tab标签显示属性
-        model.addAttribute("tabType", "formCode");
-        // 包名
-        model.addAttribute("packageName", packageName);
-        model.addAttribute("formId", formId);
-        
-        return "component/form/conf-form-input.jsp";
+        return oneGUIInput(packageName, formId, parameterMap, model);
     }
     
     /**
@@ -56,10 +55,9 @@ public class CodeController {
      * @param model
      * @return
      */
-    @RequestMapping("code-oneGUI-input")
-    public String oneGUIInput(@RequestParam("packageName") String packageName, @RequestParam("formId") String formId, @RequestParam Map<String, Object> parameterMap, Model model) {
+    @SuppressWarnings("unchecked")
+    private String oneGUIInput(String packageName, String formId, Map<String, Object> parameterMap, Model model) {
         // 一对一生成器
-        // 
         ConfForm confForm = confFormDao.get(formId);
         String formTableHql = "from ConfFormTable where formName=? AND packageName=?";
         List<ConfFormTable> formTableList = confFormTableDao.find(formTableHql, confForm.getFormName(), confForm.getPackageName());
@@ -69,26 +67,33 @@ public class CodeController {
             // 包名
             bean.setPackageName(packageName);
             // 实体类名(首字母大写)
-//            bean.setEntityName(entityName);
+            bean.setEntityName(StringUtils.capitalize(confFormTable.getFormName()));
             // 表名
             bean.setTableName(confFormTable.getTableName());
             // 主键生成测率 UUID
             bean.setKeyType("UUID");
             // 实体功能描述
-//            bean.setEntityTitle(entityTitle);
-            // 行字段数目 1
+            String tableHql = "from ConfTable where tableName=? AND packageName=?";
+            List<ConfTable> tables = tableDao.find(tableHql, confFormTable.getTableName(), confFormTable.getPackageName());
+            if (null != tables && tables.size() > 0) {
+                bean.setEntityTitle(tables.get(0).getTableNameComment());
+            }
+            // 每行字段数目 1
             bean.setRowNumber("1");
             // 风格
             bean.setFormStyle("formStyle");
             // 
             model.addAttribute("model", bean);
             model.addAttribute("formId", formId);
+            // 需要生成的代码
             List<String> selectedItems = new ArrayList<String>();
             selectedItems.add("checkboxController");
             selectedItems.add("checkboxJsp");
             selectedItems.add("checkboxEntity");
             selectedItems.add("checkboxService");
             model.addAttribute("selectedItem", selectedItems);
+         // 控制tab标签显示属性
+            model.addAttribute("tabType", "formCode");
         }
         return "component/code/code-oneGUI-input.jsp";
     }
@@ -124,9 +129,6 @@ public class CodeController {
             if ("checkboxServiceImp".equals(selectedItem)) {
                 localCreateFileProperty.setServiceImplFlag(true);
             }
-//            if ("".equals(selectedItem)) {
-//                localCreateFileProperty.setPageFlag(true);
-//            }
             if ("checkboxEntity".equals(selectedItem)) {
                 localCreateFileProperty.setEntityFlag(true);
             }
@@ -140,12 +142,11 @@ public class CodeController {
         //step.1 准备好智能表单的配置
         //step.2 判断表是否存在
         //step.3 调用代码生成器
-//        new CgformCodeGenerate(createFileProperty,generateEntity).generateToFile();
         
         //////////////////////////////////////////////////////////////////////////////////////////////////
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "生成成功");
         
-        return "component/code/code-generate-list.jsp?packageName="+ bean.getPackageName() + "&formId="+ formId;
+        return "redirect:/form/conf-form-input.do?packageName="+ bean.getPackageName() + "&formId="+ formId;
     }
     
     // ======================================================================
@@ -157,6 +158,10 @@ public class CodeController {
     @Resource
     public void setConfFormTableDao(ConfFormTableDao confFormTableDao) {
         this.confFormTableDao = confFormTableDao;
+    }
+    @Resource
+    public void setTableDao(TableDao tableDao) {
+        this.tableDao = tableDao;
     }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {

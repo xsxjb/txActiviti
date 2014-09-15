@@ -19,10 +19,6 @@
 		    pageCount: ${page.pageCount},
 		    orderBy: '${page.orderBy == null ? '' : page.orderBy}',
 		    asc: ${page.asc},
-		    params: {
-		        'filter_LIKES_username': '${param.filter_LIKES_username}',
-		        'filter_EQI_status': '${param.filter_EQI_status}'
-		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm'
 		};

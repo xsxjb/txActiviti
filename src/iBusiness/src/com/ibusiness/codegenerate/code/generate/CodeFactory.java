@@ -31,21 +31,6 @@ public class CodeFactory extends BaseCodeFactory {
     }
 
     /**
-     * 根据指定的模板文件路径，创建一个模板。
-     * @return
-     * @throws IOException
-     */
-//    public Configuration getConfiguration() throws IOException {
-//        Configuration configuration = new Configuration();
-//        String s = getTemplatePath();
-//        File file = new File(s);
-//        configuration.setDirectoryForTemplateLoading(file);
-//        configuration.setLocale(Locale.CHINA);
-//        configuration.setDefaultEncoding("UTF-8");
-//        return configuration;
-//    }
-
-    /**
      * 生成文件
      * 
      * @param templateName
@@ -59,6 +44,7 @@ public class CodeFactory extends BaseCodeFactory {
             // 取得生成文件路径
             String fileNamePath = getCodePath(type, entityPackage, entityName);
             String fileDir = StringUtils.substringBeforeLast(fileNamePath, "/");
+            // 根据指定的模板文件路径，创建一个模板。
             Template template = getConfiguration().getTemplate(templateName);
             FileUtils.forceMkdir(new File(fileDir + "/"));
             OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(fileNamePath),

@@ -12,7 +12,6 @@
     <script type="text/javascript">
 		var config = {
 			    id: 'formGrid',
-			    packageName:${packageName},
 			    pageNo: ${page.pageNo},
 			    pageSize: ${page.pageSize},
 			    totalCount: ${page.totalCount},
@@ -21,8 +20,7 @@
 			    orderBy: '${page.orderBy == null ? "" : page.orderBy}',
 			    asc: ${page.asc},
 			    params: {
-			        'filter_LIKES_username': '${param.filter_LIKES_username}',
-			        'filter_EQI_status': '${param.filter_EQI_status}'
+			        'packageName': '${packageName}'
 			    },
 				selectedItemClass: 'selectedItem',
 				gridFormId: 'formGridForm'
