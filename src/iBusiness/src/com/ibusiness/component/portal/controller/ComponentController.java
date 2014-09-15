@@ -49,21 +49,28 @@ public class ComponentController {
      */
     @RequestMapping("component-action")
     public String moduleAction(Model model, @RequestParam(value = "packageName", required = false) String packageName,
-            @RequestParam(value = "typeId", required = false) String typeId) {
+            @RequestParam(value = "typeId", required = false) String typeId,
+            @RequestParam(value = "tableName", required = false) String tableName, @RequestParam(value = "formId", required = false) String formId) {
         if ("root".equals(packageName)) {
             // 返回添加业务组件管理页面
             return "redirect:/component/component-list.do";
         }
         if ("Table".equals(typeId)) {
-            // 跳转到表存储页面
+            // 跳转到表存储列表页面
             return "redirect:/table/conf-table-list.do?packageName=" + packageName;
+        } else if ("tables".equals(typeId)) {
+            // 跳转到指定表信息页面
+            return "redirect:/table/conf-table-column-list.do?tableName=" + tableName;
         }
         if ("Form".equals(typeId)) {
-            // 跳转到表单页面
+            // 跳转到表单列表页面
             return "redirect:/form/conf-form-list.do?packageName=" + packageName;
+        } else if ("forms".equals(typeId)) {
+            // 跳转到指定表单信息页面
+            return "redirect:/form/conf-form-input.do?packageName=" + packageName + "&formId=" + formId;
         }
         if ("Bpm".equals(typeId)) {
-            // 跳转到表单页面
+            // 跳转到流程页面
             return "redirect:/bpmflow/bpm-flow-list.do?packageName=" + packageName;
         }
         // 返回JSP

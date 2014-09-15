@@ -11,6 +11,7 @@
 
   <body>
 	    <%@include file="/header/header-portal.jsp"%>
+	    <div class="row">
 	    <%@include file="/component/portal/component-leftmenu.jsp"%>
 		<!-- start of main -->
 		<div class="panel panel-default col-md-10 " > 
@@ -22,13 +23,14 @@
 			  <li class="${tabType == 'formCode' ? 'active' : ''}"><a href="${scopePrefix}/code/code-generate-input.do?packageName=${packageName}&formId=${formId}">代码生成</a></li>
 			</ul>
 			<div id="tabContent" class="tab-content">
-			  <!-- 表单基础信息 -->
+			  <!-- ========================== 表单基础信息 =================================================== -->
 			  <div id="formBase" class="tab-pane fade ${tabType == 'formBase' ? 'active in' : ''}">
+			  <c:if test="${tabType == 'formBase'}">
 			        <div class="panel-body">
 				        <form id="formForm" method="post" action="conf-form-save.do" class="form-horizontal">
 							  <c:if test="${model != null}">
-							  	<input id="conf-form_id" type="hidden" name="formId" value="${formId}">
-							  	<input id="conf-form_packagename" type="hidden" name="packageName" value="${model.packageName}">
+							  	  <input id="conf-form_id" type="hidden" name="formId" value="${formId}">
+							  	  <input id="conf-form_packagename" type="hidden" name="packageName" value="${model.packageName}">
 							  </c:if>
 							  <div class="form-group">
 							    <label class="col-lg-2 control-label" for="form_package_name">包名:</label>
@@ -57,9 +59,11 @@
 							  </div>
 						</form>
 	        		</div>
+	        	  </c:if>
 	        	  </div>
-	        	  <!-- 关联表设置 -->
+	        	  <!-- ==================== 关联表设置 ===================================================== -->
 	        	  <div id="formTables" class="tab-pane fade ${tabType == 'formTables' ? 'active in' : ''}">
+	        	  <c:if test="${tabType == 'formTables'}">
 	        	      <div class="panel panel-primary">
 		        		  <div class="panel-heading"><h4 class="panel-title">选择主表/单表：</h4></div>
 					          <div class="panel-body">
@@ -156,9 +160,11 @@
 								     </div>
 					          </div>
 				         </div>
+		          </c:if>
 	        	  </div>
-	        	  <!-- 控件类型 -->
+	        	  <!-- ================================= 控件类型 =============================================== -->
 	        	  <div id="formLabel" class="tab-pane fade ${tabType == 'formLabel' ? 'active in' : ''}">
+	        	  <c:if test="${tabType == 'formLabel'}">
 	        	      <table class="table table-hover table-bordered" id=“tableModelGrid” >
 							<thead>
 								<tr>
@@ -183,9 +189,11 @@
 							  </c:forEach>
 							</tbody>
 					  </table>
+				  </c:if>
 	        	  </div>
 	        	  <!-- ======================= 代码生成=================================================== -->
 	        	  <div id="formCode" class="tab-pane fade ${tabType == 'formCode' ? 'active in' : ''}">
+	        	  <c:if test="${tabType == 'formCode'}">
 		        	    <div class="panel-heading"><h4 class="panel-title">一对一生成器</h4></div>
 					        <div class="panel-body">
 					              <form id="menuForm" method="post" action="code-generate-save.do" class="form-horizontal">
@@ -227,7 +235,12 @@
 									          <label><input type="checkbox" name="selectedItem"  value="checkboxServiceImp" <tags:contains items="${selectedItem}" item="checkboxServiceImp">checked</tags:contains>> ServiceImp</label>
 									       </div>
 									  </div>
-									  
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" for="code_menuUrl">菜单URL:</label>
+										  <div class="col-lg-3">
+										      <textarea class="form-control" id="code_menuUrl" name="menuUrl" rows="2">${model.menuUrl}</textarea>
+										  </div>
+									  </div>
 									  <div class="form-group">
 										  <label class="col-lg-2 control-label" >风格:</label>
 										  <label class="control-label" >${model.formStyle}</label>
@@ -241,10 +254,13 @@
 									  </div>
 									</form>
 					        </div>
+			        </c:if>
 	        	  </div>
+	        	  
 	         </div>
 	    </div>
 		<!-- end of main -->
+		</div>
   </body>
 
 </html>

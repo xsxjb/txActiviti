@@ -42,12 +42,14 @@ public class ComponentResource {
     public List<Map<String, Object>> tree(@QueryParam("parentId") String parentId) {
         String hql = "from ConfComponent where parentid = 0 ";
         List<ConfComponent> entities = componentDao.find(hql);
+        // 制造一个根节点,用于对业务模块进行 增删改
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("id", 0);
         map.put("name", "业务模块(增删改)");
         map.put("packageName", "root");
         map.put("typeId", "root");
         map.put("open", "true");
+        map.put("icon", "../plugin/ztree/zTreeStyle/img/diy/1_open.png");
         map.put("children",generateEntities(entities));
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         list.add(map);
@@ -90,6 +92,11 @@ public class ComponentResource {
             map.put("packageName", component.getPackagename());
             map.put("typeId", component.getTypeid());
             map.put("open", "true");
+            if(component.getParentid().equals("0")){
+            	map.put("icon", "../plugin/ztree/zTreeStyle/img/diy/3.png");
+            }else{
+            	map.put("icon", "../plugin/ztree/zTreeStyle/img/diy/5.png");
+            }
             // 子节点--表
             if ("Table".equals(component.getTypeid())) {
                 String hql = "from ConfTable where packageName = ? ";
@@ -103,6 +110,8 @@ public class ComponentResource {
                     tableMap.put("packageName", confTable.getPackageName());
                     tableMap.put("typeId", "tables");
                     tableMap.put("open", "true");
+                    tableMap.put("tableName", confTable.getTableName());
+                    tableMap.put("icon", "../plugin/ztree/zTreeStyle/img/diy/2.png");
                     list.add(tableMap);
                 }
                 map.put("children", list);
@@ -119,6 +128,8 @@ public class ComponentResource {
                     formMap.put("packageName", confForm.getPackageName());
                     formMap.put("typeId", "forms");
                     formMap.put("open", "true");
+                    formMap.put("formId", confForm.getId());
+                    formMap.put("icon", "../plugin/ztree/zTreeStyle/img/diy/8.png");
                     list.add(formMap);
                 }
                 map.put("children", list);

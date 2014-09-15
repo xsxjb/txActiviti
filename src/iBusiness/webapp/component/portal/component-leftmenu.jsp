@@ -10,7 +10,8 @@
               <span class="title">业务模块组件</span>
             </a>
           </div>
-          <div id="collapse-group" class="accordion-body collapse  in}">
+        <!--   <div id="collapse-group" class="accordion-body collapse  in}"> -->
+          <div id="collapse-group">
             <ul id="treeMenu" class="ztree"></ul>
           </div>
         </div>
@@ -30,7 +31,8 @@
 			},
 			callback: {
 				onClick: function(event, treeId, treeNode) {
-					location.href = '${scopePrefix}/component/component-action.do?packageName=' +  treeNode.packageName + '&typeId=' + treeNode.typeId;
+					location.href = '${scopePrefix}/component/component-action.do?packageName=' +  treeNode.packageName + '&typeId=' + treeNode.typeId
+							   + '&tableName=' + treeNode.tableName + '&formId=' + treeNode.formId;
 				}
 			}
 		};

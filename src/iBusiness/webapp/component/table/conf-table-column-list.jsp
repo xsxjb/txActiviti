@@ -34,6 +34,7 @@
 	               <div id="tableCategorySearch" class="content content-inner">
 	                     <button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-column-input.do?tableName=${tableName}&columnValue='">新建</button>
 					  	 <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+					  	 <label class="control-label" >${tableName}表:</label>
 					</div>
                </div>
                <form id="tableGridForm" name="tableGridForm" method='post' action="conf-table-columns-remove.do?tableName=${tableName}" class="m-form-blank">

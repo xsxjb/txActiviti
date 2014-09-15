@@ -35,7 +35,7 @@
 
   <body>
     <%@include file="/header/header-portal.jsp"%>
-    <div class="row-fluid">
+    <div class="row">
 	<%@include file="/component/portal/component-leftmenu.jsp"%>
 	
 	<!-- start of main -->

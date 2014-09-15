@@ -74,7 +74,7 @@ public class CodeController {
             bean.setKeyType("UUID");
             // 实体功能描述
             String tableHql = "from ConfTable where tableName=? AND packageName=?";
-            List<ConfTable> tables = tableDao.find(tableHql, confFormTable.getTableName(), confFormTable.getPackageName());
+            List<ConfTable> tables = tableDao.find(tableHql, confFormTable.getTableName(), packageName);
             if (null != tables && tables.size() > 0) {
                 bean.setEntityTitle(tables.get(0).getTableNameComment());
             }
@@ -82,9 +82,12 @@ public class CodeController {
             bean.setRowNumber("1");
             // 风格
             bean.setFormStyle("formStyle");
+            // 菜单URL
+            bean.setMenuUrl("/" + confFormTable.getFormName() + "/" + confFormTable.getFormName() + "-list.do");
             // 
             model.addAttribute("model", bean);
             model.addAttribute("formId", formId);
+            model.addAttribute("packageName", packageName);
             // 需要生成的代码
             List<String> selectedItems = new ArrayList<String>();
             selectedItems.add("checkboxController");
@@ -92,10 +95,11 @@ public class CodeController {
             selectedItems.add("checkboxEntity");
             selectedItems.add("checkboxService");
             model.addAttribute("selectedItem", selectedItems);
-         // 控制tab标签显示属性
+            
+            // 控制tab标签显示属性
             model.addAttribute("tabType", "formCode");
         }
-        return "component/code/code-oneGUI-input.jsp";
+        return "component/form/conf-form-input.jsp";
     }
     /**
      * 生成

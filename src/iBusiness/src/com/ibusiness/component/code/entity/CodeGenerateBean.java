@@ -21,6 +21,8 @@ public class CodeGenerateBean {
     private String rowNumber;
     // 风格
     private String formStyle;
+    // 菜单URL
+    private String menuUrl;
     /**
      * @return the packageName
      */
@@ -104,5 +106,17 @@ public class CodeGenerateBean {
      */
     public void setFormStyle(String formStyle) {
         this.formStyle = formStyle;
+    }
+    /**
+     * @return the menuUrl
+     */
+    public String getMenuUrl() {
+        return menuUrl;
+    }
+    /**
+     * @param menuUrl the menuUrl to set
+     */
+    public void setMenuUrl(String menuUrl) {
+        this.menuUrl = menuUrl;
     }
 }
