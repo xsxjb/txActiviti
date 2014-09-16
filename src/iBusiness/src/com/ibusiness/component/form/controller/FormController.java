@@ -1,5 +1,6 @@
 package com.ibusiness.component.form.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -71,12 +72,22 @@ public class FormController {
     @RequestMapping("conf-form-input")
     public String input(@RequestParam(value = "formId", required = false) String formId, @RequestParam("packageName") String packageName, Model model) {
         ConfForm confForm = null;
+        // 实例化 表单操作配置信息对象
+        List<String> selectedItems = new ArrayList<String>();
         if (!CommonUtils.isNull(formId)) {
             confForm = confFormDao.get(formId);
+            // 编辑 表单操作配置信息
+            selectedItems.add((null != confForm.getIsEdit() && confForm.getIsEdit()) ? "isEdit": "");
+            selectedItems.add((null != confForm.getIsAdd() && confForm.getIsAdd()) ? "isAdd": "");
+            selectedItems.add((null != confForm.getIsDelete() && confForm.getIsDelete()) ? "isDelete": "");
+            selectedItems.add((null != confForm.getIsQuery() && confForm.getIsQuery()) ? "isQuery": "");
         } else {
             confForm = new ConfForm();
             confForm.setPackageName(packageName);
         }
+        // 设置 表单操作配置信息
+        model.addAttribute("selectedItem", selectedItems);
+        //
         model.addAttribute("model", confForm);
         model.addAttribute("formId", formId);
         // 控制tab标签显示属性
@@ -183,15 +194,29 @@ public class FormController {
      * @throws Exception
      */
     @RequestMapping("conf-form-save")
-    public String save(@ModelAttribute ConfForm confForm, @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
+    public String save(@ModelAttribute ConfForm confForm, @RequestParam(value = "selectedItem", required = false) List<String> selectedItems, RedirectAttributes redirectAttributes) throws Exception {
         String id = confForm.getId();
+        // 设置 表单操作设置信息。
+        if (null != selectedItems) {
+            for (String selectedItem : selectedItems) {
+                if ("isEdit".equals(selectedItem)) {
+                    confForm.setIsEdit(true);
+                } else if ("isAdd".equals(selectedItem)) {
+                    confForm.setIsAdd(true);
+                }else if ("isDelete".equals(selectedItem)) {
+                    confForm.setIsDelete(true);
+                }else if ("isQuery".equals(selectedItem)) {
+                    confForm.setIsQuery(true);
+                }
+            }
+        }
         if (CommonUtils.isNull(id)) {
             confForm.setId(UUID.randomUUID().toString());
             // save
             confFormDao.saveInsert(confForm);
         } else {
             // save
-            confFormDao.save(confForm);
+            confFormDao.update(confForm);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/form/conf-form-list.do?packageName=" + confForm.getPackageName();

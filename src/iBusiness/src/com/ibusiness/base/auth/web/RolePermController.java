@@ -180,7 +180,8 @@ public class RolePermController {
             return input(id, model);
         }
 
-        return "redirect:/auth/role-menu-input.do?id=" + id;
+        // 返回角色列表
+        return "redirect:/auth/role-def-list.do";
     }
 
     // ~ ======================================================================

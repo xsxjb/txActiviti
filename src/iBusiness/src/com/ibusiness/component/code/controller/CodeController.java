@@ -3,6 +3,7 @@ package com.ibusiness.component.code.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.base.menu.dao.MenuDao;
+import com.ibusiness.base.menu.entity.Menu;
 import com.ibusiness.codegenerate.code.generate.CodeGenerate;
 import com.ibusiness.codegenerate.code.window.CreateFileProperty;
 import com.ibusiness.component.code.entity.CodeGenerateBean;
@@ -19,6 +22,8 @@ import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.dao.ConfFormTableDao;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTable;
+import com.ibusiness.component.portal.dao.ComponentDao;
+import com.ibusiness.component.portal.entity.ConfComponent;
 import com.ibusiness.component.table.dao.TableDao;
 import com.ibusiness.component.table.entity.ConfTable;
 import com.ibusiness.core.spring.MessageHelper;
@@ -37,6 +42,8 @@ public class CodeController {
     private ConfFormTableDao confFormTableDao;
     private ConfFormDao confFormDao;
     private TableDao tableDao;
+    private ComponentDao componentDao;
+    private MenuDao menuDao;
     private MessageHelper messageHelper;
     
     /**
@@ -112,7 +119,7 @@ public class CodeController {
      */
     @RequestMapping("code-generate-save")
     public String codeGenerateSave(CodeGenerateBean bean, @RequestParam(value = "selectedItem", required = false) List<String> selectedItems,
-            @RequestParam("formId") String formId, @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) {
+            @RequestParam("formId") String formId, @RequestParam("menuUrl") String menuUrl, RedirectAttributes redirectAttributes) {
         // 自动生成Java，JSP代码
         CreateFileProperty localCreateFileProperty = new CreateFileProperty();
         for (String selectedItem : selectedItems) {
@@ -148,9 +155,64 @@ public class CodeController {
         //step.3 调用代码生成器
         
         //////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // 生成菜单
+        createMenu(formId, menuUrl);
+        
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "生成成功");
         
         return "redirect:/form/conf-form-input.do?packageName="+ bean.getPackageName() + "&formId="+ formId;
+    }
+
+    /**
+     * 生成菜单
+     * 
+     * @param formId
+     * @param menuUrl
+     */
+    @SuppressWarnings("unchecked")
+    private void createMenu(String formId, String menuUrl) {
+        ///////////////////////// 一级菜单 //////////////////////////////////////
+        ConfForm confForm = confFormDao.get(formId);
+        String hql = "from ConfComponent where packagename=?";
+        List<ConfComponent> list = componentDao.find(hql, confForm.getPackageName());
+        if (null != list && list.size() > 0) {
+            // 实例化一个菜单
+            Menu menu = new Menu();
+            menu.setId(UUID.randomUUID().toString());//菜单编号
+            menu.setMenuName(list.get(0).getModulename());//菜单名称
+            menu.setMenuLevel("1");//菜单等级
+            menu.setMenuUrl("#");//菜单地址
+            menu.setMenuIframe("URL");//菜单地址打开方式
+            menu.setMenuOrder("99");//菜单排序
+            menu.setDesktopIcon("0");//是否桌面显示
+            Menu ibMenu = new Menu();
+            ibMenu.setId("0");
+            menu.setIbMenu(ibMenu);//父菜单
+            menuDao.save(menu);
+            ///////////////////////// 二级菜单 //////////////////////////////////////
+            Menu menu2 = new Menu();
+            menu2.setId(UUID.randomUUID().toString());//菜单编号
+            menu2.setMenuName(list.get(0).getModulename());//菜单名称
+            menu2.setMenuLevel("2");//菜单等级
+            menu2.setMenuUrl("#");//菜单地址
+            menu2.setMenuIframe("URL");//菜单地址打开方式
+            menu2.setMenuOrder("99");//菜单排序
+            menu2.setDesktopIcon("0");//是否桌面显示
+            menu2.setIbMenu(menu);//父菜单
+            menuDao.save(menu2);
+            ///////////////////////// 三级菜单 //////////////////////////////////////
+            Menu menu3 = new Menu();
+            menu3.setId(UUID.randomUUID().toString());//菜单编号
+            menu3.setMenuName(confForm.getFormTitle());//菜单名称
+            menu3.setMenuLevel("3");//菜单等级
+            menu3.setMenuUrl(menuUrl);//菜单地址
+            menu3.setMenuIframe("URL");//菜单地址打开方式
+            menu3.setMenuOrder("99");//菜单排序
+            menu3.setDesktopIcon("0");//是否桌面显示
+            menu3.setIbMenu(menu2);//父菜单
+            menuDao.save(menu3);
+        }
     }
     
     // ======================================================================
@@ -166,6 +228,14 @@ public class CodeController {
     @Resource
     public void setTableDao(TableDao tableDao) {
         this.tableDao = tableDao;
+    }
+    @Resource
+    public void setComponentDao(ComponentDao componentDao) {
+        this.componentDao = componentDao;
+    }
+    @Resource
+    public void setMenuDao(MenuDao menuDao) {
+        this.menuDao = menuDao;
     }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {

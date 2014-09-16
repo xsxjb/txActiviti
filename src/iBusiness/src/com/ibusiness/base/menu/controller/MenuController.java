@@ -1,4 +1,4 @@
-package com.ibusiness.base.menu.web;
+package com.ibusiness.base.menu.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -65,22 +65,26 @@ public class MenuController {
         } else if ("3".equals(menuLevel)) {
             propertyFilters.add(new PropertyFilter("EQS_ibMenu.id", menuLevelTwo));
         }
+        // 设置排序信息
+        page.setOrderBy("menuOrder");
+        page.setOrder("ASC");
+        // 查询
         page = menuDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("menuLevel", menuLevel);
         model.addAttribute("menuLevelOne", menuLevelOne);
         model.addAttribute("menuLevelTwo", menuLevelTwo);
-        // 
-        List<Menu> menuList = menuDao.find("from Menu where menuLevel = '1'");
+        // 一级菜单下拉列表
+        List<Menu> menuList = menuDao.find("from Menu where menuLevel = '1' order by menuOrder");
         model.addAttribute("levelOneInfos", menuList);
-        // 
-        List<Menu> menu2List = menuDao.find("from Menu where menuLevel = '2'");
+        // 二级菜单下拉列表
+        List<Menu> menu2List = menuDao.find("from Menu where menuLevel = '2' order by menuOrder");
         model.addAttribute("levelTwoInfos", menu2List);
         
         return "common/menu/menu-list.jsp";
     }
     /**
-     * 新建/修改 访问权限
+     * 新建/修改 菜单信息
      * @param id
      * @param model
      * @return
@@ -123,7 +127,7 @@ public class MenuController {
             dest = menu;
         }
         // 
-        if (id == null || "".equals(id)) {
+        if (CommonUtils.isNull(id)) {
             dest.setId(UUID.randomUUID().toString());
             dest.setIbMenu(menuDao.get(parentId));
         }
@@ -135,7 +139,7 @@ public class MenuController {
         menuDao.save(dest);
         
         // 保存菜单关联权限
-        saveMenuPerm(menu);
+//        saveMenuPerm(menu); TODO
         
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         

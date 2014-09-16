@@ -71,6 +71,7 @@
 							  <c:if test="${menuLevel != 1}">
 							      <label class="control-label" for="select_levelone">一级菜单:</label>
 								  <select id="select_levelone" name="menuLevelOne">
+								      <option value="" selected>请选择</option>
 									  <c:forEach items="${levelOneInfos}" var="item">
 									    <option value="${item.id}" ${item.id==menuLevelOne ? 'selected' : ''}>${item.menuName}</option>
 									  </c:forEach>
@@ -80,6 +81,7 @@
 							  <c:if test="${menuLevel == 3}">
 							      <label class="control-label" for="menu_leveltwo">二级菜单:</label>
 								  <select id="menu_leveltwo" name="menuLevelTwo">
+								      <option value="" selected>请选择</option>
 									  <c:forEach items="${levelTwoInfos}" var="item">
 									    <option value="${item.id}" ${item.id==menuLevelTwo ? 'selected' : ''}>${item.menuName}</option>
 									  </c:forEach>

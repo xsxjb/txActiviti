@@ -70,6 +70,7 @@ public class ConfTableColumns implements java.io.Serializable {
 		this.columnValue = columnValue;
 	}
 	/**
+	 * Transient 用于标识不在数据库表中映射的属性
 	 * @return the columnValueOld
 	 */
 	@Transient

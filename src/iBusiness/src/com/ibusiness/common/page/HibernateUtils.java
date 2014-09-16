@@ -164,7 +164,7 @@ public class HibernateUtils {
     }
 
     /**
-     * 按属性条件参数创建Criterion,辅助函数.
+     * 按属性条件参数创建Criterion,辅助函数. Hibernate Criterion.
      * 
      * @param propertyName
      *            String
@@ -183,50 +183,32 @@ public class HibernateUtils {
         switch (matchType) {
         case NEQ:
             criterion = Restrictions.ne(propertyName, propertyValue);
-
             break;
-            
         case EQ:
             criterion = Restrictions.eq(propertyName, propertyValue);
-
             break;
-
         case LIKE:
             criterion = Restrictions.like(propertyName, (String) propertyValue, MatchMode.ANYWHERE);
-
             break;
-
         case LE:
             criterion = Restrictions.le(propertyName, propertyValue);
-
             break;
-
         case LT:
             criterion = Restrictions.lt(propertyName, propertyValue);
-
             break;
-
         case GE:
             criterion = Restrictions.ge(propertyName, propertyValue);
-
             break;
-
         case GT:
             criterion = Restrictions.gt(propertyName, propertyValue);
-
             break;
-
         case IN:
             criterion = Restrictions.in(propertyName, (Collection) propertyValue);
-
             break;
-
         default:
             criterion = Restrictions.eq(propertyName, propertyValue);
-
             break;
         }
-
         return criterion;
     }
 
@@ -262,6 +244,11 @@ public class HibernateUtils {
         return criterionList.toArray(new Criterion[criterionList.size()]);
     }
 
+    /**
+     * 查询条件
+     * @param buff
+     * @param propertyFilter
+     */
     public static void buildQuery(StringBuilder buff, PropertyFilter propertyFilter) {
         if (buff.toString().toLowerCase().indexOf("where") == -1) {
             buff.append(" where ");
@@ -274,50 +261,32 @@ public class HibernateUtils {
         switch (propertyFilter.getMatchType()) {
         case NEQ:
             buff.append(" !=:");
-
             break;
-            
         case EQ:
             buff.append(" =:");
-
             break;
-
         case LIKE:
             buff.append(" like:");
-
             break;
-
         case LE:
             buff.append(" <=:");
-
             break;
-
         case LT:
             buff.append(" <:");
-
             break;
-
         case GE:
             buff.append(" >=:");
-
             break;
-
         case GT:
             buff.append(" >:");
-
             break;
-
         case IN:
             buff.append(" in :");
-
             break;
-
         default:
             buff.append(" =:");
-
             break;
         }
-
         buff.append(propertyFilter.getPropertyName().replaceAll("\\.", "_"));
     }
 }

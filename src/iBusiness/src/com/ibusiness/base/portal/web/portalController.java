@@ -87,13 +87,13 @@ public class portalController {
     @SuppressWarnings("unchecked")
     private List<Menu> createMenu(String userId) {
         // 菜单设置
-        String hql = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='1' AND ub.id=?";
+        String hql = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='1' AND ub.id=? ORDER BY m.menuOrder";
         List<Menu> menus = menuDao.find(hql, Long.parseLong(userId));
         
-        String hql2 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='2' AND ub.id=?";
+        String hql2 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='2' AND ub.id=? ORDER BY m.menuOrder";
         List<Menu> menus2 = menuDao.find(hql2, Long.parseLong(userId));
         
-        String hql3 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='3' AND ub.id=?";
+        String hql3 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='3' AND ub.id=? ORDER BY m.menuOrder";
         List<Menu> menus3 = menuDao.find(hql3, Long.parseLong(userId));
         for (Menu menu1 : menus) {
             menu1.getChiledItems().clear();

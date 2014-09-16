@@ -281,8 +281,7 @@ public class HibernatePagingDao extends HibernateGenericDao {
         Criteria criteria = null;
 
         if (page.isOrderEnabled()) {
-            criteria = createCriteria(entityClass, orderBy,
-                    "ASC".equals(order), criterions);
+            criteria = createCriteria(entityClass, orderBy, "ASC".equals(order), criterions);
         } else {
             criteria = createCriteria(entityClass, criterions);
         }

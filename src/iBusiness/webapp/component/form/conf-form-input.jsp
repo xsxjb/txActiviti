@@ -29,7 +29,7 @@
 			        <div class="panel-body">
 				        <form id="formForm" method="post" action="conf-form-save.do" class="form-horizontal">
 							  <c:if test="${model != null}">
-							  	  <input id="conf-form_id" type="hidden" name="formId" value="${formId}">
+							  	  <input id="conf-form_id" type="hidden" name="id" value="${formId}">
 							  	  <input id="conf-form_packagename" type="hidden" name="packageName" value="${model.packageName}">
 							  </c:if>
 							  <div class="form-group">
@@ -44,7 +44,8 @@
 									  </div>
 							      </c:if>
 							      <c:if test="${model.formName != null}">
-							           <label class="control-label" id="form_form_name">${model.formName}</label>
+							           <label class="control-label" >${model.formName}</label>
+							           <input id="form_form_name" type="hidden" name="formName" value="${model.formName}">
 							      </c:if>
 							  </div>
 							  <div class="form-group">
@@ -52,6 +53,16 @@
 							      <div class="col-lg-3">
 								      <input id="form-formtitle" type="text" name="formTitle" value="${model.formTitle}"  class="form-control" >
 								  </div>
+							  </div>
+							  
+							  <div class="form-group">
+							          <label class="col-lg-2 control-label" >表单操作设置:</label>
+								      <div class="checkbox">
+								          <label><input type="checkbox" name="selectedItem" value="isEdit" <tags:contains items="${selectedItem}" item="isEdit">checked</tags:contains>> 是否可修改</label>
+								          <label><input type="checkbox" name="selectedItem"  value="isAdd" <tags:contains items="${selectedItem}" item="isAdd">checked</tags:contains>> 是否可新增</label>
+								          <label><input type="checkbox" name="selectedItem"  value="isDelete" <tags:contains items="${selectedItem}" item="isDelete">checked</tags:contains>> 是否可删除</label>
+								          <label><input type="checkbox" name="selectedItem"  value="isQuery" <tags:contains items="${selectedItem}" item="isQuery">checked</tags:contains>> 是否可查询</label>
+								       </div>
 							  </div>
 							  <div class="col-lg-10 col-lg-offset-2">
 							      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
