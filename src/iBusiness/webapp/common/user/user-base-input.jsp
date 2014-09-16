@@ -1,7 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<%pageContext.setAttribute("currentHeader", "user");%>
-<%pageContext.setAttribute("currentMenu", "user");%>
 <!doctype html>
 <html>
 
@@ -45,7 +43,7 @@ $(function() {
   <body>
     <%@include file="/header/header-portal.jsp"%>
 
-    <div class="span2"> </div>
+    <div class="span2"></div>
 	<!-- start of main -->
 	<div class="panel panel-default span10"> 
         <div class="panel-heading"><h4 class="panel-title">编辑用户</h4></div>

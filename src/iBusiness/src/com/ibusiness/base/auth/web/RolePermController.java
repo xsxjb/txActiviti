@@ -16,9 +16,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.base.auth.component.CheckRoleException;
 import com.ibusiness.base.auth.component.RoleDefChecker;
+import com.ibusiness.base.auth.dao.AccessDao;
 import com.ibusiness.base.auth.dao.PermDao;
 import com.ibusiness.base.auth.dao.PermTypeDao;
 import com.ibusiness.base.auth.dao.RoleDefDao;
+import com.ibusiness.base.auth.entity.Access;
 import com.ibusiness.base.auth.entity.Perm;
 import com.ibusiness.base.auth.entity.PermType;
 import com.ibusiness.base.auth.entity.RoleDef;
@@ -26,6 +28,7 @@ import com.ibusiness.base.menu.dao.MenuDao;
 import com.ibusiness.base.menu.entity.Menu;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
+import com.ibusiness.security.client.ResourcePublisher;
 
 /**
  * 权限设置
@@ -37,12 +40,16 @@ import com.ibusiness.security.api.scope.ScopeHolder;
 @RequestMapping("auth")
 public class RolePermController {
     private static Logger logger = LoggerFactory.getLogger(RolePermController.class);
+    
     private PermDao permDao;
     private RoleDefDao roleDefDao;
     private PermTypeDao permTypeDao;
     private MessageHelper messageHelper;
     private RoleDefChecker roleDefChecker;
     private MenuDao menuDao;
+    // 权限相关
+    private AccessDao accessDao;
+    private ResourcePublisher resourcePublisher;
 
     /**
      * 标签权限保存
@@ -53,6 +60,7 @@ public class RolePermController {
      * @param redirectAttributes
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("role-perm-save")
     public String save(@RequestParam("id")
     Long id, Model model, @RequestParam(value = "selectedItem", required = false)
@@ -94,6 +102,7 @@ public class RolePermController {
      * @param model
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("role-perm-input")
     public String input(@RequestParam("id") Long id, Model model) {
         RoleDef roleDef = roleDefDao.get(id);
@@ -170,6 +179,8 @@ public class RolePermController {
                 if (null!=permAddList && permAddList.size() > 0) {
                     roleDef.getPerms().add(permAddList.get(0));
                 }
+                // TODO 保存菜单关联权限
+                saveMenuPerm(menu);
             }
             roleDefDao.save(roleDef);
             messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
@@ -179,27 +190,71 @@ public class RolePermController {
 
             return input(id, model);
         }
-
         // 返回角色列表
         return "redirect:/auth/role-def-list.do";
     }
-
-    // ~ ======================================================================
+    /**
+     * 保存菜单关联权限
+     * 
+     * @param menu
+     */
+    @SuppressWarnings("unchecked")
+    private void saveMenuPerm(Menu menu) {
+        // 如果菜单没有具体的URL那么不进行URL权限控制
+        if (menu.getMenuUrl().indexOf(".") < 0) {
+            return;
+        }
+        Access dest = new Access();
+        List<Access> accessList = accessDao.find("from Access where menuId = ?", menu.getId());
+        if (accessList != null && accessList.size() > 0) {
+            dest = accessList.get(0);
+        } else {
+            dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setMenuId(menu.getId());
+        }
+        // 资源value设置为菜单URL的.do之前的部分 + *
+        String urlValue = menu.getMenuUrl().substring(0,menu.getMenuUrl().indexOf("."));
+        dest.setValue(urlValue + "*");
+        dest.setType("URL");
+        dest.setPriority(10);
+        // 权限代码 设置为菜单UUID主键,防止重复
+        String permCode = menu.getId();
+        // foreign 授权管理
+        List<Perm> permList = permDao.find("from Perm where code = ?", permCode);
+        Perm perm = new Perm();
+        if (null != permList && permList.size() > 0) {
+            perm = permList.get(0);
+            perm.setCode(permCode);
+            perm.setName(menu.getMenuName());
+        } else {
+            // 新建
+            perm.setCode(permCode);
+            perm.setName(menu.getMenuName());
+            perm.setPermType(permTypeDao.get(Long.parseLong("7")));
+            // 优先级
+            perm.setScopeId("1");
+        }
+        //
+        permDao.save(perm);
+        dest.setPerm(perm);
+        // save
+        accessDao.save(dest);
+        // 发布资源包
+        resourcePublisher.publish();
+    }
+    // ======================================================================
     @Resource
     public void setPermDao(PermDao permDao) {
         this.permDao = permDao;
     }
-
     @Resource
     public void setRoleDefDao(RoleDefDao roleDefDao) {
         this.roleDefDao = roleDefDao;
     }
-
     @Resource
     public void setRoleDefChecker(RoleDefChecker roleDefChecker) {
         this.roleDefChecker = roleDefChecker;
     }
-
     @Resource
     public void setPermTypeDao(PermTypeDao permTypeDao) {
         this.permTypeDao = permTypeDao;
@@ -208,9 +263,17 @@ public class RolePermController {
     public void setMenuDao(MenuDao menuDao) {
         this.menuDao = menuDao;
     }
-    
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
+    }
+    // 权限相关
+    @Resource
+    public void setAccessDao(AccessDao accessDao) {
+        this.accessDao = accessDao;
+    }
+    @Resource
+    public void setResourcePublisher(ResourcePublisher resourcePublisher) {
+        this.resourcePublisher = resourcePublisher;
     }
 }

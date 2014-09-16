@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ibusiness.common.dao.CommonDao;
+import com.ibusiness.common.page.HibernateEntityDao;
 import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
 
 /**   
@@ -16,15 +16,7 @@ import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
  */
 @Service
 @Transactional
-public class ${entityName}Service extends CommonDao<${entityName}Entity> {
-	/**
-     * 更新
-     * @param entity
-     */
-    public <T> void update(T entity) {
-        super.save(entity);
-    }
-
+public class ${entityName}Service extends HibernateEntityDao<${entityName}Entity> {
     /**
      * 插入
      * @param entity

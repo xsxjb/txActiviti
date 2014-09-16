@@ -1,7 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<%pageContext.setAttribute("currentHeader", "user");%>
-<%pageContext.setAttribute("currentMenu", "job");%>
 <!doctype html>
 <html>
 
@@ -42,19 +40,18 @@
     <%@include file="/header/header-portal.jsp"%>
 
     <div class="row">
-    <div class="span1"></div>
+    <div class="span2"></div>
 
 	<!-- start of main -->
-	<div class="panel panel-default span11">
+	<div class="panel panel-default span10">
         <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
           <div class="panel-body">
 	          <div id="userSearch" class="content content-inner">
 			  <form name="userForm" method="post" action="user-base-list.do" class="form-inline">
-			     <p>
+			     <div class="form-group">
 				    <label for="user_username"><spring:message code='user.user.list.search.username' text='账号'/>:</label>
 				    <input type="text" id="user_username" name="filter_LIKES_username" value="${param.filter_LIKES_username}">
-			    </p>
-			    <p>
+				    
 				    <label for="user_enabled"><spring:message code='user.user.list.search.status' text='状态'/>:</label>
 				    <select id="user_enabled" name="filter_EQI_status" class="">
 					  <option value=""></option>
@@ -62,7 +59,7 @@
 					  <option value="0" ${param.filter_EQI_status == 0 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.false' text='禁用'/></option>
 				    </select>
 				    <button class="btn btn-default btn-sm" onclick="document.userForm.submit()">查询</button>
-			    </p>
+			    </div>
 			  </form>
 			</div>
           

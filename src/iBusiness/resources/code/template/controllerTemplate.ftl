@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mossle.core.spring.MessageHelper;
-import com.ibusiness.common.export.IbExportor;
-import com.ibusiness.common.export.IbTableModel;
-import com.ibusiness.common.hibernate.IbPropertyFilter;
-import com.ibusiness.common.page.IbPage;
+import com.ibusiness.core.spring.MessageHelper;
+import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
 
 import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
@@ -35,18 +32,17 @@ import ${bussiPackage}.service.${entityPackage}.${entityName}Service;
 public class ${entityName}Controller {
 
     private MessageHelper messageHelper;
-    private IbExportor exportor;
     private ${entityName}Service ${entityName?uncap_first}Service;
 
     @RequestMapping("${entityName?uncap_first}-list")
-    public String list(@ModelAttribute IbPage page, @RequestParam Map<String, Object> parameterMap, Model model) {
+    public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
-        List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         // 根据条件查询数据
         page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "../jsp/codebpm/${entityPackage}/${entityName?uncap_first}-list";
+        return "codebpm/${entityPackage}/${entityName?uncap_first}-list.jsp";
     }
     
     /**
@@ -65,7 +61,7 @@ public class ${entityName}Controller {
         }
         model.addAttribute("model", entity);
         
-        return "../jsp/codebpm/${entityPackage}/${entityName?uncap_first}-input";
+        return "codebpm/${entityPackage}/${entityName?uncap_first}-input.jsp";
     }
 
     /**
@@ -104,37 +100,11 @@ public class ${entityName}Controller {
 
         return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do";
     }
-
-
-    /**
-     * 导出Excel
-     * 
-     * @param page
-     * @param parameterMap
-     * @param response
-     * @throws Exception
-     */
-    @RequestMapping("${entityName?uncap_first}-export")
-    public void export(@ModelAttribute IbPage page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) throws Exception {
-        List<IbPropertyFilter> propertyFilters = IbPropertyFilter.buildFromMap(parameterMap);
-        page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
-        IbTableModel tableModel = new IbTableModel();
-        tableModel.setName("导出${tableName}");
-        // 
-        tableModel.addHeaders("id");
-        tableModel.setData((List) page.getResult());
-        exportor.export(response, tableModel);
-    }
     
     // ======================================================================
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
-    }
-
-    @Resource
-    public void setIbExportor(IbExportor exportor) {
-        this.exportor = exportor;
     }
 
     @Resource

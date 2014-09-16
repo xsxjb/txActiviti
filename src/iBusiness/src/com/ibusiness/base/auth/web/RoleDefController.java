@@ -19,7 +19,6 @@ import com.ibusiness.base.auth.component.CheckRoleException;
 import com.ibusiness.base.auth.component.RoleDefChecker;
 import com.ibusiness.base.auth.dao.RoleDefDao;
 import com.ibusiness.base.auth.entity.RoleDef;
-import com.ibusiness.bridge.scope.ScopeConnector;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.core.mapper.BeanMapper;
@@ -40,7 +39,6 @@ public class RoleDefController {
     private MessageHelper messageHelper;
     private RoleDefChecker roleDefChecker;
     private BeanMapper beanMapper = new BeanMapper();
-    private ScopeConnector scopeConnector;
 
     /**
      * 角色列表
@@ -149,24 +147,17 @@ public class RoleDefController {
         return result;
     }
 
-    // ~ ======================================================================
+    // ======================================================================
     @Resource
     public void setRoleDefDao(RoleDefDao roleDefDao) {
         this.roleDefDao = roleDefDao;
     }
-
     @Resource
     public void setRoleDefChecker(RoleDefChecker roleDefChecker) {
         this.roleDefChecker = roleDefChecker;
     }
-
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
-    }
-
-    @Resource
-    public void setScopeConnector(ScopeConnector scopeConnector) {
-        this.scopeConnector = scopeConnector;
     }
 }

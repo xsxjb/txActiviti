@@ -1,24 +1,20 @@
 <%@page contentType="text/html;charset=UTF-8"%>
-<%@include file="/taglibs.jsp"%>
-<%pageContext.setAttribute("currentHeader", "user");%>
-<%pageContext.setAttribute("currentMenu", "user");%>
+<%@include file="/common/taglibs.jsp"%>
 <!doctype html>
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
     <title><spring:message code="user.user.input.title" text="编辑用户"/></title>
-    <%@include file="/common/s.jsp"%>
+    <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/header/user.jsp"%>
-    <div class="row-fluid">
-	<%@include file="/menu/user.jsp"%>
+    <%@include file="/header/header-portal.jsp"%>
+    <div class="row">
+	<div class="span2"></div>
 	<!-- start of main -->
-    <section id="m-main" class="span10">
-      <article class="m-widget">
-        <header class="header">
-		  <h4 class="title"><spring:message code="user.user.input.title" text="编辑用户"/></h4>
-		</header>
+	<div class="panel panel-default span10"> 
+        <div class="panel-heading"><h4 class="panel-title">编辑用户</h4></div>
+        <div class="panel-body">
 		<div class="content content-inner">
 				<form id="userForm" method="post" action="${entityName?uncap_first}-save.do?operationMode=STORE" class="form-horizontal">
 				  <input id="user-base_userRepoId" type="hidden" name="userRepoId" value="1">
@@ -43,8 +39,8 @@
 				  </div>
 				</form>
 		</div>
-      </article>
-    </section>
+        </div>
+    </div>
 	<!-- end of main -->
 	</div>
   </body>
