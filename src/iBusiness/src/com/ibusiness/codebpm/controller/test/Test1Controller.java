@@ -1,4 +1,4 @@
-package ${bussiPackage}.controller.${entityPackage};
+package com.ibusiness.codebpm.controller.test;
 
 import java.util.List;
 import java.util.Map;
@@ -18,33 +18,33 @@ import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
 
-import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
-import ${bussiPackage}.service.${entityPackage}.${entityName}Service;
+import com.ibusiness.codebpm.entity.test.Test1Entity;
+import com.ibusiness.codebpm.service.test.Test1Service;
 
 /**   
  * @Title: Controller
- * @Description: ${ftl_description}
+ * @Description: 测试表1
  * @author JiangBo
  *
  */
 @Controller
-@RequestMapping("${entityName?uncap_first}")
-public class ${entityName}Controller {
+@RequestMapping("test1")
+public class Test1Controller {
 
     private MessageHelper messageHelper;
-    private ${entityName}Service ${entityName?uncap_first}Service;
+    private Test1Service test1Service;
    /**
      * 列表
      */
-    @RequestMapping("${entityName?uncap_first}-list")
+    @RequestMapping("test1-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         // 根据条件查询数据
-        page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
+        page = test1Service.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "codebpm/${entityPackage}/${entityName?uncap_first}-list.jsp";
+        return "codebpm/test/test1-list.jsp";
     }
     
     /**
@@ -53,17 +53,17 @@ public class ${entityName}Controller {
      * @param model
      * @return
      */
-    @RequestMapping("${entityName?uncap_first}-input")
+    @RequestMapping("test1-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
-        ${entityName}Entity entity = null;
+        Test1Entity entity = null;
         if (!CommonUtils.isNull(id)) {
-            entity = ${entityName?uncap_first}Service.get(id);
+            entity = test1Service.get(id);
         } else {
-            entity = new ${entityName}Entity();
+            entity = new Test1Entity();
         }
         model.addAttribute("model", entity);
         
-        return "codebpm/${entityPackage}/${entityName?uncap_first}-input.jsp";
+        return "codebpm/test/test1-input.jsp";
     }
 
     /**
@@ -72,19 +72,19 @@ public class ${entityName}Controller {
      * @return
      * @throws Exception
      */
-    @RequestMapping("${entityName?uncap_first}-save")
-    public String save(@ModelAttribute ${entityName}Entity entity, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("test1-save")
+    public String save(@ModelAttribute Test1Entity entity, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         // 再进行数据复制
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
-            ${entityName?uncap_first}Service.insert(entity);
+            test1Service.insert(entity);
         } else {
-            ${entityName?uncap_first}Service.update(entity);
+            test1Service.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do";
+        return "redirect:/test1/test1-list.do";
     }
    /**
      * 删除
@@ -92,15 +92,15 @@ public class ${entityName}Controller {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("${entityName?uncap_first}-remove")
+    @RequestMapping("test1-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
-        List<${entityName}Entity> entitys = ${entityName?uncap_first}Service.findByIds(selectedItem);
-        for (${entityName}Entity entity : entitys) {
-            ${entityName?uncap_first}Service.remove(entity);
+        List<Test1Entity> entitys = test1Service.findByIds(selectedItem);
+        for (Test1Entity entity : entitys) {
+            test1Service.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do";
+        return "redirect:/test1/test1-list.do";
     }
     
     // ======================================================================
@@ -110,8 +110,8 @@ public class ${entityName}Controller {
     }
 
     @Resource
-    public void set${entityName}Service(${entityName}Service ${entityName?uncap_first}Service) {
-        this.${entityName?uncap_first}Service = ${entityName?uncap_first}Service;
+    public void setTest1Service(Test1Service test1Service) {
+        this.test1Service = test1Service;
     }
     
 }

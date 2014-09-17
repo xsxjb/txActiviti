@@ -10,19 +10,19 @@
     <script type="text/javascript">
 		var config = {
 		    id: 'codeGrid',
-		    pageNo: ${"$" + "{page.pageNo}"},
-		    pageSize: ${"$" + "{page.pageSize}"},
-		    totalCount:${"$" + "{page.totalCount}"},
-		    resultSize: ${"$" + "{page.resultSize}"},
-		    pageCount: ${"$" + "{page.pageCount}"},
-		    orderBy: '${"$" + "{page.orderBy == null ? "+ "''" +" : page.orderBy}"}',
-		    asc: ${"$" + "{page.asc}"},
+		    pageNo: ${page.pageNo},
+		    pageSize: ${page.pageSize},
+		    totalCount:${page.totalCount},
+		    resultSize: ${page.resultSize},
+		    pageCount: ${page.pageCount},
+		    orderBy: '${page.orderBy == null ? '' : page.orderBy}',
+		    asc: ${page.asc},
 		    params: {
-		        'filter_LIKES_id': '${"$" + "{param.filter_LIKES_id}"}'
+		        'filter_LIKES_id': '${param.filter_LIKES_id}',
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm',
-			exportUrl: '${entityName?uncap_first}-export.do'
+			exportUrl: 'test1-export.do'
 		};
 
 		var table;
@@ -44,10 +44,10 @@
         <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
           <div class="panel-body">
 	          <div id="userSearch" class="content content-inner">
-				  <form name="userForm" method="post" action="${entityName?uncap_first}-list.do" class="form-inline">
+				  <form name="userForm" method="post" action="test1-list.do" class="form-inline">
 				    <div class="form-group">
 				      <label for="code_table_id">模糊查询:</label>
-				      <input type="text" id="code_table_id" name="filter_LIKES_id" value="${'$' + '{param.filter_LIKES_id}'}">
+				      <input type="text" id="code_table_id" name="filter_LIKES_id" value="${param.filter_LIKES_id}">
 					  <button class="btn btn-default btn-sm" onclick="document.userForm.submit()">查询</button>
 					</div>
 				 </form>
@@ -56,7 +56,7 @@
 	   <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
-			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${entityName?uncap_first}-input.do'">新建</button>
+			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='test1-input.do'">新建</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 			</div>
 			<div class="pull-right">
@@ -71,26 +71,24 @@
 		    <div class="m-clear"></div>
 	   </div>
 	   <div class="content">
-			<form id="gridForm" name="gridForm" method='post' action="${entityName?uncap_first}-remove.do" class="m-form-blank">
+			<form id="gridForm" name="gridForm" method='post' action="test1-remove.do" class="m-form-blank">
 			  <table id="codeGrid" class="table table-hover table-bordered">
 			      <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					        <#list columns as po>
-					                <th class="sorting" name="${po.filedComment}">${po.filedComment}</th>
-					        </#list>
-				        <th width="80">${"&nbsp"};</th>
+					                <th class="sorting" name="name">name</th>
+					                <th class="sorting" name="age">age</th>
+				        <th width="80">&nbsp;</th>
 				      </tr>
 				    </thead>
 					    <tbody>
-					      <c:forEach items="${'$' + '{page.result}'}" var="item">
+					      <c:forEach items="${page.result}" var="item">
 					      <tr>
-					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
-					        <#list columns as po>
-						        <td>${"$" + "{item.${po.fieldName}}"}</td>
-					        </#list>
+					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+						        <td>${item.name}</td>
+						        <td>${item.age}</td>
 					        <td>
-					          <a href="${entityName?uncap_first}-input.do?id=${'$' + '{item.id}'}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+					          <a href="test1-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>
 					      </tr>
 					      </c:forEach>
@@ -103,9 +101,9 @@
 			  共100条记录 显示1到10条记录
 			</div>
 			<div class="btn-group m-pagination pull-right">
-			  <button class="btn btn-small">${"&lt"};</button>
+			  <button class="btn btn-small">&lt;</button>
 			  <button class="btn btn-small">1</button>
-			  <button class="btn btn-small">${"&gt"};</button>
+			  <button class="btn btn-small">&gt;</button>
 			</div>
 		    <div class="m-clear"></div>
 	      </article>

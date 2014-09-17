@@ -16,20 +16,24 @@
         <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
-				<form id="userForm" method="post" action="${entityName?uncap_first}-save.do?operationMode=STORE" class="form-horizontal">
+				<form id="userForm" method="post" action="test1-save.do?operationMode=STORE" class="form-horizontal">
 				  <input id="user-base_userRepoId" type="hidden" name="userRepoId" value="1">
-				  <c:if test="${'$' + '{model != null}'}">
-				  <input id="code_id" type="hidden" name="id" value="${'$' + '{model.id}'}">
+				  <c:if test="${model != null}">
+				  <input id="code_id" type="hidden" name="id" value="${model.id}">
 				  </c:if>
 				  
-				  <#list columns as po>
 					  <div class="control-group">
-					    <label class="control-label" for="code-${po.filedComment}">${po.filedComment}</label>
+					    <label class="control-label" for="code-name">name</label>
 						<div class="controls">
-						  <input id="code-${po.filedComment}" type="text" name="${po.filedComment}" value="${'$' + '{model.${po.filedComment}}'}" size="40" class="text required" minlength="2" maxlength="50">
+						  <input id="code-name" type="text" name="name" value="${model.name}" size="40" class="text required" minlength="2" maxlength="50">
 					    </div>
 					  </div>
-				  </#list>
+					  <div class="control-group">
+					    <label class="control-label" for="code-age">age</label>
+						<div class="controls">
+						  <input id="code-age" type="text" name="age" value="${model.age}" size="40" class="text required" minlength="2" maxlength="50">
+					    </div>
+					  </div>
 				  
 				  <div class="control-group">
 				    <div class="controls">

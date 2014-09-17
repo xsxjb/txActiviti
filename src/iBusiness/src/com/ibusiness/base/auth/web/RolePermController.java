@@ -180,7 +180,7 @@ public class RolePermController {
                     roleDef.getPerms().add(permAddList.get(0));
                 }
                 // TODO 保存菜单关联权限
-                saveMenuPerm(menu);
+//                saveMenuPerm(menu);
             }
             roleDefDao.save(roleDef);
             messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
