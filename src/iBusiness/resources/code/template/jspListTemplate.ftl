@@ -18,8 +18,7 @@
 		    orderBy: '${"$" + "{page.orderBy == null ? "+ "''" +" : page.orderBy}"}',
 		    asc: ${"$" + "{page.asc}"},
 		    params: {
-		        'filter_LIKES_username': '${"$" + "{param.filter_LIKES_username}"}',
-		        'filter_EQI_status': '${"$" + "{param.filter_EQI_status}"}'
+		        'filter_LIKES_id': '${"$" + "{param.filter_LIKES_id}"}'
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm',
@@ -47,20 +46,14 @@
 	          <div id="userSearch" class="content content-inner">
 				  <form name="userForm" method="post" action="${entityName?uncap_first}-list.do" class="form-inline">
 				    <div class="form-group">
-				      <label for="user_username"><spring:message code='user.user.list.search.username' text='账号'/>:</label>
-				      <input type="text" id="user_username" name="filter_LIKES_username" value="${'$' + '{param.filter_LIKES_username}'}">
-				      <label for="user_enabled"><spring:message code='user.user.list.search.status' text='状态'/>:</label>
-				      <select id="user_enabled" name="filter_EQI_status" class="input-mini">
-					      <option value=""></option>
-					      <option value="1" ${"$" + "{param.filter_EQI_status == 1 ? 'selected' : ''}"}><spring:message code='user.user.list.search.enabled.true' text='启用'/></option>
-					      <option value="0" ${"$" + "{param.filter_EQI_status == 0 ? 'selected' : ''}"}><spring:message code='user.user.list.search.enabled.false' text='禁用'/></option>
-				      </select>
-					  <button class="btn btn-default btn-sm" onclick="document.userForm.submit()">查询</button>
+				        <label for="code_table_id">模糊查询:</label>
+				        <input type="text" id="code_table_id" name="filter_LIKES_id" value="${'$' + '{param.filter_LIKES_id}'}">
+					    <button class="btn btn-default btn-sm" onclick="document.userForm.submit()">查询</button>
 					</div>
 				 </form>
 			  </div>
 		  </div>
-	   <div class="panel-heading"><h4 class="panel-title">用户列表</h4></div>
+	   <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${entityName?uncap_first}-input.do'">新建</button>

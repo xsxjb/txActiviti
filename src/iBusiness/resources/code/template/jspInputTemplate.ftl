@@ -4,7 +4,7 @@
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title><spring:message code="user.user.input.title" text="编辑用户"/></title>
+    <title><spring:message code="user.user.input.title" text="编辑"/></title>
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
@@ -13,7 +13,7 @@
 	<div class="span2"></div>
 	<!-- start of main -->
 	<div class="panel panel-default span10"> 
-        <div class="panel-heading"><h4 class="panel-title">编辑用户</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
 				<form id="userForm" method="post" action="${entityName?uncap_first}-save.do?operationMode=STORE" class="form-horizontal">
