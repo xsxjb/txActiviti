@@ -177,60 +177,41 @@ public class CodeController {
         String hql = "from ConfComponent where packagename=?";
         List<ConfComponent> list = componentDao.find(hql, confForm.getPackageName());
         if (null != list && list.size() > 0) {
-            // 菜单名称
-            String menuName = list.get(0).getModulename();
-            String menu1Hql = "from Menu where menuName=?";
-            List<Menu> menus= menuDao.find(menu1Hql, menuName);
             // 实例化一个菜单
             Menu menu = new Menu();
-            if (null != menus && menus.size() > 0) {
-                menu = menus.get(0);
-            } else {
-                menu.setId(UUID.randomUUID().toString());//菜单编号
-                menu.setMenuName(list.get(0).getModulename());//菜单名称
-                menu.setMenuLevel("1");//菜单等级
-                menu.setMenuUrl("#");//菜单地址
-                menu.setMenuIframe("URL");//菜单地址打开方式
-                menu.setMenuOrder("99");//菜单排序
-                menu.setDesktopIcon("0");//是否桌面显示
-                Menu ibMenu = new Menu();
-                ibMenu.setId("0");
-                menu.setIbMenu(ibMenu);//父菜单
-                menuDao.save(menu);
-            }
+            menu.setId(UUID.randomUUID().toString());//菜单编号
+            menu.setMenuName(list.get(0).getModulename());//菜单名称
+            menu.setMenuLevel("1");//菜单等级
+            menu.setMenuUrl("#");//菜单地址
+            menu.setMenuIframe("URL");//菜单地址打开方式
+            menu.setMenuOrder("99");//菜单排序
+            menu.setDesktopIcon("0");//是否桌面显示
+            Menu ibMenu = new Menu();
+            ibMenu.setId("0");
+            menu.setIbMenu(ibMenu);//父菜单
+            menuDao.save(menu);
             ///////////////////////// 二级菜单 //////////////////////////////////////
-            String menu2Hql = "from Menu where menuName=? AND ibMenu.id=?";
-            List<Menu> menus2= menuDao.find(menu2Hql, menuName, menu.getId());
             Menu menu2 = new Menu();
-            if (null != menus2 && menus2.size() > 0) {
-                menu2 = menus2.get(0);
-            } else {
-                menu2.setId(UUID.randomUUID().toString());//菜单编号
-                menu2.setMenuName(list.get(0).getModulename());//菜单名称
-                menu2.setMenuLevel("2");//菜单等级
-                menu2.setMenuUrl("#");//菜单地址
-                menu2.setMenuIframe("URL");//菜单地址打开方式
-                menu2.setMenuOrder("99");//菜单排序
-                menu2.setDesktopIcon("0");//是否桌面显示
-                menu2.setIbMenu(menu);//父菜单
-                menuDao.save(menu2);
-            }
+            menu2.setId(UUID.randomUUID().toString());//菜单编号
+            menu2.setMenuName(list.get(0).getModulename());//菜单名称
+            menu2.setMenuLevel("2");//菜单等级
+            menu2.setMenuUrl("#");//菜单地址
+            menu2.setMenuIframe("URL");//菜单地址打开方式
+            menu2.setMenuOrder("99");//菜单排序
+            menu2.setDesktopIcon("0");//是否桌面显示
+            menu2.setIbMenu(menu);//父菜单
+            menuDao.save(menu2);
             ///////////////////////// 三级菜单 //////////////////////////////////////
-            String menu3Hql = "from Menu where menuName=? AND ibMenu.id=?";
-            List<Menu> menus3= menuDao.find(menu3Hql, confForm.getFormTitle(), menu2.getId());
             Menu menu3 = new Menu();
-            if (null == menus3 || menus3.size() <= 0) {
-                menu3.setId(UUID.randomUUID().toString());//菜单编号
-                menu3.setMenuName(confForm.getFormTitle());//菜单名称
-                menu3.setMenuLevel("3");//菜单等级
-                menu3.setMenuUrl(menuUrl);//菜单地址
-                menu3.setMenuIframe("URL");//菜单地址打开方式
-                menu3.setMenuOrder("99");//菜单排序
-                menu3.setDesktopIcon("0");//是否桌面显示
-                menu3.setIbMenu(menu2);//父菜单
-                menuDao.save(menu3);
-            }
-            
+            menu3.setId(UUID.randomUUID().toString());//菜单编号
+            menu3.setMenuName(confForm.getFormTitle());//菜单名称
+            menu3.setMenuLevel("3");//菜单等级
+            menu3.setMenuUrl(menuUrl);//菜单地址
+            menu3.setMenuIframe("URL");//菜单地址打开方式
+            menu3.setMenuOrder("99");//菜单排序
+            menu3.setDesktopIcon("0");//是否桌面显示
+            menu3.setIbMenu(menu2);//父菜单
+            menuDao.save(menu3);
         }
     }
     

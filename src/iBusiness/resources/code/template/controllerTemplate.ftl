@@ -33,9 +33,7 @@ public class ${entityName}Controller {
 
     private MessageHelper messageHelper;
     private ${entityName}Service ${entityName?uncap_first}Service;
-   /**
-     * 列表
-     */
+
     @RequestMapping("${entityName?uncap_first}-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
