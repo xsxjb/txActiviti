@@ -16,6 +16,12 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
+import com.ibusiness.component.table.dao.TableColumnsDao;
 
 
 /**
@@ -40,6 +46,17 @@ public class InitServlet extends HttpServlet {
         super.init();
        
         // 取得构造器
+        // 通过构造器取得spring中的 CommonService 对象
+        ApplicationContext wc = WebApplicationContextUtils.getWebApplicationContext( this.getServletContext() );
+        TableColumnsDao tableColumnsDao  = (TableColumnsDao) wc.getBean("tableColumnsDao");
+        ConfFormTableColumnDao confFormTableColumnDao  = (ConfFormTableColumnDao) wc.getBean("confFormTableColumnDao");
+        
+        //初始化CommonBusiness单例对象
+        CommonBusiness commonBusiness = CommonBusiness.getInstance();
+        //注入到这个单例对象中
+        commonBusiness.setTableColumnsDao(tableColumnsDao);
+        commonBusiness.setConfFormTableColumnDao(confFormTableColumnDao);
+        
 
         logger.error("Initialize servlet start success.");
     }

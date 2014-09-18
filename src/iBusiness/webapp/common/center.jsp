@@ -6,8 +6,9 @@
     <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap/css/bootstrap-responsive.min.css">
     <!-- test bootswatch  
     <link  type="text/css" rel="stylesheet" href="${ctx}/plugin/bootswatch/${userCSS == null ? 'Cerulean' : userCSS}/bootstrap.min.css"> 
+    Slate
     -->
-    <link id=“bootstrapcss”  type="text/css" rel="stylesheet" href="${ctx}/plugin/bootswatch/${userCSS == null ? 'Slate' : userCSS}/bootstrap.css">
+    <link id=“bootstrapcss”  type="text/css" rel="stylesheet" href="${ctx}/plugin/bootswatch/${userCSS == null ? 'Spacelab' : userCSS}/bootstrap.css">
      
     <!-- jquery -->
     <script type="text/javascript" src="${ctx}/plugin/jquery/jquery.min.js"></script>

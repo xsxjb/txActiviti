@@ -9,6 +9,8 @@ public class CodeGenerateBean {
 
     // 包名
     private String packageName;
+    // 表单名
+    private String formName;
     // 实体类名(首字母大写)
     private String entityName;
     // 表名
@@ -118,5 +120,17 @@ public class CodeGenerateBean {
      */
     public void setMenuUrl(String menuUrl) {
         this.menuUrl = menuUrl;
+    }
+    /**
+     * @return the formName
+     */
+    public String getFormName() {
+        return formName;
+    }
+    /**
+     * @param formName the formName to set
+     */
+    public void setFormName(String formName) {
+        this.formName = formName;
     }
 }

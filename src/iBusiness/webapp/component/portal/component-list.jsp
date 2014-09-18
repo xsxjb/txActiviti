@@ -1,7 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<%pageContext.setAttribute("currentHeader", "table");%>
-<%pageContext.setAttribute("currentMenu", "serviceModule");%>
 <!doctype html>
 <html>
 
@@ -39,9 +37,9 @@
 	<%@include file="/component/portal/component-leftmenu.jsp"%>
 	
 	<!-- start of main -->
-	<div class="panel panel-default col-md-10">
+	<div class="panel panel-default span10">
         <div class="panel-heading"><h4 class="panel-title">业务模块</h4></div>
-          <div class="panel-body">
+        <div class="panel-body">
               <div class="pull-left">
 		           <p>
 					  <button class="btn btn-default  btn-sm a-insert" onclick="location.href='component-input.do'">新建</button>

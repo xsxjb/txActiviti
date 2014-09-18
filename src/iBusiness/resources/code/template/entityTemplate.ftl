@@ -1,6 +1,5 @@
 package ${bussiPackage}.entity.${entityPackage};
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;

@@ -73,6 +73,15 @@
 					      </div>
 					  </div>
 					  <div class="form-group">
+					      <label class="col-lg-2 control-label" for="form-fcEdit">是否查询字段:</label>
+						  <div class="col-lg-2">
+					          <select id="form-fcQuery" name="fcQuery"  class="form-control">
+							        <option value="1" ${model.fcQuery==1 ? 'selected' : ''}>是</option>
+								    <option value="2" ${model.fcQuery==2 ? 'selected' : ''}>否</option>
+							   </select>
+					      </div>
+					  </div>
+					  <div class="form-group">
 					      <label class="control-label col-lg-2" for="form-fcDefault">默认值:</label>
 					      <input id="form-fcDefault" type="text" name="fcDefault" value="${model.fcDefault}"  class="text required" >
 					      <button type="button" class="btn btn-default  btn-sm">公式</button>

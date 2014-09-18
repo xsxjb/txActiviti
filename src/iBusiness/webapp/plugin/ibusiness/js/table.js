@@ -26,3 +26,18 @@ function toggleSelectedItems2(isChecked) {
 		}
 	});
 }
+
+//多选框组3
+function toggleSelectedItems3(isChecked) {
+	$(".selectedItem3").each(function(index, el) {
+		$(el).prop("checked", isChecked);
+		if ($(el).parent()[0].tagName != 'SPAN' && $(el).parent()[0].tagName != 'span') {
+			return;
+		}
+		if (isChecked) {
+			$(el).parent().addClass("checked");
+		} else {
+			$(el).parent().removeClass("checked");
+		}
+	});
+}

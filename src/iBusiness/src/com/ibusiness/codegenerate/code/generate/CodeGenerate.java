@@ -17,6 +17,9 @@ import com.ibusiness.codegenerate.code.window.CreateFileProperty;
 import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.def.FtlDef;
+import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.component.form.entity.ConfFormTableColumn;
+import com.ibusiness.component.table.entity.ConfTableColumns;
 
 /**
  * 一对一代码生成器
@@ -31,6 +34,7 @@ public class CodeGenerate implements ICallBack {
     private static final Log log = LogFactory.getLog(CodeGenerate.class);
     private static String entityPackage = "test";
     private static String entityName = "Company";
+    private static String formName = "";
     private static String tableName = "person";
     private static String tableDescription = "分公司";
     private static String primaryKeyPolicy = "uuid";
@@ -60,9 +64,10 @@ public class CodeGenerate implements ICallBack {
      */
     public CodeGenerate() {
     }
-    public CodeGenerate(String packageStr, String entityNameStr, String tableNameStr, String descriptionStr,
+    public CodeGenerate(String packageStr, String formName, String entityNameStr, String tableNameStr, String descriptionStr,
             CreateFileProperty paramCreateFileProperty, int rowNumInt, String pkStr, String sequenceStr) {
         CodeGenerate.entityName = entityNameStr;
+        CodeGenerate.formName = formName;
         CodeGenerate.entityPackage = packageStr;
         CodeGenerate.tableName = tableNameStr;
         CodeGenerate.tableDescription = descriptionStr;
@@ -71,9 +76,10 @@ public class CodeGenerate implements ICallBack {
         CodeGenerate.primaryKeyPolicy = pkStr;
         CodeGenerate.sequenceCode = sequenceStr;
     }
-    public CodeGenerate(String packageStr, String entityNameStr, String tableNameStr, String descriptionStr,
+    public CodeGenerate(String packageStr, String formName, String entityNameStr, String tableNameStr, String descriptionStr,
             CreateFileProperty paramCreateFileProperty, String pkStr, String sequenceStr) {
         CodeGenerate.entityName = entityNameStr;
+        CodeGenerate.formName = formName;
         CodeGenerate.entityPackage = packageStr;
         CodeGenerate.tableName = tableNameStr;
         CodeGenerate.tableDescription = descriptionStr;
@@ -83,7 +89,7 @@ public class CodeGenerate implements ICallBack {
     }
 
     /**
-     * 执行方法
+     * 执行方法,此方法中返回模板用的Map数据
      */
     public Map<String, Object> execute() {
         HashMap<String, Object> localHashMap = new HashMap<String, Object>();
@@ -118,7 +124,27 @@ public class CodeGenerate implements ICallBack {
         try {
             // 读取指定表名的表字段List
             this.columns = this.dbFiledToJspUtil.readTableColumn(tableName);
+            // 取得表字段信息
+            Map<String, ConfTableColumns> tableColumnsMap = CommonBusiness.getInstance().getTableColumnsMap(tableName);
+            if (tableColumnsMap.size() > 0) {
+                for (Columnt columnt : this.columns) {
+                    String key = columnt.getFieldDbName();
+                    if (tableColumnsMap.containsKey(key)) {
+                        columnt.setFiledComment(tableColumnsMap.get(key).getColumnName());
+                    }
+                }
+            }
+            // 取得表单对应表管理表信息
+            List<ConfFormTableColumn> formTableColumnList = CommonBusiness.getInstance().getFormTableColumnList(tableName, formName);
+            for (ConfFormTableColumn formTableColumn : formTableColumnList) {
+                // 转换小写
+                formTableColumn.setTableColumnLower(formTableColumn.getTableColumn().toLowerCase());
+            }
+            // 表单信息
+            localHashMap.put("formTableColumnList", formTableColumnList);
+            // 向页面设置
             localHashMap.put("columns", this.columns);
+            
             // 读取指定表名的表字段(原值)List
             this.originalColumns = this.dbFiledToJspUtil.readOriginalTableColumn(tableName);
             localHashMap.put("originalColumns", this.originalColumns);
@@ -188,4 +214,5 @@ public class CodeGenerate implements ICallBack {
         new CodeGenerate().generateToFile();
         System.out.println("----Code------------- Generation -----[单表模型]------- 生成完成。。。");
     }
+    // ===============================================
 }

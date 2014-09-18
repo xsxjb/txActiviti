@@ -73,6 +73,8 @@ public class CodeController {
             CodeGenerateBean bean = new CodeGenerateBean();
             // 包名
             bean.setPackageName(packageName);
+            // 表单名
+            bean.setFormName(confFormTable.getFormName());
             // 实体类名(首字母大写)
             bean.setEntityName(StringUtils.capitalize(confFormTable.getFormName()));
             // 表名
@@ -120,7 +122,8 @@ public class CodeController {
     @RequestMapping("code-generate-save")
     public String codeGenerateSave(CodeGenerateBean bean, @RequestParam(value = "selectedItem", required = false) List<String> selectedItems,
             @RequestParam("formId") String formId, @RequestParam("menuUrl") String menuUrl, RedirectAttributes redirectAttributes) {
-        // 自动生成Java，JSP代码
+        //step.1 准备好表单的配置
+        //step.2 判断表是否存在
         CreateFileProperty localCreateFileProperty = new CreateFileProperty();
         for (String selectedItem : selectedItems) {
             if ("".equals(selectedItem)) {
@@ -145,16 +148,10 @@ public class CodeController {
             }
         }
         
-        // 自动生成Java，JSP代码
-        new CodeGenerate(bean.getPackageName(), bean.getEntityName(), bean.getTableName(), bean.getEntityTitle(),
-                localCreateFileProperty, 1, "uuid", "").generateToFile();
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        //step.1 准备好智能表单的配置
-        //step.2 判断表是否存在
         //step.3 调用代码生成器
-        
-        //////////////////////////////////////////////////////////////////////////////////////////////////
+        // 自动生成Java，JSP代码
+        new CodeGenerate(bean.getPackageName(), bean.getFormName(), bean.getEntityName(), bean.getTableName(), bean.getEntityTitle(),
+                localCreateFileProperty, 1, "uuid", "").generateToFile();
         
         // 生成菜单
         createMenu(formId, menuUrl);
@@ -191,7 +188,7 @@ public class CodeController {
                 menu.setMenuLevel("1");//菜单等级
                 menu.setMenuUrl("#");//菜单地址
                 menu.setMenuIframe("URL");//菜单地址打开方式
-                menu.setMenuOrder("99");//菜单排序
+                menu.setMenuOrder("9");//菜单排序
                 menu.setDesktopIcon("0");//是否桌面显示
                 Menu ibMenu = new Menu();
                 ibMenu.setId("0");
@@ -210,7 +207,7 @@ public class CodeController {
                 menu2.setMenuLevel("2");//菜单等级
                 menu2.setMenuUrl("#");//菜单地址
                 menu2.setMenuIframe("URL");//菜单地址打开方式
-                menu2.setMenuOrder("99");//菜单排序
+                menu2.setMenuOrder("9");//菜单排序
                 menu2.setDesktopIcon("0");//是否桌面显示
                 menu2.setIbMenu(menu);//父菜单
                 menuDao.save(menu2);
@@ -225,7 +222,7 @@ public class CodeController {
                 menu3.setMenuLevel("3");//菜单等级
                 menu3.setMenuUrl(menuUrl);//菜单地址
                 menu3.setMenuIframe("URL");//菜单地址打开方式
-                menu3.setMenuOrder("99");//菜单排序
+                menu3.setMenuOrder("9");//菜单排序
                 menu3.setDesktopIcon("0");//是否桌面显示
                 menu3.setIbMenu(menu2);//父菜单
                 menuDao.save(menu3);

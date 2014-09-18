@@ -182,7 +182,8 @@
 								    <th>字段</th>
 								    <th>显示标题</th>
 								    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)">是否显示</th>
-								    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems2(this.checked)">是否可编辑</th>
+								    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems2(this.checked)">是否编辑</th>
+								    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems3(this.checked)">查询字段</th>
 									<th width="120">&nbsp;</th>
 								</tr>
 							</thead>
@@ -192,9 +193,10 @@
 							        <td>${item.formColumn}</td>
 							        <td>${item.formColumnTitle}</td>
 							        <td><input type="checkbox" class="selectedItem a-check" name="selectedFcDisplayItem" value="${item.formColumn}" ${item.fcDisplay==1 ? 'checked' : ''}>显示</td>
-									<td><input type="checkbox" class="selectedItem2 a-check" name="selectedFcEditItem" value="${item.formColumn}" ${item.fcEdit==1 ? 'checked' : ''}>可编辑</td> 
+									<td><input type="checkbox" class="selectedItem2 a-check" name="selectedFcEditItem" value="${item.formColumn}" ${item.fcEdit==1 ? 'checked' : ''}>可编辑</td>
+									<td><input type="checkbox" class="selectedItem3 a-check" name="selectedFcQueryItem" value="${item.formColumn}" ${item.fcQuery==1 ? 'checked' : ''}>可编辑</td>
 									<td>
-							          <a href="conf-formLabel-input.do?packageName=${item.packageName}&formName=${item.formName}&formColumn=${item.formColumn}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+							            <a href="conf-formLabel-input.do?packageName=${item.packageName}&formName=${item.formName}&formColumn=${item.formColumn}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 							        </td>
 							    </tr>
 							  </c:forEach>
@@ -211,6 +213,7 @@
 									  <c:if test="${model != null}">
 									      <input type="hidden" name="formId" value="${formId}">
 									      <input type="hidden" name="packageName" value="${model.packageName}">
+									      <input type="hidden" name="formName" value="${model.formName}">
 									  </c:if>
 									  <div class="form-group">
 										  <label class="col-lg-2 control-label" >包名(小写):</label>

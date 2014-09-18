@@ -10,15 +10,15 @@
     <script type="text/javascript">
 		var config = {
 		    id: 'codeGrid',
-		    pageNo: ${"$" + "{page.pageNo}"},
-		    pageSize: ${"$" + "{page.pageSize}"},
-		    totalCount:${"$" + "{page.totalCount}"},
-		    resultSize: ${"$" + "{page.resultSize}"},
-		    pageCount: ${"$" + "{page.pageCount}"},
-		    orderBy: '${"$" + "{page.orderBy == null ? "+ "''" +" : page.orderBy}"}',
-		    asc: ${"$" + "{page.asc}"},
+		    pageNo: ${page.pageNo},
+		    pageSize: ${page.pageSize},
+		    totalCount:${page.totalCount},
+		    resultSize: ${page.resultSize},
+		    pageCount: ${page.pageCount},
+		    orderBy: '${page.orderBy == null ? '' : page.orderBy}',
+		    asc: ${page.asc},
 		    params: {
-		        'filter_LIKES_id': '${"$" + "{param.filter_LIKES_id}"}'
+		        'filter_LIKES_id': '${param.filter_LIKES_id}'
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm'
@@ -43,14 +43,12 @@
         <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
           <div class="panel-body">
 	          <div id="userSearch" class="content content-inner">
-				  <form name="userForm" method="post" action="${entityName?uncap_first}-list.do" class="form-inline">
+				  <form name="userForm" method="post" action="carManage-list.do" class="form-inline">
 				    <div class="form-group">
-				        <#list formTableColumnList as formTableColumn>
-				            <#if  '1' ==formTableColumn.fcQuery >
-				                <label for="code_table_${formTableColumn.tableColumnLower}">${formTableColumn.formColumnTitle}:</label>
-				                <input type="text" id="code_table_${formTableColumn.tableColumnLower}" name="filter_LIKES_${formTableColumn.tableColumnLower}" value="${'$' + '{param.filter_LIKES_${formTableColumn.tableColumnLower}}'}">
-				            </#if>
-				        </#list>
+				                <label for="code_table_name">车辆管理.姓名:</label>
+				                <input type="text" id="code_table_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
+				                <label for="code_table_remark">车辆管理.备注:</label>
+				                <input type="text" id="code_table_remark" name="filter_LIKES_remark" value="${param.filter_LIKES_remark}">
 				        
 					    <button class="btn btn-default btn-sm" onclick="document.userForm.submit()">查询</button>
 					</div>
@@ -60,7 +58,7 @@
 	   <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
-			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${entityName?uncap_first}-input.do'">新建</button>
+			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='carManage-input.do'">新建</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 			</div>
 			<div class="pull-right">
@@ -75,26 +73,24 @@
 		    <div class="m-clear"></div>
 	   </div>
 	   <div class="content">
-			<form id="gridForm" name="gridForm" method='post' action="${entityName?uncap_first}-remove.do" class="m-form-blank">
+			<form id="gridForm" name="gridForm" method='post' action="carManage-remove.do" class="m-form-blank">
 			  <table id="codeGrid" class="table table-hover table-bordered">
 			      <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					        <#list columns as po>
-					                <th class="sorting">${po.filedComment}</th>
-					        </#list>
-				        <th width="80">${"&nbsp"};</th>
+					                <th class="sorting">姓名</th>
+					                <th class="sorting">备注</th>
+				        <th width="80">&nbsp;</th>
 				      </tr>
 				    </thead>
 					    <tbody>
-					      <c:forEach items="${'$' + '{page.result}'}" var="item">
+					      <c:forEach items="${page.result}" var="item">
 					      <tr>
-					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
-					        <#list columns as po>
-						        <td>${"$" + "{item.${po.fieldName}}"}</td>
-					        </#list>
+					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+						        <td>${item.name}</td>
+						        <td>${item.remark}</td>
 					        <td>
-					          <a href="${entityName?uncap_first}-input.do?id=${'$' + '{item.id}'}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+					          <a href="carManage-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>
 					      </tr>
 					      </c:forEach>
@@ -107,9 +103,9 @@
 			  共100条记录 显示1到10条记录
 			</div>
 			<div class="btn-group m-pagination pull-right">
-			  <button class="btn btn-small">${"&lt"};</button>
+			  <button class="btn btn-small">&lt;</button>
 			  <button class="btn btn-small">1</button>
-			  <button class="btn btn-small">${"&gt"};</button>
+			  <button class="btn btn-small">&gt;</button>
 			</div>
 		    <div class="m-clear"></div>
 	      </article>

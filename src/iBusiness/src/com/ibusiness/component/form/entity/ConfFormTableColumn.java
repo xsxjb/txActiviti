@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * IB_CONF_FORM_TABLE_COLUMS 表单对应字段管理表
@@ -30,6 +31,8 @@ public class ConfFormTableColumn implements java.io.Serializable {
     private String tableName;
     // 表字段名
     private String tableColumn;
+    // 表字段名(小写)生成JSP模板用
+    private String tableColumnLower;
     // 组件类型
     private String fcType;
     // 录入宽度
@@ -40,6 +43,8 @@ public class ConfFormTableColumn implements java.io.Serializable {
     private String fcDisplay;
     // 是否编辑
     private String fcEdit;
+    // 是否查询条件字段
+    private String fcQuery;
     // 默认值-公式编辑
     private String fcDefault;
 
@@ -190,6 +195,19 @@ public class ConfFormTableColumn implements java.io.Serializable {
         this.fcEdit = fcEdit;
     }
     /**
+     * @return the fcQuery
+     */
+    @Column(name = "FCQUERY")
+    public String getFcQuery() {
+        return fcQuery;
+    }
+    /**
+     * @param fcQuery the fcQuery to set
+     */
+    public void setFcQuery(String fcQuery) {
+        this.fcQuery = fcQuery;
+    }
+    /**
      * @return the fcDefault
      */
     @Column(name = "FCDEFAULT")
@@ -201,5 +219,18 @@ public class ConfFormTableColumn implements java.io.Serializable {
      */
     public void setFcDefault(String fcDefault) {
         this.fcDefault = fcDefault;
+    }
+    /**
+     * @return the tableColumnLower
+     */
+    @Transient
+    public String getTableColumnLower() {
+        return tableColumnLower;
+    }
+    /**
+     * @param tableColumnLower the tableColumnLower to set
+     */
+    public void setTableColumnLower(String tableColumnLower) {
+        this.tableColumnLower = tableColumnLower;
     }
 }

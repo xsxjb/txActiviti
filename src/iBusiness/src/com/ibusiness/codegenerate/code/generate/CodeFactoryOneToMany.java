@@ -29,6 +29,7 @@ public class CodeFactoryOneToMany {
     }
 
     public Configuration getConfiguration() throws IOException {
+        // 初始化FreeMarker配置
         Configuration configuration = new Configuration();
         String s = getTemplatePath();
         File file = new File(s);

@@ -2,8 +2,8 @@ package com.ibusiness.component.table.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +25,6 @@ public class TableService {
 	/**
 	 * 实例化公用DAO
 	 */
-	@Autowired  
-	@Qualifier("tableDao")  
 	private TableDao dao;
 	
 	/**
@@ -138,7 +136,7 @@ public class TableService {
 	 * 设置DAO
 	 * @param dao the DAO to set
 	 */
-    @Autowired(required= false) 
+    @Resource
 	public void setDao(TableDao dao) {
 		this.dao = dao;
 	}
