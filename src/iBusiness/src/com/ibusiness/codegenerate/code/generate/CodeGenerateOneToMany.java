@@ -194,7 +194,7 @@ public class CodeGenerateOneToMany
 
   public static void main(String[] paramArrayOfString)
   {
-    ArrayList localArrayList = new ArrayList();
+    List localArrayList = new ArrayList();
     SubTableEntity localSubTableEntity1 = new SubTableEntity();
     localSubTableEntity1.setTableName("t60_gbuy_order_custom");
     localSubTableEntity1.setEntityName("GbuyOrderCustom");
@@ -239,7 +239,8 @@ public class CodeGenerateOneToMany
     while (localIterator.hasNext())
     {
       SubTableEntity localSubTableEntity = (SubTableEntity)localIterator.next();
-      new CodeGenerate(localSubTableEntity.getEntityPackage(), localSubTableEntity.getEntityName(), localSubTableEntity.getTableName(), localSubTableEntity.getFtlDescription(), localCreateFileProperty, (StringUtils.isNotBlank(localSubTableEntity.getPrimaryKeyPolicy())) ? localSubTableEntity.getPrimaryKeyPolicy() : "uuid", localSubTableEntity.getSequenceCode()).generateToFile();
+      // TODO
+      new CodeGenerate(localSubTableEntity.getEntityPackage(), "", localSubTableEntity.getEntityName(), localSubTableEntity.getTableName(), localSubTableEntity.getFtlDescription(), localCreateFileProperty, (StringUtils.isNotBlank(localSubTableEntity.getPrimaryKeyPolicy())) ? localSubTableEntity.getPrimaryKeyPolicy() : "uuid", localSubTableEntity.getSequenceCode()).generateToFile();
     }
     new CodeGenerateOneToMany(paramCodeParamEntity).generateToFile();
     jdField_a_of_type_OrgApacheCommonsLoggingLog.info("----Code----Generation------[一对多数据模型：" + paramCodeParamEntity.getTableName() + "]------ 生成完成。。。");

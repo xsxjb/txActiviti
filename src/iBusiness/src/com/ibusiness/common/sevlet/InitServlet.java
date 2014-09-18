@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
 import com.ibusiness.component.table.dao.TableColumnsDao;
 
@@ -50,12 +51,14 @@ public class InitServlet extends HttpServlet {
         ApplicationContext wc = WebApplicationContextUtils.getWebApplicationContext( this.getServletContext() );
         TableColumnsDao tableColumnsDao  = (TableColumnsDao) wc.getBean("tableColumnsDao");
         ConfFormTableColumnDao confFormTableColumnDao  = (ConfFormTableColumnDao) wc.getBean("confFormTableColumnDao");
+        ConfFormDao confFormDao = (ConfFormDao) wc.getBean("confFormDao");
         
         //初始化CommonBusiness单例对象
         CommonBusiness commonBusiness = CommonBusiness.getInstance();
-        //注入到这个单例对象中
+        //注入到CommonBusiness单例对象中
         commonBusiness.setTableColumnsDao(tableColumnsDao);
         commonBusiness.setConfFormTableColumnDao(confFormTableColumnDao);
+        commonBusiness.setConfFormDao(confFormDao);
         
 
         logger.error("Initialize servlet start success.");

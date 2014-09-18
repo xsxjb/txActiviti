@@ -194,7 +194,7 @@
 							        <td>${item.formColumnTitle}</td>
 							        <td><input type="checkbox" class="selectedItem a-check" name="selectedFcDisplayItem" value="${item.formColumn}" ${item.fcDisplay==1 ? 'checked' : ''}>显示</td>
 									<td><input type="checkbox" class="selectedItem2 a-check" name="selectedFcEditItem" value="${item.formColumn}" ${item.fcEdit==1 ? 'checked' : ''}>可编辑</td>
-									<td><input type="checkbox" class="selectedItem3 a-check" name="selectedFcQueryItem" value="${item.formColumn}" ${item.fcQuery==1 ? 'checked' : ''}>可编辑</td>
+									<td><input type="checkbox" class="selectedItem3 a-check" name="selectedFcQueryItem" value="${item.formColumn}" ${item.fcQuery==1 ? 'checked' : ''}>查询条件</td>
 									<td>
 							            <a href="conf-formLabel-input.do?packageName=${item.packageName}&formName=${item.formName}&formColumn=${item.formColumn}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 							        </td>

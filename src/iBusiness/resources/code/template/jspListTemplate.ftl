@@ -40,6 +40,8 @@
     <div class="span2"></div>
 	<!-- start of main -->
 	<div class="panel panel-default span10">
+	<!-- 查询条件 -->
+	<#if  confForm.isQuery >
         <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
           <div class="panel-body">
 	          <div id="userSearch" class="content content-inner">
@@ -51,12 +53,12 @@
 				                <input type="text" id="code_table_${formTableColumn.tableColumnLower}" name="filter_LIKES_${formTableColumn.tableColumnLower}" value="${'$' + '{param.filter_LIKES_${formTableColumn.tableColumnLower}}'}">
 				            </#if>
 				        </#list>
-				        
 					    <button class="btn btn-default btn-sm" onclick="document.userForm.submit()">查询</button>
 					</div>
 				 </form>
 			  </div>
 		  </div>
+      </#if>
 	   <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
@@ -113,6 +115,7 @@
 			</div>
 		    <div class="m-clear"></div>
 	      </article>
+	  </div>
 	<!-- end of main -->
 	</div>
   </body>

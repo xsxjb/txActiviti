@@ -197,6 +197,10 @@ public class FormController {
     public String save(@ModelAttribute ConfForm confForm, @RequestParam(value = "selectedItem", required = false) List<String> selectedItems, RedirectAttributes redirectAttributes) throws Exception {
         String id = confForm.getId();
         // 设置 表单操作设置信息。
+        confForm.setIsEdit(false);
+        confForm.setIsAdd(false);
+        confForm.setIsDelete(false);
+        confForm.setIsQuery(false);
         if (null != selectedItems) {
             for (String selectedItem : selectedItems) {
                 if ("isEdit".equals(selectedItem)) {
@@ -260,6 +264,9 @@ public class FormController {
             formTableColumn.setFormColumnTitle(confTable.getTableNameComment()+"."+tableColumn.getColumnName());
             formTableColumn.setTableName(confTable.getTableName());
             formTableColumn.setTableColumn(tableColumn.getColumnValue());
+            formTableColumn.setFcEdit("1");
+            formTableColumn.setFcDisplay("1");
+            formTableColumn.setFcQuery("2");
             confFormTableColumnDao.saveInsert(formTableColumn);
         }
         

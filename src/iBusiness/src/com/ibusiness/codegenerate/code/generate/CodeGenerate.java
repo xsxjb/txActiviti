@@ -18,6 +18,7 @@ import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.def.FtlDef;
 import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 
@@ -134,16 +135,22 @@ public class CodeGenerate implements ICallBack {
                     }
                 }
             }
+            // 设置表字段信息
+            localHashMap.put("columns", this.columns);
+            
+            // 取得表单信息
+            List<ConfForm> formList = CommonBusiness.getInstance().getFormList(formName);
+            // 表单信息
+            localHashMap.put("confForm", formList.get(0));
+            
             // 取得表单对应表管理表信息
             List<ConfFormTableColumn> formTableColumnList = CommonBusiness.getInstance().getFormTableColumnList(tableName, formName);
             for (ConfFormTableColumn formTableColumn : formTableColumnList) {
                 // 转换小写
                 formTableColumn.setTableColumnLower(formTableColumn.getTableColumn().toLowerCase());
             }
-            // 表单信息
+            // 表单字段信息
             localHashMap.put("formTableColumnList", formTableColumnList);
-            // 向页面设置
-            localHashMap.put("columns", this.columns);
             
             // 读取指定表名的表字段(原值)List
             this.originalColumns = this.dbFiledToJspUtil.readOriginalTableColumn(tableName);

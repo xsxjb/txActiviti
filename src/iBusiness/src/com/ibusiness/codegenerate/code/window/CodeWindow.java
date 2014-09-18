@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import com.ibusiness.codegenerate.util.createActionListener;
+import com.ibusiness.codegenerate.util.CreateActionListener;
 import com.ibusiness.codegenerate.util.exitActionListener;
 /**
  * 代码自动生成页面测试类
@@ -105,7 +105,7 @@ public class CodeWindow extends JFrame {
         localJPanel.add(jsp_row);
         // 自动代码生成按钮
         JButton createButton = new JButton("生成");
-        createButton.addActionListener(new createActionListener(this, packagefld, showlbl, entityfld, titlefld,
+        createButton.addActionListener(new CreateActionListener(this, packagefld, showlbl, entityfld, titlefld,
                 tablefld, fieldRowNumfld, keyType_ComboBox, keySequence_TextField, jsp,
                 jsp_row, action_CheckBox, jsp_CheckBox, serviceI_CheckBox, serviceImpl_CheckBox,
                 page_CheckBox, entityButton));

@@ -23,7 +23,7 @@ import com.ibusiness.codegenerate.code.window.CreateFileProperty;
  * @author JiangBo
  * 
  */
-public final class createActionListener implements ActionListener {
+public final class CreateActionListener implements ActionListener {
     private JLabel titleInfo_JLabel;
     private JTextField packageName_TextField;
     private JTextField entity_TextField;
@@ -44,7 +44,7 @@ public final class createActionListener implements ActionListener {
     /**
      * 构造函数
      */
-    public createActionListener(CodeWindow paramCodeWindow, JTextField packageName_TextField, JLabel titleInfo_JLabel,
+    public CreateActionListener(CodeWindow paramCodeWindow, JTextField packageName_TextField, JLabel titleInfo_JLabel,
             JTextField entity_TextField, JTextField tableNameRemark_TextField, JTextField tableName_TextField,
             JTextField rowNumber_TextField, JComboBox keyType_ComboBox, JTextField keySequence_TextField,
             JRadioButton jspDetail_RadioButton, JRadioButton jspRow_RadioButton, JCheckBox action_CheckBox,
@@ -120,7 +120,7 @@ public final class createActionListener implements ActionListener {
             boolean bool = new DbFiledToJspUtil().checkTableExist(this.tableName_TextField.getText());
             if (bool) {
                 // 自动生成Java，JSP代码
-                new CodeGenerate(this.packageName_TextField.getText(), this.entity_TextField.getText(),
+                new CodeGenerate(this.packageName_TextField.getText(), "", this.entity_TextField.getText(),
                         this.tableName_TextField.getText(), this.tableNameRemark_TextField.getText(),
                         localCreateFileProperty, Integer.parseInt(this.rowNumber_TextField.getText()),
                         this.keyType_ComboBox.getSelectedItem().toString(), this.keySequence_TextField.getText())
