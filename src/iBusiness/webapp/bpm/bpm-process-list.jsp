@@ -1,7 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<%pageContext.setAttribute("currentHeader", "table");%>
-<%pageContext.setAttribute("currentMenu", "table");%>
 <!doctype html>
 <html>
 
@@ -12,7 +10,6 @@
     <script type="text/javascript">
 		var config = {
 			    id: 'formGrid',
-			    packageName:${packageName},
 			    pageNo: ${page.pageNo},
 			    pageSize: ${page.pageSize},
 			    totalCount: ${page.totalCount},
@@ -21,8 +18,7 @@
 			    orderBy: '${page.orderBy == null ? "" : page.orderBy}',
 			    asc: ${page.asc},
 			    params: {
-			        'filter_LIKES_username': '${param.filter_LIKES_username}',
-			        'filter_EQI_status': '${param.filter_EQI_status}'
+			    	'packageName': '${packageName}'
 			    },
 				selectedItemClass: 'selectedItem',
 				gridFormId: 'bpmFlowGridForm'
@@ -48,7 +44,7 @@
           <div class="panel-body">
 			    <div class="pull-left">
 			        <p>
-					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-form-input.do?packageName=${packageName}'">新建</button>
+					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='bpm-process-input.do?packageName=${packageName}'">新建</button>
 					    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				    </p>
 				</div>
@@ -64,7 +60,7 @@
 				<div class="m-clear"></div>
 	    </div>
 		<div class="content">
-			<form id="bpmFlowGridForm" name="bpmFlowGridForm" method='post' action="conf-bpmFlow-remove.do?packageName=${packageName}" class="m-form-blank">
+			<form id="bpmFlowGridForm" name="bpmFlowGridForm" method='post' action="bpm-process-remove.do?packageName=${packageName}" class="m-form-blank">
 			  <table id="formGrid" class="table table-hover table-bordered">
 			    <thead>
 			      <tr>
@@ -72,6 +68,8 @@
 			        <th class="sorting">包名</th>
 			        <th class="sorting" >流程名</th>
 			        <th class="sorting">流程标题</th>
+			        <th width="60">&nbsp;</th>
+			        <th width="60">&nbsp;</th>
 			        <th width="60">&nbsp;</th>
 			      </tr>
 			    </thead>
@@ -81,10 +79,16 @@
 			      <tr>
 			        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 			        <td>${item.packageName}</td>
-			        <td>${item.formName}</td>
-			        <td>${item.formTitle}</td>
+			        <td>${item.flowName}</td>
+			        <td>${item.flowTitle}</td>
 			        <td>
-			          <a href="conf-bpmFlow-input.do?formId=${item.id}&packageName=${packageName}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+			            <a href="bpm-process-input.do?id=${item.id}&packageName=${packageName}" class="a-update">编辑</a>
+			        </td>
+			        <td>
+			            <a href="${scopePrefix}/bpm-process/bpm-process-graph.do?bpmProcessId=${item.id}" target="_blank" >图形</a>
+			        </td>
+			        <td>
+			            <a href="bpm-conf-node-list.do?flowVersionId=${item.versionId}" >配置</a>
 			        </td>
 			      </tr>
 			      </c:forEach>

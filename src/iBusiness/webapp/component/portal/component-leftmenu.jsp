@@ -32,7 +32,7 @@
 			callback: {
 				onClick: function(event, treeId, treeNode) {
 					location.href = '${scopePrefix}/component/component-action.do?packageName=' +  treeNode.packageName + '&typeId=' + treeNode.typeId
-							   + '&tableName=' + treeNode.tableName + '&formId=' + treeNode.formId;
+							   + '&tableName=' + treeNode.tableName + '&formId=' + treeNode.formId + '&flowId='  + treeNode.flowId;
 				}
 			}
 		};

@@ -55,4 +55,7 @@
 	<import resource="applicationContext-security-extend.xml"/>
 	<!-- 权限配置 -->
 	<import resource="applicationContext-security.xml"/>
+	<!-- activiti -->
+	<import resource="applicationContext-activiti.xml"/>
+	
 </beans>

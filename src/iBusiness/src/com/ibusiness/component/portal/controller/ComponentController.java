@@ -50,7 +50,9 @@ public class ComponentController {
     @RequestMapping("component-action")
     public String moduleAction(Model model, @RequestParam(value = "packageName", required = false) String packageName,
             @RequestParam(value = "typeId", required = false) String typeId,
-            @RequestParam(value = "tableName", required = false) String tableName, @RequestParam(value = "formId", required = false) String formId) {
+            @RequestParam(value = "tableName", required = false) String tableName, 
+            @RequestParam(value = "formId", required = false) String formId,
+            @RequestParam(value = "flowId", required = false) String flowId) {
         if ("root".equals(packageName)) {
             // 返回添加业务组件管理页面
             return "redirect:/component/component-list.do";
@@ -71,12 +73,21 @@ public class ComponentController {
         }
         if ("Bpm".equals(typeId)) {
             // 跳转到流程页面
-            return "redirect:/bpmflow/bpm-flow-list.do?packageName=" + packageName;
+            return "redirect:/bpm-process/bpm-process-list.do?packageName=" + packageName;
+        } else if ("flows".equals(typeId)) {
+            // 跳转到指定流程信息页面
+            return "redirect:/bpm-process/bpm-process-input.do?packageName=" + packageName + "&id=" + flowId;
         }
         // 返回JSP
         return "component/portal/component-show.jsp";
     }
-    
+    /**
+     * 列表
+     * @param page
+     * @param parameterMap
+     * @param model
+     * @return
+     */
     @RequestMapping("component-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 父结点ID为0的是业务分类模块

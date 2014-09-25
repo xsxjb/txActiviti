@@ -241,6 +241,11 @@ public class FormController {
             @RequestParam(value = "formId", required = false) String formId,
             @RequestParam("packageName") String packageName,
             Model model, RedirectAttributes redirectAttributes) throws Exception {
+        // 如果表ID为空返回
+        if (CommonUtils.isNull(tableId)) {
+            messageHelper.addFlashMessage(redirectAttributes, "core.failure.save", "请选择表~~!");
+            return "redirect:/form/conf-formTables-input.do?packageName=" + packageName + "&formId="+formId;
+        }
         // 取得表信息数据
         ConfTable confTable = tableDao.get(tableId);
         // confTable

@@ -2,14 +2,14 @@ package com.ibusiness.component.bpm.dao;
 
 import org.springframework.stereotype.Service;
 
+import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.common.page.HibernateEntityDao;
-import com.ibusiness.component.bpm.entity.ConfBpmFlow;
 /**
- * 表单管理DAO
+ * 流程管理DAO
  * 
  * @author JiangBo
  *
  */
 @Service
-public class ConfBpmFlowDao extends HibernateEntityDao<ConfBpmFlow> {
+public class BpmProcessDao extends HibernateEntityDao<BpmProcess> {
 }

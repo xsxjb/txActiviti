@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.base.auth.dao.AccessDao;
@@ -73,11 +74,40 @@ public class MenuController {
         List<Menu> menuList = menuDao.find("from Menu where menuLevel = '1' order by menuOrder");
         model.addAttribute("levelOneInfos", menuList);
         // 二级菜单下拉列表
-        List<Menu> menu2List = menuDao.find("from Menu where menuLevel = '2' order by menuOrder");
+        List<Menu> menu2List = menuDao.find("from Menu where PARENTID = '" + menuLevelOne + "' and ID != '0' order by menuOrder");
         model.addAttribute("levelTwoInfos", menu2List);
         
         return "common/menu/menu-list.jsp";
     }
+    
+    /**
+     * ajax二三级菜单联动
+     * @param menuID
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("menu-getlevelTwo")
+    @ResponseBody
+    public String getlevelTwo(@RequestParam(value = "menuleveloneID") String menuleveloneID){
+    	StringBuffer sb = new StringBuffer();
+    	//根据上级select的ID,查找下级菜单的数据
+    	List<Menu> menuList = menuDao.find("from Menu where PARENTID = '" + menuleveloneID + "'order by menuOrder");
+    	if(menuList != null && menuList.size() > 0){
+    		Menu menu;
+    		String selected;
+    		//遍历菜单项，构建select列表
+    		for(int i = 0; i < menuList.size(); i++){
+    			menu = menuList.get(i);
+    			selected = menu.getId().equals(menuleveloneID) ? "selected" : "";
+    			sb.append("<option value='"+menu.getId()+"' "+selected+">"+menu.getMenuName()+"</option>");
+    		}
+    		
+    		return sb.toString();
+    	}
+    	//没数据显示“请选择”
+    	return "<option value=''>请选择</option>";
+    }
+    
     /**
      * 新建/修改 菜单信息
      * @param id

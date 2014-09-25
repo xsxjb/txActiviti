@@ -85,12 +85,13 @@
 								      <div class="form-group">
 									      <label class="control-label" for="role_def">表名:</label>
 										  <select id="role_def" name="tableId" class="form-control">
+										        <option value="" >请选择</option>
 											  <c:forEach items="${mainTable}" var="item">
 											    <option value="${item.id}" >${item.tableNameComment}</option>
 											  </c:forEach>
 										  </select>
 										  <span class="input-group-btn">
-										      <button class="btn btn-default btn-sm a-submit" >添加</button>
+										      <button class="btn btn-default btn-sm a-submit" ><spring:message code='core.success.save' text='添加'/></button>
 										  </span>
 									   </div>
 									 </form>
@@ -133,6 +134,7 @@
 								      <div class="form-group">
 								          <label class="control-label" for="role_def">表名:</label>
 										  <select id="sub_table_id" name="tableId" class="form-control">
+										      <option value="" >请选择</option>
 											  <c:forEach items="${subTable}" var="item">
 											    <option value="${item.id}" >${item.tableNameComment}</option>
 											  </c:forEach>

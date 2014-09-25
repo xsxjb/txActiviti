@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.ibusiness.bpm.entity.BpmProcess;
+import com.ibusiness.component.bpm.dao.BpmProcessDao;
 import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.portal.dao.ComponentDao;
@@ -34,6 +36,7 @@ public class ComponentResource {
     private ComponentDao componentDao;
     private TableDao tableDao;
     private ConfFormDao confFormDao;
+    private BpmProcessDao cpmProcessDao;
 
     @SuppressWarnings("unchecked")
     @POST
@@ -133,6 +136,23 @@ public class ComponentResource {
                     list.add(formMap);
                 }
                 map.put("children", list);
+            } else if ("Bpm".equals(component.getTypeid())) {
+                String hql = "from BpmProcess where packageName = ? ";
+                List<BpmProcess> flows = cpmProcessDao.find(hql, component.getPackagename());
+                // 循环
+                List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+                for (BpmProcess bpmFlow : flows) {
+                    Map<String, Object> bpmMap = new HashMap<String, Object>();
+                    bpmMap.put("id", bpmFlow.getId());
+                    bpmMap.put("name", bpmFlow.getFlowTitle());
+                    bpmMap.put("packageName", bpmFlow.getPackageName());
+                    bpmMap.put("typeId", "flows");
+                    bpmMap.put("open", "true");
+                    bpmMap.put("flowId", bpmFlow.getId());
+                    bpmMap.put("icon", "../plugin/ztree/zTreeStyle/img/diy/9.png");
+                    list.add(bpmMap);
+                }
+                map.put("children", list);
             } else {
                 // 查询子节点
                 String hql = "from ConfComponent where parentid = ? ";
@@ -160,5 +180,9 @@ public class ComponentResource {
     @Resource
     public void setConfFormDao(ConfFormDao confFormDao) {
         this.confFormDao = confFormDao;
+    }
+    @Resource
+    public void setBpmProcessDao(BpmProcessDao cpmProcessDao) {
+        this.cpmProcessDao = cpmProcessDao;
     }
 }

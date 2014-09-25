@@ -31,11 +31,30 @@
 		    table.configPageSize('.m-page-size');
 		});
 		
+		function getlevelTwo(){
+			//向服务端获取二级菜单列表
+			$.ajax({
+				url:'menu-getlevelTwo.do',
+				data: {
+					menuleveloneID:$("#select_levelone").val()
+	    		},
+				success:function(responseText){
+					//构建select
+					$("#menu_leveltwo option").remove();
+					$('#menu_leveltwo').append(responseText);
+					//设置二级菜单ID
+					$(hidden_menuLevelTwo).val($("#menu_leveltwo").val());
+					$('#menu_leveltwo').focus();
+				}
+			});
+		}
+		
 		// 下拉菜单
 		$(document).ready(function(){
 			// 一级菜单
 			$("#select_levelone").change(function() {
 				$(hidden_menuLevelOne).val($("#select_levelone").val());
+				
 			});
 			// 二级菜单
 			$("#menu_leveltwo").change(function() {
@@ -70,7 +89,7 @@
 							  <!-- 一级父菜单 -->
 							  <c:if test="${menuLevel != 1}">
 							      <label class="control-label" for="select_levelone">一级菜单:</label>
-								  <select id="select_levelone" name="menuLevelOne">
+								  <select id="select_levelone" name="menuLevelOne" onchange="getlevelTwo();">
 								      <option value="" selected>请选择</option>
 									  <c:forEach items="${levelOneInfos}" var="item">
 									    <option value="${item.id}" ${item.id==menuLevelOne ? 'selected' : ''}>${item.menuName}</option>
