@@ -56,11 +56,29 @@ public class FormController {
         // 取得表结构信息。
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQS_packageName", packageName));
+        propertyFilters.add(new PropertyFilter("NEQI_isBpmForm", "1"));
         page = confFormDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("packageName", packageName);
         
         return "component/form/conf-form-list.jsp"; 
+    }
+    /**
+     * 流程表单信息列表
+     * 
+     * @return
+     */
+    @RequestMapping("conf-bpmForm-list")
+    public String bpmFormList(@ModelAttribute Page page, @RequestParam("packageName") String packageName, @RequestParam Map<String, Object> parameterMap, Model model) {
+        // 取得表结构信息。
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        propertyFilters.add(new PropertyFilter("EQS_packageName", packageName));
+        propertyFilters.add(new PropertyFilter("EQI_isBpmForm", "1"));
+        page = confFormDao.pagedQuery(page, propertyFilters);
+        model.addAttribute("page", page);
+        model.addAttribute("packageName", packageName);
+        
+        return "component/form/conf-bpmform-list.jsp"; 
     }
     /**
      * 表单基础信息 插入页面
@@ -70,20 +88,24 @@ public class FormController {
      * @return
      */
     @RequestMapping("conf-form-input")
-    public String input(@RequestParam(value = "formId", required = false) String formId, @RequestParam("packageName") String packageName, Model model) {
+    public String input(@RequestParam(value = "formId", required = false) String formId, @RequestParam("packageName") String packageName, @RequestParam("isBpmForm") String isBpmForm, Model model) {
         ConfForm confForm = null;
         // 实例化 表单操作配置信息对象
         List<String> selectedItems = new ArrayList<String>();
         if (!CommonUtils.isNull(formId)) {
             confForm = confFormDao.get(formId);
             // 编辑 表单操作配置信息
-            selectedItems.add((null != confForm.getIsEdit() && confForm.getIsEdit()) ? "isEdit": "");
-            selectedItems.add((null != confForm.getIsAdd() && confForm.getIsAdd()) ? "isAdd": "");
-            selectedItems.add((null != confForm.getIsDelete() && confForm.getIsDelete()) ? "isDelete": "");
-            selectedItems.add((null != confForm.getIsQuery() && confForm.getIsQuery()) ? "isQuery": "");
+            selectedItems.add((null != confForm.getIsEdit() && 1 == confForm.getIsEdit()) ? "isEdit": "");
+            selectedItems.add((null != confForm.getIsAdd() && 1 == confForm.getIsAdd()) ? "isAdd": "");
+            selectedItems.add((null != confForm.getIsDelete() && 1 == confForm.getIsDelete()) ? "isDelete": "");
+            selectedItems.add((null != confForm.getIsQuery() && 1 == confForm.getIsQuery()) ? "isQuery": "");
+            selectedItems.add((null != confForm.getIsBpmForm() && 1 == confForm.getIsBpmForm()) ? "isBpmForm": "");
         } else {
             confForm = new ConfForm();
             confForm.setPackageName(packageName);
+            if (!CommonUtils.isNull(isBpmForm)) {
+                confForm.setIsBpmForm(Integer.valueOf(isBpmForm));
+            }
         }
         // 设置 表单操作配置信息
         model.addAttribute("selectedItem", selectedItems);
@@ -95,6 +117,7 @@ public class FormController {
         
         // 包名
         model.addAttribute("packageName", packageName);
+        model.addAttribute("isBpmForm", isBpmForm);
 
         return "component/form/conf-form-input.jsp";
     }
@@ -137,6 +160,7 @@ public class FormController {
         model.addAttribute("tabType", "formTables");
         // 包名
         model.addAttribute("packageName", packageName);
+        model.addAttribute("isBpmForm", confForm.getIsBpmForm());
         model.addAttribute("formId", formId);
         model.addAttribute("formName", confForm.getFormName());
         // 主表列表下拉框
@@ -170,6 +194,7 @@ public class FormController {
         model.addAttribute("tabType", "formLabel");
         // 包名
         model.addAttribute("packageName", packageName);
+        model.addAttribute("isBpmForm", confForm.getIsBpmForm());
 
         return "component/form/conf-form-input.jsp";
     }
@@ -197,20 +222,22 @@ public class FormController {
     public String save(@ModelAttribute ConfForm confForm, @RequestParam(value = "selectedItem", required = false) List<String> selectedItems, RedirectAttributes redirectAttributes) throws Exception {
         String id = confForm.getId();
         // 设置 表单操作设置信息。
-        confForm.setIsEdit(false);
-        confForm.setIsAdd(false);
-        confForm.setIsDelete(false);
-        confForm.setIsQuery(false);
+        confForm.setIsEdit(2);
+        confForm.setIsAdd(2);
+        confForm.setIsDelete(2);
+        confForm.setIsQuery(2);
         if (null != selectedItems) {
             for (String selectedItem : selectedItems) {
                 if ("isEdit".equals(selectedItem)) {
-                    confForm.setIsEdit(true);
+                    confForm.setIsEdit(1);
                 } else if ("isAdd".equals(selectedItem)) {
-                    confForm.setIsAdd(true);
-                }else if ("isDelete".equals(selectedItem)) {
-                    confForm.setIsDelete(true);
-                }else if ("isQuery".equals(selectedItem)) {
-                    confForm.setIsQuery(true);
+                    confForm.setIsAdd(1);
+                } else if ("isDelete".equals(selectedItem)) {
+                    confForm.setIsDelete(1);
+                } else if ("isQuery".equals(selectedItem)) {
+                    confForm.setIsQuery(1);
+                } else if ("isBpmForm".equals(selectedItem)) {
+                    confForm.setIsBpmForm(1);
                 }
             }
         }

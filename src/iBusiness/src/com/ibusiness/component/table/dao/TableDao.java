@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ibusiness.common.dao.BaseEntityDao;
@@ -16,7 +16,7 @@ import com.ibusiness.component.table.entity.ConfTableColumns;
 /**
  * 流水表表结构管理DAO
  */
-@Component
+@Service
 @Transactional(rollbackFor = Exception.class)
 public class TableDao extends BaseEntityDao<ConfTable> {
 	

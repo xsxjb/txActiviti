@@ -17,7 +17,12 @@
 	        $(".launch").click();
 	    }
     </script>
-    
+    <!-- 图片右上角数值CSS样式 -->
+    <style>
+		.imageBoxItem{position: relative;}
+		/**background-color:red; */
+		.diagnoseItem{position: absolute;display: block;width: 11px;height: 11px;right:-20px;top:0px;color:#fff;}
+	</style>
   </head>
 
   <body onload="init()">
@@ -29,11 +34,14 @@
       <div id="launchpad" style="width:100%">
           <!--***************************   ***********************************-->
           <c:forEach items="${deskMenuItems}" var="item">
-             <div class="icon" style="width:30px">
+             <div class="icon imageBoxItem" style="width:30px">
                    <a href="${scopePrefix}${item.menuUrl}">
                        <img src="${ctx}/plugin/ibusiness/${item.iconUrl}" title="${item.menuName}"  />
                        <span class="badge">${item.menuName}</span>
                     </a>
+                    <!-- 字体加粗 最大值900 
+                    <span class="diagnoseItem" style="color:red;  font-weight:900; font-size:11px; " >99</span>
+                     -->
               </div>
           </c:forEach>
       </div>

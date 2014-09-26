@@ -97,6 +97,7 @@ public class CodeController {
             model.addAttribute("model", bean);
             model.addAttribute("formId", formId);
             model.addAttribute("packageName", packageName);
+            model.addAttribute("isBpmForm", confForm.getIsBpmForm());
             // 需要生成的代码
             List<String> selectedItems = new ArrayList<String>();
             selectedItems.add("checkboxController");

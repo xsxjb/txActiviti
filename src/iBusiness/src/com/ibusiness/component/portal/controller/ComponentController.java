@@ -62,14 +62,28 @@ public class ComponentController {
             return "redirect:/table/conf-table-list.do?packageName=" + packageName;
         } else if ("tables".equals(typeId)) {
             // 跳转到指定表信息页面
-            return "redirect:/table/conf-table-column-list.do?tableName=" + tableName;
+            return "redirect:/table/conf-table-column-list.do?tableName=" + tableName + "&isBpmTable=2";
         }
         if ("Form".equals(typeId)) {
             // 跳转到表单列表页面
             return "redirect:/form/conf-form-list.do?packageName=" + packageName;
         } else if ("forms".equals(typeId)) {
             // 跳转到指定表单信息页面
-            return "redirect:/form/conf-form-input.do?packageName=" + packageName + "&formId=" + formId;
+            return "redirect:/form/conf-form-input.do?packageName=" + packageName + "&formId=" + formId + "&isBpmForm=2";
+        }
+        if ("BpmTable".equals(typeId)) {
+            // 跳转到流程表存储列表页面
+            return "redirect:/table/conf-bpmTable-list.do?packageName=" + packageName;
+        } else if ("bpmTables".equals(typeId)) {
+            // 跳转到指定表信息页面
+            return "redirect:/table/conf-table-column-list.do?tableName=" + tableName + "&isBpmTable=1";
+        }
+        if ("BpmForm".equals(typeId)) {
+            // 跳转到流程表单列表页面
+            return "redirect:/form/conf-bpmForm-list.do?packageName=" + packageName;
+        } else if ("bpmForms".equals(typeId)) {
+            // 跳转到指定表单信息页面
+            return "redirect:/form/conf-form-input.do?packageName=" + packageName + "&formId=" + formId + "&isBpmForm=1";
         }
         if ("Bpm".equals(typeId)) {
             // 跳转到流程页面
@@ -146,6 +160,20 @@ public class ComponentController {
             formEntity.setPackagename(entity.getPackagename());
             formEntity.setModulename("表单设计器");
             formEntity.setTypeid("Form");
+            // 流程表
+            ConfComponent bpmTableEntity = new ConfComponent();
+            bpmTableEntity.setId(UUID.randomUUID().toString());
+            bpmTableEntity.setParentid(entity.getId());
+            bpmTableEntity.setPackagename(entity.getPackagename());
+            bpmTableEntity.setModulename("流程表设计器");
+            bpmTableEntity.setTypeid("BpmTable");
+            // 流程表单
+            ConfComponent bpmFormEntity = new ConfComponent();
+            bpmFormEntity.setId(UUID.randomUUID().toString());
+            bpmFormEntity.setParentid(entity.getId());
+            bpmFormEntity.setPackagename(entity.getPackagename());
+            bpmFormEntity.setModulename("流程表单设计器");
+            bpmFormEntity.setTypeid("BpmForm");
             // 流程
             ConfComponent bpmEntity = new ConfComponent();
             bpmEntity.setId(UUID.randomUUID().toString());
@@ -156,6 +184,8 @@ public class ComponentController {
             // 插入
             componentDao.insert(tableEntity);
             componentDao.insert(formEntity);
+            componentDao.insert(bpmTableEntity);
+            componentDao.insert(bpmFormEntity);
             componentDao.insert(bpmEntity);
         } else {
             componentDao.update(entity);

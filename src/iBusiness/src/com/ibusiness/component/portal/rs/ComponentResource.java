@@ -101,8 +101,17 @@ public class ComponentResource {
             	map.put("icon", "../plugin/ztree/zTreeStyle/img/diy/5.png");
             }
             // 子节点--表
-            if ("Table".equals(component.getTypeid())) {
-                String hql = "from ConfTable where packageName = ? ";
+            if ("Table".equals(component.getTypeid()) || "BpmTable".equals(component.getTypeid())) {
+                String isBpmTable = "1";
+                String typeId = "tables";
+                if ("Table".equals(component.getTypeid())) {
+                    isBpmTable = "2";
+                    typeId = "tables";
+                } else {
+                    isBpmTable = "1";
+                    typeId = "bpmTables";
+                }
+                String hql = "from ConfTable where packageName = ? AND isBpmTable=" + isBpmTable;
                 List<ConfTable> tables = tableDao.find(hql, component.getPackagename());
                 // 循环
                 List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -111,16 +120,25 @@ public class ComponentResource {
                     tableMap.put("id", confTable.getId());
                     tableMap.put("name", confTable.getTableNameComment());
                     tableMap.put("packageName", confTable.getPackageName());
-                    tableMap.put("typeId", "tables");
+                    tableMap.put("typeId", typeId);
                     tableMap.put("open", "true");
                     tableMap.put("tableName", confTable.getTableName());
                     tableMap.put("icon", "../plugin/ztree/zTreeStyle/img/diy/2.png");
                     list.add(tableMap);
                 }
                 map.put("children", list);
-            } else if ("Form".equals(component.getTypeid())) {
+            } else if ("Form".equals(component.getTypeid()) || "BpmForm".equals(component.getTypeid())) {
+                String isBpmForm = "1";
+                String typeId = "forms";
+                if ("Form".equals(component.getTypeid())) {
+                    isBpmForm = "2";
+                    typeId = "forms";
+                } else {
+                    isBpmForm = "1";
+                    typeId = "bpmForms";
+                }
                 // 子节点--表单
-                String hql = "from ConfForm where packageName = ? ";
+                String hql = "from ConfForm where packageName =? AND isBpmForm=" + isBpmForm;
                 List<ConfForm> forms = confFormDao.find(hql, component.getPackagename());
                 // 循环
                 List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -129,7 +147,7 @@ public class ComponentResource {
                     formMap.put("id", confForm.getId());
                     formMap.put("name", confForm.getFormTitle());
                     formMap.put("packageName", confForm.getPackageName());
-                    formMap.put("typeId", "forms");
+                    formMap.put("typeId", typeId);
                     formMap.put("open", "true");
                     formMap.put("formId", confForm.getId());
                     formMap.put("icon", "../plugin/ztree/zTreeStyle/img/diy/8.png");

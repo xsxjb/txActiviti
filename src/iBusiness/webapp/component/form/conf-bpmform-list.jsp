@@ -44,7 +44,7 @@
           <div class="panel-body">
 			    <div class="pull-left">
 			        <p>
-					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-form-input.do?packageName=${packageName}&isBpmForm=2'">新建</button>
+					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-form-input.do?packageName=${packageName}&isBpmForm=1'">新建</button>
 					    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				    </p>
 				</div>

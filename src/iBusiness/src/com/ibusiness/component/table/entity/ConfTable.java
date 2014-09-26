@@ -2,7 +2,6 @@ package com.ibusiness.component.table.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -27,11 +26,12 @@ public class ConfTable {
     private String tableType;
     // 关联主表ID
     private String parentTableId;
+    // 是否流程表
+    private Integer isBpmTable;
     /**
      * @return the id
      */
     @Id
-    @GeneratedValue
     @Column(name = "ID", nullable = false)
     public String getId() {
         return id;
@@ -110,5 +110,18 @@ public class ConfTable {
      */
     public void setParentTableId(String parentTableId) {
         this.parentTableId = parentTableId;
+    }
+    /**
+     * @return the isBpmTable
+     */
+    @Column(name = "ISBPMTABLE")
+    public Integer getIsBpmTable() {
+        return isBpmTable;
+    }
+    /**
+     * @param isBpmTable the isBpmTable to set
+     */
+    public void setIsBpmTable(Integer isBpmTable) {
+        this.isBpmTable = isBpmTable;
     }
 }

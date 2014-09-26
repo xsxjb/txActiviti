@@ -23,13 +23,15 @@ public class ConfForm {
     // 表单名标题
     private String formTitle;
     // 是否可修改
-    private Boolean isEdit;
+    private Integer isEdit;
     // 是否可新增
-    private Boolean isAdd;
+    private Integer isAdd;
     // 是否可删除
-    private Boolean isDelete;
+    private Integer isDelete;
     // 是否可查询
-    private Boolean isQuery;
+    private Integer isQuery;
+    // 是否流程表单
+    private Integer isBpmForm;
     /**
      * @return the id
      */
@@ -87,52 +89,65 @@ public class ConfForm {
      * @return the isEdit
      */
     @Column(name = "ISEDIT")
-    public Boolean getIsEdit() {
+    public Integer getIsEdit() {
         return isEdit;
     }
     /**
      * @param isEdit the isEdit to set
      */
-    public void setIsEdit(Boolean isEdit) {
+    public void setIsEdit(Integer isEdit) {
         this.isEdit = isEdit;
     }
     /**
      * @return the isAdd
      */
     @Column(name = "ISADD")
-    public Boolean getIsAdd() {
+    public Integer getIsAdd() {
         return isAdd;
     }
     /**
      * @param isAdd the isAdd to set
      */
-    public void setIsAdd(Boolean isAdd) {
+    public void setIsAdd(Integer isAdd) {
         this.isAdd = isAdd;
     }
     /**
      * @return the isDelete
      */
     @Column(name = "ISDELETE")
-    public Boolean getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
     /**
      * @param isDelete the isDelete to set
      */
-    public void setIsDelete(Boolean isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
     /**
      * @return the isQuery
      */
     @Column(name = "ISQUERY")
-    public Boolean getIsQuery() {
+    public Integer getIsQuery() {
         return isQuery;
     }
     /**
      * @param isQuery the isQuery to set
      */
-    public void setIsQuery(Boolean isQuery) {
+    public void setIsQuery(Integer isQuery) {
         this.isQuery = isQuery;
+    }
+    /**
+     * @return the isBpmForm
+     */
+    @Column(name = "ISBPMFORM")
+    public Integer getIsBpmForm() {
+        return isBpmForm;
+    }
+    /**
+     * @param isBpmForm the isBpmForm to set
+     */
+    public void setIsBpmForm(Integer isBpmForm) {
+        this.isBpmForm = isBpmForm;
     }
 }

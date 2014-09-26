@@ -32,8 +32,9 @@
         
 			<div class="content content-inner">
 				<form id="tableCommentForm" method="post" action="conf-table-save.do" class="form-horizontal">
+				   <input id="table-isBpmTable" type="hidden" name="isBpmTable" value="${isBpmTable}">
 				  <c:if test="${model != null}">
-				  <input id="table-uuId" type="hidden" name="uuId" value="${model.uuId}">
+				      <input id="table-uuId" type="hidden" name="uuId" value="${model.uuId}">
 				  </c:if>
 				  <div class="form-group">
 				    <label class="col-lg-2 control-label" for="table-packageName">所在模块:</label>

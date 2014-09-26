@@ -17,10 +17,12 @@
 		<div class="panel panel-default col-md-10 " > 
 		    <!-- tabs  -->
 	        <ul class="nav nav-tabs">
-			  <li class="${tabType == 'formBase' ? 'active' : ''} "><a href="${scopePrefix}/form/conf-form-input.do?packageName=${packageName}&formId=${formId}" >表单基础信息</a></li>
+			  <li class="${tabType == 'formBase' ? 'active' : ''} "><a href="${scopePrefix}/form/conf-form-input.do?packageName=${packageName}&formId=${formId}&isBpmForm=${isBpmForm}" >表单基础信息</a></li>
 			  <li class="${tabType == 'formTables' ? 'active' : ''}"><a href="${scopePrefix}/form/conf-formTables-input.do?packageName=${packageName}&formId=${formId}" >关联表字段</a></li>
 			  <li class="${tabType == 'formLabel' ? 'active' : ''}"><a href="${scopePrefix}/form/conf-formLabel-list.do?packageName=${packageName}&formId=${formId}">控件类型</a></li>
-			  <li class="${tabType == 'formCode' ? 'active' : ''}"><a href="${scopePrefix}/code/code-generate-input.do?packageName=${packageName}&formId=${formId}">代码生成</a></li>
+			  <c:if test="${isBpmForm == '2'}">
+			      <li class="${tabType == 'formCode' ? 'active' : ''}"><a href="${scopePrefix}/code/code-generate-input.do?packageName=${packageName}&formId=${formId}">代码生成</a></li>
+			  </c:if>
 			</ul>
 			<div id="tabContent" class="tab-content">
 			  <!-- ========================== 表单基础信息 =================================================== -->
@@ -30,6 +32,7 @@
 				        <form id="formForm" method="post" action="conf-form-save.do" class="form-horizontal">
 							  <c:if test="${model != null}">
 							  	  <input id="conf-form_id" type="hidden" name="id" value="${formId}">
+							  	  <input id="conf-form-isBpmForm" type="hidden" name="isBpmForm" value="${isBpmForm}">
 							  	  <input id="conf-form_packagename" type="hidden" name="packageName" value="${model.packageName}">
 							  </c:if>
 							  <div class="form-group">

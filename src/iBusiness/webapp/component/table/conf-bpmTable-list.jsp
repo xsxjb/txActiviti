@@ -7,7 +7,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>表存储列表</title>
+    <title>流程表列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -33,10 +33,10 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default span10">
-          <div class="panel-heading"><h4 class="panel-title">表存储模型</h4></div>
+          <div class="panel-heading"><h4 class="panel-title">流程表模型</h4></div>
           <div class="panel-body">
                 <div id="tableCategorySearch" class="content content-inner">
-				  	<button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}&isBpmTable=2'">新建</button>
+				  	<button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}&isBpmTable=1'">新建</button>
 				  	<button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				</div>
             </div>

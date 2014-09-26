@@ -33,10 +33,13 @@ public class TableService {
      * @param string
      * @return
      */
-    public List<ConfTable> queryConfTableList(String packageName) {
+    public List<ConfTable> queryConfTableList(String packageName, String isBpmTable) {
         String sql = " select * from IB_CONF_TABLE ";
         if (!CommonUtils.isNull(packageName)) {
         	sql = sql + " WHERE packageName='" + packageName +"' ";
+        }
+        if (!CommonUtils.isNull(isBpmTable)) {
+            sql = sql + " AND isBpmTable=" + isBpmTable;
         }
         return dao.queryConfTableList(sql);
     }
@@ -140,4 +143,7 @@ public class TableService {
 	public void setDao(TableDao dao) {
 		this.dao = dao;
 	}
+    public TableDao getDao() {
+        return this.dao;
+    }
 }

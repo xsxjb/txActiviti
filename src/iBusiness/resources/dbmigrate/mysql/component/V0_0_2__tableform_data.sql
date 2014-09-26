@@ -2,10 +2,12 @@
 INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES('10001','test','测试模块','0','sModule');
 INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES('10002','test','表存储设计器','10001','Table');
 INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES('10003','test','表单设计器','10001','Form');
-INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES('10004','test','流程设计器','10001','Bpm');
+INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES('10004','test','流程表设计器','10001','BpmTable');
+INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES('10005','test','流程表单设计器','10001','BpmForm');
+INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES('10006','test','流程设计器','10001','Bpm');
 
 /* ============================= 业务表管理表 =============================   */
-INSERT INTO IB_CONF_TABLE(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT) VALUES('10001','test','IB_TEST','测试练习表');
+INSERT INTO IB_CONF_TABLE(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,ISBPMTABLE) VALUES('10001','test','IB_TEST','测试练习表',2);
 /* ======================== 业务模块组件管理表 ====================  */
 CREATE TABLE IB_TEST (
 	     ID  VARCHAR(64),
@@ -18,7 +20,7 @@ INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,co
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_TEST','NAME','姓名','VARCHAR','64','是',2);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_TEST','REMARK','备注','VARCHAR','1024','是',8);
 /* ============================= 表单管理表 =============================  */
-INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY) VALUES('10001','test','testForm','测试练习表单','1','1','1','1');
+INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) VALUES('10001','test','testForm','测试练习表单',1,1,1,1,2);
 /* ============================= 表单对应数据表管理表 =============================  */
 INSERT INTO ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) VALUES('test','testForm','IB_TEST','main');
 /* ============================= 表单对应字段管理表 =============================  */

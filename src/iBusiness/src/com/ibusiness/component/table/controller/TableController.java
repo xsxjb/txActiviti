@@ -41,13 +41,24 @@ public class TableController {
     @RequestMapping("conf-table-list")
     public String confTableShow(@RequestParam("packageName") String packageName, Model model) {
         // 取得表结构信息。
-        List<ConfTable> list = tableService.queryConfTableList(packageName);
+        List<ConfTable> list = tableService.queryConfTableList(packageName,"2");
         // 表结构信息
         model.addAttribute("tableInfoList", list);
         model.addAttribute("packageName", packageName);
         
         return "component/table/conf-table-list.jsp"; 
     }
+    @RequestMapping("conf-bpmTable-list")
+    public String confBpmTableShow(@RequestParam("packageName") String packageName, Model model) {
+        // 取得表结构信息。
+        List<ConfTable> list = tableService.queryConfTableList(packageName,"1");
+        // 表结构信息
+        model.addAttribute("tableInfoList", list);
+        model.addAttribute("packageName", packageName);
+        
+        return "component/table/conf-bpmTable-list.jsp"; 
+    }
+    
     /**
      * 表列字段结构管理表信息查询
      * 
@@ -84,8 +95,9 @@ public class TableController {
      * @return
      */
     @RequestMapping("conf-table-insert")
-    public String confTableInsert(@RequestParam("packageName") String packageName, Model model) {
+    public String confTableInsert(@RequestParam("packageName") String packageName, @RequestParam("isBpmTable") String isBpmTable, Model model) {
         model.addAttribute("packageName", packageName);
+        model.addAttribute("isBpmTable", isBpmTable);
         
         return "component/table/conf-table-insert.jsp"; 
     }
@@ -97,27 +109,33 @@ public class TableController {
      */
     @RequestMapping("conf-table-save")
     public String confTableSave(@ModelAttribute ConfTable confTable, RedirectAttributes redirectAttributes) {
-    	List<ConfTable> list = new ArrayList<ConfTable>();
     	confTable.setId(UUID.randomUUID().toString());
     	confTable.setTableName("IB_" + confTable.getTableName().toUpperCase());//转成大写
-    	list.add(confTable);
-    	tableService.insertConfTable(list);
+    	tableService.getDao().saveInsert(confTable);
+    	
     	// 在数据库中创建一张业务表
 		createTable(confTable);
+		//
 		// 将ID字段插入表列字段管理表
-		List<ConfTableColumns> tableColumnsList = new ArrayList<ConfTableColumns>();
-		ConfTableColumns confTableColumns = new ConfTableColumns();
-        confTableColumns.setTableName(confTable.getTableName());
-        confTableColumns.setColumnValue("ID");
-        confTableColumns.setColumnName("UUID主键");
-        confTableColumns.setColumnNo(1);
-        confTableColumns.setColumnType("VARCHAR");
-        confTableColumns.setColumnSize("64");
-        confTableColumns.setIsNull("否");;
-        tableColumnsList.add(confTableColumns);
+        List<ConfTableColumns> tableColumnsList = new ArrayList<ConfTableColumns>();
+		if (1 == confTable.getIsBpmTable()) {
+		    // 流程用表--列字段
+		    
+		} else {
+		    // 非流程用表--列字段
+		    ConfTableColumns confTableColumns = new ConfTableColumns();
+	        confTableColumns.setTableName(confTable.getTableName());
+	        confTableColumns.setColumnValue("ID");
+	        confTableColumns.setColumnName("UUID主键");
+	        confTableColumns.setColumnNo(1);
+	        confTableColumns.setColumnType("VARCHAR");
+	        confTableColumns.setColumnSize("64");
+	        confTableColumns.setIsNull("否");
+	        tableColumnsList.add(confTableColumns);
+		}
         // 插入
         tableService.insertConfTableColumns(tableColumnsList);
-        
+        // 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/table/conf-table-list.do?packageName="+confTable.getPackageName();
     }
