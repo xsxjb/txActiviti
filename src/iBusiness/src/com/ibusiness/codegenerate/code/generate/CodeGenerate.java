@@ -114,7 +114,7 @@ public class CodeGenerate implements ICallBack {
         }
         try {
             // 读取指定表名的表字段List
-            this.columns = this.dbFiledToJspUtil.readTableColumn(tableName);
+            this.columns = getColumListByTableName(tableName);
             // 取得表字段信息
             Map<String, ConfTableColumns> tableColumnsMap = CommonBusiness.getInstance().getTableColumnsMap(tableName);
             if (tableColumnsMap.size() > 0) {
@@ -160,7 +160,40 @@ public class CodeGenerate implements ICallBack {
         localHashMap.put("serialVersionUID", String.valueOf(serialVersionUID));
         return localHashMap;
     }
-
+    /**
+     * 取得字段list 根据表名
+     * @param tableName
+     * @return
+     */
+    private List<Columnt> getColumListByTableName(String tableName) {
+        // 取得子表对应表字段信息
+        List<ConfTableColumns> subTableColumnsList = CommonBusiness.getInstance().getTableColumnsList(tableName);
+        List<Columnt> subColumlist = new ArrayList<Columnt>();
+        for (ConfTableColumns confTableColumns : subTableColumnsList) {
+            // 表卖的字段不予设置
+            if ("ID".equals(confTableColumns.getColumnValue()) 
+                    || "EXECUTIONID".equals(confTableColumns.getColumnValue())
+                    || "ASSIGNEEUSER".equals(confTableColumns.getColumnValue())
+                    || "CREATEDATEBPM".equals(confTableColumns.getColumnValue())
+                    || "NODENAME".equals(confTableColumns.getColumnValue())
+                    || "DONEFLAG".equals(confTableColumns.getColumnValue())
+                    || "PARENTID".equals(confTableColumns.getColumnValue())) {
+                continue;
+            }
+            Columnt columnt = new Columnt();
+            // 字段名
+            columnt.setFieldDbName(confTableColumns.getColumnValue());
+            //
+            columnt.setFieldType(confTableColumns.getColumnType());
+            columnt.setCharmaxLength(confTableColumns.getColumnSize());
+            // 字段名
+            columnt.setFieldName(confTableColumns.getColumnValue().toLowerCase());
+            // 字段标题
+            columnt.setFiledComment(confTableColumns.getColumnName());
+            subColumlist.add(columnt);
+        }
+        return subColumlist;
+    }
     /**
      * 生成文件
      */
@@ -175,7 +208,7 @@ public class CodeGenerate implements ICallBack {
                 codeFactory.invoke("jspListTemplate.ftl", "jspList");
                 codeFactory.invoke("jspInputTemplate.ftl", "jsp");
             } else if ("sub".equals(createFileProperty.getJspMode())) {
-                codeFactory.invoke("jspInputTemplate.ftl", "jsp");
+                codeFactory.invoke("onetomany/jspSubInputOneToMTemplate.ftl", "jsp");
             }
         }
         // ServiceImpl文件

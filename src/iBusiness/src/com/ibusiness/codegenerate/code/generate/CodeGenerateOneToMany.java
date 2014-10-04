@@ -65,7 +65,7 @@ public class CodeGenerateOneToMany implements ICallBack {
      */
     public CodeGenerateOneToMany() {
     }
-    public CodeGenerateOneToMany(CodeParamBean codeParamBean, CreateFileProperty createFileProperty) {
+    public CodeGenerateOneToMany(CodeParamBean codeParamBean, CreateFileProperty fileProperty) {
         entityName = codeParamBean.getEntityName();
         entityPackage = codeParamBean.getPackageName();
         formName = codeParamBean.getFormName();
@@ -74,7 +74,7 @@ public class CodeGenerateOneToMany implements ICallBack {
         ftlMode = codeParamBean.getFormStyle();
         primaryKeyPolicy = (StringUtils.isNotBlank(codeParamBean.getKeyType())) ? codeParamBean.getKeyType() : "uuid";
         sequenceCode = "";
-        this.createFileProperty = createFileProperty;
+        createFileProperty = fileProperty;
         subTabParamList = codeParamBean.getSubParamBeans();
     }
 
@@ -115,7 +115,8 @@ public class CodeGenerateOneToMany implements ICallBack {
         }
         try {
             // 取得主表字段数据
-            this.mainColums = this.dbFiledToJspUtil.readTableColumn(tableName);
+            // 取得表字段list 根据表名
+            this.mainColums = getColumListByTableName(tableName);
             // 读取指定表名的表字段List
             // 取得表字段信息
             Map<String, ConfTableColumns> tableColumnsMap = CommonBusiness.getInstance().getTableColumnsMap(tableName);
@@ -156,24 +157,8 @@ public class CodeGenerateOneToMany implements ICallBack {
             }
             //========= 子表内容生成 =========================================//
             for (CodeParamBean codeParamBean : subTabParamList) {
-                // 取得子表对应表字段信息
-                List<ConfTableColumns> subTableColumnsList = CommonBusiness.getInstance().getTableColumnsList(codeParamBean.getTableName());
-                List<Columnt> subColumlist = new ArrayList<Columnt>();
-                if (tableColumnsMap.size() > 0) {
-                    for (ConfTableColumns confTableColumns : subTableColumnsList) {
-                        Columnt columnt = new Columnt();
-                        // 字段名
-                        columnt.setFieldDbName(confTableColumns.getColumnValue());
-                        //
-                        columnt.setFieldType(confTableColumns.getColumnType());
-                        columnt.setCharmaxLength(confTableColumns.getColumnSize());
-                        // 字段名
-                        columnt.setFieldName(confTableColumns.getColumnValue().toLowerCase());
-                        // 字段标题
-                        columnt.setFiledComment(confTableColumns.getColumnName());
-                        subColumlist.add(columnt);
-                    }
-                }
+                // 取得表字段list 根据表名
+                List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName());
                 codeParamBean.setColumns(subColumlist);
             }
             // 将子表内容存入
@@ -185,6 +170,40 @@ public class CodeGenerateOneToMany implements ICallBack {
         localHashMap.put("serialVersionUID", String.valueOf(serialVersionUID));
         return localHashMap;
     }
+    /**
+     * 取得字段list 根据表名
+     * @param tableName
+     * @return
+     */
+    private List<Columnt> getColumListByTableName(String tableName) {
+        // 取得子表对应表字段信息
+        List<ConfTableColumns> subTableColumnsList = CommonBusiness.getInstance().getTableColumnsList(tableName);
+        List<Columnt> subColumlist = new ArrayList<Columnt>();
+        for (ConfTableColumns confTableColumns : subTableColumnsList) {
+            // 表卖的字段不予设置
+            if ("ID".equals(confTableColumns.getColumnValue()) 
+                    || "EXECUTIONID".equals(confTableColumns.getColumnValue())
+                    || "ASSIGNEEUSER".equals(confTableColumns.getColumnValue())
+                    || "CREATEDATEBPM".equals(confTableColumns.getColumnValue())
+                    || "NODENAME".equals(confTableColumns.getColumnValue())
+                    || "DONEFLAG".equals(confTableColumns.getColumnValue())
+                    || "PARENTID".equals(confTableColumns.getColumnValue())) {
+                continue;
+            }
+            Columnt columnt = new Columnt();
+            // 字段名
+            columnt.setFieldDbName(confTableColumns.getColumnValue());
+            //
+            columnt.setFieldType(confTableColumns.getColumnType());
+            columnt.setCharmaxLength(confTableColumns.getColumnSize());
+            // 字段名
+            columnt.setFieldName(confTableColumns.getColumnValue().toLowerCase());
+            // 字段标题
+            columnt.setFiledComment(confTableColumns.getColumnName());
+            subColumlist.add(columnt);
+        }
+        return subColumlist;
+    }
 
     /**
      * 生成文件
@@ -195,7 +214,7 @@ public class CodeGenerateOneToMany implements ICallBack {
         if (createFileProperty.isJspFlag()) {
             codeFactoryOneToMany.invoke("bpm/jspInputOneToMTemplate.ftl", "jsp");
             codeFactoryOneToMany.invoke("bpm/jspListOneToMTemplate.ftl", "jspList");
-            codeFactoryOneToMany.invoke("bpm/jspSubInputOneToMTemplate.ftl", "jspSub");
+//            codeFactoryOneToMany.invoke("bpm/jspSubInputOneToMTemplate.ftl", "jspSub");
         }
         // ServiceImpl文件
         if (createFileProperty.isServiceImplFlag()) {

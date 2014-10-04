@@ -106,7 +106,7 @@ public class ${entityName}Controller {
         model.addAttribute("model", entity);
         model.addAttribute("parentid", id);
         model.addAttribute("flowId", flowId);
-        return "codebpm/${entityPackage}/${entityName?uncap_first}-input.jsp";
+        return "codebpm/${entityPackage}/${sub.entityName?uncap_first}-input.jsp";
     }
     </#list>
     /**

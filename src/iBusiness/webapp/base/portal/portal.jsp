@@ -39,9 +39,10 @@
                        <img src="${ctx}/plugin/ibusiness/${item.iconUrl}" title="${item.menuName}"  />
                        <span class="badge">${item.menuName}</span>
                     </a>
-                    <!-- 字体加粗 最大值900 
-                    <span class="diagnoseItem" style="color:red;  font-weight:900; font-size:11px; " >99</span>
-                     -->
+                    <!-- 字体加粗 最大值900  -->
+                    <c:if test="${null != item.dataCount}">
+                        <span class="diagnoseItem" style="color:red;  font-weight:900; font-size:12px; " >${item.dataCount}</span>
+                    </c:if>
               </div>
           </c:forEach>
       </div>

@@ -12,11 +12,11 @@
     <div class="row">
 	<div class="span2"></div>
 	<!-- start of main -->
-	<div class="panel panel-default span10"> 
+	<div class="panel panel-default col-md10"> 
         <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
-				<form id="cgForm" method="post" action="${entityName?uncap_first}-save.do?operationMode=STORE" class="form-horizontal">
+				<form id="cgForm" method="post" action="${entityName?uncap_first}-save.do" class="form-horizontal">
 				  <c:if test="${'$' + '{model != null}'}">
 				      <input id="code_id" type="hidden" name="id" value="${'$' + '{model.id}'}">
 				  </c:if>

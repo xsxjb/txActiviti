@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ibusiness.base.auth.entity.RoleDef;
 
@@ -37,6 +38,7 @@ public class Menu implements java.io.Serializable {
 	private String menuOrder;//菜单排序
 	private String desktopIcon;//是否桌面显示
 	private String iconUrl;//对应图标
+	private String dataCount;// 数据条数(主页面显示用)
 	
 	// 一个父菜单项目对应多个叶子菜单项目
 	private List<Menu> chiledItems = new ArrayList<Menu>();
@@ -112,7 +114,6 @@ public class Menu implements java.io.Serializable {
     public String getIconUrl() {
         return iconUrl;
     }
-
     /**
      * @param iconUrl the iconUrl to set
      */
@@ -134,5 +135,15 @@ public class Menu implements java.io.Serializable {
     }
     public void setRoleDefs(Set<RoleDef> roleDefs) {
         this.roleDefs = roleDefs;
+    }
+    /**
+     * 临时
+     */
+    @Transient
+    public String getDataCount() {
+        return dataCount;
+    }
+    public void setDataCount(String dataCount) {
+        this.dataCount = dataCount;
     }
 }

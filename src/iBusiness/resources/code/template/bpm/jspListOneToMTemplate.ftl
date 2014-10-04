@@ -42,12 +42,12 @@
 	<div class="panel panel-default col-md-10 ">
         <!-- tabs  -->
         <ul class="nav nav-tabs">
-		  <li class="${'$' + '{flowType ==\'0\' ? \'active\' : \'\'}'} "><a href="${'$' + '{scopePrefix}'}/${entityName?uncap_first}/${entityName?uncap_first}-list.do?flowId=${'$' + '{flowId}'}&aflowType=0" >待办</a></li>
-		  <li class="${'$' + '{flowType ==\'1\' ? \'active\' : \'\'}'} "><a href="${'$' + '{scopePrefix}'}/${entityName?uncap_first}/${entityName?uncap_first}-list.do?flowId=${'$' + '{flowId}'}&aflowType=1" >已办</a></li>
+		  <li class="${'$' + '{flowType ==\'0\' ? \'active\' : \'\'}'} "><a href="${'$' + '{scopePrefix}'}/${entityName?uncap_first}/${entityName?uncap_first}-list.do?flowId=${'$' + '{flowId}'}&flowType=0" >待办</a></li>
+		  <li class="${'$' + '{flowType ==\'1\' ? \'active\' : \'\'}'} "><a href="${'$' + '{scopePrefix}'}/${entityName?uncap_first}/${entityName?uncap_first}-list.do?flowId=${'$' + '{flowId}'}&flowType=1" >已办</a></li>
 		</ul>
 		<div id="tabContent" class="tab-content">
 		    <!-- ========================== 待办流程信息 =================================================== -->
-			    <c:if test="${'$' + '{flowType == \'0\'}'} ">
+			    <c:if test="${'$' + '{flowType == \'0\'}'}">
 			    <div id=bpmBase class="tab-pane fade  ${'$' + '{flowType == \'0\'? \'active in\' : \'\'}'}">
 				    <!-- 查询条件 -->
 			        <div class="panel-heading"><h4 class="panel-title">待办流程查询</h4></div>
@@ -64,7 +64,7 @@
 					</div>
 			        <div class="panel-body">
 					    <div class="pull-left">
-						    <button class="btn btn-default btn-sm a-insert" onclick="${'$' + '{scopePrefix}'}/${entityName?uncap_first}/${entityName?uncap_first}-input.do?flowId=${'$' + '{flowId}'}">新建</button>
+						    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${entityName?uncap_first}-input.do?flowId=${'$' + '{flowId}'}'">新建</button>
 						    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 						</div>
 						<div class="pull-right">

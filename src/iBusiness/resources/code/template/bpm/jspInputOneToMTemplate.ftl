@@ -47,7 +47,7 @@
 	        <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('${entityName?uncap_first}-complete.do')">办理</button>
 			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('${entityName?uncap_first}-save-draft.do')">草稿</button>
-			    <button class="btn btn-default btn-sm a-remove" onclick="${'$' + '{scopePrefix}'}/${entityName?uncap_first}/${entityName?uncap_first}-list.do?flowId=${'$' + '{flowId}'}&flowType=0">返回</button>
+			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='${entityName?uncap_first}-list.do?flowId=${'$' + '{flowId}'}&flowType=0'">返回</button>
 			</div>
 	   </div>
 	   
@@ -79,7 +79,7 @@
         <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
-				    <button class="btn btn-default btn-sm a-insert" onclick="${'$' + '{scopePrefix}'}/${entityName?uncap_first}/${entityName?uncap_first}-sub-input.do?id=${'$' + '{model.id}'}&subId=&flowId=${'$' + '{flowId}'}">新建</button>
+				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=&flowId=${'$' + '{flowId}'}'">新建</button>
 				    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				</div>
 				<div class="pull-right">
@@ -106,7 +106,7 @@
 					      </tr>
 					    </thead>
 						    <tbody>
-						      <c:forEach items="${'$' + '{${sub.entityName?uncap_first}Page.result}'}" var="item">
+						      <c:forEach items="${'$' + '{page.result}'}" var="item">
 								  <tr>
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
 									        <#list sub.columns as subItem>

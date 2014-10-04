@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import com.ibusiness.base.menu.dao.MenuDao;
 import com.ibusiness.base.menu.entity.Menu;
 import com.ibusiness.base.user.dao.UserBaseDao;
 import com.ibusiness.base.user.entity.UserBase;
+import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.security.util.SpringSecurityUtils;
 /**
  * 登录后首页controller
@@ -70,6 +72,12 @@ public class portalController {
                 }
                 for (Menu menu3 : menu2.getChiledItems()) {
                     if ("1".equals(menu3.getDesktopIcon())) {
+                        if ("待办任务".equals(menu3.getMenuName())) {
+                            // 取得待办任务（个人任务）---指定用户ID的
+                            BpmComBusiness bpmComBusiness = new BpmComBusiness();
+                            List<Task> tasks = bpmComBusiness.listPersonalTasks(SpringSecurityUtils.getCurrentUserId());
+                            menu3.setDataCount(String.valueOf(tasks.size()));
+                        }
                         deskmenus.add(menu3);
                     }
                 }

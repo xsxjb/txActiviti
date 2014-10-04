@@ -36,6 +36,7 @@ update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Finder.png' where id = '
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Numbers.png' where id = 'mThree211';
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Keynote.png' where id = 'mThree212';
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/PhotoBooth.png' where id = 'mThree233';
+update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Developer.png' where id = 'mThree311';
 
 /*===============  IB_MENU_ROLE_DEF 菜单和角色模板关联表  =============================*/
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mOne1','2');
@@ -64,6 +65,8 @@ INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mThree311','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mThree312','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mThree421','2');
 
+INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mOne99','2');
+INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mTwo991','2');
 /*======= 普通用户角色权限 ==========*/
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mOne1','3');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mOne2','3');
@@ -91,5 +94,3 @@ INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mThree311','3');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mThree312','3');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mThree421','3');
 
-INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mOne99','3');
-INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mTwo991','3');
