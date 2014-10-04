@@ -14,12 +14,12 @@ import com.ibusiness.bpm.FormInfo;
 import com.ibusiness.bpm.cmd.FindStartFormCmd;
 import com.ibusiness.bpm.dao.BpmFlowNodeDao;
 import com.ibusiness.bpm.dao.BpmNodeFormDao;
+import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmFlowNode;
 import com.ibusiness.bpm.entity.BpmNodeForm;
 import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
-import com.ibusiness.component.bpm.dao.BpmProcessDao;
 
 /**
  * 流程表单相关配置

@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.ibusiness.codegenerate.code.CodeParamBean;
 import com.ibusiness.codegenerate.code.Columnt;
 import com.ibusiness.codegenerate.code.NonceUtils;
 import com.ibusiness.codegenerate.code.DbEntity.DbFiledToJspUtil;
@@ -18,6 +19,7 @@ import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.def.FtlDef;
 import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.component.table.entity.ConfTableColumns;
@@ -65,34 +67,22 @@ public class CodeGenerate implements ICallBack {
      */
     public CodeGenerate() {
     }
-    public CodeGenerate(String packageStr, String formName, String entityNameStr, String tableNameStr, String descriptionStr,
-            CreateFileProperty paramCreateFileProperty, int rowNumInt, String pkStr, String sequenceStr) {
-        CodeGenerate.entityName = entityNameStr;
-        CodeGenerate.formName = formName;
-        CodeGenerate.entityPackage = packageStr;
-        CodeGenerate.tableName = tableNameStr;
-        CodeGenerate.tableDescription = descriptionStr;
-        CodeGenerate.createFileProperty = paramCreateFileProperty;
-        CodeGenerate.FIELD_ROW_NUM = rowNumInt;
-        CodeGenerate.primaryKeyPolicy = pkStr;
-        CodeGenerate.sequenceCode = sequenceStr;
+    public CodeGenerate(CodeParamBean codeParamBean, CreateFileProperty createFileProperty) {
+        CodeGenerate.entityName = codeParamBean.getEntityName();
+        CodeGenerate.formName = codeParamBean.getFormName();
+        CodeGenerate.entityPackage = codeParamBean.getPackageName();
+        CodeGenerate.tableName = codeParamBean.getTableName();
+        CodeGenerate.tableDescription = codeParamBean.getEntityTitle();
+        CodeGenerate.createFileProperty = createFileProperty;
+        CodeGenerate.FIELD_ROW_NUM = Integer.parseInt(CommonUtils.isNull(codeParamBean.getRowNumber())? "1":codeParamBean.getRowNumber());
+        CodeGenerate.primaryKeyPolicy = codeParamBean.getKeyType();
+        CodeGenerate.sequenceCode = "";
     }
-    public CodeGenerate(String packageStr, String formName, String entityNameStr, String tableNameStr, String descriptionStr,
-            CreateFileProperty paramCreateFileProperty, String pkStr, String sequenceStr) {
-        CodeGenerate.entityName = entityNameStr;
-        CodeGenerate.formName = formName;
-        CodeGenerate.entityPackage = packageStr;
-        CodeGenerate.tableName = tableNameStr;
-        CodeGenerate.tableDescription = descriptionStr;
-        CodeGenerate.createFileProperty = paramCreateFileProperty;
-        CodeGenerate.primaryKeyPolicy = pkStr;
-        CodeGenerate.sequenceCode = sequenceStr;
-    }
-
     /**
-     * 执行方法,此方法中返回模板用的Map数据
+     * 执行方法,此方法中设置模板用的Map数据
      */
     public Map<String, Object> execute() {
+        // 设置各种数据信息向生成器模板用的Map中
         HashMap<String, Object> localHashMap = new HashMap<String, Object>();
         localHashMap.put("bussiPackage", CodeResourceUtil.bussiPackage);
         // 包名
@@ -184,9 +174,8 @@ public class CodeGenerate implements ICallBack {
             if ("01".equals(createFileProperty.getJspMode())) {
                 codeFactory.invoke("jspListTemplate.ftl", "jspList");
                 codeFactory.invoke("jspInputTemplate.ftl", "jsp");
-            }
-            if ("02".equals(createFileProperty.getJspMode())) {
-                codeFactory.invoke("jspRowEditTemplate.ftl", "jsp");
+            } else if ("sub".equals(createFileProperty.getJspMode())) {
+                codeFactory.invoke("jspInputTemplate.ftl", "jsp");
             }
         }
         // ServiceImpl文件

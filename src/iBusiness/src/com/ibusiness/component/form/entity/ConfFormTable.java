@@ -27,12 +27,16 @@ public class ConfFormTable implements java.io.Serializable {
     private String formName;
     // 表名
     private String tableName;
-    // 表类型：主表/子表/单表
+    // 表标题
+    private String tableTitle;
+    // 表类型：主表/子表/单表   main/sub
     private String tableType;
     // 模块包名
     private String packageName;
-    // 对应表
+    // 对应表字段
     private List<ConfTableColumns> tableColumns;
+    // 对应表单字段(临时存储)
+    private List<ConfFormTableColumn> formTableColumns;
     
     @Id
     @Column(name = "TABLENAME", nullable = false)
@@ -70,6 +74,19 @@ public class ConfFormTable implements java.io.Serializable {
         this.packageName = packageName;
     }
     /**
+     * @return the tableType
+     */
+    @Column(name = "TABLETYPE")
+    public String getTableType() {
+        return tableType;
+    }
+    /**
+     * @param tableType the tableType to set
+     */
+    public void setTableType(String tableType) {
+        this.tableType = tableType;
+    }
+    /**
      * 用于标识不在数据库表中映射的属性
      * @return the tbleColumns
      */
@@ -84,16 +101,30 @@ public class ConfFormTable implements java.io.Serializable {
         this.tableColumns = tableColumns;
     }
     /**
-     * @return the tableType
+     * 用于标识不在数据库表中映射的属性
+     * @return the formTableColumns
      */
-    @Column(name = "TABLETYPE")
-    public String getTableType() {
-        return tableType;
+    @Transient
+    public List<ConfFormTableColumn> getFormTableColumns() {
+        return formTableColumns;
     }
     /**
-     * @param tableType the tableType to set
+     * @param formTableColumns the formTableColumns to set
      */
-    public void setTableType(String tableType) {
-        this.tableType = tableType;
+    public void setFormTableColumns(List<ConfFormTableColumn> formTableColumns) {
+        this.formTableColumns = formTableColumns;
+    }
+    /**
+     * @return the tableTitle
+     */
+    @Transient
+    public String getTableTitle() {
+        return tableTitle;
+    }
+    /**
+     * @param tableTitle the tableTitle to set
+     */
+    public void setTableTitle(String tableTitle) {
+        this.tableTitle = tableTitle;
     }
 }

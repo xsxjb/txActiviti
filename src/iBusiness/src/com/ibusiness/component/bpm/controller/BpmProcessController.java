@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.bpm.cmd.ProcessDefinitionDiagramCmd;
+import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.util.CommonUtils;
-import com.ibusiness.component.bpm.dao.BpmProcessDao;
 import com.ibusiness.core.spring.MessageHelper;
 
 /**
@@ -65,21 +65,24 @@ public class BpmProcessController {
     }
     
     /**
-     * 插入
+     * 流程技术信息
      * @param id
      * @param model
      * @return
      */
     @RequestMapping("bpm-process-input")
-    public String input(@RequestParam(value = "packageName", required = false) String packageName, @RequestParam(value = "id", required = false) String id, Model model) {
+    public String input(@RequestParam(value = "packageName", required = false) String packageName, @RequestParam(value = "bpmId", required = false) String bpmId, Model model) {
         BpmProcess entity = null;
-        if (!CommonUtils.isNull(id)) {
-            entity = bpmProcessDao.get(id);
+        if (!CommonUtils.isNull(bpmId)) {
+            entity = bpmProcessDao.get(bpmId);
         } else {
             entity = new BpmProcess();
             entity.setPackageName(packageName);
         }
         model.addAttribute("model", entity);
+        model.addAttribute("packageName", entity.getPackageName());
+        model.addAttribute("bpmId", bpmId);
+        model.addAttribute("bpmType", "bpmBase");
         
         return "bpm/bpm-process-input.jsp";
     }
@@ -97,7 +100,11 @@ public class BpmProcessController {
             entity.setId(UUID.randomUUID().toString());
             bpmProcessDao.saveInsert(entity);
         } else {
-            bpmProcessDao.update(entity);
+            BpmProcess bpmProcess = bpmProcessDao.get(id);
+            bpmProcess.setFlowTitle(entity.getFlowTitle());
+            bpmProcess.setFormId(entity.getFormId());
+            bpmProcess.setFlowUrl(entity.getFlowUrl());
+            bpmProcessDao.update(bpmProcess);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/bpm-process/bpm-process-list.do?packageName="+entity.getPackageName();

@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.component.table.dao.TableColumnsDao;
 import com.ibusiness.component.table.entity.ConfTableColumns;
+import com.ibusiness.core.spring.ApplicationContextHelper;
 
 /**
  * CommonBusiness单例对象类
@@ -26,20 +25,14 @@ public class CommonBusiness {
     public static CommonBusiness getInstance() {
         return instance;
     }
-    // 流水表表结构管理DAO
-    private TableColumnsDao tableColumnsDao;
     // 流水表表结构管理List
     private List<ConfTableColumns> tableColumnsList = new ArrayList<ConfTableColumns>();
     // 流水表表结构管理Map
     private Map<String, ConfTableColumns> tableColumnsMap = new HashMap<String, ConfTableColumns>();
 
-    // 表单DAO
-    private ConfFormDao confFormDao;
     // 表单List
     private List<ConfForm> formList = new ArrayList<ConfForm>();
     
-    // 表单对应表管理表DAO
-    private ConfFormTableColumnDao confFormTableColumnDao;
     // 表单对应表管理表List
     private List<ConfFormTableColumn> formTableColumnList = new ArrayList<ConfFormTableColumn>();
     
@@ -50,7 +43,7 @@ public class CommonBusiness {
     @SuppressWarnings("unchecked")
     public List<ConfTableColumns> getTableColumnsList(String tableName) {
         String hql = "from ConfTableColumns where tableName=?";
-        tableColumnsList = tableColumnsDao.find(hql, tableName);
+        tableColumnsList = getTableColumnsDao().find(hql, tableName);
         return tableColumnsList;
     }
     /**
@@ -71,7 +64,7 @@ public class CommonBusiness {
     @SuppressWarnings("unchecked")
     public List<ConfForm> getFormList(String formName) {
         String hql = "from ConfForm where formName=?";
-        this.formList = confFormDao.find(hql, formName);
+        this.formList = getConfFormDao().find(hql, formName);
         return this.formList;
     }
     /**
@@ -81,20 +74,17 @@ public class CommonBusiness {
     @SuppressWarnings("unchecked")
     public List<ConfFormTableColumn> getFormTableColumnList(String tableName, String formName) {
         String hql = "from ConfFormTableColumn where tableName=? AND formName=?";
-        this.formTableColumnList = confFormTableColumnDao.find(hql, tableName, formName);
+        this.formTableColumnList = getConfFormTableColumnDao().find(hql, tableName, formName);
         return this.formTableColumnList;
     }
     // ======================================================================
-    @Resource
-    public void setTableColumnsDao(TableColumnsDao tableColumnsDao) {
-        this.tableColumnsDao = tableColumnsDao;
+    public TableColumnsDao getTableColumnsDao() {
+        return ApplicationContextHelper.getBean(TableColumnsDao.class);
     }
-    @Resource
-    public void setConfFormDao(ConfFormDao confFormDao) {
-        this.confFormDao = confFormDao;
+    public ConfFormDao getConfFormDao() {
+        return ApplicationContextHelper.getBean(ConfFormDao.class);
     }
-    @Resource
-    public void setConfFormTableColumnDao(ConfFormTableColumnDao confFormTableColumnDao) {
-        this.confFormTableColumnDao = confFormTableColumnDao;
+    public ConfFormTableColumnDao getConfFormTableColumnDao() {
+        return ApplicationContextHelper.getBean(ConfFormTableColumnDao.class);
     }
 }

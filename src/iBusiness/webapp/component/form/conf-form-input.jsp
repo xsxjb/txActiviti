@@ -20,20 +20,20 @@
 			  <li class="${tabType == 'formBase' ? 'active' : ''} "><a href="${scopePrefix}/form/conf-form-input.do?packageName=${packageName}&formId=${formId}&isBpmForm=${isBpmForm}" >表单基础信息</a></li>
 			  <li class="${tabType == 'formTables' ? 'active' : ''}"><a href="${scopePrefix}/form/conf-formTables-input.do?packageName=${packageName}&formId=${formId}" >关联表字段</a></li>
 			  <li class="${tabType == 'formLabel' ? 'active' : ''}"><a href="${scopePrefix}/form/conf-formLabel-list.do?packageName=${packageName}&formId=${formId}">控件类型</a></li>
-			  <c:if test="${isBpmForm == '2'}">
-			      <li class="${tabType == 'formCode' ? 'active' : ''}"><a href="${scopePrefix}/code/code-generate-input.do?packageName=${packageName}&formId=${formId}">代码生成</a></li>
-			  </c:if>
+		      <li class="${tabType == 'formCode' ? 'active' : ''}"><a href="${scopePrefix}/code/code-generate-input.do?packageName=${packageName}&formId=${formId}&isBpmForm=${isBpmForm}">代码生成</a></li>
 			</ul>
 			<div id="tabContent" class="tab-content">
+			  <!-- ================================================================================ -->
 			  <!-- ========================== 表单基础信息 =================================================== -->
+			  <!-- ================================================================================ -->
 			  <div id="formBase" class="tab-pane fade ${tabType == 'formBase' ? 'active in' : ''}">
 			  <c:if test="${tabType == 'formBase'}">
 			        <div class="panel-body">
 				        <form id="formForm" method="post" action="conf-form-save.do" class="form-horizontal">
 							  <c:if test="${model != null}">
-							  	  <input id="conf-form_id" type="hidden" name="id" value="${formId}">
-							  	  <input id="conf-form-isBpmForm" type="hidden" name="isBpmForm" value="${isBpmForm}">
-							  	  <input id="conf-form_packagename" type="hidden" name="packageName" value="${model.packageName}">
+							  	  <input type="hidden" name="id" value="${formId}">
+							  	  <input type="hidden" name="isBpmForm" value="${isBpmForm}">
+							  	  <input type="hidden" name="packageName" value="${model.packageName}">
 							  </c:if>
 							  <div class="form-group">
 							    <label class="col-lg-2 control-label" for="form_package_name">包名:</label>
@@ -75,7 +75,10 @@
 	        		</div>
 	        	  </c:if>
 	        	  </div>
+	        	  
+	        	  <!-- ================================================================================ -->
 	        	  <!-- ==================== 关联表设置 ===================================================== -->
+	        	  <!-- ================================================================================ -->
 	        	  <div id="formTables" class="tab-pane fade ${tabType == 'formTables' ? 'active in' : ''}">
 	        	  <c:if test="${tabType == 'formTables'}">
 	        	      <div class="panel panel-primary">
@@ -84,6 +87,7 @@
 								   <form name="formTablesForm" method="post" action="conf-formTables-save.do?tableType=main&packageName=${packageName}" class="form-inline">
 								      <c:if test="${formName != null}">
 								              <input id="conf-form_id" type="hidden" name="formId" value="${formId}">
+								              <input type="hidden" name="isBpmForm" value="${isBpmForm}">
 						  	          </c:if>
 								      <div class="form-group">
 									      <label class="control-label" for="role_def">表名:</label>
@@ -103,7 +107,7 @@
 										  <c:forEach items="${mainFormTable}" var="mainFormTable">
 										      <div class="row-fluid">
 										          <div class="well ">
-										              <div class="">${mainFormTable.tableName}</div>
+										              <div class="">${mainFormTable.tableTitle}</div>
 										              <button class="btn btn-default btn-sm a-remove" onclick="location.href='conf-formTables-remove.do?packageName=${packageName}&tableName=${mainFormTable.tableName}&formName=${mainFormTable.formName}'" >删除</button>
 												      <table class="table table-striped table-hover table-bordered">
 														  <thead>
@@ -152,7 +156,7 @@
 									  <c:forEach items="${subFormTables}" var="subFormTable">
 									      <div class="row-fluid col-lg-4">
 									          <div class="well ">
-									              <div class="">${subFormTable.tableName}</div>
+									              <div class="">${subFormTable.tableTitle}</div>
 									              <button class="btn btn-default btn-sm a-remove" onclick="location.href='conf-formTables-remove.do?packageName=${packageName}&tableName=${subFormTable.tableName}&formName=${subFormTable.formName}'" >删除</button>
 											      <table class="table table-striped table-hover table-bordered">
 													  <thead>
@@ -178,104 +182,222 @@
 				         </div>
 		          </c:if>
 	        	  </div>
+	        	  
+	        	  <!-- ================================================================================ -->
 	        	  <!-- ================================= 控件类型 =============================================== -->
+	        	  <!-- ================================================================================ -->
 	        	  <div id="formLabel" class="tab-pane fade ${tabType == 'formLabel' ? 'active in' : ''}">
 	        	  <c:if test="${tabType == 'formLabel'}">
-	        	      <table class="table table-hover table-bordered" id=“tableModelGrid” >
-							<thead>
-								<tr>
-								    <th>字段</th>
-								    <th>显示标题</th>
-								    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)">是否显示</th>
-								    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems2(this.checked)">是否编辑</th>
-								    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems3(this.checked)">查询字段</th>
-									<th width="120">&nbsp;</th>
-								</tr>
-							</thead>
-							<tbody>
-							<c:forEach items="${formTableColumns}" var="item">
-							    <tr>
-							        <td>${item.formColumn}</td>
-							        <td>${item.formColumnTitle}</td>
-							        <td><input type="checkbox" class="selectedItem a-check" name="selectedFcDisplayItem" value="${item.formColumn}" ${item.fcDisplay==1 ? 'checked' : ''}>显示</td>
-									<td><input type="checkbox" class="selectedItem2 a-check" name="selectedFcEditItem" value="${item.formColumn}" ${item.fcEdit==1 ? 'checked' : ''}>可编辑</td>
-									<td><input type="checkbox" class="selectedItem3 a-check" name="selectedFcQueryItem" value="${item.formColumn}" ${item.fcQuery==1 ? 'checked' : ''}>查询条件</td>
-									<td>
-							            <a href="conf-formLabel-input.do?packageName=${item.packageName}&formName=${item.formName}&formColumn=${item.formColumn}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
-							        </td>
-							    </tr>
-							  </c:forEach>
-							</tbody>
-					  </table>
+	        	      <div class="panel panel-primary">
+		        		  <div class="panel-heading"><h4 class="panel-title">主表字段设置：</h4></div>
+		        		  <div class="panel-body">
+			        	      <table class="table table-hover table-bordered" id=“tableModelGrid” >
+									<thead>
+										<tr>
+										    <th>字段</th>
+										    <th>显示标题</th>
+										    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)">是否显示</th>
+										    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems2(this.checked)">是否编辑</th>
+										    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems3(this.checked)">查询字段</th>
+											<th width="120">&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody>
+									<c:forEach items="${confFormTable.formTableColumns}" var="item">
+									    <tr>
+									        <td>${item.formColumn}</td>
+									        <td>${item.formColumnTitle}</td>
+									        <td><input type="checkbox" class="selectedItem a-check" name="selectedFcDisplayItem" value="${item.formColumn}" ${item.fcDisplay==1 ? 'checked' : ''}>显示</td>
+											<td><input type="checkbox" class="selectedItem2 a-check" name="selectedFcEditItem" value="${item.formColumn}" ${item.fcEdit==1 ? 'checked' : ''}>可编辑</td>
+											<td><input type="checkbox" class="selectedItem3 a-check" name="selectedFcQueryItem" value="${item.formColumn}" ${item.fcQuery==1 ? 'checked' : ''}>查询条件</td>
+											<td>
+									            <a href="conf-formLabel-input.do?packageName=${item.packageName}&formName=${item.formName}&formColumn=${item.formColumn}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+									        </td>
+									    </tr>
+									  </c:forEach>
+									</tbody>
+							  </table>
+						  </div>
+						  <!-- 子表 -->
+						  <c:if test="${null != confSubFormTables}">
+						  <c:forEach items="${confSubFormTables}" var="subFormTable">
+							  <div class="panel-heading"><h4 class="panel-title">子表字段设置：</h4></div>
+			        		  <div class="panel-body">
+				        	      <table class="table table-hover table-bordered" id=“tableModelGrid” >
+										<thead>
+											<tr>
+											    <th>字段</th>
+											    <th>显示标题</th>
+											    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)">是否显示</th>
+											    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems2(this.checked)">是否编辑</th>
+											    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems3(this.checked)">查询字段</th>
+												<th width="120">&nbsp;</th>
+											</tr>
+										</thead>
+										<tbody>
+										<c:forEach items="${subFormTable.formTableColumns}" var="item">
+										    <tr>
+										        <td>${item.formColumn}</td>
+										        <td>${item.formColumnTitle}</td>
+										        <td><input type="checkbox" class="selectedItem a-check" name="selectedFcDisplayItem" value="${item.formColumn}" ${item.fcDisplay==1 ? 'checked' : ''}>显示</td>
+												<td><input type="checkbox" class="selectedItem2 a-check" name="selectedFcEditItem" value="${item.formColumn}" ${item.fcEdit==1 ? 'checked' : ''}>可编辑</td>
+												<td><input type="checkbox" class="selectedItem3 a-check" name="selectedFcQueryItem" value="${item.formColumn}" ${item.fcQuery==1 ? 'checked' : ''}>查询条件</td>
+												<td>
+										            <a href="conf-formLabel-input.do?packageName=${item.packageName}&formName=${item.formName}&formColumn=${item.formColumn}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+										        </td>
+										    </tr>
+										  </c:forEach>
+										</tbody>
+								  </table>
+							  </div>
+						  </c:forEach>
+						  </c:if>
+					  </div>
 				  </c:if>
 	        	  </div>
+	        	  
+	        	  <!-- ================================================================================ -->
 	        	  <!-- ======================= 代码生成=================================================== -->
+	        	  <!-- ================================================================================ -->
 	        	  <div id="formCode" class="tab-pane fade ${tabType == 'formCode' ? 'active in' : ''}">
 	        	  <c:if test="${tabType == 'formCode'}">
-		        	    <div class="panel-heading"><h4 class="panel-title">一对一生成器</h4></div>
+	        	      <form id="menuForm" method="post" action="code-generate-save.do" class="form-horizontal">
+	        	        <div class="panel panel-primary">
+	        	            <div class="panel-heading"><h4 class="panel-title">代码生成操作</h4></div>
 					        <div class="panel-body">
-					              <form id="menuForm" method="post" action="code-generate-save.do" class="form-horizontal">
+						        <!-- =============== 按钮 ================== -->
+							     <div class="control-group">
+									  <div class="controls">
+									      <button id="submitButton" class="btn btn-default btn-sm  a-submit"><spring:message code='core.input.save' text='生成'/></button>
+										  &nbsp;
+									      <button class="btn btn-default btn-sm" type="button" onclick="history.back();" ><spring:message code='core.input.back' text='返回'/></button>
+									  </div>
+								  </div>
+					        </div>
+		        	        <div class="panel-heading"><h4 class="panel-title">${model.entityTitle}内容</h4></div>
+					        <div class="panel-body">
+							  <!-- =============== 主表内容 ================== -->
 									  <c:if test="${model != null}">
 									      <input type="hidden" name="formId" value="${formId}">
 									      <input type="hidden" name="packageName" value="${model.packageName}">
 									      <input type="hidden" name="formName" value="${model.formName}">
+									      <input type="hidden" name="isBpmForm" value="${isBpmForm}">
 									  </c:if>
 									  <div class="form-group">
-										  <label class="col-lg-2 control-label" >包名(小写):</label>
-										  <label class="control-label" >${model.packageName}</label>
+									      <div class="col-lg-6">
+											  <label class="col-lg-4 control-label" >包名(小写):</label>
+											  <label class="control-label" >${model.packageName}</label>
+										  </div>
+										  <div class="col-lg-6">
+											  <label class="control-label" >主键生成策略:</label>
+											  <label class="control-label" >${model.keyType}</label>
+										  </div>
 									  </div>
 									  <div class="form-group">
-										  <label class="col-lg-2 control-label" for="code_entityName">实体类名(首字母大写):</label>
-									      <input id="code_entityName" type="text" name="entityName" value="${model.entityName}" class="text">
-									  </div>
-									  <div class="form-group">
-										  <label class="col-lg-2 control-label" for="code_tableName">表名:</label>
-										  <input id="code_tableName" type="text" name="tableName" value="${model.tableName}"  class="text required"  >
-									  </div>
-									  <div class="form-group">
-										  <label class="col-lg-2 control-label" >主键生成策略:</label>
-										  <label class="control-label" >${model.keyType}</label>
+									      <div class="col-lg-6">
+									          <label class="col-lg-4 control-label" for="code_tableName">表名:</label>
+											  <input id="code_tableName" type="text" name="tableName" value="${model.tableName}"  class="text required"  >
+										  </div>
+										  <div class="col-lg-6">
+											  <label class="control-label" for="code_entityName">实体类名(首字母大写):</label>
+										      <input id="code_entityName" type="text" name="entityName" value="${model.entityName}" class="text">
+										  </div>
 									  </div>
 									  <div class="form-group">
 										  <label class="col-lg-2 control-label" for="code_entityTitle">功能描述:</label>
-										  <input id="code_entityTitle" type="text" name="entityTitle" value="${model.entityTitle}"  class="text required"  >
+										  <div class="col-lg-6">
+										      <textarea class="form-control" id="code_entityTitle" name="entityTitle" rows="1">${model.entityTitle}</textarea>
+									       </div>
 									  </div>
 									  <div class="form-group">
-										  <label class="col-lg-2 control-label" >行字段数目:</label>
-										  <label class="control-label" >${model.rowNumber}</label>
+									      <div class="col-lg-6">
+											  <label class="col-lg-4 control-label" >是否是流程用表单:</label>
+											  <label class="control-label" >${1==isBpmForm? '是':'否'}</label>
+										  </div>
+										  <div class="col-lg-6">
+											  <label class="control-label" >行字段数目:</label>
+											  <label class="control-label" >${model.rowNumber}</label>
+										  </div>
 									  </div>
 									  <div class="form-group">
 									        <label class="col-lg-2 control-label" >需要生成的代码:</label>
 									      <div class="checkbox">
-									          <label><input type="checkbox" name="selectedItem" value="checkboxController" <tags:contains items="${selectedItem}" item="checkboxController">checked</tags:contains>> Controller</label>
-									          <label><input type="checkbox" name="selectedItem"  value="checkboxEntity" <tags:contains items="${selectedItem}" item="checkboxEntity">checked</tags:contains>> Entity</label>
-									          <label><input type="checkbox" name="selectedItem"  value="checkboxJsp" <tags:contains items="${selectedItem}" item="checkboxJsp">checked</tags:contains>> Jsp</label>
-									          <label><input type="checkbox" name="selectedItem"  value="checkboxService" <tags:contains items="${selectedItem}" item="checkboxService">checked</tags:contains>> Service</label>
-									          <label><input type="checkbox" name="selectedItem"  value="checkboxServiceImp" <tags:contains items="${selectedItem}" item="checkboxServiceImp">checked</tags:contains>> ServiceImp</label>
+									          <label><input type="checkbox" name="selectedItems" value="checkboxController" <tags:contains items="${model.selectedItems}" item="checkboxController">checked</tags:contains>> Controller</label>
+									          <label><input type="checkbox" name="selectedItems"  value="checkboxEntity" <tags:contains items="${model.selectedItems}" item="checkboxEntity">checked</tags:contains>> Entity</label>
+									          <label><input type="checkbox" name="selectedItems"  value="checkboxJsp" <tags:contains items="${model.selectedItems}" item="checkboxJsp">checked</tags:contains>> Jsp</label>
+									          <label><input type="checkbox" name="selectedItems"  value="checkboxService" <tags:contains items="${model.selectedItems}" item="checkboxService">checked</tags:contains>> Service</label>
+									          <label><input type="checkbox" name="selectedItems"  value="checkboxServiceImp" <tags:contains items="${model.selectedItems}" item="checkboxServiceImp">checked</tags:contains>> ServiceImp</label>
 									       </div>
 									  </div>
 									  <div class="form-group">
 										  <label class="col-lg-2 control-label" for="code_menuUrl">菜单URL:</label>
-										  <div class="col-lg-3">
+										  <div class="col-lg-6">
 										      <textarea class="form-control" id="code_menuUrl" name="menuUrl" rows="2">${model.menuUrl}</textarea>
 										  </div>
 									  </div>
-									  <div class="form-group">
-										  <label class="col-lg-2 control-label" >风格:</label>
-										  <label class="control-label" >${model.formStyle}</label>
-									  </div>
-									  <div class="control-group">
-									    <div class="controls">
-									      <button id="submitButton" class=" btn btn-default a-submit"><spring:message code='core.input.save' text='生成'/></button>
-										  &nbsp;
-									      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
-									    </div>
-									  </div>
-									</form>
 					        </div>
-			        </c:if>
+					        <!-- =============== 子表生成内容 =============== -->
+					        <c:forEach items="${model.subCodeGenerateBeans}" var="subModel"  varStatus="status">
+							     <div class="panel-heading"><h4 class="panel-title">${subModel.entityTitle}内容</h4></div>
+							     <div class="panel-body">
+						             <div class="form-group">
+									      <div class="col-lg-6">
+											  <label class="col-lg-4 control-label" >包名(小写):</label>
+											  <label class="control-label" >${subModel.packageName}</label>
+										  </div>
+										  <div class="col-lg-6">
+											  <label class="control-label" >主键生成策略:</label>
+											  <label class="control-label" >${subModel.keyType}</label>
+										  </div>
+									  </div>
+									  <div class="form-group">
+									      <div class="col-lg-6">
+									          <label class="col-lg-4 control-label" for="code_tableName">表名:</label>
+											  <input id="code_tableName" type="text" name="subCodeGenerateBeans[${status.index}].tableName" value="${subModel.tableName}"  class="text"  >
+										  </div>
+										  <div class="col-lg-6">
+										      <label class="control-label" for="code_entityName">实体类名(首字母大写):</label>
+										      <input id="code_entityName" type="text" name="subCodeGenerateBeans[${status.index}].entityName" value="${subModel.entityName}" class="text">
+										  </div>
+									  </div>
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" for="code_entityTitle">功能描述:</label>
+										  <div class="col-lg-6">
+										      <textarea class="form-control" id="code_entityTitle" name="subCodeGenerateBeans[${status.index}].entityTitle" rows="1">${subModel.entityTitle}</textarea>
+									       </div>
+									  </div>
+									  <div class="form-group">
+									      <div class="col-lg-6">
+											  <label class="col-lg-4 control-label" >是否是流程用表单:</label>
+											  <label class="control-label" >${1==isBpmForm? '是':'否'}</label>
+										  </div>
+										  <div class="col-lg-6">
+											  <label class="control-label" >行字段数目:</label>
+											  <label class="control-label" >${subModel.rowNumber}</label>
+										  </div>
+									  </div>
+									  <div class="form-group">
+									        <label class="col-lg-2 control-label" >需要生成的代码:</label>
+									      <div class="checkbox">
+									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems" value="checkboxController" <tags:contains items="${subModel.selectedItems}" item="checkboxController">checked</tags:contains>> Controller</label>
+									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxEntity" <tags:contains items="${subModel.selectedItems}" item="checkboxEntity">checked</tags:contains>> Entity</label>
+									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxJsp" <tags:contains items="${subModel.selectedItems}" item="checkboxJsp">checked</tags:contains>> Jsp</label>
+									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxService" <tags:contains items="${subModel.selectedItems}" item="checkboxService">checked</tags:contains>> Service</label>
+									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxServiceImp" <tags:contains items="${subModel.selectedItems}" item="checkboxServiceImp">checked</tags:contains>> ServiceImp</label>
+									       </div>
+									  </div>
+									  <div class="form-group">
+										  <label class="col-lg-2 control-label" for="code_menuUrl">菜单URL:</label>
+										  <div class="col-lg-6">
+										      <textarea class="form-control" id="code_menuUrl" name="subCodeGenerateBeans[${status.index}].menuUrl" rows="1">${subModel.menuUrl}</textarea>
+										  </div>
+									  </div>
+							     </div>
+							 </c:forEach>
+					     </div>
+			        </form>
+			       </c:if>
 	        	  </div>
-	        	  
 	         </div>
 	    </div>
 		<!-- end of main -->

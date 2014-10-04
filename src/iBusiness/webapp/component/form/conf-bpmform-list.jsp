@@ -80,7 +80,7 @@
 			        <td>${item.formName}</td>
 			        <td>${item.formTitle}</td>
 			        <td>
-			          <a href="conf-form-input.do?formId=${item.id}&packageName=${packageName}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+			          <a href="conf-form-input.do?formId=${item.id}&packageName=${packageName}&isBpmForm=1" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 			        </td>
 			      </tr>
 			      </c:forEach>

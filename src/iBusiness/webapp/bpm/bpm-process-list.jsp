@@ -82,7 +82,7 @@
 			        <td>${item.flowName}</td>
 			        <td>${item.flowTitle}</td>
 			        <td>
-			            <a href="bpm-process-input.do?id=${item.id}&packageName=${packageName}" class="a-update">编辑</a>
+			            <a href="bpm-process-input.do?bpmId=${item.id}&packageName=${packageName}" class="a-update">编辑</a>
 			        </td>
 			        <td>
 			            <a href="${scopePrefix}/bpm-process/bpm-process-graph.do?bpmProcessId=${item.id}" target="_blank" >图形</a>

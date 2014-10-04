@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.common.util.CommonUtils;
+import com.ibusiness.component.table.dao.TableColumnsDao;
 import com.ibusiness.component.table.entity.ConfTable;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 import com.ibusiness.component.table.service.TableService;
@@ -31,6 +32,7 @@ public class TableController {
 
     // 共用Service,可以查询热力站,热源,BPM等基础信息
     private TableService tableService;
+    private TableColumnsDao tableColumnsDao;
     private MessageHelper messageHelper;
 
     /**
@@ -113,32 +115,79 @@ public class TableController {
     	confTable.setTableName("IB_" + confTable.getTableName().toUpperCase());//转成大写
     	tableService.getDao().saveInsert(confTable);
     	
-    	// 在数据库中创建一张业务表
-		createTable(confTable);
-		//
-		// 将ID字段插入表列字段管理表
-        List<ConfTableColumns> tableColumnsList = new ArrayList<ConfTableColumns>();
-		if (1 == confTable.getIsBpmTable()) {
-		    // 流程用表--列字段
-		    
-		} else {
-		    // 非流程用表--列字段
-		    ConfTableColumns confTableColumns = new ConfTableColumns();
-	        confTableColumns.setTableName(confTable.getTableName());
-	        confTableColumns.setColumnValue("ID");
-	        confTableColumns.setColumnName("UUID主键");
-	        confTableColumns.setColumnNo(1);
-	        confTableColumns.setColumnType("VARCHAR");
-	        confTableColumns.setColumnSize("64");
-	        confTableColumns.setIsNull("否");
-	        tableColumnsList.add(confTableColumns);
-		}
-        // 插入
-        tableService.insertConfTableColumns(tableColumnsList);
-        // 
-        messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/table/conf-table-list.do?packageName="+confTable.getPackageName();
+    	// 先删后建
+        dropTable("DROP TABLE IF EXISTS " + confTable.getTableName() + "");
+	    // 判断是流程表还是非流程表
+        if (1 == confTable.getIsBpmTable()) {
+            // 主表
+            if ("1".equals(confTable.getTableType())) {
+                // 在数据库中创建一张业务表
+                createTable("CREATE TABLE " + confTable.getTableName() + " (ID VARCHAR(64) NOT NULL, EXECUTIONID VARCHAR(64), CREATEDATEBPM DATE, NODENAME VARCHAR(128), ASSIGNEEUSER VARCHAR(128), TASKTITLE VARCHAR(256), DONEFLAG INT DEFAULT 0, PRIMARY KEY (ID))");
+                // 删除字段
+                String tcHql = "from ConfTableColumns where tableName=?";
+                tableColumnsDao.removeAll(tableColumnsDao.find(tcHql, confTable.getTableName()));
+                // 流程用主表--列字段 -- 流程表埋多个字段
+                ConfTableColumns confTableColumns = createTableColumn(confTable.getTableName(),"ID","UUID主键",1,"VARCHAR","64","否");
+                tableColumnsDao.saveInsert(confTableColumns);
+                confTableColumns = createTableColumn(confTable.getTableName(),"EXECUTIONID","流程执行实例ID",2,"VARCHAR","64","是");
+                tableColumnsDao.saveInsert(confTableColumns);
+                confTableColumns = createTableColumn(confTable.getTableName(),"CREATEDATEBPM","流程创建时间",3,"DATE","","是");
+                tableColumnsDao.saveInsert(confTableColumns);
+                confTableColumns = createTableColumn(confTable.getTableName(),"NODENAME","流程节点名",4,"VARCHAR","128","是");
+                tableColumnsDao.saveInsert(confTableColumns);
+                confTableColumns = createTableColumn(confTable.getTableName(),"ASSIGNEEUSER","负责人",5,"VARCHAR","64","是");
+                tableColumnsDao.saveInsert(confTableColumns);
+                confTableColumns = createTableColumn(confTable.getTableName(),"TASKTITLE","流程实例标题",5,"VARCHAR","256","是");
+                tableColumnsDao.saveInsert(confTableColumns);
+                confTableColumns = createTableColumn(confTable.getTableName(),"DONEFLAG","流程结束标记",7,"INT","4","是");
+                tableColumnsDao.saveInsert(confTableColumns);
+            } else {
+                // 子表
+                // 在数据库中创建一张业务表
+                createTable("CREATE TABLE " + confTable.getTableName() + " (ID VARCHAR(64) NOT NULL, PARENTID VARCHAR(64), PRIMARY KEY (ID))");
+                // 删除字段
+                String tcHql = "from ConfTableColumns where tableName=?";
+                tableColumnsDao.removeAll(tableColumnsDao.find(tcHql, confTable.getTableName()));
+                // 流程用子表--列字段 -- 流程表埋多个字段
+                ConfTableColumns confTableColumns = createTableColumn(confTable.getTableName(),"ID","UUID主键",1,"VARCHAR","64","否");
+                tableColumnsDao.saveInsert(confTableColumns);
+                confTableColumns = createTableColumn(confTable.getTableName(),"PARENTID","主表UUID",2,"VARCHAR","64","否");
+                tableColumnsDao.saveInsert(confTableColumns);
+            }
+            // 
+            messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
+            return "redirect:/table/conf-bpmTable-list.do?packageName="+confTable.getPackageName();
+        } else {
+            // 主表
+            if ("1".equals(confTable.getTableType())) {
+                // 在数据库中创建一张业务表
+                createTable("CREATE TABLE " + confTable.getTableName() + " (ID VARCHAR(64) NOT NULL, PRIMARY KEY (ID))");
+                // 删除字段
+                String tcHql = "from ConfTableColumns where tableName=?";
+                tableColumnsDao.removeAll(tableColumnsDao.find(tcHql, confTable.getTableName()));
+                // 非流程用主表--列字段 -- 非流程表只埋一个UUID字段
+                ConfTableColumns confTableColumns = createTableColumn(confTable.getTableName(),"ID","UUID主键",1,"VARCHAR","64","否");
+                // 插入
+                tableColumnsDao.saveInsert(confTableColumns);
+            } else {
+                // 子表
+                // 在数据库中创建一张业务表
+                createTable("CREATE TABLE " + confTable.getTableName() + " (ID VARCHAR(64) NOT NULL, PARENTID VARCHAR(64), PRIMARY KEY (ID))");
+                // 删除字段
+                String tcHql = "from ConfTableColumns where tableName=?";
+                tableColumnsDao.removeAll(tableColumnsDao.find(tcHql, confTable.getTableName()));
+                // 非流程用子表--列字段 -- 流程表埋多个字段
+                ConfTableColumns confTableColumns = createTableColumn(confTable.getTableName(),"ID","UUID主键",1,"VARCHAR","64","否");
+                tableColumnsDao.saveInsert(confTableColumns);
+                confTableColumns = createTableColumn(confTable.getTableName(),"PARENTID","主表UUID",2,"VARCHAR","64","否");
+                tableColumnsDao.saveInsert(confTableColumns);
+            }
+            // 
+            messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
+            return "redirect:/table/conf-table-list.do?packageName="+confTable.getPackageName();
+        }
     }
+    
     /**
      * 插入/变更/修改表列字段管理表信息
      * 
@@ -173,9 +222,20 @@ public class TableController {
      */
     @RequestMapping("conf-table-remove")
     public String confTableRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam("packageName") String packageName, RedirectAttributes redirectAttributes) {
-    	tableService.deleteConfTable(selectedItem);
+        ConfTable confTable = tableService.getDao().get(selectedItem.get(0));
+        Integer isBpmTable = confTable.getIsBpmTable();
+        // 去数据库中drop掉表
+        dropTable("DROP TABLE IF EXISTS " + confTable.getTableName() + "");
+        // 删除
+        tableService.deleteConfTable(selectedItem);
     	messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-        return "redirect:/table/conf-table-list.do?packageName="+packageName;
+    	// 判断跳转
+    	if (null != isBpmTable && isBpmTable == 1) {
+    	    return "redirect:/table/conf-bpmTable-list.do?packageName="+packageName;
+    	} else {
+    	    return "redirect:/table/conf-table-list.do?packageName="+packageName;
+    	}
+        
     }
     /**
      * 删除表列字段管理表信息
@@ -196,8 +256,16 @@ public class TableController {
      * 在数据库中创建一张业务表
      * @param list
      */
-    private void createTable(ConfTable bean) {
-    	String sql = "CREATE TABLE " + bean.getTableName() + " (ID VARCHAR(64) NOT NULL, PRIMARY KEY (ID))";
+    private void createTable(String sql) {
+        if (0 == tableService.execute(sql)) {
+            return;
+        }
+    }
+    /**
+     * 在数据库中删除一张业务表
+     * @param list
+     */
+    private void dropTable(String sql) {
         if (0 == tableService.execute(sql)) {
             return;
         }
@@ -255,12 +323,34 @@ public class TableController {
         }
 	}
     /**
+     * 创建一个 表字段结构Bean 对象
+     * 
+     * @param confTable
+     * @return
+     */
+    private ConfTableColumns createTableColumn(String tableName, String columnValue,
+            String columnName, Integer columnNo, String columnType, String columnSize, String isNull) {
+        ConfTableColumns confTableColumns = new ConfTableColumns();
+        confTableColumns.setTableName(tableName);
+        confTableColumns.setColumnValue(columnValue);
+        confTableColumns.setColumnName(columnName);
+        confTableColumns.setColumnNo(columnNo);
+        confTableColumns.setColumnType(columnType);
+        confTableColumns.setColumnSize(columnSize);
+        confTableColumns.setIsNull(isNull);
+        return confTableColumns;
+    }
+    /**
      * 注入 table service
      */
     @Resource
 	public void setTableService(TableService tableService) {
 		this.tableService = tableService;
 	}
+    @Resource
+    public void setTableColumnsDao(TableColumnsDao tableColumnsDao) {
+        this.tableColumnsDao = tableColumnsDao;
+    }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;

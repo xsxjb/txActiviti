@@ -12,16 +12,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.CodeStringUtils;
-import com.ibusiness.common.util.CommonUtils;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 /**
- * 代码生成工厂类
+ * 一对一代码生成工厂类
  * 
  * @author JiangBo
- *
+ * 
  */
 public class CodeFactory extends BaseCodeFactory {
 
@@ -56,41 +55,6 @@ public class CodeFactory extends BaseCodeFactory {
         } catch (IOException ioexception) {
             ioexception.printStackTrace();
         }
-    }
-
-//    public static String getProjectPath() {
-//        String path = System.getProperty("user.dir").replace("\\", "/") + "/";
-////        String path = "/";
-//        return path;
-//    }
-    /**
-     * 获取项目根目录
-     * 
-     * @return
-     */
-    public static String getProjectPath() {
-        String nowpath = CodeResourceUtil.PROJECTPATH; // 当前tomcat的bin目录的路径 如
-                        // D:\java\software\apache-tomcat-6.0.14\bin
-        String tempdir;
-        if (CommonUtils.isNull(nowpath)) {
-            nowpath = System.getProperty("user.dir");
-        }
-        tempdir = nowpath.replace("bin", "webapps"); // 把bin 文件夹变到 webapps文件里面
-        tempdir += "\\"; // 拼成D:\java\software\apache-tomcat-6.0.14\webapps\sz_pro
-        return tempdir;
-    }
-
-    /**
-     * 取得类路径
-     * 
-     * @return
-     */
-    public String getClassPath() {
-        String path = Thread.currentThread().getContextClassLoader().getResource("./").getPath();
-        if (path.indexOf("lib") > 0) {
-            path = "/WEB-INF/classes/";
-        }
-        return path;
     }
 
     /**
@@ -132,6 +96,9 @@ public class CodeFactory extends BaseCodeFactory {
             } else {
                 str.append(CodeResourceUtil.CODEPATH);
             }
+            // 包名
+            str.append(StringUtils.lowerCase(entityPackage));
+            str.append("/");
             // 判断相等(忽略大小写)
             if ("Action".equalsIgnoreCase(codeType)) {
                 str.append(StringUtils.lowerCase("action"));
@@ -143,8 +110,7 @@ public class CodeFactory extends BaseCodeFactory {
                 str.append(StringUtils.lowerCase(codeType));
             }
             str.append("/");
-            str.append(StringUtils.lowerCase(entityPackage));
-            str.append("/");
+            
             if ("jsp".equals(type) || ("jspList".equals(type))) {
                 String jspName = StringUtils.capitalize(entityName);
                 str.append(CodeStringUtils.getInitialSmall(jspName));
@@ -152,7 +118,8 @@ public class CodeFactory extends BaseCodeFactory {
                 // 显示页面 还是插入页面
                 if ("jsp".equals(type)) {
                     str.append("-input");
-                } if ("jspList".equals(type)) {
+                }
+                if ("jspList".equals(type)) {
                     str.append("-list");
                 }
                 str.append(".jsp");
@@ -186,24 +153,4 @@ public class CodeFactory extends BaseCodeFactory {
     public void setCallBack(ICallBack icallback) {
         callBack = icallback;
     }
-
-    /**
-     * 枚举类
-     * 
-     * @author Administrator
-     *
-     */
-    public enum CodeType {
-        serviceImpl("ServiceImpl"), service("Service"), controller("Controller"), page("Page"), entity("Entity"), jsp(""), jspList("");
-        // 成员变量 
-        private String type;
-
-        private CodeType(String type) {
-            this.type = type;
-        }
-        public String getValue() {
-            return this.type;
-        }
-    }
 }
-

@@ -3,6 +3,9 @@ package com.ibusiness.codegenerate.code.generate;
 import java.io.IOException;
 import java.util.Locale;
 
+import com.ibusiness.codegenerate.util.CodeResourceUtil;
+import com.ibusiness.common.util.CommonUtils;
+
 import freemarker.template.Configuration;
 
 /**
@@ -23,5 +26,56 @@ public class BaseCodeFactory {
         cfg.setLocale(Locale.CHINA);
         cfg.setDefaultEncoding("UTF-8");
         return cfg;
+    }
+    
+    /**
+     * 获取项目根目录
+     * 
+     * @return
+     */
+    public static String getProjectPath() {
+        String nowpath = CodeResourceUtil.PROJECTPATH; // 当前tomcat的bin目录的路径 如
+        // D:\java\software\apache-tomcat-6.0.14\bin
+        String tempdir;
+        if (CommonUtils.isNull(nowpath)) {
+            nowpath = System.getProperty("user.dir");
+        }
+        tempdir = nowpath.replace("bin", "webapps"); // 把bin 文件夹变到 webapps文件里面
+        tempdir += "\\"; // 拼成D:\java\software\apache-tomcat-6.0.14\webapps\sz_pro
+        return tempdir;
+    }
+    
+    /**
+     * 取得类路径
+     * 
+     * @return
+     */
+    public String getClassPath() {
+        String path = Thread.currentThread().getContextClassLoader().getResource("./").getPath();
+        if (path.indexOf("lib") > 0) {
+            path = "/WEB-INF/classes/";
+        }
+        return path;
+    }
+    /**
+     * 枚举类
+     * 
+     * @author Administrator
+     * 
+     */
+    public enum CodeType {
+        serviceImpl("ServiceImpl"), service("Service"), controller("Controller"), page("Page"), entity("Entity"),
+        jsp(""), jspAdd("jspAdd"), jspEdit("jspEdit"), jspList(""),jspSub("");
+        
+        // 成员变量
+        private String type;
+
+        private CodeType(String type) {
+            this.type = type;
+        }
+
+        public String getValue() {
+            return this.type;
+        }
     }
 }

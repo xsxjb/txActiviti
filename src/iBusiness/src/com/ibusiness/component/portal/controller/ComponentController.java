@@ -90,7 +90,7 @@ public class ComponentController {
             return "redirect:/bpm-process/bpm-process-list.do?packageName=" + packageName;
         } else if ("flows".equals(typeId)) {
             // 跳转到指定流程信息页面
-            return "redirect:/bpm-process/bpm-process-input.do?packageName=" + packageName + "&id=" + flowId;
+            return "redirect:/bpm-process/bpm-process-input.do?packageName=" + packageName + "&bpmId=" + flowId;
         }
         // 返回JSP
         return "component/portal/component-show.jsp";

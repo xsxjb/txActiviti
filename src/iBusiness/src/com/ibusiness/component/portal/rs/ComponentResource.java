@@ -16,8 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.entity.BpmProcess;
-import com.ibusiness.component.bpm.dao.BpmProcessDao;
 import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.portal.dao.ComponentDao;

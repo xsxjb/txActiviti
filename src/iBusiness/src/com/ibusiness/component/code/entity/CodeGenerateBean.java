@@ -1,4 +1,8 @@
 package com.ibusiness.component.code.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 代码生成器用Bean
  * 
@@ -6,7 +10,6 @@ package com.ibusiness.component.code.entity;
  *
  */
 public class CodeGenerateBean {
-
     // 包名
     private String packageName;
     // 表单名
@@ -25,6 +28,10 @@ public class CodeGenerateBean {
     private String formStyle;
     // 菜单URL
     private String menuUrl;
+    // 子表关联配置信息
+    private List<CodeGenerateBean> subCodeGenerateBeans = new ArrayList<CodeGenerateBean>();
+    // 设备项目选择信息 (页面显示用)
+    private List<String> selectedItems = new ArrayList<String>();
     /**
      * @return the packageName
      */
@@ -132,5 +139,29 @@ public class CodeGenerateBean {
      */
     public void setFormName(String formName) {
         this.formName = formName;
+    }
+    /**
+     * @return the subCodeGenerateBeans
+     */
+    public List<CodeGenerateBean> getSubCodeGenerateBeans() {
+        return subCodeGenerateBeans;
+    }
+    /**
+     * @param subCodeGenerateBeans the subCodeGenerateBeans to set
+     */
+    public void setSubCodeGenerateBeans(List<CodeGenerateBean> subCodeGenerateBeans) {
+        this.subCodeGenerateBeans = subCodeGenerateBeans;
+    }
+    /**
+     * @return the selectedItems
+     */
+    public List<String> getSelectedItems() {
+        return selectedItems;
+    }
+    /**
+     * @param selectedItems the selectedItems to set
+     */
+    public void setSelectedItems(List<String> selectedItems) {
+        this.selectedItems = selectedItems;
     }
 }

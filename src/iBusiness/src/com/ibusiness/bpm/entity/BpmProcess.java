@@ -26,6 +26,10 @@ public class BpmProcess {
     private String versionId;
     // 流程用户任务设置,是否可配置下一节点给谁办理
     private String useTaskConf;
+    // 表单ID
+    private String formId;
+    // 流程URL
+    private String flowUrl;
     /**
      * @return the id
      */
@@ -104,5 +108,31 @@ public class BpmProcess {
      */
     public void setUseTaskConf(String useTaskConf) {
         this.useTaskConf = useTaskConf;
+    }
+    /**
+     * @return the formId
+     */
+    @Column(name = "FORMID")
+    public String getFormId() {
+        return formId;
+    }
+    /**
+     * @param formId the formId to set
+     */
+    public void setFormId(String formId) {
+        this.formId = formId;
+    }
+    /**
+     * @return the flowUrl
+     */
+    @Column(name = "FLOWURL")
+    public String getFlowUrl() {
+        return flowUrl;
+    }
+    /**
+     * @param flowUrl the flowUrl to set
+     */
+    public void setFlowUrl(String flowUrl) {
+        this.flowUrl = flowUrl;
     }
 }

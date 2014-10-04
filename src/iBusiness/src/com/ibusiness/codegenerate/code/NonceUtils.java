@@ -9,10 +9,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class NonceUtils
 {
-  private static final SimpleDateFormat jdField_a_of_type_JavaTextSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+  private static final SimpleDateFormat ymdhms = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
   private static final String[] jdField_a_of_type_ArrayOfJavaLangString = { "0", "00", "0000", "00000000" };
-  private static Date jdField_a_of_type_JavaUtilDate;
-  private static int jdField_a_of_type_Int = 0;
+  private static Date date;
+  private static int typeInt = 0;
 
   public static String randomString(int paramInt)
   {
@@ -47,7 +47,7 @@ public class NonceUtils
   public static String currentTimestamp()
   {
     Date localDate = new Date();
-    return jdField_a_of_type_JavaTextSimpleDateFormat.format(localDate);
+    return ymdhms.format(localDate);
   }
 
   public static long currentMills()
@@ -63,16 +63,16 @@ public class NonceUtils
   public static synchronized String getCounter()
   {
     Date localDate = new Date();
-    if (localDate.equals(jdField_a_of_type_JavaUtilDate))
+    if (localDate.equals(date))
     {
-      jdField_a_of_type_Int += 1;
+      typeInt += 1;
     }
     else
     {
-      jdField_a_of_type_JavaUtilDate = localDate;
-      jdField_a_of_type_Int = 0;
+      date = localDate;
+      typeInt = 0;
     }
-    return Integer.toHexString(jdField_a_of_type_Int);
+    return Integer.toHexString(typeInt);
   }
 
   public static String format(String paramString, int paramInt)
@@ -99,8 +99,3 @@ public class NonceUtils
     System.out.println(randomLong() + currentMills());
   }
 }
-
-/* Location:           C:\Users\Administrator\Desktop\commons-cg-2.1.jar
- * Qualified Name:     com.code.NonceUtils
- * JD-Core Version:    0.5.4
- */

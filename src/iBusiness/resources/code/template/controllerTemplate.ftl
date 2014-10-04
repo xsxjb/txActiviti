@@ -1,4 +1,4 @@
-package ${bussiPackage}.controller.${entityPackage};
+package ${bussiPackage}.${entityPackage}.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -18,8 +18,8 @@ import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
 
-import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
-import ${bussiPackage}.service.${entityPackage}.${entityName}Service;
+import ${bussiPackage}.${entityPackage}.entity.${entityName}Entity;
+import ${bussiPackage}.${entityPackage}.service.${entityName}Service;
 
 /**   
  * @Title: Controller

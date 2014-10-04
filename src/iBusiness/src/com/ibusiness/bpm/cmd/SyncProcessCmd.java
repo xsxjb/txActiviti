@@ -16,11 +16,14 @@ import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.impl.interceptor.CommandContext;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
+import com.ibusiness.base.menu.dao.MenuDao;
+import com.ibusiness.base.menu.entity.Menu;
 import com.ibusiness.bpm.dao.BpmFlowNodeDao;
 import com.ibusiness.bpm.dao.BpmNodeCountersignDao;
 import com.ibusiness.bpm.dao.BpmNodeFormDao;
 import com.ibusiness.bpm.dao.BpmNodeListenerDao;
 import com.ibusiness.bpm.dao.BpmNodeUserDao;
+import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmFlowNode;
 import com.ibusiness.bpm.entity.BpmNodeCountersign;
@@ -31,7 +34,6 @@ import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.bpm.graph.Graph;
 import com.ibusiness.bpm.graph.Node;
-import com.ibusiness.component.bpm.dao.BpmProcessDao;
 import com.ibusiness.core.spring.ApplicationContextHelper;
 
 /**
@@ -90,6 +92,13 @@ public class SyncProcessCmd implements Command<Void> {
             bpmProcess.setFlowTitle(processDefinitionEntity.getName());
             bpmProcess.setVersionId(bpmProcessVersion.getId());
             bpmProcessDao.save(bpmProcess);
+        }
+        if ("permission".equals(bpmProcess.getFlowName())) {
+            // 菜单配置
+            MenuDao menuDao = getMenuDaoDao();
+            Menu menu= menuDao.get("mThree421");
+            menu.setMenuUrl("/permission/permission-list.do?flowType=0&flowId=" + bpmProcess.getId());
+            menuDao.save(menu);
         }
         //
         BpmnModel bpmnModel = new GetBpmnModelCmd(processDefinitionId).execute(commandContext);
@@ -366,8 +375,7 @@ public class SyncProcessCmd implements Command<Void> {
         }
 
         BpmNodeFormDao bpmNodeFormDao = getBpmNodeFormDao();
-        BpmNodeForm bpmNodeForm = bpmNodeFormDao.findUnique(
-                "from BpmNodeForm where nodeId=?", bpmFlowNode.getId());
+        BpmNodeForm bpmNodeForm = bpmNodeFormDao.findUnique("from BpmNodeForm where nodeId=?", bpmFlowNode.getId());
 
         if (bpmNodeForm == null) {
             bpmNodeForm = new BpmNodeForm();
@@ -413,5 +421,9 @@ public class SyncProcessCmd implements Command<Void> {
     // 流程节点(会签)关联配置表DAO
     public BpmNodeCountersignDao getBpmNodeCountersignDao() {
         return ApplicationContextHelper.getBean(BpmNodeCountersignDao.class);
+    }
+    // 菜单DAO
+    public MenuDao getMenuDaoDao() {
+        return ApplicationContextHelper.getBean(MenuDao.class);
     }
 }

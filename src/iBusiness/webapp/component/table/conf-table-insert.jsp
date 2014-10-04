@@ -60,9 +60,8 @@
 				    <label class="col-lg-2 control-label" for="table-type">表类型:</label>
 					<div class="col-lg-3">
 				          <select id="table-type" name="tableType"  class="form-control">
-						        <option value="1">单表</option>
-							    <option value="2">主表</option>
-							    <option value="3">子表</option>
+						        <option value="1">单表/主表</option>
+							    <option value="2">子表</option>
 						   </select>
 				    </div>
 				  </div>

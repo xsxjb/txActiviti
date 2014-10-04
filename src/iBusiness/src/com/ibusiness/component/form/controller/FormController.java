@@ -134,7 +134,6 @@ public class FormController {
     public String formTablesInput(@RequestParam(value = "formId", required = false) String formId, @RequestParam("packageName") String packageName, Model model) {
         // 取得表单信息
         if (CommonUtils.isNull(formId)) {
-            // TODO 
             return "component/form/conf-form-input.jsp";
         }
         ConfForm confForm = confFormDao.get(formId);
@@ -142,7 +141,14 @@ public class FormController {
         String hql = "from ConfFormTable WHERE formName=? AND tableType='main' ";
         List<ConfFormTable> formTableList = confFormTableDao.find(hql, confForm.getFormName());
         for (ConfFormTable confFormTable : formTableList) {
-            String tbleColumnsHql = "from ConfTableColumns WHERE tableName=?";
+            // 取得表标题名
+            String tableHql = "from ConfTable where packageName=? AND tableName=?";
+            List<ConfTable> confTables = tableDao.find(tableHql, confFormTable.getPackageName(), confFormTable.getTableName());
+            if (null != confTables && confTables.size() > 0) {
+                confFormTable.setTableTitle(confTables.get(0).getTableNameComment());
+            }
+            // 取得表对应字段
+            String tbleColumnsHql = "from ConfTableColumns WHERE tableName=? order by columnNo ";
             List<ConfTableColumns> tableColumns = tableColumnsDao.find(tbleColumnsHql, confFormTable.getTableName());
             confFormTable.setTableColumns(tableColumns);
         }
@@ -151,7 +157,14 @@ public class FormController {
         String subHql = "from ConfFormTable WHERE formName=? AND tableType='sub' ";
         List<ConfFormTable> subFormTableList = confFormTableDao.find(subHql, confForm.getFormName());
         for (ConfFormTable confFormTable : subFormTableList) {
-            String tbleColumnsHql = "from ConfTableColumns WHERE tableName=?";
+            // 取得表标题名
+            String tableHql = "from ConfTable where packageName=? AND tableName=?";
+            List<ConfTable> confTables = tableDao.find(tableHql, confFormTable.getPackageName(), confFormTable.getTableName());
+            if (null != confTables && confTables.size() > 0) {
+                confFormTable.setTableTitle(confTables.get(0).getTableNameComment());
+            }
+            // 取得表对应字段
+            String tbleColumnsHql = "from ConfTableColumns WHERE tableName=? order by columnNo ";
             List<ConfTableColumns> tableColumns = tableColumnsDao.find(tbleColumnsHql, confFormTable.getTableName());
             confFormTable.setTableColumns(tableColumns);
         }
@@ -163,12 +176,14 @@ public class FormController {
         model.addAttribute("isBpmForm", confForm.getIsBpmForm());
         model.addAttribute("formId", formId);
         model.addAttribute("formName", confForm.getFormName());
-        // 主表列表下拉框
-        String tableHql = "from ConfTable WHERE packageName=?";
-        List<ConfTable> confTableList = tableDao.find(tableHql, packageName);
+        // 主表列表下拉框. 流程表单只能关联流程表,非流程表单只能关联非流程表
+        String tableHql = "from ConfTable WHERE packageName=? AND isBpmTable=? AND tableType='1' ";
+        List<ConfTable> confTableList = tableDao.find(tableHql, packageName, confForm.getIsBpmForm());
         model.addAttribute("mainTable", confTableList);
         // 子表下拉框
-        model.addAttribute("subTable", confTableList);
+        String subTableHql = "from ConfTable WHERE packageName=? AND isBpmTable=? AND tableType='2' ";
+        List<ConfTable> confSubTableList = tableDao.find(subTableHql, packageName, confForm.getIsBpmForm());
+        model.addAttribute("subTable", confSubTableList);
 
         return "component/form/conf-form-input.jsp";
     }
@@ -184,12 +199,34 @@ public class FormController {
     @RequestMapping("conf-formLabel-list")
     public String formLabelList(@RequestParam(value = "formId", required = false) String formId, @RequestParam("packageName") String packageName, Model model) {
         ConfForm confForm = confFormDao.get(formId);
-        // 表单对应字段组件管理, ID主键字段不显示
-        String hql = "from ConfFormTableColumn WHERE formName=? AND tableColumn != 'ID'";
-        List<ConfFormTableColumn> formTableColumnList = confFormTableColumnDao.find(hql, confForm.getFormName());
-        model.addAttribute("formTableColumns", formTableColumnList);
+        // 取得表单关联的主表
+        String formTableHql = "from ConfFormTable where packageName=? AND formName=? AND tableType='main' ";
+        List<ConfFormTable> confFormTables = confFormTableDao.find(formTableHql, packageName,confForm.getFormName());
+        ConfFormTable formTable = null;
+        if (null != confFormTables && confFormTables.size() > 0) {
+            formTable =confFormTables.get(0);
+            // 表单对应字段组件管理, ID主键字段不显示
+            String hql = "from ConfFormTableColumn WHERE packageName=? AND formName=? AND tableName=? AND tableColumn != 'ID'";
+            List<ConfFormTableColumn> formTableColumns = confFormTableColumnDao.find(hql, formTable.getPackageName(), formTable.getFormName(), formTable.getTableName());
+            // 主表对象
+            formTable.setFormTableColumns(formTableColumns);
+            
+            // 取得表单关联的子表
+            String subFormTableHql = "from ConfFormTable where packageName=? AND formName=? AND tableType='sub' ";
+            List<ConfFormTable> confSubFormTables = confFormTableDao.find(subFormTableHql, packageName,confForm.getFormName());
+            // 循环取得每个子表对应的字段
+            for (ConfFormTable subFormTable : confSubFormTables) {
+                // 子表对象
+                String sunhql = "from ConfFormTableColumn WHERE packageName=? AND formName=? AND tableName=? AND tableColumn != 'ID'";
+                List<ConfFormTableColumn> subFormTableColumns = confFormTableColumnDao.find(sunhql, subFormTable.getPackageName(), subFormTable.getFormName(), subFormTable.getTableName());
+                subFormTable.setFormTableColumns(subFormTableColumns);
+            }
+            model.addAttribute("confSubFormTables", confSubFormTables);
+        } else {
+            model.addAttribute("confSubFormTables", null);
+        }
+        model.addAttribute("confFormTable", formTable);
         model.addAttribute("formId", formId);
-        
         // 控制tab标签显示属性
         model.addAttribute("tabType", "formLabel");
         // 包名
@@ -250,7 +287,12 @@ public class FormController {
             confFormDao.update(confForm);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/form/conf-form-list.do?packageName=" + confForm.getPackageName();
+        // 判断是流程表单还是非流程表单
+        if (1 == confForm.getIsBpmForm()) {
+            return "redirect:/form/conf-bpmForm-list.do?packageName=" + confForm.getPackageName();
+        } else {
+            return "redirect:/form/conf-form-list.do?packageName=" + confForm.getPackageName();
+        }
     }
     /**
      * 保存 主表/单表/子表关联表单

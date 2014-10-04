@@ -22,7 +22,7 @@ public class ConfTable {
     private String tableName;
     // 表名含义
     private String tableNameComment;
-    // 表类型
+    // 表类型    1：单表/主表 2：子表
     private String tableType;
     // 关联主表ID
     private String parentTableId;

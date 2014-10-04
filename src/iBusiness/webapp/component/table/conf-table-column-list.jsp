@@ -56,7 +56,7 @@
 						<c:forEach items="${tableInfoList}" var="item">
 						  <tr>
 						    <td>
-							    <c:if test="${item.columnValue!='ID'}">
+							    <c:if test="${item.columnValue!='ID' && item.columnValue!='CREATEDATEBPM'  && item.columnValue!='CREATEUSERBPM'  && item.columnValue!='UPDATEDATEBPM'  && item.columnValue!='UPDATEUSERBPM' && item.columnValue!='DONEFLAG' }">
 							    	<input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.columnValue}">
 							    </c:if>
 						    </td>
@@ -68,7 +68,7 @@
 							<td>${item.defaultValue}</td>
 							<td>${item.columnNo}</td>
 							<td>
-								<c:if test="${item.columnValue!='ID'}">
+								<c:if test="${item.columnValue!='ID' && item.columnValue!='CREATEDATEBPM'  && item.columnValue!='CREATEUSERBPM'  && item.columnValue!='UPDATEDATEBPM'  && item.columnValue!='UPDATEUSERBPM' && item.columnValue!='DONEFLAG' }">
 						            <a href="conf-table-column-input.do?tableName=${tableName}&columnValue=${item.columnValue}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					            </c:if>
 					        </td>

@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -14,59 +13,47 @@ import org.apache.commons.lang3.StringUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.CodeStringUtils;
 
-import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-// Referenced classes of package com.code.generate:
-//            ICallBack
+/**
+ * 一对多代码生成工厂类
+ * 
+ * @author JiangBo
+ * 
+ */
+public class CodeFactoryOneToMany extends BaseCodeFactory  {
 
-public class CodeFactoryOneToMany {
-
-    private ICallBack a;
-
-    public CodeFactoryOneToMany() {
-    }
-
-    public Configuration getConfiguration() throws IOException {
-        // 初始化FreeMarker配置
-        Configuration configuration = new Configuration();
-        String s = getTemplatePath();
-        File file = new File(s);
-        configuration.setDirectoryForTemplateLoading(file);
-        configuration.setLocale(Locale.CHINA);
-        configuration.setDefaultEncoding("UTF-8");
-        return configuration;
-    }
-
-    public void generateFile(String s, String s1, Map map) {
+    private ICallBack callBack;
+    /**
+     * 生成文件
+     * @param templateName
+     * @param type
+     * @param map
+     */
+    public void generateFile(String templateName, String type, Map<String, Object> map) {
         try {
-            String s2 = map.get("entityPackage").toString();
-            String s3 = map.get("entityName").toString();
-            String s4 = getCodePath(s1, s2, s3);
-            String s5 = StringUtils.substringBeforeLast(s4, "/");
-            Template template = getConfiguration().getTemplate(s);
-            FileUtils.forceMkdir(new File((new StringBuilder(String.valueOf(s5))).append("/").toString()));
-            OutputStreamWriter outputstreamwriter = new OutputStreamWriter(new FileOutputStream(s4),
-                    CodeResourceUtil.SYSTEM_ENCODING);
-            template.process(map, outputstreamwriter);
-            outputstreamwriter.close();
-        } catch (TemplateException templateexception) {
-            templateexception.printStackTrace();
-        } catch (IOException ioexception) {
-            ioexception.printStackTrace();
+            String entityPackage = map.get("entityPackage").toString();
+            String entityName = map.get("entityName").toString();
+            // 取得生成文件路径
+            String codePath = getCodePath(type, entityPackage, entityName);
+            String fileDir = StringUtils.substringBeforeLast(codePath, "/");
+            // 根据指定的模板文件路径，创建一个模板。
+            Template template = getConfiguration().getTemplate(templateName);
+            FileUtils.forceMkdir(new File(fileDir + "/"));
+            OutputStreamWriter outStream = new OutputStreamWriter(new FileOutputStream(codePath), CodeResourceUtil.SYSTEM_ENCODING);
+            template.process(map, outStream);
+            outStream.close();
+        } catch (TemplateException e) {
+            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 
-    public String getProjectPath() {
-        String s = (new StringBuilder(String.valueOf(System.getProperty("user.dir").replace("\\", "/")))).append("/")
-                .toString();
-        return s;
-    }
-
     public String getClassPath() {
-        String s = Thread.currentThread().getContextClassLoader().getResource("./").getPath();
-        return s;
+        String classPath = Thread.currentThread().getContextClassLoader().getResource("./").getPath();
+        return classPath;
     }
 
     public static void main(String args[]) {
@@ -74,92 +61,78 @@ public class CodeFactoryOneToMany {
     }
 
     public String getTemplatePath() {
-        String s = (new StringBuilder(String.valueOf(getClassPath()))).append(CodeResourceUtil.TEMPLATEPATH).toString();
-        return s;
+        String templatePath = (new StringBuilder(String.valueOf(getClassPath()))).append(CodeResourceUtil.TEMPLATEPATH).toString();
+        return templatePath;
     }
 
-    public String getCodePath(String s, String s1, String s2) {
-        String s3 = getProjectPath();
-        StringBuilder stringbuilder = new StringBuilder();
-        if (StringUtils.isNotBlank(s)) {
-            String s4 = CodeType.valueOf(s).getValue();
-            stringbuilder.append(s3);
-            if ("jspAdd".equals(s) || "jspEdit".equals(s) || "jsp".equals(s))
-                stringbuilder.append(CodeResourceUtil.JSPPATH);
-            else
-                stringbuilder.append(CodeResourceUtil.CODEPATH);
-            if ("Action".equalsIgnoreCase(s4))
-                stringbuilder.append(StringUtils.lowerCase("action"));
-            else if ("ServiceImpl".equalsIgnoreCase(s4))
-                stringbuilder.append(StringUtils.lowerCase("service/impl"));
-            else if ("ServiceI".equalsIgnoreCase(s4))
-                stringbuilder.append(StringUtils.lowerCase("service"));
-            else if (!"jspAdd".equals(s) && !"jspEdit".equals(s) && !"jsp".equals(s))
-                stringbuilder.append(StringUtils.lowerCase(s4));
-            stringbuilder.append("/");
-            stringbuilder.append(StringUtils.lowerCase(s1));
-            stringbuilder.append("/");
-            if ("jspEdit".equals(s) || "jspAdd".equals(s) || "jsp".equals(s)) {
-                String s5 = StringUtils.capitalize(s2);
-                stringbuilder.append(CodeStringUtils.getInitialSmall(s5));
-                stringbuilder.append(s4);
-                stringbuilder.append(".jsp");
+    /**
+     * 取得生成文件路径
+     * @return
+     */
+    public String getCodePath(String type, String entityPackage, String entityName) {
+        String projectPath = getProjectPath();
+        StringBuilder strBuilder = new StringBuilder();
+        if (StringUtils.isNotBlank(type)) {
+            String codeType = CodeType.valueOf(type).getValue();
+            strBuilder.append(projectPath);
+            if ("jspSub".equals(type) || "jsp".equals(type)  || "jspList".equals(type)) {
+                String jspPath = CodeResourceUtil.JSPPATH;
+                // 设置JSP路径
+                jspPath = jspPath.replace("/com/ibusiness", "");
+                strBuilder.append(jspPath);
             } else {
-                stringbuilder.append(StringUtils.capitalize(s2));
-                stringbuilder.append(s4);
-                stringbuilder.append(".java");
+                strBuilder.append(CodeResourceUtil.CODEPATH);
+            }
+            // 包名
+            strBuilder.append(StringUtils.lowerCase(entityPackage));
+            strBuilder.append("/");
+            // 模块名
+            if ("Action".equalsIgnoreCase(codeType)) {
+                strBuilder.append(StringUtils.lowerCase("action"));
+            } else if ("ServiceImpl".equalsIgnoreCase(codeType)) {
+                strBuilder.append(StringUtils.lowerCase("service/impl"));
+            } else if ("ServiceI".equalsIgnoreCase(codeType)) {
+                strBuilder.append(StringUtils.lowerCase("service"));
+            } else if (!"jspAdd".equals(type) && !"jspEdit".equals(type) && !"jsp".equals(type)) {
+                strBuilder.append(StringUtils.lowerCase(codeType));
+            }
+            strBuilder.append("/");
+            // 文件名
+            if ("jspList".equals(type) || "jspSub".equals(type) || "jsp".equals(type)) {
+                String s5 = StringUtils.capitalize(entityName);
+                strBuilder.append(CodeStringUtils.getInitialSmall(s5));
+                strBuilder.append(codeType);
+                // 显示页面 还是插入页面
+                if ("jsp".equals(type)) {
+                    strBuilder.append("-input");
+                } else if ("jspSub".equals(type)) {
+                    strBuilder.append("-sub-input");
+                } else if ("jspList".equals(type)) {
+                    strBuilder.append("-list");
+                }
+                strBuilder.append(".jsp");
+            } else {
+                strBuilder.append(StringUtils.capitalize(entityName));
+                strBuilder.append(codeType);
+                strBuilder.append(".java");
             }
         } else {
             throw new IllegalArgumentException("type is null");
         }
-        return stringbuilder.toString();
+        return strBuilder.toString();
     }
 
-    public void invoke(String s, String s1) {
-        Object obj = new HashMap();
-        obj = a.execute();
-        generateFile(s, s1, ((Map) (obj)));
+    public void invoke(String templateName, String type) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map = callBack.execute();
+        generateFile(templateName, type, map);
     }
 
     public ICallBack getCallBack() {
-        return a;
+        return callBack;
     }
 
     public void setCallBack(ICallBack icallback) {
-        a = icallback;
+        callBack = icallback;
     }
-
-    /**
-     * 枚举类
-     * 
-     * @author Administrator
-     * 
-     */
-    public enum CodeType {
-        // 注：枚举写在最前面，否则编译出错
-        serviceImpl("serviceImpl", 0, "ServiceImpl"), dao("dao", 1, "Dao"), service("service", 2, "ServiceI"), action(
-                "action", 3, "Action"), page("page", 4, "Page"), entity("entity", 5, "Entity"), jspAdd("jspAdd", 6,
-                "-main-add"), jspEdit("jspEdit", 7, "-main-edit"), jsp("jsp", 8, "");
-        // 成员变量
-        private String name;
-        private int index;
-        private String value;
-        private static final CodeType codeTypes[];
-        static {
-            codeTypes = (new CodeType[] {
-                    serviceImpl, dao, service, action, page, entity, jspAdd, jspEdit, jsp });
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        // 构造方法
-        private CodeType(String name, int index, String value) {
-            this.name = name;
-            this.index = index;
-            this.value = value;
-        }
-    }
-
 }
