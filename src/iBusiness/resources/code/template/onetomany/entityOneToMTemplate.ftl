@@ -1,4 +1,4 @@
-package ${bussiPackage}.entity.${entityPackage};
+package ${bussiPackage}.${entityPackage}.entity;
 
 import java.util.Date;
 

@@ -39,16 +39,16 @@
     <div class="row">
     <div class="span2"></div>
 	<!-- start of main -->
-	<div class="panel panel-default col-md-10 " > 
-		    <!-- tabs  -->
-	        <ul class="nav nav-tabs">
-			  <li class="${flowType == '0' ? 'active' : ''} "><a href="${scopePrefix}/permission/permission-list.do?flowId=${flowId}&flowType=0" >待办</a></li>
-			  <li class="${flowType == '1' ? 'active' : ''}"><a href="${scopePrefix}/permission/permission-list.do?flowId=${flowId}&flowType=1" >已办</a></li>
-			</ul>
-			<div id="tabContent" class="tab-content">
-			    <!-- ========================== 待办流程信息 =================================================== -->
+	<div class="panel panel-default col-md-10 ">
+        <!-- tabs  -->
+        <ul class="nav nav-tabs">
+		  <li class="${flowType =='0' ? 'active' : ''} "><a href="${scopePrefix}/permission/permission-list.do?flowId=${flowId}&flowType=0" >待办</a></li>
+		  <li class="${flowType =='1' ? 'active' : ''} "><a href="${scopePrefix}/permission/permission-list.do?flowId=${flowId}&flowType=1" >已办</a></li>
+		</ul>
+		<div id="tabContent" class="tab-content">
+		    <!-- ========================== 待办流程信息 =================================================== -->
 			    <c:if test="${flowType == '0'}">
-			    <div id=bpmBase class="tab-pane fade  ${flowType == '0' ? ' active in' : ''}">
+			    <div id=bpmBase class="tab-pane fade  ${flowType == '0'? 'active in' : ''}">
 				    <!-- 查询条件 -->
 			        <div class="panel-heading"><h4 class="panel-title">待办流程查询</h4></div>
 			        <div class="panel-body">
@@ -127,8 +127,8 @@
 			  </c:if>
 			  
 			  <!-- ========================== 已办流程信息 =================================================== -->
-			   <c:if test="${flowType == '1'}">
-			   <div id=bpmBase class="tab-pane fade  ${flowType == '1' ? ' active in' : ''}">
+			   <c:if test="${flowType =='1'}">
+			   <div id=bpmBase class="tab-pane fade  ${flowType == '1' ?' active in' : ''}">
 				    <!-- 查询条件 -->
 			        <div class="panel-body">
 				          <div id="search" class="content content-inner">
@@ -197,8 +197,8 @@
 			  </div>
 			  </c:if>
 			  
-		  </div>
-	  </div>
+		   </div>
+	    </div>
 	<!-- end of main -->
 	</div>
   </body>

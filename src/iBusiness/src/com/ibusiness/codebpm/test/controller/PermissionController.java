@@ -9,9 +9,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.activiti.engine.impl.interceptor.Command;
-import org.activiti.engine.task.Task;
-import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,21 +16,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import org.activiti.engine.impl.interceptor.Command;
+import org.activiti.engine.task.Task;
+import org.apache.commons.io.IOUtils;
+
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
-import com.ibusiness.codebpm.test.entity.PermissionEntity;
-import com.ibusiness.codebpm.test.entity.Permission_sEntity;
-import com.ibusiness.codebpm.test.service.PermissionService;
-import com.ibusiness.codebpm.test.service.Permission_sService;
-import com.ibusiness.common.page.Page;
-import com.ibusiness.common.page.PropertyFilter;
-import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.spring.MessageHelper;
+import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.page.Page;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.security.util.SpringSecurityUtils;
 
+import com.ibusiness.codebpm.test.entity.PermissionEntity;
+import com.ibusiness.codebpm.test.service.PermissionService;
+import com.ibusiness.codebpm.test.entity.Permission_sEntity;
+import com.ibusiness.codebpm.test.service.Permission_sService;
+
 /**   
- * @Title: 审批权限流程Controller
- * 
+ * @Title: Controller
+ * @Description: 审批权限流程表
  * @author JiangBo
  *
  */
@@ -43,8 +45,8 @@ public class PermissionController {
 
     private MessageHelper messageHelper;
     private PermissionService permissionService;
-    private Permission_sService permission_sService;
-    /**
+        private Permission_sService permission_sService;
+   /**
      * 列表
      */
     @RequestMapping("permission-list")
@@ -60,7 +62,6 @@ public class PermissionController {
         // 返回JSP
         return "codebpm/test/permission-list.jsp";
     }
-    
     /**
      * 新建一条流程, 进入流程表单信息页面
      * @param id
@@ -76,28 +77,24 @@ public class PermissionController {
             entity = new PermissionEntity();
         }
         model.addAttribute("model", entity);
-        
         // 子表信息
-        Map<String, Object> parameterMap = new HashMap<String, Object>();
-        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(map);
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
-        page = permission_sService.pagedQuery(page, propertyFilters);
-        model.addAttribute("page", page);
+	        page = permission_sService.pagedQuery(page, propertyFilters);
+	        model.addAttribute("page", page);
+        
         // 流程ID
         model.addAttribute("flowId", flowId);
         return "codebpm/test/permission-input.jsp";
     }
+    
     /**
      * 子表新建
-     * @param flowId
-     * @param id
-     * @param subId
-     * @param model
-     * @return
      */
-    @RequestMapping("permission-sub-input")
-    public String subInput(@RequestParam(value = "flowId", required = false) String flowId, @RequestParam("id") String id, @RequestParam("subId") String subId, Model model) {
+    @RequestMapping("permission_s-input")
+    public String permission_sInput(@RequestParam(value = "flowId", required = false) String flowId, @RequestParam("id") String id, @RequestParam("subId") String subId, Model model) {
         Permission_sEntity entity = permission_sService.get(subId);
         model.addAttribute("model", entity);
         model.addAttribute("parentid", id);
@@ -178,7 +175,7 @@ public class PermissionController {
     /**
      * 子表保存
      */
-    @RequestMapping("permission-sub-save")
+    @RequestMapping("permission_s-save")
     public String subSave(@ModelAttribute Permission_sEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, RedirectAttributes redirectAttributes) throws Exception {
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
@@ -208,7 +205,6 @@ public class PermissionController {
 
         return "redirect:/permission/permission-list.do?flowId=" + flowId;
     }
-    
     /**
      * 流程定义图像
      * @param bpmProcessId
@@ -230,6 +226,7 @@ public class PermissionController {
 
         IOUtils.copy(is, response.getOutputStream());
     }
+    
     // ======================================================================
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
@@ -239,8 +236,8 @@ public class PermissionController {
     public void setPermissionService(PermissionService permissionService) {
         this.permissionService = permissionService;
     }
-    @Resource
-    public void setPermission_sService(Permission_sService permission_sService) {
-        this.permission_sService = permission_sService;
-    }
+        @Resource
+	    public void setPermission_sService(Permission_sService permission_sService) {
+	        this.permission_sService = permission_sService;
+	    }
 }

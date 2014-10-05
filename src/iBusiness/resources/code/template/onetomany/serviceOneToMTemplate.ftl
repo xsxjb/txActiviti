@@ -1,4 +1,4 @@
-package ${bussiPackage}.service.${entityPackage};
+package ${bussiPackage}.${entityPackage}.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ibusiness.common.page.HibernateEntityDao;
-import ${bussiPackage}.entity.${entityPackage}.${entityName}Entity;
+import ${bussiPackage}.${entityPackage}.entity.${entityName}Entity;
 
 /**   
  * @Title: Service

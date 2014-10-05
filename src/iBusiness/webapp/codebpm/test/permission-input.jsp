@@ -32,7 +32,7 @@
 		});
 		// 提交方法--通过传入路径 提交到不同的controller
 		function mainFormSubmit(path){
-			$('#mainForm').attr("action", path).submit();
+			$('#mainForm').attr('action', path).submit();
 		}
     </script>
   </head>
@@ -42,19 +42,19 @@
 	<div class="span2"></div>
 	<!-- start of main -->
 	<div class="panel panel-default col-md-10"> 
-        <div class="panel-heading"><h4 class="panel-title">流程控制</h4></div>
-        <div class="panel-body">
-		    <div class="pull-left">
+	    <div class="panel-heading"><h4 class="panel-title">流程控制</h4></div>
+	    <div class="panel-body">
+	        <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('permission-complete.do')">办理</button>
 			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('permission-save-draft.do')">草稿</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='permission-list.do?flowId=${flowId}&flowType=0'">返回</button>
 			</div>
 	   </div>
 	   
-	   <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
-				<form id="mainForm" method="post" action="permission-save-draft.do?flowId=${flowId}" class="form-horizontal">
+		       <form id="mainForm" method="post" action="permission-save-draft.do?flowId=${flowId}" class="form-horizontal">
 				   <input type="hidden" name="flowId" value="${flowId}">
 				   <c:if test="${model != null}">
 				       <input type="hidden" name="id" value="${model.id}">
@@ -65,22 +65,24 @@
 				   </c:if>
 				   <div class="control-group">
 					      <div class="col-lg-6">
-						      <label class="control-label" for="code-name">流程标题:</label>
-							  <input id="code-name" type="text" name="tasktitle" value="${model.tasktitle}"  class="text required" >
-						  </div>
-						  <div class="col-lg-6">
 						      <label class="control-label" for="code-remark">备注:</label>
 							  <input id="code-remark" type="text" name="remark" value="${model.remark}"  class="text required" >
 						  </div>
 					</div>
+				   <div class="control-group">
+					      <div class="col-lg-6">
+						      <label class="control-label" for="code-tasktitle">流程实例标题:</label>
+							  <input id="code-tasktitle" type="text" name="tasktitle" value="${model.tasktitle}"  class="text required" >
+						  </div>
+					</div>
 				</form>
 		</div>
-        </div>
-        <!-- ============================================================== -->
+        </div> 
+        <!-- ==================== 子表 ========================================== -->
         <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
-	       <div class="panel-body">
+	    <div class="panel-body">
 			    <div class="pull-left">
-				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='permission-sub-input.do?id=${model.id}&subId=&flowId=${flowId}'">新建</button>
+				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='permission_s-input.do?id=${model.id}&subId=&flowId=${flowId}'">新建</button>
 				    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				</div>
 				<div class="pull-right">
@@ -100,19 +102,19 @@
 				      <thead>
 					      <tr>
 					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			                  <th class="sorting">子表备注</th>
+			                      <th class="sorting">备注</th>
 					          <th width="80">&nbsp;</th>
 					      </tr>
 					    </thead>
 						    <tbody>
 						      <c:forEach items="${page.result}" var="item">
-						      <tr>
-						        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-						        <td>${item.remark}</td>
-						        <td>
-						          <a href="permission-sub-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
-						        </td>
-						      </tr>
+								  <tr>
+								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+									            <td>${item.remark}</td>
+								        <td>
+								          <a href="permission-sub-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+								        </td>
+								  </tr>
 						      </c:forEach>
 						    </tbody>
 						  </table>
@@ -129,8 +131,7 @@
 				</div>
 			    <div class="m-clear"></div>
 		      </article>
-		  </div>
-	  
+      </div>
 	<!-- end of main -->
 	</div>
   </body>

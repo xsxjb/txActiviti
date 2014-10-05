@@ -20,6 +20,7 @@ import com.ibusiness.base.menu.entity.Menu;
 import com.ibusiness.base.menu.entity.MenuRoleDef;
 import com.ibusiness.codegenerate.code.CodeParamBean;
 import com.ibusiness.codegenerate.code.generate.CodeGenerate;
+import com.ibusiness.codegenerate.code.generate.CodeGenerateBpmForm;
 import com.ibusiness.codegenerate.code.generate.CodeGenerateOneToMany;
 import com.ibusiness.codegenerate.code.window.CreateFileProperty;
 import com.ibusiness.component.code.entity.CodeGenerateBean;
@@ -150,14 +151,25 @@ public class CodeController {
                 }
                 codeParamBean.setSubParamBeans(subParamList);
                 // 代码生成器--流程
-                new CodeGenerateOneToMany(codeParamBean, createFileProperty).generateToFile();
+                new CodeGenerateBpmForm(codeParamBean, createFileProperty).generateToFile();
             } else {
                 // 一对一流程表单生成器
+                CodeParamBean codeParamBean = new CodeParamBean();
+                codeParamBean.setPackageName(bean.getPackageName());
+                codeParamBean.setFormName(bean.getFormName());
+                codeParamBean.setEntityName(bean.getEntityName());
+                codeParamBean.setTableName(bean.getTableName());
+                codeParamBean.setKeyType("uuid");
+                codeParamBean.setEntityTitle(bean.getEntityTitle());
+                codeParamBean.setRowNumber(bean.getRowNumber());
+                codeParamBean.setFormStyle(bean.getFormStyle());
+                // 代码生成器--流程
+                new CodeGenerateBpmForm(codeParamBean, createFileProperty).generateToFile();
             }
         } else {
             // 非流程表单---调用非流程生成器
             if (null != subCodeGenerateBeans && subCodeGenerateBeans.size() > 0) {
-                // 一对多非流程表单生成器
+             // 一对多流程表单生成器
                 CodeParamBean codeParamBean = new CodeParamBean();
                 codeParamBean.setPackageName(bean.getPackageName());
                 codeParamBean.setFormName(bean.getFormName());
@@ -170,7 +182,7 @@ public class CodeController {
                 List<CodeParamBean> subParamList = new ArrayList<CodeParamBean>();
                 for (CodeGenerateBean codeGenerateBean : subCodeGenerateBeans) {
                     CodeParamBean subParamBean = new CodeParamBean();
-                    subParamBean.setPackageName(codeGenerateBean.getPackageName());
+                    subParamBean.setPackageName(bean.getPackageName());
                     subParamBean.setFormName(bean.getFormName());
                     subParamBean.setTableName(codeGenerateBean.getTableName());
                     subParamBean.setEntityName(codeGenerateBean.getEntityName());
@@ -178,9 +190,17 @@ public class CodeController {
                     subParamBean.setEntityTitle(bean.getEntityTitle());
                     subParamBean.setRowNumber(bean.getRowNumber());
                     subParamBean.setFormStyle(bean.getFormStyle());
+                    // 子表生成
+                    CreateFileProperty subFileProperty = new CreateFileProperty();
+                    subFileProperty.setJspFlag(true);
+                    subFileProperty.setServiceIFlag(true);
+                    subFileProperty.setEntityFlag(true);
+                    subFileProperty.setJspMode("sub");
+                    new CodeGenerate(subParamBean, subFileProperty).generateToFile();
+                    subParamList.add(subParamBean);
                 }
                 codeParamBean.setSubParamBeans(subParamList);
-                
+                // 代码生成器--非流程
                 new CodeGenerateOneToMany(codeParamBean, createFileProperty).generateToFile();
             } else {
                 // 一对一非流程表单生成器

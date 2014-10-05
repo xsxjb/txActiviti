@@ -29,8 +29,8 @@ import com.ibusiness.component.table.entity.ConfTableColumns;
  * @author JiangBo
  * 
  */
-public class CodeGenerateOneToMany implements ICallBack {
-    private static final Log log = LogFactory.getLog(CodeGenerateOneToMany.class);
+public class CodeGenerateBpmForm implements ICallBack {
+    private static final Log log = LogFactory.getLog(CodeGenerateBpmForm.class);
     private static String entityPackage = "test";
     private static String entityName = "Person";
     private static String tableName = "person";
@@ -63,9 +63,9 @@ public class CodeGenerateOneToMany implements ICallBack {
     /**
      * 构造函数
      */
-    public CodeGenerateOneToMany() {
+    public CodeGenerateBpmForm() {
     }
-    public CodeGenerateOneToMany(CodeParamBean codeParamBean, CreateFileProperty fileProperty) {
+    public CodeGenerateBpmForm(CodeParamBean codeParamBean, CreateFileProperty fileProperty) {
         entityName = codeParamBean.getEntityName();
         entityPackage = codeParamBean.getPackageName();
         formName = codeParamBean.getFormName();
@@ -156,10 +156,12 @@ public class CodeGenerateOneToMany implements ICallBack {
                 localHashMap.put("primary_key_type", columnt.getFieldType());
             }
             //========= 子表内容生成 =========================================//
-            for (CodeParamBean codeParamBean : subTabParamList) {
-                // 取得表字段list 根据表名
-                List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName());
-                codeParamBean.setColumns(subColumlist);
+            if (null != subTabParamList && subTabParamList.size() > 0) {
+                for (CodeParamBean codeParamBean : subTabParamList) {
+                    // 取得表字段list 根据表名
+                    List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName());
+                    codeParamBean.setColumns(subColumlist);
+                }
             }
             // 将子表内容存入
             localHashMap.put("subTab", subTabParamList);
@@ -210,29 +212,30 @@ public class CodeGenerateOneToMany implements ICallBack {
      */
     public void generateToFile() {
         CodeFactoryBpmForm codeFactoryOneToMany = new CodeFactoryBpmForm();
-        codeFactoryOneToMany.setCallBack(new CodeGenerateOneToMany());
+        codeFactoryOneToMany.setCallBack(new CodeGenerateBpmForm());
         if (createFileProperty.isJspFlag()) {
-            codeFactoryOneToMany.invoke("onetomany/jspInputOneToMTemplate.ftl", "jsp");
-            codeFactoryOneToMany.invoke("onetomany/jspListOneToMTemplate.ftl", "jspList");
+            codeFactoryOneToMany.invoke("bpm/jspInputOneToMTemplate.ftl", "jsp");
+            codeFactoryOneToMany.invoke("bpm/jspListOneToMTemplate.ftl", "jspList");
+//            codeFactoryOneToMany.invoke("bpm/jspSubInputOneToMTemplate.ftl", "jspSub");
         }
         // ServiceImpl文件
         if (createFileProperty.isServiceImplFlag()) {
-            codeFactoryOneToMany.invoke("onetomany/serviceOneToMTemplate.ftl", "serviceImpl");
+            codeFactoryOneToMany.invoke("bpm/serviceOneToMTemplate.ftl", "serviceImpl");
         }
         // ServiceI文件
         if (createFileProperty.isServiceIFlag()) {
-            codeFactoryOneToMany.invoke("onetomany/serviceOneToMTemplate.ftl", "service");
+            codeFactoryOneToMany.invoke("bpm/serviceOneToMTemplate.ftl", "service");
         }
         // controller文件
         if (createFileProperty.isActionFlag()) {
-            codeFactoryOneToMany.invoke("onetomany/controllerOneToMTemplate.ftl", "controller");
+            codeFactoryOneToMany.invoke("bpm/controllerOneToMTemplate.ftl", "controller");
         }
         // entity文件
         if (createFileProperty.isEntityFlag()) {
-            codeFactoryOneToMany.invoke("onetomany/entityOneToMTemplate.ftl", "entity");
+            codeFactoryOneToMany.invoke("bpm/entityOneToMTemplate.ftl", "entity");
         }
     }
-
+    
     public static void main(String[] paramArrayOfString) {
     }
 }

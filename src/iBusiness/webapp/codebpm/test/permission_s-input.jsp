@@ -9,21 +9,20 @@
   </head>
   <body>
     <%@include file="/header/header-portal.jsp"%>
-    <div class="span2"></div>
+	<div class="span2"></div>
 	<!-- start of main -->
     <div class="panel panel-default col-md-10">
         <div class="panel-heading"><h4 class="panel-title">编辑子表</h4></div>
         <div class="panel-body">
 			<div class="content content-inner">
-					<form id="userForm" method="post" action="permission-sub-save.do?parentid=${parentid}&flowId=${flowId}" class="form-horizontal">
+					<form id="userForm" method="post" action="permission_s-save.do?parentid=${parentid}&flowId=${flowId}" class="form-horizontal">
 					  <c:if test="${model != null}">
 					      <input id="code_id" type="hidden" name="id" value="${model.id}">
 					  </c:if>
-					  
 						  <div class="form-group">
-						    <label class="control-label" for="code-packagename">子表备注</label>
+						    <label class="control-label" for="code-remark">备注</label>
 							<div class="controls">
-							  <input id="code-packagename" type="text" name=remark value="${model.remark}"  class="text required"  >
+							  <input id="code-remark" type="text" name=remark value="${model.remark}"  class="text required"  >
 						    </div>
 						  </div>
 					  
