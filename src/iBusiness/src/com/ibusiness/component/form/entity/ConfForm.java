@@ -22,6 +22,8 @@ public class ConfForm {
     private String formName;
     // 表单名标题
     private String formTitle;
+    // 表单URL地址
+    private String formURL;
     // 是否可修改
     private Integer isEdit;
     // 是否可新增
@@ -149,5 +151,18 @@ public class ConfForm {
      */
     public void setIsBpmForm(Integer isBpmForm) {
         this.isBpmForm = isBpmForm;
+    }
+    /**
+     * @return the formURL
+     */
+    @Column(name = "FORMURL")
+    public String getFormURL() {
+        return formURL;
+    }
+    /**
+     * @param formURL the formURL to set
+     */
+    public void setFormURL(String formURL) {
+        this.formURL = formURL;
     }
 }

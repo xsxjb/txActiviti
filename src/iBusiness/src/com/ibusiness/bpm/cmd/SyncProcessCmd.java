@@ -17,7 +17,6 @@ import org.activiti.engine.impl.interceptor.CommandContext;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
 import com.ibusiness.base.menu.dao.MenuDao;
-import com.ibusiness.base.menu.entity.Menu;
 import com.ibusiness.bpm.dao.BpmFlowNodeDao;
 import com.ibusiness.bpm.dao.BpmNodeCountersignDao;
 import com.ibusiness.bpm.dao.BpmNodeFormDao;
@@ -85,20 +84,17 @@ public class SyncProcessCmd implements Command<Void> {
             bpmProcess = bpmProcessList.get(0);
         }
         if (null == bpmProcess) {
-            bpmProcess = new BpmProcess();
-            bpmProcess.setId(UUID.randomUUID().toString());
-            bpmProcess.setPackageName("test");
-            bpmProcess.setFlowName(bpmProcessVersion.getBpmProsessKey());
-            bpmProcess.setFlowTitle(processDefinitionEntity.getName());
+            return null;
+//            bpmProcess = new BpmProcess();
+//            bpmProcess.setId(UUID.randomUUID().toString());
+//            bpmProcess.setPackageName("test");
+//            bpmProcess.setFlowName(bpmProcessVersion.getBpmProsessKey());
+//            bpmProcess.setFlowTitle(processDefinitionEntity.getName());
+//            bpmProcess.setVersionId(bpmProcessVersion.getId());
+//            bpmProcessDao.save(bpmProcess);
+        } else {
             bpmProcess.setVersionId(bpmProcessVersion.getId());
             bpmProcessDao.save(bpmProcess);
-        }
-        if ("permission".equals(bpmProcess.getFlowName())) {
-            // 菜单配置
-            MenuDao menuDao = getMenuDaoDao();
-            Menu menu= menuDao.get("mThree421");
-            menu.setMenuUrl("/permission/permission-list.do?flowType=0&flowId=" + bpmProcess.getId());
-            menuDao.save(menu);
         }
         //
         BpmnModel bpmnModel = new GetBpmnModelCmd(processDefinitionId).execute(commandContext);

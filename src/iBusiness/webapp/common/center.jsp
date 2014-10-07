@@ -14,6 +14,9 @@
     <script type="text/javascript" src="${ctx}/plugin/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugin/jquery/jquery-migrate-1.2.1.min.js"></script>
     
+    <script type="text/javascript" src="${ctx}/plugin/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="${ctx}/plugin/jquery-validation/jquery.validate.min.js"></script>
+    
 	<!-- bootstrap -->
     <script type="text/javascript" src="${ctx}/plugin/bootstrap/js/bootstrap.min.js"></script>
 

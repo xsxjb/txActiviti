@@ -334,6 +334,9 @@ public class CodeController {
             bean.setFormStyle("formStyle");
             // 菜单URL
             bean.setMenuUrl("/" + entityName + "/" + entityName + "-list.do");
+            // 保存表单URL信息
+            confForm.setFormURL(bean.getMenuUrl());
+            confFormDao.save(confForm);
             
             // 需要生成的代码
             List<String> selectedItems = new ArrayList<String>();

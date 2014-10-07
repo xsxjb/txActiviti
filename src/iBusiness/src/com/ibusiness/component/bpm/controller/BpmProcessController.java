@@ -26,6 +26,8 @@ import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.util.CommonUtils;
+import com.ibusiness.component.form.dao.ConfFormDao;
+import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.core.spring.MessageHelper;
 
 /**
@@ -42,6 +44,7 @@ public class BpmProcessController {
     private MessageHelper messageHelper;
     private BpmProcessVersionDao bpmProcessVersionDao;
     private ProcessEngine processEngine;
+    private ConfFormDao confFormDao;
     
     /**
      * 流程列表
@@ -65,11 +68,12 @@ public class BpmProcessController {
     }
     
     /**
-     * 流程技术信息
+     * 流程基础信息
      * @param id
      * @param model
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("bpm-process-input")
     public String input(@RequestParam(value = "packageName", required = false) String packageName, @RequestParam(value = "bpmId", required = false) String bpmId, Model model) {
         BpmProcess entity = null;
@@ -83,6 +87,10 @@ public class BpmProcessController {
         model.addAttribute("packageName", entity.getPackageName());
         model.addAttribute("bpmId", bpmId);
         model.addAttribute("bpmType", "bpmBase");
+        // 表单下拉菜单
+        String formHql = "from ConfForm where packageName=?";
+        List<ConfForm> formList = confFormDao.find(formHql, packageName);
+        model.addAttribute("formList", formList);
         
         return "bpm/bpm-process-input.jsp";
     }
@@ -98,12 +106,23 @@ public class BpmProcessController {
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
+            // 菜单保存
+            if (CommonUtils.isNull(entity.getFlowUrl())) {
+                ConfForm confForm = confFormDao.get(entity.getFormId());
+                entity.setFlowUrl(confForm.getFormURL() + "?flowType=0&flowId=" + id);
+            }
             bpmProcessDao.saveInsert(entity);
         } else {
             BpmProcess bpmProcess = bpmProcessDao.get(id);
             bpmProcess.setFlowTitle(entity.getFlowTitle());
             bpmProcess.setFormId(entity.getFormId());
-            bpmProcess.setFlowUrl(entity.getFlowUrl());
+            // 菜单保存
+            if (CommonUtils.isNull(entity.getFlowUrl())) {
+                ConfForm confForm = confFormDao.get(entity.getFormId());
+                bpmProcess.setFlowUrl(confForm.getFormURL() + "?flowType=0&flowId=" + id);
+            } else {
+                bpmProcess.setFlowUrl(entity.getFlowUrl());
+            }
             bpmProcessDao.update(bpmProcess);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
@@ -163,5 +182,9 @@ public class BpmProcessController {
     @Resource
     public void setProcessEngine(ProcessEngine processEngine) {
         this.processEngine = processEngine;
+    }
+    @Resource
+    public void setConfFormDao(ConfFormDao confFormDao) {
+        this.confFormDao = confFormDao;
     }
 }

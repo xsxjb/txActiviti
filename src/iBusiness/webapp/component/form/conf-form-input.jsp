@@ -386,12 +386,7 @@
 									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxServiceImp" <tags:contains items="${subModel.selectedItems}" item="checkboxServiceImp">checked</tags:contains>> ServiceImp</label>
 									       </div>
 									  </div>
-									  <div class="form-group">
-										  <label class="col-lg-2 control-label" for="code_menuUrl">菜单URL:</label>
-										  <div class="col-lg-6">
-										      <textarea class="form-control" id="code_menuUrl" name="subCodeGenerateBeans[${status.index}].menuUrl" rows="1">${subModel.menuUrl}</textarea>
-										  </div>
-									  </div>
+									  
 							     </div>
 							 </c:forEach>
 					     </div>

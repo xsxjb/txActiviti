@@ -38,8 +38,8 @@ INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,co
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION_S','REMARK','备注','VARCHAR','1024','是',9);
 
 /* ============================= 表单管理表 =============================  */
-INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) VALUES('10001','test','testForm','测试练习表单',1,1,1,1,2);
-INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) VALUES('permission01','test','permissionForm','审批流程表单',1,1,1,2,1);
+INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM,FORMURL) VALUES('10001','test','testForm','测试练习表单',1,1,1,1,2,'/test/test-list.do');
+INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM,FORMURL) VALUES('permission01','test','permissionForm','审批流程表单',1,1,1,2,1,'/permission/permission-list.do');
 
 /* ============================= 表单对应数据表管理表 =============================  */
 INSERT INTO ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) VALUES('test','testForm','IB_TEST','main');

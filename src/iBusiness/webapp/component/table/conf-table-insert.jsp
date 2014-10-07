@@ -68,7 +68,7 @@
 				  <div class="control-group">
 				      <label class="col-lg-2 control-label" for="table-mainTable">子表对应主表:</label>
 					  <div class="controls">
-					      <input id="table-mainTable" type="text" name="mainTable" value=""  class="text required"  >
+					      <input id="table-mainTable" type="text" name="mainTable" value=""  class="text"  >
 				      </div>
 				  </div>
 				  

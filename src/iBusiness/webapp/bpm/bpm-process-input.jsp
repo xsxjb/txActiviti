@@ -11,6 +11,18 @@
     <%@include file="/header/header-portal.jsp"%>
     <div class="row">
 	<%@include file="/component/portal/component-leftmenu.jsp"%>
+	<script type="text/javascript">
+		$(function() {
+		    $("#bpmBaseForm").validate({
+		        submitHandler: function(form) {
+					bootbox.animate(false);
+					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+		            form.submit();
+		        },
+		        errorClass: 'validate-error'
+		    });
+		})
+    </script>
 	<!-- start of main -->
 	<div class="panel panel-default col-md-10 " > 
 		    <!-- tabs  -->
@@ -24,7 +36,7 @@
 			    <c:if test="${bpmType == 'bpmBase'}">
 			        <div class="panel-body">
 						<div class="content content-inner">
-								<form id="userForm" method="post" action="bpm-process-save.do" class="form-horizontal">
+								<form id="bpmBaseForm" method="post" action="bpm-process-save.do" class="form-horizontal">
 								  <input id="user-base_userRepoId" type="hidden" name="userRepoId" value="1">
 								  <c:if test="${model != null}">
 								      <input id="code_id" type="hidden" name="id" value="${bpmId}">
@@ -54,11 +66,16 @@
 								    </div>
 								    <!-- 流程关联表单 -->
 								    <div class="form-group">
-									    <label class="col-lg-2 control-label" for="code-flowForm">关联表单:</label>
-										<div class="col-lg-3">
-										  <input id="code-flowForm" type="text" name="formId" value="${model.formId}"  class="form-control" >
-									    </div>
-								    </div>
+									      <label class="col-lg-2 control-label" for="role_def">关联表单:</label>
+									      <div class="col-lg-3">
+											  <select id="role_def" name="formId" class="form-control required">
+											        <option value="" >请选择</option>
+												  <c:forEach items="${formList}" var="item">
+												      <option value="${item.id}" ${item.id==model.formId ? 'selected' : ''}>${item.formTitle}</option>
+												  </c:forEach>
+											  </select>
+										  </div>
+									 </div>
 								    <div class="form-group">
 									    <label class="col-lg-2 control-label" for="bpm-graph">URL:</label>
 										<div class="col-lg-3">
