@@ -11,6 +11,9 @@
     <%@include file="/header/header-portal.jsp"%>
     <div class="row">
 	<%@include file="/component/portal/component-leftmenu.jsp"%>
+	
+	<!-- ================================================================================= -->
+	<!-- ================================================================================= -->
 	<script type="text/javascript">
 		$(function() {
 		    $("#bpmBaseForm").validate({
@@ -28,7 +31,7 @@
 		    <!-- tabs  -->
 	        <ul class="nav nav-tabs">
 			  <li class="${bpmType == 'bpmBase' ? 'active' : ''} "><a href="${scopePrefix}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" >流程基础信息</a></li>
-			  <li class="${bpmType == 'bpmCode' ? 'active' : ''}"><a href="${scopePrefix}/code/bpm-code-generate-input.do?packageName=${packageName}&bpmId=${bpmId}" >代码生成</a></li>
+			  <li class="${bpmType == 'bpmCode' ? 'active' : ''}"><a href="${scopePrefix}/flowchart/init-flow-chart.do?packageName=${packageName}&bpmId=${bpmId}" >流程设置图</a></li>
 			</ul>
 			<div id="tabContent" class="tab-content">
 			    <!-- ========================== 流程基础信息 =================================================== -->
@@ -85,7 +88,8 @@
 									<div class="form-group">
 									    <label class="col-lg-2 control-label" for="bpm-graph">配置:</label>
 										<div class="col-lg-3">
-										    <a class="btn btn-primary" href="${scopePrefix}/bpm-process/bpm-conf-node-list.do?flowVersionId=${model.versionId}" >配置</a>
+										    <!-- style="display:none" -->
+										    <a class="btn btn-primary" style="display:none" href="${scopePrefix}/bpm-process/bpm-conf-node-list.do?flowVersionId=${model.versionId}" >配置</a>
 									    </div>
 									</div>
 									<div class="form-group">
@@ -105,10 +109,13 @@
                     </div>
                 </c:if>
             </div>
-            <!-- ==================== 关联表设置 ===================================================== -->
-        	<div id="bpmCode" class="tab-pane fade ${tabType == 'bpmCode' ? 'active in' : ''}">
-        	<c:if test="${tabType == 'bpmCode'}">
-        	  
+            <!-- ==================== 流程图设置 ===================================================== -->
+        	<div id="flowChart" class="tab-pane fade ${tabType == 'flowChart' ? 'active in' : ''}">
+        	<c:if test="${tabType == 'flowChart'}">
+		        	
+        	      <!-- -->
+				      <iframe src="${scopePrefix}/flowchart/draw.jsp" height="500" style="width:100%;border:0px;"  ></iframe>
+				   
         	</c:if>
         	</div>
 	    </div>

@@ -1,12 +1,10 @@
-package com.ibusiness.codebpm.test.service;
+package com.codegenerate.test.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.codegenerate.test.entity.Permission_sEntity;
 import com.ibusiness.common.page.HibernateEntityDao;
-import com.ibusiness.codebpm.test.entity.Permission_sEntity;
 
 /**   
  * @Title: Service

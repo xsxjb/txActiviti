@@ -91,7 +91,7 @@ public class CodeFactory extends BaseCodeFactory {
             if (("jsp".equals(type)) || ("jspList".equals(type))) {
                 String jspPath = CodeResourceUtil.JSPPATH;
                 // 设置JSP路径
-                jspPath = jspPath.replace("/com/ibusiness", "");
+                jspPath = jspPath.replace("/com", "");
                 str.append(jspPath);
             } else {
                 str.append(CodeResourceUtil.CODEPATH);

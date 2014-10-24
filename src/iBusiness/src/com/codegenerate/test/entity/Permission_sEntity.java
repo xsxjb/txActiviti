@@ -1,4 +1,4 @@
-package com.ibusiness.codebpm.test.entity;
+package com.codegenerate.test.entity;
 
 import java.util.Date;
 

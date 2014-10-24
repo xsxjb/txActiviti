@@ -108,3 +108,13 @@ CREATE TABLE IB_BPM_NODE_COUNTERSIGN (
         CONSTRAINT PK_BPM_NODE_COUNTERSIGN PRIMARY KEY(ID)
 ) ENGINE=INNODB;
 
+/*==============================================================*/
+/* 流程图配置表   */
+/*==============================================================*/
+CREATE TABLE IB_CONF_FLOW_CHART (
+	     ID               VARCHAR(64),
+	     FLOWID    VARCHAR(64),  
+	     ITEMID      VARCHAR(64),   
+	     CONTEXT  VARCHAR(2000), 
+        CONSTRAINT PK_IB_CONF_FLOW_CHART PRIMARY KEY(ID)
+) ENGINE=INNODB;

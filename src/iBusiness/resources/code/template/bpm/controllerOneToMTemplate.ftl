@@ -64,7 +64,7 @@ public class ${entityName}Controller {
         model.addAttribute("flowId", flowId);
         model.addAttribute("flowType", flowType);
         // 返回JSP
-        return "codebpm/${entityPackage}/${entityName?uncap_first}-list.jsp";
+        return "codegenerate/${entityPackage}/${entityName?uncap_first}-list.jsp";
     }
     /**
      * 新建一条流程, 进入流程表单信息页面
@@ -93,7 +93,7 @@ public class ${entityName}Controller {
         
         // 流程ID
         model.addAttribute("flowId", flowId);
-        return "codebpm/${entityPackage}/${entityName?uncap_first}-input.jsp";
+        return "codegenerate/${entityPackage}/${entityName?uncap_first}-input.jsp";
     }
     
     <#list subTab as sub>
@@ -106,7 +106,7 @@ public class ${entityName}Controller {
         model.addAttribute("model", entity);
         model.addAttribute("parentid", id);
         model.addAttribute("flowId", flowId);
-        return "codebpm/${entityPackage}/${sub.entityName?uncap_first}-input.jsp";
+        return "codegenerate/${entityPackage}/${sub.entityName?uncap_first}-input.jsp";
     }
     </#list>
     /**

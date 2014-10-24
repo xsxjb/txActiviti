@@ -4,6 +4,12 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,5 +94,60 @@ public class CommonUtils {
         }
         strOne = strOne + strTwo;
         return strOne;
+    }
+    /**
+     * list转换JSON字符串
+     * @param beanList
+     * @param datePattern
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+    public static JSONArray getJsonFromList(List beanList, String datePattern) {
+        if (datePattern == null || "".equals(datePattern)) {
+            datePattern = Constants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS;
+        }
+        JsonConfig jsonConfig = configJson(null, datePattern);
+        JSONArray array = JSONArray.fromObject(beanList, jsonConfig);
+        return array;
+    }
+    /**
+     * Bean转换JSON字符串
+     * @param beanList
+     * @param datePattern
+     * @return
+     */
+    public static JSONObject getJsonFromBean(Object bean, String datePattern) {
+        if (datePattern == null || "".equals(datePattern)) {
+            datePattern = Constants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS;
+        }
+        JsonConfig jsonConfig = configJson(null, datePattern);
+        JSONObject jsonObject = JSONObject.fromObject(bean, jsonConfig);
+        return jsonObject;
+    }
+    /**
+     * JSON字符串转换List对象
+     * @param beanList
+     * @param datePattern
+     * @return
+     */
+    @SuppressWarnings({"deprecation", "rawtypes"})
+    public static Object getListFromJson(String jsonStr, Class clazz) {
+        return JSONArray.toList(JSONArray.fromObject(jsonStr), clazz);
+    }
+    /**
+     * 创建JSON配置对象
+     * @param excludes
+     * @param datePattern
+     * @return
+     */
+    private static JsonConfig configJson(String[] excludes, String datePattern) {
+        JsonConfig jsonConfig = new JsonConfig();
+        if (excludes != null) {
+            jsonConfig.setExcludes(excludes);
+        }
+        jsonConfig.setIgnoreDefaultExcludes(false);
+        jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+        jsonConfig.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor(datePattern));
+        return jsonConfig;
     }
 }

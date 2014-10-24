@@ -1,4 +1,4 @@
-package com.ibusiness.codebpm.test.controller;
+package com.codegenerate.test.controller;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -9,6 +9,9 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import org.activiti.engine.impl.interceptor.Command;
+import org.activiti.engine.task.Task;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,22 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import org.activiti.engine.impl.interceptor.Command;
-import org.activiti.engine.task.Task;
-import org.apache.commons.io.IOUtils;
-
+import com.codegenerate.test.entity.PermissionEntity;
+import com.codegenerate.test.entity.Permission_sEntity;
+import com.codegenerate.test.service.PermissionService;
+import com.codegenerate.test.service.Permission_sService;
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
-import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
+import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.util.CommonUtils;
+import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.util.SpringSecurityUtils;
-
-import com.ibusiness.codebpm.test.entity.PermissionEntity;
-import com.ibusiness.codebpm.test.service.PermissionService;
-import com.ibusiness.codebpm.test.entity.Permission_sEntity;
-import com.ibusiness.codebpm.test.service.Permission_sService;
 
 /**   
  * @Title: Controller
@@ -60,7 +58,7 @@ public class PermissionController {
         model.addAttribute("flowId", flowId);
         model.addAttribute("flowType", flowType);
         // 返回JSP
-        return "codebpm/test/permission-list.jsp";
+        return "codegenerate/test/permission-list.jsp";
     }
     /**
      * 新建一条流程, 进入流程表单信息页面
@@ -87,7 +85,7 @@ public class PermissionController {
         
         // 流程ID
         model.addAttribute("flowId", flowId);
-        return "codebpm/test/permission-input.jsp";
+        return "codegenerate/test/permission-input.jsp";
     }
     
     /**
@@ -99,7 +97,7 @@ public class PermissionController {
         model.addAttribute("model", entity);
         model.addAttribute("parentid", id);
         model.addAttribute("flowId", flowId);
-        return "codebpm/test/permission_s-input.jsp";
+        return "codegenerate/test/permission_s-input.jsp";
     }
     /**
      * 办理
