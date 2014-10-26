@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=10" />
-	<title>PLC绘图页面</title>
+	<title>在线绘图页面</title>
 
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/uuid.js"></script>
@@ -15,7 +15,6 @@
 	<!--  -->
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/StartNode.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/EndNode.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/eventDraw.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/ReviveScene.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Lane.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/TaskNode.js"></script>
@@ -23,6 +22,8 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Pipeline.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/CalculatePos.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Line.js"></script>
+	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/eventDraw.js"></script>
 	<style type="text/css">
 		.tool {
 		    height: 30px; float: left; cursor: pointer; padding: 5px; filter: alpha(Opacity = 70); opacity: 0.7;
@@ -40,7 +41,7 @@
 	</script>
 </head>
 <body onload="init();">
-	<div id="toolCanvas"  style="position: relative; height: 40px; width:1200px; border: 1px solid;">
+	<div id="toolCanvas"  style="position: relative; height: 40px; width:1080px; border: 1px solid;">
 		<div class="tool"  title="泳道" id="addLane"><img height="30px" width="30px" src="../plugin/ibusiness/flowchart/img/lanebg.png" /></div>
 		<div class="tool"  title="开始" id="StartNode">
 			<img height="30px" width="30px" name="startNode" id="startNodeImg" src="../plugin/ibusiness/flowchart/img/startnode.png" />
@@ -74,19 +75,16 @@
 		</div>
 	</div>
 	<!-- 基础弹出form页面 -->
-	<div id ="baseForm"  style="width: 150px;position: absolute; top: 330; left: 400; z-index: 1000; text-align: center; background-color: #CFDFEF; display: none;">
-		<table style="width:150px;">
-			<tr><td><label style="width:20px;">id</label></td><td align="left"><input id ="baseId" style="width:100px;" type="text" value="" readonly="readonly"> </td></tr>
-			<tr><td><label style="width:20px;">标题</label></td><td align="left"><input id ="baseTitle" style="width:100px;" type="text" value=""></td></tr>
-			<tr><td><label style="width:20px;">x坐标</label></td><td align="left"><input id ="baseX" style="width:100px;" type="text" disabled/></td></tr>
-			<tr><td><label style="width:20px;">y坐标</label></td><td align="left"><input id = "baseY" style="width:100px;" type="text" value="" disabled></td></tr>
+	<div id ="baseForm"  style="width: 200px;position: absolute; top: 330; left: 400; z-index: 1000; text-align: center; background-color: #CFDFEF; display: none;">
+		<table style="width:200px;">
+			<tr><td><label >id</label></td><td align="left"><input id ="baseId"  style="width:100px;" type="text" value="" readonly="readonly"> </td></tr>
+			<tr><td><label >标题</label></td><td align="left"><input id ="baseTitle"  style="width:100px;" type="text" value=""></td></tr>
+			<tr><td><label >x坐标</label></td><td align="left"><input id ="baseX"  style="width:100px;" type="text" disabled/></td></tr>
+			<tr><td><label >y坐标</label></td><td align="left"><input id = "baseY"  style="width:100px;" type="text" value="" disabled></td></tr>
 			<tr><td>操作</td>
 				<td>
-					&nbsp;&nbsp;
 					<a href="#" id = "addBase" >确定</a>
-					&nbsp;&nbsp;
 					<a href="#" id = "deleteBase" >删除</a>
-					&nbsp;&nbsp;
 					<a href="#" onclick="javascript:$('#baseForm').hide(300)">关闭</a>
 				</td>
 			</tr>
@@ -102,11 +100,8 @@
 			<tr><td>y坐标</td><td align="left"><input id = "taskNodeY" type="text" value="" disabled></td></tr>
 			<tr><td>操作</td>
 				<td>
-					&nbsp;&nbsp;
 					<a href="#" id = "addTaskNode" >确定</a>
-					&nbsp;&nbsp;
 					<a href="#" id = "deleteLamp" >删除</a>
-					&nbsp;&nbsp;
 					<a href="#" onclick="javascript:$('#taskNodeForm').hide(300)">关闭</a>
 				</td>
 			</tr>
@@ -166,11 +161,11 @@
 </body>
 </html>
 
-<script LANGUAGE="JavaScript">
+<script language="JavaScript">
 	var elements = new ArrayList();
 	var canvas = null;
 	var ctx = null;
-	var width = 1200;
+	var width = 1080;
 	var height = 500;
 	var deviceTyleList = null;
 	
@@ -213,7 +208,7 @@
 	}
 
 //窗口改变尺寸后自适应
-/*
+/* 
 window.onresize = function() {
 	var newwidth = $(document).width() - 2 * canvas.offsetLeft;
 	var newheight = $(document).height() - 2 * canvas.offsetTop;

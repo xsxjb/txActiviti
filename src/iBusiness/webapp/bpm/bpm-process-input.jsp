@@ -80,25 +80,35 @@
 										  </div>
 									 </div>
 								    <div class="form-group">
-									    <label class="col-lg-2 control-label" for="bpm-graph">URL:</label>
+									    <label class="col-lg-2 control-label" for="code-flowForm">URL:</label>
 										<div class="col-lg-3">
-										    <input id="code-flowForm" type="text" name="flowUrl" value="${model.flowUrl}"  class="form-control" >
+										    <textarea class="form-control" id="code-flowForm" name="flowUrl" rows="1">${model.flowUrl}</textarea>
 									    </div>
 									</div>
 									<div class="form-group">
-									    <label class="col-lg-2 control-label" for="bpm-graph">配置:</label>
+									    <label class="col-lg-2 control-label" >配置:</label>
 										<div class="col-lg-3">
 										    <!-- style="display:none" -->
 										    <a class="btn btn-primary" style="display:none" href="${scopePrefix}/bpm-process/bpm-conf-node-list.do?flowVersionId=${model.versionId}" >配置</a>
 									    </div>
 									</div>
-									<div class="form-group">
-									    <label class="col-lg-2 control-label" for="bpm-graph">图形:</label>
-										<div class="col-lg-3">
-										    <!-- target="_blank" -->
-										    <a class="btn btn-primary" href="${scopePrefix}/bpm-process/bpm-process-graph.do?bpmProcessId=${model.id}"  >图形</a>
-									    </div>
-									</div>
+									<c:if test="${bpmId == null}">
+											<div class="form-group">
+											    <label class="col-lg-2 control-label" for="init-task-node">初始设置流程节点:<br/>(逗号,分割)<br/>例如: 发起,审批</label>
+												<div class="col-lg-3">
+												    <textarea class="form-control" id="init-task-node" name="initTaskNode" rows="1">${model.initTaskNode}</textarea>
+											    </div>
+											</div>
+									</c:if>
+									<c:if test="${bpmId != null}">
+											<div class="form-group">
+											    <label class="col-lg-2 control-label" >图形:</label>
+												<div class="col-lg-3">
+												    <!-- target="_blank" -->
+												    <a class="btn btn-primary" href="${scopePrefix}/bpm-process/bpm-process-graph.do?bpmProcessId=${model.id}"  >图形</a>
+											    </div>
+											</div>
+									</c:if>
 								  
 								  <div class="col-lg-10 col-lg-offset-2">
 								      <button id="submitButton" class="btn a-submit"><spring:message code='core.input.save' text='保存'/></button>
@@ -114,7 +124,7 @@
         	<c:if test="${tabType == 'flowChart'}">
 		        	
         	      <!-- -->
-				      <iframe src="${scopePrefix}/flowchart/draw.jsp" height="500" style="width:100%;border:0px;"  ></iframe>
+				      <iframe src="${scopePrefix}/flowchart/draw.jsp?bpmId=${bpmId}" height="500" style="width:100%;border:0px;"  ></iframe>
 				   
         	</c:if>
         	</div>

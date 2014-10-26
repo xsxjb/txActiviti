@@ -30,7 +30,6 @@ function Line(id,x,y){
 		if( json != null ){
 			this.id = json.id;
 			this.name = json.name;
-			this.fillColor = json.fillColor;
 
 			this.title = json.title;
 			this.x = parseInt(json.x);
@@ -38,6 +37,9 @@ function Line(id,x,y){
 			
 			this.startElmId = json.startElmId;
 			this.endElmId = json.endElmId;
+			
+			// 设置线位置坐标点
+		//	this.realPoints = calculateStartEndPos(elements.getId(json.startElmId),elements.getId(json.endElmId),this.realPoints);
 			// 设置线位置坐标点
 			var  strRealPoints= json.realPoints.split(",");
 			for (var i=0; i< strRealPoints.length; i++) {

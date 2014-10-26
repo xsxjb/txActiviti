@@ -7,13 +7,35 @@ $(function() {
 	var isQuery = false;
 	var mouseClickElemetId = null; // 页面当前选中的对象的ID
     var lineMap = new HashMap(); // 线的map
+    /**
+     * 取得参数
+     */
+    var getParam = function(name){
+    	       var search = document.location.search;
+    	        var pattern = new RegExp("[?&]"+name+"\=([^&]+)", "g");
+    	        var matcher = pattern.exec(search);
+    	        var items = null;
+    	        if(null != matcher){
+    	                try{
+    	                        items = decodeURIComponent(decodeURIComponent(matcher[1]));
+    	                }catch(e){
+    	                        try{
+    	                                items = decodeURIComponent(matcher[1]);
+    	                       }catch(e){
+    	                                items = matcher[1];
+    	                        }
+    	                }
+    	        }
+    	        return items;
+    	};
+    	
 	/**
 	 * 查询【流程信息】下拉列表信息
 	*/
     function getFlowList(){
 		//向服务端获取二级菜单列表
 		$.ajax({
-			url:'flow-list.do?flowId=${bpmId}',
+			url:'flow-list.do?flowId='+getParam("bpmId"),
 			success:function(responseText){
 				$('#select_flowname').append(responseText);
 			}
@@ -549,6 +571,11 @@ $(function() {
 		}
 		//获得用于选中的【流程】
 		var flowId = $('#select_flowname option:selected').val();
+		// 查询数据
+		searchChartInfo(flowId);
+	});
+	// 查询数据
+	function searchChartInfo(flowId){
 		//清空页面上的所有元素。
 		elements.clear();
 		//添加一个控制台，用于显示鼠标信息
@@ -559,15 +586,13 @@ $(function() {
 		//添加一个十字辅助线
 		var cruciate = new CruciateAuxiliaryLine("line",0,0);
 		elements.add(cruciate);
-		
 		//还原场景
 		var rs  = new ReviveScene('design');
 		rs.requestJson(flowId);
 		//初始化工具栏
 		initTools();
 		isQuery = true;
-	});
-	
+	}
 	//------------------------------------------------
 	//单击【保存】按钮，将页面上的对象，保存到表中
 	$("#save").click(function(e) {
@@ -697,7 +722,6 @@ $(function() {
 			'opacity' : 1
 		});
 	}
-	
 	/**
 	 * 创建界面元素的ID号
 	 */
@@ -732,35 +756,37 @@ $(function() {
 		}
 	}
 	////定义箭头线条
-	function Arrow(){
-	this.start_x=0;
-	this.start_y=0;
-	this.end_x=0;
-	this.end_y=0;
-	this.length=0; //两点之间的长度
-	this.radii=0; //圆点的半径
-	this.arrow_len=10; //箭头的长度
-	this.color="#ffff00";
-	this.rotation=0;
+	function Arrow() {
+		this.start_x = 0;
+		this.start_y = 0;
+		this.end_x = 0;
+		this.end_y = 0;
+		this.length = 0; // 两点之间的长度
+		this.radii = 0; // 圆点的半径
+		this.arrow_len = 10; // 箭头的长度
+		this.color = "#ffff00";
+		this.rotation = 0;
 	}
-	Arrow.prototype.draw=function(context){
-	context.save();
-	context.translate(this.start_x,this.start_y);
-	context.rotate(this.rotation);
-	context.lineWidth=2;
-	context.fillStyle=this.color;
-	context.beginPath();
-	context.moveTo(0,0);
-	context.lineTo(0,-2);
-	context.lineTo(-(this.length-this.radii-this.arrow_len),-2);
-	context.lineTo(-(this.length-this.radii-this.arrow_len),-4);
-	context.lineTo(-(this.length-this.radii),0);
-	context.lineTo(-(this.length-this.radii-this.arrow_len),4);
-	context.lineTo(-(this.length-this.radii-this.arrow_len),2);
-	context.lineTo(0,2);
-	context.closePath();
-	context.stroke();
-	context.restore();
+	Arrow.prototype.draw = function(context) {
+		context.save();
+		context.translate(this.start_x, this.start_y);
+		context.rotate(this.rotation);
+		context.lineWidth = 2;
+		context.fillStyle = this.color;
+		context.beginPath();
+		context.moveTo(0, 0);
+		context.lineTo(0, -2);
+		context.lineTo(-(this.length - this.radii - this.arrow_len), -2);
+		context.lineTo(-(this.length - this.radii - this.arrow_len), -4);
+		context.lineTo(-(this.length - this.radii), 0);
+		context.lineTo(-(this.length - this.radii - this.arrow_len), 4);
+		context.lineTo(-(this.length - this.radii - this.arrow_len), 2);
+		context.lineTo(0, 2);
+		context.closePath();
+		context.stroke();
+		context.restore();
 	};
 	
+	// 查询数据
+	searchChartInfo(getParam("bpmId"));
 });

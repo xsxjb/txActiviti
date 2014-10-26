@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * IB_CONF_FORM BPM流程管理表
@@ -30,6 +31,8 @@ public class BpmProcess {
     private String formId;
     // 流程URL
     private String flowUrl;
+    // 初始化节点(逗号,分割)
+    private String initTaskNode;
     /**
      * @return the id
      */
@@ -134,5 +137,18 @@ public class BpmProcess {
      */
     public void setFlowUrl(String flowUrl) {
         this.flowUrl = flowUrl;
+    }
+    /**
+     * @return the initTaskNode
+     */
+    @Transient
+    public String getInitTaskNode() {
+        return initTaskNode;
+    }
+    /**
+     * @param initTaskNode the initTaskNode to set
+     */
+    public void setInitTaskNode(String initTaskNode) {
+        this.initTaskNode = initTaskNode;
     }
 }

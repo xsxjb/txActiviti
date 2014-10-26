@@ -88,17 +88,31 @@ public class FlowChartController {
      * 保存
      * @return
      */
-    @SuppressWarnings("unchecked")
     @RequestMapping("save-flow-chart")
     public String saveFlowChart(@RequestParam(value = "contexts") String contexts, @RequestParam(value = "flowId") String flowId) {
-         // 设置插入对象
+        // 保存在线画图信息流程图数据
+        saveConfFlowChart(contexts, flowId);
+        // 
+        // 保存修改流程相关BPMN.XML信息 TODO
+//        saveBpmnXmlInfo();
+        
+        return "/flowchart/draw.jsp";
+    }
+
+    /**
+     * 保存在线画图信息流程图数据
+     * @param contexts
+     * @param flowId
+     */
+    @SuppressWarnings("unchecked")
+    private void saveConfFlowChart(String contexts, String flowId) {
+        // 设置插入对象
         JSONArray jsonArray = JSONArray.fromObject(contexts);
         ConfFlowChart bean = null;
         // 第一步 先删除
         String hql = "from ConfFlowChart where flowId=?";
         List<ConfFlowChart> list = flowChartService.find(hql, flowId);
         flowChartService.removeAll(list);
-        
         // 第二步 插入
         // 解析前台传递的JSONString
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -114,7 +128,6 @@ public class FlowChartController {
             // 插入
             flowChartService.saveInsert(bean);
         }
-        return "/flowchart/draw.jsp";
     }
     /**
      * 删除
@@ -139,7 +152,7 @@ public class FlowChartController {
     String businessKey, Model model) throws Exception {
         model.addAttribute("bpmProcessId", bpmProcessId);
         model.addAttribute("businessKey", businessKey);
-            // 如果没找到form，就判断是否配置负责人
+            // 如果没找到form，就判断是否配置负责人 TODO
 //            return taskConf(new LinkedMultiValueMap(), bpmProcessId, businessKey, nextStep, model);
         return "redirect:/flowchart/testForm-list.do";
     }

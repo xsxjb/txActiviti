@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>管理下属</title>
+    <title>业务模块管理</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 var config = {
