@@ -25,6 +25,7 @@ import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
+import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.util.CommonUtils;
@@ -227,6 +228,13 @@ public class BpmProcessController {
             }
             bpmProcessDao.update(bpmProcess);
         }
+        // 发布流程  --- 根据XML信息和流程名 TODO
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
+        // 创建一个BPMN XML数据
+        String xmlStr = bpmComBusiness.createBpmnXML();
+        // 发布
+        bpmComBusiness.deployFlow(xmlStr, entity.getFlowName());
+        
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/bpm-process/bpm-process-list.do?packageName="+entity.getPackageName();
     }
