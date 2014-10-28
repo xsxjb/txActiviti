@@ -79,7 +79,9 @@ public class AutoDeployer {
                 Deployment deployment = deploymentBuilder.deploy();
                 logger.info("auto deploy : {}", resourceName);
 
+                // 根据deployment取得
                 for (ProcessDefinition processDefinition : repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list()) {
+                    // 执行命令
                     this.syncProcessDefinition(processDefinition.getId());
                 }
             } catch (IOException ex) {
@@ -109,7 +111,7 @@ public class AutoDeployer {
     }
 
     /**
-     * 执行一个命令
+     * 执行一个命令--创建流程用数据
      * @param processDefinitionId
      */
     public void syncProcessDefinition(String processDefinitionId) {

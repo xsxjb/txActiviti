@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngine;
@@ -13,15 +15,20 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.DeploymentBuilder;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ibusiness.bpm.cmd.SyncProcessCmd;
 import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.core.spring.ApplicationContextHelper;
+import com.ibusiness.flowchart.entity.ConfFlowChart;
 import com.ibusiness.security.util.SpringSecurityUtils;
 
 /**
@@ -126,6 +133,18 @@ public class BpmComBusiness {
     }
     // ==============================================================
     /**
+     * 删除部署到activiti中的流程定义
+     * @param xml
+     * @param xmlName
+     */
+    public void deleteDeployment(String deploymentId) {
+        // 删除发布信息
+        RepositoryService repositoryService = getProcessEngine().getRepositoryService();
+        // 级联删除,会删除和当前规则相关的所有信息，包括历史
+        repositoryService.deleteDeployment(deploymentId, true);
+    }
+    
+    /**
      * 发布流程  --- 根据XML信息和流程名
      * 
      * @param xml
@@ -137,71 +156,176 @@ public class BpmComBusiness {
         RepositoryService repositoryService = processEngine.getRepositoryService();
         // Deploy the process definition 部署
         try {
-            repositoryService.createDeployment()
-                             .addInputStream(xmlName+".bpmn20.xml", new ByteArrayInputStream(xml.getBytes("UTF-8")))
-                             .deploy();
+            DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().addInputStream(xmlName+".bpmn20.xml", new ByteArrayInputStream(xml.getBytes("UTF-8")));
+            Deployment deployment = deploymentBuilder.deploy();
+            
+            // 根据deployment取得
+            for (ProcessDefinition processDefinition : repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list()) {
+                // 执行命令
+                syncProcessDefinition(processDefinition.getId());
+            }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
     /**
-     * 创建一个BPMN XML数据
+     * 执行一个命令--创建流程用数据
+     * @param processDefinitionId
      */
-    public String createBpmnXML() {
-        // TODO Auto-generated method stub
+    private void syncProcessDefinition(String processDefinitionId) {
+        getProcessEngine().getManagementService().executeCommand(new SyncProcessCmd(processDefinitionId));
+    }
+    /**
+     * 创建一个BPMN XML数据 TODO
+     */
+    public String createBpmnXML(BpmProcess bpmProcess, List<ConfFlowChart> confFlowCharts) {
+        // 流程信息
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-        xml = xml + "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:activiti=\"http://activiti.org/bpmn\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:omgdi=\"http://www.omg.org/spec/DD/20100524/DI\" typeLanguage=\"http://www.w3.org/2001/XMLSchema\" expressionLanguage=\"http://www.w3.org/1999/XPath\" targetNamespace=\"http://www.activiti.org/processdef\">";
-        xml = xml + "  <process id=\"process\" name=\"getCar\" isExecutable=\"true\">";
-        xml = xml + "    <startEvent id=\"sid-2C96A3F5-D9A1-47B8-82D2-FAF3E536D056\"></startEvent>";
-        xml = xml + "    <userTask id=\"sid-EA7B879B-70BB-466A-9F63-BCBBF6B69F55\" name=\"请车申请\"></userTask>";
-        xml = xml + "    <sequenceFlow id=\"sid-F1524339-A0AE-470F-B2E0-0C69FF5D4FB8\" sourceRef=\"sid-2C96A3F5-D9A1-47B8-82D2-FAF3E536D056\" targetRef=\"sid-EA7B879B-70BB-466A-9F63-BCBBF6B69F55\"></sequenceFlow>";
-        xml = xml + "    <endEvent id=\"sid-C6064773-2F9C-4129-B5F7-7A23F4E380EF\"></endEvent>";
-        xml = xml + "    <sequenceFlow id=\"sid-68B7650B-AB4E-41CD-B3CE-B9A05C37B6FE\" sourceRef=\"sid-EA7B879B-70BB-466A-9F63-BCBBF6B69F55\" targetRef=\"sid-C6064773-2F9C-4129-B5F7-7A23F4E380EF\"></sequenceFlow>";
-        xml = xml + "    <userTask id=\"sid-C9DE79C8-A33F-4FF8-8FD7-055EE2615351\" name=\"请车审批\"></userTask>";
-        xml = xml + "    <sequenceFlow id=\"sid-6E075568-C5BA-4133-9923-4ACA50461029\" sourceRef=\"sid-EA7B879B-70BB-466A-9F63-BCBBF6B69F55\" targetRef=\"sid-C9DE79C8-A33F-4FF8-8FD7-055EE2615351\"></sequenceFlow>";
-        xml = xml + "    <endEvent id=\"sid-ABD05E45-C37E-4FB8-B573-2D31CE04255A\"></endEvent>";
-        xml = xml + "    <sequenceFlow id=\"sid-46F759B7-4398-43C3-8FCE-337E6868356E\" sourceRef=\"sid-C9DE79C8-A33F-4FF8-8FD7-055EE2615351\" targetRef=\"sid-ABD05E45-C37E-4FB8-B573-2D31CE04255A\"></sequenceFlow>";
-        xml = xml + "  </process>";
-        xml = xml + "  <bpmndi:BPMNDiagram id=\"BPMNDiagram_process\">";
-        xml = xml + "    <bpmndi:BPMNPlane bpmnElement=\"process\" id=\"BPMNPlane_process\">";
-        xml = xml + "      <bpmndi:BPMNShape bpmnElement=\"sid-2C96A3F5-D9A1-47B8-82D2-FAF3E536D056\" id=\"BPMNShape_sid-2C96A3F5-D9A1-47B8-82D2-FAF3E536D056\">";
-        xml = xml + "        <omgdc:Bounds height=\"30.0\" width=\"30.0\" x=\"203.0\" y=\"153.0\"></omgdc:Bounds>";
-        xml = xml + "      </bpmndi:BPMNShape>";
-        xml = xml + "      <bpmndi:BPMNShape bpmnElement=\"sid-EA7B879B-70BB-466A-9F63-BCBBF6B69F55\" id=\"BPMNShape_sid-EA7B879B-70BB-466A-9F63-BCBBF6B69F55\">";
-        xml = xml + "        <omgdc:Bounds height=\"80.0\" width=\"100.0\" x=\"270.0\" y=\"120.0\"></omgdc:Bounds>";
-        xml = xml + "      </bpmndi:BPMNShape>";
-        xml = xml + "      <bpmndi:BPMNShape bpmnElement=\"sid-C6064773-2F9C-4129-B5F7-7A23F4E380EF\" id=\"BPMNShape_sid-C6064773-2F9C-4129-B5F7-7A23F4E380EF\">";
-        xml = xml + "        <omgdc:Bounds height=\"28.0\" width=\"28.0\" x=\"423.0\" y=\"154.0\"></omgdc:Bounds>";
-        xml = xml + "      </bpmndi:BPMNShape>";
-        xml = xml + "      <bpmndi:BPMNShape bpmnElement=\"sid-C9DE79C8-A33F-4FF8-8FD7-055EE2615351\" id=\"BPMNShape_sid-C9DE79C8-A33F-4FF8-8FD7-055EE2615351\">";
-        xml = xml + "        <omgdc:Bounds height=\"80.0\" width=\"100.0\" x=\"423.0\" y=\"128.0\"></omgdc:Bounds>";
-        xml = xml + "      </bpmndi:BPMNShape>";
-        xml = xml + "      <bpmndi:BPMNShape bpmnElement=\"sid-ABD05E45-C37E-4FB8-B573-2D31CE04255A\" id=\"BPMNShape_sid-ABD05E45-C37E-4FB8-B573-2D31CE04255A\">";
-        xml = xml + "       <omgdc:Bounds height=\"28.0\" width=\"28.0\" x=\"568.0\" y=\"154.0\"></omgdc:Bounds>";
-        xml = xml + "      </bpmndi:BPMNShape>";
-        xml = xml + "      <bpmndi:BPMNEdge bpmnElement=\"sid-46F759B7-4398-43C3-8FCE-337E6868356E\" id=\"BPMNEdge_sid-46F759B7-4398-43C3-8FCE-337E6868356E\">";
-        xml = xml + "        <omgdi:waypoint x=\"523.0\" y=\"168.0\"></omgdi:waypoint>";
-        xml = xml + "        <omgdi:waypoint x=\"568.0\" y=\"168.0\"></omgdi:waypoint>";
-        xml = xml + "      </bpmndi:BPMNEdge>";
-        xml = xml + "      <bpmndi:BPMNEdge bpmnElement=\"sid-68B7650B-AB4E-41CD-B3CE-B9A05C37B6FE\" id=\"BPMNEdge_sid-68B7650B-AB4E-41CD-B3CE-B9A05C37B6FE\">";
-        xml = xml + "        <omgdi:waypoint x=\"370.0\" y=\"160.0\"></omgdi:waypoint>";
-        xml = xml + "        <omgdi:waypoint x=\"396.5\" y=\"160.0\"></omgdi:waypoint>";
-        xml = xml + "        <omgdi:waypoint x=\"396.5\" y=\"168.0\"></omgdi:waypoint>";
-        xml = xml + "        <omgdi:waypoint x=\"423.0\" y=\"168.0\"></omgdi:waypoint>";
-        xml = xml + "      </bpmndi:BPMNEdge>";
-      xml = xml + "      <bpmndi:BPMNEdge bpmnElement=\"sid-F1524339-A0AE-470F-B2E0-0C69FF5D4FB8\" id=\"BPMNEdge_sid-F1524339-A0AE-470F-B2E0-0C69FF5D4FB8\">";
-      xml = xml + "        <omgdi:waypoint x=\"232.95407566718828\" y=\"166.82713132022053\"></omgdi:waypoint>";
-      xml = xml + "        <omgdi:waypoint x=\"270.0\" y=\"163.921568627451\"></omgdi:waypoint>";
-      xml = xml + "      </bpmndi:BPMNEdge>";
-      xml = xml + "      <bpmndi:BPMNEdge bpmnElement=\"sid-6E075568-C5BA-4133-9923-4ACA50461029\" id=\"BPMNEdge_sid-6E075568-C5BA-4133-9923-4ACA50461029\">";
-      xml = xml + "        <omgdi:waypoint x=\"370.0\" y=\"160.0\"></omgdi:waypoint>";
-      xml = xml + "        <omgdi:waypoint x=\"396.5\" y=\"160.0\"></omgdi:waypoint>";
-      xml = xml + "        <omgdi:waypoint x=\"396.5\" y=\"168.0\"></omgdi:waypoint>";
-      xml = xml + "        <omgdi:waypoint x=\"423.0\" y=\"168.0\"></omgdi:waypoint>";
-      xml = xml + "      </bpmndi:BPMNEdge>";
-      xml = xml + "    </bpmndi:BPMNPlane>";
-      xml = xml + "  </bpmndi:BPMNDiagram>";
-      xml = xml + "</definitions>";
+        xml = xml + "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:activiti=\"http://activiti.org/bpmn\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:omgdi=\"http://www.omg.org/spec/DD/20100524/DI\" typeLanguage=\"http://www.w3.org/2001/XMLSchema\" expressionLanguage=\"http://www.w3.org/1999/XPath\" targetNamespace=\"http://www.iBusiness.com\">";
+        xml = xml + "<process id=\""+bpmProcess.getFlowName()+"\" name=\""+bpmProcess.getFlowTitle()+"\" isExecutable=\"true\">";
+        // 
+        Map<String, ConfFlowChart> confFlowChartMap = new HashMap<String, ConfFlowChart>();
+        // 
+        ConfFlowChart startNode = null;
+        for (ConfFlowChart confFlowChart : confFlowCharts) {
+            confFlowChartMap.put(confFlowChart.getItemId(), confFlowChart);
+            JSONObject flowChartObj= JSONObject.fromObject(confFlowChart.getContext());
+            if ("StartNode".equals(flowChartObj.get("type"))) {
+                startNode = confFlowChart;
+            }
+        }
+        // 递归创建XML
+        String xmlStr = "";
+        xmlStr = editXmlByFlowChart(xmlStr, startNode, confFlowChartMap);
+        xml = xml + xmlStr;
+        
+        xml = xml + "</process>";
+        // 图信息
+        xml = xml + "<bpmndi:BPMNDiagram id=\"BPMNDiagram_"+bpmProcess.getFlowName()+"\">";
+        xml = xml + "<bpmndi:BPMNPlane bpmnElement=\""+bpmProcess.getFlowName()+"\" id=\"BPMNPlane_"+bpmProcess.getFlowName()+"\">";
+        
+        // 递归创建画图相关XML
+        String xmlDiagramStr = "";
+        xmlDiagramStr = editDiagramXmlByFlowChart(xmlDiagramStr, startNode, confFlowChartMap);
+        xml = xml + xmlDiagramStr;
+
+        xml = xml + "</bpmndi:BPMNPlane>";
+        xml = xml + "</bpmndi:BPMNDiagram>";
+        //
+        xml = xml + "</definitions>";
+        
+        System.out.println("=======BpmnXml:"+xml);
+        return xml;
+    }
+    /**
+     * 递归创建XML
+     * @param startNode
+     * @return
+     */
+    private String editXmlByFlowChart(String xml, ConfFlowChart nodeBean, Map<String, ConfFlowChart> confFlowChartMap) {
+        JSONObject flowChartObj= JSONObject.fromObject(nodeBean.getContext());
+        // 开始节点
+        if ("StartNode".equals(flowChartObj.get("type"))) {
+            // activiti:assignee=\"${assignee}\" 设置下一节点用户
+            xml = xml + "<startEvent id=\"sid-"+flowChartObj.get("id")+"\" activiti:assignee=\"${assignee}\" ></startEvent>";
+            String nextNodesStr = flowChartObj.get("afterLineIds").toString();
+            String[] nextNodes = nextNodesStr.split(",");
+            for (String nextNodeStr : nextNodes) {
+                ConfFlowChart bean = confFlowChartMap.get(nextNodeStr);
+                if (null != bean) {
+                    xml = editXmlByFlowChart(xml, bean, confFlowChartMap);
+                }
+            }
+        } else if ("TaskNode".equals(flowChartObj.get("type"))) {
+            // 任务节点
+            xml = xml + "<userTask id=\"sid-"+flowChartObj.get("id")+"\" activiti:assignee=\"${assignee}\" name=\""+flowChartObj.get("title")+"\"></userTask>";
+            String nextNodesStr = flowChartObj.get("afterLineIds").toString();
+            String[] nextNodes = nextNodesStr.split(",");
+            for (String nextNodeStr : nextNodes) {
+                ConfFlowChart bean = confFlowChartMap.get(nextNodeStr);
+                if (null != bean) {
+                    xml = editXmlByFlowChart(xml, bean, confFlowChartMap);
+                }
+            }
+        } else if ("Line".equals(flowChartObj.get("type"))) {
+            // 线
+            xml = xml + "<sequenceFlow id=\"sid-"+flowChartObj.get("id")+"\" sourceRef=\"sid-"+flowChartObj.get("startElmId")+"\" targetRef=\"sid-"+flowChartObj.get("endElmId")+"\"></sequenceFlow>";
+            String nextNodesStr = flowChartObj.get("endElmId").toString();
+            String[] nextNodes = nextNodesStr.split(",");
+            for (String nextNodeStr : nextNodes) {
+                ConfFlowChart bean = confFlowChartMap.get(nextNodeStr);
+                if (null != bean) {
+                    xml = editXmlByFlowChart(xml, bean, confFlowChartMap);
+                }
+            }
+        } else if ("EndNode".equals(flowChartObj.get("type"))) {
+            // 结束节点
+            xml = xml + "<endEvent id=\"sid-"+flowChartObj.get("id")+"\" name= \"End\" ></endEvent>";
+        }
+        return xml;
+    }
+    /**
+     * 递归创建图形XML
+     * @param xml
+     * @param startNode
+     * @param confFlowChartMap
+     * @return
+     */
+    private String editDiagramXmlByFlowChart(String xml, ConfFlowChart confFlowChart,
+            Map<String, ConfFlowChart> confFlowChartMap) {
+        JSONObject flowChartObj= JSONObject.fromObject(confFlowChart.getContext());
+        // 开始节点
+        if ("StartNode".equals(flowChartObj.get("type"))) {
+            xml = xml + "<bpmndi:BPMNShape bpmnElement=\"sid-"+flowChartObj.get("id")+"\" id=\"BPMNShape_sid-"+flowChartObj.get("id")+"\">";
+            xml = xml + "<omgdc:Bounds height=\""+flowChartObj.get("height")+"\" width=\""+flowChartObj.get("width")+"\" x=\""+flowChartObj.get("x")+"\" y=\""+flowChartObj.get("y")+"\"></omgdc:Bounds>";
+            xml = xml + "</bpmndi:BPMNShape>";
+            String nextNodesStr = flowChartObj.get("afterLineIds").toString();
+            String[] nextNodes = nextNodesStr.split(",");
+            for (String nextNodeStr : nextNodes) {
+                ConfFlowChart bean = confFlowChartMap.get(nextNodeStr);
+                if (null != bean) {
+                    xml = editDiagramXmlByFlowChart(xml, bean, confFlowChartMap);
+                }
+            }
+        }
+        // 任务节点
+        if ("TaskNode".equals(flowChartObj.get("type"))) {
+            xml = xml + "<bpmndi:BPMNShape bpmnElement=\"sid-"+flowChartObj.get("id")+"\" id=\"BPMNShape_sid-"+flowChartObj.get("id")+"\">";
+            xml = xml + "<omgdc:Bounds height=\""+flowChartObj.get("height")+"\" width=\""+flowChartObj.get("width")+"\" x=\""+flowChartObj.get("x")+"\" y=\""+flowChartObj.get("y")+"\"></omgdc:Bounds>";
+            xml = xml + "</bpmndi:BPMNShape>";
+            String nextNodesStr = flowChartObj.get("afterLineIds").toString();
+            String[] nextNodes = nextNodesStr.split(",");
+            for (String nextNodeStr : nextNodes) {
+                ConfFlowChart bean = confFlowChartMap.get(nextNodeStr);
+                if (null != bean) {
+                    xml = editDiagramXmlByFlowChart(xml, bean, confFlowChartMap);
+                }
+            }
+        }
+        // 线
+        if ("Line".equals(flowChartObj.get("type"))) {
+            xml = xml + "<bpmndi:BPMNEdge bpmnElement=\"sid-"+flowChartObj.get("id")+"\" id=\"BPMNEdge_sid-"+flowChartObj.get("id")+"\">";
+            String realPointStr =flowChartObj.get("realPoints").toString();
+            String[] realPoints = realPointStr.split(",");
+            for (int i=0; i<realPoints.length; i=i+2) {
+                xml = xml + "<omgdi:waypoint x=\""+realPoints[i]+"\" y=\""+realPoints[i+1]+"\"></omgdi:waypoint>";
+            }
+            xml = xml + "</bpmndi:BPMNEdge>";
+            String nextNodesStr = flowChartObj.get("endElmId").toString();
+            String[] nextNodes = nextNodesStr.split(",");
+            for (String nextNodeStr : nextNodes) {
+                ConfFlowChart bean = confFlowChartMap.get(nextNodeStr);
+                if (null != bean) {
+                    xml = editDiagramXmlByFlowChart(xml, bean, confFlowChartMap);
+                }
+            }
+        }
+        // 结束节点
+        if ("EndNode".equals(flowChartObj.get("type"))) {
+            xml = xml + "<bpmndi:BPMNShape bpmnElement=\"sid-"+flowChartObj.get("id")+"\" id=\"BPMNShape_sid-"+flowChartObj.get("id")+"\">";
+            xml = xml + "<omgdc:Bounds height=\""+flowChartObj.get("height")+"\" width=\""+flowChartObj.get("width")+"\" x=\""+flowChartObj.get("x")+"\" y=\""+flowChartObj.get("y")+"\"></omgdc:Bounds>";
+            xml = xml + "</bpmndi:BPMNShape>";
+        }
         return xml;
     }
     // ==============================================================

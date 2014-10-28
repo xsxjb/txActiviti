@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
- * IB_CONF_FORM BPM流程管理表
+ * IB_BPM_PROCESS BPM流程管理表
  * 
  * @author JiangBo
  *

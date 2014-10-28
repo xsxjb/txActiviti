@@ -78,7 +78,7 @@ public class CodeFactoryBpmForm extends BaseCodeFactory  {
             if ("jspSub".equals(type) || "jsp".equals(type)  || "jspList".equals(type)) {
                 String jspPath = CodeResourceUtil.JSPPATH;
                 // 设置JSP路径
-                jspPath = jspPath.replace("/com/ibusiness", "");
+                jspPath = jspPath.replace("/com", "");
                 strBuilder.append(jspPath);
             } else {
                 strBuilder.append(CodeResourceUtil.CODEPATH);

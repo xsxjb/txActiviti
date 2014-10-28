@@ -12,6 +12,7 @@ import net.sf.json.JSONObject;
 
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.impl.interceptor.Command;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.bpm.cmd.ProcessDefinitionDiagramCmd;
+import com.ibusiness.bpm.dao.BpmFlowNodeDao;
+import com.ibusiness.bpm.dao.BpmNodeCountersignDao;
+import com.ibusiness.bpm.dao.BpmNodeFormDao;
+import com.ibusiness.bpm.dao.BpmNodeListenerDao;
+import com.ibusiness.bpm.dao.BpmNodeUserDao;
 import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmProcess;
@@ -47,11 +53,16 @@ import com.ibusiness.flowchart.service.FlowChartService;
 public class BpmProcessController {
 
     private BpmProcessDao bpmProcessDao;
-    private MessageHelper messageHelper;
     private BpmProcessVersionDao bpmProcessVersionDao;
+    private BpmFlowNodeDao bpmFlowNodeDao;
+    private BpmNodeUserDao bpmNodeUserDao;
+    private BpmNodeListenerDao bpmNodeListenerDao;
+    private BpmNodeFormDao bpmNodeFormDao;
+    private BpmNodeCountersignDao bpmNodeCountersignDao;
     private ProcessEngine processEngine;
     private ConfFormDao confFormDao;
     private FlowChartService flowChartService;
+    private MessageHelper messageHelper;
     
     /**
      * 流程列表
@@ -108,6 +119,7 @@ public class BpmProcessController {
      * @return
      * @throws Exception
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("bpm-process-save")
     public String save(@ModelAttribute BpmProcess entity, RedirectAttributes redirectAttributes) throws Exception {
         String id = entity.getId();
@@ -196,7 +208,6 @@ public class BpmProcessController {
                         // 设置任务节点和线的关系
                         taskNode.setContext("{\"id\":\""+taskNode.getItemId()+"\",\"name\":\""+taskNodes[i]+"\",\"type\":\"TaskNode\",\"title\":\""+taskNodes[i]+"\",\"x\":\""+x+"\",\"y\":\""+(y+25)+"\",\"width\":\"100\",\"height\":\"50\",\"headLineIds\":\""+lineBean.getItemId()+"\",\"afterLineIds\":\""+endNodeLine.getItemId()+"\"}");
                     }
-                    
                     // ===================================================================
                     // 持久化数据
                     if (null!=startNode) {
@@ -215,6 +226,18 @@ public class BpmProcessController {
                     y = y + 110;
                 }
             }
+            // =========================================================================
+            // 更新信息时不需要重新发布。修改流程图时才需要
+            // =========================================================================
+            // 发布流程  --- 根据XML信息和流程名
+            BpmComBusiness bpmComBusiness = new BpmComBusiness();
+            // 创建一个BPMN XML数据
+            String flowchartSql = "from ConfFlowChart where flowId=?";
+            List<ConfFlowChart> confFlowCharts = flowChartService.find(flowchartSql,entity.getId());
+            String xmlStr = bpmComBusiness.createBpmnXML(entity, confFlowCharts);
+            // 发布
+            bpmComBusiness.deployFlow(xmlStr, entity.getFlowName());
+            
         } else {
             BpmProcess bpmProcess = bpmProcessDao.get(id);
             bpmProcess.setFlowTitle(entity.getFlowTitle());
@@ -228,12 +251,6 @@ public class BpmProcessController {
             }
             bpmProcessDao.update(bpmProcess);
         }
-        // 发布流程  --- 根据XML信息和流程名 TODO
-        BpmComBusiness bpmComBusiness = new BpmComBusiness();
-        // 创建一个BPMN XML数据
-        String xmlStr = bpmComBusiness.createBpmnXML();
-        // 发布
-        bpmComBusiness.deployFlow(xmlStr, entity.getFlowName());
         
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/bpm-process/bpm-process-list.do?packageName="+entity.getPackageName();
@@ -244,17 +261,49 @@ public class BpmProcessController {
      * @param redirectAttributes
      * @return
      */
-    @SuppressWarnings("unchecked")
     @RequestMapping("bpm-process-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<BpmProcess> entitys = bpmProcessDao.findByIds(selectedItem);
         for (BpmProcess entity : entitys) {
-            bpmProcessDao.remove(entity);
+            // 删除部署到activiti中的流程定义
+            // 根据流程版本编号 取得 流程编号
+            if (!CommonUtils.isNull(entity.getVersionId())) {
+                BpmProcessVersion bpmProcessVersion = bpmProcessVersionDao.get(entity.getVersionId());
+                // 
+                if (null != bpmProcessVersion) {
+                    List<ProcessDefinition> processDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery()
+                            .processDefinitionKey(bpmProcessVersion.getBpmProsessKey()).list();
+                    if (null != processDefinitions) {
+                        for (ProcessDefinition processDefinition : processDefinitions) {
+                            // 删除发布信息
+                            new BpmComBusiness().deleteDeployment(processDefinition.getDeploymentId());
+                        }
+                    }
+                }
+            }
             
+            // 删除流程管理表
+            bpmProcessDao.remove(entity);
+            // 删除流程版本管理
+            bpmProcessVersionDao.remove(bpmProcessVersionDao.get(entity.getVersionId()));
+            // 删除流程节点配置表
+            String flowNodeSql = "from BpmFlowNode where flowId=?";
+            bpmFlowNodeDao.removeAll(bpmFlowNodeDao.find(flowNodeSql, entity.getId()));
+            // 删除流程节点人员(参与者)配置表
+            String nodeUserSql = "from BpmNodeUser where flowId=?";
+            bpmNodeUserDao.removeAll(bpmNodeUserDao.find(nodeUserSql, entity.getId()));
+            // 删除流程节点事件配置表
+            String nodeListenerSql = "from BpmNodeListener where flowId=?";
+            bpmNodeListenerDao.removeAll(bpmNodeListenerDao.find(nodeListenerSql, entity.getId()));
+            // 删除流程节点表单配置表
+            String nodeFormSql = "from BpmNodeForm where flowId=?";
+            bpmNodeFormDao.removeAll(bpmNodeFormDao.find(nodeFormSql, entity.getId()));
+            // 删除流程节点(会签)关联配置表
+            String nodeCountersignSql = "from BpmNodeCountersign where flowId=?";
+            bpmNodeCountersignDao.removeAll(bpmNodeCountersignDao.find(nodeCountersignSql, entity.getId()));
             // 删除流程对应的流程图
-            String flowChartHql = "from ConfFlowChart where flowId=?";
-            List<ConfFlowChart> flowCharts= flowChartService.find(flowChartHql, entity.getId());
-            flowChartService.removeAll(flowCharts);
+            String flowChartSql = "from ConfFlowChart where flowId=?";
+            flowChartService.removeAll(flowChartService.find(flowChartSql, entity.getId()));
         }
         
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
@@ -264,7 +313,7 @@ public class BpmProcessController {
     
     ////////////////////////////////////////////////////////////////////////////////////////
     /**
-     * 流程定义图像 TODO
+     * 流程定义图像
      * @param bpmProcessId
      * @param response
      * @throws Exception
@@ -294,12 +343,28 @@ public class BpmProcessController {
         this.bpmProcessDao = bpmProcessDao;
     }
     @Resource
-    public void setMessageHelper(MessageHelper messageHelper) {
-        this.messageHelper = messageHelper;
-    }
-    @Resource
     public void setBpmProcessVersionDao(BpmProcessVersionDao bpmProcessVersionDao) {
         this.bpmProcessVersionDao = bpmProcessVersionDao;
+    }
+    @Resource
+    public void setBpmFlowNodeDao(BpmFlowNodeDao bpmFlowNodeDao) {
+        this.bpmFlowNodeDao = bpmFlowNodeDao;
+    }
+    @Resource
+    public void setBpmNodeUserDao(BpmNodeUserDao bpmNodeUserDao) {
+        this.bpmNodeUserDao = bpmNodeUserDao;
+    }
+    @Resource
+    public void setBpmNodeListenerDao(BpmNodeListenerDao bpmNodeListenerDao) {
+        this.bpmNodeListenerDao = bpmNodeListenerDao;
+    }
+    @Resource
+    public void setBpmNodeFormDao(BpmNodeFormDao bpmNodeFormDao) {
+        this.bpmNodeFormDao = bpmNodeFormDao;
+    }
+    @Resource
+    public void setBpmNodeCountersignDao(BpmNodeCountersignDao bpmNodeCountersignDao) {
+        this.bpmNodeCountersignDao = bpmNodeCountersignDao;
     }
     @Resource
     public void setProcessEngine(ProcessEngine processEngine) {
@@ -308,5 +373,9 @@ public class BpmProcessController {
     @Resource
     public void setConfFormDao(ConfFormDao confFormDao) {
         this.confFormDao = confFormDao;
+    }
+    @Resource
+    public void setMessageHelper(MessageHelper messageHelper) {
+        this.messageHelper = messageHelper;
     }
 }
