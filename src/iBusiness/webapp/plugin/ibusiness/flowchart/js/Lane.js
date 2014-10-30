@@ -18,7 +18,7 @@ function Lane( id,x,y ){
 	this.moveOver = 1;		//是否可以移入（0：没有边框,1:画边框）
 	this.bark = new Image(); 
 	// 泳道图片
-	this.bark.src = "../plugin/ibusiness/flowchart/img/lanebg.png";
+	this.bark.src = "../plugin/ibusiness/flowchart/img/lanebg2.png";
 
 	/**
 	 *	初始化
@@ -112,14 +112,14 @@ function Lane( id,x,y ){
 	    // 鼠标移动到此
 	    if(this.moveOver == 1 ){
 	    	//画出边线
-			ctx.strokeStyle="blue";
+			ctx.strokeStyle="white";
 			ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false );
 		}
 	    // 泳道设施靠左
 	    this.x = 0;
 		//画出图片
 		ctx.drawImage( this.bark, this.x, this.y, this.width, this.height ); 
-		ctx.strokeStyle="blue";
+		ctx.strokeStyle="white";
 		// 泳道线上
 		ctx.beginPath();
 		ctx.moveTo(0,parseInt(this.y)-0);

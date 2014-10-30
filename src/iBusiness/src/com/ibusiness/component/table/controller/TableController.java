@@ -2,6 +2,7 @@ package com.ibusiness.component.table.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.common.service.TableCommonUtil;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.component.table.dao.TableColumnsDao;
 import com.ibusiness.component.table.entity.ConfTable;
@@ -122,69 +124,50 @@ public class TableController {
             // 主表
             if ("1".equals(confTable.getTableType())) {
                 // 在数据库中创建一张业务表
-                createTable("CREATE TABLE " + confTable.getTableName() + " (ID VARCHAR(64) NOT NULL, EXECUTIONID VARCHAR(64), CREATEDATEBPM DATE, NODENAME VARCHAR(128), ASSIGNEEUSER VARCHAR(128), TASKTITLE VARCHAR(256), DONEFLAG INT DEFAULT 0, PRIMARY KEY (ID))");
-                // 删除字段
-                String tcHql = "from ConfTableColumns where tableName=?";
-                tableColumnsDao.removeAll(tableColumnsDao.find(tcHql, confTable.getTableName()));
-                // 流程用主表--列字段 -- 流程表埋多个字段
-                ConfTableColumns confTableColumns = createTableColumn(confTable.getTableName(),"ID","UUID主键",1,"VARCHAR","64","否");
-                tableColumnsDao.saveInsert(confTableColumns);
-                confTableColumns = createTableColumn(confTable.getTableName(),"EXECUTIONID","流程执行实例ID",2,"VARCHAR","64","是");
-                tableColumnsDao.saveInsert(confTableColumns);
-                confTableColumns = createTableColumn(confTable.getTableName(),"CREATEDATEBPM","流程创建时间",3,"DATE","","是");
-                tableColumnsDao.saveInsert(confTableColumns);
-                confTableColumns = createTableColumn(confTable.getTableName(),"NODENAME","流程节点名",4,"VARCHAR","128","是");
-                tableColumnsDao.saveInsert(confTableColumns);
-                confTableColumns = createTableColumn(confTable.getTableName(),"ASSIGNEEUSER","负责人",5,"VARCHAR","64","是");
-                tableColumnsDao.saveInsert(confTableColumns);
-                confTableColumns = createTableColumn(confTable.getTableName(),"TASKTITLE","流程实例标题",5,"VARCHAR","256","是");
-                tableColumnsDao.saveInsert(confTableColumns);
-                confTableColumns = createTableColumn(confTable.getTableName(),"DONEFLAG","流程结束标记",7,"INT","4","是");
-                tableColumnsDao.saveInsert(confTableColumns);
+                createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getBpmMColumnsMap());
             } else {
                 // 子表
                 // 在数据库中创建一张业务表
-                createTable("CREATE TABLE " + confTable.getTableName() + " (ID VARCHAR(64) NOT NULL, PARENTID VARCHAR(64), PRIMARY KEY (ID))");
-                // 删除字段
-                String tcHql = "from ConfTableColumns where tableName=?";
-                tableColumnsDao.removeAll(tableColumnsDao.find(tcHql, confTable.getTableName()));
-                // 流程用子表--列字段 -- 流程表埋多个字段
-                ConfTableColumns confTableColumns = createTableColumn(confTable.getTableName(),"ID","UUID主键",1,"VARCHAR","64","否");
-                tableColumnsDao.saveInsert(confTableColumns);
-                confTableColumns = createTableColumn(confTable.getTableName(),"PARENTID","主表UUID",2,"VARCHAR","64","否");
-                tableColumnsDao.saveInsert(confTableColumns);
+                createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getBpmSColumnsMap());
             }
-            // 
             messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
             return "redirect:/table/conf-bpmTable-list.do?packageName="+confTable.getPackageName();
         } else {
             // 主表
             if ("1".equals(confTable.getTableType())) {
                 // 在数据库中创建一张业务表
-                createTable("CREATE TABLE " + confTable.getTableName() + " (ID VARCHAR(64) NOT NULL, PRIMARY KEY (ID))");
-                // 删除字段
-                String tcHql = "from ConfTableColumns where tableName=?";
-                tableColumnsDao.removeAll(tableColumnsDao.find(tcHql, confTable.getTableName()));
-                // 非流程用主表--列字段 -- 非流程表只埋一个UUID字段
-                ConfTableColumns confTableColumns = createTableColumn(confTable.getTableName(),"ID","UUID主键",1,"VARCHAR","64","否");
-                // 插入
-                tableColumnsDao.saveInsert(confTableColumns);
+                createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getmColumnsMap());
             } else {
                 // 子表
                 // 在数据库中创建一张业务表
-                createTable("CREATE TABLE " + confTable.getTableName() + " (ID VARCHAR(64) NOT NULL, PARENTID VARCHAR(64), PRIMARY KEY (ID))");
-                // 删除字段
-                String tcHql = "from ConfTableColumns where tableName=?";
-                tableColumnsDao.removeAll(tableColumnsDao.find(tcHql, confTable.getTableName()));
-                // 非流程用子表--列字段 -- 流程表埋多个字段
-                ConfTableColumns confTableColumns = createTableColumn(confTable.getTableName(),"ID","UUID主键",1,"VARCHAR","64","否");
-                tableColumnsDao.saveInsert(confTableColumns);
-                confTableColumns = createTableColumn(confTable.getTableName(),"PARENTID","主表UUID",2,"VARCHAR","64","否");
-                tableColumnsDao.saveInsert(confTableColumns);
+                createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getsColumnsMap());
             }
             // 
             messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
             return "redirect:/table/conf-table-list.do?packageName="+confTable.getPackageName();
+        }
+    }
+    /**
+     * 在数据库中创建一张业务表
+     * 
+     * @param tableName
+     */
+    private void createTableByReservedColumns(String tableName, Map<String, ConfTableColumns> columnsMap) {
+        // 在数据库中创建一张业务表
+        String createSql ="CREATE TABLE " + tableName + " (";
+        for (Map.Entry<String, ConfTableColumns> entry : columnsMap.entrySet()) {
+            createSql = createSql + entry.getKey() + " " + TableCommonUtil.getReservedColumnsMap().get(entry.getKey()) + ", ";
+        };
+        createSql = createSql +  " PRIMARY KEY (ID))";
+        createTable(createSql);
+        // 删除字段
+        String tcHql = "from ConfTableColumns where tableName=?";
+        tableColumnsDao.removeAll(tableColumnsDao.find(tcHql, tableName));
+        // 流程用主表--列字段 -- 流程表埋多个字段
+        for (Map.Entry<String, ConfTableColumns> entry : columnsMap.entrySet()) {
+            ConfTableColumns confTableColumns = entry.getValue();
+            confTableColumns.setTableName(tableName);
+            tableColumnsDao.saveInsert(confTableColumns);
         }
     }
     
@@ -322,24 +305,6 @@ public class TableController {
             return;
         }
 	}
-    /**
-     * 创建一个 表字段结构Bean 对象
-     * 
-     * @param confTable
-     * @return
-     */
-    private ConfTableColumns createTableColumn(String tableName, String columnValue,
-            String columnName, Integer columnNo, String columnType, String columnSize, String isNull) {
-        ConfTableColumns confTableColumns = new ConfTableColumns();
-        confTableColumns.setTableName(tableName);
-        confTableColumns.setColumnValue(columnValue);
-        confTableColumns.setColumnName(columnName);
-        confTableColumns.setColumnNo(columnNo);
-        confTableColumns.setColumnType(columnType);
-        confTableColumns.setColumnSize(columnSize);
-        confTableColumns.setIsNull(isNull);
-        return confTableColumns;
-    }
     /**
      * 注入 table service
      */

@@ -34,6 +34,7 @@ import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.MenuCommon;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.entity.ConfForm;
@@ -124,11 +125,11 @@ public class BpmProcessController {
     public String save(@ModelAttribute BpmProcess entity, RedirectAttributes redirectAttributes) throws Exception {
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
-            entity.setId(UUID.randomUUID().toString());
-            // 菜单保存
+            entity.setId(entity.getFlowName() + "001");
+            // 保存菜单URL
             if (CommonUtils.isNull(entity.getFlowUrl())) {
                 ConfForm confForm = confFormDao.get(entity.getFormId());
-                entity.setFlowUrl(confForm.getFormURL() + "?flowType=0&flowId=" + id);
+                entity.setFlowUrl(confForm.getFormURL() + "?flowType=0&flowId=" + entity.getId());
             }
             bpmProcessDao.saveInsert(entity);
             // 根据 初始化节点(逗号,分割) 初始化流程节点数据。
@@ -251,6 +252,8 @@ public class BpmProcessController {
             }
             bpmProcessDao.update(bpmProcess);
         }
+        // 添加,生成菜单,并且向系统管理员添加权限
+        new MenuCommon().createMenu(entity.getPackageName(), entity.getFlowTitle(), entity.getFlowUrl());
         
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/bpm-process/bpm-process-list.do?packageName="+entity.getPackageName();

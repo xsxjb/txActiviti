@@ -9,38 +9,58 @@
   </head>
   <body>
     <%@include file="/header/header-portal.jsp"%>
-    <div class="row">
-	<div class="span2"></div>
-	<!-- start of main -->
-	<div class="panel panel-default col-md10"> 
+    <script type="text/javascript">
+		$(function() {
+		    $("#cgForm").validate({
+		        submitHandler: function(form) {
+					bootbox.animate(false);
+					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+		            form.submit();
+		        },
+		        errorClass: 'validate-error'
+		    });
+		})
+    </script>
+    <div class="span2"></div>
+    <!-- start of main -->
+    <div class="panel panel-default span10"> 
         <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
         <div class="panel-body">
-		<div class="content content-inner">
-				<form id="cgForm" method="post" action="${entityName?uncap_first}-save.do" class="form-horizontal">
-				  <c:if test="${'$' + '{model != null}'}">
-				      <input id="code_id" type="hidden" name="id" value="${'$' + '{model.id}'}">
-				  </c:if>
-				  
-				  <#list columns as po>
-					  <div class="control-group">
-					    <label class="control-label" for="code-${po.fieldName}">${po.filedComment}</label>
-						<div class="controls">
-						  <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  class="text required" >
-					    </div>
-					  </div>
-				  </#list>
-				  
-				  <div class="control-group">
-				    <div class="controls">
-				      <button id="submitButton" class="btn a-submit"><spring:message code='core.input.save' text='保存'/></button>
-				      <button type="button" onclick="history.back();" class="btn a-cancel"><spring:message code='core.input.back' text='返回'/></button>
-				    </div>
-				  </div>
-				</form>
-		</div>
+                <form id="cgForm" method="post" action="${entityName?uncap_first}-save.do" class="form-horizontal">
+                  <c:if test="${'$' + '{model != null}'}">
+                      <input id="code_id" type="hidden" name="id" value="${'$' + '{model.id}'}">
+                  </c:if>
+                  
+                  <#list columns as po>
+                      <#if po.fcDisplay="1">
+                      <!-- 是否显示 -->
+                          <div class="form-group">
+                              <label class="col-lg-2 control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
+                              <!-- 是否可编辑 -->
+                              <#if po.fcEdit="1">
+                                  <!-- 编辑类型 -->
+                                  <#if po.fcType="2">
+                                      <div class="col-lg-6">
+                                          <textarea class="form-control" id="code-${po.fieldName}" name="${po.fieldName}" rows="1">${'$' + '{model.${po.fieldName}}'}</textarea>
+                                      </div>
+                                  <#else>
+                                      <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  class="text required" >
+                                  </#if>
+                              <#else>
+                                  <label>${'$' + '{model.${po.fieldName}}'}</label>
+                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
+                              </#if>
+                          </div>
+                        </#if>
+                  </#list>
+                  
+                  <div class="form-group">
+                      <button id="submitButton" class="btn a-submit"><spring:message code='core.input.save' text='保存'/></button>
+                      <button type="button" onclick="history.back();" class="btn a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+                  </div>
+                </form>
         </div>
     </div>
-	<!-- end of main -->
-	</div>
+    <!-- end of main -->
   </body>
 </html>

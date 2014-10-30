@@ -55,12 +55,20 @@
 				       <input type="hidden" name="id" value="${'$' + '{model.id}'}">
 				   </c:if>
 				   <#list columns as po>
-				   <div class="control-group">
-					      <div class="col-lg-6">
-						      <label class="control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
-							  <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  class="text required" >
-						  </div>
-					</div>
+				       <#if po.fcDisplay="1">
+				       <!-- 是否显示 -->
+						   <div class="control-group">
+							      <div class="col-lg-6">
+								      <label class="control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
+								      <!-- 是否可编辑 -->
+		                              <#if po.fcEdit="1">
+		                                  <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  class="text required" >
+		                              <#else>
+		                                  <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}" disabled="disabled"  class="text required" >
+		                              </#if>
+								  </div>
+							</div>
+					    </#if>
 					</#list>
 				</form>
 		</div>

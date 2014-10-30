@@ -8,35 +8,35 @@
     <title><spring:message code="user.user.input.title" text="编辑用户"/></title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
-$(function() {
-    $("#userForm").validate({
-        submitHandler: function(form) {
-			bootbox.animate(false);
-			var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
-            form.submit();
-        },
-        errorClass: 'validate-error',
-        rules: {
-            username: {
-                remote: {
-                    url: 'user-base-checkUsername.do',
-                    data: {
-                        <c:if test="${model != null}">
-                        id: function() {
-                            return $('#user-base_id').val();
-                        }
-                        </c:if>
-                    }
-                }
-            }
-        },
-        messages: {
-            username: {
-                remote: "<spring:message code='user.user.input.duplicate' text='存在重复账号'/>"
-            }
-        }
-    });
-})
+		$(function() {
+		    $("#userForm").validate({
+		        submitHandler: function(form) {
+					bootbox.animate(false);
+					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+		            form.submit();
+		        },
+		        errorClass: 'validate-error',
+		        rules: {
+		            username: {
+		                remote: {
+		                    url: 'user-base-checkUsername.do',
+		                    data: {
+		                        <c:if test="${model != null}">
+		                        id: function() {
+		                            return $('#user-base_id').val();
+		                        }
+		                        </c:if>
+		                    }
+		                }
+		            }
+		        },
+		        messages: {
+		            username: {
+		                remote: "<spring:message code='user.user.input.duplicate' text='存在重复账号'/>"
+		            }
+		        }
+		    });
+		})
     </script>
   </head>
 
@@ -100,7 +100,7 @@ $(function() {
 				  </div>
 				  <div class="form-group">
 				      <label class="col-lg-2 control-label" for="user-base_mobile">手机:</label>
-					  <input id="user-base_mobile" type="text" name="mobile" value="${model.mobile}">
+					  <input id="user-base_mobile" class="number"  type="text" name="mobile" value="${model.mobile}">
 				  </div>
 				  <div class="form-group">
 				      <label class="col-lg-2 control-label" for="user-base_ref"><spring:message code="user.user.input.ref" text="引用"/>:</label>

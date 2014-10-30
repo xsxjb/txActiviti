@@ -19,12 +19,13 @@ import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.def.FtlDef;
 import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.common.service.TableCommonUtil;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 
 /**
- * 一对多生成器
+ * 非流程一对多生成器
  * 
  * @author JiangBo
  * 
@@ -116,7 +117,7 @@ public class CodeGenerateOneToMany implements ICallBack {
         try {
             // 取得主表字段数据
             // 取得表字段list 根据表名
-            this.mainColums = getColumListByTableName(tableName);
+            this.mainColums = getColumListByTableName(tableName, formName);
             // 读取指定表名的表字段List
             // 取得表字段信息
             Map<String, ConfTableColumns> tableColumnsMap = CommonBusiness.getInstance().getTableColumnsMap(tableName);
@@ -158,7 +159,7 @@ public class CodeGenerateOneToMany implements ICallBack {
             //========= 子表内容生成 =========================================//
             for (CodeParamBean codeParamBean : subTabParamList) {
                 // 取得表字段list 根据表名
-                List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName());
+                List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName(), formName);
                 codeParamBean.setColumns(subColumlist);
             }
             // 将子表内容存入
@@ -175,19 +176,14 @@ public class CodeGenerateOneToMany implements ICallBack {
      * @param tableName
      * @return
      */
-    private List<Columnt> getColumListByTableName(String tableName) {
+    private List<Columnt> getColumListByTableName(String tableName, String formName) {
         // 取得子表对应表字段信息
         List<ConfTableColumns> subTableColumnsList = CommonBusiness.getInstance().getTableColumnsList(tableName);
+        Map<String, ConfFormTableColumn> formTableColumnMap = CommonBusiness.getInstance().getFormTableColumnMap(tableName, formName);
         List<Columnt> subColumlist = new ArrayList<Columnt>();
         for (ConfTableColumns confTableColumns : subTableColumnsList) {
             // 表卖的字段不予设置
-            if ("ID".equals(confTableColumns.getColumnValue()) 
-                    || "EXECUTIONID".equals(confTableColumns.getColumnValue())
-                    || "ASSIGNEEUSER".equals(confTableColumns.getColumnValue())
-                    || "CREATEDATEBPM".equals(confTableColumns.getColumnValue())
-                    || "NODENAME".equals(confTableColumns.getColumnValue())
-                    || "DONEFLAG".equals(confTableColumns.getColumnValue())
-                    || "PARENTID".equals(confTableColumns.getColumnValue())) {
+            if (TableCommonUtil.getReservedColumnsMap().containsKey(confTableColumns.getColumnValue())) {
                 continue;
             }
             Columnt columnt = new Columnt();
@@ -200,6 +196,18 @@ public class CodeGenerateOneToMany implements ICallBack {
             columnt.setFieldName(confTableColumns.getColumnValue().toLowerCase());
             // 字段标题
             columnt.setFiledComment(confTableColumns.getColumnName());
+            // 设置表单相关字段信息
+            ConfFormTableColumn formColumn = formTableColumnMap.get(confTableColumns.getColumnValue());
+            if (null != formColumn) {
+                // 录入宽度
+                columnt.setFcWidth(formColumn.getFcWidth());
+                // 录入高度
+                columnt.setFcHeight(formColumn.getFcHeight());
+                // 是否显示
+                columnt.setFcDisplay(formColumn.getFcDisplay());
+                // 是否编辑
+                columnt.setFcEdit(formColumn.getFcEdit());
+            }
             subColumlist.add(columnt);
         }
         return subColumlist;

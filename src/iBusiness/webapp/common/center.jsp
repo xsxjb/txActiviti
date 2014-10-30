@@ -16,6 +16,7 @@
     
     <script type="text/javascript" src="${ctx}/plugin/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="${ctx}/plugin/jquery-validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="${ctx}/plugin/jquery-validation/localization/messages_zh_CN.js"></script>
     
 	<!-- bootstrap -->
     <script type="text/javascript" src="${ctx}/plugin/bootstrap/js/bootstrap.min.js"></script>

@@ -31,7 +31,7 @@
 		    <!-- tabs  -->
 	        <ul class="nav nav-tabs">
 			  <li class="${bpmType == 'bpmBase' ? 'active' : ''} "><a href="${scopePrefix}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" >流程基础信息</a></li>
-			  <li class="${bpmType == 'bpmCode' ? 'active' : ''}"><a href="${scopePrefix}/flowchart/init-flow-chart.do?packageName=${packageName}&bpmId=${bpmId}" >流程设置图</a></li>
+			  <li class="${tabType == 'flowChart' ? 'active' : ''}"><a href="${scopePrefix}/flowchart/init-flow-chart.do?packageName=${packageName}&bpmId=${bpmId}" >流程设置图</a></li>
 			</ul>
 			<div id="tabContent" class="tab-content">
 			    <!-- ========================== 流程基础信息 =================================================== -->

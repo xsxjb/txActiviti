@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
 import com.ibusiness.component.form.entity.ConfForm;
@@ -35,6 +36,7 @@ public class CommonBusiness {
     
     // 表单对应表管理表List
     private List<ConfFormTableColumn> formTableColumnList = new ArrayList<ConfFormTableColumn>();
+    private Map<String, ConfFormTableColumn> formTableColumnMap = new HashMap<String, ConfFormTableColumn>();
     
     /**
      * 取得流水表表结构管理List
@@ -73,9 +75,25 @@ public class CommonBusiness {
      */
     @SuppressWarnings("unchecked")
     public List<ConfFormTableColumn> getFormTableColumnList(String tableName, String formName) {
-        String hql = "from ConfFormTableColumn where tableName=? AND formName=?";
-        this.formTableColumnList = getConfFormTableColumnDao().find(hql, tableName, formName);
+        if (CommonUtils.isNull(tableName) || CommonUtils.isNull(formName)) {
+            String hql = "from ConfFormTableColumn ";
+            this.formTableColumnList = getConfFormTableColumnDao().find(hql);
+        } else {
+            String hql = "from ConfFormTableColumn where tableName=? AND formName=?";
+            this.formTableColumnList = getConfFormTableColumnDao().find(hql, tableName, formName);
+        }
         return this.formTableColumnList;
+    }
+    /**
+     * 取得表单对应表管理表List
+     * @return the formTableColumnMap
+     */
+    public Map<String, ConfFormTableColumn> getFormTableColumnMap(String tableName, String formName) {
+        this.formTableColumnMap = new HashMap<String, ConfFormTableColumn>();
+        for(ConfFormTableColumn bean :getFormTableColumnList(tableName, formName)) {
+            this.formTableColumnMap.put(bean.getTableColumn(), bean);
+        }
+        return this.formTableColumnMap;
     }
     // ======================================================================
     public TableColumnsDao getTableColumnsDao() {

@@ -19,6 +19,7 @@ import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.def.FtlDef;
 import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.common.service.TableCommonUtil;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
@@ -114,7 +115,7 @@ public class CodeGenerate implements ICallBack {
         }
         try {
             // 读取指定表名的表字段List
-            this.columns = getColumListByTableName(tableName);
+            this.columns = getColumListByTableName(tableName, formName);
             // 取得表字段信息
             Map<String, ConfTableColumns> tableColumnsMap = CommonBusiness.getInstance().getTableColumnsMap(tableName);
             if (tableColumnsMap.size() > 0) {
@@ -165,31 +166,41 @@ public class CodeGenerate implements ICallBack {
      * @param tableName
      * @return
      */
-    private List<Columnt> getColumListByTableName(String tableName) {
+    private List<Columnt> getColumListByTableName(String tableName, String formName) {
         // 取得子表对应表字段信息
         List<ConfTableColumns> subTableColumnsList = CommonBusiness.getInstance().getTableColumnsList(tableName);
+        Map<String, ConfFormTableColumn> formTableColumnMap = CommonBusiness.getInstance().getFormTableColumnMap(tableName, formName);
         List<Columnt> subColumlist = new ArrayList<Columnt>();
         for (ConfTableColumns confTableColumns : subTableColumnsList) {
-            // 表卖的字段不予设置
-            if ("ID".equals(confTableColumns.getColumnValue()) 
-                    || "EXECUTIONID".equals(confTableColumns.getColumnValue())
-                    || "ASSIGNEEUSER".equals(confTableColumns.getColumnValue())
-                    || "CREATEDATEBPM".equals(confTableColumns.getColumnValue())
-                    || "NODENAME".equals(confTableColumns.getColumnValue())
-                    || "DONEFLAG".equals(confTableColumns.getColumnValue())
-                    || "PARENTID".equals(confTableColumns.getColumnValue())) {
+            // 表埋的保留字段不予设置
+            if (TableCommonUtil.getReservedColumnsMap().containsKey(confTableColumns.getColumnValue())) {
                 continue;
             }
             Columnt columnt = new Columnt();
             // 字段名
             columnt.setFieldDbName(confTableColumns.getColumnValue());
-            //
+            // 字段类型
             columnt.setFieldType(confTableColumns.getColumnType());
+            // 长度
             columnt.setCharmaxLength(confTableColumns.getColumnSize());
             // 字段名
             columnt.setFieldName(confTableColumns.getColumnValue().toLowerCase());
             // 字段标题
             columnt.setFiledComment(confTableColumns.getColumnName());
+            // 设置表单相关字段信息
+            ConfFormTableColumn formColumn = formTableColumnMap.get(confTableColumns.getColumnValue());
+            if (null != formColumn) {
+                // 录入宽度
+                columnt.setFcWidth(formColumn.getFcWidth());
+                // 录入高度
+                columnt.setFcHeight(formColumn.getFcHeight());
+                // 是否显示
+                columnt.setFcDisplay(formColumn.getFcDisplay());
+                // 是否编辑
+                columnt.setFcEdit(formColumn.getFcEdit());
+                // 组件类型
+                columnt.setFcType(formColumn.getFcType());
+            }
             subColumlist.add(columnt);
         }
         return subColumlist;

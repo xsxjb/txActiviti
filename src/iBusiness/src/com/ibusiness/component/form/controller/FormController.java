@@ -206,7 +206,7 @@ public class FormController {
         if (null != confFormTables && confFormTables.size() > 0) {
             formTable =confFormTables.get(0);
             // 表单对应字段组件管理, ID主键字段不显示
-            String hql = "from ConfFormTableColumn WHERE packageName=? AND formName=? AND tableName=? AND tableColumn != 'ID'";
+            String hql = "from ConfFormTableColumn WHERE packageName=? AND formName=? AND tableName=? AND tableColumn not in ('ID','EXECUTIONID','CREATEDATEBPM','ASSIGNEEUSER','NODENAME','DONEFLAG') order by columnNo";
             List<ConfFormTableColumn> formTableColumns = confFormTableColumnDao.find(hql, formTable.getPackageName(), formTable.getFormName(), formTable.getTableName());
             // 主表对象
             formTable.setFormTableColumns(formTableColumns);
@@ -217,7 +217,7 @@ public class FormController {
             // 循环取得每个子表对应的字段
             for (ConfFormTable subFormTable : confSubFormTables) {
                 // 子表对象
-                String sunhql = "from ConfFormTableColumn WHERE packageName=? AND formName=? AND tableName=? AND tableColumn != 'ID'";
+                String sunhql = "from ConfFormTableColumn WHERE packageName=? AND formName=? AND tableName=? AND tableColumn not in ('ID','EXECUTIONID','CREATEDATEBPM','ASSIGNEEUSER','NODENAME','DONEFLAG') order by columnNo ";
                 List<ConfFormTableColumn> subFormTableColumns = confFormTableColumnDao.find(sunhql, subFormTable.getPackageName(), subFormTable.getFormName(), subFormTable.getTableName());
                 subFormTable.setFormTableColumns(subFormTableColumns);
             }
@@ -338,6 +338,7 @@ public class FormController {
             formTableColumn.setFormColumnTitle(confTable.getTableNameComment()+"."+tableColumn.getColumnName());
             formTableColumn.setTableName(confTable.getTableName());
             formTableColumn.setTableColumn(tableColumn.getColumnValue());
+            formTableColumn.setColumnNo(tableColumn.getColumnNo());
             formTableColumn.setFcEdit("1");
             formTableColumn.setFcDisplay("1");
             formTableColumn.setFcQuery("2");

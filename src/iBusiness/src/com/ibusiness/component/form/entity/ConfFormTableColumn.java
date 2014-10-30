@@ -47,7 +47,9 @@ public class ConfFormTableColumn implements java.io.Serializable {
     private String fcQuery;
     // 默认值-公式编辑
     private String fcDefault;
-
+    // 字段排序
+    private Integer columnNo;
+    
     /**
      * @return the packageName
      */
@@ -232,5 +234,18 @@ public class ConfFormTableColumn implements java.io.Serializable {
      */
     public void setTableColumnLower(String tableColumnLower) {
         this.tableColumnLower = tableColumnLower;
+    }
+    /**
+     * @return the columnNo
+     */
+    @Column(name = "COLUMNNO")
+    public Integer getColumnNo() {
+        return columnNo;
+    }
+    /**
+     * @param columnNo the columnNo to set
+     */
+    public void setColumnNo(Integer columnNo) {
+        this.columnNo = columnNo;
     }
 }

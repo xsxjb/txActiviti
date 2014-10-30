@@ -19,12 +19,13 @@ import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.def.FtlDef;
 import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.common.service.TableCommonUtil;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 
 /**
- * 一对多生成器
+ * 流程一对多生成器
  * 
  * @author JiangBo
  * 
@@ -116,7 +117,7 @@ public class CodeGenerateBpmForm implements ICallBack {
         try {
             // 取得主表字段数据
             // 取得表字段list 根据表名
-            this.mainColums = getColumListByTableName(tableName);
+            this.mainColums = getColumListByTableName(tableName, formName);
             // 读取指定表名的表字段List
             // 取得表字段信息
             Map<String, ConfTableColumns> tableColumnsMap = CommonBusiness.getInstance().getTableColumnsMap(tableName);
@@ -124,7 +125,10 @@ public class CodeGenerateBpmForm implements ICallBack {
                 for (Columnt columnt : this.mainColums) {
                     String key = columnt.getFieldDbName();
                     if (tableColumnsMap.containsKey(key)) {
+                        // 字段标题
                         columnt.setFiledComment(tableColumnsMap.get(key).getColumnName());
+                        // 是否允许为空
+                        columnt.setIsNull(tableColumnsMap.get(key).getIsNull());
                     }
                 }
             }
@@ -159,7 +163,7 @@ public class CodeGenerateBpmForm implements ICallBack {
             if (null != subTabParamList && subTabParamList.size() > 0) {
                 for (CodeParamBean codeParamBean : subTabParamList) {
                     // 取得表字段list 根据表名
-                    List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName());
+                    List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName(), formName);
                     codeParamBean.setColumns(subColumlist);
                 }
             }
@@ -177,31 +181,39 @@ public class CodeGenerateBpmForm implements ICallBack {
      * @param tableName
      * @return
      */
-    private List<Columnt> getColumListByTableName(String tableName) {
+    private List<Columnt> getColumListByTableName(String tableName, String formName) {
         // 取得子表对应表字段信息
         List<ConfTableColumns> subTableColumnsList = CommonBusiness.getInstance().getTableColumnsList(tableName);
+        Map<String, ConfFormTableColumn> formTableColumnMap = CommonBusiness.getInstance().getFormTableColumnMap(tableName, formName);
         List<Columnt> subColumlist = new ArrayList<Columnt>();
         for (ConfTableColumns confTableColumns : subTableColumnsList) {
-            // 表卖的字段不予设置
-            if ("ID".equals(confTableColumns.getColumnValue()) 
-                    || "EXECUTIONID".equals(confTableColumns.getColumnValue())
-                    || "ASSIGNEEUSER".equals(confTableColumns.getColumnValue())
-                    || "CREATEDATEBPM".equals(confTableColumns.getColumnValue())
-                    || "NODENAME".equals(confTableColumns.getColumnValue())
-                    || "DONEFLAG".equals(confTableColumns.getColumnValue())
-                    || "PARENTID".equals(confTableColumns.getColumnValue())) {
+            // 表单预留的字段不予设置
+            if (TableCommonUtil.getReservedColumnsMap().containsKey(confTableColumns.getColumnValue())) {
                 continue;
             }
             Columnt columnt = new Columnt();
             // 字段名
             columnt.setFieldDbName(confTableColumns.getColumnValue());
-            //
+            // 字段类型
             columnt.setFieldType(confTableColumns.getColumnType());
+            // 长度
             columnt.setCharmaxLength(confTableColumns.getColumnSize());
             // 字段名
             columnt.setFieldName(confTableColumns.getColumnValue().toLowerCase());
             // 字段标题
             columnt.setFiledComment(confTableColumns.getColumnName());
+            // 设置表单相关字段信息
+            ConfFormTableColumn formColumn = formTableColumnMap.get(confTableColumns.getColumnValue());
+            if (null != formColumn) {
+                // 录入宽度
+                columnt.setFcWidth(formColumn.getFcWidth());
+                // 录入高度
+                columnt.setFcHeight(formColumn.getFcHeight());
+                // 是否显示
+                columnt.setFcDisplay(formColumn.getFcDisplay());
+                // 是否编辑
+                columnt.setFcEdit(formColumn.getFcEdit());
+            }
             subColumlist.add(columnt);
         }
         return subColumlist;
@@ -216,7 +228,6 @@ public class CodeGenerateBpmForm implements ICallBack {
         if (createFileProperty.isJspFlag()) {
             codeFactoryOneToMany.invoke("bpm/jspInputOneToMTemplate.ftl", "jsp");
             codeFactoryOneToMany.invoke("bpm/jspListOneToMTemplate.ftl", "jspList");
-//            codeFactoryOneToMany.invoke("bpm/jspSubInputOneToMTemplate.ftl", "jspSub");
         }
         // ServiceImpl文件
         if (createFileProperty.isServiceImplFlag()) {

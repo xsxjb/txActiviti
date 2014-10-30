@@ -1,14 +1,15 @@
 
 /**
- *	定义一个任务节点对象
+ *	定义一个路由节点对象,判断下一步是去什么方向
+ *
  *	@author	JiangBo
  */
-function TaskNode(id,x,y ){
+function Gateway(id,x,y ){
 	this.model = 'design';//设定2个模式（design/control）
 	this.id = id;
-	this.name = '发起节点';
-	this.type = 'TaskNode';
-	this.title = '标题';
+	this.name = '判断节点';
+	this.type = 'Gateway';
+	this.title = '判断节点';
 	this.x = x;				//任务节点对象的起始位置（x坐标）
 	this.y = y;				//任务节点对象的起始位置（y坐标）
 	this.height = 50;		//任务节点对象的高度

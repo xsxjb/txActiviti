@@ -83,7 +83,9 @@
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					        <#list columns as po>
+					            <#if po.fcDisplay="1">
 					                <th class="sorting">${po.filedComment}</th>
+					            </#if>
 					        </#list>
 				        <th width="80">${"&nbsp"};</th>
 				      </tr>
@@ -93,7 +95,9 @@
 					      <tr>
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
 					        <#list columns as po>
-						        <td>${"$" + "{item.${po.fieldName}}"}</td>
+					            <#if po.fcDisplay="1">
+						            <td>${"$" + "{item.${po.fieldName}}"}</td>
+						        </#if>
 					        </#list>
 					        <td>
 					          <a href="${entityName?uncap_first}-input.do?id=${'$' + '{item.id}'}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
