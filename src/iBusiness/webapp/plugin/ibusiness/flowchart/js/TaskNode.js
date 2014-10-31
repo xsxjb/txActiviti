@@ -58,15 +58,15 @@ function TaskNode(id,x,y ){
 	 */
 	this.init = function( json ){
 	    // 主对象图片
-		this.imageMain.src = "../plugin/ibusiness/flowchart/img/tasknode.png";
+		this.imageMain.src = "../../plugin/ibusiness/flowchart/img/tasknode.png";
 		// 编辑子对象图片
-		this.imageEditBtn.src = "../plugin/ibusiness/flowchart/img/edit.png";
+		this.imageEditBtn.src = "../../plugin/ibusiness/flowchart/img/edit.png";
 		// 删除子
-		this.imageDeleteBtn.src="../plugin/ibusiness/flowchart/img/cross.png";
+		this.imageDeleteBtn.src="../../plugin/ibusiness/flowchart/img/cross.png";
 		// 建立下一节点按钮图片
-		this.imageNextTaskBtn.src = "../plugin/ibusiness/flowchart/img/add.png";
+		this.imageNextTaskBtn.src = "../../plugin/ibusiness/flowchart/img/add.png";
 		// 结束节点图片
-		this.imageEndBtn.src = "../plugin/ibusiness/flowchart/img/endnode.png";
+		this.imageEndBtn.src = "../../plugin/ibusiness/flowchart/img/endnode.png";
 		if( null != json ){
 			this.id = json.id;
 			this.name = json.name;

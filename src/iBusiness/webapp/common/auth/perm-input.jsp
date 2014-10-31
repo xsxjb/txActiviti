@@ -22,7 +22,7 @@ $(function() {
   </head>
 
   <body>
-    <%@include file="/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/header/header-portal.jsp"%>
 
     <div class="span2"></div>
 

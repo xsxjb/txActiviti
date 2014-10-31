@@ -44,7 +44,7 @@ public class FlowChartController {
         model.addAttribute("packageName", packageName);
         model.addAttribute("bpmId", bpmId);
         model.addAttribute("tabType", "flowChart");
-        return "bpm/bpm-process-input.jsp";
+        return "ibusiness/bpm/bpm-process-input.jsp";
     }
     
     /**
@@ -96,7 +96,7 @@ public class FlowChartController {
         // 保存修改流程相关BPMN.XML信息 TODO
 //        saveBpmnXmlInfo();
         
-        return "/flowchart/draw.jsp";
+        return "/ibusiness/flowchart/draw.jsp";
     }
 
     /**

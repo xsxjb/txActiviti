@@ -312,7 +312,7 @@ public class CodeController {
         
         // 设置信息
         model.addAttribute("model", bean);
-        return "component/form/conf-form-input.jsp";
+        return "ibusiness/component/form/conf-form-input.jsp";
     }
     // ======================================================================
     @Resource

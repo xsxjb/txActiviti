@@ -31,9 +31,9 @@ this.model = 'design';//设定2个模式（design/control）
 	 */
 	this.init = function( json ){
 	    //结束节点图片
-		this.bark.src = "../plugin/ibusiness/flowchart/img/endnode.png";
+		this.bark.src = "../../plugin/ibusiness/flowchart/img/endnode.png";
 		// 删除子
-		this.imageDeleteBtn.src="../plugin/ibusiness/flowchart/img/cross.png";
+		this.imageDeleteBtn.src="../../plugin/ibusiness/flowchart/img/cross.png";
 		
 		if( null != json ) {
 			this.id = json.id;

@@ -39,11 +39,11 @@ function StartNode( id,x,y ){
 	 */
 	this.init = function( json ){
 	    //开始节点图片
-		this.bark.src = "../plugin/ibusiness/flowchart/img/startnode.png";
+		this.bark.src = "../../plugin/ibusiness/flowchart/img/startnode.png";
 		// 建立下一节点按钮图片
-		this.imageNextTaskBtn.src = "../plugin/ibusiness/flowchart/img/add.png";
+		this.imageNextTaskBtn.src = "../../plugin/ibusiness/flowchart/img/add.png";
 		// 删除子
-		this.imageDeleteBtn.src="../plugin/ibusiness/flowchart/img/cross.png";
+		this.imageDeleteBtn.src="../../plugin/ibusiness/flowchart/img/cross.png";
 		if( null != json ) {
 			this.id = json.id;
 			this.name = json.name;

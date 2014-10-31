@@ -61,7 +61,7 @@ public class FormController {
         model.addAttribute("page", page);
         model.addAttribute("packageName", packageName);
         
-        return "component/form/conf-form-list.jsp"; 
+        return "ibusiness/component/form/conf-form-list.jsp"; 
     }
     /**
      * 流程表单信息列表
@@ -78,7 +78,7 @@ public class FormController {
         model.addAttribute("page", page);
         model.addAttribute("packageName", packageName);
         
-        return "component/form/conf-bpmform-list.jsp"; 
+        return "ibusiness/component/form/conf-bpmform-list.jsp"; 
     }
     /**
      * 表单基础信息 插入页面
@@ -119,7 +119,7 @@ public class FormController {
         model.addAttribute("packageName", packageName);
         model.addAttribute("isBpmForm", isBpmForm);
 
-        return "component/form/conf-form-input.jsp";
+        return "ibusiness/component/form/conf-form-input.jsp";
     }
     /**
      * 关联表设置
@@ -134,7 +134,7 @@ public class FormController {
     public String formTablesInput(@RequestParam(value = "formId", required = false) String formId, @RequestParam("packageName") String packageName, Model model) {
         // 取得表单信息
         if (CommonUtils.isNull(formId)) {
-            return "component/form/conf-form-input.jsp";
+            return "ibusiness/component/form/conf-form-input.jsp";
         }
         ConfForm confForm = confFormDao.get(formId);
         // 主表/单表 关联表单
@@ -185,7 +185,7 @@ public class FormController {
         List<ConfTable> confSubTableList = tableDao.find(subTableHql, packageName, confForm.getIsBpmForm());
         model.addAttribute("subTable", confSubTableList);
 
-        return "component/form/conf-form-input.jsp";
+        return "ibusiness/component/form/conf-form-input.jsp";
     }
     /**
      * 字段组件信息列表
@@ -233,7 +233,7 @@ public class FormController {
         model.addAttribute("packageName", packageName);
         model.addAttribute("isBpmForm", confForm.getIsBpmForm());
 
-        return "component/form/conf-form-input.jsp";
+        return "ibusiness/component/form/conf-form-input.jsp";
     }
     /**
      * 表单字段组件管理
@@ -247,7 +247,7 @@ public class FormController {
         if (null != formTableColumnList && formTableColumnList.size() > 0) {
             model.addAttribute("model", formTableColumnList.get(0));
         }
-        return "component/form/conf-formLabel-input.jsp";
+        return "ibusiness/component/form/conf-formLabel-input.jsp";
     }
     /**
      * 保存

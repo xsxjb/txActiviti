@@ -36,7 +36,7 @@ public class BpmConfNodeController {
         String hql = "from BpmFlowNode where flowVersionId=? order by priority";
         List<BpmFlowNode> bpmFlowNodes = bpmFlowNodeDao.find(hql, flowVersionId);
         model.addAttribute("bpmFlowNodes", bpmFlowNodes);
-        return "bpm/bpm-conf-node-list.jsp";
+        return "ibusiness/bpm/bpm-conf-node-list.jsp";
     }
 
     // ======================================================================

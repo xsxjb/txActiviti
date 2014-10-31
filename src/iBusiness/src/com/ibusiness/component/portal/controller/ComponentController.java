@@ -38,7 +38,7 @@ public class ComponentController {
     public String show(@RequestParam Map<String, Object> parameterMap, Model model) {
         model.addAttribute("parentId", 0);
         // 返回JSP
-        return "component/portal/component-show.jsp";
+        return "ibusiness/component/portal/component-show.jsp";
     }
     /**
      * 菜单跳转控制方法
@@ -112,7 +112,7 @@ public class ComponentController {
         page = componentDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "component/portal/component-list.jsp";
+        return "ibusiness/component/portal/component-list.jsp";
     }
     
     /**
@@ -131,7 +131,7 @@ public class ComponentController {
         }
         model.addAttribute("model", entity);
         
-        return "component/portal/component-input.jsp";
+        return "ibusiness/component/portal/component-input.jsp";
     }
 
     /**

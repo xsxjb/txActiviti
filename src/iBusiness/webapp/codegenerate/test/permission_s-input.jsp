@@ -8,7 +8,7 @@
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/header/header-portal.jsp"%>
 	<div class="span2"></div>
 	<!-- start of main -->
     <div class="panel panel-default col-md-10">

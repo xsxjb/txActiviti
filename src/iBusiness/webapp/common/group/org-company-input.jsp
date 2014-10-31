@@ -43,7 +43,7 @@ $(function() {
   </head>
 
   <body>
-    <%@include file="/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/header/header-portal.jsp"%>
 
 	<!-- start of main -->
 	<div class="panel panel-default span10"> 

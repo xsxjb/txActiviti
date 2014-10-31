@@ -80,7 +80,7 @@ public class BpmWorkspaceController {
         // 设置页面信息
         model.addAttribute("tasks", tasklist);
         
-        return "bpm/workspace-listPersonalTasks.jsp";
+        return "ibusiness/bpm/workspace-listPersonalTasks.jsp";
     }
 
     /**
@@ -99,7 +99,7 @@ public class BpmWorkspaceController {
         model.addAttribute("historicTasks", historicTasks);
         model.addAttribute("historicVariableInstances", historicVariableInstances);
 
-        return "bpm/workspace-viewHistory.jsp";
+        return "ibusiness/bpm/workspace-viewHistory.jsp";
     }
 
     /**
@@ -134,7 +134,7 @@ public class BpmWorkspaceController {
                 .taskAssignee(userId).finished().list();
         model.addAttribute("historicTasks", historicTasks);
 
-        return "bpm/workspace-listHistoryTasks.jsp";
+        return "ibusiness/bpm/workspace-listHistoryTasks.jsp";
     }
 
     // ~ ======================================================================

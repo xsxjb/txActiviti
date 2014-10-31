@@ -50,7 +50,7 @@ public class TableController {
         model.addAttribute("tableInfoList", list);
         model.addAttribute("packageName", packageName);
         
-        return "component/table/conf-table-list.jsp"; 
+        return "ibusiness/component/table/conf-table-list.jsp"; 
     }
     @RequestMapping("conf-bpmTable-list")
     public String confBpmTableShow(@RequestParam("packageName") String packageName, Model model) {
@@ -60,7 +60,7 @@ public class TableController {
         model.addAttribute("tableInfoList", list);
         model.addAttribute("packageName", packageName);
         
-        return "component/table/conf-bpmTable-list.jsp"; 
+        return "ibusiness/component/table/conf-bpmTable-list.jsp"; 
     }
     
     /**
@@ -76,7 +76,7 @@ public class TableController {
         model.addAttribute("tableInfoList", list);
         model.addAttribute("tableName", tableName);
         // 取得表结构信息
-        return "component/table/conf-table-column-list.jsp";
+        return "ibusiness/component/table/conf-table-column-list.jsp";
     }
     /**
      * 表列字段结构管理表信息查询
@@ -91,7 +91,7 @@ public class TableController {
         model.addAttribute("beanInfo", bean);
         model.addAttribute("tableName", tableName);
         // 取得表结构信息
-        return "component/table/conf-table-column-input.jsp";
+        return "ibusiness/component/table/conf-table-column-input.jsp";
     }
     /**
      * 新建一张业务表页面跳转
@@ -103,7 +103,7 @@ public class TableController {
         model.addAttribute("packageName", packageName);
         model.addAttribute("isBpmTable", isBpmTable);
         
-        return "component/table/conf-table-insert.jsp"; 
+        return "ibusiness/component/table/conf-table-insert.jsp"; 
     }
     
     /**

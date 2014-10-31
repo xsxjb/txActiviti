@@ -35,7 +35,7 @@ $(function() {
     function getFlowList(){
 		//向服务端获取二级菜单列表
 		$.ajax({
-			url:'flow-list.do?flowId='+getParam("bpmId"),
+			url:'/iBusiness/default/flowchart/flow-list.do?flowId='+getParam("bpmId"),
 			success:function(responseText){
 				$('#select_flowname').append(responseText);
 			}
@@ -628,7 +628,7 @@ $(function() {
 		//发起AJAX请求，提交参数
 		$.ajax({
 			 type: "POST",
-			 url: "save-flow-chart.do?contexts="+jsonString+"&flowId="+flowId,
+			 url: "/iBusiness/default/flowchart/save-flow-chart.do?contexts="+jsonString+"&flowId="+flowId,
 			 dataType: "text",
 			 success: function(data){
 				//初始化工具栏
@@ -668,7 +668,7 @@ $(function() {
 		//发起AJAX请求，提交参数
 		$.ajax({
 			 type: "POST",
-			 url: "delete-flow-chart.do?flowId="+flowId,
+			 url: "/iBusiness/default/flowchart/delete-flow-chart.do?flowId="+flowId,
 			 dataType: "text",
 			 success: function(data){
 				 var json = JSON.parse(data);

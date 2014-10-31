@@ -51,7 +51,7 @@ public class portalController {
         session.setAttribute("deskMenuItems", deskmenus);
         
         // 返回JSP
-        return "base/portal/portal.jsp";
+        return "ibusiness/base/portal/portal.jsp";
     }
 
     /**
