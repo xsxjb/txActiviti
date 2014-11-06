@@ -304,7 +304,6 @@ $(function() {
 			switch( isType(selectId) ){
 			case 'draw':
 				if( selectId == 'Pipeline'  ){
-					//alert('画管线');
 					if( drawPipeline == null ){
 						elementId = createId();
 						drawPipeline = new Pipeline();

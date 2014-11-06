@@ -339,6 +339,7 @@ public class FormController {
             formTableColumn.setTableName(confTable.getTableName());
             formTableColumn.setTableColumn(tableColumn.getColumnValue());
             formTableColumn.setColumnNo(tableColumn.getColumnNo());
+            formTableColumn.setFcType("1");
             formTableColumn.setFcEdit("1");
             formTableColumn.setFcDisplay("1");
             formTableColumn.setFcQuery("2");

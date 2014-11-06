@@ -37,9 +37,9 @@
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
                               <!-- 是否可编辑 -->
-                              <#if po.fcEdit="1">
+                              <#if "1"=po.fcEdit>
                                   <!-- 编辑类型 -->
-                                  <#if po.fcType="2">
+                                  <#if "2"=po.fcType>
                                       <div class="col-lg-6">
                                           <textarea class="form-control" id="code-${po.fieldName}" name="${po.fieldName}" rows="1">${'$' + '{model.${po.fieldName}}'}</textarea>
                                       </div>

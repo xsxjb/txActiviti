@@ -29,7 +29,6 @@ function Texts(	id,x,y ){
 
 	this.isPop = 1;	//是否可以弹出编辑页面
 	this.isError = 0;	//是否出错了（1表示出错啦,0表示正常可以查看实时数据）
-	this.win = "/XMCP/jsp/plc-control/station/page/textRecord.jsp";
 
 	/**
 	 *	初始化
@@ -90,67 +89,6 @@ function Texts(	id,x,y ){
 	 *	根据实时数据更新组件的状态
 	 */
 	this.updateStatus = function( json ){
-		try {
-
-			if( this.columnName != '%' ){
-				
-					
-				//更新热力站【实时数据】
-				var key = this.columnName.substring(0, this.columnName.indexOf(".") );
-				var type = this.columnName.substring(0, 1);
-				var value = this.columnName.substring(this.columnName.indexOf(".")+1 );
-				var heatStationId = $('#station option:selected').val();
-				var heatUnitId = $('#unit option:selected').val();
-				var id = heatStationId+''+heatUnitId+''+key;
-				
-				if( type == "s" ){
-					//更新【实时数据】
-					this.realData = json[''+heatStationId]['null-null-'+value] ;
-					if( this.realData != 'undefined' && this.realData != null ){
-						this.isError = 0;
-					}else{
-						this.realData = title;
-						this.isError = 1;
-					}
-				}else if( type == "u" ){
-					//更新【实时数据】
-					this.realData = json[heatStationId+''+heatUnitId][heatUnitId+'-null-'+value]  ;
-					if( this.realData != 'undefined' && this.realData != null ){
-						this.isError = 0;
-					}else{
-						this.realData = title;
-						this.isError = 1;
-					}
-				}else if( type == "X" ){
-					this.realData = json[heatStationId+''+heatUnitId+''+key][heatUnitId+'-'+key+'-'+value];
-					if( this.realData != 'undefined' && this.realData != null ){
-						this.isError = 0;
-					}else{
-						this.realData = title;
-						this.isError = 1;
-					}
-				}else if( type == "B" ){
-					this.realData = json[heatStationId+''+heatUnitId+''+key][heatUnitId+'-'+key+'-'+value];
-					if( this.realData != 'undefined' && this.realData != null ){
-						this.isError = 0;
-					}else{
-						this.realData = title;
-						this.isError = 1;
-					}
-				}else if( type == "V" ){
-					this.realData = json[heatStationId+''+heatUnitId+''+key][heatUnitId+'-'+key+'-'+value];
-					if( this.realData != 'undefined' && this.realData != null ){
-						this.isError = 0;
-					}else{
-						this.realData = title;
-						this.isError = 1;
-					}
-				}
-				
-			}
-	　　} catch(err) {
-			
-	　　}
 	}
 	/**
 	 *	鼠标移入事件
@@ -167,38 +105,7 @@ function Texts(	id,x,y ){
 	 *	单击事件
 	 */
 	this.clickView = function( mouseX,mouseY ){
-		
-		if( this.columnName != "%" ){
-			
-			
-			//这个功能还没有做,暂时先不弹出
-			var heatStationId = $('#station option:selected').val();
-			var heatUnitId = $('#unit option:selected').val();
-			
-			if( heatStationId == "%" || heatStationId == "" ){
-				alert("请确认您选的【换热站】,不然会发错命令！");
-				return;
-			}
-			
-			if( this.isError == 0 ){
-				//window.open( this.win+"?heatStationId="+heatStationId+"&heatUnitId="+heatUnitId+"&columnName="+this.columnName+"&userId="+userId  );
-	
-				var url = this.win+"?heatStationId="+heatStationId+"&heatUnitId="+heatUnitId+"&columnName="+this.columnName+"&userId="+userId ;
-				//alert( url );
-	
-				$("#realTimeLiveCurveIframe").attr("src", url );
-	
-				$("#realTimeLiveCurve").css({top:(canvas.height-500)/2+50 ,left:(canvas.width-770)/2});
-				$("#realTimeLiveCurve").css({width:770 ,height:500});
-				$("#realTimeLiveCurve").show(300);
-			}else{
-			
-				alert('当前实时数据中没有这个数据，不能显示！');
-			}
-
-			
-		}
-		
+		//这个功能还没有做,暂时先不弹出
 	}
 
 	/**
@@ -346,15 +253,12 @@ function Texts(	id,x,y ){
 				}
 			}
 		}
-			
 	}
-
 
 	/**
 	 *	动画效果
 	 */
 	this.animation = function(){
-
 		this.paint();
 		return;
 	}
