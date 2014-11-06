@@ -23,4 +23,21 @@
 		<property name="dataSource" ref="dataSource"/>
 		<property name="applicationProperties" ref="applicationProperties"/>
 	</bean>
+	
+	<!-- 多数据源配置 ======== 添加数据源2 
+	<bean id="dataSource2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	     <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	     <property name="url" value="jdbc:oracle:thin:@192.168.1.201:1521:rwdb"/>
+	     <property name="username" value="txuser"/>
+	     <property name="password" value="txuser"/>
+		 <property name="initialSize" value="1"/>
+		 <property name="maxActive" value="500"/>
+		 <property name="maxIdle" value="2"/>
+		 <property name="minIdle" value="1"/>
+		 <property name= "validationQuery" value="select 1 from dual" />
+	</bean>
+	<bean id="dsTwoDao" class="com.ibusiness.common.dao.DsTwoDao">
+		<property name="dataSource" ref="dataSource2"></property>
+	</bean>
+	-->
 </beans>
