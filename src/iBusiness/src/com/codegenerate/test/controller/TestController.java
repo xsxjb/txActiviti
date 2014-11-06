@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.common.model.ConfSelectItem;
+import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.component.form.entity.ConfFormTableColumn;
+
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
@@ -62,7 +66,11 @@ public class TestController {
             entity = new TestEntity();
         }
         model.addAttribute("model", entity);
-        
+        // 取得表单对应表管理表Map
+        Map<String, ConfFormTableColumn> formTableColumnMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_TEST", "testForm");
+	            // 下拉列表
+	            List<ConfSelectItem> nameItems = (List<ConfSelectItem>) CommonUtils.getListFromJson(formTableColumnMap.get("NAME").getConfSelectInfo(), ConfSelectItem.class);
+                model.addAttribute("nameItems", nameItems);
         return "codegenerate/test/test-input.jsp";
     }
 

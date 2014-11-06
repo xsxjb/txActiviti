@@ -27,11 +27,13 @@
 				    
 					  <div class="form-group">
 					      <label class="control-label col-lg-2" for="form-column">字段:</label>
-					      <label id="form-column" >${model.formColumn}</label>
-					  </div>
-					  <div class="form-group">
+					      <div class="col-lg-3">
+					          <label id="form-column" >${model.formColumn}</label>
+					      </div>
 					      <label class="control-label col-lg-2" for="form-column-title">显示标题:</label>
-					      <input id="form-column-title" type="text" name="formColumnTitle" value="${model.formColumnTitle}"  class="text required" >
+					      <div class="col-lg-3">
+					          <input id="form-column-title" type="text" name="formColumnTitle" value="${model.formColumnTitle}"  class="text required" >
+					      </div>
 					  </div>
 					  <div class="form-group">
 					      <label class="control-label col-lg-2" for="form-fcType">组件类型:</label>
@@ -42,17 +44,26 @@
 								    <option value="3" ${model.fcType==3 ? 'selected' : ''}>日期</option>
 								    <option value="4" ${model.fcType==4 ? 'selected' : ''}>时间</option>
 								    <option value="5" ${model.fcType==5 ? 'selected' : ''}>数值</option>
-								    <option value="6" ${model.fcType==6 ? 'selected' : ''}>数据字典</option>
+								    <option value="6" ${model.fcType==6 ? 'selected' : ''}>下拉列表</option>
+								    <option value="7" ${model.fcType==7 ? 'selected' : ''}>数据字典</option>
 							   </select>
 						   </div>
 					  </div>
 					  <div class="form-group">
-					      <label class="control-label col-lg-2" for="form-fcWidth">录入宽度:</label>
-					      <input id="form-fcWidth" type="text" name="fcWidth" value="${model.fcWidth}"  class="text required" >
+					      <label class="control-label col-lg-2" for="form-confSelectInfo">下拉列表内容:</label>
+					      <div class="col-lg-6">
+					          <textarea class="form-control" id="form-confSelectInfo" rows="2" name="confSelectInfo"  >${model.confSelectInfo}</textarea>
+					      </div>
 					  </div>
 					  <div class="form-group">
+					      <label class="control-label col-lg-2" for="form-fcWidth">录入宽度:</label>
+					      <div class="col-lg-3">
+					          <input id="form-fcWidth" type="text" name="fcWidth" value="${model.fcWidth}"  class="text required" >
+					      </div>
 					      <label class="control-label col-lg-2" for="form-fcHeight">录入高度:</label>
-					      <input id="form-fcHeight" type="text" name="fcHeight" value="${model.fcHeight}"  class="text required" >
+					      <div class="col-lg-3">
+					          <input id="form-fcHeight" type="text" name="fcHeight" value="${model.fcHeight}"  class="text required" >
+					      </div>
 					  </div>
 					  <div class="form-group">
 					      <label class="col-lg-2 control-label " for="form-fcDisplay">是否显示:</label>

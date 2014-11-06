@@ -38,12 +38,25 @@
                               <label class="col-lg-2 control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
                               <!-- 是否可编辑 -->
                               <#if "1"=po.fcEdit>
-                                  <!-- 编辑类型 -->
-                                  <#if "2"=po.fcType>
+                                  <#if "2"=po.fcType> 
+                                      <!-- 编辑类型     多行 -->
                                       <div class="col-lg-6">
                                           <textarea class="form-control" id="code-${po.fieldName}" name="${po.fieldName}" rows="1">${'$' + '{model.${po.fieldName}}'}</textarea>
                                       </div>
-                                  <#else>
+                                  </#if>
+                                  <#if "6"=po.fcType>
+                                       <!-- 编辑类型     下拉  -->
+                                      <div class="col-lg-3">
+										  <select id="code-${po.fieldName}" name="${po.fieldName}" class="form-control">
+										        <option value="" >请选择</option>
+											  <c:forEach items="${'$' + '{${po.fieldName}Items}'}" var="item">
+											    <option value="${'$' + '{item.key}'}"  >${'$' + '{item.value}'}</option>
+											  </c:forEach>
+										  </select>
+								      </div>
+                                  </#if>
+                                  <#if "1"=po.fcType>
+                                      <!-- 编辑类型      单行 -->
                                       <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  class="text required" >
                                   </#if>
                               <#else>

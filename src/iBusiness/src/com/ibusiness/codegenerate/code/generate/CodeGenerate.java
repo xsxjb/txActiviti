@@ -18,6 +18,7 @@ import com.ibusiness.codegenerate.code.window.CreateFileProperty;
 import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.def.FtlDef;
+import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.service.TableCommonUtil;
 import com.ibusiness.common.util.CommonUtils;
@@ -166,6 +167,7 @@ public class CodeGenerate implements ICallBack {
      * @param tableName
      * @return
      */
+    @SuppressWarnings("unchecked")
     private List<Columnt> getColumListByTableName(String tableName, String formName) {
         // 取得子表对应表字段信息
         List<ConfTableColumns> subTableColumnsList = CommonBusiness.getInstance().getTableColumnsList(tableName);
@@ -200,6 +202,10 @@ public class CodeGenerate implements ICallBack {
                 columnt.setFcEdit(formColumn.getFcEdit());
                 // 组件类型
                 columnt.setFcType(formColumn.getFcType());
+                if ("6".equals(formColumn.getFcType())) {
+                    List<ConfSelectItem> confSelectItems = (List<ConfSelectItem>) CommonUtils.getListFromJson(formColumn.getConfSelectInfo(), ConfSelectItem.class);
+                    columnt.setConfSelectItems(confSelectItems);
+                }
             }
             subColumlist.add(columnt);
         }

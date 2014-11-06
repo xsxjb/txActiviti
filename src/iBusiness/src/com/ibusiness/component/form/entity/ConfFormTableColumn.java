@@ -49,6 +49,8 @@ public class ConfFormTableColumn implements java.io.Serializable {
     private String fcDefault;
     // 字段排序
     private Integer columnNo;
+    // 下拉列表内容信息
+    private String confSelectInfo;
     
     /**
      * @return the packageName
@@ -247,5 +249,18 @@ public class ConfFormTableColumn implements java.io.Serializable {
      */
     public void setColumnNo(Integer columnNo) {
         this.columnNo = columnNo;
+    }
+    /**
+     * @return the confSelectInfo
+     */
+    @Column(name = "CONFSELECTINFO")
+    public String getConfSelectInfo() {
+        return confSelectInfo;
+    }
+    /**
+     * @param confSelectInfo the confSelectInfo to set
+     */
+    public void setConfSelectInfo(String confSelectInfo) {
+        this.confSelectInfo = confSelectInfo;
     }
 }
