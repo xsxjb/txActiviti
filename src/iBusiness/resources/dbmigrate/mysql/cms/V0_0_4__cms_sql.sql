@@ -1,8 +1,9 @@
 
--------------------------------------------------------------------------------
---  cms catalog
--------------------------------------------------------------------------------
-CREATE TABLE CMS_CATALOG(
+/*==============================================================*/
+/* cms catalog   */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_CMS_CATALOG;
+CREATE TABLE IB_CMS_CATALOG(
         ID BIGINT auto_increment,
 	NAME VARCHAR(50),
 	CODE VARCHAR(200),
@@ -14,14 +15,15 @@ CREATE TABLE CMS_CATALOG(
 	KEYWORD VARCHAR(200),
 	DESCRIPTION VARCHAR(200),
 	PARENT_ID BIGINT,
-        CONSTRAINT PK_CMS_CATALOG PRIMARY KEY(ID),
-	CONSTRAINT FK_CMS_CATALOG_PARENT FOREIGN KEY(PARENT_ID) REFERENCES CMS_CATALOG(ID)
+        CONSTRAINT PK_CMS_CATALOG PRIMARY KEY(ID)
+        /*,CONSTRAINT FK_CMS_CATALOG_PARENT FOREIGN KEY(PARENT_ID) REFERENCES IB_CMS_CATALOG(ID) */
 ) engine=innodb;
 
--------------------------------------------------------------------------------
---  cms article
--------------------------------------------------------------------------------
-CREATE TABLE CMS_ARTICLE(
+/*==============================================================*/
+/* cms article   */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_CMS_ARTICLE;
+CREATE TABLE IB_CMS_ARTICLE(
         ID BIGINT auto_increment,
 	TITLE VARCHAR(200),
 	SHORT_TITLE VARCHAR(200),
@@ -46,14 +48,15 @@ CREATE TABLE CMS_ARTICLE(
 	RECOMMEND_STATUS INT,
 	USER_ID VARCHAR(200),
 	CATALOG_ID BIGINT,
-        CONSTRAINT PK_CMS_ARTICLE PRIMARY KEY(ID),
-	CONSTRAINT FK_CMS_ARTICLE_CATALOG FOREIGN KEY(CATALOG_ID) REFERENCES CMS_CATALOG(ID)
+        CONSTRAINT PK_CMS_ARTICLE PRIMARY KEY(ID)
+        /*,CONSTRAINT FK_CMS_ARTICLE_CATALOG FOREIGN KEY(CATALOG_ID) REFERENCES IB_CMS_CATALOG(ID)*/
 ) engine=innodb;
 
--------------------------------------------------------------------------------
---  cms comment
--------------------------------------------------------------------------------
-CREATE TABLE CMS_COMMENT(
+/*==============================================================*/
+/* cms comment   */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_CMS_COMMENT;
+CREATE TABLE IB_CMS_COMMENT(
         ID BIGINT auto_increment,
 	TITLE VARCHAR(200),
 	CONTENT VARCHAR(200),
@@ -61,21 +64,22 @@ CREATE TABLE CMS_COMMENT(
 	CREATE_TIME TIMESTAMP,
 	USER_ID VARCHAR(200),
 	ARTICLE_ID BIGINT,
-        CONSTRAINT PK_CMS_COMMENT PRIMARY KEY(ID),
-	CONSTRAINT FK_CMS_COMMENT_ARTICLE FOREIGN KEY(ARTICLE_ID) REFERENCES CMS_ARTICLE(ID)
+        CONSTRAINT PK_CMS_COMMENT PRIMARY KEY(ID)
+       /* ,CONSTRAINT FK_CMS_COMMENT_ARTICLE FOREIGN KEY(ARTICLE_ID) REFERENCES IB_CMS_ARTICLE(ID) */
 ) engine=innodb;
 
--------------------------------------------------------------------------------
---  cms favorite
--------------------------------------------------------------------------------
-CREATE TABLE CMS_FAVORITE(
+/*==============================================================*/
+/* cms favorite   */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_CMS_FAVORITE;
+CREATE TABLE IB_CMS_FAVORITE(
         ID BIGINT auto_increment,
 	SUBJECT VARCHAR(200),
 	CREATE_TIME TIMESTAMP,
 	USER_ID VARCHAR(200),
 	ARTICLE_ID BIGINT,
 	COMMENT_ID BIGINT,
-        CONSTRAINT PK_CMS_FAVORITE PRIMARY KEY(ID),
-	CONSTRAINT FK_CMS_FAVORITE_ARTICLE FOREIGN KEY(ARTICLE_ID) REFERENCES CMS_ARTICLE(ID),
-	CONSTRAINT FK_CMS_FAVORITE_COMMENT FOREIGN KEY(COMMENT_ID) REFERENCES CMS_COMMENT(ID)
+        CONSTRAINT PK_CMS_FAVORITE PRIMARY KEY(ID)
+      /*  ,CONSTRAINT FK_CMS_FAVORITE_ARTICLE FOREIGN KEY(ARTICLE_ID) REFERENCES IB_CMS_ARTICLE(ID),
+	CONSTRAINT FK_CMS_FAVORITE_COMMENT FOREIGN KEY(COMMENT_ID) REFERENCES IB_CMS_COMMENT(ID) */
 ) engine=innodb;

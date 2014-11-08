@@ -4,6 +4,7 @@
 /*==============================================================*/
 /* 客户表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_CUSTOMER_INFO;
 CREATE TABLE IB_CUSTOMER_INFO (
          ID  VARCHAR(64),
          CUSTOMERNO          VARCHAR(64),
@@ -18,6 +19,7 @@ CREATE TABLE IB_CUSTOMER_INFO (
 /*==============================================================*/
 /* 图标名称表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_MAP_ICON;
 CREATE TABLE IB_MAP_ICON (
          ID  VARCHAR(64),
          ICONNAME VARCHAR(64),
@@ -26,6 +28,7 @@ CREATE TABLE IB_MAP_ICON (
 /*=============================================================================================*/
 /* Table: 图标类型表 */
 /*=============================================================================================*/
+DROP TABLE IF EXISTS IB_MAP_ICON_TYPE;
 CREATE TABLE IB_MAP_ICON_TYPE (
     ID                                VARCHAR(64),
     ICONID                       VARCHAR(64)    not null,
@@ -39,6 +42,7 @@ CREATE TABLE IB_MAP_ICON_TYPE (
 /*=============================================================================================*/
 /* Table: (位置)标注表 */
 /*=============================================================================================*/
+DROP TABLE IF EXISTS IB_MAP_SITE;
 CREATE TABLE IB_MAP_SITE (
 	    ID                                VARCHAR(64),
 		SITENO                       VARCHAR(64), 

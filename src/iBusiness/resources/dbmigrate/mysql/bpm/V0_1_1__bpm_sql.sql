@@ -1,6 +1,7 @@
 /*==============================================================*/
 /* IB_CONF_BPM_FLOW BPM流程管理表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_BPM_PROCESS;
 CREATE TABLE IB_BPM_PROCESS (
 	     ID  VARCHAR(64),
 	     PACKAGENAME VARCHAR(128),
@@ -18,6 +19,7 @@ CREATE TABLE IB_BPM_PROCESS (
 /*==============================================================*/
 /* IB_BPM_PROCESS_VERSION 流程版本管理   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_BPM_PROCESS_VERSION;
 CREATE TABLE IB_BPM_PROCESS_VERSION (
         ID VARCHAR(64),
 		BPMPROSESSID VARCHAR(128),
@@ -29,6 +31,7 @@ CREATE TABLE IB_BPM_PROCESS_VERSION (
 /*==============================================================*/
 /* IB_BPM_FLOW_NODE 流程节点配置表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_BPM_FLOW_NODE;
 CREATE TABLE IB_BPM_FLOW_NODE (
         ID VARCHAR(64),
         PACKAGENAME VARCHAR(128),
@@ -46,9 +49,11 @@ CREATE TABLE IB_BPM_FLOW_NODE (
 		PRIORITY  INTEGER,
         CONSTRAINT PK_IB_BPM_FLOW_NODE PRIMARY KEY(ID)
 ) ENGINE=INNODB;
+
 /*==============================================================*/
 /*  流程节点人员(参与者)配置表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_BPM_NODE_USER;
 CREATE TABLE IB_BPM_NODE_USER (
         ID VARCHAR(64),
         PACKAGENAME VARCHAR(128),
@@ -64,6 +69,7 @@ CREATE TABLE IB_BPM_NODE_USER (
 /*==============================================================*/
 /*  流程节点事件配置表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_BPM_NODE_LISTENER;
 CREATE TABLE IB_BPM_NODE_LISTENER (
         ID VARCHAR(64),
         PACKAGENAME VARCHAR(128),
@@ -79,6 +85,7 @@ CREATE TABLE IB_BPM_NODE_LISTENER (
 /*==============================================================*/
 /*  流程节点表单配置表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_BPM_NODE_FORM;
 CREATE TABLE IB_BPM_NODE_FORM (
         ID VARCHAR(64),
         PACKAGENAME VARCHAR(128),
@@ -95,6 +102,7 @@ CREATE TABLE IB_BPM_NODE_FORM (
 /*==============================================================*/
 /*  流程节点(会签)关联配置表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_BPM_NODE_COUNTERSIGN;
 CREATE TABLE IB_BPM_NODE_COUNTERSIGN (
         ID VARCHAR(64),
         PACKAGENAME VARCHAR(128),
@@ -111,6 +119,7 @@ CREATE TABLE IB_BPM_NODE_COUNTERSIGN (
 /*==============================================================*/
 /* 流程图配置表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_CONF_FLOW_CHART;
 CREATE TABLE IB_CONF_FLOW_CHART (
 	     ID               VARCHAR(64),
 	     FLOWID    VARCHAR(64),  

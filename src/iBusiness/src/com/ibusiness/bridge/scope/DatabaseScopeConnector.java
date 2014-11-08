@@ -25,19 +25,19 @@ public class DatabaseScopeConnector implements ScopeConnector {
 
     // 通过 ID 查询应用管理表
     private String sqlFindById = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO where id=?";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from IB_SCOPE_INFO where id=?";
     // 通过 编码 查询应用管理表
     private String sqlFindByCode = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO where code=?";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from IB_SCOPE_INFO where code=?";
     // 通过 引用 查询应用管理表
     private String sqlFindByRef = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO where ref=?";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from IB_SCOPE_INFO where ref=?";
     // 查询应用管理表所有数据
     private String sqlFindAll = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from IB_SCOPE_INFO";
     // 查询应用管理表 共享=1 的数据
     private String sqlFindSharedScopes = "select id as id,code as code,name as name,ref as ref,"
-            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from SCOPE_INFO where shared=1";
+            + " shared as shared,user_repo_ref as userRepoRef,type as type" + " from IB_SCOPE_INFO where shared=1";
 
     public ScopeDTO findById(String id) {
         try {

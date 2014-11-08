@@ -22,7 +22,7 @@ import javax.persistence.Table;
  * @author JiangBo
  */
 @Entity
-@Table(name = "AUTH_PERM")
+@Table(name = "IB_AUTH_PERM")
 public class Perm implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
@@ -157,7 +157,7 @@ public class Perm implements java.io.Serializable {
 
     /** @return . */
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "AUTH_PERM_ROLE_DEF", joinColumns = { @JoinColumn(name = "PERM_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ROLE_DEF_ID", nullable = false, updatable = false) })
+    @JoinTable(name = "IB_AUTH_PERM_ROLE_DEF", joinColumns = { @JoinColumn(name = "PERM_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ROLE_DEF_ID", nullable = false, updatable = false) })
     public Set<RoleDef> getRoleDefs() {
         return this.roleDefs;
     }

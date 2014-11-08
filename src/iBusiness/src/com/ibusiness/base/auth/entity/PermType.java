@@ -15,10 +15,10 @@ import javax.persistence.Table;
 /**
  * PermType 授权类型表.
  * 
- * @author Lingo
+ * @author JiangBo
  */
 @Entity
-@Table(name = "AUTH_PERM_TYPE")
+@Table(name = "IB_AUTH_PERM_TYPE")
 public class PermType implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 

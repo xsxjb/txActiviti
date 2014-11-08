@@ -1,6 +1,7 @@
 /*==============================================================*/
 /* 业务模块组件管理表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_CONF_COMPONENT;
 CREATE TABLE IB_CONF_COMPONENT (
          ID  VARCHAR(64),
 		 PACKAGENAME VARCHAR(128),
@@ -14,6 +15,7 @@ CREATE TABLE IB_CONF_COMPONENT (
 /*==============================================================*/
 /* config table info 业务表结构管理表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_CONF_TABLE;
 CREATE TABLE IB_CONF_TABLE(
 		    ID  VARCHAR(64),
 		    PACKAGENAME VARCHAR(128),
@@ -28,6 +30,7 @@ CREATE TABLE IB_CONF_TABLE(
 /*==============================================================*/
 /* config table columns info 业务表字段结构管理表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_CONF_TABLE_COLUMNS;
 CREATE TABLE IB_CONF_TABLE_COLUMNS (
   tableName VARCHAR(128),
   columnValue VARCHAR(128),
@@ -43,6 +46,7 @@ CREATE TABLE IB_CONF_TABLE_COLUMNS (
 /*==============================================================*/
 /* IB_CONF_FORM–表单管理表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_CONF_FORM;
 CREATE TABLE IB_CONF_FORM (
 		   ID VARCHAR(64),
 		   PACKAGENAME VARCHAR(128),
@@ -60,6 +64,7 @@ CREATE TABLE IB_CONF_FORM (
 /*==============================================================*/
 /* IB_CONF_FORM_TABLE-表单对应数据表管理表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_CONF_FORM_TABLE;
 CREATE TABLE IB_CONF_FORM_TABLE (
   PACKAGENAME VARCHAR(128),
   FORMNAME VARCHAR(128),
@@ -71,6 +76,7 @@ CREATE TABLE IB_CONF_FORM_TABLE (
 /*==============================================================*/
 /* IB_CONF_FORM_TABLE_COLUMS-表单对应字段管理表   */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_CONF_FORM_TABLE_COLUMS;
 CREATE TABLE IB_CONF_FORM_TABLE_COLUMS (
 		  PACKAGENAME VARCHAR(128),
 		  FORMNAME VARCHAR(128),

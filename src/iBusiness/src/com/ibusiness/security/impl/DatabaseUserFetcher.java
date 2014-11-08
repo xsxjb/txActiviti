@@ -83,7 +83,7 @@ public class DatabaseUserFetcher implements UserFetcher {
 
     public Map<String, Object> fetchUserMap(String username,
             String userRepoRef, String scopeId) {
-        String sqlUser = "select id,username,password,status,display_name from USER_BASE"
+        String sqlUser = "select id,username,password,status,display_name from IB_USER_BASE"
                 + " where username=? and user_repo_id=?";
 
         try {
@@ -107,7 +107,7 @@ public class DatabaseUserFetcher implements UserFetcher {
      */
     public List<Map<String, Object>> fetchAuthoritieList(String username,
             String userRepoRef, String scopeId) {
-        String sqlAuthority = "SELECT p.code AS authority FROM USER_BASE us,AUTH_ROLE_DEF r,AUTH_PERM_ROLE_DEF pr,AUTH_PERM p "
+        String sqlAuthority = "SELECT p.code AS authority FROM IB_USER_BASE us,IB_AUTH_ROLE_DEF r,IB_AUTH_PERM_ROLE_DEF pr,IB_AUTH_PERM p "
                 + " WHERE us.role_def_id=r.id AND r.id=pr.role_def_id AND pr.perm_id=p.id"
                 + " and username=? and user_repo_id=? and r.scope_id=?";
 
@@ -137,7 +137,7 @@ public class DatabaseUserFetcher implements UserFetcher {
         List<Map<String, Object>> attributeList = null;
 
         try {
-            String sqlAttribute = "SELECT r.name AS attribute FROM USER_BASE us,AUTH_ROLE_DEF r  WHERE us.role_def_id=r.id"
+            String sqlAttribute = "SELECT r.name AS attribute FROM IB_USER_BASE us,IB_AUTH_ROLE_DEF r  WHERE us.role_def_id=r.id"
                     + " and username=? and user_repo_id=? and r.scope_id=?";
             attributeList = jdbcTemplate.queryForList(sqlAttribute, username,
                     userRepoRef, scopeId);

@@ -2,7 +2,8 @@
 /*-------------------------------------------------------------------------------*/
 /*--  user repo 用户库列表  */
 /*-------------------------------------------------------------------------------*/
-CREATE TABLE USER_REPO(
+DROP TABLE IF EXISTS IB_USER_REPO;
+CREATE TABLE IB_USER_REPO(
         ID BIGINT auto_increment,
 		CODE VARCHAR(50),
         NAME VARCHAR(50),
@@ -14,7 +15,8 @@ CREATE TABLE USER_REPO(
 /*==============================================================*/
 /* user base 用户表   */
 /*==============================================================*/
-CREATE TABLE USER_BASE(
+DROP TABLE IF EXISTS IB_USER_BASE;
+CREATE TABLE IB_USER_BASE(
         ID BIGINT auto_increment,
         USERNAME VARCHAR(50),
 		DISPLAY_NAME VARCHAR(50),
@@ -28,6 +30,6 @@ CREATE TABLE USER_BASE(
 		JOB_INFO_ID BIGINT,
 		ROLE_DEF_ID BIGINT,
 		CSS varchar(64),
-        CONSTRAINT PK_USER_BASE PRIMARY KEY(ID),
-        CONSTRAINT FK_USER_BASE_REPO FOREIGN KEY(USER_REPO_ID) REFERENCES USER_REPO(ID)
+        CONSTRAINT PK_USER_BASE PRIMARY KEY(ID)
+       /* ,CONSTRAINT FK_USER_BASE_REPO FOREIGN KEY(USER_REPO_ID) REFERENCES IB_USER_REPO(ID) */
 ) engine=innodb;

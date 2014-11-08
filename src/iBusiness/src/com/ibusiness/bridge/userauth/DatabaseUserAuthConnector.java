@@ -25,14 +25,14 @@ public class DatabaseUserAuthConnector implements UserAuthConnector {
     private UserConnector userConnector;
 
     //
-    private String sqlFindPassword = "select password from USER_BASE where id=?";
+    private String sqlFindPassword = "select password from IB_USER_BASE where id=?";
     // 权限和角色和用户资源关联
     private String sqlFindPermissions = "select p.code as permission"
-            + " from USER_BASE us,AUTH_ROLE_DEF r,AUTH_PERM_ROLE_DEF pr,AUTH_PERM p"
+            + " from IB_USER_BASE us,IB_AUTH_ROLE_DEF r,IB_AUTH_PERM_ROLE_DEF pr,IB_AUTH_PERM p"
             + " where us.ROLE_DEF_ID=r.id and r.id=pr.role_def_id and pr.perm_id=p.id"
             + " and us.ref=? and us.scope_id=?";
     // 用户权限查询语句
-    private String sqlFindRoles = "select r.name as role" + " from USER_BASE ub, AUTH_ROLE_DEF r"
+    private String sqlFindRoles = "select r.name as role" + " from IB_USER_BASE ub, IB_AUTH_ROLE_DEF r"
             + " where ub.role_def_id=r.id" + " and ub.ref=? and ub.scope_id=?";
 
     public UserAuthDTO findByUsername(String username, String scopeId) {

@@ -2,6 +2,7 @@
 /*==============================================================*/
 /*  菜单管理表 */
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_MENU;
 CREATE TABLE IB_MENU(
         ID VARCHAR(64),
         MENUNAME VARCHAR(256),
@@ -18,6 +19,7 @@ CREATE TABLE IB_MENU(
 /*==============================================================*/
 /*  菜单和角色模板关联表*/
 /*==============================================================*/
+DROP TABLE IF EXISTS IB_MENU_ROLE_DEF;
 CREATE TABLE IB_MENU_ROLE_DEF(
         MENU_ID VARCHAR(64) NOT NULL,
         ROLE_DEF_ID BIGINT NOT NULL,

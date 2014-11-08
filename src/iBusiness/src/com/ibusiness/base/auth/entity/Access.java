@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @author JiangBo
  */
 @Entity
-@Table(name = "AUTH_ACCESS")
+@Table(name = "IB_AUTH_ACCESS")
 public class Access implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 

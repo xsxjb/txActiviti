@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @author Lingo
  */
 @Entity
-@Table(name = "USER_REPO")
+@Table(name = "IB_USER_REPO")
 public class UserRepo implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 

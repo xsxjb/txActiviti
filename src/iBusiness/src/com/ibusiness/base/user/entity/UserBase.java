@@ -18,7 +18,7 @@ import com.ibusiness.base.group.entity.JobInfo;
  * @author JiangBo
  */
 @Entity
-@Table(name = "USER_BASE")
+@Table(name = "IB_USER_BASE")
 public class UserBase implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 

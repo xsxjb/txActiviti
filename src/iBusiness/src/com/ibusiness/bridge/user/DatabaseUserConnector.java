@@ -25,21 +25,21 @@ public class DatabaseUserConnector implements UserConnector {
     // 用户表-通过ID查询
     private String sqlFindById = "select id as id,username as username,status as status,"
             + "display_name as display_name,email as email,mobile as mobile,user_repo_id as user_repo_ref"
-            + " from USER_BASE where id=?";
+            + " from IB_USER_BASE where id=?";
     // 用户表-通过帐号, 用户库列表ID查询
     private String sqlFindByUsername = "select ub.id as id,ub.username as username,ub.status as status,"
             + "display_name as display_name,email as email,mobile as mobile,user_repo_id as user_repo_ref"
-            + " from USER_BASE ub where ub.username=? and ub.user_repo_id=?";
+            + " from IB_USER_BASE ub where ub.username=? and ub.user_repo_id=?";
     // 用户表-通过 引用, 用户库列表ID查询
     private String sqlFindByRef = "select ub.id as id,ub.username as username,ub.status as status,"
             + "display_name as display_name,email as email,mobile as mobile,user_repo_id as user_repo_ref"
-            + " from USER_BASE ub where ub.ref=? and ub.user_repo_id=?";
+            + " from IB_USER_BASE ub where ub.ref=? and ub.user_repo_id=?";
     // 用户表-总行数
-    private String sqlPagedQueryCount = "select count(*) from USER_BASE";
+    private String sqlPagedQueryCount = "select count(*) from IB_USER_BASE";
     // 用户表-全部数据
     private String sqlPagedQuerySelect = "select id as id,username as username,status as status,"
             + "display_name as display_name,email as email,mobile as mobile,user_repo_id as user_repo_ref"
-            + " from USER_BASE";
+            + " from IB_USER_BASE";
 
     public UserDTO findById(String id) {
         Assert.notNull(id, "user id should not be null");

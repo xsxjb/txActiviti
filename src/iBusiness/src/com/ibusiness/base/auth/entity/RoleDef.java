@@ -21,7 +21,7 @@ import com.ibusiness.base.menu.entity.Menu;
  * @author JiangBo
  */
 @Entity
-@Table(name = "AUTH_ROLE_DEF")
+@Table(name = "IB_AUTH_ROLE_DEF")
 public class RoleDef implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
@@ -114,7 +114,7 @@ public class RoleDef implements java.io.Serializable {
 
     /** @return . */
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "AUTH_PERM_ROLE_DEF", joinColumns = { @JoinColumn(name = "ROLE_DEF_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "PERM_ID", nullable = false, updatable = false) })
+    @JoinTable(name = "IB_AUTH_PERM_ROLE_DEF", joinColumns = { @JoinColumn(name = "ROLE_DEF_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "PERM_ID", nullable = false, updatable = false) })
     public Set<Perm> getPerms() {
         return this.perms;
     }
