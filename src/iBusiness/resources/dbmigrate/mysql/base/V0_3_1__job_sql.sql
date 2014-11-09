@@ -4,12 +4,12 @@
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_COMPANY;
 CREATE TABLE IB_COMPANY(
-        ID BIGINT auto_increment,
-        NAME VARCHAR(200),
-	    DESCN VARCHAR(200),
-        STATUS INTEGER,
-	    REF VARCHAR(200),
-	    SCOPE_ID VARCHAR(50),
+        ID                 VARCHAR(64),
+        NAME          VARCHAR(256),
+	    DESCN        VARCHAR(256),
+        STATUS       INTEGER,
+	    REF             VARCHAR(256),
+	    SCOPE_ID   VARCHAR(64),
         CONSTRAINT PK_ORG_COMPANY PRIMARY KEY(ID)
 ) engine=innodb;
 
@@ -18,13 +18,13 @@ CREATE TABLE IB_COMPANY(
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_DEPARTMENT;
 CREATE TABLE IB_DEPARTMENT(
-        ID BIGINT auto_increment,
-        COMPANYID BIGINT,
-        NAME VARCHAR(200),
-	    DESCN VARCHAR(200),
-        STATUS INTEGER,
-	    REF VARCHAR(200),
-	    SCOPE_ID VARCHAR(50),
+        ID                   VARCHAR(64),
+        COMPANYID VARCHAR(64),
+        NAME            VARCHAR(200),
+	    DESCN           VARCHAR(200),
+        STATUS          INTEGER,
+	    REF               VARCHAR(200),
+	    SCOPE_ID     VARCHAR(50),
         CONSTRAINT PK_ORG_DEPARTMENT PRIMARY KEY(ID)
 ) engine=innodb;
 
@@ -33,14 +33,14 @@ CREATE TABLE IB_DEPARTMENT(
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_GROUP;
 CREATE TABLE IB_GROUP(
-        ID BIGINT auto_increment,
-        COMPANYID BIGINT,
-        DEPTID BIGINT,
-        NAME VARCHAR(200),
-	    DESCN VARCHAR(200),
-        STATUS INTEGER,
-	    REF VARCHAR(200),
-	    SCOPE_ID VARCHAR(50),
+        ID                      VARCHAR(64),
+        COMPANYID    VARCHAR(64),
+        DEPTID            VARCHAR(64),
+        NAME              VARCHAR(256),
+	    DESCN             VARCHAR(256),
+        STATUS            INTEGER,
+	    REF                  VARCHAR(256),
+	    SCOPE_ID       VARCHAR(64),
         CONSTRAINT PK_ORG_GROUP PRIMARY KEY(ID)
 ) engine=innodb;
 
@@ -49,10 +49,10 @@ CREATE TABLE IB_GROUP(
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_JOB_TYPE;
 CREATE TABLE IB_JOB_TYPE(
-        ID BIGINT auto_increment,
-	    NAME VARCHAR(50),
-	    PARENT_ID BIGINT,
-	    SCOPE_ID VARCHAR(50),
+        ID                 VARCHAR(64),
+	    NAME          VARCHAR(64),
+	    PARENT_ID VARCHAR(64),
+	    SCOPE_ID    VARCHAR(64),
         CONSTRAINT PK_IB_JOB_TYPE PRIMARY KEY(ID)
         /*,CONSTRAINT FK_IB_JOB_TYPE_PARENT FOREIGN KEY(PARENT_ID) REFERENCES IB_JOB_TYPE(ID) */
 ) engine=innodb;
@@ -62,9 +62,9 @@ CREATE TABLE IB_JOB_TYPE(
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_JOB_TITLE;
 CREATE TABLE IB_JOB_TITLE(
-        ID BIGINT auto_increment,
-	    NAME VARCHAR(50),
-	    SCOPE_ID VARCHAR(50),
+        ID                VARCHAR(64),
+	    NAME         VARCHAR(64),
+	    SCOPE_ID   VARCHAR(64),
         CONSTRAINT PK_IB_JOB_TITLE PRIMARY KEY(ID)
 ) engine=innodb;
 
@@ -73,11 +73,11 @@ CREATE TABLE IB_JOB_TITLE(
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_JOB_INFO;
 CREATE TABLE IB_JOB_INFO(
-        ID BIGINT auto_increment,
-	    NAME VARCHAR(50),
-	    TYPE_ID BIGINT,
-	    TITLE_ID BIGINT,
-	    SCOPE_ID VARCHAR(50),
+        ID               VARCHAR(64),
+	    NAME        VARCHAR(64),
+	    TYPE_ID    VARCHAR(64),
+	    TITLE_ID   VARCHAR(64), 
+	    SCOPE_ID  VARCHAR(64),
         CONSTRAINT PK_IB_JOB_INFO PRIMARY KEY(ID)
         /*,CONSTRAINT FK_IB_JOB_INFO_TYPE FOREIGN KEY(TYPE_ID) REFERENCES IB_JOB_TYPE(ID),
         CONSTRAINT FK_IB_JOB_INFO_TITLE FOREIGN KEY(TITLE_ID) REFERENCES IB_JOB_TITLE(ID) */

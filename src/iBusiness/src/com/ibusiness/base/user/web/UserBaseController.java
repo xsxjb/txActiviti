@@ -3,6 +3,7 @@ package com.ibusiness.base.user.web;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -25,6 +26,7 @@ import com.ibusiness.bridge.user.UserCache;
 import com.ibusiness.bridge.user.UserDTO;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
@@ -63,7 +65,7 @@ public class UserBaseController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         UserRepo userRepo = userRepoDao.findUniqueBy("code", ScopeHolder.getScopeCode());
-        propertyFilters.add(new PropertyFilter("EQL_userRepo.id", Long.toString(userRepo.getId())));
+        propertyFilters.add(new PropertyFilter("EQS_userRepo.id", userRepo.getId()));
         page = userBaseDao.pagedQuery(page, propertyFilters);
         
         model.addAttribute("page", page);
@@ -79,10 +81,10 @@ public class UserBaseController {
      * @return
      */
     @RequestMapping("user-base-input")
-    public String input(@RequestParam(value = "id", required = false) Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         UserBase userBase = null;
 
-        if (id != null) {
+        if (!CommonUtils.isNull(id)) {
             userBase = userBaseDao.get(id);
         } else {
             userBase = new UserBase();
@@ -112,8 +114,7 @@ public class UserBaseController {
      */
     @RequestMapping("user-base-save")
     public String save(@ModelAttribute UserBase userBase, @RequestParam(value = "confirmPassword", required = false)
-    String confirmPassword, @RequestParam("userRepoId") Long userRepoId, @RequestParam("jobId") long jobId,
-    @RequestParam("roleId") Long roleId,
+    String confirmPassword, @RequestParam("userRepoId") String userRepoId, @RequestParam("jobId") String jobId, @RequestParam("roleId") String roleId,
     @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         if (userBase.getPassword() != null) {
@@ -128,9 +129,9 @@ public class UserBaseController {
         }
         // 再进行数据复制
         UserBase dest = null;
-        Long id = userBase.getId();
+        String id = userBase.getId();
 
-        if (id != null) {
+        if (!CommonUtils.isNull(id)) {
             dest = userBaseDao.get(id);
             dest.setStatus(0);
             beanMapper.copy(userBase, dest);
@@ -148,16 +149,18 @@ public class UserBaseController {
             dest.setRoleDef(roleDefDao.get(roleId));
             // 设置默认的css样式
             dest.setCss("Cerulean");
+            // UUID
+            dest.setId(UUID.randomUUID().toString());
             userService.insertUser(dest, userRepoId);
         }
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 
         UserDTO userDto = new UserDTO();
-        userDto.setId(Long.toString(dest.getId()));
+        userDto.setId(dest.getId());
         userDto.setUsername(dest.getUsername());
         userDto.setRef(dest.getRef());
-        userDto.setUserRepoRef(Long.toString(userRepoId));
+        userDto.setUserRepoRef(userRepoId);
         userCache.removeUser(userDto);
 
         return "redirect:/user/user-base-list.do";
@@ -171,18 +174,17 @@ public class UserBaseController {
      * @return
      */
     @RequestMapping("user-base-remove")
-    public String remove(@RequestParam("selectedItem")
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<UserBase> userBases = userBaseDao.findByIds(selectedItem);
 
         for (UserBase userBase : userBases) {
             userService.removeUser(userBase);
 
             UserDTO userDto = new UserDTO();
-            userDto.setId(Long.toString(userBase.getId()));
+            userDto.setId(userBase.getId());
             userDto.setUsername(userBase.getUsername());
             userDto.setRef(userBase.getRef());
-            userDto.setUserRepoRef(Long.toString(userBase.getUserRepo().getId()));
+            userDto.setUserRepoRef(userBase.getUserRepo().getId());
             userCache.removeUser(userDto);
         }
 
@@ -224,7 +226,7 @@ public class UserBaseController {
     @RequestMapping("user-base-checkUsername")
     @ResponseBody
     public boolean checkUsername(@RequestParam("username") String username, 
-            @RequestParam(value = "id", required = false) Long id) throws Exception {
+            @RequestParam(value = "id", required = false) String id) throws Exception {
         String hql = "from UserBase where username=?";
         Object[] params = {
             username };

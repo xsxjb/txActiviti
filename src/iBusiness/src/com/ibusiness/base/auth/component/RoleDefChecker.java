@@ -6,15 +6,19 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Component;
 
 import com.ibusiness.base.auth.entity.RoleDef;
-
+/**
+ * 角色Check
+ * 
+ * @author JiangBo
+ *
+ */
 @Component
 public class RoleDefChecker implements MessageSourceAware {
     private MessageSourceAccessor messages;
 
     public void check(RoleDef roleDef) {
-        if ((roleDef.getId() != null) && (roleDef.getId() == 1)) {
-            throw new CheckRoleException(messages.getMessage(
-                    "auth.superuser.edit", "不允许修改超级管理员角色"));
+        if ((roleDef.getId() != null) && ("1".equals(roleDef.getId()))) {
+            throw new CheckRoleException(messages.getMessage("auth.superuser.edit", "不允许修改超级管理员角色"));
         }
     }
 

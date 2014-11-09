@@ -17,13 +17,13 @@ public class OrgGroup implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
     /** 编号. */
-    private Long id;
+    private String id;
 
     /** 公司编号. */
-    private Long companyid;
+    private String companyid;
     
     /** 部门编号. */
-    private Long deptid;
+    private String deptid;
     /** 小组名称. */
     private String name;
     /** 备注. */
@@ -41,7 +41,7 @@ public class OrgGroup implements java.io.Serializable {
     public OrgGroup() {
     }
 
-    public OrgGroup(Long companyid, Long deptid, String name, String descn, Integer status, String ref,
+    public OrgGroup(String companyid, String deptid, String name, String descn, Integer status, String ref,
             String scopeId) {
         this.companyid = companyid;
         this.deptid = deptid;
@@ -54,9 +54,8 @@ public class OrgGroup implements java.io.Serializable {
 
     /** @return null. */
     @Id
-    @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -64,7 +63,7 @@ public class OrgGroup implements java.io.Serializable {
      * @param id
      *            null.
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -141,28 +140,28 @@ public class OrgGroup implements java.io.Serializable {
     /**
      * @return the companyid
      */
-    public Long getCompanyid() {
+    public String getCompanyid() {
         return companyid;
     }
 
     /**
      * @param companyid the companyid to set
      */
-    public void setCompanyid(Long companyid) {
+    public void setCompanyid(String companyid) {
         this.companyid = companyid;
     }
 
     /**
      * @return the deptid
      */
-    public Long getDeptid() {
+    public String getDeptid() {
         return deptid;
     }
 
     /**
      * @param deptid the deptid to set
      */
-    public void setDeptid(Long deptid) {
+    public void setDeptid(String deptid) {
         this.deptid = deptid;
     }
 }

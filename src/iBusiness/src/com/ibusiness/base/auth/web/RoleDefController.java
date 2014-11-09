@@ -2,6 +2,7 @@ package com.ibusiness.base.auth.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -21,6 +22,7 @@ import com.ibusiness.base.auth.dao.RoleDefDao;
 import com.ibusiness.base.auth.entity.RoleDef;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
@@ -60,8 +62,7 @@ public class RoleDefController {
     }
 
     @RequestMapping("role-def-input")
-    public String input(@RequestParam(value = "id", required = false)
-    Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         if (id != null) {
             RoleDef roleDef = roleDefDao.get(id);
             model.addAttribute("model", roleDef);
@@ -85,18 +86,18 @@ public class RoleDefController {
             roleDefChecker.check(roleDef);
             // after invoke
             RoleDef dest = null;
-            Long id = roleDef.getId();
-            if (id != null) {
+            String id = roleDef.getId();
+            if (!CommonUtils.isNull(id)) {
                 dest = roleDefDao.get(id);
                 roleDef.setPerms(null);
                 beanMapper.copy(roleDef, dest);
+                roleDefDao.save(dest);
             } else {
                 dest = roleDef;
-            }
-            if (id == null) {
                 dest.setScopeId(ScopeHolder.getScopeId());
+                dest.setId(UUID.randomUUID().toString());
+                roleDefDao.saveInsert(dest);
             }
-            roleDefDao.save(dest);
             messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         } catch (CheckRoleException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -107,8 +108,7 @@ public class RoleDefController {
     }
 
     @RequestMapping("role-def-remove")
-    public String remove(@RequestParam("selectedItem")
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         try {
             List<RoleDef> roleDefs = roleDefDao.findByIds(selectedItem);
 
@@ -130,8 +130,7 @@ public class RoleDefController {
     @RequestMapping("role-def-checkName")
     @ResponseBody
     public boolean checkName(@RequestParam("name")
-    String name, @RequestParam(value = "id", required = false)
-    Long id) throws Exception {
+    String name, @RequestParam(value = "id", required = false) String id) throws Exception {
         String hql = "from RoleDef where scopeId=" + ScopeHolder.getScopeId() + " and name=?";
         Object[] params = {
             name };

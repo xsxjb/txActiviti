@@ -2,6 +2,7 @@ package com.ibusiness.base.group.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -16,6 +17,7 @@ import com.ibusiness.base.group.dao.OrgCompanyDao;
 import com.ibusiness.base.group.entity.OrgCompany;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
@@ -44,8 +46,7 @@ public class OrgCompanyController {
     }
 
     @RequestMapping("org-company-input")
-    public String input(@RequestParam(value = "id", required = false)
-    Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         if (id != null) {
             OrgCompany orgCompany = orgCompanyDao.get(id);
             model.addAttribute("model", orgCompany);
@@ -59,20 +60,18 @@ public class OrgCompanyController {
     OrgCompany orgCompany, @RequestParam
     Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) {
         OrgCompany dest = null;
-        Long id = orgCompany.getId();
+        String id = orgCompany.getId();
 
-        if (id != null) {
+        if (!CommonUtils.isNull(id)) {
             dest = orgCompanyDao.get(id);
             beanMapper.copy(orgCompany, dest);
+            orgCompanyDao.save(dest);
         } else {
             dest = orgCompany;
-        }
-
-        if (id == null) {
             dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setId(UUID.randomUUID().toString());
+            orgCompanyDao.saveInsert(dest);
         }
-
-        orgCompanyDao.save(dest);
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 
@@ -80,8 +79,7 @@ public class OrgCompanyController {
     }
 
     @RequestMapping("org-company-remove")
-    public String remove(@RequestParam("selectedItem")
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<OrgCompany> orgCompanies = orgCompanyDao.findByIds(selectedItem);
 
         for (OrgCompany orgCompany : orgCompanies) {

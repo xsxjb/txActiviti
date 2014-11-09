@@ -23,7 +23,7 @@ public class PermType implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
     /** null. */
-    private Long id;
+    private String id;
 
     /** null. */
     private String name;
@@ -58,9 +58,8 @@ public class PermType implements java.io.Serializable {
 
     /** @return null. */
     @Id
-    @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -68,7 +67,7 @@ public class PermType implements java.io.Serializable {
      * @param id
      *            null.
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -2,6 +2,7 @@ package com.ibusiness.base.group.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -16,6 +17,7 @@ import com.ibusiness.base.group.dao.OrgDepartmentDao;
 import com.ibusiness.base.group.entity.OrgDepartment;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
@@ -43,8 +45,7 @@ public class OrgDepartmentController {
     }
 
     @RequestMapping("org-department-input")
-    public String input(@RequestParam(value = "id", required = false)
-    Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         if (id != null) {
             OrgDepartment orgDepartment = orgDepartmentDao.get(id);
             model.addAttribute("model", orgDepartment);
@@ -56,17 +57,15 @@ public class OrgDepartmentController {
     @RequestMapping("org-department-save")
     public String save(@ModelAttribute OrgDepartment orgDepartment, RedirectAttributes redirectAttributes) {
         OrgDepartment dest = null;
-        Long id = orgDepartment.getId();
+        String id = orgDepartment.getId();
 
-        if (id != null) {
+        if (!CommonUtils.isNull(id)) {
             dest = orgDepartmentDao.get(id);
             beanMapper.copy(orgDepartment, dest);
         } else {
             dest = orgDepartment;
-        }
-
-        if (id == null) {
             dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setId(UUID.randomUUID().toString());
         }
 
         orgDepartmentDao.save(dest);
@@ -78,7 +77,7 @@ public class OrgDepartmentController {
 
     @RequestMapping("org-department-remove")
     public String remove(@RequestParam("selectedItem")
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<OrgDepartment> orgDepartments = orgDepartmentDao.findByIds(selectedItem);
 
         for (OrgDepartment orgDepartment : orgDepartments) {

@@ -21,7 +21,7 @@ public class UserService {
     private UserBaseDao userBaseDao;
     private UserRepoDao userRepoDao;
 
-    public void insertUser(UserBase userBase, Long userRepoId) {
+    public void insertUser(UserBase userBase, String userRepoId) {
         // user repo
         userBase.setUserRepo(userRepoDao.get(userRepoId));
 
@@ -30,7 +30,7 @@ public class UserService {
 
     }
 
-    public void updateUser(UserBase userBase, Long userRepoId) {
+    public void updateUser(UserBase userBase, String userRepoId) {
         // user repo
         userBase.setUserRepo(userRepoDao.get(userRepoId));
         userBaseDao.save(userBase);

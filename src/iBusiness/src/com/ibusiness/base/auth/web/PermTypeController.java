@@ -2,6 +2,7 @@ package com.ibusiness.base.auth.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -16,6 +17,7 @@ import com.ibusiness.base.auth.dao.PermTypeDao;
 import com.ibusiness.base.auth.entity.PermType;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
@@ -53,36 +55,32 @@ public class PermTypeController {
     }
 
     @RequestMapping("perm-type-input")
-    public String input(@RequestParam(value = "id", required = false)
-    Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         if (id != null) {
             PermType permType = permTypeDao.get(id);
             model.addAttribute("model", permType);
         }
-
         return "common/auth/perm-type-input.jsp";
     }
 
     @RequestMapping("perm-type-save")
-    public String save(@ModelAttribute
-    PermType permType, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute PermType permType, RedirectAttributes redirectAttributes) {
         // copy
         PermType dest = null;
-        Long id = permType.getId();
+        String id = permType.getId();
 
-        if (id != null) {
+        if (!CommonUtils.isNull(id)) {
             dest = permTypeDao.get(id);
             beanMapper.copy(permType, dest);
+            // save
+            permTypeDao.save(dest);
         } else {
             dest = permType;
-        }
-
-        if (id == null) {
             dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setId(UUID.randomUUID().toString());
+            // save
+            permTypeDao.saveInsert(dest);
         }
-
-        // save
-        permTypeDao.save(dest);
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 
@@ -90,8 +88,7 @@ public class PermTypeController {
     }
 
     @RequestMapping("perm-type-remove")
-    public String remove(@RequestParam("selectedItem")
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<PermType> permTypes = permTypeDao.findByIds(selectedItem);
         permTypeDao.removeAll(permTypes);
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");

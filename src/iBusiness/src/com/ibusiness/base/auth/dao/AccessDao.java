@@ -48,7 +48,7 @@ public class AccessDao extends HibernateEntityDao<Access> {
         Access access;
 
         if (id.length() != 0) {
-            access = this.get(Long.parseLong(id));
+            access = this.get(id);
         } else {
             access = this.findUnique(
                     "from Access where value=? and type=? and scope_id=?",

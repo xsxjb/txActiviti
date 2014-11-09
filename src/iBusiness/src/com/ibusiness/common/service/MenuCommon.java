@@ -84,7 +84,7 @@ public class MenuCommon {
         if(null == menuRoleDefList || menuRoleDefList.size() < 1) {
             MenuRoleDef menuRoleDef = new MenuRoleDef();
             menuRoleDef.setMenuId(menu.getId());
-            menuRoleDef.setRoleDefId(2);// 系统管理角色
+            menuRoleDef.setRoleDefId("2");// 系统管理角色
             getMenuRoleDefDao().saveInsert(menuRoleDef);
         }
         return menu;

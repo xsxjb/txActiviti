@@ -2,6 +2,7 @@ package com.ibusiness.base.group.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -46,8 +47,7 @@ public class JobTypeController {
     }
 
     @RequestMapping("job-type-input")
-    public String input(@RequestParam(value = "id", required = false)
-    Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         if (id != null) {
             JobType jobType = jobTypeDao.get(id);
             model.addAttribute("model", jobType);
@@ -60,29 +60,30 @@ public class JobTypeController {
 
     @RequestMapping("job-type-save")
     public String save(@ModelAttribute
-    JobType jobType, @RequestParam(value = "jobTypeId", required = false)
-    Long jobTypeId, RedirectAttributes redirectAttributes) {
+    JobType jobType, @RequestParam(value = "jobTypeId", required = false) String jobTypeId, RedirectAttributes redirectAttributes) {
         JobType dest = null;
-        Long id = jobType.getId();
+        String id = jobType.getId();
 
         if (id != null) {
             dest = jobTypeDao.get(id);
             beanMapper.copy(jobType, dest);
+            if (jobTypeId != null) {
+                dest.setJobType(jobTypeDao.get(jobTypeId));
+            } else {
+                dest.setJobType(null);
+            }
+            jobTypeDao.save(dest);
         } else {
             dest = jobType;
-        }
-
-        if (jobTypeId != null) {
-            dest.setJobType(jobTypeDao.get(jobTypeId));
-        } else {
-            dest.setJobType(null);
-        }
-
-        if (id == null) {
             dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setId(UUID.randomUUID().toString());
+            if (jobTypeId != null) {
+                dest.setJobType(jobTypeDao.get(jobTypeId));
+            } else {
+                dest.setJobType(null);
+            }
+            jobTypeDao.saveInsert(dest);
         }
-
-        jobTypeDao.save(dest);
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 
@@ -90,8 +91,7 @@ public class JobTypeController {
     }
 
     @RequestMapping("job-type-remove")
-    public String remove(@RequestParam("selectedItem")
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<JobType> jobTypes = jobTypeDao.findByIds(selectedItem);
 
         for (JobType jobType : jobTypes) {

@@ -3,6 +3,7 @@ package com.ibusiness.base.auth.web;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -62,9 +63,8 @@ public class RolePermController {
      */
     @SuppressWarnings("unchecked")
     @RequestMapping("role-perm-save")
-    public String save(@RequestParam("id")
-    Long id, Model model, @RequestParam(value = "selectedItem", required = false)
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    public String save(@RequestParam("id") String id, Model model, @RequestParam(value = "selectedItem", required = false)
+    List<String> selectedItem, RedirectAttributes redirectAttributes) {
         if (selectedItem == null) {
             selectedItem = Collections.emptyList();
         }
@@ -73,12 +73,12 @@ public class RolePermController {
             RoleDef roleDef = roleDefDao.get(id);
             roleDefChecker.check(roleDef);
             // 清空非menu类型的,类型编号!=7
-            List<Perm> permList = permDao.find("from Perm where permType.id != ?", Long.parseLong("7"));
+            List<Perm> permList = permDao.find("from Perm where permType.id != ?", "7");
             for (Perm perm : permList) {
                 roleDef.getPerms().remove(perm);
             }
 
-            for (Long permId : selectedItem) {
+            for (String permId : selectedItem) {
                 Perm perm = permDao.get(permId);
                 roleDef.getPerms().add(perm);
             }
@@ -104,9 +104,9 @@ public class RolePermController {
      */
     @SuppressWarnings("unchecked")
     @RequestMapping("role-perm-input")
-    public String input(@RequestParam("id") Long id, Model model) {
+    public String input(@RequestParam("id") String id, Model model) {
         RoleDef roleDef = roleDefDao.get(id);
-        List<Long> selectedItem = new ArrayList<Long>();
+        List<String> selectedItem = new ArrayList<String>();
 
         for (Perm perm : roleDef.getPerms()) {
             selectedItem.add(perm.getId());
@@ -130,7 +130,7 @@ public class RolePermController {
      */
     @SuppressWarnings("unchecked")
     @RequestMapping("role-menu-input")
-    public String menuinput(@RequestParam("id") Long id, Model model) {
+    public String menuinput(@RequestParam("id") String id, Model model) {
         RoleDef roleDef = roleDefDao.get(id);
         List<String> selectedItem = new ArrayList<String>();
         for (Menu menu : roleDef.getMenus()) {
@@ -154,8 +154,7 @@ public class RolePermController {
      */
     @SuppressWarnings("unchecked")
     @RequestMapping("role-menu-save")
-    public String menuSave(@RequestParam("id")
-    Long id, Model model, @RequestParam(value = "selectedItem", required = false)
+    public String menuSave(@RequestParam("id") String id, Model model, @RequestParam(value = "selectedItem", required = false)
     List<String> selectedItem, RedirectAttributes redirectAttributes) {
         if (selectedItem == null) {
             selectedItem = Collections.emptyList();
@@ -167,7 +166,7 @@ public class RolePermController {
             // 只清空menu类型
             roleDef.getMenus().clear();
             // 清空menu类型的,类型编号=7
-            List<Perm> permList = permDao.find("from Perm where permType.id = ?", Long.parseLong("7"));
+            List<Perm> permList = permDao.find("from Perm where permType.id = ?", "7");
             for (Perm perm : permList) {
                 roleDef.getPerms().remove(perm);
             }
@@ -175,14 +174,14 @@ public class RolePermController {
             for (String menuId : selectedItem) {
                 Menu menu = menuDao.get(menuId);
                 roleDef.getMenus().add(menu);
-                List<Perm> permAddList = permDao.find("from Perm where permType.id = 7 AND code=?", menuId);
+                List<Perm> permAddList = permDao.find("from Perm where permType.id = '7' AND code=?", menuId);
                 if (null!=permAddList && permAddList.size() > 0) {
                     roleDef.getPerms().add(permAddList.get(0));
                 }
                 // TODO 保存菜单关联权限
 //                saveMenuPerm(menu);
             }
-            roleDefDao.save(roleDef);
+            roleDefDao.saveInsert(roleDef);
             messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         } catch (CheckRoleException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -209,6 +208,7 @@ public class RolePermController {
         if (accessList != null && accessList.size() > 0) {
             dest = accessList.get(0);
         } else {
+            dest.setId(UUID.randomUUID().toString());
             dest.setScopeId(ScopeHolder.getScopeId());
             dest.setMenuId(menu.getId());
         }
@@ -230,7 +230,7 @@ public class RolePermController {
             // 新建
             perm.setCode(permCode);
             perm.setName(menu.getMenuName());
-            perm.setPermType(permTypeDao.get(Long.parseLong("7")));
+            perm.setPermType(permTypeDao.get("7"));
             // 优先级
             perm.setScopeId("1");
         }

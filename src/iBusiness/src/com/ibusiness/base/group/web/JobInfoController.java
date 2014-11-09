@@ -2,6 +2,7 @@ package com.ibusiness.base.group.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -58,8 +59,7 @@ public class JobInfoController {
     }
 
     @RequestMapping("job-info-input")
-    public String input(@RequestParam(value = "id", required = false)
-    Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         if (id != null) {
             JobInfo jobInfo = jobInfoDao.get(id);
             model.addAttribute("model", jobInfo);
@@ -72,20 +72,18 @@ public class JobInfoController {
     }
 
     @RequestMapping("job-info-save")
-    public String save(@ModelAttribute JobInfo jobInfo, @RequestParam("jobTitleId") long jobTitleId, 
-            @RequestParam("jobTypeId") long jobTypeId, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute JobInfo jobInfo, @RequestParam("jobTitleId") String jobTitleId, 
+            @RequestParam("jobTypeId") String jobTypeId, RedirectAttributes redirectAttributes) {
         JobInfo dest = null;
-        Long id = jobInfo.getId();
+        String id = jobInfo.getId();
 
         if (id != null) {
             dest = jobInfoDao.get(id);
             beanMapper.copy(jobInfo, dest);
         } else {
             dest = jobInfo;
-        }
-
-        if (id == null) {
             dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setId(UUID.randomUUID().toString());
         }
 
         dest.setJobTitle(jobTitleDao.get(jobTitleId));
@@ -100,7 +98,7 @@ public class JobInfoController {
 
     @RequestMapping("job-info-remove")
     public String remove(@RequestParam("selectedItem")
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<JobInfo> jobInfos = jobInfoDao.findByIds(selectedItem);
 
         for (JobInfo jobInfo : jobInfos) {

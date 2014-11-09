@@ -2,6 +2,7 @@ package com.ibusiness.base.group.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -16,6 +17,7 @@ import com.ibusiness.base.group.dao.JobTitleDao;
 import com.ibusiness.base.group.entity.JobTitle;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
@@ -46,13 +48,11 @@ public class JobTitleController {
     }
 
     @RequestMapping("job-title-input")
-    public String input(@RequestParam(value = "id", required = false)
-    Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         if (id != null) {
             JobTitle jobTitle = jobTitleDao.get(id);
             model.addAttribute("model", jobTitle);
         }
-
         return "common/group/job-title-input.jsp";
     }
 
@@ -60,17 +60,15 @@ public class JobTitleController {
     public String save(@ModelAttribute
     JobTitle jobTitle, RedirectAttributes redirectAttributes) {
         JobTitle dest = null;
-        Long id = jobTitle.getId();
+        String id = jobTitle.getId();
 
-        if (id != null) {
+        if (!CommonUtils.isNull(id)) {
             dest = jobTitleDao.get(id);
             beanMapper.copy(jobTitle, dest);
         } else {
             dest = jobTitle;
-        }
-
-        if (id == null) {
             dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setId(UUID.randomUUID().toString());
         }
 
         jobTitleDao.save(dest);
@@ -81,8 +79,7 @@ public class JobTitleController {
     }
 
     @RequestMapping("job-title-remove")
-    public String remove(@RequestParam("selectedItem")
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<JobTitle> jobTitles = jobTitleDao.findByIds(selectedItem);
 
         for (JobTitle jobTitle : jobTitles) {

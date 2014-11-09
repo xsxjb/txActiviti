@@ -20,7 +20,7 @@ public class Access implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 
     /** null. */
-    private Long id;
+    private String id;
 
     /** null. */
     private Perm perm;
@@ -60,7 +60,7 @@ public class Access implements java.io.Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -68,7 +68,7 @@ public class Access implements java.io.Serializable {
      * @param id
      *            null.
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -17,7 +17,7 @@ public class MenuRoleDef implements java.io.Serializable {
      */
     private static final long serialVersionUID = 1L;
     private String menuId;//菜单编号
-	private Integer roleDefId;//角色模板编号
+	private String roleDefId;//角色模板编号
     /**
      * @return the menuId
      */
@@ -37,13 +37,13 @@ public class MenuRoleDef implements java.io.Serializable {
      */
     @Id
     @Column(name = "ROLE_DEF_ID")
-    public Integer getRoleDefId() {
+    public String getRoleDefId() {
         return roleDefId;
     }
     /**
      * @param roleDefId the roleDefId to set
      */
-    public void setRoleDefId(Integer roleDefId) {
+    public void setRoleDefId(String roleDefId) {
         this.roleDefId = roleDefId;
     }
 }

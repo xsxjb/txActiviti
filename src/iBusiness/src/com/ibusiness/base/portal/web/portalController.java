@@ -40,7 +40,7 @@ public class portalController {
     public String list(Model model, HttpSession session) {
         // 当前用户ID
         String userId = SpringSecurityUtils.getCurrentUserId();
-        UserBase userBase = userBaseDao.get(Long.parseLong(userId));
+        UserBase userBase = userBaseDao.get(userId);
         // 设置当前用户CSS样式
         session.setAttribute("userCSS",userBase.getCss());
         // 设置菜单
@@ -96,13 +96,13 @@ public class portalController {
     private List<Menu> createMenu(String userId) {
         // 菜单设置
         String hql = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='1' AND ub.id=? ORDER BY m.menuOrder";
-        List<Menu> menus = menuDao.find(hql, Long.parseLong(userId));
+        List<Menu> menus = menuDao.find(hql, userId);
         
         String hql2 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='2' AND ub.id=? ORDER BY m.menuOrder";
-        List<Menu> menus2 = menuDao.find(hql2, Long.parseLong(userId));
+        List<Menu> menus2 = menuDao.find(hql2, userId);
         
         String hql3 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='3' AND ub.id=? ORDER BY m.menuOrder";
-        List<Menu> menus3 = menuDao.find(hql3, Long.parseLong(userId));
+        List<Menu> menus3 = menuDao.find(hql3, userId);
         for (Menu menu1 : menus) {
             menu1.getChiledItems().clear();
             for (Menu menu2 : menus2) {

@@ -2,6 +2,7 @@ package com.ibusiness.base.auth.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -18,6 +19,7 @@ import com.ibusiness.base.auth.entity.Perm;
 import com.ibusiness.base.auth.entity.PermType;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
@@ -50,7 +52,7 @@ public class PermController {
     Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
-        propertyFilters.add(new PropertyFilter("NEQL_permType.id", "7"));
+        propertyFilters.add(new PropertyFilter("NEQS_permType.id", "7"));
         page = permDao.pagedQuery(page, propertyFilters);
 
         model.addAttribute("page", page);
@@ -66,7 +68,7 @@ public class PermController {
      * @return
      */
     @RequestMapping("perm-input")
-    public String input(@RequestParam(value = "id", required = false) Long id, Model model) {
+    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         if (id != null) {
             Perm perm = permDao.get(id);
             model.addAttribute("model", perm);
@@ -84,23 +86,23 @@ public class PermController {
      * @return
      */
     @RequestMapping("perm-save")
-    public String save(@ModelAttribute Perm perm, @RequestParam("permTypeId") Long permTypeId,
+    public String save(@ModelAttribute Perm perm, @RequestParam("permTypeId") String permTypeId,
             RedirectAttributes redirectAttributes) {
         Perm dest = null;
-        Long id = perm.getId();
-
-        if (id != null) {
+        String id = perm.getId();
+        PermType permType = permTypeDao.get(permTypeId);
+        if (!CommonUtils.isNull(id)) {
             dest = permDao.get(id);
             beanMapper.copy(perm, dest);
+            dest.setPermType(permType);
+            permDao.save(dest);
         } else {
             dest = perm;
-        }
-
-        if (id == null) {
             dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setId(UUID.randomUUID().toString());
+            dest.setPermType(permType);
+            permDao.saveInsert(dest);
         }
-
-        permDao.save(dest);
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 
@@ -114,8 +116,7 @@ public class PermController {
      * @return
      */
     @RequestMapping("perm-remove")
-    public String remove(@RequestParam("selectedItem")
-    List<Long> selectedItem, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<Perm> perms = permDao.findByIds(selectedItem);
         permDao.removeAll(perms);
         messageHelper.addFlashMessage(redirectAttributes, "core.delete.save", "删除成功");

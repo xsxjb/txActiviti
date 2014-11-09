@@ -28,7 +28,7 @@ public class UicssController {
     public String save(@RequestParam("userCSS") String userCSS, HttpSession session) {
 
         String userId = SpringSecurityUtils.getCurrentUserId();
-        UserBase userBase = userBaseDao.get(Long.parseLong(userId));
+        UserBase userBase = userBaseDao.get(userId);
         userBase.setCss(userCSS);
         userBaseDao.save(userBase);
         // 设置request

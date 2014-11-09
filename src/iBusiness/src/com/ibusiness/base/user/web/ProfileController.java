@@ -57,9 +57,9 @@ public class ProfileController {
      * @throws Exception
      */
     @RequestMapping("profile-save")
-    public String save(@ModelAttribute UserBase userBase, @RequestParam("userRepoId") Long userRepoId, 
+    public String save(@ModelAttribute UserBase userBase, @RequestParam("userRepoId") String userRepoId, 
             @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
-        Long id = userBase.getId();
+        String id = userBase.getId();
         // 再进行数据复制
         UserBase dest = null;
         if (id != null) {
