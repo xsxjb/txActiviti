@@ -63,18 +63,14 @@
 				       <input type="hidden" name="nodename" value="${model.nodename}">
 				       <input type="hidden" name="doneflag" value="${model.doneflag}">
 				   </c:if>
-				   <div class="control-group">
-					      <div class="col-lg-6">
-						      <label class="control-label" for="code-remark">备注:</label>
-							  <input id="code-remark" type="text" name="remark" value="${model.remark}"  class="text required" >
-						  </div>
-					</div>
-				   <div class="control-group">
-					      <div class="col-lg-6">
-						      <label class="control-label" for="code-tasktitle">流程实例标题:</label>
-							  <input id="code-tasktitle" type="text" name="tasktitle" value="${model.tasktitle}"  class="text required" >
-						  </div>
-					</div>
+					       <!-- 是否显示 -->
+						   <div class="control-group">
+							      <div class="col-lg-6">
+								      <label class="control-label" for="code-remark">备注:</label>
+								      <!-- 是否可编辑 -->
+		                                  <input id="code-remark" type="text" name="remark" value="${model.remark}"  class="text required" >
+								  </div>
+							</div>
 				</form>
 		</div>
         </div> 
@@ -112,7 +108,7 @@
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 									            <td>${item.remark}</td>
 								        <td>
-								          <a href="permission-sub-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+								          <a href="permission_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 								        </td>
 								  </tr>
 						      </c:forEach>

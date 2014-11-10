@@ -35,12 +35,27 @@
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-name">姓名:</label>
                               <!-- 是否可编辑 -->
+                                       <!-- 编辑类型     下拉  -->
+                                      <div class="col-lg-3">
+										  <select id="code-name" name="name" class="form-control">
+										        <option value="" >请选择</option>
+											  <c:forEach items="${nameItems}" var="item">
+											    <option value="${item.key}"  >${item.value}</option>
+											  </c:forEach>
+										  </select>
+								      </div>
                           </div>
                       <!-- 是否显示 -->
+                      <tags:hasPerm value="userstatus">
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-remark">备注:</label>
                               <!-- 是否可编辑 -->
+                                      <!-- 编辑类型     多行 -->
+                                      <div class="col-lg-6">
+                                          <textarea class="form-control" id="code-remark" name="remark" rows="1">${model.remark}</textarea>
+                                      </div>
                           </div>
+                          </tags:hasPerm>
                   
                   <div class="form-group">
                       <button id="submitButton" class="btn a-submit"><spring:message code='core.input.save' text='保存'/></button>
