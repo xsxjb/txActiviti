@@ -182,7 +182,7 @@ public class CodeGenerateOneToMany implements ICallBack {
         Map<String, ConfFormTableColumn> formTableColumnMap = CommonBusiness.getInstance().getFormTableColumnMap(tableName, formName);
         List<Columnt> subColumlist = new ArrayList<Columnt>();
         for (ConfTableColumns confTableColumns : subTableColumnsList) {
-            // 表卖的字段不予设置
+            // 表中埋的字段不予设置
             if (TableCommonUtil.getReservedColumnsMap().containsKey(confTableColumns.getColumnValue())) {
                 continue;
             }

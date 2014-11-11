@@ -150,4 +150,16 @@ public class CommonUtils {
         jsonConfig.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor(datePattern));
         return jsonConfig;
     }
+    /**
+     * @return the ymdhms
+     */
+    public SimpleDateFormat getYmdhms() {
+        return ymdhms;
+    }
+    /**
+     * @param ymdhms the ymdhms to set
+     */
+    public void setYmdhms(SimpleDateFormat ymdhms) {
+        this.ymdhms = ymdhms;
+    }
 }

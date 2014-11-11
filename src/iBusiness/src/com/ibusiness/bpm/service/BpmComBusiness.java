@@ -150,7 +150,7 @@ public class BpmComBusiness {
      * @param xml
      * @param xmlName
      */
-    public void deployFlow(String xml, String xmlName) {
+    public Deployment deployFlow(String xml, String xmlName) {
         ProcessEngine processEngine = getProcessEngine();
         // Get Activiti services
         RepositoryService repositoryService = processEngine.getRepositoryService();
@@ -164,9 +164,12 @@ public class BpmComBusiness {
                 // 执行命令
                 syncProcessDefinition(processDefinition.getId());
             }
+            return deployment;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            return null;
         }
+        
     }
     /**
      * 执行一个命令--创建流程用数据

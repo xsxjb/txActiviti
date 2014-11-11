@@ -8,6 +8,10 @@ import javax.annotation.Resource;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ibusiness.bpm.dao.BpmProcessDao;
+import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmProcess;
+import com.ibusiness.bpm.entity.BpmProcessVersion;
+import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.flowchart.entity.ConfFlowChart;
 import com.ibusiness.flowchart.service.FlowChartService;
@@ -32,6 +39,8 @@ public class FlowChartController {
 
     private FlowChartService flowChartService;
     private BpmProcessDao bpmProcessDao;
+    private BpmProcessVersionDao bpmProcessVersionDao;
+    private ProcessEngine processEngine;
     
     /**
      * 查询
@@ -92,11 +101,60 @@ public class FlowChartController {
     public String saveFlowChart(@RequestParam(value = "contexts") String contexts, @RequestParam(value = "flowId") String flowId) {
         // 保存在线画图信息流程图数据
         saveConfFlowChart(contexts, flowId);
-        // 
-        // 保存修改流程相关BPMN.XML信息 TODO
-//        saveBpmnXmlInfo();
+        
+        // 保存修改流程相关BPMN.XML信息
+        saveBpmnXmlInfo(flowId);
         
         return "/ibusiness/flowchart/draw.jsp";
+    }
+
+    /**
+     * 保存修改流程相关BPMN XML信息
+     */
+    @SuppressWarnings("unchecked")
+    private void saveBpmnXmlInfo(String flowId) {
+        BpmProcess entity = bpmProcessDao.get(flowId);
+        // 发布流程  --- 根据XML信息和流程名
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
+        // 创建一个BPMN XML数据
+        String flowchartSql = "from ConfFlowChart where flowId=?";
+        List<ConfFlowChart> confFlowCharts = flowChartService.find(flowchartSql, entity.getId());
+        
+        // 
+        // 删除部署到activiti中的流程定义
+        // 根据流程版本编号 取得 流程编号
+        if (!CommonUtils.isNull(entity.getVersionId())) {
+            BpmProcessVersion bpmProcessVersion = bpmProcessVersionDao.get(entity.getVersionId());
+            // 
+            if (null != bpmProcessVersion) {
+                List<ProcessDefinition> processDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery()
+                        .processDefinitionKey(bpmProcessVersion.getBpmProsessKey()).list();
+                if (null != processDefinitions) {
+                    for (ProcessDefinition processDefinition : processDefinitions) {
+                        // 删除发布信息
+                        new BpmComBusiness().deleteDeployment(processDefinition.getDeploymentId());
+                    }
+                }
+            }
+        }
+        
+        // 
+        String xmlStr = bpmComBusiness.createBpmnXML(entity, confFlowCharts);
+        // 发布
+        Deployment deployment = bpmComBusiness.deployFlow(xmlStr, entity.getFlowName());
+        // 根据deployment取得
+        RepositoryService repositoryService = processEngine.getRepositoryService();
+        // 
+        String bpmProsessId = null;
+        for (ProcessDefinition processDefinition : repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list()) {
+            // 执行命令
+            bpmProsessId = processDefinition.getId();
+            break;
+        }
+        // 
+        BpmProcessVersion bpmProcessVersion = bpmProcessVersionDao.get(entity.getVersionId());
+        bpmProcessVersion.setBpmProsessId(bpmProsessId);
+        bpmProcessVersionDao.save(bpmProcessVersion);
     }
 
     /**
@@ -165,5 +223,13 @@ public class FlowChartController {
     @Resource
     public void setBpmProcessDao(BpmProcessDao bpmProcessDao) {
         this.bpmProcessDao = bpmProcessDao;
+    }
+    @Resource
+    public void setBpmProcessVersionDao(BpmProcessVersionDao bpmProcessVersionDao) {
+        this.bpmProcessVersionDao = bpmProcessVersionDao;
+    }
+    @Resource
+    public void setProcessEngine(ProcessEngine processEngine) {
+        this.processEngine = processEngine;
     }
 }

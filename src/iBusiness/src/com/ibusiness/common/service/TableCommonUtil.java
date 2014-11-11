@@ -3,6 +3,7 @@ package com.ibusiness.common.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ibusiness.common.config.ConfigProperties;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 
 /**
@@ -33,19 +34,19 @@ public class TableCommonUtil {
         // 整体的预留字段
         reservedColumnsMap.put("ID", "VARCHAR(64) NOT NULL");
         reservedColumnsMap.put("EXECUTIONID", "VARCHAR(64)");
-        reservedColumnsMap.put("CREATEDATEBPM", "DATE");
+        reservedColumnsMap.put("CREATEDATEBPM", ConfigProperties.DATATYPE_DATE);
         reservedColumnsMap.put("NODENAME", "VARCHAR(128)");
         reservedColumnsMap.put("ASSIGNEEUSER", "VARCHAR(128)");
-        reservedColumnsMap.put("DONEFLAG", "INT DEFAULT 0");
+        reservedColumnsMap.put("DONEFLAG", "INTEGER DEFAULT 0");
         reservedColumnsMap.put("PARENTID", "VARCHAR(64)");
         reservedColumnsMap.put("TASKTITLE", "VARCHAR(256)");
         // 流程主表的预留字段
         bpmMColumnsMap.put("ID", createTableColumn("ID","UUID主键",91,"VARCHAR","64","否"));
         bpmMColumnsMap.put("EXECUTIONID", createTableColumn("EXECUTIONID","流程执行实例ID",92,"VARCHAR","64","是"));
-        bpmMColumnsMap.put("CREATEDATEBPM", createTableColumn("CREATEDATEBPM","流程创建时间",93,"DATE","","是"));
+        bpmMColumnsMap.put("CREATEDATEBPM", createTableColumn("CREATEDATEBPM","流程创建时间",93,ConfigProperties.DATATYPE_DATE,"","是"));
         bpmMColumnsMap.put("NODENAME", createTableColumn("NODENAME","流程节点名",94,"VARCHAR","128","是"));
         bpmMColumnsMap.put("ASSIGNEEUSER", createTableColumn("ASSIGNEEUSER","负责人",95,"VARCHAR","64","是"));
-        bpmMColumnsMap.put("DONEFLAG", createTableColumn("DONEFLAG","流程结束标记",96,"INT","4","是"));
+        bpmMColumnsMap.put("DONEFLAG", createTableColumn("DONEFLAG","流程结束标记",96,"INTEGER","4","是"));
         bpmMColumnsMap.put("TASKTITLE", createTableColumn("TASKTITLE","流程实例标题",97,"VARCHAR","256","是"));
         // 流程子表的预留字段
         bpmSColumnsMap.put("ID", createTableColumn("ID","UUID主键",91,"VARCHAR","64","否"));
