@@ -1,17 +1,16 @@
 
-
 /*==============================================================*/
-/* doc info   */
+/* doc info 文档表  */
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_DOC_INFO;
 CREATE TABLE IB_DOC_INFO(
-        ID BIGINT auto_increment,
-	NAME VARCHAR(200),
-	PATH VARCHAR(200),
-	TYPE INTEGER,
-	CREATE_TIME TIMESTAMP,
-	USER_ID BIGINT,
-	DESCN VARCHAR(255),
-        CONSTRAINT PK_DOC_INFO PRIMARY KEY(ID)
+        ID                        VARCHAR(64),
+		NAME                 VARCHAR(256),
+		PATH                   VARCHAR(256),
+		DOCTYPE           INTEGER,
+		CREATE_TIME   DATETIME,
+		USER_ID            VARCHAR(64),
+		DESCN              VARCHAR(255),
+        CONSTRAINT PK_IB_DOC_INFO PRIMARY KEY(ID)
 ) engine=innodb;
 

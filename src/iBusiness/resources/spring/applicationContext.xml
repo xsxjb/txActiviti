@@ -30,7 +30,13 @@
 	<bean id="messageHelper" class="com.ibusiness.core.spring.MessageHelper"/>
     <!-- 在ApplicationContext环境外获取bean的工具类 -->
 	<bean id="applicationContextHelper" class="com.ibusiness.core.spring.ApplicationContextHelper"/>
-
+	
+	<!-- doc文件上传用 -->
+    <bean id="storeConnector" class="com.ibusiness.doc.store.FileStoreConnector">
+        <!-- 文件上传后保存的地址 -->
+		<property name="baseDir" value="${store.baseDir}"/>
+	</bean>
+	
 	<!-- 数据库连接 -->
 	<import resource="applicationContext-jdbc.xml"/>
 	<!-- springMVC相关的配置 -->
