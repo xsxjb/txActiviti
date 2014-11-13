@@ -179,7 +179,7 @@ public class BpmComBusiness {
         getProcessEngine().getManagementService().executeCommand(new SyncProcessCmd(processDefinitionId));
     }
     /**
-     * 创建一个BPMN XML数据 TODO
+     * 创建一个BPMN XML数据
      */
     public String createBpmnXML(BpmProcess bpmProcess, List<ConfFlowChart> confFlowCharts) {
         // 流程信息
@@ -229,7 +229,8 @@ public class BpmComBusiness {
         JSONObject flowChartObj= JSONObject.fromObject(nodeBean.getContext());
         // 开始节点
         if ("StartNode".equals(flowChartObj.get("type"))) {
-            // activiti:assignee=\"${assignee}\" 设置下一节点用户
+            // TODO
+            // activiti:assignee=\"${assignee}\" 设置下一节点用户 
             xml = xml + "<startEvent id=\"sid-"+flowChartObj.get("id")+"\" activiti:assignee=\"${assignee}\" ></startEvent>";
             String nextNodesStr = flowChartObj.get("afterLineIds").toString();
             String[] nextNodes = nextNodesStr.split(",");

@@ -37,7 +37,7 @@
 				  <div class="form-group">
 				      <label class="col-lg-2 control-label" for="table-columnType">字段类型:</label>
 				      <div class="col-lg-3">
-							 <select id="table-columnType" name="columnType" >
+							 <select class="form-control"  id="table-columnType" name="columnType" >
 							      <option ${beanInfo.columnType == "VARCHAR" ? 'selected' : ''} >VARCHAR</option>
 							      <option ${beanInfo.columnType == "INT" ? 'selected' : ''} >INT</option>
 							      <option ${beanInfo.columnType == "DOUBLE" ? 'selected' : ''} >DOUBLE</option>
@@ -52,7 +52,7 @@
 				  <div class="form-group">
 				    <label class="col-lg-2 control-label" for="table-isNull">允许空</label>
 					<div class="col-lg-3">
-						<select id="table-isNull" name="isNull"  >
+						<select class="form-control"  id="table-isNull" name="isNull"  >
 						      <option ${beanInfo.isNull == "是" ? 'selected' : ''}  value="是">是</option>
 						      <option ${beanInfo.isNull == "否" ? 'selected' : ''}  value="否">否</option>
 						  </select>

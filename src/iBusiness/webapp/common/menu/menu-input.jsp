@@ -59,7 +59,7 @@
 					      <input id="menu_iconUrl" type="text" name="iconUrl" value="${model.iconUrl}"  class="form-control" >
 					  </div>
 				  </div>
-				  <div class="control-group">
+				  <div class="form-group">
 				    <div class="controls col-lg-10 col-lg-offset-2">
 				      <button id="submitButton" class=" btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					  &nbsp;

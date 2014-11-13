@@ -266,7 +266,7 @@
 	        	            <div class="panel-heading"><h4 class="panel-title">代码生成操作</h4></div>
 					        <div class="panel-body">
 						        <!-- =============== 按钮 ================== -->
-							     <div class="control-group">
+							     <div class="form-group">
 									  <div class="controls">
 									      <button id="submitButton" class="btn btn-default btn-sm  a-submit"><spring:message code='core.input.save' text='生成'/></button>
 										  &nbsp;

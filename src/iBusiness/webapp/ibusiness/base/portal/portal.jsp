@@ -21,7 +21,7 @@
     <style>
 		.imageBoxItem{position: relative;}
 		/**background-color:red; */
-		.diagnoseItem{position: absolute;display: block;width: 11px;height: 11px;right:-20px;top:0px;color:#fff;}
+		.diagnoseItem{position: absolute;display: block;width: 11px;height: 11px;right:-30px;top:0px;color:#fff;}
 	</style>
   </head>
 

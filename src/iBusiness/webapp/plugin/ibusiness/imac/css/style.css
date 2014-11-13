@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document Download by http://www.veryhuo.com*/
 body{
-	background:url(../mac/galaxy.jpg);
+/*	 background:url(../mac/galaxy.jpg); */
 	background-position:center top;
 	background-repeat:no-repeat;
 	margin:0px;
@@ -45,7 +45,7 @@ body{
 }
 
 .icon{
-	background:url(mac/shadow.png) no-repeat left center;
+	background:url(../img/shadow.png) no-repeat left center;
 	float:left;
 	width:60px;
 	height:80px;

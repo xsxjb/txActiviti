@@ -53,7 +53,7 @@
 				    <input type="text" id="user_username" name="filter_LIKES_username" value="${param.filter_LIKES_username}">
 				    
 				    <label for="user_enabled"><spring:message code='user.user.list.search.status' text='状态'/>:</label>
-				    <select id="user_enabled" name="filter_EQI_status" class="">
+				    <select class="form-control"  id="user_enabled" name="filter_EQI_status" >
 					  <option value=""></option>
 					  <option value="1" ${param.filter_EQI_status == 1 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.true' text='启用'/></option>
 					  <option value="0" ${param.filter_EQI_status == 0 ? 'selected' : ''}><spring:message code='user.user.list.search.enabled.false' text='禁用'/></option>

@@ -33,19 +33,19 @@ $(function() {
 				  <c:if test="${model != null}">
 				  <input id="msg-info_id" type="hidden" name="id" value="${model.id}">
 				  </c:if>
-				  <div class="control-group">
+				  <div class="form-group">
 				    <label class="control-label" for="msg-info_address">文件</label>
 					<div class="controls">
 					  <input id="msg-info_address" type="file" name="attachment" value="" size="40" class="text">
 				    </div>
 				  </div>
-				  <div class="control-group">
+				  <div class="form-group">
 				    <label class="control-label" for="docInfo_descn">备注</label>
 					<div class="controls">
 					  <input id="docInfo_descn" type="text" name="descn" value="${model.descn}" size="40" class="text">
 				    </div>
 				  </div>
-				  <div class="control-group">
+				  <div class="form-group">
 				    <div class="controls">
 				      <button type="submit" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					  &nbsp;

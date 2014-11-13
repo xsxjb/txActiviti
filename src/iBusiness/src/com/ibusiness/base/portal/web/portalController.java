@@ -78,6 +78,10 @@ public class portalController {
                             List<Task> tasks = bpmComBusiness.listPersonalTasks(SpringSecurityUtils.getCurrentUserId());
                             menu3.setDataCount(String.valueOf(tasks.size()));
                         }
+                        if ("公告查看".equals(menu3.getMenuName())) {
+                            // 如果有新的公告显示new
+                            menu3.setDataCount("NEW~");
+                        }
                         deskmenus.add(menu3);
                     }
                 }

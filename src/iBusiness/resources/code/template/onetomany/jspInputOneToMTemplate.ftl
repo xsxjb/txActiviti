@@ -57,7 +57,7 @@
 				   <#list columns as po>
 				       <#if po.fcDisplay="1">
 				       <!-- 是否显示 -->
-						   <div class="control-group">
+						   <div class="form-group">
 							      <div class="col-lg-6">
 								      <label class="control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
 								      <!-- 是否可编辑 -->

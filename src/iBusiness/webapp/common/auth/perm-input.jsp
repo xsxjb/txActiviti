@@ -44,13 +44,13 @@ $(function() {
 				  </p>
 				  <p>
 					  <label class="control-label" for="access_perm">权限分类:</label>
-					  <select id="access_perm" name="permTypeId">
+					  <select class="form-control" id="access_perm" name="permTypeId">
 					    <c:forEach items="${permTypes}" var="item">
 					    <option value="${item.id}" ${model.permType.id==item.id ? 'selected' : ''}>${item.name}</option>
 						</c:forEach>
 					  </select>
 				  </p>
-				  <div class="control-group">
+				  <div class="form-group">
 				    <div class="controls">
 				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					  &nbsp;

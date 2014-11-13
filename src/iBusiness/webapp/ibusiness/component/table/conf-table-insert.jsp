@@ -65,14 +65,14 @@
 						   </select>
 				    </div>
 				  </div>
-				  <div class="control-group">
+				  <div class="form-group">
 				      <label class="col-lg-2 control-label" for="table-mainTable">子表对应主表:</label>
 					  <div class="controls">
 					      <input id="table-mainTable" type="text" name="mainTable" value=""  class="text"  >
 				      </div>
 				  </div>
 				  
-				  <div class="control-group">
+				  <div class="form-group">
 				    <div class="controls">
 				      <button id="submitButton" class="btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
 				      <button type="button" onclick="history.back();" class="btn btn-default btn-sm a-cancel"><spring:message code='core.input.back' text='返回'/></button>

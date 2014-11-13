@@ -107,6 +107,12 @@ public class DocInfoController {
         return "redirect:/doc/doc-info-list.do";
     }
 
+    /**
+     * 下载文件
+     * @param id
+     * @param response
+     * @throws Exception
+     */
     @RequestMapping("doc-info-download")
     public void download(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
         DocInfo docInfo = docInfoService.get(id);
@@ -122,13 +128,17 @@ public class DocInfoController {
         }
     }
 
+    /**
+     * 删除文件
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
     @RequestMapping("doc-info-remove")
-    public String remove(@RequestParam("selectedItem") List<Long> selectedItem,
-            RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<DocInfo> docInfos = docInfoService.findByIds(selectedItem);
         docInfoService.removeAll(docInfos);
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-
         return "redirect:/doc/doc-info-list.do";
     }
 

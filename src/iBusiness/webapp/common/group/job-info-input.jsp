@@ -38,7 +38,7 @@ $(function() {
 			  </c:if>
 			  <p>
 			    <label class="control-label" for="job_title">职务名称:</label>
-				  <select id="job_title" name="jobTitleId">
+				  <select class="form-control" class="form-control" id="job_title" name="jobTitleId">
 				  <c:forEach items="${jobTitles}" var="item">
 				    <option value="${item.id}">${item.name}</option>
 				  </c:forEach>

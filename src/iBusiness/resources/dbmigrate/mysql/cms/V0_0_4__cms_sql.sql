@@ -1,85 +1,62 @@
 
 /*==============================================================*/
-/* cms catalog   */
+/* cms 公告栏目表   */
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_CMS_CATALOG;
 CREATE TABLE IB_CMS_CATALOG(
-        ID BIGINT auto_increment,
-	NAME VARCHAR(50),
-	CODE VARCHAR(200),
-	LOGO VARCHAR(200),
-	TYPE INT,
-	TEMPLATE_INDEX VARCHAR(200),
-	TEMPLATE_LIST VARCHAR(200),
-	TEMPLATE_DETAIL VARCHAR(200),
-	KEYWORD VARCHAR(200),
-	DESCRIPTION VARCHAR(200),
-	PARENT_ID BIGINT,
+        ID                                VARCHAR(64),
+		NAME                          VARCHAR(64),
+		CODE                           VARCHAR(256),
+		LOGO                           VARCHAR(256),
+		CATALOGTYPE            INTEGER,
+		TEMPLATE_INDEX      VARCHAR(256),
+		TEMPLATE_LIST         VARCHAR(256),
+		TEMPLATE_DETAIL    VARCHAR(256),
+		DESCRIPTION              VARCHAR(256),
+		PARENT_ID                  VARCHAR(64),
         CONSTRAINT PK_CMS_CATALOG PRIMARY KEY(ID)
-        /*,CONSTRAINT FK_CMS_CATALOG_PARENT FOREIGN KEY(PARENT_ID) REFERENCES IB_CMS_CATALOG(ID) */
 ) engine=innodb;
 
 /*==============================================================*/
-/* cms article   */
+/* cms 公告文章   */
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_CMS_ARTICLE;
 CREATE TABLE IB_CMS_ARTICLE(
-        ID BIGINT auto_increment,
-	TITLE VARCHAR(200),
-	SHORT_TITLE VARCHAR(200),
-	SUB_TITLE VARCHAR(200),
-	CONTENT TEXT,
-	SUMMARY VARCHAR(200),
-	LOGO VARCHAR(200),
-	KEYWORD VARCHAR(200),
-	TAGS VARCHAR(200),
-	SOURCE VARCHAR(200),
-	ALLOW_COMMENT INT,
-	STATUS INT,
-	PUBLISH_TIME TIMESTAMP,
-	CLOSE_TIME TIMESTAMP,
-	TYPE INT,
-	TOP INT,
-	WEIGHT INT,
-	CREATE_TIME TIMESTAMP,
-	TEMPLATE VARCHAR(200),
-	VIEW_COUNT INT,
-	RECOMMEND_ID BIGINT,
-	RECOMMEND_STATUS INT,
-	USER_ID VARCHAR(200),
-	CATALOG_ID BIGINT,
+        ID                          VARCHAR(64),
+		TITLE                   VARCHAR(256),
+		SHORT_TITLE      VARCHAR(256),
+		SUB_TITLE           VARCHAR(256),
+		CONTENT             VARCHAR(2000),
+		SUMMARY            VARCHAR(256),
+		LOGO                    VARCHAR(256),
+		TAGS                      VARCHAR(256),
+		ALLOW_COMMENT             INTEGER,
+		STATUS                      INTEGER,
+		PUBLISH_TIME         TIMESTAMP,
+		CLOSE_TIME             TIMESTAMP,
+		ARTICLETYPE           INTEGER,
+		TOP                            INTEGER,
+		WEIGHT                    INTEGER,
+		CREATE_TIME           TIMESTAMP,
+		VIEW_COUNT             INTEGER,
+		RECOMMEND_ID        VARCHAR(64),
+		RECOMMEND_STATUS INTEGER,
+		USER_ID                     VARCHAR(64),
+		CATALOG_ID              VARCHAR(64),
         CONSTRAINT PK_CMS_ARTICLE PRIMARY KEY(ID)
-        /*,CONSTRAINT FK_CMS_ARTICLE_CATALOG FOREIGN KEY(CATALOG_ID) REFERENCES IB_CMS_CATALOG(ID)*/
 ) engine=innodb;
 
 /*==============================================================*/
-/* cms comment   */
+/* cms 公告文章评论表   */
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_CMS_COMMENT;
 CREATE TABLE IB_CMS_COMMENT(
-        ID BIGINT auto_increment,
-	TITLE VARCHAR(200),
-	CONTENT VARCHAR(200),
-	STATUS INT,
-	CREATE_TIME TIMESTAMP,
-	USER_ID VARCHAR(200),
-	ARTICLE_ID BIGINT,
+        ID                        VARCHAR(64),
+		TITLE                  VARCHAR(256),
+		CONTENT            VARCHAR(2000),
+		STATUS                INTEGER,
+		CREATE_TIME    TIMESTAMP,
+		USER_ID              VARCHAR(64),
+		ARTICLE_ID        VARCHAR(64),
         CONSTRAINT PK_CMS_COMMENT PRIMARY KEY(ID)
-       /* ,CONSTRAINT FK_CMS_COMMENT_ARTICLE FOREIGN KEY(ARTICLE_ID) REFERENCES IB_CMS_ARTICLE(ID) */
-) engine=innodb;
-
-/*==============================================================*/
-/* cms favorite   */
-/*==============================================================*/
-DROP TABLE IF EXISTS IB_CMS_FAVORITE;
-CREATE TABLE IB_CMS_FAVORITE(
-        ID BIGINT auto_increment,
-	SUBJECT VARCHAR(200),
-	CREATE_TIME TIMESTAMP,
-	USER_ID VARCHAR(200),
-	ARTICLE_ID BIGINT,
-	COMMENT_ID BIGINT,
-        CONSTRAINT PK_CMS_FAVORITE PRIMARY KEY(ID)
-      /*  ,CONSTRAINT FK_CMS_FAVORITE_ARTICLE FOREIGN KEY(ARTICLE_ID) REFERENCES IB_CMS_ARTICLE(ID),
-	CONSTRAINT FK_CMS_FAVORITE_COMMENT FOREIGN KEY(COMMENT_ID) REFERENCES IB_CMS_COMMENT(ID) */
 ) engine=innodb;

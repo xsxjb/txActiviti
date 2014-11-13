@@ -79,7 +79,7 @@
 				  <div class="form-group">
 				    <label class="col-lg-2 control-label" for="job_level">职位:</label>
 				    <div class="col-lg-3">
-						  <select id="job_level" name="jobId" >
+						  <select class="form-control"  id="job_level" name="jobId" >
 							  <c:forEach items="${jobInfos}" var="item">
 							    <option value="${item.id}" ${item.id==model.jobInfo.id ? 'selected' : ''}>${item.jobTitle.name}</option>
 							  </c:forEach>
@@ -88,7 +88,7 @@
 				  </div>
 				  <div class="form-group">
 				    <label class="col-lg-2 control-label" for="role_def">角色:</label>
-					  <select id="role_def" name="roleId" class="">
+					  <select class="form-control"  id="role_def" name="roleId" class="">
 						  <c:forEach items="${roleDefs}" var="item">
 						    <option value="${item.id}" ${item.id==model.roleDef.id ? 'selected' : ''}>${item.name}</option>
 						  </c:forEach>

@@ -23,7 +23,7 @@
        	 <form id="roleForm" method="post" action="role-menu-save.do" class="form-horizontal">
 			  <input type="hidden" name="id" value="${id}">
 				  <c:forEach items="${menus}" var="item">
-					  <div class="control-group">
+					  <div class="form-group">
 					        <input id="selectedItem-${item.id}" type="checkbox" name="selectedItem" value="${item.id}" <tags:contains items="${selectedItem}" item="${item.id}">checked</tags:contains>>
 					        <label for="selectedItem-${item.id}" style="display:inline;">${item.menuName}</label>
 							<c:if test="${item.chiledItems != '[]'}">
@@ -45,7 +45,7 @@
 						    </c:if>
 					  </div>
 				  </c:forEach>
-				  <div class="control-group">
+				  <div class="form-group">
 				    <div class="controls">
 				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					  &nbsp;

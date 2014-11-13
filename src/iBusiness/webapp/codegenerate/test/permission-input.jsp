@@ -64,7 +64,7 @@
 				       <input type="hidden" name="doneflag" value="${model.doneflag}">
 				   </c:if>
 					       <!-- 是否显示 -->
-						   <div class="control-group">
+						   <div class="form-group">
 							      <div class="col-lg-6">
 								      <label class="control-label" for="code-remark">备注:</label>
 								      <!-- 是否可编辑 -->

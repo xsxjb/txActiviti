@@ -43,7 +43,7 @@ $(function() {
 		  </p>
 		  <p>
 		    <label class="control-label" for="job_level">上级:</label>
-			  <select id="job_level" name="jobTypeId">
+			  <select class="form-control" id="job_level" name="jobTypeId">
 			      <option value=""></option>
 				  <c:forEach items="${jobTypes}" var="item">
 				    <option value="${item.id}">${item.name}</option>

@@ -23,7 +23,7 @@
        	 <form id="roleForm" method="post" action="role-perm-save.do" class="form-horizontal">
 			  <input type="hidden" name="id" value="${id}">
 				  <c:forEach items="${permTypes}" var="permType">
-					  <div class="control-group">
+					  <div class="form-group">
 							<label class="control-label"><strong>${permType.name}:</strong></label>
 						    <div class="controls">
 							      <c:forEach items="${permType.perms}" var="item">
@@ -34,7 +34,7 @@
 						    </div>
 					  </div>
 				  </c:forEach>
-				  <div class="control-group">
+				  <div class="form-group">
 				    <div class="controls">
 				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					  &nbsp;
