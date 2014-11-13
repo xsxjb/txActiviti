@@ -248,10 +248,10 @@ public class DBtoEntityUtil {
                 stringbuffer.append((new StringBuilder("\t *@return: ")).append(b_java_lang_String_array1d_fld[i])
                         .append("  ").append(a(a_java_lang_String_array1d_fld[i])).append("\n").toString());
                 stringbuffer.append("\t */\n");
-                if (CodeResourceUtil.JEECG_GENERATE_TABLE_ID.equals(a_java_lang_String_array1d_fld[i].toLowerCase())) {
+                if (CodeResourceUtil.CG_GENERATE_TABLE_ID.equals(a_java_lang_String_array1d_fld[i].toLowerCase())) {
                     stringbuffer.append("\t@Id\n");
                     stringbuffer.append((new StringBuilder("\t@Column(name =\""))
-                            .append(CodeResourceUtil.JEECG_GENERATE_TABLE_ID.toUpperCase())
+                            .append(CodeResourceUtil.CG_GENERATE_TABLE_ID.toUpperCase())
                             .append("\", nullable = false, length = 36)\n").toString());
                 } else {
                     stringbuffer.append((new StringBuilder("\t@Column(name =\""))

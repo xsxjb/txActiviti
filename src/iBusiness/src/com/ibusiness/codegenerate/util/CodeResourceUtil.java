@@ -9,7 +9,9 @@ import java.util.ResourceBundle;
  */
 public class CodeResourceUtil {
     // 取得代码生成器数据库配置文件
-    private static final ResourceBundle a = ResourceBundle.getBundle("code/code_database");
+//    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("code/code_database");
+    // 数据库统一用 application.properties 中的配置进行配置
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("application");
     // 取得代码生成器配置文件
     private static final ResourceBundle configProperties = ResourceBundle.getBundle("code/code_config");
     public static String DIVER_NAME = "com.mysql.jdbc.Driver";
@@ -18,8 +20,8 @@ public class CodeResourceUtil {
     public static String PASSWORD = "root";
     public static String DATABASE_NAME = "sys";
     public static String DATABASE_TYPE = "mysql";
-    public static String JEECG_UI_FIELD_REQUIRED_NUM = "4";
-    public static String JEECG_UI_FIELD_SEARCH_NUM = "3";
+    public static String CG_UI_FIELD_REQUIRED_NUM = "4";
+    public static String CG_UI_FIELD_SEARCH_NUM = "3";
     // jsp文件起始根路径
     public static String web_root_package = "WebRoot";
     // java文件起始根路径
@@ -30,7 +32,7 @@ public class CodeResourceUtil {
     public static String webrootBussiPackage = "jsp";
     public static String entity_package = "entity";
     public static String page_package = "page";
-    public static boolean JEECG_FILED_CONVERT = true;
+    public static boolean CG_FILED_CONVERT = true;
     public static String ENTITY_URL;
     public static String PAGE_URL;
     public static String ENTITY_URL_INX;
@@ -40,8 +42,8 @@ public class CodeResourceUtil {
     public static String PROJECTPATH;
     public static String CODEPATH;
     public static String JSPPATH;
-    public static String JEECG_GENERATE_TABLE_ID;
-    public static String JEECG_GENERATE_UI_FILTER_FIELDS;
+    public static String CG_GENERATE_TABLE_ID;
+    public static String CG_GENERATE_UI_FILTER_FIELDS;
     public static String SYSTEM_ENCODING;
 
     static {
@@ -50,7 +52,7 @@ public class CodeResourceUtil {
         USERNAME = getUSERNAME();
         PASSWORD = getPASSWORD();
         DATABASE_NAME = getDATABASE_NAME();
-        JEECG_FILED_CONVERT = getJEECG_FILED_CONVERT();
+        CG_FILED_CONVERT = getCG_FILED_CONVERT();
         SYSTEM_ENCODING = getSYSTEM_ENCODING();
         TEMPLATEPATH = getTEMPLATEPATH();
         PROJECTPATH = getPROJECTPATH();
@@ -59,8 +61,8 @@ public class CodeResourceUtil {
         bussiPackage = getBussiPackage();
         //
         webrootBussiPackage = getWebrootBussiPackage();
-        JEECG_GENERATE_TABLE_ID = getJeecg_generate_table_id();
-        JEECG_UI_FIELD_SEARCH_NUM = getJeecg_ui_search_filed_num();
+        CG_GENERATE_TABLE_ID = getCg_generate_table_id();
+        CG_UI_FIELD_SEARCH_NUM = getCg_ui_search_filed_num();
         if ((URL.indexOf("mysql") >= 0) || (URL.indexOf("MYSQL") >= 0))
             DATABASE_TYPE = "mysql";
         else if ((URL.indexOf("oracle") >= 0) || (URL.indexOf("ORACLE") >= 0))
@@ -77,27 +79,27 @@ public class CodeResourceUtil {
     }
 
     public static final String getDIVER_NAME() {
-        return a.getString("diver_name");
+        return resourceBundle.getString("db.default.driverClassName");
     }
 
     public static final String getURL() {
-        return a.getString("url");
+        return resourceBundle.getString("db.default.url");
     }
 
     public static final String getUSERNAME() {
-        return a.getString("username");
+        return resourceBundle.getString("db.default.username");
     }
 
     public static final String getPASSWORD() {
-        return a.getString("password");
+        return resourceBundle.getString("db.default.password");
     }
 
     public static final String getDATABASE_NAME() {
-        return a.getString("database_name");
+        return resourceBundle.getString("default.database.name");
     }
 
-    public static final boolean getJEECG_FILED_CONVERT() {
-        String str = configProperties.getString("jeecg_filed_convert");
+    public static final boolean getCG_FILED_CONVERT() {
+        String str = configProperties.getString("cg_filed_convert");
         return !str.toString().equals("false");
     }
 
@@ -149,19 +151,19 @@ public class CodeResourceUtil {
         return configProperties.getString("system_encoding");
     }
 
-    public static final String getJeecg_generate_table_id() {
-        return configProperties.getString("jeecg_generate_table_id");
+    public static final String getCg_generate_table_id() {
+        return configProperties.getString("cg_generate_table_id");
     }
 
-    public static final String getJeecg_generate_ui_filter_fields() {
-        return configProperties.getString("jeecg_generate_ui_filter_fields");
+    public static final String getCg_generate_ui_filter_fields() {
+        return configProperties.getString("cg_generate_ui_filter_fields");
     }
 
-    public static final String getJeecg_ui_search_filed_num() {
-        return configProperties.getString("jeecg_ui_search_filed_num");
+    public static final String getCg_ui_search_filed_num() {
+        return configProperties.getString("cg_ui_search_filed_num");
     }
 
-    public static final String getJeecg_ui_field_required_num() {
-        return configProperties.getString("jeecg_ui_field_required_num");
+    public static final String getCg_ui_field_required_num() {
+        return configProperties.getString("cg_ui_field_required_num");
     }
 }

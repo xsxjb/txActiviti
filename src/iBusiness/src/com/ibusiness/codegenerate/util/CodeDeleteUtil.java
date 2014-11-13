@@ -3,7 +3,7 @@ package com.ibusiness.codegenerate.util;
 import java.io.File;
 import java.io.PrintStream;
 
-public class JeecgCodeDeleteUtil
+public class CodeDeleteUtil
 {
   private static String a = CodeResourceUtil.bussiPackage;
   private static final String b = "src/" + a;
@@ -74,8 +74,3 @@ public class JeecgCodeDeleteUtil
     return localFile.delete();
   }
 }
-
-/* Location:           C:\Users\Administrator\Desktop\commons-cg-2.1.jar
- * Qualified Name:     com.util.JeecgCodeDeleteUtil
- * JD-Core Version:    0.5.4
- */

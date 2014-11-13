@@ -31,21 +31,21 @@ public class ${entityName}Entity implements java.io.Serializable {
 	 *方法: 取得${po.fieldType}
 	 *@return: ${po.fieldType}  ${po.filedComment}
 	 */
-	<#if po.fieldName == jeecg_table_id>
+	<#if po.fieldName == cg_table_id>
 	
-	<#if jeecg_primary_key_policy == 'uuid'>
+	<#if cg_primary_key_policy == 'uuid'>
 	@Id
 	@GeneratedValue(generator = "paymentableGenerator")
 	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	</#if>
-	<#if jeecg_primary_key_policy == 'identity'>
+	<#if cg_primary_key_policy == 'identity'>
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	</#if>
-	<#if jeecg_primary_key_policy == 'sequence'>
+	<#if cg_primary_key_policy == 'sequence'>
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="sequence")
-	@SequenceGenerator(name="sequence",sequenceName="${jeecg_sequence_code}",allocationSize=1)
+	@SequenceGenerator(name="sequence",sequenceName="${cg_sequence_code}",allocationSize=1)
 	</#if>
 	</#if>
 	@Column(name ="${po.fieldDbName}",nullable=<#if po.nullable == 'Y'>true<#else>false</#if><#if po.precision != ''>,precision=${po.precision}</#if><#if po.scale != ''>,scale=${po.scale}</#if><#if po.charmaxLength != ''>,length=${po.charmaxLength}</#if>)

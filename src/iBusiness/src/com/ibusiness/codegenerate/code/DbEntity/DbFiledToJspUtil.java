@@ -60,7 +60,7 @@ public class DbFiledToJspUtil {
             int j = i;
             if (j > 0) {
                 Columnt columnt = new Columnt();
-                if (CodeResourceUtil.JEECG_FILED_CONVERT) {
+                if (CodeResourceUtil.CG_FILED_CONVERT) {
                     columnt.setFieldName(formatField(resultSet.getString(1).toLowerCase()));
                 } else {
                     columnt.setFieldName(resultSet.getString(1).toLowerCase());
@@ -74,7 +74,7 @@ public class DbFiledToJspUtil {
                 editColumnt(columnt);
                 columnt.setFiledComment(StringUtils.isBlank(resultSet.getString(3)) ? columnt
                         .getFieldName() : resultSet.getString(3));
-                if (!CodeResourceUtil.JEECG_GENERATE_TABLE_ID.equals(columnt.getFieldName())
+                if (!CodeResourceUtil.CG_GENERATE_TABLE_ID.equals(columnt.getFieldName())
                         && !"createDt".equals(columnt.getFieldName()) && !"modifyDt".equals(columnt.getFieldName())
                         && !"delflag".equals(columnt.getFieldName()) && !"crtuser".equals(columnt.getFieldName())
                         && !"crtuserName".equals(columnt.getFieldName())
@@ -85,13 +85,13 @@ public class DbFiledToJspUtil {
                 }
                 while (resultSet.previous()) {
                     Columnt columnt2 = new Columnt();
-                    if (CodeResourceUtil.JEECG_FILED_CONVERT) {
+                    if (CodeResourceUtil.CG_FILED_CONVERT) {
                         columnt2.setFieldName(formatField(resultSet.getString(1).toLowerCase()));
                     } else {
                         columnt2.setFieldName(resultSet.getString(1).toLowerCase());
                     }
                     columnt2.setFieldDbName(resultSet.getString(1).toUpperCase());
-                    if (!CodeResourceUtil.JEECG_GENERATE_TABLE_ID.equals(columnt2.getFieldName())
+                    if (!CodeResourceUtil.CG_GENERATE_TABLE_ID.equals(columnt2.getFieldName())
                             && !"createDt".equals(columnt2.getFieldName())
                             && !"modifyDt".equals(columnt2.getFieldName())
                             && !"delflag".equals(columnt2.getFieldName()) && !"crtuser".equals(columnt2.getFieldName())
@@ -179,7 +179,7 @@ public class DbFiledToJspUtil {
             int j = i;
             if (j > 0) {
                 Columnt columnt = new Columnt();
-                if (CodeResourceUtil.JEECG_FILED_CONVERT)
+                if (CodeResourceUtil.CG_FILED_CONVERT)
                     columnt.setFieldName(formatField(resultSet.getString(1).toLowerCase()));
                 else
                     columnt.setFieldName(resultSet.getString(1).toLowerCase());
@@ -197,7 +197,7 @@ public class DbFiledToJspUtil {
                 Columnt columnt2;
                 for (; resultSet.previous(); arraylist.add(columnt2)) {
                     columnt2 = new Columnt();
-                    if (CodeResourceUtil.JEECG_FILED_CONVERT)
+                    if (CodeResourceUtil.CG_FILED_CONVERT)
                         columnt2.setFieldName(formatField(resultSet.getString(1).toLowerCase()));
                     else
                         columnt2.setFieldName(resultSet.getString(1).toLowerCase());

@@ -95,17 +95,17 @@ public class CodeGenerateOneToMany implements ICallBack {
         localHashMap.put("tableName", tableName);
         // 表描述
         localHashMap.put("ftl_description", entityTitle);
-        localHashMap.put(FtlDef.JEECG_TABLE_ID, CodeResourceUtil.JEECG_GENERATE_TABLE_ID);
+        localHashMap.put(FtlDef.CG_TABLE_ID, CodeResourceUtil.CG_GENERATE_TABLE_ID);
         // 主键
-        localHashMap.put(FtlDef.JEECG_PRIMARY_KEY_POLICY, primaryKeyPolicy);
+        localHashMap.put(FtlDef.CG_PRIMARY_KEY_POLICY, primaryKeyPolicy);
         // SEQUENCE
-        localHashMap.put(FtlDef.JEECG_SEQUENCE_CODE, sequenceCode);
+        localHashMap.put(FtlDef.CG_SEQUENCE_CODE, sequenceCode);
         // 创建时间
         localHashMap.put("ftl_create_time", CodeDateUtils.dateToString(new Date()));
-        localHashMap.put(FtlDef.FIELD_REQUIRED_NAME, Integer.valueOf((StringUtils.isNotEmpty(CodeResourceUtil.JEECG_UI_FIELD_REQUIRED_NUM)) ? Integer
-                .parseInt(CodeResourceUtil.JEECG_UI_FIELD_REQUIRED_NUM) : -1));
-        localHashMap.put(FtlDef.SEARCH_FIELD_NUM, Integer.valueOf((StringUtils.isNotEmpty(CodeResourceUtil.JEECG_UI_FIELD_SEARCH_NUM)) ? Integer
-                .parseInt(CodeResourceUtil.JEECG_UI_FIELD_SEARCH_NUM) : -1));
+        localHashMap.put(FtlDef.FIELD_REQUIRED_NAME, Integer.valueOf((StringUtils.isNotEmpty(CodeResourceUtil.CG_UI_FIELD_REQUIRED_NUM)) ? Integer
+                .parseInt(CodeResourceUtil.CG_UI_FIELD_REQUIRED_NUM) : -1));
+        localHashMap.put(FtlDef.SEARCH_FIELD_NUM, Integer.valueOf((StringUtils.isNotEmpty(CodeResourceUtil.CG_UI_FIELD_SEARCH_NUM)) ? Integer
+                .parseInt(CodeResourceUtil.CG_UI_FIELD_SEARCH_NUM) : -1));
         // 行字段数目
         localHashMap.put(FtlDef.FIELD_ROW_NAME, Integer.valueOf(FIELD_ROW_NUM));
         try {
@@ -151,7 +151,7 @@ public class CodeGenerateOneToMany implements ICallBack {
             localHashMap.put("originalColumns", this.originalColumns);
             // 设置值
             for (Columnt columnt : originalColumns) {
-                if (!columnt.getFieldName().toLowerCase().equals(CodeResourceUtil.JEECG_GENERATE_TABLE_ID.toLowerCase())) {
+                if (!columnt.getFieldName().toLowerCase().equals(CodeResourceUtil.CG_GENERATE_TABLE_ID.toLowerCase())) {
                     continue;
                 }
                 localHashMap.put("primary_key_type", columnt.getFieldType());
