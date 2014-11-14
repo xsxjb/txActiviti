@@ -23,10 +23,12 @@ import com.codegenerate.test.entity.PermissionEntity;
 import com.codegenerate.test.entity.Permission_sEntity;
 import com.codegenerate.test.service.PermissionService;
 import com.codegenerate.test.service.Permission_sService;
+import com.ibusiness.base.user.entity.UserBase;
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.util.SpringSecurityUtils;
@@ -64,6 +66,7 @@ public class PermissionController {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQI_doneflag", flowType));
+        propertyFilters.add(new PropertyFilter("EQS_assigneeuser", SpringSecurityUtils.getCurrentUserId()));
         // 根据条件查询数据
         page = permissionService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -92,8 +95,14 @@ public class PermissionController {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(map);
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
-	        page = permission_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+        page = permission_sService.pagedQuery(page, propertyFilters);
+        model.addAttribute("page", page);
+        
+        // 取得用户
+        List<UserBase> list = CommonBusiness.getInstance().getUserBaseList();
+        model.addAttribute("userItems", list);
+        // TODO
+        model.addAttribute("userId", SpringSecurityUtils.getCurrentUserId());
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -118,11 +127,11 @@ public class PermissionController {
      * @throws Exception
      */
     @RequestMapping("permission-complete")
-    public String completeTask(@ModelAttribute PermissionEntity entity, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String completeTask(@ModelAttribute PermissionEntity entity, @RequestParam(value = "flowId", required = false) String flowId, 
+            @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         String executionId = null;
-        // 取得当前用户
-        String userId = SpringSecurityUtils.getCurrentUserId();
+        // 取得当前用户 
         if (CommonUtils.isNull(entity.getExecutionid())) {
             // 启动流程, 设置执行实例ID
             executionId = bpmComBusiness.flowStart(flowId, userId);
@@ -131,7 +140,7 @@ public class PermissionController {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
             entity.setCreatedatebpm(task.getCreateTime());
             entity.setNodename(task.getName());
-            entity.setAssigneeuser(task.getAssignee());
+            entity.setAssigneeuser(userId);
             entity.setDoneflag(0);
         } else {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
@@ -145,7 +154,7 @@ public class PermissionController {
             // 设置流程实例信息=========================
             entity.setCreatedatebpm(task.getCreateTime());
             entity.setNodename(task.getName());
-            entity.setAssigneeuser(task.getAssignee());
+            entity.setAssigneeuser(userId);
         }
         // 再进行数据存储
         String id = entity.getId();

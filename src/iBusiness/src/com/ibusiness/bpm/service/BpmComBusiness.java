@@ -105,7 +105,6 @@ public class BpmComBusiness {
      * @return
      */
     public void rollback(String taskId) {
-        // TODO
         Command<Integer> cmd = new RollbackTaskCmd(taskId);
         getProcessEngine().getManagementService().executeCommand(cmd);
     }

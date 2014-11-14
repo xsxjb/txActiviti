@@ -45,13 +45,13 @@
 	    <div class="panel-heading"><h4 class="panel-title">流程控制</h4></div>
 	    <div class="panel-body">
 	        <div class="pull-left">
-			    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('permission-complete.do')">办理</button>
+			    <a href="#nextTaskUserDiv" role="button" class="btn btn-default btn-sm" data-toggle="modal">办理</a>
 			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('permission-save-draft.do')">草稿</button>
 			    <button class="btn btn-default btn-sm" onclick="location.href='workspace-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='permission-list.do?flowId=${flowId}&flowType=0'">返回</button>
 			</div>
 	   </div>
-	   
+        
         <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
@@ -72,6 +72,31 @@
 		                                  <input id="code-remark" type="text" name="remark" value="${model.remark}"  class="text required" >
 								  </div>
 							</div>
+							
+					<!--  选择下一节点办理人弹出层  -->
+				    <div id="nextTaskUserDiv" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true">
+				            <div class="panel panel-default span8"> 
+					            <div class="panel-heading"><h4 class="panel-title">下一节点办理</h4></div>
+						        <div class="panel-body">
+									    <div class="form-group">
+                                            <label class="col-lg-2 control-label" for="code-remark">办理人:</label>
+                                            <div class="col-lg-3">
+												  <select id="code-sex" name="userId" class="form-control">
+												        <option value="" >请选择</option>
+													  <c:forEach items="${userItems}" var="item">
+													    <option value="${item.id}"  ${item.id == userId ? 'selected' : ''}>${item.displayName}</option>
+													  </c:forEach>
+												  </select>
+										      </div>
+						                </div>
+						                <div class="pull-right">
+						                    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('permission-complete.do')">办理</button>
+						                    <button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">关闭</button>
+						                </div>
+					            </div>
+					        </div>
+				    </div>
+				    <!--  -->
 				</form>
 		</div>
         </div> 
@@ -131,5 +156,6 @@
       </div>
 	<!-- end of main -->
 	</div>
+        
   </body>
 </html>

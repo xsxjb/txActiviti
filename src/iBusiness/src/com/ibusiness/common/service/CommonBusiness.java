@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ibusiness.base.user.dao.UserBaseDao;
+import com.ibusiness.base.user.entity.UserBase;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
@@ -37,7 +39,13 @@ public class CommonBusiness {
     // 表单对应表管理表List
     private List<ConfFormTableColumn> formTableColumnList = new ArrayList<ConfFormTableColumn>();
     private Map<String, ConfFormTableColumn> formTableColumnMap = new HashMap<String, ConfFormTableColumn>();
-    
+    /**
+     * 取得用户表所有用户
+     */
+    public List<UserBase> getUserBaseList() {
+        List<UserBase> list = getUserBaseDao().getAll();
+        return list;
+    }
     /**
      * 取得流水表表结构管理List
      * @return the tableColumnsList
@@ -96,6 +104,9 @@ public class CommonBusiness {
         return this.formTableColumnMap;
     }
     // ======================================================================
+    public UserBaseDao getUserBaseDao() {
+        return ApplicationContextHelper.getBean(UserBaseDao.class);
+    }
     public TableColumnsDao getTableColumnsDao() {
         return ApplicationContextHelper.getBean(TableColumnsDao.class);
     }

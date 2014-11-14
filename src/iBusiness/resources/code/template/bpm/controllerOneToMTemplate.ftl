@@ -25,8 +25,10 @@ import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.security.util.SpringSecurityUtils;
+import com.ibusiness.base.user.entity.UserBase;
 
 import ${bussiPackage}.${entityPackage}.entity.${entityName}Entity;
 import ${bussiPackage}.${entityPackage}.service.${entityName}Service;
@@ -58,6 +60,7 @@ public class ${entityName}Controller {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQI_doneflag", flowType));
+        propertyFilters.add(new PropertyFilter("EQS_assigneeuser", SpringSecurityUtils.getCurrentUserId()));
         // 根据条件查询数据
         page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -93,6 +96,12 @@ public class ${entityName}Controller {
         
         // 流程ID
         model.addAttribute("flowId", flowId);
+        // 取得用户
+        List<UserBase> list = CommonBusiness.getInstance().getUserBaseList();
+        model.addAttribute("userItems", list);
+        // TODO
+        model.addAttribute("userId", SpringSecurityUtils.getCurrentUserId());
+        
         return "codegenerate/${entityPackage}/${entityName?uncap_first}-input.jsp";
     }
     
@@ -116,11 +125,10 @@ public class ${entityName}Controller {
      * @throws Exception
      */
     @RequestMapping("${entityName?uncap_first}-complete")
-    public String completeTask(@ModelAttribute ${entityName}Entity entity, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String completeTask(@ModelAttribute ${entityName}Entity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         String executionId = null;
-        // 取得当前用户
-        String userId = SpringSecurityUtils.getCurrentUserId();
+        // 
         if (CommonUtils.isNull(entity.getExecutionid())) {
             // 启动流程, 设置执行实例ID
             executionId = bpmComBusiness.flowStart(flowId, userId);
@@ -129,7 +137,7 @@ public class ${entityName}Controller {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
             entity.setCreatedatebpm(task.getCreateTime());
             entity.setNodename(task.getName());
-            entity.setAssigneeuser(task.getAssignee());
+            entity.setAssigneeuser(userId);
             entity.setDoneflag(0);
         } else {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
@@ -143,7 +151,7 @@ public class ${entityName}Controller {
             // 设置流程实例信息=========================
             entity.setCreatedatebpm(task.getCreateTime());
             entity.setNodename(task.getName());
-            entity.setAssigneeuser(task.getAssignee());
+            entity.setAssigneeuser(userId);
         }
         // 再进行数据存储
         String id = entity.getId();
