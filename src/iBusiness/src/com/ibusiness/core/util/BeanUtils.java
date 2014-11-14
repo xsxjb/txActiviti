@@ -309,7 +309,7 @@ public class BeanUtils /* extends org.apache.commons.beanutils.BeanUtils */{
      * @throws NoSuchFieldException
      *             field不存在时抛出异常
      * 
-     * @todo: 使用reflectUtils里的方法更合适，这里的实现方式，必须先有field才能有method，逻辑上有问题 实际上，即使没有field也可以单独有method。
+     * @TODO: 使用reflectUtils里的方法更合适，这里的实现方式，必须先有field才能有method，逻辑上有问题 实际上，即使没有field也可以单独有method。
      */
     public static String getGetterName(Class type, String fieldName) throws NoSuchFieldException {
         Assert.notNull(type, "Type required");

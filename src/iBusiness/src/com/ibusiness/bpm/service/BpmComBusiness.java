@@ -15,6 +15,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -22,6 +23,7 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ibusiness.bpm.cmd.RollbackTaskCmd;
 import com.ibusiness.bpm.cmd.SyncProcessCmd;
 import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
@@ -104,8 +106,8 @@ public class BpmComBusiness {
      */
     public void rollback(String taskId) {
         // TODO
-//        Command<Integer> cmd = new RollbackTaskCmd(taskId);
-//        getProcessEngine().getManagementService().executeCommand(cmd);
+        Command<Integer> cmd = new RollbackTaskCmd(taskId);
+        getProcessEngine().getManagementService().executeCommand(cmd);
     }
     /**
      * 根据执行实例ID查询taskID

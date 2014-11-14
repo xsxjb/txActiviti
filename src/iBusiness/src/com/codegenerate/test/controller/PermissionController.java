@@ -43,7 +43,19 @@ public class PermissionController {
 
     private MessageHelper messageHelper;
     private PermissionService permissionService;
-        private Permission_sService permission_sService;
+    private Permission_sService permission_sService;
+    /**
+     * 回退功能
+     */
+    @RequestMapping("workspace-rollback")
+    public String rollback(@RequestParam("executionId") String executiond, @RequestParam("flowId") String flowId) {
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
+        Task task = bpmComBusiness.getTaskIdByExecutionId(executiond);
+        
+        new BpmComBusiness().rollback(task.getId());
+        return "redirect:/permission/permission-list.do?flowType=0&flowId=" + flowId;
+    }
+        
    /**
      * 列表
      */

@@ -47,6 +47,7 @@
 	        <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('${entityName?uncap_first}-complete.do')">办理</button>
 			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('${entityName?uncap_first}-save-draft.do')">草稿</button>
+			    <button class="btn btn-default btn-sm" onclick="location.href='${entityName?uncap_first}-rollback.do?executionId=${'$' + '{model.executionid}'}&flowId=${'$' + '{flowId}'}&flowType=0'">回退</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='${entityName?uncap_first}-list.do?flowId=${'$' + '{flowId}'}&flowType=0'">返回</button>
 			</div>
 	   </div>

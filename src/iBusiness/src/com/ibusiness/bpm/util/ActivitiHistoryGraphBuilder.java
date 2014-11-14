@@ -91,8 +91,7 @@ public class ActivitiHistoryGraphBuilder {
         // .orderByHistoricActivityInstanceStartTime().asc();
         // TODO: 如果用了uuid会造成这样排序出问题
         // 但是如果用startTime，可能出现因为处理速度太快，时间一样，导致次序颠倒的问题
-        historicActivityInstanceQueryImpl.processInstanceId(processInstanceId)
-                .orderByHistoricActivityInstanceId().asc();
+        historicActivityInstanceQueryImpl.processInstanceId(processInstanceId).orderByHistoricActivityInstanceId().asc();
 
         Page page = new Page(0, 100);
         historicActivityInstances = Context

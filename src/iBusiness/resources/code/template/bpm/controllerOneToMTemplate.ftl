@@ -160,6 +160,17 @@ public class ${entityName}Controller {
         return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do?flowType=0&flowId=" + flowId;
     }
     /**
+     * 回退功能
+     */
+    @RequestMapping("${entityName?uncap_first}-rollback")
+    public String rollback(@RequestParam("executionId") String executiond, @RequestParam("flowId") String flowId) {
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
+        Task task = bpmComBusiness.getTaskIdByExecutionId(executiond);
+        
+        new BpmComBusiness().rollback(task.getId());
+        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do?flowType=0&flowId=" + flowId;
+    }
+    /**
      * 草稿
      * 
      * @return

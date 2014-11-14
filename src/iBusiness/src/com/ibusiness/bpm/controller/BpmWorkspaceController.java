@@ -211,8 +211,7 @@ public class BpmWorkspaceController {
      */
     @RequestMapping("workspace-rollback")
     public String rollback(@RequestParam("taskId") String taskId) {
-        // Command<Integer> cmd = new RollbackTaskCmd(taskId);
-        // processEngine.getManagementService().executeCommand(cmd);
+        new BpmComBusiness().rollback(taskId);
         return "redirect:/bpm/workspace-listPersonalTasks.do";
     }
     // ======================================================================

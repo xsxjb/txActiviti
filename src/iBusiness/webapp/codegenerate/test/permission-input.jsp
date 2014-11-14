@@ -47,6 +47,7 @@
 	        <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('permission-complete.do')">办理</button>
 			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('permission-save-draft.do')">草稿</button>
+			    <button class="btn btn-default btn-sm" onclick="location.href='workspace-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='permission-list.do?flowId=${flowId}&flowType=0'">返回</button>
 			</div>
 	   </div>
