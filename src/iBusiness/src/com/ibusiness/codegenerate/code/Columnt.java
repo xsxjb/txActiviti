@@ -14,6 +14,9 @@ import com.ibusiness.common.model.ConfSelectItem;
 public class Columnt {
     public static final String OPTION_REQUIRED = "required:true";
     public static final String OPTION_NUMBER_INSEX = "precision:2,groupSeparator:','";
+    // 页面tag信息
+    private String jspTagInfo;
+    //
     private String fieldDbName;
     // 字段名小写
     private String fieldName;
@@ -35,13 +38,18 @@ public class Columnt {
     private List<ConfSelectItem> confSelectItems = new ArrayList<ConfSelectItem>();
     // 数据库字段类别
     private String fieldType = "";
+    // 控件类型,类别-带UI技术类型
     private String classType = "";
+    // 控件类型,类别-不带UI技术类型
     private String classType_row = "";
     private String optionType = "";
     // 数据库字段长度
     private String charmaxLength = "";
+    // 数据长度 (pricision=10)
     private String precision;
+    // 小数位设置(scale=0无小数)
     private String scale;
+    // Hibernate字段是否为null
     private String nullable;
 
     public String getNullable() {
@@ -197,5 +205,17 @@ public class Columnt {
      */
     public void setConfSelectItems(List<ConfSelectItem> confSelectItems) {
         this.confSelectItems = confSelectItems;
+    }
+    /**
+     * @return the jspTagInfo
+     */
+    public String getJspTagInfo() {
+        return jspTagInfo;
+    }
+    /**
+     * @param jspTagInfo the jspTagInfo to set
+     */
+    public void setJspTagInfo(String jspTagInfo) {
+        this.jspTagInfo = jspTagInfo;
     }
 }

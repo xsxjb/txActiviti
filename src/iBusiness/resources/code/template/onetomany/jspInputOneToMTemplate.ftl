@@ -62,9 +62,11 @@
 								      <label class="control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
 								      <!-- 是否可编辑 -->
 		                              <#if po.fcEdit="1">
+		                                   ${po.jspTagInfo}
 		                                  <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  class="text required" >
 		                              <#else>
-		                                  <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}" disabled="disabled"  class="text required" >
+		                                  <label>${'$' + '{model.${po.fieldName}}'}</label>
+                                          <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
 		                              </#if>
 								  </div>
 							</div>
