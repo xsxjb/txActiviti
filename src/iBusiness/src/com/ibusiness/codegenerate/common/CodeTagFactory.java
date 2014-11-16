@@ -1,6 +1,7 @@
 package com.ibusiness.codegenerate.common;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,17 +137,31 @@ public class CodeTagFactory {
         // 下拉列表数据
         List<ConfSelectItem> confSelectItems = (List<ConfSelectItem>) CommonUtils.getListFromJson(formColumn.getConfSelectInfo(), ConfSelectItem.class);
         columnt.setConfSelectItems(confSelectItems);
+        
+        // ============================================================================
+        // 生成controller类中的Attribute
+        String controllerInfo = "";
+        // 取得表单对应表管理表Map
+        controllerInfo = controllerInfo + "Map<String, ConfFormTableColumn> formTableColumnMap= CommonBusiness.getInstance().getFormTableColumnMap(\""+formColumn.getTableName()+"\", \""+formColumn.getFormName()+"\");";
+        // 下拉列表
+        controllerInfo = controllerInfo + "List<ConfSelectItem> "+columnt.getFieldName()+"Items = (List<ConfSelectItem>) CommonUtils.getListFromJson(formTableColumnMap.get(\""+columnt.getFieldDbName()+"\").getConfSelectInfo(), ConfSelectItem.class);";
+        controllerInfo = controllerInfo + "model.addAttribute(\""+columnt.getFieldName()+"Items\", "+columnt.getFieldName()+"Items);";
+        List<String> maList = new ArrayList<String>();
+        maList.add(controllerInfo);
+        columnt.setModelAttributeList(maList);
+        
+        // ============================================================================
         // 生成JSP显示组件
-        String str = "";
-        str = str + "<div class=\"col-lg-3\">";
-        str = str + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\">";
-        str = str + "          <option value=\"\" >请选择</option>";
-        str = str + "        <c:forEach items=\"${"+columnt.getFieldName()+"Items}\" var=\"item\">";
-        str = str + "          <option value=\"${item.key}\"  >${item.value}</option>";
-        str = str + "        </c:forEach>";
-        str = str + "    </select>";
-        str = str + "</div>";
-        columnt.setJspTagInfo(str);
+        String jspTagInfo = "";
+        jspTagInfo = jspTagInfo + "<div class=\"col-lg-3\">";
+        jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\">";
+        jspTagInfo = jspTagInfo + "          <option value=\"\" >请选择</option>";
+        jspTagInfo = jspTagInfo + "        <c:forEach items=\"${"+columnt.getFieldName()+"Items}\" var=\"item\">";
+        jspTagInfo = jspTagInfo + "          <option value=\"${item.key}\"  >${item.value}</option>";
+        jspTagInfo = jspTagInfo + "        </c:forEach>";
+        jspTagInfo = jspTagInfo + "    </select>";
+        jspTagInfo = jspTagInfo + "</div>";
+        columnt.setJspTagInfo(jspTagInfo);
         return columnt;
     }
     /**

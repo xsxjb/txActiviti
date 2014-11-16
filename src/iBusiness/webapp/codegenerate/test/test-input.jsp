@@ -33,23 +33,18 @@
                   
                       <!-- 是否显示 -->
                           <div class="form-group">
-                              <label class="col-lg-2 control-label" for="code-address">地址:</label>
-                              <!-- 是否可编辑 -->
-                                      <!-- 编辑类型     多行 --><div class="col-lg-6">    <textarea class="form-control" id="code-address" name="address" rows="1">${model.address}</textarea></div>
-                          </div>
-                      <!-- 是否显示 -->
-                          <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-age">年龄:</label>
                               <!-- 是否可编辑 -->
-                                      <input id="code-age" type="text" name="age" value="${model.age"  class="text number" >
+                                      <input id="code-age" type="text" name="age" value="${model.age}"  class="text number" >
                           </div>
                       <!-- 是否显示 -->
-                          <div class="form-group">
-                              <label class="col-lg-2 control-label" for="code-name">姓名:</label>
-                              <!-- 是否可编辑 -->
-                                      <!-- 编辑类型   单行 --><input id="code-name" type="text" name="name" value="${model.name}"  class="text required" >
-                          </div>
-                      <!-- 是否显示 -->
+				<div class="form-group">
+					<label class="col-lg-2 control-label" for="code-name">姓名:</label>
+					<!-- 是否可编辑 -->
+					<!-- 编辑类型   单行 -->
+					<input id="code-name" type="text" name="name" value="${model.name}" class="text required">
+				</div>
+				<!-- 是否显示 -->
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-remark">备注:</label>
                               <!-- 是否可编辑 -->

@@ -27,8 +27,6 @@ public class TestEntity implements java.io.Serializable {
 	private java.lang.String name;
 	/**remark*/
 	private java.lang.String remark;
-	/**address*/
-	private java.lang.String address;
 	/**sex*/
 	private java.lang.String sex;
 	/**age*/
@@ -88,25 +86,9 @@ public class TestEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  address
-	 */
-	@Column(name ="ADDRESS",nullable=true,length=128)
-	public java.lang.String getAddress(){
-		return this.address;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  address
-	 */
-	public void setAddress(java.lang.String address){
-		this.address = address;
-	}
-	/**
-	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  sex
 	 */
-	@Column(name ="SEX",nullable=true,length=7)
+	@Column(name ="SEX",nullable=true,length=8)
 	public java.lang.String getSex(){
 		return this.sex;
 	}

@@ -74,7 +74,6 @@
 			      <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					                <th class="sorting">地址</th>
 					                <th class="sorting">年龄</th>
 					                <th class="sorting">姓名</th>
 					                <th class="sorting">备注</th>
@@ -86,7 +85,6 @@
 					      <c:forEach items="${page.result}" var="item">
 					      <tr>
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-						            <td>${item.address}</td>
 						            <td>${item.age}</td>
 						            <td>${item.name}</td>
 						            <td>${item.remark}</td>

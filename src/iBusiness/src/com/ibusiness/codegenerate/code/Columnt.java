@@ -16,6 +16,8 @@ public class Columnt {
     public static final String OPTION_NUMBER_INSEX = "precision:2,groupSeparator:','";
     // 页面tag信息
     private String jspTagInfo;
+    // controller java类向model中设置值Attribute
+    private List<String> modelAttributeList = new ArrayList<String>();
     //
     private String fieldDbName;
     // 字段名小写
@@ -217,5 +219,17 @@ public class Columnt {
      */
     public void setJspTagInfo(String jspTagInfo) {
         this.jspTagInfo = jspTagInfo;
+    }
+    /**
+     * @return the modelAttributeList
+     */
+    public List<String> getModelAttributeList() {
+        return modelAttributeList;
+    }
+    /**
+     * @param modelAttributeList the modelAttributeList to set
+     */
+    public void setModelAttributeList(List<String> modelAttributeList) {
+        this.modelAttributeList = modelAttributeList;
     }
 }

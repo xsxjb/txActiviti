@@ -66,11 +66,13 @@ public class TestController {
             entity = new TestEntity();
         }
         model.addAttribute("model", entity);
-        // 取得表单对应表管理表Map
-        Map<String, ConfFormTableColumn> formTableColumnMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_TEST", "testForm");
-	            // 下拉列表
-	            List<ConfSelectItem> sexItems = (List<ConfSelectItem>) CommonUtils.getListFromJson(formTableColumnMap.get("SEX").getConfSelectInfo(), ConfSelectItem.class);
-                model.addAttribute("sexItems", sexItems);
+            // 取得表单对应表管理表list
+            // 取得表单对应表管理表list
+            // 取得表单对应表管理表list
+            // 取得表单对应表管理表list
+            Map<String, ConfFormTableColumn> formTableColumnMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_TEST", "testForm");
+            List<ConfSelectItem> sexItems = (List<ConfSelectItem>) CommonUtils.getListFromJson(formTableColumnMap.get("SEX").getConfSelectInfo(), ConfSelectItem.class);
+            model.addAttribute("sexItems", sexItems);
         return "codegenerate/test/test-input.jsp";
     }
 

@@ -66,14 +66,11 @@ public class ${entityName}Controller {
             entity = new ${entityName}Entity();
         }
         model.addAttribute("model", entity);
-        // 取得表单对应表管理表Map
-        Map<String, ConfFormTableColumn> formTableColumnMap= CommonBusiness.getInstance().getFormTableColumnMap("${tableName}", "${confForm.formName}");
         <#list columns as po>
-            <#if "6"=po.fcType>
-	            // 下拉列表
-	            List<ConfSelectItem> ${po.fieldName}Items = (List<ConfSelectItem>) CommonUtils.getListFromJson(formTableColumnMap.get("${po.fieldDbName}").getConfSelectInfo(), ConfSelectItem.class);
-                model.addAttribute("${po.fieldName}Items", ${po.fieldName}Items);
-            </#if>
+            // 取得表单对应表管理表list
+            <#list po.modelAttributeList as ma>
+                ${ma}
+            </#list>
         </#list>
         return "codegenerate/${entityPackage}/${entityName?uncap_first}-input.jsp";
     }
