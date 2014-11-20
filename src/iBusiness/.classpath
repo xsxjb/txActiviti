@@ -98,5 +98,6 @@
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/jul-to-slf4j-1.7.6.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/mail-1.4.7.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/mybatis-3.2.5.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/ibusiness-core-v0.1.2.jar"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>

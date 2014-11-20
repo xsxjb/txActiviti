@@ -88,11 +88,13 @@
 				  </div>
 				  <div class="form-group">
 				    <label class="col-lg-2 control-label" for="role_def">角色:</label>
+				    <div class="col-lg-3">
 					  <select class="form-control"  id="role_def" name="roleId" class="">
 						  <c:forEach items="${roleDefs}" var="item">
 						    <option value="${item.id}" ${item.id==model.roleDef.id ? 'selected' : ''}>${item.name}</option>
 						  </c:forEach>
 					  </select>
+					</div>
 				  </div>
 				  <div class="form-group">
 				      <label class="col-lg-2 control-label" for="user-base_email">邮箱:</label>

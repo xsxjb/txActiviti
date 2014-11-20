@@ -9,13 +9,26 @@
   </head>
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
+    <script type="text/javascript">
+        // 表单验证JS
+		$(function() {
+		    $("#subForm").validate({
+		        submitHandler: function(form) {
+					bootbox.animate(false);
+					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+		            form.submit();
+		        },
+		        errorClass: 'validate-error'
+		    });
+		})
+    </script>
 	<div class="span2"></div>
 	<!-- start of main -->
     <div class="panel panel-default col-md-10">
         <div class="panel-heading"><h4 class="panel-title">编辑子表</h4></div>
         <div class="panel-body">
 			<div class="content content-inner">
-					<form id="userForm" method="post" action="${entityName?uncap_first}-save.do?parentid=${'$' + '{parentid}'}&flowId=${'$' + '{flowId}'}" class="form-horizontal">
+					<form id="subForm" method="post" action="${entityName?uncap_first}-save.do?parentid=${'$' + '{parentid}'}&flowId=${'$' + '{flowId}'}" class="form-horizontal">
 					  <c:if test="${'$' + '{model != null}'}">
 					      <input id="code_id" type="hidden" name="id" value="${'$' + '{model.id}'}">
 					  </c:if>
