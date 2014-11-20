@@ -27,10 +27,6 @@ public class TestEntity implements java.io.Serializable {
 	private java.lang.String name;
 	/**remark*/
 	private java.lang.String remark;
-	/**sex*/
-	private java.lang.String sex;
-	/**age*/
-	private java.lang.Integer age;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -83,37 +79,5 @@ public class TestEntity implements java.io.Serializable {
 	 */
 	public void setRemark(java.lang.String remark){
 		this.remark = remark;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  sex
-	 */
-	@Column(name ="SEX",nullable=true,length=8)
-	public java.lang.String getSex(){
-		return this.sex;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  sex
-	 */
-	public void setSex(java.lang.String sex){
-		this.sex = sex;
-	}
-	/**
-	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  age
-	 */
-	@Column(name ="AGE",nullable=true,precision=10,scale=0)
-	public java.lang.Integer getAge(){
-		return this.age;
-	}
-
-	/**
-	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  age
-	 */
-	public void setAge(java.lang.Integer age){
-		this.age = age;
 	}
 }

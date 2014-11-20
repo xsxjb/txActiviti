@@ -77,14 +77,25 @@ public class DocInfoController {
         return "ibusiness/doc/doc-info-input.jsp";
     }
 
+    /**
+     * 保存上传文件
+     * 
+     * @param docInfo
+     * @param attachment
+     * @param parameterMap
+     * @param redirectAttributes
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("doc-info-save")
     public String save(@ModelAttribute DocInfo docInfo, @RequestParam("attachment") MultipartFile attachment,
             @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) throws Exception {
         DocInfo dest = null;
         String id = docInfo.getId();
-
-        StoreDTO storeDto = storeConnector.save("docinfo", attachment.getInputStream(), attachment.getOriginalFilename());
         
+        // 讲文件上传到服务器
+        StoreDTO storeDto = storeConnector.save("docinfo", attachment.getInputStream(), attachment.getOriginalFilename());
+        // 保存文件信息
         if (id != null) {
             dest = docInfoService.get(id);
             beanMapper.copy(docInfo, dest);
@@ -92,6 +103,7 @@ public class DocInfoController {
             dest.setPath(storeDto.getKey());
             docInfoService.save(dest);
         } else {
+            // 插入新上传文件信息
             dest = docInfo;
             dest.setCreateTime(new Date());
             String userId = SpringSecurityUtils.getCurrentUserId();

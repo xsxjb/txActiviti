@@ -30,13 +30,13 @@
 	<div class="panel panel-default col-md-10 " > 
 		    <!-- tabs  -->
 	        <ul class="nav nav-tabs">
-			  <li class="${bpmType == 'bpmBase' ? 'active' : ''} "><a href="${scopePrefix}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" >流程基础信息</a></li>
-			  <li class="${tabType == 'flowChart' ? 'active' : ''}"><a href="${scopePrefix}/flowchart/init-flow-chart.do?packageName=${packageName}&bpmId=${bpmId}" >流程设置图</a></li>
+			  <li class="${tabType == 'bpmBase' ? 'active' : ''} "><a href="${scopePrefix}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" >流程基础信息</a></li>
+			  <li class="${tabType == 'confNode' ? 'active' : ''}"><a href="${scopePrefix}/bpm-process/bpm-conf-node-list.do?packageName=${packageName}&flowVersionId=${model.versionId}&bpmId=${bpmId}" >流程设置</a></li>
 			</ul>
 			<div id="tabContent" class="tab-content">
 			    <!-- ========================== 流程基础信息 =================================================== -->
-			    <div id=bpmBase class="tab-pane fade ${bpmType == 'bpmBase' ? 'active in' : ''}">
-			    <c:if test="${bpmType == 'bpmBase'}">
+			    <div id=bpmBase class="tab-pane fade ${tabType == 'bpmBase' ? 'active in' : ''}">
+			    <c:if test="${tabType == 'bpmBase'}">
 			        <div class="panel-body">
 						<div class="content content-inner">
 								<form id="bpmBaseForm" method="post" action="bpm-process-save.do" class="form-horizontal">
@@ -85,13 +85,15 @@
 										    <textarea class="form-control" id="code-flowForm" name="flowUrl" rows="1">${model.flowUrl}</textarea>
 									    </div>
 									</div>
-									<div class="form-group">
-									    <label class="col-lg-2 control-label" >配置:</label>
-										<div class="col-lg-3">
-										    <!-- style="display:none" -->
-										    <a class="btn btn-primary" style="display:none" href="${scopePrefix}/bpm-process/bpm-conf-node-list.do?flowVersionId=${model.versionId}" >配置</a>
-									    </div>
-									</div>
+									<c:if test="${bpmId != null}">
+									        <div class="form-group">
+											    <label class="col-lg-2 control-label" >配置:</label>
+												<div class="col-lg-3">
+												    <!-- style="display:none" -->
+												    <a class="btn btn-primary"  href="${scopePrefix}/flowchart/init-flow-chart.do?packageName=${packageName}&bpmId=${bpmId}" >配置</a>
+											    </div>
+											</div>
+									</c:if>
 									<c:if test="${bpmId == null}">
 											<div class="form-group">
 											    <label class="col-lg-2 control-label" for="init-task-node">初始设置流程节点:<br/>(逗号,分割)<br/>例如: 发起,审批</label>
@@ -119,13 +121,97 @@
                     </div>
                 </c:if>
             </div>
-            <!-- ==================== 流程图设置 ===================================================== -->
-        	<div id="flowChart" class="tab-pane fade ${tabType == 'flowChart' ? 'active in' : ''}">
-        	<c:if test="${tabType == 'flowChart'}">
-		        	
-        	      <!-- -->
-				      <iframe src="${scopePrefix}/ibusiness/flowchart/draw.jsp?bpmId=${bpmId}" height="500" style="width:100%;border:0px;"  ></iframe>
-				   
+            <!-- ==================== 流程设置 ===================================================== -->
+        	<div id="flowChart" class="tab-pane fade ${tabType == 'confNode' ? 'active in' : ''}">
+        	<c:if test="${tabType == 'confNode'}">
+        	    <input  type="hidden" name="packageName" value="${packageName}">
+        	    <input  type="hidden" name="bpmId" value="${bpmId}">
+        	    
+        	        <div class="panel-heading"><h4 class="panel-title">流程配置</h4></div>
+			        <div class="panel-body">
+					<div class="content content-inner">
+							<table class="table">
+						      <thead>
+						        <tr>
+						        <!--   <th>编号</th>   -->
+						          <th>类型</th>
+						          <th>节点</th>
+						          <th>人员</th>
+						          <th>事件</th>
+						          <th>规则</th>
+						          <th>表单</th>
+						          <th>操作</th>
+						          <th>提醒</th>
+						        </tr>
+						      </thead>
+						      <tbody>
+						        <c:forEach items="${bpmFlowNodes}" var="item">
+						        <tr>
+						        <!--   <td>${item.id}</td>  -->
+								  <td>${item.nodeType}</td>
+						          <td>${item.nodeName}</td>
+						          <td>
+								    <c:if test="${item.confUser == 0}">
+									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+									<c:if test="${item.confUser == 1}">
+									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+									&nbsp;
+							      </td>
+						          <td>
+								    <c:if test="${item.confListener == 0}">
+									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+								    <c:if test="${item.confListener == 1}">
+									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+									&nbsp;
+							      </td>
+						          <td>
+								    <c:if test="${item.confRule == 0}">
+									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+								    <c:if test="${item.confRule == 1}">
+									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+									&nbsp;
+							      </td>
+						          <td>
+								    <c:if test="${item.confForm == 0}">
+									  <a href="conf-node-colums.do?packageName=${packageName}&flowId=${bpmId}&nodeId=${item.id}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+								    <c:if test="${item.confForm == 1}">
+									  <a href="conf-node-colums.do?packageName=${packageName}&flowId=${bpmId}&nodeId=${item.id}" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+									&nbsp;
+							      </td>
+						          <td>
+								    <c:if test="${item.confOperation == 0}">
+									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+								    <c:if test="${item.confOperation == 1}">
+									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+									&nbsp;
+							      </td>
+						          <td>
+								    <c:if test="${item.confNotice == 0}">
+									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+								    <c:if test="${item.confNotice == 1}">
+									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									</c:if>
+									&nbsp;
+							      </td>
+						        </tr>
+						        </c:forEach>
+						      </tbody>
+							  </tbody>
+							</table>
+					</div>
+			    </div>
+        	        
         	</c:if>
         	</div>
 	    </div>

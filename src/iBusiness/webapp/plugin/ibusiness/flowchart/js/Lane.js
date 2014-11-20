@@ -60,7 +60,7 @@ function Lane( id,x,y ){
 	 *	鼠标移入事件
 	 */
 	this.mousemove = function( mouseX,mouseY ){
-		ctx.strokeStyle="#FFFFFF";
+		ctx.strokeStyle="#000000";
 		ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false ); 
 	}
 	
@@ -112,14 +112,14 @@ function Lane( id,x,y ){
 	    // 鼠标移动到此
 	    if(this.moveOver == 1 ){
 	    	//画出边线
-			ctx.strokeStyle="white";
+			ctx.strokeStyle="blue";
 			ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false );
 		}
 	    // 泳道设施靠左
 	    this.x = 0;
 		//画出图片
 		ctx.drawImage( this.bark, this.x, this.y, this.width, this.height ); 
-		ctx.strokeStyle="white";
+		ctx.strokeStyle="gray"; // 黑black  白： white   蓝：blue 灰色：gray
 		// 泳道线上
 		ctx.beginPath();
 		ctx.moveTo(0,parseInt(this.y)-0);

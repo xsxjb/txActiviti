@@ -139,8 +139,8 @@ $(function() {
 	 * ----------------------------------------------------------------------
 	 */
 	$('#canvas').mousedown(function(e) {
-		var mouseX = e.pageX - canvas.offsetLeft;
-		var mouseY = e.pageY - canvas.offsetTop;
+		var mouseX = e.pageX - $('#canvas').offset().left;
+		var mouseY = e.pageY - $('#canvas').offset().top;
 		//设定为按下状态
 		mousedown = true;
 		// 左上角提示鼠标操作信息
@@ -174,8 +174,8 @@ $(function() {
 	
 	//松开鼠标时候触发
 	$('#canvas').mouseup(function(e) {
-		var mouseX = e.pageX - canvas.offsetLeft;
-		var mouseY = e.pageY - canvas.offsetTop;
+		var mouseX = e.pageX - $('#canvas').offset().left;
+		var mouseY = e.pageY - $('#canvas').offset().top;
 		mousedown = false;
 		if( elements.getId('console') != null ) {
 			elements.getId('console').realData = '鼠标抬起：'+mouseX+','+mouseY;
@@ -261,8 +261,8 @@ $(function() {
 	
 	//鼠标移动
 	$('#canvas').mousemove(function(e) {
-		var mouseX = e.pageX - canvas.offsetLeft;
-		var mouseY = e.pageY - canvas.offsetTop;
+		var mouseX = e.pageX - $('#canvas').offset().left;
+		var mouseY = e.pageY - $('#canvas').offset().top;
 		// 鼠标拖拽移动
 		if (mousedown == true && mouseImage != null) {
 		    mouseImage.x = mouseX;
@@ -293,8 +293,8 @@ $(function() {
 	
 	//鼠标移进
 	$('#canvas').mouseover(function(e) {
-		var mouseX = e.pageX - canvas.offsetLeft;
-		var mouseY = e.pageY - canvas.offsetTop;
+		var mouseX = e.pageX - $('#canvas').offset().left;
+		var mouseY = e.pageY - $('#canvas').offset().top;
 		if( elements.getId('console') != null  ) {
 			elements.getId('console').realData = '鼠标移进画板';
 		}
@@ -580,7 +580,7 @@ $(function() {
 		//添加一个控制台，用于显示鼠标信息
 		var texts = new Texts("console",2,5);
 		texts.width = 200;
-		texts.textColor = '#FFFFFF';
+		texts.textColor = '#000000';
 		elements.add(texts);
 		//添加一个十字辅助线
 		var cruciate = new CruciateAuxiliaryLine("line",0,0);

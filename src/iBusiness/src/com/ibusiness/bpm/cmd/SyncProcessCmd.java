@@ -25,6 +25,7 @@ import com.ibusiness.bpm.dao.BpmNodeUserDao;
 import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmFlowNode;
+import com.ibusiness.bpm.entity.BpmNodeColums;
 import com.ibusiness.bpm.entity.BpmNodeCountersign;
 import com.ibusiness.bpm.entity.BpmNodeForm;
 import com.ibusiness.bpm.entity.BpmNodeListener;
@@ -33,6 +34,11 @@ import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.bpm.graph.Graph;
 import com.ibusiness.bpm.graph.Node;
+import com.ibusiness.bpm.service.BpmNodeColumsService;
+import com.ibusiness.component.form.dao.ConfFormDao;
+import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
+import com.ibusiness.component.form.entity.ConfForm;
+import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.core.spring.ApplicationContextHelper;
 
 /**
@@ -153,11 +159,44 @@ public class SyncProcessCmd implements Command<Void> {
                 bpmFlowNode.setConfNotice("2");
                 bpmFlowNode.setPriority(priority);
                 bpmFlowNodeDao.save(bpmFlowNode);
+                
+                // 插入 流程节点字段配置表
+                insertBpmFlowNode(bpmProcess.getFormId(), bpmFlowNode);
+                
             }
             // 配置监听器
             processListener(process.getExecutionListeners(), bpmFlowNode);
         }
         
+    }
+
+    /**
+     * 插入 流程节点字段配置表
+     * @param bpmProcess
+     * @param bpmFlowNode
+     */
+    @SuppressWarnings("unchecked")
+    private void insertBpmFlowNode(String formId, BpmFlowNode bpmFlowNode) {
+        // 
+        ConfForm confForm = getConfFormDao().get(formId);
+        String sql = "from ConfFormTableColumn where formName=?";
+        List<ConfFormTableColumn> confFormTableColumns = getConfFormTableColumnDao().find(sql, confForm.getFormName());
+        // 
+        for (ConfFormTableColumn confFormTableColumn : confFormTableColumns) {
+            BpmNodeColums bpmNodeColums = new BpmNodeColums();
+            bpmNodeColums.setId(UUID.randomUUID().toString());
+            bpmNodeColums.setPackageName(confFormTableColumn.getPackageName());
+            bpmNodeColums.setFlowId(bpmFlowNode.getFlowId());
+            bpmNodeColums.setFormName(confFormTableColumn.getFormName());
+            bpmNodeColums.setNodeId(bpmFlowNode.getId());
+            bpmNodeColums.setFormColumn(confFormTableColumn.getFormColumn());
+            bpmNodeColums.setFormColumnTitle(confFormTableColumn.getFormColumnTitle());
+            bpmNodeColums.setTableName(confFormTableColumn.getTableName());
+            bpmNodeColums.setTableColumn(confFormTableColumn.getTableColumn());
+            bpmNodeColums.setFcDisplay("1");
+            bpmNodeColums.setFcEdit("1");
+            getBpmNodeColumsService().saveInsert(bpmNodeColums);
+        }
     }
 
     /**
@@ -193,6 +232,9 @@ public class SyncProcessCmd implements Command<Void> {
             bpmFlowNode.setConfNotice("0");
             bpmFlowNode.setPriority(priority);
             bpmFlowNodeDao.save(bpmFlowNode);
+            
+            // 插入 流程节点字段配置表
+            insertBpmFlowNode(bpmProcess.getFormId(), bpmFlowNode);
         }
 
         // 配置参与者
@@ -288,6 +330,9 @@ public class SyncProcessCmd implements Command<Void> {
             bpmFlowNode.setPriority(priority);
             
             bpmFlowNodeDao.save(bpmFlowNode);
+            
+            // 插入 流程节点字段配置表
+            insertBpmFlowNode(bpmProcess.getFormId(), bpmFlowNode);
         }
         //
         FlowElement flowElement = bpmnModel.getFlowElement(node.getId());
@@ -322,6 +367,9 @@ public class SyncProcessCmd implements Command<Void> {
             bpmFlowNode.setConfNotice("0");
             bpmFlowNode.setPriority(priority);
             bpmFlowNodeDao.save(bpmFlowNode);
+            
+            // 插入 流程节点字段配置表
+            insertBpmFlowNode(bpmProcess.getFormId(), bpmFlowNode);
         }
 
         FlowElement flowElement = bpmnModel.getFlowElement(node.getId());
@@ -390,6 +438,18 @@ public class SyncProcessCmd implements Command<Void> {
     }
     
     // ==================================================================================
+    // 表单管理DAO
+    public ConfFormDao getConfFormDao() {
+        return ApplicationContextHelper.getBean(ConfFormDao.class);
+    }
+    // 表单对应表管理表DAO
+    public ConfFormTableColumnDao getConfFormTableColumnDao() {
+        return ApplicationContextHelper.getBean(ConfFormTableColumnDao.class);
+    }
+    // 流程分类定义配置表单表DAO
+    public BpmNodeColumsService getBpmNodeColumsService() {
+        return ApplicationContextHelper.getBean(BpmNodeColumsService.class);
+    }
     //流程管理DAO
     public BpmProcessDao getBpmProcessDao() {
         return ApplicationContextHelper.getBean(BpmProcessDao.class);

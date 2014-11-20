@@ -20,6 +20,8 @@ import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.task.Task;
 import org.apache.commons.io.IOUtils;
 
+import net.sf.json.JSONObject;
+
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.core.spring.MessageHelper;
@@ -78,12 +80,36 @@ public class ${entityName}Controller {
     @RequestMapping("${entityName?uncap_first}-input")
     public String input(@ModelAttribute Page page, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "id", required = false) String id, Model model) {
         ${entityName}Entity entity = null;
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
         if (!CommonUtils.isNull(id)) {
             entity = ${entityName?uncap_first}Service.get(id);
         } else {
             entity = new ${entityName}Entity();
+            
+            // 发起一个流程, 设置当前用户执行
+            String userId = SpringSecurityUtils.getCurrentUserId();
+            String executionId = bpmComBusiness.flowStart(flowId, userId);
+            entity.setExecutionid(executionId);
+            // 设置流程实例信息=========================
+            Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
+            entity.setCreatedatebpm(task.getCreateTime());
+            entity.setNodename(task.getName());
+            entity.setAssigneeuser(userId);
+            entity.setDoneflag(0);
+            // 进行存储
+            entity.setId(UUID.randomUUID().toString());
+            entity.setDoneflag(0);
+            ${entityName?uncap_first}Service.insert(entity);
         }
         model.addAttribute("model", entity);
+        
+        // 取得当前流程节点信息
+        Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
+        String nodeCode = task.getTaskDefinitionKey();
+        // 根据流程和节点信息取得 流程指定节点的字段信息
+        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, entity.getExecutionid(), nodeCode, ${entityName}Entity.class);
+        model.addAttribute("nodeColumsMap", json);
+        
         // 子表信息
         Map<String, Object> map = new HashMap<String, Object>();
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(map);
@@ -102,6 +128,12 @@ public class ${entityName}Controller {
         // TODO
         model.addAttribute("userId", SpringSecurityUtils.getCurrentUserId());
         
+        // 在controller中设置页面控件用的数据
+        <#list columns as po>
+            <#list po.modelAttributeList as ma>
+                ${ma}
+            </#list>
+        </#list>
         return "codegenerate/${entityPackage}/${entityName?uncap_first}-input.jsp";
     }
     
@@ -115,6 +147,17 @@ public class ${entityName}Controller {
         model.addAttribute("model", entity);
         model.addAttribute("parentid", id);
         model.addAttribute("flowId", flowId);
+        
+        // 取得主表中的 executionid
+        ${entityName}Entity mainEntity = ${entityName?uncap_first}Service.get(id);
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
+        // 取得当前流程节点信息
+        Task task = bpmComBusiness.getTaskIdByExecutionId(mainEntity.getExecutionid());
+        String nodeCode = task.getTaskDefinitionKey();
+        // 根据流程和节点信息取得 流程指定节点的字段信息
+        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, mainEntity.getExecutionid(), nodeCode, ${sub.entityName}Entity.class);
+        model.addAttribute("nodeColumsMap", json);
+        
         return "codegenerate/${entityPackage}/${sub.entityName?uncap_first}-input.jsp";
     }
     </#list>

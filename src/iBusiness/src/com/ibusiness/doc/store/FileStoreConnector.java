@@ -16,10 +16,14 @@ import org.springframework.util.FileCopyUtils;
 public class FileStoreConnector implements StoreConnector {
     private String baseDir;
 
+    /**
+     * 将指定文件上传到服务器
+     */
     public StoreDTO save(String model, InputStream inputStream, String originName) throws Exception {
         String prefix = new SimpleDateFormat("yyyyMMdd").format(new Date());
         String suffix = this.getSuffix(originName);
         String path = prefix + "/" + UUID.randomUUID() + suffix;
+        // 创建一个目录，它的路径名由当前 File 对象指定，包括任一必须的父路径
         File dir = new File(baseDir + "/" + model + "/" + prefix);
         dir.mkdirs();
 

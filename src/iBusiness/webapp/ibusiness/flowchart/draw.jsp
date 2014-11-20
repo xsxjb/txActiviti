@@ -28,6 +28,12 @@
 		.tool {
 		    height: 30px; float: left; cursor: pointer; padding: 5px; filter: alpha(Opacity = 70); opacity: 0.7;
 		}
+		.popDiv {
+			position: absolute;
+			z-index: 1000;
+			text-align: center;
+			display: none;
+		}
 	</style>
 	<script type="text/javascript">
 		/**
@@ -107,6 +113,12 @@
 			</tr>
 		</table> 
 	</div>
+	
+	<!-- 节点设置页面 -->
+	<div id="taskNodeDiv" class="popDiv" >
+		<iframe id="controlIframe" src="" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" ></iframe>
+	</div>
+	
 	<!-- 线弹出页面 -->
 	<div id ="lineForm"  style="width: 250px;position: absolute; top: 330; left: 400; z-index: 1000; text-align: center; background-color: #CFDFEF; display: none;">
 		<table style="width: 250px;">

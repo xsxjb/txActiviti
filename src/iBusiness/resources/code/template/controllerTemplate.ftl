@@ -66,8 +66,9 @@ public class ${entityName}Controller {
             entity = new ${entityName}Entity();
         }
         model.addAttribute("model", entity);
+        
+        // 在controller中设置页面控件用的数据
         <#list columns as po>
-            // 取得表单对应表管理表list
             <#list po.modelAttributeList as ma>
                 ${ma}
             </#list>

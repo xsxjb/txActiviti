@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.TableCommonUtil;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
@@ -335,6 +336,10 @@ public class FormController {
         String tbleColumnsHql = "from ConfTableColumns WHERE tableName=?";
         List<ConfTableColumns> tbleColumns = tableColumnsDao.find(tbleColumnsHql, confFormTable.getTableName());
         for (ConfTableColumns tableColumn : tbleColumns) {
+            // 如果是保留字就不要生成
+            if (TableCommonUtil.getReservedColumnsMap().containsKey(tableColumn.getColumnValue())) {
+                continue;
+            }
             ConfFormTableColumn formTableColumn = new ConfFormTableColumn();
             formTableColumn.setPackageName(packageName);
             formTableColumn.setFormName(confForm.getFormName());

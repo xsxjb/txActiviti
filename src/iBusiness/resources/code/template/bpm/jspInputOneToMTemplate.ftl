@@ -34,6 +34,18 @@
 		function mainFormSubmit(path){
 			${"$" + "('#mainForm').attr('action', path).submit()"};
 		}
+		
+		// 表单验证JS
+		$(function() {
+		    $("#mainForm").validate({
+		        submitHandler: function(form) {
+					bootbox.animate(false);
+					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+		            form.submit();
+		        },
+		        errorClass: 'validate-error'
+		    });
+		})
     </script>
   </head>
   <body>
@@ -61,6 +73,7 @@
 				       <input type="hidden" name="id" value="${'$' + '{model.id}'}">
 				       <input type="hidden" name="executionid" value="${'$' + '{model.executionid}'}">
 				       <input type="hidden" name="createdatebpm" value="${'$' + '{model.createdatebpm}'}">
+				       <input type="hidden" name="assigneeuser" value="${'$' + '{model.assigneeuser}'}">
 				       <input type="hidden" name="nodename" value="${'$' + '{model.nodename}'}">
 				       <input type="hidden" name="doneflag" value="${'$' + '{model.doneflag}'}">
 				   </c:if>
@@ -68,27 +81,32 @@
 					   <#if po.fcDisplay="1">
 					       <!-- 是否显示 -->
 						   <div class="form-group">
-							      <div class="col-lg-6">
-								      <label class="control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
-								      <!-- 是否可编辑 -->
-		                              <#if po.fcEdit="1">
-		                                  <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  class="text required" >
-		                              <#else>
-		                                  <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}" disabled="disabled"  class="text required" >
-		                              </#if>
-								  </div>
+							      <label class="control-label  col-lg-2" for="code-${po.fieldName}">${po.filedComment}:</label>
+							      <!-- 是否可编辑 -->
+	                              <#if "1"=po.fcEdit>
+	                                      ${po.jspTagInfo}
+	                              <#else>
+		                              <div class="col-lg-4">
+		                                  <label>${'$' + '{model.${po.fieldName}}'}</label>
+		                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
+	                                  </div>
+	                              </#if>
 							</div>
 					   </#if>
 					</#list>
 					
 					<!--  选择下一节点办理人弹出层  -->
-				    <div id="nextTaskUserDiv" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true">
-				            <div class="panel panel-default span8"> 
-					            <div class="panel-heading"><h4 class="panel-title">下一节点办理</h4></div>
-						        <div class="panel-body">
+				    <div id="nextTaskUserDiv" class="modal fade" tabindex="-1" style="top:20%;" >
+				            <div class="modal-dialog">
+						    <div class="modal-content">
+							      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>
+								        <h4 class="modal-title">办理下一节点</h4>
+							      </div>
+							      <div class="modal-body">
 									    <div class="form-group">
                                             <label class="col-lg-2 control-label" for="code-remark">办理人:</label>
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-4">
 												  <select id="code-sex" name="userId" class="form-control">
 												        <option value="" >请选择</option>
 													  <c:forEach items="${'$' + '{userItems}'}" var="item">
@@ -97,12 +115,13 @@
 												  </select>
 										      </div>
 						                </div>
-						                <div class="pull-right">
+						           </div>
+						           <div class="modal-footer">
 						                    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('${entityName?uncap_first}-complete.do')">办理</button>
-						                    <button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">关闭</button>
-						                </div>
-					            </div>
-					        </div>
+						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+						           </div>
+					            </div><!-- /.modal-content -->
+						  </div><!-- /.modal-dialog -->
 				    </div>
 					
 				</form>

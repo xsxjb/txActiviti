@@ -148,6 +148,24 @@ Table.prototype = {
 			return false;
 		}
 	},
+	
+	commitAll: function() {
+		var len = $('.' + this.config.selectedItemClass + ':checked').length;
+		if (len == 0) {
+			$.showMessage(this.messages['select.record'], {
+				 position: 'top',
+				 size: '36',
+				 fontSize: '20px'
+			});
+			return false;
+		}
+		if (confirm(this.messages['confirm.delete'])) {
+			$('#' + this.config.gridFormId).submit();
+			return true;
+		} else {
+			return false;
+		}
+	},
 
 	exportExcel: function() {
 		var url = this.config.exportUrl;

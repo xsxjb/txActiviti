@@ -36,7 +36,7 @@ $(function() {
 				  <div class="form-group">
 				    <label class="control-label" for="msg-info_address">文件</label>
 					<div class="controls">
-					  <input id="msg-info_address" type="file" name="attachment" value="" size="40" class="text">
+					  <input id="msg-info_address" type="file" name="attachment" value="" size="40" class="text required">
 				    </div>
 				  </div>
 				  <div class="form-group">

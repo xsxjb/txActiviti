@@ -105,7 +105,7 @@ public class BpmProcessController {
         model.addAttribute("model", entity);
         model.addAttribute("packageName", entity.getPackageName());
         model.addAttribute("bpmId", bpmId);
-        model.addAttribute("bpmType", "bpmBase");
+        model.addAttribute("tabType", "bpmBase");
         // 流程表单下拉菜单,只查询流程表单
         String formHql = "from ConfForm where packageName=? AND isBpmForm=1";
         List<ConfForm> formList = confFormDao.find(formHql, packageName);

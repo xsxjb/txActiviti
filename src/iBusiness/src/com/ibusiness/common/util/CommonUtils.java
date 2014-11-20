@@ -151,6 +151,27 @@ public class CommonUtils {
         return jsonConfig;
     }
     /**
+     * 字符串转换大写
+     */
+    public static String toUpperCase(String str) {
+        if (isNull(str)) {
+            return "";
+        } else {
+            return str.toUpperCase();
+        }
+    }
+    /**
+     * 字符串转换小写
+     */
+    public static String toLowerCase(String str) {
+        if (isNull(str)) {
+            return "";
+        } else {
+            return str.toLowerCase();
+        }
+    }
+    
+    /**
      * @return the ymdhms
      */
     public SimpleDateFormat getYmdhms() {

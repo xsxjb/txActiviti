@@ -33,28 +33,15 @@
                   
                       <!-- 是否显示 -->
                           <div class="form-group">
-                              <label class="col-lg-2 control-label" for="code-age">年龄:</label>
+                              <label class="col-lg-2 control-label" for="code-name">姓名:</label>
                               <!-- 是否可编辑 -->
-                                      <input id="code-age" type="text" name="age" value="${model.age}"  class="text number" >
+                                      <input id="code-name" type="text" name="name" value="${model.name}" class="text required" >
                           </div>
                       <!-- 是否显示 -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="code-name">姓名:</label>
-					<!-- 是否可编辑 -->
-					<!-- 编辑类型   单行 -->
-					<input id="code-name" type="text" name="name" value="${model.name}" class="text required">
-				</div>
-				<!-- 是否显示 -->
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-remark">备注:</label>
                               <!-- 是否可编辑 -->
-                                      <!-- 编辑类型     多行 --><div class="col-lg-6">    <textarea class="form-control" id="code-remark" name="remark" rows="1">${model.remark}</textarea></div>
-                          </div>
-                      <!-- 是否显示 -->
-                          <div class="form-group">
-                              <label class="col-lg-2 control-label" for="code-sex">性别:</label>
-                              <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">    <select id="code-sex" name="sex" class="form-control">          <option value="" >请选择</option>        <c:forEach items="${sexItems}" var="item">          <option value="${item.key}"  >${item.value}</option>        </c:forEach>    </select></div>
+                                      <div class="col-lg-6">    <textarea class="form-control" id="code-remark" name="remark" rows="1" >${model.remark}</textarea></div>
                           </div>
                   
                   <div class="form-group">

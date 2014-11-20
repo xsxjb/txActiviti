@@ -127,3 +127,23 @@ CREATE TABLE IB_CONF_FLOW_CHART (
 	     CONTEXT  VARCHAR(2000), 
         CONSTRAINT PK_IB_CONF_FLOW_CHART PRIMARY KEY(ID)
 ) ENGINE=INNODB;
+
+/*==============================================================*/
+/* 流程节点字段配置表   */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_BPM_NODE_COLUMS;
+CREATE TABLE IB_BPM_NODE_COLUMS (
+        ID                                       VARCHAR(64),  
+		PACKAGENAME                VARCHAR(128),  
+		FLOWID                            VARCHAR(64),  
+		FORMNAME                      VARCHAR(128),  
+		NODEID                             VARCHAR(64),  
+		FORMCOLUMN                 VARCHAR(128),  
+		FORMCOLUMNTITLE       VARCHAR(256),  
+		TABLENAME                    VARCHAR(128),  
+		TABLECOLUMN                VARCHAR(128),  
+		FCDISPLAY                       VARCHAR(8),  
+		FCEDIT                              VARCHAR(8),  
+        CONSTRAINT PK_IB_BPM_NODE_COLUMS PRIMARY KEY(ID)
+) ENGINE=INNODB;
+

@@ -82,7 +82,7 @@ this.model = 'design';//设定2个模式（design/control）
 	 *	鼠标移入事件
 	 */
 	this.mousemove = function( mouseX,mouseY ){
-		ctx.strokeStyle="#FFFFFF";
+		ctx.strokeStyle="#000000";
 		ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false ); 
 	}
 	
@@ -153,12 +153,12 @@ this.model = 'design';//设定2个模式（design/control）
 		}
 		// 鼠标移动到此 或者当前已经选定此组件
 	    if(this.moveOver == 1  || this.mouseClick == 1){
-			ctx.strokeStyle="#FFFFFF";
+			ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false );
 		}
 	    if (this.moveOver == 9) {
 		    // 删除子按钮
-		    ctx.strokeStyle="#FFFFFF";
+		    ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)+this.xDeleteBtn-5, parseInt(this.y)+this.yDeleteBtn-5, parseInt(this.widthDeleteBtn)+10, parseInt(this.heightDeleteBtn)+10, false );
 		}
 	}

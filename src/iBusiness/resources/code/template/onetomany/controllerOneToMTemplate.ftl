@@ -90,6 +90,13 @@ public class ${entityName}Controller {
         
         // 流程ID
         model.addAttribute("flowId", flowId);
+        
+        // 在controller中设置页面控件用的数据
+        <#list columns as po>
+            <#list po.modelAttributeList as ma>
+                ${ma}
+            </#list>
+        </#list>
         return "codegenerate/${entityPackage}/${entityName?uncap_first}-input.jsp";
     }
     

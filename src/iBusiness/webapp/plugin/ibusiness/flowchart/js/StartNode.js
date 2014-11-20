@@ -91,7 +91,7 @@ function StartNode( id,x,y ){
 	 *	鼠标移入事件
 	 */
 	this.mousemove = function( mouseX,mouseY ){
-		ctx.strokeStyle="#FFFFFF";
+		ctx.strokeStyle="#000000";
 		ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false ); 
 	}
 	
@@ -196,17 +196,17 @@ function StartNode( id,x,y ){
 		}
 		// 鼠标移动到此 或者当前已经选定此组件
 	    if(this.moveOver == 1 || this.mouseClick == 1){
-			ctx.strokeStyle="#FFFFFF";
+			ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false );
 		}
 		if (this.moveOver == 3) {
 		    // 建立下一节点
-		    ctx.strokeStyle="#FFFFFF";
+		    ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)+this.xNextTaskBtn-5, parseInt(this.y)+this.yNextTaskBtn-5, parseInt(this.widthNextTaskBtn)+10, parseInt(this.heightNextTaskBtn)+10, false );
 		}
 		if (this.moveOver == 9) {
 		    // 删除子按钮
-		    ctx.strokeStyle="#FFFFFF";
+		    ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)+this.xDeleteBtn-5, parseInt(this.y)+this.yDeleteBtn-5, parseInt(this.widthDeleteBtn)+10, parseInt(this.heightDeleteBtn)+10, false );
 		}
 	}

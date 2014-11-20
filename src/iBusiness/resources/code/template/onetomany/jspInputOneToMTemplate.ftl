@@ -58,17 +58,16 @@
 				       <#if po.fcDisplay="1">
 				       <!-- 是否显示 -->
 						   <div class="form-group">
-							      <div class="col-lg-6">
-								      <label class="control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
-								      <!-- 是否可编辑 -->
-		                              <#if po.fcEdit="1">
-		                                   ${po.jspTagInfo}
-		                                  <input id="code-${po.fieldName}" type="text" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  class="text required" >
-		                              <#else>
+							      <label class="control-label col-lg-2" for="code-${po.fieldName}">${po.filedComment}:</label>
+							      <!-- 是否可编辑 -->
+	                              <#if po.fcEdit="1">
+	                                   ${po.jspTagInfo}
+	                              <#else>
+	                                  <div class="col-lg-4">
 		                                  <label>${'$' + '{model.${po.fieldName}}'}</label>
-                                          <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
-		                              </#if>
-								  </div>
+	                                      <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
+	                                  </div>
+	                              </#if>
 							</div>
 					    </#if>
 					</#list>

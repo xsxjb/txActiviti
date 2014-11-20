@@ -17,18 +17,18 @@ import com.ibusiness.component.form.entity.ConfFormTableColumn;
 
 
 /**
- * CodeTagFactory生成页面标签工厂类
+ * CodeBpmTagFactory 流程用 生成页面标签工厂类
  * 
  * @author JiangBo
  *
  */
-public class CodeTagFactory {
-    private CodeTagFactory () {}
-    private static CodeTagFactory instance = new CodeTagFactory();
-    public static CodeTagFactory getInstance() {
+public class CodeBpmTagFactory {
+    private CodeBpmTagFactory () {}
+    private static CodeBpmTagFactory instance = new CodeBpmTagFactory();
+    public static CodeBpmTagFactory getInstance() {
         return instance;
     }
-    private static Logger logger = LoggerFactory.getLogger(CodeTagFactory.class);
+    private static Logger logger = LoggerFactory.getLogger(CodeBpmTagFactory.class);
     /**
      * 组件map
      */
@@ -61,7 +61,7 @@ public class CodeTagFactory {
         try {
             if (tagComponentMap.containsKey(formColumn.getFcType())) {
                 String strMethod = tagComponentMap.get(formColumn.getFcType());
-                columnt = (Columnt) CodeTagFactory.class.getDeclaredMethod(strMethod, Columnt.class, ConfFormTableColumn.class).invoke(instance, columnt, formColumn);
+                columnt = (Columnt) CodeBpmTagFactory.class.getDeclaredMethod(strMethod, Columnt.class, ConfFormTableColumn.class).invoke(instance, columnt, formColumn);
                 return columnt;
             } else {
                 logger.error("================要求生成的页面控件不存在:" + formColumn.getFcType());
@@ -84,8 +84,11 @@ public class CodeTagFactory {
      * 单行输入框
      */
     public Columnt singleInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
-        String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" >";
+        String str = "<!-- 编辑类型   单行 -->";
+        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" ${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'? 'disabled=\"disabled\"':''} class=\"text required\" >";
+        str = str + " <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        str = str + "     <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + " </c:if>";
         columnt.setJspTagInfo(str);
         return columnt;
     }
@@ -93,9 +96,12 @@ public class CodeTagFactory {
      * 多行输入框
      */
     public Columnt multiInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
-        String str = "";
+        String str = "<!-- 编辑类型     多行 -->";
         str = str + "<div class=\"col-lg-6\">";
-        str = str + "    <textarea class=\"form-control\" id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" rows=\"1\" >${model."+columnt.getFieldName()+"}</textarea>";
+        str = str + "    <textarea class=\"form-control\" id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" rows=\"1\"  ${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'? 'disabled=\"value\"':''} >${model."+columnt.getFieldName()+"}</textarea>";
+        str = str + "    <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        str = str + "      <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + "    </c:if>";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -105,7 +111,10 @@ public class CodeTagFactory {
      */
     public Columnt numberInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text number\" >";
+        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text number\" ${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'? 'disabled=\"disabled\"':''} >";
+        str = str + " <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        str = str + "     <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + " </c:if>";
         columnt.setJspTagInfo(str);
         return columnt;
     }
@@ -154,12 +163,15 @@ public class CodeTagFactory {
         // 生成JSP显示组件
         String jspTagInfo = "";
         jspTagInfo = jspTagInfo + "<div class=\"col-lg-3\">";
-        jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\" >";
+        jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\" ${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'? 'disabled=\"value\"':''} >";
         jspTagInfo = jspTagInfo + "          <option value=\"\" >请选择</option>";
         jspTagInfo = jspTagInfo + "        <c:forEach items=\"${"+columnt.getFieldName()+"Items}\" var=\"item\">";
         jspTagInfo = jspTagInfo + "          <option value=\"${item.key}\" ${item.key==model."+columnt.getFieldName()+"? 'selected':''} >${item.value}</option>";
         jspTagInfo = jspTagInfo + "        </c:forEach>";
         jspTagInfo = jspTagInfo + "    </select>";
+        jspTagInfo = jspTagInfo + "    <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        jspTagInfo = jspTagInfo + "      <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        jspTagInfo = jspTagInfo + "    </c:if>";
         jspTagInfo = jspTagInfo + "</div>";
         columnt.setJspTagInfo(jspTagInfo);
         return columnt;

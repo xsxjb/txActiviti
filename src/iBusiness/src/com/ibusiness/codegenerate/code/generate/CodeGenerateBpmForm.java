@@ -15,6 +15,7 @@ import com.ibusiness.codegenerate.code.Columnt;
 import com.ibusiness.codegenerate.code.NonceUtils;
 import com.ibusiness.codegenerate.code.DbEntity.DbFiledToJspUtil;
 import com.ibusiness.codegenerate.code.window.CreateFileProperty;
+import com.ibusiness.codegenerate.common.CodeBpmTagFactory;
 import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
 import com.ibusiness.codegenerate.util.def.FtlDef;
@@ -39,7 +40,6 @@ public class CodeGenerateBpmForm implements ICallBack {
     private static String entityTitle = "用户";
     private static String primaryKeyPolicy = "uuid";
     private static String sequenceCode = "";
-    private static String ftlMode;
     public static String FTL_MODE_A = "A";
     public static String FTL_MODE_B = "B";
     private static List<CodeParamBean> subTabParamList = new ArrayList<CodeParamBean>();
@@ -72,7 +72,6 @@ public class CodeGenerateBpmForm implements ICallBack {
         formName = codeParamBean.getFormName();
         tableName = codeParamBean.getTableName();
         entityTitle = codeParamBean.getEntityTitle();
-        ftlMode = codeParamBean.getFormStyle();
         primaryKeyPolicy = (StringUtils.isNotBlank(codeParamBean.getKeyType())) ? codeParamBean.getKeyType() : "uuid";
         sequenceCode = "";
         createFileProperty = fileProperty;
@@ -213,6 +212,8 @@ public class CodeGenerateBpmForm implements ICallBack {
                 columnt.setFcDisplay(formColumn.getFcDisplay());
                 // 是否编辑
                 columnt.setFcEdit(formColumn.getFcEdit());
+                // 根据标签类型生成标签
+                columnt = CodeBpmTagFactory.getInstance().CreateTagComponent(columnt, formColumn);
             }
             subColumlist.add(columnt);
         }

@@ -96,7 +96,7 @@ function Texts(	id,x,y ){
 	this.mousemove = function( mouseX,mouseY ){
 		
 		if( this.columnName != '%' ){
-			ctx.strokeStyle="#FFFFFF";
+			ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false ); 	
 		}
 
@@ -243,7 +243,7 @@ function Texts(	id,x,y ){
 			//画出边框（当鼠标移动到文字上面的时候，显示边框和提示标题）
 			if( this.isPop == 1 && this.moveOver == 1 ){
 				//1.画出边框
-				ctx.strokeStyle="#FFFFFF";
+				ctx.strokeStyle="#000000";
 				ctx.strokeRect( parseInt(this.x)-5+offX, parseInt(this.y)-5, (x.length+this.unit.length)*10+20, parseInt(this.height)+10 , false ); 	
 			
 				//2.提示标题

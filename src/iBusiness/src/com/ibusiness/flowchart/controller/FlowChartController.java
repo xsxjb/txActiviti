@@ -1,5 +1,6 @@
 package com.ibusiness.flowchart.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
+import com.ibusiness.bpm.entity.BpmNodeColums;
 import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.bpm.service.BpmComBusiness;
+import com.ibusiness.bpm.service.BpmNodeColumsService;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.flowchart.entity.ConfFlowChart;
 import com.ibusiness.flowchart.service.FlowChartService;
@@ -38,12 +41,14 @@ import com.ibusiness.flowchart.service.FlowChartService;
 public class FlowChartController {
 
     private FlowChartService flowChartService;
+    private BpmNodeColumsService bpmNodeColumsService;
     private BpmProcessDao bpmProcessDao;
     private BpmProcessVersionDao bpmProcessVersionDao;
     private ProcessEngine processEngine;
     
     /**
-     * 查询
+     * 流程图信息初始化
+     * 
      * @param flowId
      * @return
      */
@@ -52,8 +57,11 @@ public class FlowChartController {
         //
         model.addAttribute("packageName", packageName);
         model.addAttribute("bpmId", bpmId);
-        model.addAttribute("tabType", "flowChart");
-        return "ibusiness/bpm/bpm-process-input.jsp";
+        
+        // 包名
+        model.addAttribute("packageName", packageName);
+        
+        return "ibusiness/flowchart/flowchart-draw.jsp";
     }
     
     /**
@@ -201,24 +209,34 @@ public class FlowChartController {
         }
         return "redirect:/flowchart/query-flow-chart.do?flowId="+flowId;
     }
+    
     /**
      * 显示启动流程的表单.
      */
-    @RequestMapping("form-viewStartForm")
-    public String viewStartForm(@RequestParam("bpmProcessId")
-    String bpmProcessId, @RequestParam(value = "businessKey", required = false)
-    String businessKey, Model model) throws Exception {
-        model.addAttribute("bpmProcessId", bpmProcessId);
-        model.addAttribute("businessKey", businessKey);
-            // 如果没找到form，就判断是否配置负责人 TODO
-//            return taskConf(new LinkedMultiValueMap(), bpmProcessId, businessKey, nextStep, model);
-        return "redirect:/flowchart/testForm-list.do";
+    @RequestMapping("pop-conf-taskNode")
+    @ResponseBody
+    public String confTaskNode(@RequestParam(value = "packageName", required = false) String packageName, @RequestParam("flowId") String flowId, Model model) throws Exception {
+        String bncsSql = "from BpmNodeColums where flowId=?";
+        List<BpmNodeColums> bpmNodeColumsList = bpmNodeColumsService.find(bncsSql, flowId);
+        for (BpmNodeColums bpmNodeColums : bpmNodeColumsList) {
+//            bpmNodeColums.
+        }
+        // TODO 主表对象
+        List<List<BpmNodeColums>> list = new ArrayList<List<BpmNodeColums>>();
+        list.add(bpmNodeColumsList);
+        JSONArray array = new JSONArray();
+        array.add(CommonUtils.getJsonFromList(bpmNodeColumsList, null));
+        return array.toString();
     }
 
     // ======================================================================
     @Resource
     public void setFlowChartService(FlowChartService flowChartService) {
         this.flowChartService = flowChartService;
+    }
+    @Resource
+    public void setBpmNodeColumsService(BpmNodeColumsService bpmNodeColumsService) {
+        this.bpmNodeColumsService = bpmNodeColumsService;
     }
     @Resource
     public void setBpmProcessDao(BpmProcessDao bpmProcessDao) {

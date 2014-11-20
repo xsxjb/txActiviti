@@ -46,6 +46,8 @@
 	          <div id="search" class="content content-inner">
 				  <form name="cgForm" method="post" action="test-list.do" class="form-inline">
 				    <div class="form-group">
+				                <label for="code_table_name">姓名:</label>
+				                <input type="text" id="code_table_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
 					    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
 					</div>
 				 </form>
@@ -74,10 +76,8 @@
 			      <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					                <th class="sorting">年龄</th>
 					                <th class="sorting">姓名</th>
 					                <th class="sorting">备注</th>
-					                <th class="sorting">性别</th>
 				        <th width="80">&nbsp;</th>
 				      </tr>
 				    </thead>
@@ -85,10 +85,8 @@
 					      <c:forEach items="${page.result}" var="item">
 					      <tr>
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-						            <td>${item.age}</td>
 						            <td>${item.name}</td>
 						            <td>${item.remark}</td>
-						            <td>${item.sex}</td>
 					        <td>
 					          <a href="test-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>

@@ -52,7 +52,7 @@ public class CommonBusiness {
      */
     @SuppressWarnings("unchecked")
     public List<ConfTableColumns> getTableColumnsList(String tableName) {
-        String hql = "from ConfTableColumns where tableName=?";
+        String hql = "from ConfTableColumns where tableName=? order by columnNo";
         tableColumnsList = getTableColumnsDao().find(hql, tableName);
         return tableColumnsList;
     }

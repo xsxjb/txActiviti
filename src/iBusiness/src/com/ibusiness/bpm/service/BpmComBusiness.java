@@ -2,6 +2,7 @@ package com.ibusiness.bpm.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +26,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ibusiness.bpm.cmd.RollbackTaskCmd;
 import com.ibusiness.bpm.cmd.SyncProcessCmd;
+import com.ibusiness.bpm.dao.BpmFlowNodeDao;
 import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
+import com.ibusiness.bpm.entity.BpmFlowNode;
+import com.ibusiness.bpm.entity.BpmNodeColums;
 import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.spring.ApplicationContextHelper;
 import com.ibusiness.flowchart.entity.ConfFlowChart;
 import com.ibusiness.security.util.SpringSecurityUtils;
@@ -97,6 +102,41 @@ public class BpmComBusiness {
         HistoryService historyService = getProcessEngine().getHistoryService();
         List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskAssignee(userId).finished().list();
         return historicTasks;
+    }
+    /**
+     * 根据流程和节点信息取得 流程指定节点的字段信息
+     * 
+     * @param flowId
+     * @param executionid
+     * @return
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public JSONObject getNodeColumsInfo(String flowId, String executionid, String nodeCode, Class clazz) {
+        // 反射类取得类中各个属性字段名
+        Map<String, String> clazzMap = new HashMap<String, String>();
+        Field field[] = clazz.getDeclaredFields();
+        for (Field f : field) {
+            String key = CommonUtils.toUpperCase(f.getName());
+            clazzMap.put(key, f.getName());
+        }
+        // 取得节点信息
+        String sql = " from BpmFlowNode where flowId=? AND nodeCode=?";
+        List<BpmFlowNode> flowNodeList = getBpmFlowNodeDao().find(sql, flowId, nodeCode);
+        BpmFlowNode bpmFlowNode = null;
+        if (null != flowNodeList && flowNodeList.size() > 0) {
+            bpmFlowNode = flowNodeList.get(0);
+        }
+        // 取得指定节点的字段信息
+        String nodeColumsSql = " from BpmNodeColums where flowId=? AND nodeId=?";
+        List<BpmNodeColums> bpmNodeColumsList = getBpmNodeColumsService().find(nodeColumsSql, flowId, bpmFlowNode.getId());
+        Map<String, BpmNodeColums> nodeColumsMap = new HashMap<String, BpmNodeColums>();
+        for (BpmNodeColums bpmNodeColums : bpmNodeColumsList) {
+            if (clazzMap.containsKey(bpmNodeColums.getTableColumn())) {
+                nodeColumsMap.put(clazzMap.get(bpmNodeColums.getTableColumn()), bpmNodeColums);
+            }
+        }
+        JSONObject json = JSONObject.fromObject(nodeColumsMap);
+        return json;
     }
     // ~ ==================================国内特色流程====================================
     /**
@@ -352,5 +392,11 @@ public class BpmComBusiness {
     }
     public RuntimeService getRuntimeService() {
         return ApplicationContextHelper.getBean(RuntimeService.class);
+    }
+    public BpmFlowNodeDao getBpmFlowNodeDao() {
+        return ApplicationContextHelper.getBean(BpmFlowNodeDao.class);
+    }
+    public BpmNodeColumsService getBpmNodeColumsService() {
+        return ApplicationContextHelper.getBean(BpmNodeColumsService.class);
     }
 }

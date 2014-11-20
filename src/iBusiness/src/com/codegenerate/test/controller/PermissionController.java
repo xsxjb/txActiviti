@@ -9,6 +9,8 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.task.Task;
 import org.apache.commons.io.IOUtils;
@@ -68,6 +70,8 @@ public class PermissionController {
         propertyFilters.add(new PropertyFilter("EQI_doneflag", flowType));
         propertyFilters.add(new PropertyFilter("EQS_assigneeuser", SpringSecurityUtils.getCurrentUserId()));
         // 根据条件查询数据
+        page.setOrderBy("createdatebpm");
+        page.setOrder("desc");
         page = permissionService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("flowId", flowId);
@@ -83,13 +87,37 @@ public class PermissionController {
      */
     @RequestMapping("permission-input")
     public String input(@ModelAttribute Page page, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "id", required = false) String id, Model model) {
+        
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
         PermissionEntity entity = null;
         if (!CommonUtils.isNull(id)) {
             entity = permissionService.get(id);
         } else {
             entity = new PermissionEntity();
+            // 发起一个流程, 设置当前用户执行
+            String userId = SpringSecurityUtils.getCurrentUserId();
+            String executionId = bpmComBusiness.flowStart(flowId, userId);
+            entity.setExecutionid(executionId);
+            // 设置流程实例信息=========================
+            Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
+            entity.setCreatedatebpm(task.getCreateTime());
+            entity.setNodename(task.getName());
+            entity.setAssigneeuser(userId);
+            entity.setDoneflag(0);
+            // 进行存储
+            entity.setId(UUID.randomUUID().toString());
+            entity.setDoneflag(0);
+            permissionService.insert(entity);
         }
         model.addAttribute("model", entity);
+        
+        // 取得当前流程节点信息
+        Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
+        String nodeCode = task.getTaskDefinitionKey();
+        // 根据流程和节点信息取得 流程指定节点的字段信息
+        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, entity.getExecutionid(), nodeCode, PermissionEntity.class);
+        model.addAttribute("nodeColumsMap", json);
+        
         // 子表信息
         Map<String, Object> map = new HashMap<String, Object>();
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(map);
@@ -108,7 +136,7 @@ public class PermissionController {
         model.addAttribute("flowId", flowId);
         return "codegenerate/test/permission-input.jsp";
     }
-    
+
     /**
      * 子表新建
      */
@@ -118,6 +146,17 @@ public class PermissionController {
         model.addAttribute("model", entity);
         model.addAttribute("parentid", id);
         model.addAttribute("flowId", flowId);
+        
+        // 
+        PermissionEntity mainEntity = permissionService.get(id);
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
+        // 取得当前流程节点信息
+        Task task = bpmComBusiness.getTaskIdByExecutionId(mainEntity.getExecutionid());
+        String nodeCode = task.getTaskDefinitionKey();
+        // 根据流程和节点信息取得 流程指定节点的字段信息
+        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, mainEntity.getExecutionid(), nodeCode, Permission_sEntity.class);
+        model.addAttribute("nodeColumsMap", json);
+        
         return "codegenerate/test/permission_s-input.jsp";
     }
     /**
@@ -130,18 +169,9 @@ public class PermissionController {
     public String completeTask(@ModelAttribute PermissionEntity entity, @RequestParam(value = "flowId", required = false) String flowId, 
             @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
-        String executionId = null;
         // 取得当前用户 
         if (CommonUtils.isNull(entity.getExecutionid())) {
-            // 启动流程, 设置执行实例ID
-            executionId = bpmComBusiness.flowStart(flowId, userId);
-            entity.setExecutionid(executionId);
-            // 设置流程实例信息=========================
-            Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
-            entity.setCreatedatebpm(task.getCreateTime());
-            entity.setNodename(task.getName());
-            entity.setAssigneeuser(userId);
-            entity.setDoneflag(0);
+            
         } else {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
             // 办理流程

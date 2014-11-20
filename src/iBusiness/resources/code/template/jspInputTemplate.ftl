@@ -40,8 +40,10 @@
                               <#if "1"=po.fcEdit>
                                       ${po.jspTagInfo}
                               <#else>
-                                  <label>${'$' + '{model.${po.fieldName}}'}</label>
-                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
+	                              <div class="col-lg-4">
+	                                  <label>${'$' + '{model.${po.fieldName}}'}</label>
+	                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
+                                  </div>
                               </#if>
                           </div>
                         </#if>

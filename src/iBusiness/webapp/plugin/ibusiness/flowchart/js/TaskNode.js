@@ -126,7 +126,7 @@ function TaskNode(id,x,y ){
 	 */
 	this.mousemove = function( mouseX,mouseY ){
 	    // 画出边线
-		ctx.strokeStyle="#FFFFFF";
+		ctx.strokeStyle="#000000";
 	    ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false );
 	}
 	/**
@@ -141,12 +141,32 @@ function TaskNode(id,x,y ){
 	this.clickEdit = function(mouseX,mouseY){
 		// alert( this.id+this.name+'被单击（编辑）!' );
 		if (this.moveOver == 1) {
+			//
+			$.ajax({
+				url:'/iBusiness/default/flowchart/pop-conf-taskNode.do',
+				data: {
+					flowId:$("#bpmId").val(),
+					packageName:$("#packageName").val()
+	    		},
+				success:function(data){
+					var json = JSON.parse(data);
+					alert("=========单击事件=:"+json);
+					// 
+					$('#taskNodeDiv').modal('show');
+				}
+			});
+			
+			
+			
+			//
+			/**
 			$("#taskNodeForm").css({top:mouseY + canvas.offsetTop ,left: mouseX + canvas.offsetLeft});
 			$("#taskNodeForm").show(300);
 			$("#taskNodeId").attr("value",this.id);
 			$("#taskNodeName").attr("value",this.name);
 			$("#taskNodeX").attr("value",this.x);
 			$("#taskNodeY").attr("value",this.y);
+			*/
 		} else if (this.moveOver == 2) {
 		
 		} else if (this.moveOver == 3) {
@@ -281,27 +301,27 @@ function TaskNode(id,x,y ){
 		// 鼠标移动到控件位置显示内容
 		if(this.moveOver == 1 || this.mouseClick == 1){
 		    // 主控件
-			ctx.strokeStyle="#FFFFFF";
+			ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false );
 		}
 		if (this.moveOver == 2) {
 		    // 编辑子按钮
-		    ctx.strokeStyle="#FFFFFF";
+		    ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)+this.xEditBtn-5, parseInt(this.y)+this.yEditBtn-5, parseInt(this.widthEditBtn)+10, parseInt(this.heightEditBtn)+10, false );
 		}
 		if (this.moveOver == 3) {
 		    // 建立下一节点
-		    ctx.strokeStyle="#FFFFFF";
+		    ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)+this.xNextTaskBtn-5, parseInt(this.y)+this.yNextTaskBtn-5, parseInt(this.widthNextTaskBtn)+10, parseInt(this.heightNextTaskBtn)+10, false );
 		}
 		if (this.moveOver == 8) {
 		    // 建立结束节点
-		    ctx.strokeStyle="#FFFFFF";
+		    ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)+this.xEndBtn-5, parseInt(this.y)+this.yEndBtn-5, parseInt(this.widthEndBtn)+10, parseInt(this.heightEndBtn)+10, false );
 		}
 		if (this.moveOver == 9) {
 		    // 删除子按钮
-		    ctx.strokeStyle="#FFFFFF";
+		    ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)+this.xDeleteBtn-5, parseInt(this.y)+this.yDeleteBtn-5, parseInt(this.widthDeleteBtn)+10, parseInt(this.heightDeleteBtn)+10, false );
 		}
 	}
