@@ -136,7 +136,7 @@ public class CodeController {
                     subFileProperty.setJspFlag(true);
                     subFileProperty.setServiceIFlag(true);
                     subFileProperty.setEntityFlag(true);
-                    subFileProperty.setJspMode("sub");
+                    subFileProperty.setJspMode("bpmSub");
                     new CodeGenerate(subParamBean, subFileProperty).generateToFile();
                     subParamList.add(subParamBean);
                 }

@@ -15,6 +15,7 @@ import com.ibusiness.codegenerate.code.Columnt;
 import com.ibusiness.codegenerate.code.NonceUtils;
 import com.ibusiness.codegenerate.code.DbEntity.DbFiledToJspUtil;
 import com.ibusiness.codegenerate.code.window.CreateFileProperty;
+import com.ibusiness.codegenerate.common.CodeBpmTagFactory;
 import com.ibusiness.codegenerate.common.CodeTagFactory;
 import com.ibusiness.codegenerate.util.CodeDateUtils;
 import com.ibusiness.codegenerate.util.CodeResourceUtil;
@@ -203,7 +204,11 @@ public class CodeGenerate implements ICallBack {
                 columnt.setFcType(formColumn.getFcType());
                 
                 // 根据标签类型生成标签
-                columnt = CodeTagFactory.getInstance().CreateTagComponent(columnt, formColumn);
+                if ("bpmSub".equals(createFileProperty.getJspMode())) {
+                    columnt = CodeBpmTagFactory.getInstance().CreateTagComponent(columnt, formColumn);
+                } else {
+                    columnt = CodeTagFactory.getInstance().CreateTagComponent(columnt, formColumn);
+                }
             }
             
             // ADD
@@ -226,6 +231,8 @@ public class CodeGenerate implements ICallBack {
                 codeFactory.invoke("jspInputTemplate.ftl", "jsp");
             } else if ("sub".equals(createFileProperty.getJspMode())) {
                 codeFactory.invoke("onetomany/jspSubInputOneToMTemplate.ftl", "jsp");
+            } else if ("bpmSub".equals(createFileProperty.getJspMode())) {
+                codeFactory.invoke("bpm/jspSubInputOneToMTemplate.ftl", "jsp");
             }
         }
         // ServiceImpl文件

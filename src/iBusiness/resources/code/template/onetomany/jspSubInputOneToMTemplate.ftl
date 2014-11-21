@@ -14,8 +14,10 @@
 		$(function() {
 		    $("#subForm").validate({
 		        submitHandler: function(form) {
-					bootbox.animate(false);
-					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+		            if (typeof(bootbox) != 'undefined') {
+					    bootbox.animate(false);
+					    var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+		            }
 		            form.submit();
 		        },
 		        errorClass: 'validate-error'
@@ -33,12 +35,21 @@
 					      <input id="code_id" type="hidden" name="id" value="${'$' + '{model.id}'}">
 					  </c:if>
 					   <#list columns as po>
-						  <div class="form-group">
-						    <label class="control-label" for="code-${po.fieldName}">${po.filedComment}</label>
-							<div class="controls">
-							  <input id="code-${po.fieldName}" type="text" name=${po.fieldName} value="${'$' + '{model.${po.fieldName}}'}"  class="text required"  >
-						    </div>
-						  </div>
+					       <#if po.fcDisplay="1">
+	                       <!-- 是否显示 -->
+	                          <div class="form-group">
+	                              <label class="control-label col-lg-2" for="code-${po.fieldName}">${po.filedComment}:</label>
+	                              <!-- 是否可编辑 -->
+	                              <#if "1"=po.fcEdit>
+	                                      ${po.jspTagInfo}
+	                              <#else>
+		                              <div class="col-lg-4">
+		                                  <label>${'$' + '{model.${po.fieldName}}'}</label>
+		                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
+	                                  </div>
+	                              </#if>
+	                          </div>
+	                       </#if>
 					  </#list>
 					  
 					  <div class="form-group">

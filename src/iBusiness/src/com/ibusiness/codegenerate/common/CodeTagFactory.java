@@ -113,9 +113,11 @@ public class CodeTagFactory {
      * 日期
      */
     public Columnt dateParser(Columnt columnt, ConfFormTableColumn formColumn) {
-        // TODO 未实现
-        String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\"  class=\"text\" >";
+        String str = "<div class=\"input-append datepicker date\">";
+        str = str + "<span class=\"add-on\">";
+        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
+        str = str + "</span>";
+        str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
     }
@@ -124,8 +126,11 @@ public class CodeTagFactory {
      */
     public Columnt dateTimeParser(Columnt columnt, ConfFormTableColumn formColumn) {
         // TODO 未实现
-        String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\"  class=\"text\" >";
+        String str = "<div class=\"input-append datepicker date\">";
+        str = str + "<span class=\"add-on\">";
+        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
+        str = str + "</span>";
+        str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
     }

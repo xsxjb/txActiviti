@@ -84,11 +84,14 @@ public class CodeBpmTagFactory {
      * 单行输入框
      */
     public Columnt singleInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
-        String str = "<!-- 编辑类型   单行 -->";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" ${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'? 'disabled=\"disabled\"':''} class=\"text required\" >";
-        str = str + " <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
-        str = str + "     <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
-        str = str + " </c:if>";
+        String str = "";
+        str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
+        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" >";
+        str = str + "</c:if>";
+        str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        str = str + "  <label>${model."+columnt.getFieldName()+"}</label>";
+        str = str + "  <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + "</c:if>";
         columnt.setJspTagInfo(str);
         return columnt;
     }
@@ -98,10 +101,13 @@ public class CodeBpmTagFactory {
     public Columnt multiInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "<!-- 编辑类型     多行 -->";
         str = str + "<div class=\"col-lg-6\">";
-        str = str + "    <textarea class=\"form-control\" id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" rows=\"1\"  ${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'? 'disabled=\"value\"':''} >${model."+columnt.getFieldName()+"}</textarea>";
-        str = str + "    <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
-        str = str + "      <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
-        str = str + "    </c:if>";
+        str = str + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
+        str = str + "    <textarea class=\"form-control\" id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" rows=\"1\" >${model."+columnt.getFieldName()+"}</textarea>";
+        str = str + "  </c:if>";
+        str = str + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        str = str + "    <label>${model."+columnt.getFieldName()+"}</label>";
+        str = str + "    <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + "  </c:if>";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -111,10 +117,13 @@ public class CodeBpmTagFactory {
      */
     public Columnt numberInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text number\" ${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'? 'disabled=\"disabled\"':''} >";
-        str = str + " <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
-        str = str + "     <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
-        str = str + " </c:if>";
+        str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
+        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text number required\" >";
+        str = str + "</c:if>";
+        str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        str = str + "  <label>${model."+columnt.getFieldName()+"}</label>";
+        str = str + "  <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + "</c:if>";
         columnt.setJspTagInfo(str);
         return columnt;
     }
@@ -122,9 +131,18 @@ public class CodeBpmTagFactory {
      * 日期
      */
     public Columnt dateParser(Columnt columnt, ConfFormTableColumn formColumn) {
-        // TODO 未实现
         String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\"  class=\"text\" >";
+        str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
+        str = str + "  <div class=\"input-append datepicker date\">";
+        str = str + "  <span class=\"add-on\">";
+        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
+        str = str + "  </span>";
+        str = str + "  </div>";
+        str = str + "</c:if>";
+        str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        str = str + "  <label>${model."+columnt.getFieldName()+"}</label>";
+        str = str + "  <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + "</c:if>";
         columnt.setJspTagInfo(str);
         return columnt;
     }
@@ -134,7 +152,17 @@ public class CodeBpmTagFactory {
     public Columnt dateTimeParser(Columnt columnt, ConfFormTableColumn formColumn) {
         // TODO 未实现
         String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\"  class=\"text\" >";
+        str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
+        str = str + "  <div class=\"input-append datepicker date\">";
+        str = str + "  <span class=\"add-on\">";
+        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
+        str = str + "  </span>";
+        str = str + "  </div>";
+        str = str + "</c:if>";
+        str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        str = str + "  <label>${model."+columnt.getFieldName()+"}</label>";
+        str = str + "  <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + "</c:if>";
         columnt.setJspTagInfo(str);
         return columnt;
     }
@@ -163,15 +191,18 @@ public class CodeBpmTagFactory {
         // 生成JSP显示组件
         String jspTagInfo = "";
         jspTagInfo = jspTagInfo + "<div class=\"col-lg-3\">";
-        jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\" ${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'? 'disabled=\"value\"':''} >";
+        jspTagInfo = jspTagInfo + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
+        jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\" >";
         jspTagInfo = jspTagInfo + "          <option value=\"\" >请选择</option>";
         jspTagInfo = jspTagInfo + "        <c:forEach items=\"${"+columnt.getFieldName()+"Items}\" var=\"item\">";
         jspTagInfo = jspTagInfo + "          <option value=\"${item.key}\" ${item.key==model."+columnt.getFieldName()+"? 'selected':''} >${item.value}</option>";
         jspTagInfo = jspTagInfo + "        </c:forEach>";
         jspTagInfo = jspTagInfo + "    </select>";
-        jspTagInfo = jspTagInfo + "    <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
-        jspTagInfo = jspTagInfo + "      <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
-        jspTagInfo = jspTagInfo + "    </c:if>";
+        jspTagInfo = jspTagInfo + "  </c:if>";
+        jspTagInfo = jspTagInfo + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit!='1'}\">";
+        jspTagInfo = jspTagInfo + "    <label>${model."+columnt.getFieldName()+"}</label>";
+        jspTagInfo = jspTagInfo + "    <input type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        jspTagInfo = jspTagInfo + "  </c:if>";
         jspTagInfo = jspTagInfo + "</div>";
         columnt.setJspTagInfo(jspTagInfo);
         return columnt;
