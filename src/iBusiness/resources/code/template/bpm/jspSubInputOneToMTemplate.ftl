@@ -53,7 +53,7 @@
 					  </#list>
 					  
 					  <div class="form-group">
-					    <div class="controls">
+					    <div class="col-lg-10 col-lg-offset-2">
 					      <button id="submitButton" class="btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					      <button type="button" onclick="history.back();" class="btn btn-default btn-sm a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 					    </div>

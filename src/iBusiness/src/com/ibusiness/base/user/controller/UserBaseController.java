@@ -1,4 +1,4 @@
-package com.ibusiness.base.user.web;
+package com.ibusiness.base.user.controller;
 
 import java.util.HashMap;
 import java.util.List;
