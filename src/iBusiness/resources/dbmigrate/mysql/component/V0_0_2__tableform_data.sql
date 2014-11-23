@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS IB_TEST;
 CREATE TABLE IB_TEST ( ID  VARCHAR(64), NAME VARCHAR(64), REMARK VARCHAR(1024), CONSTRAINT PK_IB_TEST PRIMARY KEY(ID)) ENGINE=INNODB;
 /* ====== 审批权限流程表 =====  */
 DROP TABLE IF EXISTS IB_PERMISSION;
-CREATE TABLE  IB_PERMISSION(ID VARCHAR(64) NOT NULL, EXECUTIONID VARCHAR(64), CREATEDATEBPM DATETIME, NODENAME VARCHAR(128), ASSIGNEEUSER VARCHAR(128), TASKTITLE VARCHAR(256), REMARK VARCHAR(512), DONEFLAG INT DEFAULT 0, PRIMARY KEY (ID)) ENGINE=INNODB;
+CREATE TABLE  IB_PERMISSION(ID VARCHAR(64) NOT NULL, EXECUTIONID VARCHAR(64), CREATEDATEBPM DATETIME, NODENAME VARCHAR(128), ASSIGNEEUSER VARCHAR(128), USERNAME VARCHAR(128), TASKTITLE VARCHAR(256), REMARK VARCHAR(512), DONEFLAG INT DEFAULT 0, PRIMARY KEY (ID)) ENGINE=INNODB;
 /* ====== 审批权限流程子表 =====  */
 DROP TABLE IF EXISTS IB_PERMISSION_S;
 CREATE TABLE IB_PERMISSION_S ( ID  VARCHAR(64), PARENTID VARCHAR(64),REMARK VARCHAR(1024), CONSTRAINT PK_IB_PERMISSION_S PRIMARY KEY(ID)) ENGINE=INNODB;
@@ -31,9 +31,10 @@ INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,co
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','EXECUTIONID','流程执行实例ID','VARCHAR','64','是',92);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','CREATEDATEBPM','流程创建时间','DATE','','是',93);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','ASSIGNEEUSER','负责人','VARCHAR','64','是',94);
-INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','NODENAME','流程节点名','VARCHAR','64','是',95);
-INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','DONEFLAG','流程结束标记','INT','4','是',96);
-INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','TASKTITLE','流程实例标题','VARCHAR','256','是',97);
+INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','USERNAME','负责人名','VARCHAR','128','是',95);
+INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','NODENAME','流程节点名','VARCHAR','64','是',96);
+INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','DONEFLAG','流程结束标记','INT','4','是',97);
+INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','TASKTITLE','流程实例标题','VARCHAR','256','是',98);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','REMARK','备注','VARCHAR','512','是',9);
 /* ====== 审批权限流程子表 =====  */
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION_S','ID','UUID主键','VARCHAR','64','否',91);

@@ -142,12 +142,9 @@ function Gateway(id,x,y ){
 	this.clickEdit = function(mouseX,mouseY){
 		// alert( this.id+this.name+'被单击（编辑）!' );
 		if (this.moveOver == 1) {
-			$("#taskNodeForm").css({top:mouseY + canvas.offsetTop ,left: mouseX + canvas.offsetLeft});
-			$("#taskNodeForm").show(300);
-			$("#taskNodeId").attr("value",this.id);
-			$("#taskNodeName").attr("value",this.name);
-			$("#taskNodeX").attr("value",this.x);
-			$("#taskNodeY").attr("value",this.y);
+			// 
+			
+			//
 		} else if (this.moveOver == 2) {
 		
 		} else if (this.moveOver == 3) {
@@ -224,10 +221,7 @@ function Gateway(id,x,y ){
 	 *	单击事件（新加&编辑）
 	 */
 	this.clickAdd = function(){
-		this.id = $("#taskNodeId").val();
-		this.name = $("#taskNodeName").val();
-	    this.title = $("#taskNodeName").val();
-		$("#taskNodeForm").hide(300);
+		// 
 	}
 	/**
 	 *	判断单击的是自己吗

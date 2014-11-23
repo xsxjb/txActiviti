@@ -103,6 +103,7 @@ public class PermissionController {
             entity.setCreatedatebpm(task.getCreateTime());
             entity.setNodename(task.getName());
             entity.setAssigneeuser(userId);
+            entity.setUsername(CommonBusiness.getInstance().getUserBean(userId).getDisplayName());
             entity.setDoneflag(0);
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
@@ -185,6 +186,7 @@ public class PermissionController {
             entity.setCreatedatebpm(task.getCreateTime());
             entity.setNodename(task.getName());
             entity.setAssigneeuser(userId);
+            entity.setUsername(CommonBusiness.getInstance().getUserBean(userId).getDisplayName());
         }
         // 再进行数据存储
         String id = entity.getId();

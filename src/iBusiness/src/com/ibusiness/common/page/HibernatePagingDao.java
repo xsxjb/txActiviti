@@ -71,8 +71,7 @@ public class HibernatePagingDao extends HibernateGenericDao {
         // 实际查询返回分页对象
         Query query = createQuery(hql, values);
         int start = (pageNo - 1) * pageSize;
-        List result = query.setFirstResult(start).setMaxResults(pageSize)
-                .list();
+        List result = query.setFirstResult(start).setMaxResults(pageSize).list();
 
         Page page = new Page(result, totalCount);
         page.setPageNo(pageNo);
@@ -273,8 +272,7 @@ public class HibernatePagingDao extends HibernateGenericDao {
      * @return 含总记录数和当前页数据的Page对象.
      */
     @Transactional(readOnly = true)
-    public <T> Page pagedQuery(Class<T> entityClass, Page page,
-            Criterion... criterions) {
+    public <T> Page pagedQuery(Class<T> entityClass, Page page, Criterion... criterions) {
         String orderBy = page.getOrderBy();
         String order = page.getOrder();
 
@@ -286,8 +284,7 @@ public class HibernatePagingDao extends HibernateGenericDao {
             criteria = createCriteria(entityClass, criterions);
         }
 
-        Page resultPage = this.pagedQuery(criteria, page.getPageNo(),
-                page.getPageSize());
+        Page resultPage = this.pagedQuery(criteria, page.getPageNo(), page.getPageSize());
         resultPage.setOrderBy(orderBy);
         resultPage.setOrder(order);
 

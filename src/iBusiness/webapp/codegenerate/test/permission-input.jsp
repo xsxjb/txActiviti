@@ -140,18 +140,18 @@
 				      <thead>
 					      <tr>
 					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			                      <th class="sorting">备注</th>
-					          <th width="80">&nbsp;</th>
+			                   <th width="80">&nbsp;</th>
+			                   <th class="sorting">备注</th>
 					      </tr>
 					    </thead>
 						    <tbody>
 						      <c:forEach items="${page.result}" var="item">
 								  <tr>
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-									            <td>${item.remark}</td>
 								        <td>
 								          <a href="permission_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 								        </td>
+							            <td>${item.remark}</td>
 								  </tr>
 						      </c:forEach>
 						    </tbody>

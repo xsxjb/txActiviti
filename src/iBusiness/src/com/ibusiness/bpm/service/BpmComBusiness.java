@@ -227,9 +227,9 @@ public class BpmComBusiness {
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         xml = xml + "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:activiti=\"http://activiti.org/bpmn\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:omgdi=\"http://www.omg.org/spec/DD/20100524/DI\" typeLanguage=\"http://www.w3.org/2001/XMLSchema\" expressionLanguage=\"http://www.w3.org/1999/XPath\" targetNamespace=\"http://www.iBusiness.com\">";
         xml = xml + "<process id=\""+bpmProcess.getFlowName()+"\" name=\""+bpmProcess.getFlowTitle()+"\" isExecutable=\"true\">";
-        // 
+        
+        // 根据流程图List信息实例化一个流程图Map。方便递归创建XML时调用
         Map<String, ConfFlowChart> confFlowChartMap = new HashMap<String, ConfFlowChart>();
-        // 
         ConfFlowChart startNode = null;
         for (ConfFlowChart confFlowChart : confFlowCharts) {
             confFlowChartMap.put(confFlowChart.getItemId(), confFlowChart);

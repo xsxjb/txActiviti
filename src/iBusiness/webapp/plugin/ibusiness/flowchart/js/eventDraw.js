@@ -506,34 +506,6 @@ $(function() {
 	
 	//----------------------------------------------------------
 	//----------------------------------------------------------
-	//单击【任务节点】弹出页面中的确定按钮
-	$('#addTaskNode').click(function(e) {
-		var charCheck = new RegExp("^(\\d+)$");
-		if( !charCheck.test($("#taskNodeX").val()) ){
-            alert('[X坐标]必须是整数!');
-            $("#taskNodeX").focus();
-            return;
-        }
-		if( !charCheck.test($("#taskNodeY").val()) ){
-            alert('[Y坐标]必须是整数!');
-            $("#taskNodeY").focus();
-            return;
-        }
-		if( window.confirm("您确认要更新该组件吗？") == true ){
-			elements.getId($("#taskNodeId").val()).clickAdd();
-			$("#taskNodeForm").hide(300);
-		}
-	});
-	//单击【任务节点】弹出页面中的删除按钮
-	$("#deleteLamp").click(function(e) {
-		if( window.confirm("您确认要删除该组件吗？") == true ){
-			elements.removeId($("#taskNodeId").val());
-			$("#taskNodeForm").hide(300);
-		}
-	});
-	
-	//----------------------------------------------------------
-	//----------------------------------------------------------
 	//单击【基础】弹出框中的确定按钮
 	$('#addBase').click(function(e) {
 		var charCheck = new RegExp("^(\\d+)$");
@@ -745,7 +717,6 @@ $(function() {
 	function hideForm(){
 		$("#baseForm").hide(); // 泳道
 		$("#lineForm").hide(); // 线
-		$("#taskNodeForm").hide(); // 任务节点
 	}
 	// 清除所有控件的选中状态
 	function clearMouseClick(){

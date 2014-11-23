@@ -83,6 +83,7 @@
 							<a href="${scopePrefix}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" class="btn btn-default btn-sm " >返回</a>
 						</div>
 					</div>
+					
 					<!-- 基础弹出form页面 -->
 					<div id ="baseForm"  style="width: 200px;position: absolute; top: 330; left: 400; z-index: 1000; text-align: center; background-color: #CFDFEF; display: none;">
 						<table style="width:200px;">
@@ -101,73 +102,22 @@
 					</div>
 					
 					<!-- 任务节点出页面 -->
-				    <div id="taskNodeDiv" class="modal fade" style="top:20%;" >
-				            <div class="modal-dialog">
+				    <div id="taskNodeDiv" class="modal fade" style="top:10%;" >
+				        <div class="col-md-2"></div>
+			            <div class="col-md-8">
 						    <div class="modal-content">
 							      <div class="modal-header">
 								        <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>
-								        <h4 class="modal-title">设置节点信息</h4>
 							      </div>
-							      <div class="modal-body">
-							          <!-- 表单数据 -->
-							      	  <div class="panel panel-primary">
-										  <!-- 子表 -->
-										  <c:if test="${null != bpmNodeTables}">
-										  <c:forEach items="${bpmNodeTables}" var="bpmNodeColums">
-											  <div class="panel-heading"><h4 class="panel-title">子表字段设置：</h4></div>
-							        		  <div class="panel-body">
-								        	      <table class="table table-hover table-bordered" id=“tableModelGrid” >
-														<thead>
-															<tr>
-															    <th>字段</th>
-															    <th>显示标题</th>
-															    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)">是否显示</th>
-															    <th class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems2(this.checked)">是否编辑</th>
-																<th width="120">&nbsp;</th>
-															</tr>
-														</thead>
-														<tbody>
-														<c:forEach items="${bpmNodeColums}" var="item">
-														    <tr>
-														        <td>${item.formColumn}</td>
-														        <td>${item.formColumnTitle}</td>
-														        <td><input type="checkbox" class="selectedItem a-check" name="selectedFcDisplayItem" value="${item.formColumn}" ${item.fcDisplay==1 ? 'checked' : ''}>显示</td>
-																<td><input type="checkbox" class="selectedItem2 a-check" name="selectedFcEditItem" value="${item.formColumn}" ${item.fcEdit==1 ? 'checked' : ''}>可编辑</td>
-																<td>
-														            <a href="conf-formLabel-input.do?packageName=${item.packageName}&formName=${item.formName}&formColumn=${item.formColumn}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
-														        </td>
-														    </tr>
-														  </c:forEach>
-														</tbody>
-												  </table>
-											  </div>
-										  </c:forEach>
-										  </c:if>
-									  </div>
-						                
+							      <div class="modal-body" style="height:450px;" >
+							          <iframe id="taskNodeIframe" src="" width="100%" height="100%" ></iframe>
 						           </div>
 						           <div class="modal-footer">
 						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
 						           </div>
-					            </div><!-- /.modal-content -->
-						  </div><!-- /.modal-dialog -->
+					            </div>
+						  </div>
 				    </div>
-					<!-- 任务节点出页面 -->
-					<div id ="taskNodeForm"  style="width: 200px;position: absolute; top: 330; left: 400; z-index: 1000; text-align: center; background-color: #CFDFEF; display: none;">
-						<table style="width: 200px;">
-							<tr><td>id</td><td align="left"><input id ="taskNodeId" type="text" value="" readonly="readonly"> </td></tr>
-							<tr><td>名称</td><td align="left"><input id ="taskNodeName" type="text" value=""></td></tr>
-							<tr><td>x坐标</td><td align="left"><input id ="taskNodeX" type="text" value="" disabled></td></tr>
-							<tr><td>y坐标</td><td align="left"><input id = "taskNodeY" type="text" value="" disabled></td></tr>
-							<tr><td>操作</td>
-								<td>
-									<a href="#" id = "addTaskNode" >确定</a>
-									<a href="#" id = "deleteLamp" >删除</a>
-									<a href="#" onclick="javascript:$('#taskNodeForm').hide(300)">关闭</a>
-								</td>
-							</tr>
-						</table> 
-					</div>
 					
 					<!-- 画图面板 -->
 					<canvas id="canvas" style="border:1px solid #DDDDDD"></canvas>

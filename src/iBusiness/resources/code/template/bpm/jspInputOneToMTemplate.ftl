@@ -154,22 +154,22 @@
 				      <thead>
 					      <tr>
 					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					          <#list sub.columns as subItem>
-			                      <th class="sorting">${subItem.filedComment}</th>
-			                  </#list>
 					          <th width="80">&nbsp;</th>
+				          <#list sub.columns as subItem>
+		                      <th class="sorting">${subItem.filedComment}</th>
+		                  </#list>
 					      </tr>
 					    </thead>
 						    <tbody>
 						      <c:forEach items="${'$' + '{page.result}'}" var="item">
 								  <tr>
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
-									        <#list sub.columns as subItem>
-									            <td>${'$' + '{item.${subItem.fieldName}}'}</td>
-									        </#list>
-								        <td>
-								          <a href="${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=${'$' + '{item.id}'}&flowId=${'$' + '{flowId}'}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+									    <td>
+								            <a href="${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=${'$' + '{item.id}'}&flowId=${'$' + '{flowId}'}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 								        </td>
+							        <#list sub.columns as subItem>
+							            <td>${'$' + '{item.${subItem.fieldName}}'}</td>
+							        </#list>
 								  </tr>
 						      </c:forEach>
 						    </tbody>

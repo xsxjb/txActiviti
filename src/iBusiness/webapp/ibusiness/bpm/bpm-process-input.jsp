@@ -106,8 +106,8 @@
 											<div class="form-group">
 											    <label class="col-lg-2 control-label" >图形:</label>
 												<div class="col-lg-3">
-												    <!-- target="_blank" -->
-												    <a class="btn btn-primary" href="${scopePrefix}/bpm-process/bpm-process-graph.do?bpmProcessId=${model.id}"  >图形</a>
+												    <!--  -->
+												    <a class="btn btn-primary" target="_blank" href="${scopePrefix}/bpm-process/bpm-process-graph.do?bpmProcessId=${model.id}"  >图形</a>
 											    </div>
 											</div>
 									</c:if>

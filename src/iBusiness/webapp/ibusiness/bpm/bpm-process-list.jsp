@@ -88,7 +88,7 @@
 			            <a href="${scopePrefix}/bpm-process/bpm-process-graph.do?bpmProcessId=${item.id}" target="_blank" >图形</a>
 			        </td>
 			        <td>
-			            <a href="bpm-conf-node-list.do?flowVersionId=${item.versionId}" >配置</a>
+			            <a href="bpm-conf-node-list.do?packageName=${packageName}&flowVersionId=${item.versionId}&bpmId=${item.id}" >配置</a>
 			        </td>
 			      </tr>
 			      </c:forEach>

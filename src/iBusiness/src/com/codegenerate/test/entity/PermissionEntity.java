@@ -31,6 +31,7 @@ public class PermissionEntity implements java.io.Serializable {
 	private java.lang.String nodename;
 	/**assigneeuser*/
 	private java.lang.String assigneeuser;
+	private java.lang.String username;
 	/**tasktitle*/
 	private java.lang.String tasktitle;
 	/**remark*/
@@ -170,4 +171,17 @@ public class PermissionEntity implements java.io.Serializable {
 	public void setDoneflag(java.lang.Integer doneflag){
 		this.doneflag = doneflag;
 	}
+    /**
+     * @return the username
+     */
+	@Column(name ="USERNAME")
+    public java.lang.String getUsername() {
+        return username;
+    }
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(java.lang.String username) {
+        this.username = username;
+    }
 }

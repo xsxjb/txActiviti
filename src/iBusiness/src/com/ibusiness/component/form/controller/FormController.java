@@ -150,7 +150,14 @@ public class FormController {
             }
             // 取得表对应字段
             String tbleColumnsHql = "from ConfTableColumns WHERE tableName=? order by columnNo ";
-            List<ConfTableColumns> tableColumns = tableColumnsDao.find(tbleColumnsHql, confFormTable.getTableName());
+            List<ConfTableColumns> tableColumnsList = tableColumnsDao.find(tbleColumnsHql, confFormTable.getTableName());
+            // 去掉保留字的
+            List<ConfTableColumns> tableColumns = new ArrayList<ConfTableColumns>();
+            for (ConfTableColumns confTableColumns : tableColumnsList) {
+                if (!TableCommonUtil.getReservedColumnsMap().containsKey(confTableColumns.getColumnValue())) {
+                    tableColumns.add(confTableColumns);
+                }
+            }
             confFormTable.setTableColumns(tableColumns);
         }
         model.addAttribute("mainFormTable", formTableList);
@@ -166,7 +173,14 @@ public class FormController {
             }
             // 取得表对应字段
             String tbleColumnsHql = "from ConfTableColumns WHERE tableName=? order by columnNo ";
-            List<ConfTableColumns> tableColumns = tableColumnsDao.find(tbleColumnsHql, confFormTable.getTableName());
+            List<ConfTableColumns> tableColumnsList = tableColumnsDao.find(tbleColumnsHql, confFormTable.getTableName());
+            // 去掉保留字的对象
+            List<ConfTableColumns> tableColumns = new ArrayList<ConfTableColumns>();
+            for (ConfTableColumns confTableColumns : tableColumnsList) {
+                if (!TableCommonUtil.getReservedColumnsMap().containsKey(confTableColumns.getColumnValue())) {
+                    tableColumns.add(confTableColumns);
+                }
+            }
             confFormTable.setTableColumns(tableColumns);
         }
         model.addAttribute("subFormTables", subFormTableList);

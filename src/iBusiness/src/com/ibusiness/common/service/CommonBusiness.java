@@ -47,6 +47,13 @@ public class CommonBusiness {
         return list;
     }
     /**
+     * 取得用户表的用户信息
+     */
+    public UserBase getUserBean(String id) {
+        UserBase bean = getUserBaseDao().get(id);
+        return bean;
+    }
+    /**
      * 取得流水表表结构管理List
      * @return the tableColumnsList
      */

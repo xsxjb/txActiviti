@@ -37,6 +37,7 @@ public class TableCommonUtil {
         reservedColumnsMap.put("CREATEDATEBPM", ConfigProperties.DATATYPE_DATE);
         reservedColumnsMap.put("NODENAME", "VARCHAR(128)");
         reservedColumnsMap.put("ASSIGNEEUSER", "VARCHAR(128)");
+        reservedColumnsMap.put("USERNAME", "VARCHAR(128)");
         reservedColumnsMap.put("DONEFLAG", "INTEGER DEFAULT 0");
         reservedColumnsMap.put("PARENTID", "VARCHAR(64)");
         reservedColumnsMap.put("TASKTITLE", "VARCHAR(256)");
@@ -46,6 +47,7 @@ public class TableCommonUtil {
         bpmMColumnsMap.put("CREATEDATEBPM", createTableColumn("CREATEDATEBPM","流程创建时间",93,ConfigProperties.DATATYPE_DATE,"","是"));
         bpmMColumnsMap.put("NODENAME", createTableColumn("NODENAME","流程节点名",94,"VARCHAR","128","是"));
         bpmMColumnsMap.put("ASSIGNEEUSER", createTableColumn("ASSIGNEEUSER","负责人",95,"VARCHAR","64","是"));
+        bpmMColumnsMap.put("USERNAME", createTableColumn("USERNAME","负责人名",95,"VARCHAR","128","是"));
         bpmMColumnsMap.put("DONEFLAG", createTableColumn("DONEFLAG","流程结束标记",96,"INTEGER","4","是"));
         bpmMColumnsMap.put("TASKTITLE", createTableColumn("TASKTITLE","流程实例标题",97,"VARCHAR","256","是"));
         // 流程子表的预留字段

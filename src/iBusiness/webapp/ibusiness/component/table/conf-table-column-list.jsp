@@ -56,7 +56,7 @@
 						<c:forEach items="${tableInfoList}" var="item">
 						  <tr>
 						    <td>
-							    <c:if test="${item.columnValue!='ID' && item.columnValue!='CREATEDATEBPM'  && item.columnValue!='EXECUTIONID'  && item.columnValue!='NODENAME'  && item.columnValue!='TASKTITLE' && item.columnValue!='ASSIGNEEUSER' && item.columnValue!='DONEFLAG' && item.columnValue!='PARENTID'}">
+							    <c:if test="${item.columnValue!='ID' && item.columnValue!='CREATEDATEBPM'  && item.columnValue!='EXECUTIONID'  && item.columnValue!='NODENAME'  && item.columnValue!='TASKTITLE' && item.columnValue!='ASSIGNEEUSER' && item.columnValue!='USERNAME' && item.columnValue!='DONEFLAG' && item.columnValue!='PARENTID'}">
 							    	<input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.columnValue}">
 							    </c:if>
 						    </td>

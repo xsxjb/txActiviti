@@ -84,11 +84,11 @@
 						      <thead>
 							      <tr>
 							          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+					                  <th width="80">&nbsp;</th>
 					                  <th class="sorting">日期</th>
 					                  <th class="sorting">流程节点</th>
 					                  <th class="sorting">来自用户</th>
 					                  <th class="sorting">流程标题</th>
-							          <th width="80">&nbsp;</th>
 							          <th width="60">&nbsp;</th>
 							      </tr>
 							    </thead>
@@ -96,15 +96,15 @@
 								      <c:forEach items="${'$' + '{page.result}'}" var="item">
 								      <tr>
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
-								        <td><fmt:formatDate value="${'$' + '{item.createdatebpm}'}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-								        <td>${'$' + '{item.nodename}'}</td>
-								        <td>${'$' + '{item.assigneeuser}'}</td>
-								        <td>${'$' + '{item.tasktitle}'}</td>
 								        <td>
 								          <a href="${entityName?uncap_first}-input.do?flowId=${'$' + '{flowId}'}&id=${'$' + '{item.id}'}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 								        </td>
+								        <td><fmt:formatDate value="${'$' + '{item.createdatebpm}'}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+								        <td>${'$' + '{item.nodename}'}</td>
+								        <td>${'$' + '{item.username}'}</td>
+								        <td>${'$' + '{item.tasktitle}'}</td>
 								        <td>
-								            <a href="${entityName?uncap_first}-graph.do?flowId=${'$' + '{flowId}'}&id=${'$' + '{item.id}'}" class="a-update"><spring:message code="core.list.edit" text="图"/></a>
+								            <a target="_blank"  href="${entityName?uncap_first}-graph.do?flowId=${'$' + '{flowId}'}&id=${'$' + '{item.id}'}" class="a-update"><spring:message code="core.list.edit" text="图"/></a>
 								        </td>
 								      </tr>
 								      </c:forEach>

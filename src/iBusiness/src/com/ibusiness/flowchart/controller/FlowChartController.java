@@ -1,7 +1,9 @@
 package com.ibusiness.flowchart.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -15,13 +17,17 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ibusiness.bpm.dao.BpmFlowNodeDao;
 import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
+import com.ibusiness.bpm.entity.BpmFlowNode;
 import com.ibusiness.bpm.entity.BpmNodeColums;
+import com.ibusiness.bpm.entity.BpmNodeTable;
 import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.bpm.service.BpmComBusiness;
@@ -42,6 +48,7 @@ public class FlowChartController {
 
     private FlowChartService flowChartService;
     private BpmNodeColumsService bpmNodeColumsService;
+    private BpmFlowNodeDao bpmFlowNodeDao;
     private BpmProcessDao bpmProcessDao;
     private BpmProcessVersionDao bpmProcessVersionDao;
     private ProcessEngine processEngine;
@@ -213,20 +220,64 @@ public class FlowChartController {
     /**
      * 显示启动流程的表单.
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("pop-conf-taskNode")
-    @ResponseBody
-    public String confTaskNode(@RequestParam(value = "packageName", required = false) String packageName, @RequestParam("flowId") String flowId, Model model) throws Exception {
-        String bncsSql = "from BpmNodeColums where flowId=?";
-        List<BpmNodeColums> bpmNodeColumsList = bpmNodeColumsService.find(bncsSql, flowId);
-        for (BpmNodeColums bpmNodeColums : bpmNodeColumsList) {
-//            bpmNodeColums.
+    public String confTaskNode(@RequestParam(value = "packageName", required = false) String packageName,
+            @RequestParam("flowId") String flowId, @RequestParam("id") String id, Model model) throws Exception {
+        String flowNodeSql = "from BpmFlowNode where flowId=? AND nodeCode=?";
+        List<BpmFlowNode> bpmFlowNodeList = bpmFlowNodeDao.find(flowNodeSql, flowId, "sid-"+id);
+        String nodeId = "";
+        if (null != bpmFlowNodeList && bpmFlowNodeList.size() > 0) {
+            nodeId = bpmFlowNodeList.get(0).getId();
         }
-        // TODO 主表对象
-        List<List<BpmNodeColums>> list = new ArrayList<List<BpmNodeColums>>();
-        list.add(bpmNodeColumsList);
-        JSONArray array = new JSONArray();
-        array.add(CommonUtils.getJsonFromList(bpmNodeColumsList, null));
-        return array.toString();
+        // 实例化一个Map
+        Map<String, List<BpmNodeColums>> map = new HashMap<String, List<BpmNodeColums>>();
+        // 根据流程 和节点信息进行查询
+        String bncsSql = "from BpmNodeColums where flowId=? AND nodeId=?";
+        List<BpmNodeColums> bpmNodeColumsList = bpmNodeColumsService.find(bncsSql, flowId, nodeId);
+        for (BpmNodeColums bpmNodeColums : bpmNodeColumsList) {
+            if (map.containsKey(bpmNodeColums.getTableName())) {
+                map.get(bpmNodeColums.getTableName()).add(bpmNodeColums);
+            } else {
+                List<BpmNodeColums> bncList = new ArrayList<BpmNodeColums>();
+                bncList.add(bpmNodeColums);
+                map.put(bpmNodeColums.getTableName(), bncList);
+            }
+        }
+        // 
+        List<BpmNodeTable> bpmNodeTables = new ArrayList<BpmNodeTable>();
+        for (Map.Entry<String, List<BpmNodeColums>> entry : map.entrySet()) {
+            BpmNodeTable bpmNodeTable = new BpmNodeTable();
+            bpmNodeTable.setPackageName(packageName);
+            bpmNodeTable.setFlowId(flowId);
+            bpmNodeTable.setBpmNodeColumsList(entry.getValue());
+            bpmNodeTables.add(bpmNodeTable);
+        }
+        model.addAttribute("bpmNodeTables", bpmNodeTables);
+        model.addAttribute("packageName", packageName);
+        model.addAttribute("flowId", flowId);
+        model.addAttribute("nodeId", nodeId);
+        return "ibusiness/flowchart/pop-conf-tasknode.jsp";
+    }
+    /**
+     * 节点信息保存
+     * @return
+     */
+    @RequestMapping("save-conf-node-colums")
+    @ResponseBody
+    public String saveConfNodeColums(@ModelAttribute BpmNodeTable bpmNodeTables, @RequestParam(value = "packageName", required = false) String packageName, 
+            @RequestParam("flowId") String flowId, @RequestParam("nodeId") String nodeId) {
+        // 
+        List<BpmNodeColums> nodeColumsList = bpmNodeTables.getBpmNodeColumsList();
+        if (null != nodeColumsList) {
+            for (BpmNodeColums bpmNodeColums : nodeColumsList) {
+                BpmNodeColums bean = bpmNodeColumsService.get(bpmNodeColums.getId());
+                bean.setFcDisplay(bpmNodeColums.getFcDisplay());
+                bean.setFcEdit(bpmNodeColums.getFcEdit());
+                bpmNodeColumsService.update(bean);
+            }
+        }
+        return "success";
     }
 
     // ======================================================================
@@ -237,6 +288,10 @@ public class FlowChartController {
     @Resource
     public void setBpmNodeColumsService(BpmNodeColumsService bpmNodeColumsService) {
         this.bpmNodeColumsService = bpmNodeColumsService;
+    }
+    @Resource
+    public void setBpmFlowNodeDao(BpmFlowNodeDao bpmFlowNodeDao) {
+        this.bpmFlowNodeDao = bpmFlowNodeDao;
     }
     @Resource
     public void setBpmProcessDao(BpmProcessDao bpmProcessDao) {

@@ -141,32 +141,12 @@ function TaskNode(id,x,y ){
 	this.clickEdit = function(mouseX,mouseY){
 		// alert( this.id+this.name+'被单击（编辑）!' );
 		if (this.moveOver == 1) {
-			//
-			$.ajax({
-				url:'/iBusiness/default/flowchart/pop-conf-taskNode.do',
-				data: {
-					flowId:$("#bpmId").val(),
-					packageName:$("#packageName").val()
-	    		},
-				success:function(data){
-					var json = JSON.parse(data);
-					alert("=========单击事件=:"+json);
-					// 
-					$('#taskNodeDiv').modal('show');
-				}
-			});
 			
+			var url = "/iBusiness/default/flowchart/pop-conf-taskNode.do?flowId="+$("#bpmId").val()+"&packageName="+$("#packageName").val()+"&id="+this.id;
+			$("#taskNodeIframe").attr("src", url );
+		//	$("#taskNodeDiv").css({width:570 ,height:380});
+			$('#taskNodeDiv').modal('show');
 			
-			
-			//
-			/**
-			$("#taskNodeForm").css({top:mouseY + canvas.offsetTop ,left: mouseX + canvas.offsetLeft});
-			$("#taskNodeForm").show(300);
-			$("#taskNodeId").attr("value",this.id);
-			$("#taskNodeName").attr("value",this.name);
-			$("#taskNodeX").attr("value",this.x);
-			$("#taskNodeY").attr("value",this.y);
-			*/
 		} else if (this.moveOver == 2) {
 		
 		} else if (this.moveOver == 3) {
@@ -243,10 +223,13 @@ function TaskNode(id,x,y ){
 	 *	单击事件（新加&编辑）
 	 */
 	this.clickAdd = function(){
+		alert("单击事件（新加&编辑）");
+		/**
 		this.id = $("#taskNodeId").val();
 		this.name = $("#taskNodeName").val();
 	    this.title = $("#taskNodeName").val();
 		$("#taskNodeForm").hide(300);
+		*/
 	}
 	/**
 	 *	判断单击的是自己吗
