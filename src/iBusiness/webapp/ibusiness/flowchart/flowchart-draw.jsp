@@ -20,6 +20,7 @@
 		<!--  -->
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/StartNode.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/EndNode.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Gateway.js"></script> 
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/ReviveScene.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Lane.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/TaskNode.js"></script>
@@ -62,6 +63,9 @@
 						</div>
 						<div class="tool"  title="线" id="Pipeline">
 							<img height="30px" width="30px" name="line" id="lineImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/waterflow.png" />
+						</div>
+						<div class="tool"  title="判断" id="Gateway">
+							<img height="30px" width="30px" name="gateway" id="gatewayImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/gateway.png" />
 						</div>
 						<div class="tool"  title="选择" id="select">
 							<img height="30px" width="30px" name="select" id="selectImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/select.jpg" />

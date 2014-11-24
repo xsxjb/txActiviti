@@ -87,8 +87,17 @@ public class TableController {
     public String queryConfTableColumn(@RequestParam("tableName") String tableName, @RequestParam("columnValue") String columnValue, Model model) {
     	// 取得表结构信息
         ConfTableColumns bean = tableService.queryConfTableColumn(tableName, columnValue);
+        // 如果是新建的字段自动生成表字段排序
+        int columnNo = 1;
+        if (null == bean || 1 < bean.getColumnNo()) {
+            ConfTableColumns maxColumnNoBean = tableService.queryMaxTableColumnNo(tableName);
+            if (null != maxColumnNoBean && maxColumnNoBean.getColumnNo() > 0) {
+                columnNo = maxColumnNoBean.getColumnNo() + 1;
+            }
+        }
         // 表结构信息
         model.addAttribute("beanInfo", bean);
+        model.addAttribute("columnNo", columnNo);
         model.addAttribute("tableName", tableName);
         // 取得表结构信息
         return "ibusiness/component/table/conf-table-column-input.jsp";

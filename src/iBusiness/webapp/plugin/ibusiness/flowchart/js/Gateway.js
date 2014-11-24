@@ -13,17 +13,13 @@ function Gateway(id,x,y ){
 	this.x = x;				//任务节点对象的起始位置（x坐标）
 	this.y = y;				//任务节点对象的起始位置（y坐标）
 	this.height = 50;		//任务节点对象的高度
-	this.width = 100;		//任务节点对象的宽度
+	this.width = 50;		//任务节点对象的宽度
 	this.moveOver = 1;		//是否可以移入（0：没有移入,1:移入主对象,2:移入编辑子对象）
 	this.mouseClick = 0;    //单击选中此对象 0：未单击, 1：单击
 	
 	this.headLineIds=new HashMap(); // 头节点线ID List
 	this.afterLineIds=new HashMap(); // 尾节点线ID List
 
-	this.lampMonitoring = '%';		//监控的实时数据
-	this.status = '正常';//正常,警报,不亮灯
-	// 用于判断是画黑色还是红色
-	this.redblack = 1;
 	// 主对象图片
 	this.imageMain = new Image();
 	// =========== 编辑子按钮图片 ===========================
@@ -59,7 +55,7 @@ function Gateway(id,x,y ){
 	 */
 	this.init = function( json ){
 	    // 主对象图片
-		this.imageMain.src = "../../plugin/ibusiness/flowchart/img/tasknode.png";
+		this.imageMain.src = "../../plugin/ibusiness/flowchart/img/gateway.png";
 		// 编辑子对象图片
 		this.imageEditBtn.src = "../../plugin/ibusiness/flowchart/img/edit.png";
 		// 删除子
@@ -143,7 +139,6 @@ function Gateway(id,x,y ){
 		// alert( this.id+this.name+'被单击（编辑）!' );
 		if (this.moveOver == 1) {
 			// 
-			
 			//
 		} else if (this.moveOver == 2) {
 		
@@ -260,7 +255,7 @@ function Gateway(id,x,y ){
 		if( this.title != "" ){
 			ctx.fillStyle="#000000";  //填充颜色
 			ctx.font="bold 15px 宋体";
-			ctx.fillText( this.title , parseInt(this.x)+10, parseInt(this.y)+30 );
+			ctx.fillText( this.title , parseInt(this.x)+10, parseInt(this.y)+0 );
 		}
 		if (this.mouseClick == 1) {
 			// 画编辑子控件

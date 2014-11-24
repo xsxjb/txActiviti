@@ -1,7 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<%pageContext.setAttribute("currentHeader", "table");%>
-<%pageContext.setAttribute("currentMenu", "table");%>
 <!doctype html>
 <html>
 
@@ -9,6 +7,18 @@
     <%@include file="/common/meta.jsp"%>
     <title>编辑表列字段信息</title>
     <%@include file="/common/center.jsp"%>
+    <script type="text/javascript">
+		$(function() {
+		    $("#tableForm").validate({
+		        submitHandler: function(form) {
+					bootbox.animate(false);
+					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+		            form.submit();
+		        },
+		        errorClass: 'validate-error'
+		    });
+		})
+    </script>
   </head>
 
   <body>
@@ -64,7 +74,12 @@
 				  </div>
 				  <div class="form-group">
 				      <label class="col-lg-2 control-label" for="table-columnNo">字段排序编号:</label>
-					  <input id="table-columnNo" type="text" name="columnNo" value="${beanInfo.columnNo}">
+					  <c:if test="${beanInfo != null}">
+					      <input id="table-columnNo" type="text" name="columnNo" value="${beanInfo.columnNo}">
+					  </c:if>
+					  <c:if test="${beanInfo == null}">
+					      <input id="table-columnNo" type="text" name="columnNo" value="${columnNo}">
+					  </c:if>
 				  </div>
 				  
 				  <div class="form-group">

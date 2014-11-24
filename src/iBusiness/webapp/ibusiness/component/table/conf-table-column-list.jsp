@@ -1,7 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<%pageContext.setAttribute("currentHeader", "table");%>
-<%pageContext.setAttribute("currentMenu", "table");%>
 <!doctype html>
 <html>
 
@@ -28,7 +26,7 @@
       <%@include file="/ibusiness/header/header-portal.jsp"%>
 	  <%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
 	      <!-- start of main -->
-	      <div class="panel panel-default span10">
+	      <div class="panel panel-default col-lg-10">
               <div class="panel-heading"><h4 class="panel-title">表列字段</h4></div>
                <div class="panel-body">
 	               <div id="tableCategorySearch" class="content content-inner">
@@ -68,7 +66,7 @@
 							<td>${item.defaultValue}</td>
 							<td>${item.columnNo}</td>
 							<td>
-								<c:if test="${item.columnValue!='ID' && item.columnValue!='CREATEDATEBPM'  && item.columnValue!='EXECUTIONID'  && item.columnValue!='NODENAME'  && item.columnValue!='TASKTITLE' && item.columnValue!='ASSIGNEEUSER' && item.columnValue!='DONEFLAG' && item.columnValue!='PARENTID'}">
+								<c:if test="${item.columnValue!='ID' && item.columnValue!='CREATEDATEBPM'  && item.columnValue!='EXECUTIONID'  && item.columnValue!='NODENAME'  && item.columnValue!='TASKTITLE' && item.columnValue!='ASSIGNEEUSER' && item.columnValue!='USERNAME' && item.columnValue!='DONEFLAG' && item.columnValue!='PARENTID'}">
 						            <a href="conf-table-column-input.do?tableName=${tableName}&columnValue=${item.columnValue}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					            </c:if>
 					        </td>

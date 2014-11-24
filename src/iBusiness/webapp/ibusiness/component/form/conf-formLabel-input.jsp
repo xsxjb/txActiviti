@@ -108,7 +108,12 @@
 					      <input id="form-fcDefault" type="text" name="fcDefault" value="${model.fcDefault}"  class="text required" >
 					      <button type="button" class="btn btn-default  btn-sm">公式</button>
 					  </div>
-				  
+				      <div class="form-group">
+					      <label class="control-label col-lg-2" for="form-columnNo">排序:</label>
+					      <div class="col-lg-3">
+					          <input id="form-fcWidth" type="text" name="columnNo" value="${model.columnNo}"  class="text required" >
+					      </div>
+					  </div>
 				  <div class="form-group">
 				    <div class="controls">
 				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>

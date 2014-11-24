@@ -19,10 +19,6 @@ function TaskNode(id,x,y ){
 	this.headLineIds=new HashMap(); // 头节点线ID List
 	this.afterLineIds=new HashMap(); // 尾节点线ID List
 
-	this.lampMonitoring = '%';		//监控的实时数据
-	this.status = '正常';//正常,警报,不亮灯
-	// 用于判断是画黑色还是红色
-	this.redblack = 1;
 	// 主对象图片
 	this.imageMain = new Image();
 	// =========== 编辑子按钮图片 ===========================

@@ -67,6 +67,16 @@ public class TableService {
 		String sql = " SELECT tableName, columnValue,columnValue columnValueOld, columnName, columnType, columnType columnTypeOld, columnSize, ISNULL, defaultValue, columnNo FROM IB_CONF_TABLE_COLUMNS WHERE tableName='" + tableName +"' AND columnValue ='" + columnValue + "' ";
 		return dao.queryConfTableColumn(sql);
 	}
+	/**
+     * 取得列最大编号(预埋字段不算即,90以后的编号不统计)
+     * @param tableName
+     * @param columnValue
+     * @return
+     */
+    public ConfTableColumns queryMaxTableColumnNo(String tableName) {
+        String sql = " SELECT max(columnNo) columnNo FROM IB_CONF_TABLE_COLUMNS WHERE tableName='" + tableName +"' AND columnNo<90 ";
+        return dao.queryConfTableColumn(sql);
+    }
     /**
      * 插入数据-业务表管理表
      * @param tableName

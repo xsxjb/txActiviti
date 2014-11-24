@@ -408,6 +408,9 @@ $(function() {
 		case 'EndNode'://开始节点
 			return 'image';
 			break;
+		case 'Gateway'://判断节点
+			return 'image';
+			break;
 		case 'Pipeline'://线
 			return 'draw';
 			break;
@@ -444,6 +447,11 @@ $(function() {
 			v.init();
 			return v;
 			break;
+		case 'Gateway'://判断节点
+			var v = new Gateway(id==null?Math.uuid():id,x,y);
+			v.init();
+			return v;
+			break;	
 		case 'select'://选择
 			return '-';
 			break;		
