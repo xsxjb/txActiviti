@@ -13,9 +13,11 @@
 		$(function() {
 		    $("#cgForm").validate({
 		        submitHandler: function(form) {
-					bootbox.animate(false);
-					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
-		            form.submit();
+		            if (typeof(bootbox) != 'undefined') {
+					    bootbox.animate(false);
+					    var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+					}
+					form.submit();
 		        },
 		        errorClass: 'validate-error'
 		    });
@@ -41,12 +43,14 @@
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-remark">备注:</label>
                               <!-- 是否可编辑 -->
-                                      <div class="col-lg-6">    <textarea class="form-control" id="code-remark" name="remark" rows="1" >${model.remark}</textarea></div>
+                                      <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" >
                           </div>
                   
                   <div class="form-group">
-                      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-                      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+	                  <div class="col-lg-10 col-lg-offset-2">
+	                      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+	                      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+	                  </div>
                   </div>
                 </form>
         </div>

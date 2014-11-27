@@ -64,12 +64,12 @@ public class BpmComBusiness {
     /**
      * 办理流程
      */
-    public void completeTask(String taskId, String userId) {
+    public void completeTask(String taskId, Map<String, Object> map) {
         // Get Activiti services
         TaskService taskService = getProcessEngine().getTaskService();
         // complete a task
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("assignee", userId);
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("assignee", userId);
         taskService.complete(taskId, map);
     }
     /**
@@ -292,9 +292,30 @@ public class BpmComBusiness {
                     xml = editXmlByFlowChart(xml, bean, confFlowChartMap);
                 }
             }
+        } else if ("Gateway".equals(flowChartObj.get("type"))) {
+            // 判断节点
+            xml = xml + "<exclusiveGateway id=\"sid-"+flowChartObj.get("id")+"\" name=\"Exclusive Gateway\"></exclusiveGateway>";
+            String nextNodesStr = flowChartObj.get("afterLineIds").toString();
+            String[] nextNodes = nextNodesStr.split(",");
+            for (String nextNodeStr : nextNodes) {
+                ConfFlowChart bean = confFlowChartMap.get(nextNodeStr);
+                if (null != bean) {
+                    xml = editXmlByFlowChart(xml, bean, confFlowChartMap);
+                }
+            }
         } else if ("Line".equals(flowChartObj.get("type"))) {
             // 线
-            xml = xml + "<sequenceFlow id=\"sid-"+flowChartObj.get("id")+"\" sourceRef=\"sid-"+flowChartObj.get("startElmId")+"\" targetRef=\"sid-"+flowChartObj.get("endElmId")+"\"></sequenceFlow>";
+            xml = xml + "<sequenceFlow id=\"sid-"+flowChartObj.get("id")+"\" sourceRef=\"sid-"+flowChartObj.get("startElmId")+"\" targetRef=\"sid-"+flowChartObj.get("endElmId")+"\">";
+            // 如果前一个节点是判断节点,则生成判断条件
+            String sourceRefStr = ""+flowChartObj.get("startElmId");
+            ConfFlowChart sourceRefbean = confFlowChartMap.get(sourceRefStr);
+            if ("Gateway".equals(JSONObject.fromObject(sourceRefbean.getContext()).get("type"))) {
+                xml = xml + "<conditionExpression xsi:type=\"tFormalExpression\">";
+                xml = xml + "${"+ (flowChartObj.containsKey("gatewayInfo") ? flowChartObj.get("gatewayInfo") : "") +"}";
+                xml = xml + "</conditionExpression>";
+            }
+            // 
+            xml = xml + "</sequenceFlow>";
             String nextNodesStr = flowChartObj.get("endElmId").toString();
             String[] nextNodes = nextNodesStr.split(",");
             for (String nextNodeStr : nextNodes) {
@@ -347,6 +368,21 @@ public class BpmComBusiness {
                 }
             }
         }
+        // 判断节点
+        if ("Gateway".equals(flowChartObj.get("type"))) {
+            xml = xml + "<bpmndi:BPMNShape bpmnElement=\"sid-"+flowChartObj.get("id")+"\" id=\"BPMNShape_sid-"+flowChartObj.get("id")+"\">";
+            xml = xml + "<omgdc:Bounds height=\""+flowChartObj.get("height")+"\" width=\""+flowChartObj.get("width")+"\" x=\""+flowChartObj.get("x")+"\" y=\""+flowChartObj.get("y")+"\"></omgdc:Bounds>";
+            xml = xml + "</bpmndi:BPMNShape>";
+            String nextNodesStr = flowChartObj.get("afterLineIds").toString();
+            String[] nextNodes = nextNodesStr.split(",");
+            for (String nextNodeStr : nextNodes) {
+                ConfFlowChart bean = confFlowChartMap.get(nextNodeStr);
+                if (null != bean) {
+                    xml = editDiagramXmlByFlowChart(xml, bean, confFlowChartMap);
+                }
+            }
+        }
+        
         // 线
         if ("Line".equals(flowChartObj.get("type"))) {
             xml = xml + "<bpmndi:BPMNEdge bpmnElement=\"sid-"+flowChartObj.get("id")+"\" id=\"BPMNEdge_sid-"+flowChartObj.get("id")+"\">";

@@ -44,11 +44,33 @@
 		        errorClass: 'validate-error'
 		    });
 		})
+		// 任务节点基础信息
+		function taskNodeBase(){
+			// 设置显示标签
+			$("#taskNodeBaseTabs").attr("class","active");
+			$("#popConfTaskNodeTabs").attr("class"," ");
+			// 
+			$("#taskNodeBaseDiv").attr("class","tab-pane fade active in ");
+			$("#popConfTaskNodeDiv").attr("class","tab-pane fade");
+		}
+		// 任务节点弹出层
+		function popConfTaskNode(){
+	//	    var url = "/iBusiness/default/flowchart/pop-conf-taskNode.do?flowId="+$("#bpmId").val()+"&packageName="+$("#packageName").val()+"&id="+$("#taskNodeId").val();
+	//	    $("#taskNodeIframe").attr("src", url );
+		    // 设置显示标签
+		    $("#taskNodeBaseTabs").attr("class"," ");
+		    $("#popConfTaskNodeTabs").attr("class","active");
+		   // 
+			$("#taskNodeBaseDiv").attr("class","tab-pane fade ");
+			$("#popConfTaskNodeDiv").attr("class","tab-pane fade active in ");
+		}
+		
     </script>
 	<!-- start of main -->
 	<div class="panel panel-default col-md-10 " > 
 	        <input id="bpmId" type="hidden" name="bpmId" value="${bpmId}">
 	        <input id="packageName" type="hidden" name="packageName" value="${packageName}">
+	        <input id="taskNodeId" type="hidden" name="taskNodeId"  >
 	        <!--  -->
 	        	<div id="toolCanvas"  style="position: relative; height: 40px; width:1080px; border: 1px solid;">
 						<div class="tool"  title="泳道" id="addLane"><img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/lanebg.png" /></div>
@@ -91,10 +113,14 @@
 					<!-- 基础弹出form页面 -->
 					<div id ="baseForm"  style="width: 200px;position: absolute; top: 330; left: 400; z-index: 1000; text-align: center; background-color: #CFDFEF; display: none;">
 						<table style="width:200px;">
-							<tr><td><label >id</label></td><td align="left"><input id ="baseId"  style="width:100px;" type="text" value="" readonly="readonly"> </td></tr>
-							<tr><td><label >标题</label></td><td align="left"><input id ="baseTitle"  style="width:100px;" type="text" value=""></td></tr>
-							<tr><td><label >x坐标</label></td><td align="left"><input id ="baseX"  style="width:100px;" type="text" disabled/></td></tr>
-							<tr><td><label >y坐标</label></td><td align="left"><input id = "baseY"  style="width:100px;" type="text" value="" disabled></td></tr>
+							<tr><td><label >id</label></td><td align="left">
+							<input id="baseId"  style="width:100px;" type="text" value="" readonly="readonly"> </td></tr>
+							<tr><td><label >标题</label></td><td align="left">
+							<input id ="baseTitle"  style="width:100px;" type="text" value=""></td></tr>
+							<tr><td><label >x坐标</label></td><td align="left">
+							<input id ="baseX"  style="width:100px;" type="text" disabled/></td></tr>
+							<tr><td><label >y坐标</label></td><td align="left">
+							<input id = "baseY"  style="width:100px;" type="text" value="" disabled></td></tr>
 							<tr><td>操作</td>
 								<td>
 									<a href="#" id = "addBase" >确定</a>
@@ -105,16 +131,93 @@
 						</table> 
 					</div>
 					
-					<!-- 任务节点出页面 -->
+					<!--  判断节点弹出层  -->
+				    <div id="gatewayDiv" class="modal fade"  style="top:10%;">
+					    <div class="modal-dialog">
+						    <div class="modal-content">
+							      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal"><span>&times;</span><span class="sr-only">Close</span></button>
+							      </div>
+							      <div class="modal-body"  style="height:200px;" >
+						                <div class="form-group">
+                                            <label class="col-lg-4 control-label" for="code-remark">判断节点ID:</label>
+                                            <div class="col-lg-6">
+	                                            <input id="gatewayId" type="text" name="gatewayId" class="form-control" readonly="readonly">
+	                                        </div>
+						                </div>
+						                <div class="form-group">
+                                            <label class="col-lg-4 control-label" for="code-remark">下一节点ID:</label>
+                                            <div class="col-lg-6">
+	                                            <select id="nextNodeId" name="nextNodeId" class="form-control" >
+									              <option value="" >请选择</option>
+		          								</select>
+                                            </div>
+						                </div>
+						                <div class="form-group">
+                                            <label class="col-lg-4 control-label" for="code-remark">计算公式:</label>
+                                            <div class="col-lg-6">
+                                                <textarea class="form-control" id="gatewayInfo" name="gatewayInfo" rows="2" >${gatewayInfo}</textarea>
+                                            </div>
+						                </div>
+							            </div>
+							      </div>
+							      <div class="modal-footer">
+							          <a href="#"  id = "submitGateway" class="btn btn-default btn-sm"  >确定</a>
+							          <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+							      </div>
+						    </div><!-- /.modal-content -->
+						  </div><!-- /.modal-dialog -->
+				    </div>
+					
+					<!-- 任务节点弹出层 -->
 				    <div id="taskNodeDiv" class="modal fade" style="top:10%;" >
 				        <div class="col-md-2"></div>
 			            <div class="col-md-8">
 						    <div class="modal-content">
 							      <div class="modal-header">
-								        <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>
+							          <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>
 							      </div>
 							      <div class="modal-body" style="height:450px;" >
-							          <iframe id="taskNodeIframe" src="" width="100%" height="100%" ></iframe>
+							              <ul class="nav nav-tabs">
+											  <li id="taskNodeBaseTabs" class=""><a href="#" onclick="taskNodeBase();" >节点基础信息</a></li>
+											  <li id="popConfTaskNodeTabs" class=""><a href="#" onclick="popConfTaskNode();" >节点列设置</a></li>
+										  </ul>
+										  <div id="tabContent" class="tab-content">
+										        <!-- 基础信息sheet -->
+												<div id="taskNodeBaseDiv" class="tab-pane fade ">
+												    <div class="panel panel-default col-lg-10">
+													<div class="panel-body">
+								                        <div class="form-group">
+				                                            <label class="col-lg-4 control-label" for="code-remark">结点ID:</label>
+				                                            <div class="col-lg-6">
+					                                            <input id="nodeId" type="text" name="nodeId" class="form-control" readonly="readonly">
+					                                        </div>
+										                </div>
+							                            <div class="form-group">
+				                                            <label class="col-lg-4 control-label" for="code-remark">结点标题:</label>
+				                                            <div class="col-lg-6">
+					                                            <input id="taskNodeTitle" type="text" name="taskNodeTitle" class="form-control" >
+					                                        </div>
+										                </div>
+										                <div class="form-group">
+				                                            <label class="col-lg-4 control-label" for="code-remark">结点名:</label>
+				                                            <div class="col-lg-6">
+					                                            <input id="taskNodeName" type="text" name="taskNodeName" class="form-control" >
+					                                        </div>
+										                </div>
+										                <br/>
+										                <div class="form-group">
+												          <a href="#"  id = "taskNodeSave" class="btn btn-default btn-sm"  >确定</a>
+												          <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+												      </div>
+											      </div>
+											      </div>
+								                </div>
+								                <!-- 节点对应字段sheet -->
+								                <div id="popConfTaskNodeDiv" class="tab-pane fade" style="height:400px;" >
+						                              <iframe id="taskNodeIframe" src="" width="100%" height="100%" ></iframe>
+						                        </div>
+							               </div>
 						           </div>
 						           <div class="modal-footer">
 						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>

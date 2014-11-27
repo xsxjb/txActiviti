@@ -49,6 +49,10 @@ function ReviveScene(model){
 							obj = new EndNode(json.id, x, y);
 							obj.init(json);
 							break;
+						case "Gateway":
+							obj = new Gateway(json.id, x, y);
+							obj.init(json);
+							break;
 						case "Line":
 							obj = new Line(json.id, x, y);
 							obj.init(json);

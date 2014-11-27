@@ -13,7 +13,7 @@ function TaskNode(id,x,y ){
 	this.y = y;				//任务节点对象的起始位置（y坐标）
 	this.height = 50;		//任务节点对象的高度
 	this.width = 100;		//任务节点对象的宽度
-	this.moveOver = 1;		//是否可以移入（0：没有移入,1:移入主对象,2:移入编辑子对象）
+	this.moveOver = 1;		//是否可以移入（0：没有移入,1:移入主对象,2:移入判断子对象 3:下一节点 8:结束节点 9:删除）
 	this.mouseClick = 0;    //单击选中此对象 0：未单击, 1：单击
 	
 	this.headLineIds=new HashMap(); // 头节点线ID List
@@ -21,8 +21,8 @@ function TaskNode(id,x,y ){
 
 	// 主对象图片
 	this.imageMain = new Image();
-	// =========== 编辑子按钮图片 ===========================
-	this.imageEditBtn =  new Image();
+	// =========== 判断子按钮图片 ===========================
+	this.imageGateWayBtn =  new Image();
 	this.xEditBtn = this.width+5;          //x坐标偏移量
 	this.yEditBtn = this.height-15;          //y坐标偏移量
 	this.heightEditBtn = 15;	//编辑子按钮的高度
@@ -55,8 +55,8 @@ function TaskNode(id,x,y ){
 	this.init = function( json ){
 	    // 主对象图片
 		this.imageMain.src = "../../plugin/ibusiness/flowchart/img/tasknode.png";
-		// 编辑子对象图片
-		this.imageEditBtn.src = "../../plugin/ibusiness/flowchart/img/edit.png";
+		// 判断子对象图片
+		this.imageGateWayBtn.src = "../../plugin/ibusiness/flowchart/img/gateway.png";
 		// 删除子
 		this.imageDeleteBtn.src="../../plugin/ibusiness/flowchart/img/cross.png";
 		// 建立下一节点按钮图片
@@ -141,10 +141,39 @@ function TaskNode(id,x,y ){
 			var url = "/iBusiness/default/flowchart/pop-conf-taskNode.do?flowId="+$("#bpmId").val()+"&packageName="+$("#packageName").val()+"&id="+this.id;
 			$("#taskNodeIframe").attr("src", url );
 		//	$("#taskNodeDiv").css({width:570 ,height:380});
+			
+			$("#taskNodeId").attr("value",this.id);
+			$("#nodeId").attr("value",this.id);
+			$("#taskNodeTitle").attr("value",this.title);
+			$("#taskNodeName").attr("value",this.name);
+
+			// 设置显示标签
+			$("#taskNodeBaseTabs").attr("class","active");
+			$("#popConfTaskNodeTabs").attr("class"," ");
+			$("#taskNodeBaseDiv").attr("class","tab-pane fade active in ");
+			$("#popConfTaskNodeDiv").attr("class","tab-pane fade");
+			
+			// 
 			$('#taskNodeDiv').modal('show');
 			
 		} else if (this.moveOver == 2) {
-		
+			// 新建一个判断节点
+		    var gateway = new Gateway(Math.uuid(), this.x+200, this.y);
+		    gateway.init();
+			elements.add(gateway);
+			// 计算划线的开始坐标
+			var realPoints = [];
+			realPoints = calculateStartEndPos(this,gateway,realPoints);
+			// 画线
+			var lineBean = new Line(Math.uuid(),this.x+this.width,this.y+this.height/2);
+			lineBean.init();
+			lineBean.realPoints=realPoints;
+			lineBean.startElmId = this.id;
+			lineBean.endElmId = gateway.id;
+			elements.add(lineBean);
+			// 设置任务节点对应的线的信息
+			gateway.headLineIds.put(lineBean.id,lineBean.id);
+			this.afterLineIds.put(lineBean.id,lineBean.id);
 		} else if (this.moveOver == 3) {
 		    // 新建一个task节点
 		    var taskNode = new TaskNode(Math.uuid(), this.x+200, this.y);
@@ -235,7 +264,7 @@ function TaskNode(id,x,y ){
 		if( mouseX >= this.x && mouseX <= (parseInt(this.x)+parseInt(this.width)) && mouseY >= this.y && mouseY<=(parseInt(this.y)+parseInt(this.height)) ){
 			return 1;
 		}
-		// 编辑子按钮
+		// 判断子按钮
 		if (mouseX >= this.x+this.xEditBtn && mouseX <= (parseInt(this.x)+this.xEditBtn+parseInt(this.widthEditBtn)) && mouseY >= this.y+this.yEditBtn && mouseY<=(parseInt(this.y)+this.yEditBtn+parseInt(this.heightEditBtn))) {
 		   return 2;
 		}
@@ -267,8 +296,8 @@ function TaskNode(id,x,y ){
 			ctx.fillText( this.title , parseInt(this.x)+10, parseInt(this.y)+30 );
 		}
 		if (this.mouseClick == 1) {
-			// 画编辑子控件
-			ctx.drawImage( this.imageEditBtn, this.x+this.xEditBtn, this.y+this.yEditBtn, this.widthEditBtn, this.heightEditBtn);
+			// 画判断子控件
+			ctx.drawImage( this.imageGateWayBtn, this.x+this.xEditBtn, this.y+this.yEditBtn, this.widthEditBtn, this.heightEditBtn);
 			// 画删除子控件
 			ctx.drawImage( this.imageDeleteBtn, this.x+this.xDeleteBtn, this.y+this.yDeleteBtn, this.widthDeleteBtn, this.heightDeleteBtn);
 			// 建立结束节点子按钮控件
@@ -284,7 +313,7 @@ function TaskNode(id,x,y ){
 			ctx.strokeRect( parseInt(this.x)-5, parseInt(this.y)-5, parseInt(this.width)+10, parseInt(this.height)+10 , false );
 		}
 		if (this.moveOver == 2) {
-		    // 编辑子按钮
+		    // 判断子按钮
 		    ctx.strokeStyle="#000000";
 			ctx.strokeRect( parseInt(this.x)+this.xEditBtn-5, parseInt(this.y)+this.yEditBtn-5, parseInt(this.widthEditBtn)+10, parseInt(this.heightEditBtn)+10, false );
 		}

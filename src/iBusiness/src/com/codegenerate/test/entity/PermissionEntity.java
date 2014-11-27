@@ -1,15 +1,15 @@
 package com.codegenerate.test.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.hibernate.annotations.GenericGenerator;
-
-import com.ibusiness.bpm.entity.BpmNodeTable;
+import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
@@ -31,6 +31,7 @@ public class PermissionEntity implements java.io.Serializable {
 	private java.lang.String nodename;
 	/**assigneeuser*/
 	private java.lang.String assigneeuser;
+	/**username*/
 	private java.lang.String username;
 	/**tasktitle*/
 	private java.lang.String tasktitle;
@@ -125,6 +126,22 @@ public class PermissionEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  username
+	 */
+	@Column(name ="USERNAME",nullable=true,length=128)
+	public java.lang.String getUsername(){
+		return this.username;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  username
+	 */
+	public void setUsername(java.lang.String username){
+		this.username = username;
+	}
+	/**
+	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  tasktitle
 	 */
 	@Column(name ="TASKTITLE",nullable=true,length=256)
@@ -171,17 +188,4 @@ public class PermissionEntity implements java.io.Serializable {
 	public void setDoneflag(java.lang.Integer doneflag){
 		this.doneflag = doneflag;
 	}
-    /**
-     * @return the username
-     */
-	@Column(name ="USERNAME")
-    public java.lang.String getUsername() {
-        return username;
-    }
-    /**
-     * @param username the username to set
-     */
-    public void setUsername(java.lang.String username) {
-        this.username = username;
-    }
 }

@@ -29,7 +29,7 @@
 	<!-- start of main -->
 	<div class="panel panel-default col-md-10 " > 
 		    <!-- tabs  -->
-	        <ul class="nav nav-tabs">
+	        <ul class="nav nav-pills">
 			  <li class="${tabType == 'bpmBase' ? 'active' : ''} "><a href="${scopePrefix}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" >流程基础信息</a></li>
 			  <li class="${tabType == 'confNode' ? 'active' : ''}"><a href="${scopePrefix}/bpm-process/bpm-conf-node-list.do?packageName=${packageName}&flowVersionId=${model.versionId}&bpmId=${bpmId}" >流程设置</a></li>
 			</ul>

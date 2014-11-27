@@ -174,7 +174,11 @@ public class Project_approvalController {
         } else {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
             // 办理流程
-            bpmComBusiness.completeTask(task.getId(), userId);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("assignee", userId);
+            map.put("bean", entity);
+            
+            bpmComBusiness.completeTask(task.getId(), map);
             if (bpmComBusiness.isFinishedByTask(entity.getExecutionid())) {
                 entity.setDoneflag(1);
             } else {
@@ -232,6 +236,23 @@ public class Project_approvalController {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/project_approval/project_approval-input.do?flowId=" + flowId + "&id=" + id;
     }
+        /**
+     * 删除一条流程信息
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("project_approval-remove")
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
+        List<Project_approvalEntity> entitys = project_approvalService.findByIds(selectedItem);
+        for (Project_approvalEntity entity : entitys) {
+            project_approvalService.remove(entity);
+        }
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+
+        return "redirect:/project_approval/project_approval-list.do?flowType=0&flowId=" + flowId;
+    }
+    
     /**
      * 子表保存
      */
@@ -250,21 +271,18 @@ public class Project_approvalController {
         return "redirect:/project_approval/project_approval-input.do?flowId=" + flowId + "&id=" + entity.getParentid();
     }
     /**
-     * 删除一条流程信息
-     * @param selectedItem
-     * @param redirectAttributes
-     * @return
+     * 子表删除
      */
-    @RequestMapping("project_approval-remove")
-    public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
-        List<Project_approvalEntity> entitys = project_approvalService.findByIds(selectedItem);
-        for (Project_approvalEntity entity : entitys) {
-            project_approvalService.remove(entity);
+    @RequestMapping("project_product_s-remove")
+    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+        List<Project_product_sEntity> entitys = project_product_sService.findByIds(selectedItem);
+        for (Project_product_sEntity entity : entitys) {
+            project_product_sService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-
-        return "redirect:/project_approval/project_approval-list.do?flowId=" + flowId;
+        return "redirect:/project_approval/project_approval-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
     }
+
     /**
      * 流程定义图像
      * @param bpmProcessId

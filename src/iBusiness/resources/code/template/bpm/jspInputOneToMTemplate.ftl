@@ -149,7 +149,8 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="gridForm" name="gridForm" method='post' action="${entityName?uncap_first}-remove.do" class="m-form-blank">
+				<form id="gridForm" name="gridForm" method='post' action="${sub.entityName?uncap_first}-remove.do" class="m-form-blank">
+				  <input type="hidden" name="flowId" value="${'$' + '{flowId}'}">
 				  <table id="codeGrid" class="table table-hover table-bordered">
 				      <thead>
 					      <tr>

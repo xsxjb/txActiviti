@@ -6,7 +6,6 @@
     <%@include file="/common/meta.jsp"%>
     <title>编辑</title>
     <%@include file="/common/center.jsp"%>
-   
     <script type="text/javascript">
 		var config = {
 		    id: 'codeGrid',
@@ -35,9 +34,20 @@
 		function mainFormSubmit(path){
 			$('#mainForm').attr('action', path).submit();
 		}
-		// 弹出选择下一节点办理人层
-		function nextUserPop(){
-		}
+		
+		// 表单验证JS
+		$(function() {
+		    $("#mainForm").validate({
+		        submitHandler: function(form) {
+		            if (typeof(bootbox) != 'undefined') {
+					    bootbox.animate(false);
+					    var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
+		            }
+		            form.submit();
+		        },
+		        errorClass: 'validate-error'
+		    });
+		})
     </script>
   </head>
   <body>
@@ -49,17 +59,13 @@
 	    <div class="panel-heading"><h4 class="panel-title">流程控制</h4></div>
 	    <div class="panel-body">
 	        <div class="pull-left">
-	            
-			    <a href="#nextTaskUserDiv" class="btn btn-default btn-sm" data-toggle="modal">办理</a>
-			     <!-- 
-			     <button class="btn btn-default btn-sm a-submit" onclick="nextUserPop()">办理</button>
-			     -->
+	            <a href="#nextTaskUserDiv" role="button" class="btn btn-default btn-sm" data-toggle="modal">办理</a>
 			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('permission-save-draft.do')">草稿</button>
-			    <button class="btn btn-default btn-sm" onclick="location.href='workspace-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
+			    <button class="btn btn-default btn-sm" onclick="location.href='permission-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='permission-list.do?flowId=${flowId}&flowType=0'">返回</button>
 			</div>
 	   </div>
-        
+	   
         <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
@@ -75,26 +81,21 @@
 				   </c:if>
 					       <!-- 是否显示 -->
 						   <div class="form-group">
-							      <div class="col-lg-6">
-								      <label class="control-label" for="code-remark">备注:</label>
-								      <!-- 是否可编辑 -->
-	                                  <input id="code-remark" type="text" name="remark" value="${model.remark}"  ${nodeColumsMap.remark.fcEdit!='1'? 'disabled="disabled"':''} class="text required" >
-								      <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">
-								              <input type="hidden" name="remark" value="${model.remark}">
-								      </c:if>
-								  </div>
+							      <label class="control-label  col-lg-2" for="code-remark">备注:</label>
+							      <!-- 是否可编辑 -->
+	                                      <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">  <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" ></c:if><c:if test="${nodeColumsMap.remark.fcEdit!='1'}">  <label>${model.remark}</label>  <input type="hidden" name="remark" value="${model.remark}"></c:if>
 							</div>
-							
+					
 					<!--  选择下一节点办理人弹出层  -->
-				    <div id="nextTaskUserDiv" class="modal fade" tabindex="-1"  style="top:20%;">
-					    <div class="modal-dialog">
+				    <div id="nextTaskUserDiv" class="modal fade" tabindex="-1" style="top:20%;" >
+				            <div class="modal-dialog">
 						    <div class="modal-content">
 							      <div class="modal-header">
-								        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+								        <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>
 								        <h4 class="modal-title">办理下一节点</h4>
 							      </div>
 							      <div class="modal-body">
-						                <div class="form-group">
+									    <div class="form-group">
                                             <label class="col-lg-2 control-label" for="code-remark">办理人:</label>
                                             <div class="col-lg-4">
 												  <select id="code-sex" name="userId" class="form-control">
@@ -105,14 +106,15 @@
 												  </select>
 										      </div>
 						                </div>
-							      </div>
-							      <div class="modal-footer">
-							            <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('permission-complete.do')">办理</button>
-							            <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
-							      </div>
-						    </div><!-- /.modal-content -->
+						           </div>
+						           <div class="modal-footer">
+						                    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('permission-complete.do')">办理</button>
+						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+						           </div>
+					            </div><!-- /.modal-content -->
 						  </div><!-- /.modal-dialog -->
 				    </div>
+					
 				</form>
 		</div>
         </div> 
@@ -135,21 +137,22 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="gridForm" name="gridForm" method='post' action="permission-remove.do" class="m-form-blank">
+				<form id="gridForm" name="gridForm" method='post' action="permission_s-remove.do" class="m-form-blank">
+				  <input type="hidden" name="flowId" value="${flowId}">
 				  <table id="codeGrid" class="table table-hover table-bordered">
 				      <thead>
 					      <tr>
 					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			                   <th width="80">&nbsp;</th>
-			                   <th class="sorting">备注</th>
+					          <th width="80">&nbsp;</th>
+		                      <th class="sorting">备注</th>
 					      </tr>
 					    </thead>
 						    <tbody>
 						      <c:forEach items="${page.result}" var="item">
 								  <tr>
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-								        <td>
-								          <a href="permission_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+									    <td>
+								            <a href="permission_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 								        </td>
 							            <td>${item.remark}</td>
 								  </tr>
@@ -172,6 +175,5 @@
       </div>
 	<!-- end of main -->
 	</div>
-        
   </body>
 </html>

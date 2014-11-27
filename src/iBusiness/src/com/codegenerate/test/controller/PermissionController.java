@@ -9,11 +9,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
-import org.activiti.engine.impl.interceptor.Command;
-import org.activiti.engine.task.Task;
-import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,19 +16,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.codegenerate.test.entity.PermissionEntity;
-import com.codegenerate.test.entity.Permission_sEntity;
-import com.codegenerate.test.service.PermissionService;
-import com.codegenerate.test.service.Permission_sService;
-import com.ibusiness.base.user.entity.UserBase;
+import org.activiti.engine.impl.interceptor.Command;
+import org.activiti.engine.task.Task;
+import org.apache.commons.io.IOUtils;
+
+import net.sf.json.JSONObject;
+
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
-import com.ibusiness.common.page.Page;
+import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.page.Page;
 import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
-import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.util.SpringSecurityUtils;
+import com.ibusiness.base.user.entity.UserBase;
+
+import com.codegenerate.test.entity.PermissionEntity;
+import com.codegenerate.test.service.PermissionService;
+import com.codegenerate.test.entity.Permission_sEntity;
+import com.codegenerate.test.service.Permission_sService;
 
 /**   
  * @Title: Controller
@@ -47,19 +49,7 @@ public class PermissionController {
 
     private MessageHelper messageHelper;
     private PermissionService permissionService;
-    private Permission_sService permission_sService;
-    /**
-     * 回退功能
-     */
-    @RequestMapping("workspace-rollback")
-    public String rollback(@RequestParam("executionId") String executiond, @RequestParam("flowId") String flowId) {
-        BpmComBusiness bpmComBusiness = new BpmComBusiness();
-        Task task = bpmComBusiness.getTaskIdByExecutionId(executiond);
-        
-        new BpmComBusiness().rollback(task.getId());
-        return "redirect:/permission/permission-list.do?flowType=0&flowId=" + flowId;
-    }
-        
+        private Permission_sService permission_sService;
    /**
      * 列表
      */
@@ -70,8 +60,6 @@ public class PermissionController {
         propertyFilters.add(new PropertyFilter("EQI_doneflag", flowType));
         propertyFilters.add(new PropertyFilter("EQS_assigneeuser", SpringSecurityUtils.getCurrentUserId()));
         // 根据条件查询数据
-        page.setOrderBy("createdatebpm");
-        page.setOrder("desc");
         page = permissionService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("flowId", flowId);
@@ -87,13 +75,13 @@ public class PermissionController {
      */
     @RequestMapping("permission-input")
     public String input(@ModelAttribute Page page, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "id", required = false) String id, Model model) {
-        
-        BpmComBusiness bpmComBusiness = new BpmComBusiness();
         PermissionEntity entity = null;
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
         if (!CommonUtils.isNull(id)) {
             entity = permissionService.get(id);
         } else {
             entity = new PermissionEntity();
+            
             // 发起一个流程, 设置当前用户执行
             String userId = SpringSecurityUtils.getCurrentUserId();
             String executionId = bpmComBusiness.flowStart(flowId, userId);
@@ -124,20 +112,21 @@ public class PermissionController {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(map);
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
-        page = permission_sService.pagedQuery(page, propertyFilters);
-        model.addAttribute("page", page);
+	        page = permission_sService.pagedQuery(page, propertyFilters);
+	        model.addAttribute("page", page);
         
+        // 流程ID
+        model.addAttribute("flowId", flowId);
         // 取得用户
         List<UserBase> list = CommonBusiness.getInstance().getUserBaseList();
         model.addAttribute("userItems", list);
         // TODO
         model.addAttribute("userId", SpringSecurityUtils.getCurrentUserId());
         
-        // 流程ID
-        model.addAttribute("flowId", flowId);
+        // 在controller中设置页面控件用的数据
         return "codegenerate/test/permission-input.jsp";
     }
-
+    
     /**
      * 子表新建
      */
@@ -148,7 +137,7 @@ public class PermissionController {
         model.addAttribute("parentid", id);
         model.addAttribute("flowId", flowId);
         
-        // 
+        // 取得主表中的 executionid
         PermissionEntity mainEntity = permissionService.get(id);
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         // 取得当前流程节点信息
@@ -167,16 +156,29 @@ public class PermissionController {
      * @throws Exception
      */
     @RequestMapping("permission-complete")
-    public String completeTask(@ModelAttribute PermissionEntity entity, @RequestParam(value = "flowId", required = false) String flowId, 
-            @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
+    public String completeTask(@ModelAttribute PermissionEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
-        // 取得当前用户 
+        String executionId = null;
+        // 
         if (CommonUtils.isNull(entity.getExecutionid())) {
-            
+            // 启动流程, 设置执行实例ID
+            executionId = bpmComBusiness.flowStart(flowId, userId);
+            entity.setExecutionid(executionId);
+            // 设置流程实例信息=========================
+            Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
+            entity.setCreatedatebpm(task.getCreateTime());
+            entity.setNodename(task.getName());
+            entity.setAssigneeuser(userId);
+            entity.setUsername(CommonBusiness.getInstance().getUserBean(userId).getDisplayName());
+            entity.setDoneflag(0);
         } else {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
             // 办理流程
-            bpmComBusiness.completeTask(task.getId(), userId);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("assignee", userId);
+            map.put("bean", entity);
+            
+            bpmComBusiness.completeTask(task.getId(), map);
             if (bpmComBusiness.isFinishedByTask(entity.getExecutionid())) {
                 entity.setDoneflag(1);
             } else {
@@ -203,6 +205,17 @@ public class PermissionController {
         return "redirect:/permission/permission-list.do?flowType=0&flowId=" + flowId;
     }
     /**
+     * 回退功能
+     */
+    @RequestMapping("permission-rollback")
+    public String rollback(@RequestParam("executionId") String executiond, @RequestParam("flowId") String flowId) {
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
+        Task task = bpmComBusiness.getTaskIdByExecutionId(executiond);
+        
+        new BpmComBusiness().rollback(task.getId());
+        return "redirect:/permission/permission-list.do?flowType=0&flowId=" + flowId;
+    }
+    /**
      * 草稿
      * 
      * @return
@@ -223,6 +236,23 @@ public class PermissionController {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/permission/permission-input.do?flowId=" + flowId + "&id=" + id;
     }
+        /**
+     * 删除一条流程信息
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("permission-remove")
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
+        List<PermissionEntity> entitys = permissionService.findByIds(selectedItem);
+        for (PermissionEntity entity : entitys) {
+            permissionService.remove(entity);
+        }
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+
+        return "redirect:/permission/permission-list.do?flowType=0&flowId=" + flowId;
+    }
+    
     /**
      * 子表保存
      */
@@ -241,21 +271,18 @@ public class PermissionController {
         return "redirect:/permission/permission-input.do?flowId=" + flowId + "&id=" + entity.getParentid();
     }
     /**
-     * 删除一条流程信息
-     * @param selectedItem
-     * @param redirectAttributes
-     * @return
+     * 子表删除
      */
-    @RequestMapping("permission-remove")
-    public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
-        List<PermissionEntity> entitys = permissionService.findByIds(selectedItem);
-        for (PermissionEntity entity : entitys) {
-            permissionService.remove(entity);
+    @RequestMapping("permission_s-remove")
+    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+        List<Permission_sEntity> entitys = permission_sService.findByIds(selectedItem);
+        for (Permission_sEntity entity : entitys) {
+            permission_sService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-
-        return "redirect:/permission/permission-list.do?flowId=" + flowId;
+        return "redirect:/permission/permission-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
     }
+
     /**
      * 流程定义图像
      * @param bpmProcessId

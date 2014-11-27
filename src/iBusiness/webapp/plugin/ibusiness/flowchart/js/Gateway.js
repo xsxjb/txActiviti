@@ -136,10 +136,23 @@ function Gateway(id,x,y ){
 	 *	单击事件（编辑）
 	 */
 	this.clickEdit = function(mouseX,mouseY){
-		// alert( this.id+this.name+'被单击（编辑）!' );
+		// 单击主空间
 		if (this.moveOver == 1) {
-			// 
-			//
+			// 设置值
+			$('#gatewayId').val(this.id);
+			// 先清空下拉框内容
+			$('#nextNodeId').empty();
+			// 循环设置 当前判断节点中所有下一个节点的信息
+			var arrayKey = this.afterLineIds.keys();
+			for (var i=0;i<arrayKey.length;i++) {
+				// 取得线对象
+				var lineItem = elements.getId(arrayKey[i]);
+				var nextNode = elements.getId(lineItem.endElmId);
+				$('#nextNodeId').append($("<option value=\""+nextNode.id+"\">"+nextNode.title+"</option>")  );
+			}
+			
+			// 显示弹出层
+			$('#gatewayDiv').modal('show');
 		} else if (this.moveOver == 2) {
 		
 		} else if (this.moveOver == 3) {
@@ -251,12 +264,8 @@ function Gateway(id,x,y ){
 	this.paint = function(){
 	    // 主控件
 		ctx.drawImage( this.imageMain, this.x, this.y, this.width, this.height );
-		// 主控件标题
-		if( this.title != "" ){
-			ctx.fillStyle="#000000";  //填充颜色
-			ctx.font="bold 15px 宋体";
-			ctx.fillText( this.title , parseInt(this.x)+10, parseInt(this.y)+0 );
-		}
+		
+		// 鼠标单击事件
 		if (this.mouseClick == 1) {
 			// 画编辑子控件
 			ctx.drawImage( this.imageEditBtn, this.x+this.xEditBtn, this.y+this.yEditBtn, this.widthEditBtn, this.heightEditBtn);

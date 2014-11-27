@@ -201,7 +201,7 @@ public class TableController {
         } else {
             confTableColumns.setColumnValue(confTableColumns.getColumnValue().toUpperCase());
             tableService.updateConfTableColumns(tableName, confTableColumns);
-            messageHelper.addFlashMessage(redirectAttributes, "core.success.update", "更新成功");
+            messageHelper.addFlashMessage(redirectAttributes, "core.input.save", "更新成功");
             // 更改表结构
             alterTableColumn(confTableColumns);
         }

@@ -460,55 +460,39 @@ $(function() {
 	//----------------------------------------------------------------
 	//----------------------------------------------------------
 	//----------------------------------------------------------
-	//单击【线编辑表单】中的确定按钮
-	$('#addLine').click(function(e) {
+	//单击【判断节点】弹出框中的确定按钮
+	$('#submitGateway').click(function(e) {
 		var charCheck = new RegExp("^(\\d+)$");
-		if( !charCheck.test($("#lineX").val()) ){
-            alert('[X坐标]必须是整数!');
-            $("#lineX").focus();
-            return;
-        }
-		if( !charCheck.test($("#lineY").val()) ){
-            alert('[Y坐标]必须是整数!');
-            $("#lineY").focus();
-            return;
-        }
-		if( !charCheck.test($("#lineW").val()) ){
-            alert('[宽度]必须是整数!');
-            $("#lineW").focus();
-            return;
-        }
-        //判断管道的流向，向北向西的可以为负数，南和东正数
-        switch ( $("#flowTo").val() ) {//north, south, east and west
-		case "north"://北
-		case "west"://西
-	        var charCheck2 = new RegExp("^(-)(\\d+)$");
-			if( !charCheck2.test($("#lineL").val()) ){
-	            alert('管道的流向为向上或向左时[长度]必须是负数!');
-	            $("#lineL").focus();
-	            return;
-	        }
-			break;
-		case "south"://南
-		case "east"://东
-			if( !charCheck.test($("#lineL").val()) ){
-	            alert('管道的流向为向下或向右时[长度]必须是整数!');
-	            $("#lineL").focus();
-	            return;
-	        }
-			break;
-		}
-		if( window.confirm("您确认要更新该管道吗？") == true ){
-			elements.getId($("#lineId").val()).clickAdd();
-			$("#lineForm").hide(300);
+		if( window.confirm("您确认要更新该组件吗？") == true ){
+			// 1.根据判断节点ID取得判断节点
+			
+			// 3.根据线信息取得线连接的下一步节点ID
+			// 4.根据前台传递过来的下一节点ID设置判断条件到对应的线对象
+			var gwItem = elements.getId($("#gatewayId").val());
+			// 2.循环判断节点下一步对应的线
+			var arrayKey = gwItem.afterLineIds.keys();
+			for (var i=0;i<arrayKey.length;i++) {
+				// 取得线对象
+				var lineItem = elements.getId(arrayKey[i]);
+				if (lineItem.endElmId == $("#nextNodeId").val()) {
+					lineItem.gatewayInfo=$("#gatewayInfo").val();
+					break;
+				}
+			}
+			// 关闭弹出层
+			$('#taskNodeDiv').modal('hide');
 		}
 	});
-	
-	//单击【线编辑表单】中的删除按钮
-	$("#deleteLine").click(function(e) {
-		if( window.confirm("您确认要删除该管道吗？") == true ){
-			elements.removeId($("#lineId").val());
-			$("#lineForm").hide(300);
+	//----------------------------------------------------------
+	//----------------------------------------------------------
+	//单击【任务节点】弹出框中的确定按钮
+	$('#taskNodeSave').click(function(e) {
+		var charCheck = new RegExp("^(\\d+)$");
+		if( window.confirm("您确认要更新该组件吗？") == true ){
+			var taskNodeItem = elements.getId($("#nodeId").val());
+			taskNodeItem.title =$("#taskNodeTitle").val();
+			taskNodeItem.name =$("#taskNodeName").val();
+			$('#taskNodeDiv').modal('hide');
 		}
 	});
 	

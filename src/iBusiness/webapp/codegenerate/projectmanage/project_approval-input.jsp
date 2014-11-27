@@ -197,7 +197,8 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="gridForm" name="gridForm" method='post' action="project_approval-remove.do" class="m-form-blank">
+				<form id="gridForm" name="gridForm" method='post' action="project_product_s-remove.do" class="m-form-blank">
+				  <input type="hidden" name="flowId" value="${flowId}">
 				  <table id="codeGrid" class="table table-hover table-bordered">
 				      <thead>
 					      <tr>

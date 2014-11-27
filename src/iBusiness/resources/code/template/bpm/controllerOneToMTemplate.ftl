@@ -187,7 +187,11 @@ public class ${entityName}Controller {
         } else {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
             // 办理流程
-            bpmComBusiness.completeTask(task.getId(), userId);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("assignee", userId);
+            map.put("bean", entity);
+            
+            bpmComBusiness.completeTask(task.getId(), map);
             if (bpmComBusiness.isFinishedByTask(entity.getExecutionid())) {
                 entity.setDoneflag(1);
             } else {
@@ -245,6 +249,23 @@ public class ${entityName}Controller {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-input.do?flowId=" + flowId + "&id=" + id;
     }
+        /**
+     * 删除一条流程信息
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("${entityName?uncap_first}-remove")
+    public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
+        List<${entityName}Entity> entitys = ${entityName?uncap_first}Service.findByIds(selectedItem);
+        for (${entityName}Entity entity : entitys) {
+            ${entityName?uncap_first}Service.remove(entity);
+        }
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+
+        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do?flowType=0&flowId=" + flowId;
+    }
+    
     <#list subTab as sub>
     /**
      * 子表保存
@@ -263,23 +284,20 @@ public class ${entityName}Controller {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-input.do?flowId=" + flowId + "&id=" + entity.getParentid();
     }
-    </#list>
     /**
-     * 删除一条流程信息
-     * @param selectedItem
-     * @param redirectAttributes
-     * @return
+     * 子表删除
      */
-    @RequestMapping("${entityName?uncap_first}-remove")
-    public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
-        List<${entityName}Entity> entitys = ${entityName?uncap_first}Service.findByIds(selectedItem);
-        for (${entityName}Entity entity : entitys) {
-            ${entityName?uncap_first}Service.remove(entity);
+    @RequestMapping("${sub.entityName?uncap_first}-remove")
+    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+        List<${sub.entityName}Entity> entitys = ${sub.entityName?uncap_first}Service.findByIds(selectedItem);
+        for (${sub.entityName}Entity entity : entitys) {
+            ${sub.entityName?uncap_first}Service.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-
-        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do?flowId=" + flowId;
+        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
     }
+    </#list>
+
     /**
      * 流程定义图像
      * @param bpmProcessId

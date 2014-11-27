@@ -23,6 +23,9 @@ function Line(id,x,y){
 	// 线后(结束)节点id
 	this.endElmId = '';
 	
+	// 判断节点的判断条件
+	this.gatewayInfo = '';
+	
 	/**
 	 *	初始化
 	 */
@@ -38,6 +41,7 @@ function Line(id,x,y){
 			this.startElmId = json.startElmId;
 			this.endElmId = json.endElmId;
 			
+			this.gatewayInfo = json.gatewayInfo;
 			// 设置线位置坐标点
 		//	this.realPoints = calculateStartEndPos(elements.getId(json.startElmId),elements.getId(json.endElmId),this.realPoints);
 			// 设置线位置坐标点
@@ -62,6 +66,8 @@ function Line(id,x,y){
 					"\"x\":\""+this.x+"\"," +
 					"\"y\":\""+this.y+"\"," +
 					
+					"\"gatewayInfo\":\""+this.gatewayInfo+"\"," +
+		
 					"\"realPoints\":\""+this.realPoints+"\"," +
 					"\"startElmId\":\""+this.startElmId+"\"," +
 					"\"endElmId\":\""+this.endElmId+"\"" +
