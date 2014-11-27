@@ -120,8 +120,7 @@ public class CmsArticleController {
     @RequestMapping("cms-article-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem,
             RedirectAttributes redirectAttributes) {
-        List<CmsArticle> cmsArticles = cmsArticleService
-                .findByIds(selectedItem);
+        List<CmsArticle> cmsArticles = cmsArticleService.findByIds(selectedItem);
         cmsArticleService.removeAll(cmsArticles);
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
@@ -208,6 +207,9 @@ public class CmsArticleController {
     @RequestMapping("cms-article-view-list")
     public String viewList(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 设置排序信息
+        page.setOrderBy("createTime");
+        page.setOrder("DESC");
         page = cmsArticleService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
 

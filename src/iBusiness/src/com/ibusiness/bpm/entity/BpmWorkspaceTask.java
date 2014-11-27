@@ -3,19 +3,26 @@ package com.ibusiness.bpm.entity;
 import java.util.Date;
 
 /**
- * 
+ * 代办流程信息列表用bean
  * @author JiangBo
  *
  */
 public class BpmWorkspaceTask {
+    // 编号
     private String id;
+    // 节点名称
     private String name;
+    // 创建时间
     private Date createTime;
+    // 负责人
     private String assignee;
+    // 状态
     private Boolean suspended;
     private String processInstanceId;
-    // 
+    // 流程URL
     private String flowUrl;
+    // 流程名
+    private String flowTitle;
     /**
      * @return the id
      */
@@ -99,5 +106,17 @@ public class BpmWorkspaceTask {
      */
     public void setFlowUrl(String flowUrl) {
         this.flowUrl = flowUrl;
+    }
+    /**
+     * @return the flowName
+     */
+    public String getFlowTitle() {
+        return flowTitle;
+    }
+    /**
+     * @param flowName the flowName to set
+     */
+    public void setFlowTitle(String flowTitle) {
+        this.flowTitle = flowTitle;
     }
 }

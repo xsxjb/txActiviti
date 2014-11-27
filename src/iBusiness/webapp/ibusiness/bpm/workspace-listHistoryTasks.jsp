@@ -15,7 +15,7 @@
     <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
       <!-- start of main -->
-      <div class="panel panel-default span10">
+      <div class="panel panel-default col-lg-10">
         <div class="panel-heading"><h4 class="panel-title">已办流程列表</h4></div>
         <div class="panel-body">
 			  <table id="demoGrid" class="table table-hover table-bordered">

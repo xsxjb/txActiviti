@@ -26,12 +26,12 @@ import com.ibusiness.bpm.dao.BpmFlowNodeDao;
 import com.ibusiness.bpm.dao.BpmNodeCountersignDao;
 import com.ibusiness.bpm.dao.BpmNodeFormDao;
 import com.ibusiness.bpm.dao.BpmNodeListenerDao;
-import com.ibusiness.bpm.dao.BpmNodeUserDao;
 import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmProcess;
 import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.bpm.service.BpmComBusiness;
+import com.ibusiness.bpm.service.BpmNodeUserService;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.service.MenuCommon;
@@ -56,7 +56,7 @@ public class BpmProcessController {
     private BpmProcessDao bpmProcessDao;
     private BpmProcessVersionDao bpmProcessVersionDao;
     private BpmFlowNodeDao bpmFlowNodeDao;
-    private BpmNodeUserDao bpmNodeUserDao;
+    private BpmNodeUserService bpmNodeUserService;
     private BpmNodeListenerDao bpmNodeListenerDao;
     private BpmNodeFormDao bpmNodeFormDao;
     private BpmNodeCountersignDao bpmNodeCountersignDao;
@@ -294,7 +294,7 @@ public class BpmProcessController {
             bpmFlowNodeDao.removeAll(bpmFlowNodeDao.find(flowNodeSql, entity.getId()));
             // 删除流程节点人员(参与者)配置表
             String nodeUserSql = "from BpmNodeUser where flowId=?";
-            bpmNodeUserDao.removeAll(bpmNodeUserDao.find(nodeUserSql, entity.getId()));
+            bpmNodeUserService.removeAll(bpmNodeUserService.find(nodeUserSql, entity.getId()));
             // 删除流程节点事件配置表
             String nodeListenerSql = "from BpmNodeListener where flowId=?";
             bpmNodeListenerDao.removeAll(bpmNodeListenerDao.find(nodeListenerSql, entity.getId()));
@@ -354,8 +354,8 @@ public class BpmProcessController {
         this.bpmFlowNodeDao = bpmFlowNodeDao;
     }
     @Resource
-    public void setBpmNodeUserDao(BpmNodeUserDao bpmNodeUserDao) {
-        this.bpmNodeUserDao = bpmNodeUserDao;
+    public void setBpmNodeUserService(BpmNodeUserService bpmNodeUserService) {
+        this.bpmNodeUserService = bpmNodeUserService;
     }
     @Resource
     public void setBpmNodeListenerDao(BpmNodeListenerDao bpmNodeListenerDao) {

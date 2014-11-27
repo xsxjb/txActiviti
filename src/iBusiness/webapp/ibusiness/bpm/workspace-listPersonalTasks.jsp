@@ -13,17 +13,17 @@
     <%@include file="/ibusiness/header/header-portal.jsp"%>
 
     <div class="row">
-
+    <div class="col-lg-1"></div>
 	<!-- start of main -->
-    <div class="panel panel-default span10">
+    <div class="panel panel-default col-lg-10">
         <div class="panel-heading"><h4 class="panel-title">待办流程列表</h4></div>
         <div class="panel-body">
 			  <table id="demoGrid" class="table table-hover table-bordered">
 			    <thead>
 			      <tr>
 			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			        <th class="sorting" >编号</th>
-			        <th class="sorting" >名称</th>
+			        <th class="sorting" >流程标题</th>
+			        <th class="sorting" >节点名称</th>
 			        <th class="sorting" >创建时间</th>
 			        <th class="sorting" >负责人</th>
 			        <th class="sorting" >状态</th>
@@ -35,7 +35,7 @@
 			      <c:forEach items="${tasks}" var="item">
 			      <tr>
 			        <td><input type="checkbox" class="selectedItem" name="selectedItem" value="${item.id}"></td>
-				    <td>${item.id}</td>
+				    <td>${item.flowTitle}</td>
 				    <td>${item.name}</td>
 				    <td><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 				    <td><tags:user userId="${item.assignee}"/></td>

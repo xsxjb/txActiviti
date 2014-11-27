@@ -1,4 +1,4 @@
-package com.ibusiness.bpm.dao;
+package com.ibusiness.bpm.service;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +12,6 @@ import com.ibusiness.common.page.HibernateEntityDao;
  *
  */
 @Service
-public class BpmNodeUserDao extends HibernateEntityDao<BpmNodeUser> {
+public class BpmNodeUserService extends HibernateEntityDao<BpmNodeUser> {
 
 }

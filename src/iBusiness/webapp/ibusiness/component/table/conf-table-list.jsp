@@ -32,7 +32,7 @@
     <%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
 
 	<!-- start of main -->
-	<div class="panel panel-default span10">
+	<div class="panel panel-default col-lg-10">
           <div class="panel-heading"><h4 class="panel-title">表存储模型</h4></div>
           <div class="panel-body">
                 <div id="tableCategorySearch" class="content content-inner">

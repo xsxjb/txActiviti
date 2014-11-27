@@ -158,20 +158,8 @@ public class Project_approvalController {
     @RequestMapping("project_approval-complete")
     public String completeTask(@ModelAttribute Project_approvalEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
-        String executionId = null;
         // 
-        if (CommonUtils.isNull(entity.getExecutionid())) {
-            // 启动流程, 设置执行实例ID
-            executionId = bpmComBusiness.flowStart(flowId, userId);
-            entity.setExecutionid(executionId);
-            // 设置流程实例信息=========================
-            Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
-            entity.setCreatedatebpm(task.getCreateTime());
-            entity.setNodename(task.getName());
-            entity.setAssigneeuser(userId);
-            entity.setUsername(CommonBusiness.getInstance().getUserBean(userId).getDisplayName());
-            entity.setDoneflag(0);
-        } else {
+        if (!CommonUtils.isNull(entity.getExecutionid())) {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
             // 办理流程
             Map<String, Object> map = new HashMap<String, Object>();
@@ -236,7 +224,7 @@ public class Project_approvalController {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/project_approval/project_approval-input.do?flowId=" + flowId + "&id=" + id;
     }
-        /**
+    /**
      * 删除一条流程信息
      * @param selectedItem
      * @param redirectAttributes

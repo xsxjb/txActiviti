@@ -12,8 +12,8 @@ $(function() {
     $("#permForm").validate({
         submitHandler: function(form) {
 			bootbox.animate(false);
-			var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
-            form.submit();
+			var box = bootbox.dialog('<div class="progress" ><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"> 60% </div></div>');
+			form.submit();
         },
         errorClass: 'validate-error'
     });
@@ -24,10 +24,10 @@ $(function() {
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
 
-    <div class="span2"></div>
+    <div class="col-lg-1"></div>
 
    	<!-- start of main -->
-	<div class="panel panel-default span10"> 
+	<div class="panel panel-default col-lg-10"> 
         <div class="panel-heading"><h4 class="panel-title">编辑标签级权限</h4></div>
         <div class="panel-body">
       		<form id="permForm" method="post" action="perm-save.do" class="form-horizontal">

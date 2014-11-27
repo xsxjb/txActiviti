@@ -21,7 +21,6 @@ import com.ibusiness.bpm.dao.BpmFlowNodeDao;
 import com.ibusiness.bpm.dao.BpmNodeCountersignDao;
 import com.ibusiness.bpm.dao.BpmNodeFormDao;
 import com.ibusiness.bpm.dao.BpmNodeListenerDao;
-import com.ibusiness.bpm.dao.BpmNodeUserDao;
 import com.ibusiness.bpm.dao.BpmProcessDao;
 import com.ibusiness.bpm.dao.BpmProcessVersionDao;
 import com.ibusiness.bpm.entity.BpmFlowNode;
@@ -35,6 +34,7 @@ import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.bpm.graph.Graph;
 import com.ibusiness.bpm.graph.Node;
 import com.ibusiness.bpm.service.BpmNodeColumsService;
+import com.ibusiness.bpm.service.BpmNodeUserService;
 import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
 import com.ibusiness.component.form.entity.ConfForm;
@@ -279,8 +279,8 @@ public class SyncProcessCmd implements Command<Void> {
         }
                 
         // 取得流程节点关联用户数据
-        BpmNodeUserDao bpmNodeUserDao = getBpmNodeUserDao();
-        BpmNodeUser bpmNodeUser = bpmNodeUserDao.findUnique(
+        BpmNodeUserService bpmNodeUserService = getBpmNodeUserService();
+        BpmNodeUser bpmNodeUser = bpmNodeUserService.findUnique(
                         "from BpmNodeUser where userValue=? and userType=? and priority=? and userStatus=0 and nodeId=?",
                         value, type, priority, bpmFlowNode.getId());
 
@@ -296,7 +296,7 @@ public class SyncProcessCmd implements Command<Void> {
             bpmNodeUser.setUserStatus("0");
             bpmNodeUser.setPriority(priority);
             
-            bpmNodeUserDao.save(bpmNodeUser);
+            bpmNodeUserService.save(bpmNodeUser);
         }
 
         return priority + 1;
@@ -463,8 +463,8 @@ public class SyncProcessCmd implements Command<Void> {
         return ApplicationContextHelper.getBean(BpmFlowNodeDao.class);
     }
     // 流程定义配置人员表DAO
-    public BpmNodeUserDao getBpmNodeUserDao() {
-        return ApplicationContextHelper.getBean(BpmNodeUserDao.class);
+    public BpmNodeUserService getBpmNodeUserService() {
+        return ApplicationContextHelper.getBean(BpmNodeUserService.class);
     }
     // 流程节点事件配置表DAO
     public BpmNodeListenerDao getBpmNodeListenerDao() {

@@ -66,14 +66,18 @@ public class BpmWorkspaceController {
             // bpmURL设置
             String proceVersionHql = "from BpmProcessVersion where bpmProsessId=?";
             List<BpmProcessVersion> bpmProcessVersionList = bpmProcessVersionDao.find(proceVersionHql, task.getProcessDefinitionId());
+            String flowTitle = "";
             String flowUrl = "";
             if (null != bpmProcessVersionList && bpmProcessVersionList.size() > 0) {
                 String proceHql = "from BpmProcess where versionId=?";
                 List<BpmProcess> bpmProcessList= bpmProcessDao.find(proceHql, bpmProcessVersionList.get(0).getId());
                 if (null != bpmProcessList && bpmProcessList.size() > 0) {
                     flowUrl = bpmProcessList.get(0).getFlowUrl();
+                    flowTitle = bpmProcessList.get(0).getFlowTitle();
                 }
             }
+            // 流程名设置
+            taskBean.setFlowTitle(flowTitle);
             taskBean.setFlowUrl(flowUrl);
             tasklist.add(taskBean);
         }

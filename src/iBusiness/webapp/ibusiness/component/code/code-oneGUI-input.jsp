@@ -12,10 +12,10 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
 
-	<div class="span2"></div>
+	<div class="col-lg-1"></div>
 
 	<!-- start of main -->
-	<div class="panel panel-default span10">
+	<div class="panel panel-default col-lg-10">
         
     </div>
     

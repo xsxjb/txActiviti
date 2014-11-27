@@ -41,10 +41,10 @@ $(function() {
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
 
-    <div class="span2"></div>
+    <div class="col-lg-1"></div>
 
 	<!-- start of main -->
-	<div class="panel panel-default span10"> 
+	<div class="panel panel-default col-lg-10"> 
         <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
         <div class="panel-body">
 	        <div id="permTypeSearch" class="content content-inner">

@@ -25,42 +25,43 @@ $(function() {
     <%@include file="/ibusiness/header/header-portal.jsp"%>
 
     <div class="row">
-
-	<!-- start of main -->
-	<div class="panel panel-default span10"> 
-        <div class="panel-heading"><h4 class="panel-title">修改密码</h4></div>
-        <div class="panel-body">
-          <form id="userForm" method="post" action="change-password-save.do?operationMode=STORE" class="form-horizontal">
-			  <div class="form-group">
-			    <label class="col-lg-2 control-label" for="oldPassword"><spring:message code="user.user.changepassword.old" text="原密码"/>:</label>
-				<div class="controls">
-				  <input id="oldPassword" name="oldPassword" type="password" value="" class="col-lg-3 required" maxlength="20">
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <label class="col-lg-2 control-label" for="oldPassword"><spring:message code="user.user.changepassword.new" text="新密码"/>:</label>
-				<div class="controls">
-			      <input id="newPassword" name="newPassword" type="password" value="" class="col-lg-3 required" maxlength="20">
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <label class="col-lg-2 control-label" for="confirmPassword"><spring:message code="user.user.changepassword.confirm" text="确认密码"/>:</label>
-				<div class="controls">
-			      <input id="col-lg-3 confirmPassword" name="confirmPassword" type="password" value="" equalTo="#newPassword">
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <div class="controls">
-			      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-				  &nbsp;
-			      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
-			    </div>
-			  </div>
-		  </form>
-        </div>
-	<!-- end of main -->
-	</div>
-
+	    <div class="col-lg-1"></div>
+	
+		<!-- start of main -->
+		<div class="panel panel-default col-lg-10"> 
+	        <div class="panel-heading"><h4 class="panel-title">修改密码</h4></div>
+	        <div class="panel-body">
+	          <form id="userForm" method="post" action="change-password-save.do?operationMode=STORE" class="form-horizontal">
+				  <div class="form-group">
+				    <label class="col-lg-2 control-label" for="oldPassword"><spring:message code="user.user.changepassword.old" text="原密码"/>:</label>
+					<div class="controls">
+					  <input id="oldPassword" name="oldPassword" type="password" value="" class="col-lg-3 required" maxlength="20">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-lg-2 control-label" for="oldPassword"><spring:message code="user.user.changepassword.new" text="新密码"/>:</label>
+					<div class="controls">
+				      <input id="newPassword" name="newPassword" type="password" value="" class="col-lg-3 required" maxlength="20">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-lg-2 control-label" for="confirmPassword"><spring:message code="user.user.changepassword.confirm" text="确认密码"/>:</label>
+					<div class="controls">
+				      <input id="col-lg-3 confirmPassword" name="confirmPassword" type="password" value="" equalTo="#newPassword">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <div class="controls">
+				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+					  &nbsp;
+				      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
+				    </div>
+				  </div>
+			  </form>
+	        </div>
+		<!-- end of main -->
+		</div>
+    </div>
   </body>
 
 </html>

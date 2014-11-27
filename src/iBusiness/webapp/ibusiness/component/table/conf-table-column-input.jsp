@@ -12,8 +12,8 @@
 		    $("#tableForm").validate({
 		        submitHandler: function(form) {
 					bootbox.animate(false);
-					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
-		            form.submit();
+					var box = bootbox.dialog('<div class="progress" ><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"> 60% </div></div>');
+					form.submit();
 		        },
 		        errorClass: 'validate-error'
 		    });
@@ -26,7 +26,7 @@
 	<%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
 
 	<!-- start of main -->
-	<div class="panel panel-default span10">
+	<div class="panel panel-default col-lg-10">
           <div class="panel-heading"><h4 class="panel-title">编辑列字段</h4></div>
           <div class="panel-body">
 	          <form id="tableForm" method="post" action="conf-table-columns-update.do?tableName=${tableName}" class="form-horizontal">

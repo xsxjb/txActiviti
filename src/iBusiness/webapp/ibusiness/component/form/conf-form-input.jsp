@@ -7,6 +7,19 @@
     <%@include file="/common/meta.jsp"%>
     <title>编辑表单</title>
     <%@include file="/common/center.jsp"%>
+    <script type="text/javascript">
+		$(function() {
+		    $("#codeGForm").validate({
+		        submitHandler: function(form) {
+					bootbox.animate(false);
+					var box = bootbox.dialog('<div class="progress" ><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"> 60% </div></div>');
+					    
+					form.submit();
+		        },
+		        errorClass: 'validate-error'
+		    });
+		})
+    </script>
   </head>
 
   <body>
@@ -261,7 +274,7 @@
 	        	  <!-- ================================================================================ -->
 	        	  <div id="formCode" class="tab-pane fade ${tabType == 'formCode' ? 'active in' : ''}">
 	        	  <c:if test="${tabType == 'formCode'}">
-	        	      <form id="menuForm" method="post" action="code-generate-save.do" class="form-horizontal">
+	        	      <form id="codeGForm" method="post" action="code-generate-save.do" class="form-horizontal">
 	        	        <div class="panel panel-primary">
 	        	            <div class="panel-heading"><h4 class="panel-title">代码生成操作</h4></div>
 					        <div class="panel-body">

@@ -17,7 +17,7 @@
     <div class="row">
 
 	<!-- start of main -->
-    <div class="panel panel-default span10">
+    <div class="panel panel-default col-lg-10">
         <div class="panel-heading"><h4 class="panel-title">流程图</h4></div>
         <div class="panel-body">
 	        <div id="demoSearch" class="content">
@@ -51,10 +51,10 @@
 			  </table>
             </div>
       </div>
-
+<!-- 
       <div class="panel-heading"><h4 class="panel-title">表单</h4></div>
-          <div class="panel-body">
-		      <div class="content">
+      <div class="panel-body">
+		    <div class="content">
 				  <table id="demoGrid" class="table table-hover table-bordered">
 				    <thead>
 				      <tr>
@@ -72,8 +72,9 @@
 				      </c:forEach>
 				    </tbody>
 				  </table>
-                </div>
+              </div>
       </div>
+ -->
     </div>
 	<!-- end of main -->
 	</div>
