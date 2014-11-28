@@ -10,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ibusiness.codegenerate.code.Columnt;
-import com.ibusiness.common.model.ConfSelectItem;
-import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.common.util.Constants;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
 
@@ -169,13 +167,7 @@ public class CodeBpmTagFactory {
     /**
      * 下拉列表
      */
-    @SuppressWarnings("unchecked")
     public Columnt selectParser(Columnt columnt, ConfFormTableColumn formColumn) {
-        // 下拉列表数据
-        List<ConfSelectItem> confSelectItems = (List<ConfSelectItem>) CommonUtils.getListFromJson(formColumn.getConfSelectInfo(), ConfSelectItem.class);
-        columnt.setConfSelectItems(confSelectItems);
-        
-        // ============================================================================
         // 生成controller类中的Attribute
         String controllerInfo = "";
         // 取得表单对应表管理表Map

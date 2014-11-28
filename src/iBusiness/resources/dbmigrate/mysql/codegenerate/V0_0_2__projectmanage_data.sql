@@ -6,10 +6,12 @@ INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES(
 INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES('4028819e49df4dc30149df63802d0004','projectmanage','流程表单设计器','4028819e49df4dc30149df637e5c0000','BpmForm');
 INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES('4028819e49df4dc30149df6380be0005','projectmanage','流程设计器','4028819e49df4dc30149df637e5c0000','Bpm');
 
+/* ================================================================================   */
+/* ===================================    物料分类信息表  =================================   */
+/* ================================================================================   */
 /* ================= 业务表结构管理表 ==================   */
-insert  into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE,PARENTTABLEID,ISBPMTABLE) values ('dc70a9f0-8dd2-434e-9e6e-74e36ccafc12','projectmanage','IB_PROJECT_APPROVAL','项目立项表','1',NULL,1);
-insert  into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE,PARENTTABLEID,ISBPMTABLE) values ('df0afcdf-296f-4045-b657-33d8fb1d86b5','projectmanage','IB_PROJECT_PRODUCT_S','立项产成品子表','2',NULL,1);
-
+insert  into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE,PARENTTABLEID,ISBPMTABLE) values ('IB_PROJECT_APPROVAL001','projectmanage','IB_PROJECT_APPROVAL','项目立项表','1',NULL,1);
+insert  into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE,PARENTTABLEID,ISBPMTABLE) values ('IB_PROJECT_PRODUCT_S001','projectmanage','IB_PROJECT_PRODUCT_S','立项产成品子表','2',NULL,1);
 /* ================= 业务表字段结构管理表 ==================   */
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_APPROVAL','ID','UUID主键','VARCHAR','64','否',NULL,91);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_APPROVAL','EXECUTIONID','流程执行实例ID','VARCHAR','64','是',NULL,92);
@@ -29,7 +31,7 @@ insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,c
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_APPROVAL','PLANNER','计划员','VARCHAR','32','是','',9);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_APPROVAL','BUYER','采购员','VARCHAR','32','是','',10);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_APPROVAL','PRODUCTMANAGE','生成负责人','VARCHAR','32','是','',11);
-
+/* =================== 子表  =================================   */
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_PRODUCT_S','ID','UUID主键','VARCHAR','64','否',NULL,91);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_PRODUCT_S','PARENTID','主表UUID','VARCHAR','64','否',NULL,92);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_PRODUCT_S','PRODUCTNO','产成品编号','VARCHAR','64','是','',1);
@@ -41,14 +43,11 @@ insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,c
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_PRODUCT_S','AMOUNT','金额','DOUBLE','12,2','是','',7);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_PRODUCT_S','PRODUCTTYPE','产品类型','VARCHAR','32','是','',8);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_PRODUCT_S','PRODUCTFLOWID','产品件号','VARCHAR','32','是','',9);
-
 /* ================= 表单管理表 ==================   */
-insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('c2ea9fdd-35ed-4228-8c83-ab3e71014abc','projectmanage','projectApproval','项目立项表单',NULL,1,1,1,2,1);
-
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('projectmanage-projectApproval001','projectmanage','projectApproval','项目立项表单',NULL,1,1,1,2,1);
 /* ================= 表单对应数据表管理表 ==================   */
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('projectmanage','projectApproval','IB_PROJECT_APPROVAL','main');
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('projectmanage','projectApproval','IB_PROJECT_PRODUCT_S','sub');
-
 /* ================= 表单对应字段管理表 ==================   */
 insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCDEFAULT,CONFSELECTINFO) values ('projectmanage','projectApproval','IB_PROJECT_APPROVAL.BUYER','采购员','BUYER','IB_PROJECT_APPROVAL',10,'1',NULL,NULL,'1','1','2',NULL,NULL);
 insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCDEFAULT,CONFSELECTINFO) values ('projectmanage','projectApproval','IB_PROJECT_APPROVAL.CUSTOMERNAME','客户名称','CUSTOMERNAME','IB_PROJECT_APPROVAL',3,'1',NULL,NULL,'1','1','2',NULL,NULL);
@@ -70,4 +69,33 @@ insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUM
 insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCDEFAULT,CONFSELECTINFO) values ('projectmanage','projectApproval','IB_PROJECT_PRODUCT_S.PRODUCTTYPE','产品类型','PRODUCTTYPE','IB_PROJECT_PRODUCT_S',8,'1',NULL,NULL,'1','1','2',NULL,NULL);
 insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCDEFAULT,CONFSELECTINFO) values ('projectmanage','projectApproval','IB_PROJECT_PRODUCT_S.PRODUCTUNIT','单位','PRODUCTUNIT','IB_PROJECT_PRODUCT_S',5,'1',NULL,NULL,'1','1','2',NULL,NULL);
 insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCDEFAULT,CONFSELECTINFO) values ('projectmanage','projectApproval','IB_PROJECT_PRODUCT_S.UNITPRICE','单价','UNITPRICE','IB_PROJECT_PRODUCT_S',6,'1',NULL,NULL,'1','1','2',NULL,NULL);
+
+/* ================================================================================   */
+/* ===================================    物料分类信息表  =================================   */
+/* ================================================================================   */
+/* ================= 业务表结构管理表 ==================   */
+insert  into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE,PARENTTABLEID,ISBPMTABLE) values ('IB_MATERIALS_TYPE001','projectmanage','IB_MATERIALS_TYPE','物料分类信息表','1',NULL,2);
+/* ================= 业务表字段结构管理表 ==================   */
+insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIALS_TYPE','ID','UUID主键','VARCHAR','64','否',NULL,91);
+insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIALS_TYPE','TYPENO','分类编号','VARCHAR','64','是',NULL,1);
+insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIALS_TYPE','TYPENAME','分类名称','DATETIME','128','是',NULL,2);
+insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIALS_TYPE','RPARENTID','父节点ID','VARCHAR','64','是',NULL,3);
+insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIALS_TYPE','ISLEAF','是否叶子节点','DATETIME','8','是',NULL,4);
+/* ================= 表单管理表 ==================   */
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('projectmanage-materialsType001','projectmanage','materialsType','物料分类管理',NULL,1,1,1,1,2);
+/* ================= 表单对应数据表管理表 ==================   */
+insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('projectmanage','materialsType','IB_MATERIALS_TYPE','main');
+/* ================= 表单对应字段管理表 ==================   */
+insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCDEFAULT,CONFSELECTINFO) values ('projectmanage','materialsType','IB_MATERIALS_TYPE.ISLEAF','是否叶子节点','ISLEAF','IB_MATERIALS_TYPE',4,'8','','','1','1','2','','');
+insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCDEFAULT,CONFSELECTINFO) values ('projectmanage','materialsType','IB_MATERIALS_TYPE.RPARENTID','父节点','RPARENTID','IB_MATERIALS_TYPE',3,'7','','','1','1','2','','{\"sql\":\"select id vKey, typeName vValue from IB_MATERIALS_TYPE \"}');
+insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCDEFAULT,CONFSELECTINFO) values ('projectmanage','materialsType','IB_MATERIALS_TYPE.TYPENAME','物料分类名称','TYPENAME','IB_MATERIALS_TYPE',2,'1','','','1','1','1','','');
+insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCDEFAULT,CONFSELECTINFO) values ('projectmanage','materialsType','IB_MATERIALS_TYPE.TYPENO','物料分类编号','TYPENO','IB_MATERIALS_TYPE',1,'1','','','1','1','2','','');
+/* ================= 菜单管理表  ==================   */
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('mOneXmgl','项目管理','1','#','URL','5','0');
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('mTwoXmgl1','项目管理','2','#','URL','1','mOneXmgl');
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('mThreeXmgl1','物料分类管理','3','/materials_type/materials_type-list.do','URL','1','mTwoXmgl1');
+/*===============   菜单和角色模板关联表  =============================*/
+INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mOneXmgl','2');
+INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mTwoXmgl1','2');
+INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('mThreeXmgl1','2');
 

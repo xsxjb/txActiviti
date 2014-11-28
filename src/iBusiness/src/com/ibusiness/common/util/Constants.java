@@ -73,4 +73,8 @@ public interface Constants {
     String CODE_SELECT = "6";
     // 数据字典
     String CODE_DATA_SELECT = "7";
+    // 单选按钮
+    String CODE_RADIOBOX = "8";
+    // 复选按钮
+    String CODE_CHECKBOX = "9";
 }

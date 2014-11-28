@@ -3,8 +3,6 @@ package com.ibusiness.codegenerate.code;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ibusiness.common.model.ConfSelectItem;
-
 /**
  * 表列字段Bean
  * 
@@ -36,8 +34,6 @@ public class Columnt {
     private String fcEdit = "";
     // 组件类型
     private String fcType = "";
-    // 下拉列表数据
-    private List<ConfSelectItem> confSelectItems = new ArrayList<ConfSelectItem>();
     // 数据库字段类别
     private String fieldType = "";
     // 控件类型,类别-带UI技术类型
@@ -195,18 +191,6 @@ public class Columnt {
      */
     public void setFcType(String fcType) {
         this.fcType = fcType;
-    }
-    /**
-     * @return the confSelectItems
-     */
-    public List<ConfSelectItem> getConfSelectItems() {
-        return confSelectItems;
-    }
-    /**
-     * @param confSelectItems the confSelectItems to set
-     */
-    public void setConfSelectItems(List<ConfSelectItem> confSelectItems) {
-        this.confSelectItems = confSelectItems;
     }
     /**
      * @return the jspTagInfo

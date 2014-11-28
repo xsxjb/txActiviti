@@ -45,12 +45,21 @@
 								    <option value="4" ${model.fcType==4 ? 'selected' : ''}>时间</option>
 								    <option value="5" ${model.fcType==5 ? 'selected' : ''}>数值</option>
 								    <option value="6" ${model.fcType==6 ? 'selected' : ''}>下拉列表</option>
-								    <option value="7" ${model.fcType==7 ? 'selected' : ''}>数据字典</option>
+								    <option value="7" ${model.fcType==7 ? 'selected' : ''}>下拉数据字典</option>
+								    <option value="8" ${model.fcType==8 ? 'selected' : ''}>单选按钮</option>
+								    <option value="9" ${model.fcType==9 ? 'selected' : ''}>多选按钮</option>
 							   </select>
 						   </div>
 					  </div>
 					  <div class="form-group">
-					      <label class="control-label col-lg-2" for="form-confSelectInfo">下拉列表内容:</label>
+					      <div class="col-lg-1"></div>
+					      <div class="col-lg-10">
+					      <label class="control-label" for="form-confSelectInfo">下拉列表内容:
+					        设置下拉列表固定值：[{"key":"1","value":"男"},{"key":"2","value":"女"}]<br/>
+ 					        设置数据字典值：{"sql":"select id vKey, name vValue from ib_job_title "}
+					      </label>
+					      </div>
+					      <div class="col-lg-2"></div>
 					      <div class="col-lg-6">
 					          <textarea class="form-control" id="form-confSelectInfo" rows="2" name="confSelectInfo"  >${model.confSelectInfo}</textarea>
 					      </div>
@@ -73,8 +82,6 @@
 								    <option value="2" ${model.fcDisplay==2 ? 'selected' : ''}>否</option>
 							   </select>
 						   </div>
-					  </div>
-					  <div class="form-group">
 					      <label class="col-lg-2 control-label" for="form-fcEdit">是否编辑:</label>
 						  <div class="col-lg-2">
 					          <select id="form-fcEdit" name="fcEdit"  class="form-control">

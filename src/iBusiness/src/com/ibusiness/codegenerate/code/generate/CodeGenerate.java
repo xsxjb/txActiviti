@@ -157,7 +157,6 @@ public class CodeGenerate implements ICallBack {
             }
         } catch (Exception e) {
             log.error("===================" + e.toString());
-            System.exit(-1);
         }
         long serialVersionUID = NonceUtils.randomLong() + NonceUtils.currentMills();
         localHashMap.put("serialVersionUID", String.valueOf(serialVersionUID));

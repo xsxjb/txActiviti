@@ -163,39 +163,54 @@ public class CmsArticleController {
     @RequestMapping("cms-article-view")
     public String view(@RequestParam("id") String id, Model model) {
         CmsArticle cmsArticle = cmsArticleService.get(id);
-        String html = "";
-        html = html + "<html dir=\"ltr\">";
-        html = html + "<head>";
-        html = html + "  <title>" + cmsArticle.getTitle() + "</title>";
-        html = html + "  <link type=\"text/css\" rel=stylesheet href=\"/iBusiness/plugin/ckeditor/contents.css\">";
-        html = html + "</head>";
-        html = html + "<body class=\"cke_show_borders\" >";
-        html = html + cmsArticle.getContent();
-        // 
-        html = html + "<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px;\">";
-        html = html + "    <tbody>";
-        html = html + "        <tr>";
-        html = html + "            <td>发布人：</td>";
         String userName = "";
+        
+//        String html = "";
+//        html = html + "<html dir=\"ltr\">";
+//        html = html + "<head>";
+//        html = html + "  <title>" + cmsArticle.getTitle() + "</title>";
+//        html = html + "  <link type=\"text/css\" rel=stylesheet href=\"/iBusiness/plugin/ckeditor/contents.css\">";
+//        html = html + "</head>";
+//        html = html + "<body class=\"cke_show_borders\" >";
+//        html = html + cmsArticle.getContent();
+//        // 
+//        html = html + "<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px;\">";
+//        html = html + "    <tbody>";
+//        html = html + "        <tr>";
+//        html = html + "            <td>发布人：</td>";
+//        //
+//        if (!CommonUtils.isNull(cmsArticle.getUserId())) {
+//            UserBase userBase = userBaseDao.get(cmsArticle.getUserId());
+//            if (null != userBase) {
+//                userName = userBase.getDisplayName();
+//            }
+//        }
+//        html = html + "            <td>"+userName+"</td>";
+//        html = html + "        </tr>";
+//        html = html + "        <tr>";
+//        html = html + "            <td>发布时间：</td>";
+//        html = html + "            <td>"+cmsArticle.getCreateTime()+"</td>";
+//        html = html + "        </tr>";
+//        html = html + "    </tbody>";
+//        html = html + "</table>";
+//        // 
+//        html = html + "</body>";
+//        html = html + "</html>";
+//        // 
+//        model.addAttribute("html", html);
+        
+        ///////////////////////////////////////////////////////////////////////////////////
         if (!CommonUtils.isNull(cmsArticle.getUserId())) {
             UserBase userBase = userBaseDao.get(cmsArticle.getUserId());
             if (null != userBase) {
                 userName = userBase.getDisplayName();
             }
         }
-        html = html + "            <td>"+userName+"</td>";
-        html = html + "        </tr>";
-        html = html + "        <tr>";
-        html = html + "            <td>发布时间：</td>";
-        html = html + "            <td>"+cmsArticle.getCreateTime()+"</td>";
-        html = html + "        </tr>";
-        html = html + "    </tbody>";
-        html = html + "</table>";
-        // 
-        html = html + "</body>";
-        html = html + "</html>";
-        // 
-        model.addAttribute("html", html);
+        model.addAttribute("title", cmsArticle.getTitle());
+        model.addAttribute("content", cmsArticle.getContent());
+        model.addAttribute("userName", userName);
+        model.addAttribute("creatTime", cmsArticle.getCreateTime());
+        model.addAttribute("id", id);
 
         return "ibusiness/cms/cms-article-view.jsp";
     }

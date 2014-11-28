@@ -1,4 +1,15 @@
-
+/*==============================================================*/
+/* 物料分类信息表   */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_MATERIALS_TYPE;
+CREATE TABLE IB_MATERIALS_TYPE (
+  ID                      varchar(64) NOT NULL,
+  TYPENO            varchar(64) DEFAULT NULL,
+  TYPENAME      varchar(128) DEFAULT NULL,
+  RPARENTID     varchar(64) DEFAULT NULL,
+  ISLEAF             varchar(8) DEFAULT NULL,
+  PRIMARY KEY (ID)
+) ENGINE=INNODB;
 /*==============================================================*/
 /* 项目立项表   */
 /*==============================================================*/
