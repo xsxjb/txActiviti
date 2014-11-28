@@ -72,10 +72,12 @@ $(function() {
 					      <label class="control-label" for="user-base_mobile">手机</label>
 						  <input id="user-base_mobile" type="text" name="mobile" value="${model.mobile}">
 					</p>
-					 <p>
-					      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-					      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
-					</p>
+					 <div class="form-group">
+	                      <div class="col-lg-10 col-lg-offset-2">
+						      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+						      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+						  </div>
+					</div>
 				</form>
           </div>
       </div>

@@ -17,7 +17,8 @@
 		    orderBy: '${page.orderBy == null ? '' : page.orderBy}',
 		    asc: ${page.asc},
 		    params: {
-		        'id': '${model.id}'
+		        'id': '${model.id}',
+		        'flowId':'${flowId}'
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm'

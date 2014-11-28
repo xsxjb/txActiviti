@@ -17,6 +17,7 @@
     <div class="row">
 
 	<!-- start of main -->
+	<div class="col-lg-1"></div>
     <div class="panel panel-default col-lg-10">
         <div class="panel-heading"><h4 class="panel-title">流程图</h4></div>
         <div class="panel-body">
@@ -27,7 +28,7 @@
 			  <table id="demoGrid" class="table table-hover table-bordered">
 			    <thead>
 			      <tr>
-			        <th class="sorting" >编号</th>
+			        <th class="sorting" >流程标题</th>
 			        <th class="sorting" >名称</th>
 			        <th class="sorting" >开始时间</th>
 			        <th class="sorting" >结束时间</th>
@@ -39,7 +40,7 @@
 			    <tbody>
 			      <c:forEach items="${historicTasks}" var="item">
 			      <tr>
-				    <td>${item.id}</td>
+				    <td>${item.flowTitle}</td>
 				    <td>${item.name}</td>
 				    <td><fmt:formatDate value="${item.startTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 				    <td><fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
@@ -75,6 +76,9 @@
               </div>
       </div>
  -->
+         <div class="col-lg-10 col-lg-offset-5">
+		      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+		  </div>
     </div>
 	<!-- end of main -->
 	</div>

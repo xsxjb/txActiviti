@@ -22,7 +22,6 @@ import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ibusiness.bpm.cmd.RollbackTaskCmd;
 import com.ibusiness.bpm.cmd.SyncProcessCmd;
@@ -97,7 +96,6 @@ public class BpmComBusiness {
      * 
      * @return
      */
-    @RequestMapping("workspace-listHistoryTasks")
     public List<HistoricTaskInstance> listHistoryTasks(String userId) {
         HistoryService historyService = getProcessEngine().getHistoryService();
         List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskAssignee(userId).finished().list();
@@ -112,6 +110,9 @@ public class BpmComBusiness {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public JSONObject getNodeColumsInfo(String flowId, String executionid, String nodeCode, Class clazz) {
+        if (CommonUtils.isNull(flowId)) {
+            return new JSONObject();
+        }
         // 反射类取得类中各个属性字段名
         Map<String, String> clazzMap = new HashMap<String, String>();
         Field field[] = clazz.getDeclaredFields();

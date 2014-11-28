@@ -100,7 +100,11 @@ public class BpmWorkspaceController {
                 .processInstanceId(processInstanceId).list();
         List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery()
                 .processInstanceId(processInstanceId).list();
-        model.addAttribute("historicTasks", historicTasks);
+        
+        // 通过historicTasks取得流程页面显示信息列表
+        List<BpmWorkspaceTask> tasklist = getBpmWorkspaceTaskList(historicTasks);
+        //
+        model.addAttribute("historicTasks", tasklist);
         model.addAttribute("historicVariableInstances", historicVariableInstances);
 
         return "ibusiness/bpm/workspace-viewHistory.jsp";
@@ -134,9 +138,13 @@ public class BpmWorkspaceController {
     public String listHistoryTasks(Model model) {
         HistoryService historyService = processEngine.getHistoryService();
         String userId = SpringSecurityUtils.getCurrentUserId();
-        List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery()
-                .taskAssignee(userId).finished().list();
-        model.addAttribute("historicTasks", historicTasks);
+        List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskAssignee(userId).finished().list();
+        
+        // 通过historicTasks取得流程页面显示信息列表
+        List<BpmWorkspaceTask> tasklist = getBpmWorkspaceTaskList(historicTasks);
+            
+        // 
+        model.addAttribute("historicTasks", tasklist);
 
         return "ibusiness/bpm/workspace-listHistoryTasks.jsp";
     }
@@ -217,6 +225,41 @@ public class BpmWorkspaceController {
     public String rollback(@RequestParam("taskId") String taskId) {
         new BpmComBusiness().rollback(taskId);
         return "redirect:/bpm/workspace-listPersonalTasks.do";
+    }
+    
+    /**
+     * 通过historicTasks取得流程页面显示信息列表
+     * @param historicTasks
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    private List<BpmWorkspaceTask> getBpmWorkspaceTaskList(List<HistoricTaskInstance> historicTasks) {
+        List<BpmWorkspaceTask> tasklist = new ArrayList<BpmWorkspaceTask>();
+        for (HistoricTaskInstance task : historicTasks) {
+            BpmWorkspaceTask taskBean = new BpmWorkspaceTask();
+            taskBean.setId(task.getId());
+            taskBean.setName(task.getName());
+            taskBean.setStartTime(task.getStartTime());
+            taskBean.setEndTime(task.getEndTime());
+            taskBean.setAssignee(task.getAssignee());
+            taskBean.setDeleteReason("completed".equals(task.getDeleteReason())?"办理" : task.getDeleteReason());
+            taskBean.setProcessInstanceId(task.getProcessInstanceId());
+            // 取得流程标题
+            String proceVersionHql = "from BpmProcessVersion where bpmProsessId=?";
+            List<BpmProcessVersion> bpmProcessVersionList = bpmProcessVersionDao.find(proceVersionHql, task.getProcessDefinitionId());
+            String flowTitle = "";
+            if (null != bpmProcessVersionList && bpmProcessVersionList.size() > 0) {
+                String proceHql = "from BpmProcess where versionId=?";
+                List<BpmProcess> bpmProcessList= bpmProcessDao.find(proceHql, bpmProcessVersionList.get(0).getId());
+                if (null != bpmProcessList && bpmProcessList.size() > 0) {
+                    flowTitle = bpmProcessList.get(0).getFlowTitle();
+                }
+            }
+            // 流程标题设置
+            taskBean.setFlowTitle(flowTitle);
+            tasklist.add(taskBean);
+        }
+        return tasklist;
     }
     // ======================================================================
     @Resource

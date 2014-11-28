@@ -14,6 +14,12 @@ public class BpmWorkspaceTask {
     private String name;
     // 创建时间
     private Date createTime;
+    // 开始时间 -- 已办
+    private Date startTime;
+    // 结束时间 -- 已办
+    private Date endTime;
+    // 处理结果 -- 已办
+    private String deleteReason;
     // 负责人
     private String assignee;
     // 状态
@@ -118,5 +124,41 @@ public class BpmWorkspaceTask {
      */
     public void setFlowTitle(String flowTitle) {
         this.flowTitle = flowTitle;
+    }
+    /**
+     * @return the startTime
+     */
+    public Date getStartTime() {
+        return startTime;
+    }
+    /**
+     * @param startTime the startTime to set
+     */
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+    /**
+     * @return the endTime
+     */
+    public Date getEndTime() {
+        return endTime;
+    }
+    /**
+     * @param endTime the endTime to set
+     */
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+    /**
+     * @return the deleteReason
+     */
+    public String getDeleteReason() {
+        return deleteReason;
+    }
+    /**
+     * @param deleteReason the deleteReason to set
+     */
+    public void setDeleteReason(String deleteReason) {
+        this.deleteReason = deleteReason;
     }
 }
