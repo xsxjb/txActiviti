@@ -52,8 +52,13 @@ $(function() {
 		        <tags:hasPerm value="userattr">
 			    	<button class="btn btn-default btn-sm a-insert" onclick="location.href='org-company-input.do'">新建</button>
 			    </tags:hasPerm>
-			  <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
-			</div>
+			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+			    <button class="btn btn-small btn-sm a-export" onclick="table.exportExcel()">导出Excel</button>
+			    <form id="msg-infoForm" method="post" action="org-company-import-export.do" class="form-horizontal" enctype="multipart/form-data">
+				    <button class="btn btn-small btn-sm a-submit" type="submit">导入Excel</button>
+					<input id="msg-info_address" type="file" name="attachment" value=""  class="text required">
+				</form>
+		  </div>
 			<div class="pull-right">
 			  每页显示
 			  <select class="m-page-size">

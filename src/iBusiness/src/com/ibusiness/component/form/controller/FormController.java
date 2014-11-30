@@ -261,9 +261,6 @@ public class FormController {
         List<ConfFormTableColumn> formTableColumnList = confFormTableColumnDao.find(hql, formName, formColumn, packageName);
         if (null != formTableColumnList && formTableColumnList.size() > 0) {
             ConfFormTableColumn bean = formTableColumnList.get(0);
-            if (CommonUtils.isNull(bean.getConfSelectInfo())) {
-                bean.setConfSelectInfo("[{\"key\":\"1\",\"value\":\"男\"},{\"key\":\"2\",\"value\":\"女\"}]");
-            }
             model.addAttribute("model", bean);
         }
         return "ibusiness/component/form/conf-formLabel-input.jsp";

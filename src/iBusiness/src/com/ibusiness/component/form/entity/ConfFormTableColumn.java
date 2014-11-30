@@ -43,6 +43,8 @@ public class ConfFormTableColumn implements java.io.Serializable {
     private String fcDisplay;
     // 是否编辑
     private String fcEdit;
+    // 必须输入
+    private String fcMust;
     // 是否查询条件字段
     private String fcQuery;
     // 默认值-公式编辑
@@ -262,5 +264,18 @@ public class ConfFormTableColumn implements java.io.Serializable {
      */
     public void setConfSelectInfo(String confSelectInfo) {
         this.confSelectInfo = confSelectInfo;
+    }
+    /**
+     * @return the fcMust
+     */
+    @Column(name = "FCMUST")
+    public String getFcMust() {
+        return fcMust;
+    }
+    /**
+     * @param fcMust the fcMust to set
+     */
+    public void setFcMust(String fcMust) {
+        this.fcMust = fcMust;
     }
 }

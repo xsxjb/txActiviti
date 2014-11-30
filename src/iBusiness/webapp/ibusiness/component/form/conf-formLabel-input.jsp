@@ -90,17 +90,6 @@
 							   </select>
 					      </div>
 					  </div>
-					  <!-- 
-					  <div class="form-group">
-					      <label class="col-lg-2 control-label " for="form-fcDisplay">必须输入:</label>
-					      <div class="col-lg-2">
-						      <select id="form-fcDisplay" name="fcDisplay"  class="form-control">
-							        <option value="1" ${model.fcDisplay==1 ? 'selected' : ''}>是</option>
-								    <option value="2" ${model.fcDisplay==2 ? 'selected' : ''}>否</option>
-							   </select>
-						   </div>
-					  </div>
-					   -->
 					  <div class="form-group">
 					      <label class="col-lg-2 control-label" for="form-fcEdit">是否查询字段:</label>
 						  <div class="col-lg-2">
@@ -109,6 +98,13 @@
 								    <option value="2" ${model.fcQuery==2 ? 'selected' : ''}>否</option>
 							   </select>
 					      </div>
+					      <label class="col-lg-2 control-label " for="form-fcMust">必须输入:</label>
+					      <div class="col-lg-2">
+						      <select id="form-fcMust" name="fcMust"  class="form-control">
+							        <option value="1" ${model.fcMust==1 ? 'selected' : ''}>是</option>
+								    <option value="2" ${model.fcMust==2 ? 'selected' : ''}>否</option>
+							   </select>
+						   </div>
 					  </div>
 					  <div class="form-group">
 					      <label class="control-label col-lg-2" for="form-fcDefault">默认值:</label>

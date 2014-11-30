@@ -35,7 +35,6 @@ public class CommonBusiness {
 
     // 表单List
     private List<ConfForm> formList = new ArrayList<ConfForm>();
-    
     // 表单对应表管理表List
     private List<ConfFormTableColumn> formTableColumnList = new ArrayList<ConfFormTableColumn>();
     private Map<String, ConfFormTableColumn> formTableColumnMap = new HashMap<String, ConfFormTableColumn>();
@@ -109,6 +108,16 @@ public class CommonBusiness {
             this.formTableColumnMap.put(bean.getTableColumn(), bean);
         }
         return this.formTableColumnMap;
+    }
+    /**
+     * 取得表单对应表管理表Map key为表单字段
+     */
+    public Map<String, ConfFormTableColumn> getFormTableColumnMapByFormColumn() {
+        Map<String, ConfFormTableColumn> formTableColumnMap = new HashMap<String, ConfFormTableColumn>();
+        for(ConfFormTableColumn bean :getFormTableColumnList(null, null)) {
+            formTableColumnMap.put(bean.getFormColumn(), bean);
+        }
+        return formTableColumnMap;
     }
     // ======================================================================
     public UserBaseDao getUserBaseDao() {

@@ -176,7 +176,7 @@ public class CodeTagFactory {
         // 下拉列表
         controllerInfo = controllerInfo + "net.sf.json.JSONObject jsonObj = net.sf.json.JSONObject.fromObject(formTableColumnMap.get(\""+columnt.getFieldDbName()+"\").getConfSelectInfo());";
         controllerInfo = controllerInfo + "String sql = jsonObj.getString(\"sql\");";
-        controllerInfo = controllerInfo + "List<Map<String,Object>> list = ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(sql);";
+        controllerInfo = controllerInfo + "List<Map<String,Object>> list = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(sql);";
         controllerInfo = controllerInfo + "List<ConfSelectItem> "+columnt.getFieldName()+"Items = new java.util.ArrayList<ConfSelectItem>();";
         controllerInfo = controllerInfo + "for (Map<String,Object> mapBean : list) {";
         controllerInfo = controllerInfo + "    ConfSelectItem confSelectItem = new ConfSelectItem();";
