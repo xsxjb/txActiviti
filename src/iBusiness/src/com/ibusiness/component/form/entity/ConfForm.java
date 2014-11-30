@@ -32,6 +32,10 @@ public class ConfForm {
     private Integer isDelete;
     // 是否可查询
     private Integer isQuery;
+    // 是否导出excel
+    private Integer isExcelExport;
+    // 是否excel导入
+    private Integer isImportExport;
     // 是否流程表单
     private Integer isBpmForm;
     /**
@@ -164,5 +168,31 @@ public class ConfForm {
      */
     public void setFormURL(String formURL) {
         this.formURL = formURL;
+    }
+    /**
+     * @return the isExcelExport
+     */
+    @Column(name = "ISEXCELEXPORT")
+    public Integer getIsExcelExport() {
+        return isExcelExport;
+    }
+    /**
+     * @param isExcelExport the isExcelExport to set
+     */
+    public void setIsExcelExport(Integer isExcelExport) {
+        this.isExcelExport = isExcelExport;
+    }
+    /**
+     * @return the isImportExport
+     */
+    @Column(name = "ISIMPORTEXPORT")
+    public Integer getIsImportExport() {
+        return isImportExport;
+    }
+    /**
+     * @param isImportExport the isImportExport to set
+     */
+    public void setIsImportExport(Integer isImportExport) {
+        this.isImportExport = isImportExport;
     }
 }

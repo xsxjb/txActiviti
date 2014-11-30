@@ -78,6 +78,8 @@
 								          <label><input type="checkbox" name="selectedItem"  value="isAdd" <tags:contains items="${selectedItem}" item="isAdd">checked</tags:contains>> 是否可新增</label>
 								          <label><input type="checkbox" name="selectedItem"  value="isDelete" <tags:contains items="${selectedItem}" item="isDelete">checked</tags:contains>> 是否可删除</label>
 								          <label><input type="checkbox" name="selectedItem"  value="isQuery" <tags:contains items="${selectedItem}" item="isQuery">checked</tags:contains>> 是否可查询</label>
+								          <label><input type="checkbox" name="selectedItem"  value="isExcelExport" <tags:contains items="${selectedItem}" item="isExcelExport">checked</tags:contains>> 是否导出Excel</label>
+								          <label><input type="checkbox" name="selectedItem"  value="isImportExport" <tags:contains items="${selectedItem}" item="isImportExport">checked</tags:contains>> 是否Excel导入</label>
 								       </div>
 							  </div>
 							  <div class="col-lg-10 col-lg-offset-2">

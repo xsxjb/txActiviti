@@ -48,16 +48,18 @@ CREATE TABLE IB_CONF_TABLE_COLUMNS (
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_CONF_FORM;
 CREATE TABLE IB_CONF_FORM (
-		   ID VARCHAR(64),
-		   PACKAGENAME VARCHAR(128),
-		   FORMNAME VARCHAR(128),
-		   FORMTITLE VARCHAR(128),
-		   FORMURL VARCHAR(256),
-		   ISEDIT INTEGER,
-		   ISADD INTEGER,
-		   ISDELETE INTEGER,
-		   ISQUERY INTEGER,
-		   ISBPMFORM INTEGER,
+		   ID                             VARCHAR(64),
+		   PACKAGENAME      VARCHAR(128),
+		   FORMNAME            VARCHAR(128),
+		   FORMTITLE            VARCHAR(128),
+		   FORMURL               VARCHAR(256),
+		   ISEDIT                     INTEGER,
+		   ISADD                      INTEGER,
+		   ISDELETE                INTEGER,
+		   ISQUERY                   INTEGER,
+		   ISEXCELEXPORT     INTEGER,
+		   ISIMPORTEXPORT   INTEGER,
+		   ISBPMFORM            INTEGER,
         CONSTRAINT PK_IB_CONF_FORM PRIMARY KEY(ID)
 ) ENGINE=INNODB;
 

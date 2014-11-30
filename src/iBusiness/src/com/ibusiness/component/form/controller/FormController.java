@@ -101,6 +101,8 @@ public class FormController {
             selectedItems.add((null != confForm.getIsDelete() && 1 == confForm.getIsDelete()) ? "isDelete": "");
             selectedItems.add((null != confForm.getIsQuery() && 1 == confForm.getIsQuery()) ? "isQuery": "");
             selectedItems.add((null != confForm.getIsBpmForm() && 1 == confForm.getIsBpmForm()) ? "isBpmForm": "");
+            selectedItems.add((null != confForm.getIsExcelExport() && 1 == confForm.getIsExcelExport()) ? "isExcelExport": "");
+            selectedItems.add((null != confForm.getIsImportExport() && 1 == confForm.getIsImportExport()) ? "isImportExport": "");
         } else {
             confForm = new ConfForm();
             confForm.setPackageName(packageName);
@@ -291,6 +293,10 @@ public class FormController {
                     confForm.setIsQuery(1);
                 } else if ("isBpmForm".equals(selectedItem)) {
                     confForm.setIsBpmForm(1);
+                } else if ("isExcelExport".equals(selectedItem)) {
+                    confForm.setIsExcelExport(1);
+                } else if ("isImportExport".equals(selectedItem)) {
+                    confForm.setIsImportExport(1);
                 }
             }
         }

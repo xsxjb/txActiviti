@@ -161,8 +161,7 @@ public class HibernatePagingDao extends HibernateGenericDao {
         }
 
         int start = (pageNo - 1) * pageSize;
-        List result = criteria.setFirstResult(start).setMaxResults(pageSize)
-                .list();
+        List result = criteria.setFirstResult(start).setMaxResults(pageSize).list();
 
         Page page = new Page(result, totalCount);
         page.setPageNo(pageNo);

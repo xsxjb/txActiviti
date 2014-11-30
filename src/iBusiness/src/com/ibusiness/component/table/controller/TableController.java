@@ -16,6 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.common.service.TableCommonUtil;
 import com.ibusiness.common.util.CommonUtils;
+import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
+import com.ibusiness.component.form.dao.ConfFormTableDao;
+import com.ibusiness.component.form.entity.ConfFormTable;
+import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.component.table.dao.TableColumnsDao;
 import com.ibusiness.component.table.entity.ConfTable;
 import com.ibusiness.component.table.entity.ConfTableColumns;
@@ -35,6 +39,8 @@ public class TableController {
     // 共用Service,可以查询热力站,热源,BPM等基础信息
     private TableService tableService;
     private TableColumnsDao tableColumnsDao;
+    private ConfFormTableDao confFormTableDao;
+    private ConfFormTableColumnDao confFormTableColumnDao;
     private MessageHelper messageHelper;
 
     /**
@@ -266,6 +272,7 @@ public class TableController {
      * 在数据库中修改(更新/追加)指定的业务表的数据列
      * @param list
      */
+    @SuppressWarnings("unchecked")
     private void alterTableColumn(ConfTableColumns bean) {
     	String defaultStr = "";
     	if (bean.getColumnType().indexOf("number") >= 0) {
@@ -281,6 +288,30 @@ public class TableController {
 			if (0 == tableService.execute(sql)) {
 				return;
 			}
+			// 取得表对应表单
+			String formTableHql = "from ConfFormTable where tableName=? ";
+			List<ConfFormTable> formTableList = confFormTableDao.find(formTableHql, bean.getTableName());
+			if (null != formTableList && formTableList.size() > 0) {
+			    for (ConfFormTable confFormTable : formTableList) {
+			        // 实例化一个 表单对应字段管理表 对象
+			        ConfFormTableColumn confFormTableColumn = new ConfFormTableColumn();
+			        confFormTableColumn.setPackageName(confFormTable.getPackageName());
+			        confFormTableColumn.setFormName(confFormTable.getFormName());
+			        confFormTableColumn.setFormColumn(CommonUtils.toUpperCase(bean.getTableName())+"."+CommonUtils.toUpperCase(bean.getColumnValue()));
+			        confFormTableColumn.setFormColumnTitle(bean.getColumnName());
+			        confFormTableColumn.setTableColumn(bean.getColumnValue());
+			        confFormTableColumn.setTableName(bean.getTableName());
+			        confFormTableColumn.setColumnNo(2);
+			        confFormTableColumn.setFcType("1");
+			        confFormTableColumn.setFcDisplay("1");
+			        confFormTableColumn.setFcEdit("1");
+			        confFormTableColumn.setFcMust("1");
+			        confFormTableColumn.setFcQuery("2");
+			        // 插入表单中对应的表字段信息
+		            confFormTableColumnDao.saveInsert(confFormTableColumn);
+			    }
+			}
+			
 		} else {
 			// 修改数据列名
 		    if (!bean.getColumnValue().equals(bean.getColumnValueOld())) {
@@ -308,11 +339,16 @@ public class TableController {
      * @param tableName
      * @param columnValue
      */
+    @SuppressWarnings("unchecked")
     private void alterDropTableColumns(String tableName, String columnValue) {
     	String sql = "ALTER TABLE " + tableName + " DROP COLUMN " + columnValue;
         if (0 == tableService.execute(sql)) {
             return;
         }
+        // 删除表单中对应的表字段信息
+        String hql = "from ConfFormTableColumn where tableName=? AND tableColumn=?";
+        List<ConfFormTableColumn> list = confFormTableColumnDao.find(hql, CommonUtils.toUpperCase(tableName), CommonUtils.toUpperCase(columnValue));
+        confFormTableColumnDao.removeAll(list);
 	}
     /**
      * 注入 table service
@@ -324,6 +360,14 @@ public class TableController {
     @Resource
     public void setTableColumnsDao(TableColumnsDao tableColumnsDao) {
         this.tableColumnsDao = tableColumnsDao;
+    }
+    @Resource
+    public void setConfFormTableDao(ConfFormTableDao confFormTableDao) {
+        this.confFormTableDao = confFormTableDao;
+    }
+    @Resource
+    public void setConfFormTableColumnDao(ConfFormTableColumnDao confFormTableColumnDao) {
+        this.confFormTableColumnDao = confFormTableColumnDao;
     }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
