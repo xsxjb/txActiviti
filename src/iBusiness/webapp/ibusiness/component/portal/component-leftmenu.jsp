@@ -27,7 +27,7 @@
 		var setting = {
 			async: {
 				enable: true,
-				url: "${scopePrefix}/rs/component/tree?parentId=${parentId}"
+				url: "${scopePrefix}/rs/component/left-menu-tree?packageName=${packageName}&typeId=${typeId}&parentId=${parentId}"
 			},
 			callback: {
 				onClick: function(event, treeId, treeNode) {

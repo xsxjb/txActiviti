@@ -55,6 +55,7 @@ public class TableController {
         // 表结构信息
         model.addAttribute("tableInfoList", list);
         model.addAttribute("packageName", packageName);
+        model.addAttribute("typeId", "tables");
         
         return "ibusiness/component/table/conf-table-list.jsp"; 
     }
@@ -65,6 +66,7 @@ public class TableController {
         // 表结构信息
         model.addAttribute("tableInfoList", list);
         model.addAttribute("packageName", packageName);
+        model.addAttribute("typeId", "BpmTable");
         
         return "ibusiness/component/table/conf-bpmTable-list.jsp"; 
     }
@@ -75,12 +77,22 @@ public class TableController {
      * @return
      */
     @RequestMapping("conf-table-column-list")
-    public String queryConfTableDetail(@RequestParam("tableName") String tableName, Model model) {
+    public String queryConfTableDetail(@RequestParam("tableName") String tableName, @RequestParam("isBpmTable") String isBpmTable, Model model) {
     	// 取得表结构信息
         List<ConfTableColumns> list = tableService.queryConfTableColumns(tableName);
         // 表结构信息
         model.addAttribute("tableInfoList", list);
         model.addAttribute("tableName", tableName);
+        List<ConfTable> tableList = tableService.queryConfTableByTableName(tableName);
+        if (null != tableList && tableList.size() > 0) {
+            model.addAttribute("packageName", tableList.get(0).getPackageName());
+        }
+        if ("1".equals(isBpmTable)) {
+            model.addAttribute("typeId", "BpmTable");
+        } else {
+            model.addAttribute("typeId", "Table");
+        }
+        
         // 取得表结构信息
         return "ibusiness/component/table/conf-table-column-list.jsp";
     }
@@ -211,7 +223,7 @@ public class TableController {
             // 更改表结构
             alterTableColumn(confTableColumns);
         }
-        return "redirect:/table/conf-table-column-list.do?tableName=" + tableName;
+        return "redirect:/table/conf-table-column-list.do?tableName=" + tableName + "&isBpmTable=1";
     }
     /**
      * 删除业务表管理表信息

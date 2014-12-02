@@ -33,7 +33,12 @@ import com.ibusiness.core.spring.MessageHelper;
 public class ComponentController {
     private MessageHelper messageHelper;
     private ComponentDao componentDao;
-    
+    /**
+     * 后台管理首页
+     * @param parameterMap
+     * @param model
+     * @return
+     */
     @RequestMapping("component-show")
     public String show(@RequestParam Map<String, Object> parameterMap, Model model) {
         model.addAttribute("parentId", 0);

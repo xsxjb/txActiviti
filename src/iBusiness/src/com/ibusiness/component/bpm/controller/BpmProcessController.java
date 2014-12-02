@@ -82,6 +82,7 @@ public class BpmProcessController {
         // 
         model.addAttribute("page", page);
         model.addAttribute("packageName", packageName);
+        model.addAttribute("typeId", "Bpm");
         
         return "ibusiness/bpm/bpm-process-list.jsp";
     }
@@ -110,6 +111,7 @@ public class BpmProcessController {
         String formHql = "from ConfForm where packageName=? AND isBpmForm=1";
         List<ConfForm> formList = confFormDao.find(formHql, packageName);
         model.addAttribute("formList", formList);
+        model.addAttribute("typeId", "Bpm");
         
         return "ibusiness/bpm/bpm-process-input.jsp";
     }

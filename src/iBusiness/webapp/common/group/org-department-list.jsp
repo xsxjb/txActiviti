@@ -67,9 +67,9 @@ $(function() {
 		    <thead>
 		      <tr>
 		        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-		        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
-		        <th class="sorting" name="name">部门名称</th>
-		        <th class="sorting" name="companyid">公司编号</th>
+		        <th class="sorting" ><spring:message code="org.org.list.id" text="编号"/></th>
+		        <th class="sorting" >部门名称</th>
+		        <th class="sorting" >公司编号</th>
 		        <th width="80">&nbsp;</th>
 		      </tr>
 		    </thead>

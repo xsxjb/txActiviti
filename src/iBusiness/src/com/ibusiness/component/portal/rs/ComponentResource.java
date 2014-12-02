@@ -40,9 +40,10 @@ public class ComponentResource {
 
     @SuppressWarnings("unchecked")
     @POST
-    @Path("tree")
+    @Path("left-menu-tree")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Map<String, Object>> tree(@QueryParam("parentId") String parentId) {
+    public List<Map<String, Object>> tree(@QueryParam("packageName") String packageName, @QueryParam("typeId") String strTypeId,
+            @QueryParam("parentId") String parentId) {
         String hql = "from ConfComponent where parentid = 0 ";
         List<ConfComponent> entities = componentDao.find(hql);
         // 制造一个根节点,用于对业务模块进行 增删改
@@ -51,9 +52,9 @@ public class ComponentResource {
         map.put("name", "业务模块(增删改)");
         map.put("packageName", "root");
         map.put("typeId", "root");
-        map.put("open", "true");
+        map.put("open", "true");  // 展开
         map.put("icon", "../plugin/ztree/zTreeStyle/img/diy/1_open.png");
-        map.put("children",generateEntities(entities));
+        map.put("children",generateEntities(packageName, strTypeId, entities));
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         list.add(map);
         return list;
@@ -64,14 +65,14 @@ public class ComponentResource {
      * @param partyStructTypeId
      * @return
      */
-    private List<Map<String, Object>> generateEntities(List<ConfComponent> entities) {
+    private List<Map<String, Object>> generateEntities(String packageName, String strTypeId, List<ConfComponent> entities) {
         if (entities == null) {
             return null;
         }
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
             for (ConfComponent entity : entities) {
-                list.add(generateEntity(entity));
+                list.add(generateEntity(packageName, strTypeId, entity));
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
@@ -87,14 +88,39 @@ public class ComponentResource {
      * @return
      */
     @SuppressWarnings("unchecked")
-    private Map<String, Object> generateEntity(ConfComponent component) {
+    private Map<String, Object> generateEntity(String packageName, String strTypeId, ConfComponent component) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             map.put("id", component.getId());
             map.put("name", component.getModulename());
             map.put("packageName", component.getPackagename());
             map.put("typeId", component.getTypeid());
-            map.put("open", "true");
+            // 展开
+            if (packageName.equals(component.getPackagename())) {
+                if (strTypeId.equals(component.getTypeid()) || "sModule".equals(component.getTypeid())) {
+                    map.put("open", "true");
+                }
+                // 表
+                if ("Table".equals(strTypeId) && "tables".equals(component.getTypeid())) {
+                    map.put("open", "true");
+                }
+                // 流程表
+                if ("BpmTable".equals(strTypeId) && "bpmTables".equals(component.getTypeid())) {
+                    map.put("open", "true");
+                }
+                // 表单
+                if ("Form".equals(strTypeId) && "forms".equals(component.getTypeid())) {
+                    map.put("open", "true");
+                }
+                // 流程表单
+                if ("BpmForm".equals(strTypeId) && "bpmForms".equals(component.getTypeid())) {
+                    map.put("open", "true");
+                }
+                // 流程表单
+                if ("Bpm".equals(strTypeId) && "flows".equals(component.getTypeid())) {
+                    map.put("open", "true");
+                }
+            }
             if(component.getParentid().equals("0")){
             	map.put("icon", "../plugin/ztree/zTreeStyle/img/diy/3.png");
             }else{
@@ -121,7 +147,9 @@ public class ComponentResource {
                     tableMap.put("name", confTable.getTableNameComment());
                     tableMap.put("packageName", confTable.getPackageName());
                     tableMap.put("typeId", typeId);
-                    tableMap.put("open", "true");
+                    if (strTypeId.equals(typeId)) {
+                        tableMap.put("open", "true"); // 展开
+                    }
                     tableMap.put("tableName", confTable.getTableName());
                     tableMap.put("icon", "../plugin/ztree/zTreeStyle/img/diy/2.png");
                     list.add(tableMap);
@@ -148,7 +176,9 @@ public class ComponentResource {
                     formMap.put("name", confForm.getFormTitle());
                     formMap.put("packageName", confForm.getPackageName());
                     formMap.put("typeId", typeId);
-                    formMap.put("open", "true");
+                    if (strTypeId.equals(typeId)) {
+                        formMap.put("open", "true"); // 展开
+                    }
                     formMap.put("formId", confForm.getId());
                     formMap.put("icon", "../plugin/ztree/zTreeStyle/img/diy/8.png");
                     list.add(formMap);
@@ -165,7 +195,9 @@ public class ComponentResource {
                     bpmMap.put("name", bpmFlow.getFlowTitle());
                     bpmMap.put("packageName", bpmFlow.getPackageName());
                     bpmMap.put("typeId", "flows");
-                    bpmMap.put("open", "true");
+                    if (strTypeId.equals("Bpm")) {
+                        bpmMap.put("open", "true"); // 展开
+                    }
                     bpmMap.put("flowId", bpmFlow.getId());
                     bpmMap.put("icon", "../plugin/ztree/zTreeStyle/img/diy/9.png");
                     list.add(bpmMap);
@@ -176,7 +208,7 @@ public class ComponentResource {
                 String hql = "from ConfComponent where parentid = ? ";
                 List<ConfComponent> entities = componentDao.find(hql, component.getId());
                 // 循环
-                map.put("children", generateEntities(entities));
+                map.put("children", generateEntities(packageName, strTypeId, entities));
             }
             return map;
         } catch (Exception e) {

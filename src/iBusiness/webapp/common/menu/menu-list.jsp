@@ -67,10 +67,10 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
 
-	<div class="span1"></div>
+	<div class="col-lg-1"></div>
 
 	<!-- start of main -->
-	<div class="panel panel-default span11">
+	<div class="panel panel-default col-lg-10">
         <!-- tabs  -->
         <ul class="nav nav-tabs">
 		  <li class="${menuLevel == '1' ? 'active' : ''}"><a href="${scopePrefix}/menu/menu-list.do?menuLevel=1&menuLevelOne=0&menuLevelTwo=0" >一级菜单</a></li>
@@ -83,33 +83,37 @@
 		      <div class="panel-body">
 		            <input id="hidden_menuLevelOne" type="hidden" name="menuLevelOne" value="${menuLevelOne}">
 		            <input id="hidden_menuLevelTwo" type="hidden" name="menuLevelTwo" value="${menuLevelTwo}">
-				        <div class="pull-left">
-							  <button class="btn btn-default  btn-sm" onclick="location.href='menu-input.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val()">新建</button>
-							  <button class="btn btn-default  btn-sm a-remove" onclick="table.removeAll()"><spring:message code="core.list.delete" text="删除"/></button>
-							  <!-- 一级父菜单 -->
-							  <c:if test="${menuLevel != 1}">
-							      <label class="control-label" for="select_levelone">一级菜单:</label>
-								  <select class="form-control"  id="select_levelone" name="menuLevelOne" onchange="getlevelTwo();">
-								      <option value="" selected>请选择</option>
-									  <c:forEach items="${levelOneInfos}" var="item">
-									    <option value="${item.id}" ${item.id==menuLevelOne ? 'selected' : ''}>${item.menuName}</option>
-									  </c:forEach>
-								  </select>
-						      </c:if>
-							  <!-- 二级父菜单 -->
-							  <c:if test="${menuLevel == 3}">
-							      <label class="control-label" for="menu_leveltwo">二级菜单:</label>
-								  <select class="form-control"  id="menu_leveltwo" name="menuLevelTwo">
-								      <option value="" selected>请选择</option>
-									  <c:forEach items="${levelTwoInfos}" var="item">
-									    <option value="${item.id}" ${item.id==menuLevelTwo ? 'selected' : ''}>${item.menuName}</option>
-									  </c:forEach>
-								  </select>
-						      </c:if>
-						      <c:if test="${menuLevel != 1}">
-						            <button class="btn btn-default  btn-sm" onclick="location.href='menu-list.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val() ">查询</button>
-						  	  </c:if>
-						</div>
+				            <div class="form-group">
+								  <button class="btn btn-default  btn-sm" onclick="location.href='menu-input.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val()">新建</button>
+								  <button class="btn btn-default  btn-sm a-remove" onclick="table.removeAll()"><spring:message code="core.list.delete" text="删除"/></button>
+								  <!-- 一级父菜单 -->
+								  <c:if test="${menuLevel != 1}">
+								      <label class="col-lg-1 control-label" for="select_levelone">一级菜单:</label>
+								      <div class="col-lg-2">
+										  <select class="form-control"  id="select_levelone" name="menuLevelOne" onchange="getlevelTwo();">
+										      <option value="" selected>请选择</option>
+											  <c:forEach items="${levelOneInfos}" var="item">
+											    <option value="${item.id}" ${item.id==menuLevelOne ? 'selected' : ''}>${item.menuName}</option>
+											  </c:forEach>
+										  </select>
+									  </div>
+							      </c:if>
+								  <!-- 二级父菜单 -->
+								  <c:if test="${menuLevel == 3}">
+								      <label class="col-lg-1 control-label" for="menu_leveltwo">二级菜单:</label>
+								      <div class="col-lg-2">
+										  <select class="form-control"  id="menu_leveltwo" name="menuLevelTwo">
+										      <option value="" selected>请选择</option>
+											  <c:forEach items="${levelTwoInfos}" var="item">
+											    <option value="${item.id}" ${item.id==menuLevelTwo ? 'selected' : ''}>${item.menuName}</option>
+											  </c:forEach>
+										  </select>
+									  </div>
+							      </c:if>
+							      <c:if test="${menuLevel != 1}">
+							            <button class="btn btn-default  btn-sm" onclick="location.href='menu-list.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val() ">查询</button>
+							  	  </c:if>
+						  	</div>
 				        <div class="pull-right">
 						  每页显示
 						  <select class="m-page-size">
@@ -125,11 +129,11 @@
 						      <thead>
 						        <tr>
 						          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-						          <th class="sorting" name="menuName"><spring:message code="auth.access.list.type" text="菜单名"/></th>
-						          <th class="sorting" name="menuLevel"><spring:message code="auth.access.list.value" text="菜单级别"/></th>
-						          <th class="sorting" name="menuUrl"><spring:message code="auth.access.list.perm" text="URL"/></th>
-						          <th class="sorting" name="menuOrder"><spring:message code="auth.access.list.priority" text="排序"/></th>
-						          <th width="50">&nbsp;</th>
+						          <th class="sorting" ><spring:message code="auth.access.list.type" text="菜单名"/></th>
+						          <th class="sorting" ><spring:message code="auth.access.list.value" text="菜单级别"/></th>
+						          <th class="sorting" ><spring:message code="auth.access.list.perm" text="URL"/></th>
+						          <th class="sorting" ><spring:message code="auth.access.list.priority" text="排序"/></th>
+						          <th width="60">&nbsp;</th>
 						        </tr>
 						      </thead>
 						      <tbody>
@@ -141,9 +145,7 @@
 						          <td>${item.menuUrl}</td>
 						          <td>${item.menuOrder}</td>
 						          <td>
-									<region:region-permission permission="app:write">
 						            <a href="menu-input.do?id=${item.id}&menuLevel=${menuLevel}&menuLevelOne=0&menuLevelTwo=${menuLevelTwo}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>&nbsp;
-									</region:region-permission>
 						          </td>
 						        </tr>
 						        </c:forEach>

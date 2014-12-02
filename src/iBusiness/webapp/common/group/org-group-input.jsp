@@ -56,22 +56,41 @@ $(function() {
 		  <c:if test="${model != null}">
 		  <input id="org_id" type="hidden" name="id" value="${model.id}">
 		  </c:if>
-	      <p>
-		      <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="小组名称"/>:</label>
-			  <input id="org_orgname" type="text" name="name" value="${model.name}"  class="text required" minlength="2" maxlength="50">
-	       </p>
-		  <p>
-		      <label class="control-label" for="org_companyid"><spring:message code="org.org.input.orgname" text="公司编号"/>:</label>
-			  <input id="org_companyid" type="text" name="companyid" value="${model.companyid}"  "40" class="text required" minlength="2" maxlength="50">
-		  </p>
-		  <p>
-		      <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="部门编号"/>:</label>
-			  <input id="org_deptid" type="text" name="deptid" value="${model.deptid}"  class="text required" minlength="2" maxlength="50">
-		  </p>
-		  <p>
-		      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-		      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
-		  </p>
+	      <div class="form-group">
+              <label class="col-lg-2 control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="小组名称"/>:</label>
+			  <div class="col-lg-3">
+			      <input id="org_orgname" type="text" name="name" value="${model.name}"  class="text required"  maxlength="50">
+			  </div>
+	       </div>
+	       <div class="form-group">
+                    <label class="col-lg-2 control-label" for="org_companyname">公司名:</label>
+                     <div class="col-lg-3">
+                         <select id="org_companyname" name="companyid" class="form-control required" >
+                               <option value="" >请选择</option>
+                            <c:forEach items="${companyidItems}" var="item">
+                               <option value="${item.key}" ${item.key==model.companyid? 'selected':''} >${item.value}</option>
+                            </c:forEach>
+                         </select>
+                     </div>
+          </div>
+          <div class="form-group">
+                    <label class="col-lg-2 control-label" for="org_deptid"><spring:message code="org.org.input.orgname" text="部门编号"/>:</label>
+                    <div class="col-lg-3">
+                         <select id="org_deptid" name="deptid" class="form-control required" >
+                               <option value="" >请选择</option>
+                            <c:forEach items="${deptidItems}" var="item">
+                               <option value="${item.key}" ${item.key==model.deptid? 'selected':''} >${item.value}</option>
+                            </c:forEach>
+                         </select>
+                     </div>
+          </div>
+			  
+		  <div class="form-group">
+                  <div class="col-lg-10 col-lg-offset-2">
+				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+				      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
+		          </div>
+		  </div>
 		</form>
         </div>
     </div>

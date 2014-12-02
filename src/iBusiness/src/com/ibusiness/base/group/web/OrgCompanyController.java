@@ -48,9 +48,7 @@ public class OrgCompanyController {
      * @return
      */
     @RequestMapping("org-company-list")
-    public String list(@ModelAttribute
-    Page page, @RequestParam
-    Map<String, Object> parameterMap, Model model) {
+    public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         page = orgCompanyDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -132,7 +130,7 @@ public class OrgCompanyController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("org");
+        tableModel.setExcelName("公司信息列表");
         // 列名
         tableModel.addHeaders("id", "name", "status", "descn", "scopeId");
         tableModel.setTableName("ib_company");

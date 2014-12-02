@@ -61,6 +61,7 @@ public class FormController {
         page = confFormDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("packageName", packageName);
+        model.addAttribute("typeId", "Form");
         
         return "ibusiness/component/form/conf-form-list.jsp"; 
     }
@@ -78,6 +79,7 @@ public class FormController {
         page = confFormDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("packageName", packageName);
+        model.addAttribute("typeId", "BpmForm");
         
         return "ibusiness/component/form/conf-bpmform-list.jsp"; 
     }
@@ -121,6 +123,11 @@ public class FormController {
         // 包名
         model.addAttribute("packageName", packageName);
         model.addAttribute("isBpmForm", isBpmForm);
+        if ("1".equals(isBpmForm)) {
+            model.addAttribute("typeId", "BpmForm");
+        } else {
+            model.addAttribute("typeId", "Form");
+        }
 
         return "ibusiness/component/form/conf-form-input.jsp";
     }

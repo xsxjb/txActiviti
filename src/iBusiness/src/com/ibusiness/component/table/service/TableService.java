@@ -33,6 +33,19 @@ public class TableService {
      * @param string
      * @return
      */
+    public List<ConfTable> queryConfTableByTableName(String tableName) {
+        String sql = " select * from IB_CONF_TABLE ";
+        if (!CommonUtils.isNull(tableName)) {
+            sql = sql + " WHERE tableName='" + tableName +"' ";
+        }
+        return dao.queryConfTableList(sql);
+    }
+	/**
+     * 业务表管理表信息查询
+     * 
+     * @param string
+     * @return
+     */
     public List<ConfTable> queryConfTableList(String packageName, String isBpmTable) {
         String sql = " select * from IB_CONF_TABLE ";
         if (!CommonUtils.isNull(packageName)) {

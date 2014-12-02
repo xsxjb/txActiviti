@@ -143,9 +143,9 @@ public class CodeTagFactory {
         // 生成controller类中的Attribute
         String controllerInfo = "";
         // 取得表单对应表管理表Map
-        controllerInfo = controllerInfo + "Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> formTableColumnMap= CommonBusiness.getInstance().getFormTableColumnMap(\""+formColumn.getTableName()+"\", \""+formColumn.getFormName()+"\");";
+        controllerInfo = controllerInfo + "Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> "+columnt.getFieldName()+"FTCMap= CommonBusiness.getInstance().getFormTableColumnMap(\""+formColumn.getTableName()+"\", \""+formColumn.getFormName()+"\");";
         // 下拉列表
-        controllerInfo = controllerInfo + "List<com.ibusiness.common.model.ConfSelectItem> "+columnt.getFieldName()+"Items = (List<com.ibusiness.common.model.ConfSelectItem>) CommonUtils.getListFromJson(formTableColumnMap.get(\""+columnt.getFieldDbName()+"\").getConfSelectInfo(), com.ibusiness.common.model.ConfSelectItem.class);";
+        controllerInfo = controllerInfo + "List<com.ibusiness.common.model.ConfSelectItem> "+columnt.getFieldName()+"Items = (List<com.ibusiness.common.model.ConfSelectItem>) CommonUtils.getListFromJson("+columnt.getFieldName()+"FTCMap.get(\""+columnt.getFieldDbName()+"\").getConfSelectInfo(), com.ibusiness.common.model.ConfSelectItem.class);";
         controllerInfo = controllerInfo + "model.addAttribute(\""+columnt.getFieldName()+"Items\", "+columnt.getFieldName()+"Items);";
         List<String> maList = new ArrayList<String>();
         maList.add(controllerInfo);
@@ -172,13 +172,13 @@ public class CodeTagFactory {
         // 生成controller类中的Attribute
         String controllerInfo = "";
         // 取得表单对应表管理表Map
-        controllerInfo = controllerInfo + "Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> formTableColumnMap= CommonBusiness.getInstance().getFormTableColumnMap(\""+formColumn.getTableName()+"\", \""+formColumn.getFormName()+"\");";
+        controllerInfo = controllerInfo + "Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> "+columnt.getFieldName()+"FTCMap= CommonBusiness.getInstance().getFormTableColumnMap(\""+formColumn.getTableName()+"\", \""+formColumn.getFormName()+"\");";
         // 下拉列表
-        controllerInfo = controllerInfo + "net.sf.json.JSONObject jsonObj = net.sf.json.JSONObject.fromObject(formTableColumnMap.get(\""+columnt.getFieldDbName()+"\").getConfSelectInfo());";
-        controllerInfo = controllerInfo + "String sql = jsonObj.getString(\"sql\");";
-        controllerInfo = controllerInfo + "List<Map<String,Object>> list = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(sql);";
+        controllerInfo = controllerInfo + "net.sf.json.JSONObject "+columnt.getFieldName()+"JsonObj = net.sf.json.JSONObject.fromObject("+columnt.getFieldName()+"FTCMap.get(\""+columnt.getFieldDbName()+"\").getConfSelectInfo());";
+        controllerInfo = controllerInfo + "String "+columnt.getFieldName()+"Sql = "+columnt.getFieldName()+"JsonObj.getString(\"sql\");";
+        controllerInfo = controllerInfo + "List<Map<String,Object>> "+columnt.getFieldName()+"List = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList("+columnt.getFieldName()+"Sql);";
         controllerInfo = controllerInfo + "List<ConfSelectItem> "+columnt.getFieldName()+"Items = new java.util.ArrayList<ConfSelectItem>();";
-        controllerInfo = controllerInfo + "for (Map<String,Object> mapBean : list) {";
+        controllerInfo = controllerInfo + "for (Map<String,Object> mapBean : "+columnt.getFieldName()+"List) {";
         controllerInfo = controllerInfo + "    ConfSelectItem confSelectItem = new ConfSelectItem();";
         controllerInfo = controllerInfo + "    confSelectItem.setKey(mapBean.get(\"vKey\").toString());";
         controllerInfo = controllerInfo + "    confSelectItem.setValue(mapBean.get(\"vValue\").toString());";

@@ -15,8 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.base.group.dao.OrgGroupDao;
 import com.ibusiness.base.group.entity.OrgGroup;
+import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
@@ -34,6 +36,13 @@ public class OrgGroupController {
     private MessageHelper messageHelper;
     private BeanMapper beanMapper = new BeanMapper();
 
+    /**
+     * 小组列表
+     * @param page
+     * @param parameterMap
+     * @param model
+     * @return
+     */
     @RequestMapping("org-group-list")
     public String list(@ModelAttribute
     Page page, @RequestParam
@@ -47,13 +56,22 @@ public class OrgGroupController {
         return "common/group/org-group-list.jsp";
     }
 
+    /**
+     * 小组信息
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping("org-group-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         if (id != null) {
             OrgGroup orgGroup = orgGroupDao.get(id);
             model.addAttribute("model", orgGroup);
         }
-
+        // 在controller中设置页面控件用的数据
+        Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> companyidFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_TEST", "testForm");net.sf.json.JSONObject companyidJsonObj = net.sf.json.JSONObject.fromObject(companyidFTCMap.get("COMPANYID").getConfSelectInfo());String companyidSql = companyidJsonObj.getString("sql");List<Map<String,Object>> companyidList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(companyidSql);List<ConfSelectItem> companyidItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : companyidList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    companyidItems.add(confSelectItem);}model.addAttribute("companyidItems", companyidItems);
+        Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> deptidFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_TEST", "testForm");net.sf.json.JSONObject deptidJsonObj = net.sf.json.JSONObject.fromObject(deptidFTCMap.get("DEPTID").getConfSelectInfo());String deptidSql = deptidJsonObj.getString("sql");List<Map<String,Object>> deptidList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(deptidSql);List<ConfSelectItem> deptidItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : deptidList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    deptidItems.add(confSelectItem);}model.addAttribute("deptidItems", deptidItems);
+        
         return "common/group/org-group-input.jsp";
     }
 

@@ -61,7 +61,7 @@
 								<td>${item.packageName}</td>
 								<td>${item.id}</td>
 								<td>
-						          <a href="conf-table-column-list.do?tableName=${item.tableName}" class="a-update"><spring:message code="core.list.edit" text="编辑表字段"/></a>
+						          <a href="conf-table-column-list.do?tableName=${item.tableName}&isBpmTable=1" class="a-update"><spring:message code="core.list.edit" text="编辑表字段"/></a>
 						        </td>
 						    </tr>
 						  </c:forEach>

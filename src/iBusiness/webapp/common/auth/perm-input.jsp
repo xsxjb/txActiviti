@@ -34,27 +34,32 @@ $(function() {
 				  <c:if test="${model != null}">
 				  		<input id="perm_id" type="hidden" name="id" value="${model.id}">
 				  </c:if>
-				  <p>
-					  <label class="control-label" for="perm_code">标签value:</label>
-				      <input id="perm_code" type="text" name="code" value="${model.code}" class="text">
-				  </p>
-				  <p>
-					  <label class="control-label" for="perm_name">名称:</label>
-				      <input id="perm_name" type="text" name="name" value="${model.name}" class="text">
-				  </p>
-				  <p>
-					  <label class="control-label" for="access_perm">权限分类:</label>
-					  <select class="form-control" id="access_perm" name="permTypeId">
-					    <c:forEach items="${permTypes}" var="item">
-					    <option value="${item.id}" ${model.permType.id==item.id ? 'selected' : ''}>${item.name}</option>
-						</c:forEach>
-					  </select>
-				  </p>
 				  <div class="form-group">
-				    <div class="controls">
-				      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-					  &nbsp;
-				      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
+					  <label class="col-lg-2 control-label" for="perm_code">标签value:</label>
+					  <div class="col-lg-3">
+				          <input id="perm_code" type="text" name="code" value="${model.code}" class="text">
+				      </div>
+				  </div>
+				  <div class="form-group">
+					  <label class="col-lg-2 control-label" for="perm_name">名称:</label>
+					  <div class="col-lg-3">
+				          <input id="perm_name" type="text" name="name" value="${model.name}" class="text">
+				      </div>
+				  </div>
+				  <div class="form-group">
+					  <label class="col-lg-2 control-label" for="access_perm">权限分类:</label>
+					  <div class="col-lg-3">
+						  <select class="form-control" id="access_perm" name="permTypeId">
+						    <c:forEach items="${permTypes}" var="item">
+						    <option value="${item.id}" ${model.permType.id==item.id ? 'selected' : ''}>${item.name}</option>
+							</c:forEach>
+						  </select>
+					  </div>
+				  </div>
+				  <div class="form-group">
+                      <div class="col-lg-10 col-lg-offset-2">
+					      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+					      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
 				    </div>
 				  </div>
 			</form>
