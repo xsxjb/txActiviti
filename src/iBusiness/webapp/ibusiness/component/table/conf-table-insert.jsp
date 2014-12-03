@@ -34,7 +34,7 @@
 				<form id="tableCommentForm" method="post" action="conf-table-save.do" class="form-horizontal">
 				   <input id="table-isBpmTable" type="hidden" name="isBpmTable" value="${isBpmTable}">
 				  <c:if test="${model != null}">
-				      <input id="table-uuId" type="hidden" name="uuId" value="${model.uuId}">
+				      <input  type="hidden" name="id" value="${model.id}">
 				  </c:if>
 				  <div class="form-group">
 				    <label class="col-lg-2 control-label" for="table-packageName">所在模块:</label>
@@ -46,7 +46,13 @@
 				  <div class="form-group">
 				    <label class="col-lg-2 control-label" for="table-tableName">表名称(大写):</label>
 					<div class="controls">
-					  IB_<input id="table-tableName" type="text" name="tableName" value="${model.tableName}"  class="text required"  >
+					    <c:if test="${model == null}">
+					        IB_<input id="table-tableName" type="text" name="tableName" value="${model.tableName}"  class="text required"  >
+					    </c:if>
+					    <c:if test="${model != null}">
+						    <label class="control-label"  >${model.tableName}</label>
+						    <input type="hidden" name="tableName" value="${model.tableName}">
+					    </c:if>
 				    </div>
 				  </div>
 				  <div class="form-group">
@@ -76,6 +82,9 @@
 				    <div class="controls">
 				      <button id="submitButton" class="btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
 				      <button type="button" onclick="history.back();" class="btn btn-default btn-sm a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+				      <c:if test="${model != null}">
+				          <a href="conf-table-data-synchronization.do?packageName=${packageName}&tableName=${model.tableName}" class="btn btn-default btn-sm">表结构同步</a>
+				      </c:if>
 				    </div>
 				  </div>
 				</form>

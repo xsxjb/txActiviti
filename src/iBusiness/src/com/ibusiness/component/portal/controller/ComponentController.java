@@ -148,6 +148,8 @@ public class ComponentController {
     @RequestMapping("serviceModule-save")
     public String save(@ModelAttribute ConfComponent entity, RedirectAttributes redirectAttributes) throws Exception {
         String id = entity.getId();
+        // 转换全小写
+        entity.setPackagename(CommonUtils.toLowerCase(entity.getPackagename()));
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
             componentDao.insert(entity);

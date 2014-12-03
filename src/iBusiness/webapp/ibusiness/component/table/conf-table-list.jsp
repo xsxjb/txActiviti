@@ -36,7 +36,7 @@
           <div class="panel-heading"><h4 class="panel-title">表存储模型</h4></div>
           <div class="panel-body">
                 <div id="tableCategorySearch" class="content content-inner">
-				  	<button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}&isBpmTable=2'">新建</button>
+				  	<button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}&tableName=&isBpmTable=2'">新建</button>
 				  	<button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				</div>
             </div>
@@ -56,7 +56,7 @@
 						<c:forEach items="${tableInfoList}" var="item">
 						    <tr>
 							    <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-								<td>${item.tableName}</td>
+								<td><a href="conf-table-insert.do?packageName=${packageName}&tableName=${item.tableName}&isBpmTable=2" class="a-update">${item.tableName}</a></td>
 								<td>${item.tableNameComment}</td>
 								<td>${item.packageName}</td>
 								<td>${item.id}</td>

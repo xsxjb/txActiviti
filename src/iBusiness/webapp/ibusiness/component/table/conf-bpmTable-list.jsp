@@ -36,7 +36,7 @@
           <div class="panel-heading"><h4 class="panel-title">流程表模型</h4></div>
           <div class="panel-body">
                 <div id="tableCategorySearch" class="content content-inner">
-				  	<button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}&isBpmTable=1'">新建</button>
+				  	<button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}&tableName=&isBpmTable=1'">新建</button>
 				  	<button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				</div>
             </div>

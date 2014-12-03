@@ -87,8 +87,9 @@ public class CmsArticleController {
      * @return
      */
     @RequestMapping("cms-article-save")
-    public String save(@ModelAttribute CmsArticle cmsArticle, @RequestParam("cmsCatalogId") String cmsCatalogId, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute CmsArticle cmsArticle, RedirectAttributes redirectAttributes) {
         String id = cmsArticle.getId();
+        String cmsCatalogId = cmsArticle.getCmsCatalog().getId();
         CmsArticle dest = null;
 
         if (id != null) {

@@ -23,6 +23,7 @@ import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.component.table.dao.TableColumnsDao;
 import com.ibusiness.component.table.entity.ConfTable;
 import com.ibusiness.component.table.entity.ConfTableColumns;
+import com.ibusiness.component.table.service.ConfTableColumnsService;
 import com.ibusiness.component.table.service.TableService;
 import com.ibusiness.core.spring.MessageHelper;
 
@@ -41,6 +42,7 @@ public class TableController {
     private TableColumnsDao tableColumnsDao;
     private ConfFormTableDao confFormTableDao;
     private ConfFormTableColumnDao confFormTableColumnDao;
+    private ConfTableColumnsService confTableColumnsService;
     private MessageHelper messageHelper;
 
     /**
@@ -77,7 +79,7 @@ public class TableController {
      * @return
      */
     @RequestMapping("conf-table-column-list")
-    public String queryConfTableDetail(@RequestParam("tableName") String tableName, @RequestParam("isBpmTable") String isBpmTable, Model model) {
+    public String queryConfTableDetail(@RequestParam("tableName") String tableName, Model model) {
     	// 取得表结构信息
         List<ConfTableColumns> list = tableService.queryConfTableColumns(tableName);
         // 表结构信息
@@ -86,11 +88,11 @@ public class TableController {
         List<ConfTable> tableList = tableService.queryConfTableByTableName(tableName);
         if (null != tableList && tableList.size() > 0) {
             model.addAttribute("packageName", tableList.get(0).getPackageName());
-        }
-        if ("1".equals(isBpmTable)) {
-            model.addAttribute("typeId", "BpmTable");
-        } else {
-            model.addAttribute("typeId", "Table");
+            if ("1".equals(tableList.get(0).getIsBpmTable())) {
+                model.addAttribute("typeId", "BpmTable");
+            } else {
+                model.addAttribute("typeId", "Table");
+            }
         }
         
         // 取得表结构信息
@@ -126,7 +128,17 @@ public class TableController {
      * @return
      */
     @RequestMapping("conf-table-insert")
-    public String confTableInsert(@RequestParam("packageName") String packageName, @RequestParam("isBpmTable") String isBpmTable, Model model) {
+    public String confTableInsert(@RequestParam("packageName") String packageName, @RequestParam("tableName") String tableName, @RequestParam("isBpmTable") String isBpmTable, Model model) {
+        ConfTable confTable = null;
+        if (CommonUtils.isNull(tableName)) {
+            
+        } else {
+            List<ConfTable> list = tableService.queryConfTableByTableName(tableName);
+            if (null != list && list.size() > 0) {
+                confTable = list.get(0);
+            }
+        }
+        model.addAttribute("model", confTable);
         model.addAttribute("packageName", packageName);
         model.addAttribute("isBpmTable", isBpmTable);
         
@@ -140,39 +152,49 @@ public class TableController {
      */
     @RequestMapping("conf-table-save")
     public String confTableSave(@ModelAttribute ConfTable confTable, RedirectAttributes redirectAttributes) {
-    	confTable.setId(UUID.randomUUID().toString());
-    	confTable.setTableName("IB_" + confTable.getTableName().toUpperCase());//转成大写
-    	tableService.getDao().saveInsert(confTable);
-    	
-    	// 先删后建
-        dropTable("DROP TABLE IF EXISTS " + confTable.getTableName() + "");
-	    // 判断是流程表还是非流程表
-        if (1 == confTable.getIsBpmTable()) {
-            // 主表
-            if ("1".equals(confTable.getTableType())) {
-                // 在数据库中创建一张业务表
-                createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getBpmMColumnsMap());
+        // 新建 ==============================
+        if (CommonUtils.isNull(confTable.getId())) {
+            confTable.setId(UUID.randomUUID().toString());
+            confTable.setTableName("IB_" + confTable.getTableName().toUpperCase());//转成大写
+            tableService.getDao().saveInsert(confTable);
+            
+            // 先删后建
+            dropTable("DROP TABLE IF EXISTS " + confTable.getTableName() + "");
+            // 判断是流程表还是非流程表
+            if (1 == confTable.getIsBpmTable()) {
+                // 主表
+                if ("1".equals(confTable.getTableType())) {
+                    // 在数据库中创建一张业务表
+                    createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getBpmMColumnsMap());
+                } else {
+                    // 子表
+                    // 在数据库中创建一张业务表
+                    createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getBpmSColumnsMap());
+                }
+                messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
+                return "redirect:/table/conf-bpmTable-list.do?packageName="+confTable.getPackageName();
             } else {
-                // 子表
-                // 在数据库中创建一张业务表
-                createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getBpmSColumnsMap());
+                // 主表
+                if ("1".equals(confTable.getTableType())) {
+                    // 在数据库中创建一张业务表
+                    createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getmColumnsMap());
+                } else {
+                    // 子表
+                    // 在数据库中创建一张业务表
+                    createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getsColumnsMap());
+                }
             }
-            messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-            return "redirect:/table/conf-bpmTable-list.do?packageName="+confTable.getPackageName();
         } else {
-            // 主表
-            if ("1".equals(confTable.getTableType())) {
-                // 在数据库中创建一张业务表
-                createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getmColumnsMap());
-            } else {
-                // 子表
-                // 在数据库中创建一张业务表
-                createTableByReservedColumns(confTable.getTableName(), TableCommonUtil.getsColumnsMap());
-            }
-            // 
-            messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-            return "redirect:/table/conf-table-list.do?packageName="+confTable.getPackageName();
+            // 更新  ==============================
+            ConfTable updateBean = tableService.getDao().get(confTable.getId());
+            updateBean.setTableNameComment(confTable.getTableNameComment());
+            updateBean.setTableType(confTable.getTableType());
+            updateBean.setParentTableId(confTable.getParentTableId());
+            tableService.getDao().update(updateBean);
         }
+        // 
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
+        return "redirect:/table/conf-table-list.do?packageName="+confTable.getPackageName();
     }
     /**
      * 在数据库中创建一张业务表
@@ -261,6 +283,37 @@ public class TableController {
     		alterDropTableColumns(tableName, columnValue);
     	}
         return "redirect:/table/conf-table-column-list.do?tableName=" + tableName;
+    }
+    /**
+     * 数据同步
+     * 
+     * @param packageName
+     * @param tableName
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("conf-table-data-synchronization")
+    public String confTableSynchronization(@RequestParam("packageName") String packageName, @RequestParam("tableName") String tableName) {
+        // 在数据库中创建一张业务表
+        String tableColumnsSql = "from ConfTableColumns where tableName=?";
+        List<ConfTableColumns> tcList = confTableColumnsService.find(tableColumnsSql, tableName);
+        if (null != tcList && tcList.size() > 0) {
+            // 1.去数据库中drop掉表
+            dropTable("DROP TABLE IF EXISTS " + tableName + "");
+            // 2.创建表
+            String createSql ="CREATE TABLE " + tableName + " (";
+            for (ConfTableColumns bean : tcList) {
+                createSql = createSql + bean.getColumnValue() + " " + bean.getColumnType();
+                if (!CommonUtils.isNull(bean.getColumnSize())) {
+                    createSql = createSql + "(" + bean.getColumnSize() + ")";
+                }
+                createSql = createSql + ", ";
+            };
+            createSql = createSql +  " PRIMARY KEY (ID))";
+            createTable(createSql);
+        }
+        
+        return "redirect:/table/conf-table-list.do?packageName="+packageName;
     }
     /**
      * 在数据库中创建一张业务表
@@ -362,6 +415,7 @@ public class TableController {
         List<ConfFormTableColumn> list = confFormTableColumnDao.find(hql, CommonUtils.toUpperCase(tableName), CommonUtils.toUpperCase(columnValue));
         confFormTableColumnDao.removeAll(list);
 	}
+    // ============================================================================================
     /**
      * 注入 table service
      */
@@ -380,6 +434,10 @@ public class TableController {
     @Resource
     public void setConfFormTableColumnDao(ConfFormTableColumnDao confFormTableColumnDao) {
         this.confFormTableColumnDao = confFormTableColumnDao;
+    }
+    @Resource
+    public void setConfTableColumnsService(ConfTableColumnsService confTableColumnsService) {
+        this.confTableColumnsService = confTableColumnsService;
     }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {

@@ -33,14 +33,14 @@ $(function() {
         <div class="panel-heading"><h4 class="panel-title">编辑文章</h4></div>
         <div class="panel-body">
 			<div class="content content-inner">
-					<form id="cmsArticleForm" method="post" action="cms-article-save.do" class="form-horizontal">
+					<form id="cmsArticleForm" method="post" action="cms-article-save.do?cmsCatalogId=1" class="form-horizontal">
 					  <c:if test="${model != null}">
-					  <input id="cms-article_id" type="hidden" name="id" value="${model.id}">
+					  <input type="hidden" name="id" value="${model.id}">
 					  </c:if>
 					  <div class="form-group">
 					    <label class="col-lg-2 control-label" for="cms-article_cmsArticlename">栏目</label>
 						<div class="col-lg-3">
-					      <select class="form-control required"  id="perm_resc" name="cmsCatalogId" >
+					      <select class="form-control required"  id="perm_resc" name="cmsCatalog.id" >
 					          <option value="" >请选择...</option>
 							  <c:forEach items="${cmsCatalogs}" var="item">
 							    <option value="${item.id}" ${model.cmsCatalog.id==item.id ? 'selected' : ''}>${item.name}</option>
@@ -150,7 +150,7 @@ $(function() {
 					
 					  <div class="form-group">
 					    <div class="col-lg-10 col-lg-offset-2">
-					      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+					      <button class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 					    </div>
 					  </div>

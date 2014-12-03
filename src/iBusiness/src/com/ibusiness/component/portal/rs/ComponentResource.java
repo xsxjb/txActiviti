@@ -38,13 +38,20 @@ public class ComponentResource {
     private ConfFormDao confFormDao;
     private BpmProcessDao cpmProcessDao;
 
+    /**
+     * 后台管理页面  左边树列表信息
+     * @param packageName
+     * @param strTypeId
+     * @param parentId
+     * @return
+     */
     @SuppressWarnings("unchecked")
     @POST
     @Path("left-menu-tree")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Map<String, Object>> tree(@QueryParam("packageName") String packageName, @QueryParam("typeId") String strTypeId,
             @QueryParam("parentId") String parentId) {
-        String hql = "from ConfComponent where parentid = 0 ";
+        String hql = "from ConfComponent where parentid = '0' ";
         List<ConfComponent> entities = componentDao.find(hql);
         // 制造一个根节点,用于对业务模块进行 增删改
         Map<String, Object> map = new HashMap<String, Object>();
