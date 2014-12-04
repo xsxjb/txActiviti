@@ -108,7 +108,7 @@
 						                </div>
 						           </div>
 						           <div class="modal-footer">
-						                    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('permission-complete.do')">办理</button>
+						                    <button class="btn btn-default btn-sm" onclick="mainFormSubmit('permission-complete.do')">办理</button>
 						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
 						           </div>
 					            </div><!-- /.modal-content -->

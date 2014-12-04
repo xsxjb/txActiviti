@@ -97,8 +97,8 @@
 									<c:if test="${bpmId == null}">
 											<div class="form-group">
 											    <label class="col-lg-2 control-label" for="init-task-node">初始设置流程节点:<br/>(逗号,分割)<br/>例如: 发起,审批</label>
-												<div class="col-lg-3">
-												    <textarea class="form-control" id="init-task-node" name="initTaskNode" rows="1">${model.initTaskNode}</textarea>
+												<div class="col-lg-6">
+												    <textarea class="form-control" id="init-task-node" name="initTaskNode" rows="2">${model.initTaskNode}</textarea>
 											    </div>
 											</div>
 									</c:if>

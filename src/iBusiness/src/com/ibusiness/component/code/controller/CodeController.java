@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.base.menu.dao.MenuDao;
+import com.ibusiness.base.menu.entity.Menu;
 import com.ibusiness.codegenerate.code.CodeParamBean;
 import com.ibusiness.codegenerate.code.generate.CodeGenerate;
 import com.ibusiness.codegenerate.code.generate.CodeGenerateBpmForm;
@@ -26,6 +28,7 @@ import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTable;
 import com.ibusiness.component.table.dao.TableDao;
 import com.ibusiness.component.table.entity.ConfTable;
+import com.ibusiness.core.spring.ApplicationContextHelper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.core.util.StringUtils;
 
@@ -73,6 +76,7 @@ public class CodeController {
      * @param model
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("code-generate-save")
     public String codeGenerateSave(@Valid CodeGenerateBean bean, 
             @RequestParam("formId") String formId, @RequestParam("menuUrl") String menuUrl, RedirectAttributes redirectAttributes) {
@@ -207,7 +211,12 @@ public class CodeController {
                 new CodeGenerate(codeParamBean, createFileProperty).generateToFile();
             }
             // 非流程表单直接生成菜单
-            new MenuCommon().createMenu(confForm.getPackageName(), confForm.getFormTitle(), menuUrl);
+            String menuSql ="from Menu where menuName=? AND menuUrl=? AND menuLevel='3' ";
+            List<Menu> menuList = getMenuDao().find(menuSql, confForm.getFormTitle(), menuUrl);
+            // 如果已经存在就不要创建了
+            if (null == menuList || menuList.size() < 1) {
+                new MenuCommon().createMenu(confForm.getPackageName(), confForm.getFormTitle(), menuUrl);
+            }
         }
         
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "生成成功");
@@ -291,8 +300,8 @@ public class CodeController {
                 if (null != tables && tables.size() > 0) {
                     subbean.setEntityTitle(tables.get(0).getTableNameComment());
                 }
-                // 每行字段数目 1
-                subbean.setRowNumber("1");
+                // 每行字段数目2
+                subbean.setRowNumber("2");
                 // 风格
                 subbean.setFormStyle("formStyle");
                 // 菜单URL
@@ -330,5 +339,8 @@ public class CodeController {
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
+    }
+    public MenuDao getMenuDao() {
+        return ApplicationContextHelper.getBean(MenuDao.class);
     }
 }

@@ -35,6 +35,7 @@ import com.ibusiness.bpm.entity.BpmProcessVersion;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.spring.ApplicationContextHelper;
 import com.ibusiness.flowchart.entity.ConfFlowChart;
+import com.ibusiness.flowchart.service.FlowChartService;
 import com.ibusiness.security.util.SpringSecurityUtils;
 
 /**
@@ -44,6 +45,31 @@ import com.ibusiness.security.util.SpringSecurityUtils;
  *
  */
 public class BpmComBusiness {
+    /**
+     * 启动项目时候初始化所有流程
+     */
+    @SuppressWarnings("unchecked")
+    public void initBpmFlow() {
+        // 1.取得所有已经发布流程,存在Map中
+        Map<String, String> processMap = new HashMap<String, String>();
+        for (ProcessDefinition processDefinition : getProcessEngine().getRepositoryService().createProcessDefinitionQuery().list()) {
+            processMap.put(processDefinition.getKey(), processDefinition.getName());
+        }
+        // 2.取得所有流程
+        List<BpmProcess> bpmProcessList = getBpmProcessDao().getAll();
+        // 3.判断流程是否以发布，如果未发布则根据流程曲线存储的信息发布流程。
+        for (BpmProcess bean : bpmProcessList) {
+            if (processMap.containsKey(bean.getFlowName())) {
+                continue;
+            }
+            // 创建一个BPMN XML数据
+            String flowchartSql = "from ConfFlowChart where flowId=?";
+            List<ConfFlowChart> confFlowCharts = getFlowChartService().find(flowchartSql, bean.getId());
+            String xmlStr = createBpmnXML(bean, confFlowCharts);
+            // 发布
+            deployFlow(xmlStr, bean.getFlowName());
+        }
+    }
     /**
      * 启动流程
      */
@@ -124,7 +150,9 @@ public class BpmComBusiness {
         String sql = " from BpmFlowNode where flowId=? AND nodeCode=?";
         List<BpmFlowNode> flowNodeList = getBpmFlowNodeDao().find(sql, flowId, nodeCode);
         BpmFlowNode bpmFlowNode = null;
-        if (null != flowNodeList && flowNodeList.size() > 0) {
+        if (null == flowNodeList || flowNodeList.size() < 1) {
+            return new JSONObject();
+        } else {
             bpmFlowNode = flowNodeList.get(0);
         }
         // 取得指定节点的字段信息
@@ -417,6 +445,9 @@ public class BpmComBusiness {
      */
     public BpmProcessDao getBpmProcessDao() {
         return ApplicationContextHelper.getBean(BpmProcessDao.class);
+    }
+    public FlowChartService getFlowChartService() {
+        return ApplicationContextHelper.getBean(FlowChartService.class);
     }
     public BpmProcessVersionDao getBpmProcessVersionDao() {
         return ApplicationContextHelper.getBean(BpmProcessVersionDao.class);

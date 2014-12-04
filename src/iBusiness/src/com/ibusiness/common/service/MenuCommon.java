@@ -32,11 +32,11 @@ public class MenuCommon {
         if (null != list && list.size() > 0) {
             // 菜单名称
             String menuName = list.get(0).getModulename();
-            ///////////////////////// 一级菜单 //////////////////////////////////////
+            // 一级菜单
             Menu menu = saveMenu(menuName, "#", "1", null);
-            ///////////////////////// 二级菜单 //////////////////////////////////////
+            // 二级菜单
             Menu menu2 = saveMenu(list.get(0).getModulename(), "#", "2", menu);
-            ///////////////////////// 三级菜单 //////////////////////////////////////
+            // 三级菜单
             saveMenu(formTitle, menuUrl, "3", menu2);
         }
     }

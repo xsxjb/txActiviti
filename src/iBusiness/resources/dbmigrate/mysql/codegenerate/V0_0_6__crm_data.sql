@@ -65,8 +65,7 @@ INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,co
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','BENEFICIARY','开户行','VARCHAR','128','是','',26);
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','BUSINESSCONTACTS','业务联系人','VARCHAR','16','是','',17);
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','CATEGORY','类别','VARCHAR','8','是','',3);
-INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','CHARACTER','企业性质','VARCHAR','16','是','',6);
-INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','CODE','邮编','VARCHAR','8','是','',34);
+INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','UNITCHARACTER','企业性质','VARCHAR','16','是','',6);
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','COMPANYFAX','公司传真','VARCHAR','16','是','',11);
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','COMPANYPHONE','公司电话','VARCHAR','16','是','',10);
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','CONTACTFAX','联系人传真','VARCHAR','16','是','',20);
@@ -96,7 +95,7 @@ INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,co
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','USERPHONE','负责人电话','VARCHAR','16','是','',14);
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','YOURADDRESS','收件地址','VARCHAR','128','是','',30);
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','YOURCOMPANY','收件公司','VARCHAR','128','是','',29);
-INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','YOURNAME','YOURNAME','VARCHAR','32','是','',31);
+INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','YOURNAME','收件人姓名','VARCHAR','32','是','',31);
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','YOURPHONE','联系电话','VARCHAR','16','是','',32);
 
 /* ============================= 表单管理表 =============================  */

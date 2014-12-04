@@ -88,7 +88,7 @@ public class TableController {
         List<ConfTable> tableList = tableService.queryConfTableByTableName(tableName);
         if (null != tableList && tableList.size() > 0) {
             model.addAttribute("packageName", tableList.get(0).getPackageName());
-            if ("1".equals(tableList.get(0).getIsBpmTable())) {
+            if (1 == tableList.get(0).getIsBpmTable()) {
                 model.addAttribute("typeId", "BpmTable");
             } else {
                 model.addAttribute("typeId", "Table");

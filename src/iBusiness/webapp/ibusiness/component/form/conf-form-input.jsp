@@ -331,7 +331,7 @@
 										  </div>
 										  <div class="col-lg-6">
 											  <label class="control-label" >行字段数目:</label>
-											  <label class="control-label" >${model.rowNumber}</label>
+											  <input id="code_entityName" type="text" name="rowNumber" value="${model.rowNumber}" class="text number">
 										  </div>
 									  </div>
 									  <div class="form-group">

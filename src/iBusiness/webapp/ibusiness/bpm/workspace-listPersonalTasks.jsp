@@ -41,7 +41,7 @@
 				    <td><tags:user userId="${item.assignee}"/></td>
 				    <td>${item.suspended ? '挂起' : '激活'}</td>
 			        <td>
-			          <a href="${scopePrefix}${item.flowUrl}${item.id}">办理</a>
+			          <a href="${scopePrefix}${item.flowUrl}">办理</a>
 			          <a href="workspace-viewHistory.do?processInstanceId=${item.processInstanceId}">历史</a>
 			        </td>
 			      </tr>

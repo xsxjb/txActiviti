@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibusiness.bpm.service.BpmComBusiness;
+
 
 /**
  * 系统初始化类
@@ -38,8 +40,11 @@ public class InitServlet extends HttpServlet {
      */
     public void init() throws ServletException {
         super.init();
-       
-        // 取得构造器
+        
+        // 启动平台时候初始化所有流程
+        new BpmComBusiness().initBpmFlow();
+        
+     // 取得构造器
 //        // 通过构造器取得spring中的 CommonService 对象
 //        ApplicationContext wc = WebApplicationContextUtils.getWebApplicationContext( this.getServletContext() );
 //        //初始化CommonBusiness单例对象

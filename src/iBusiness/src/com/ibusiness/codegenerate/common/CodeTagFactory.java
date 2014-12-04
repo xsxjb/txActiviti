@@ -87,7 +87,9 @@ public class CodeTagFactory {
      */
     public Columnt singleInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" >";
+        str = str + "<div class=\"col-lg-3\">";
+        str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" >";
+        str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
     }
@@ -107,7 +109,9 @@ public class CodeTagFactory {
      */
     public Columnt numberInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text number\" >";
+        str = str + "<div class=\"col-lg-3\">";
+        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text number\" >";
+        str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
     }
@@ -115,10 +119,13 @@ public class CodeTagFactory {
      * 日期
      */
     public Columnt dateParser(Columnt columnt, ConfFormTableColumn formColumn) {
-        String str = "<div class=\"input-append datepicker date\">";
-        str = str + "<span class=\"add-on\">";
-        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
-        str = str + "</span>";
+        String str ="";
+        str = str + "<div class=\"col-lg-3\">";
+        str = str + "  <div class=\"input-append datepicker date\">";
+        str = str + "  <span class=\"add-on\">";
+        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
+        str = str + "  </span>";
+        str = str + "  </div>";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -128,10 +135,13 @@ public class CodeTagFactory {
      */
     public Columnt dateTimeParser(Columnt columnt, ConfFormTableColumn formColumn) {
         // TODO 未实现
-        String str = "<div class=\"input-append datepicker date\">";
-        str = str + "<span class=\"add-on\">";
-        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
-        str = str + "</span>";
+        String str ="";
+        str = str + "<div class=\"col-lg-3\">";
+        str = str + "  <div class=\"input-append datepicker date\">";
+        str = str + "  <span class=\"add-on\">";
+        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
+        str = str + "  </span>";
+        str = str + "  </div>";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -223,7 +233,9 @@ public class CodeTagFactory {
     public Columnt checkBoxParser(Columnt columnt, ConfFormTableColumn formColumn) {
         // TODO 未实现
         String str = "";
-        str = str + "<input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\"  class=\"text\" >";
+        str = str + "<div class=\"col-lg-3\">";
+        str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" >";
+        str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
     }

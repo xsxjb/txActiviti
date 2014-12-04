@@ -74,42 +74,10 @@
 			      <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					                <th class="sorting">客户编号</th>
-					                <th class="sorting">客户状态</th>
+					                <th class="sorting">客户名称</th>
 					                <th class="sorting"> 客户类别</th>
 					                <th class="sorting">客户地址</th>
-					                <th class="sorting">手机</th>
-					                <th class="sorting">联系电话</th>
-					                <th class="sorting">负责经理</th>
-					                <th class="sorting">系统销售</th>
-					                <th class="sorting">客户名称</th>
-					                <th class="sorting">信息来源</th>
-					                <th class="sorting">关系状态</th>
-					                <th class="sorting">省</th>
-					                <th class="sorting">市</th>
 					                <th class="sorting">企业性质</th>
-					                <th class="sorting">上级主管单位</th>
-					                <th class="sorting">三年内规划描述</th>
-					                <th class="sorting">客户诉求</th>
-					                <th class="sorting">是否以合作信息表</th>
-					                <th class="sorting">客户发票单位名称</th>
-					                <th class="sorting">开户行</th>
-					                <th class="sorting">帐号</th>
-					                <th class="sorting">税号</th>
-					                <th class="sorting">开票联系人</th>
-					                <th class="sorting">联系电话</th>
-					                <th class="sorting">发票邮寄单位名称</th>
-					                <th class="sorting">邮寄地址</th>
-					                <th class="sorting">邮编</th>
-					                <th class="sorting">收件人</th>
-					                <th class="sorting">电话</th>
-					                <th class="sorting">首选联系人</th>
-					                <th class="sorting">职位</th>
-					                <th class="sorting">固话/传真</th>
-					                <th class="sorting">手机</th>
-					                <th class="sorting">邮件</th>
-					                <th class="sorting">办公地址</th>
-					                <th class="sorting">邮编</th>
 				        <th width="80">&nbsp;</th>
 				      </tr>
 				    </thead>
@@ -117,42 +85,10 @@
 					      <c:forEach items="${page.result}" var="item">
 					      <tr>
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-						            <td>${item.customerno}</td>
-						            <td>${item.customerstate}</td>
+						            <td>${item.customername}</td>
 						            <td>${item.customertype}</td>
 						            <td>${item.customeraddress}</td>
-						            <td>${item.phone}</td>
-						            <td>${item.telephone}</td>
-						            <td>${item.salesmanager}</td>
-						            <td>${item.systemsales}</td>
-						            <td>${item.customername}</td>
-						            <td>${item.infosource}</td>
-						            <td>${item.relationshipstatus}</td>
-						            <td>${item.province}</td>
-						            <td>${item.city}</td>
 						            <td>${item.customernature}</td>
-						            <td>${item.superviseunit}</td>
-						            <td>${item.planinfo}</td>
-						            <td>${item.customerdemand}</td>
-						            <td>${item.cooperationinfo}</td>
-						            <td>${item.invoicename}</td>
-						            <td>${item.bank}</td>
-						            <td>${item.accountno}</td>
-						            <td>${item.taxid}</td>
-						            <td>${item.invoiceuser}</td>
-						            <td>${item.invoiceusertel}</td>
-						            <td>${item.invoicemailunitname}</td>
-						            <td>${item.mailaddress}</td>
-						            <td>${item.invoiczip}</td>
-						            <td>${item.invoicaddressee}</td>
-						            <td>${item.invoicphonetel}</td>
-						            <td>${item.customeruser}</td>
-						            <td>${item.userposition}</td>
-						            <td>${item.usertelephone}</td>
-						            <td>${item.userphone}</td>
-						            <td>${item.useremail}</td>
-						            <td>${item.userofficeaddress}</td>
-						            <td>${item.userzip}</td>
 					        <td>
 					          <a href="customer_info-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>

@@ -23,9 +23,9 @@
 		    });
 		})
     </script>
-    <div class="span2"></div>
+    <div class="col-lg-1"></div>
     <!-- start of main -->
-    <div class="panel panel-default span10"> 
+    <div class="panel panel-default col-lg-10"> 
         <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
         <div class="panel-body">
                 <form id="cgForm" method="post" action="test-save.do" class="form-horizontal">
@@ -33,18 +33,14 @@
                       <input id="code_id" type="hidden" name="id" value="${model.id}">
                   </c:if>
                   
-                      <!-- 是否显示 -->
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-name">姓名:</label>
-                              <!-- 是否可编辑 -->
-                                      <input id="code-name" type="text" name="name" value="${model.name}" class="text required" >
-                          </div>
-                      <!-- 是否显示 -->
-                          <div class="form-group">
+                                <!-- 是否可编辑 -->
+                                      <div class="col-lg-3">   <input id="code-name" type="text" name="name" value="${model.name}" class="text required" ></div>
                               <label class="col-lg-2 control-label" for="code-remark">备注:</label>
-                              <!-- 是否可编辑 -->
-                                      <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" >
-                          </div>
+                                <!-- 是否可编辑 -->
+                                      <div class="col-lg-3">   <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" ></div>
+                            </div>
                   
                   <div class="form-group">
 	                  <div class="col-lg-10 col-lg-offset-2">

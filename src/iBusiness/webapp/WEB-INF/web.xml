@@ -50,11 +50,14 @@
     <servlet>
 		<servlet-name>InitServlet</servlet-name>
 		<servlet-class>com.ibusiness.common.sevlet.InitServlet</servlet-class>
+		<!-- 设置启动时加裁 -->
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>InitServlet</servlet-name>
     	<url-pattern>/default/common/checkcode</url-pattern>
   	</servlet-mapping>
+  	
   	<!-- 验证码 -->
   	<servlet>
     	<servlet-name>captchaAjax</servlet-name>

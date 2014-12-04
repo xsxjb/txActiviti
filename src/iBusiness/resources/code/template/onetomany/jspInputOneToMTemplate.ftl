@@ -70,8 +70,9 @@
 				   </c:if>
 				   <#list columns as po>
 				       <#if po.fcDisplay="1">
-				       <!-- 是否显示 -->
-						   <div class="form-group">
+				          <#if po_index%2==0>
+                             <div class="form-group">
+                          </#if>
 							      <label class="control-label col-lg-2" for="code-${po.fieldName}">${po.filedComment}:</label>
 							      <!-- 是否可编辑 -->
 	                              <#if po.fcEdit="1">
@@ -82,7 +83,10 @@
 	                                      <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
 	                                  </div>
 	                              </#if>
-							</div>
+	                    <#if po_index%2 ==1>
+                            </div>
+                        </#if>
+							
 					    </#if>
 					</#list>
 				</form>

@@ -1,5 +1,5 @@
 /* ======================== 业务模块组件管理表 ====================  */
-/* ====== 商务管理表 =====  */
+/* ========================= 商务管理表 ========================  */
 DROP TABLE IF EXISTS IB_CUSTOMER_INFO;
 CREATE TABLE IB_CUSTOMER_INFO (
   ID                              varchar(64) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IB_CUSTOMER_INFO (
   USERZIP                        varchar(10),
   PRIMARY KEY (ID)
 ) ENGINE=INNODB;
-/* ====== 原材料供应商维护表 =====  */
+/* ===================== 原材料供应商维护表 ========================  */
 DROP TABLE IF EXISTS IB_SUPPLIER;
 CREATE TABLE IB_SUPPLIER (
     ID varchar(64) NOT NULL DEFAULT '',

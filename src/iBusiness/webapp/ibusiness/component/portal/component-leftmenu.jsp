@@ -1,16 +1,14 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 
       <!-- start of sidebar -->
-      <aside id="m-sidebar" class="accordion col-md-2" data-spy="affix" data-offset-top="100">
-
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#m-sidebar" href="#collapse-group">
-              <i class="icon-user"></i>
-              <span class="title">业务模块组件</span>
-            </a>
-          </div>
-        <!--   <div id="collapse-group" class="accordion-body collapse  in}"> -->
+      <div class="col-lg-2">
+	      <div class="panel-heading">
+	          <a class="accordion-toggle" data-toggle="collapse" data-parent="#m-sidebar" href="#collapse-group">
+                  <i class="icon-user"></i>
+                  <span class="title"><h4 class="panel-title">业务模块组件</h4></span>
+              </a>
+	      </div>
+	        <div class="panel-body">
           <div id="collapse-group">
             <ul id="treeMenu" class="ztree"></ul>
           </div>
@@ -18,9 +16,9 @@
 
 		<footer id="m-footer" class="text-center">
 		  <hr>
-		  &copy;天翔
+		  &copy;iBusiness
 		</footer>
-      </aside>
+	  </div>
       <!-- end of sidebar -->
 
 <script type="text/javascript">

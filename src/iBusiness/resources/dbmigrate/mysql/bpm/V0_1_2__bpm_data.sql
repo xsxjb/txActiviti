@@ -2,7 +2,6 @@
 INSERT INTO IB_BPM_PROCESS(ID,PACKAGENAME,FLOWNAME,FLOWTITLE,VERSIONID,FORMID,FLOWURL) VALUES('permission001','test','permission','审批权限','64d18a72-3f68-4734-b8c1-92546897089c','permission01','/permission/permission-list.do?flowType=0&flowId=permission001');
 
 /* ============================= 流程图配置表 =============================   */
-TRUNCATE TABLE IB_CONF_FLOW_CHART;
 INSERT INTO IB_CONF_FLOW_CHART(ID,FLOWID,ITEMID,CONTEXT) VALUES('permission001_0001','permission001','16E2E696-AC31-4778-AC20-0B18EF88D941','{"id":"16E2E696-AC31-4778-AC20-0B18EF88D941","name":"泳道","type":"Lane","title":"总经理","x":"0","y":"260","width":"35","height":"110"}');
 INSERT INTO IB_CONF_FLOW_CHART(ID,FLOWID,ITEMID,CONTEXT) VALUES('permission001_0002','permission001','17B0D07D-B778-4898-A38D-B199AC606D74','{"id":"17B0D07D-B778-4898-A38D-B199AC606D74","name":"发起申请","type":"TaskNode","title":"发起申请","x":"195","y":"67","width":"100","height":"50","headLineIds":"A26FC95E-1536-4CB9-AB5D-6EDFD7CCDC65","afterLineIds":"DDD38676-6796-4C4E-80AB-DE096EADD3F8"}');
 INSERT INTO IB_CONF_FLOW_CHART(ID,FLOWID,ITEMID,CONTEXT) VALUES('permission001_0003','permission001','A26FC95E-1536-4CB9-AB5D-6EDFD7CCDC65','{"id":"A26FC95E-1536-4CB9-AB5D-6EDFD7CCDC65","name":"线","type":"Line","fillColor":"red","title":"标题","x":"125","y":"92","realPoints":"125,92,195,92","startElmId":"AC5674AE-CF14-46B3-A7FA-0129DF26C0A8","endElmId":"17B0D07D-B778-4898-A38D-B199AC606D74"}');

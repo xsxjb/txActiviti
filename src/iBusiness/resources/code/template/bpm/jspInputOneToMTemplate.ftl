@@ -70,7 +70,7 @@
         <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
-		       <form id="mainForm" method="post" action="permission-save-draft.do?flowId=${'$' + '{flowId}'}" class="form-horizontal">
+		       <form id="mainForm" method="post" action="${entityName?uncap_first}-complete.do?flowId=${'$' + '{flowId}'}" class="form-horizontal">
 				   <input type="hidden" name="flowId" value="${'$' + '{flowId}'}">
 				   <c:if test="${'$' + '{model != null}'}">
 				       <input type="hidden" name="id" value="${'$' + '{model.id}'}">
@@ -82,8 +82,9 @@
 				   </c:if>
 				   <#list columns as po>
 					   <#if po.fcDisplay="1">
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+				         <#if po_index%2==0>
+                           <div class="form-group">
+                         </#if>
 							      <label class="control-label  col-lg-2" for="code-${po.fieldName}">${po.filedComment}:</label>
 							      <!-- 是否可编辑 -->
 	                              <#if "1"=po.fcEdit>
@@ -94,7 +95,10 @@
 		                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
 	                                  </div>
 	                              </#if>
-							</div>
+                          <#if po_index%2 ==1>
+                            </div>
+                          </#if>
+						 
 					   </#if>
 					</#list>
 					
@@ -120,7 +124,7 @@
 						                </div>
 						           </div>
 						           <div class="modal-footer">
-						                    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('${entityName?uncap_first}-complete.do')">办理</button>
+						                    <button class="btn btn-default btn-sm a-insert">办理</button>
 						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
 						           </div>
 					            </div><!-- /.modal-content -->

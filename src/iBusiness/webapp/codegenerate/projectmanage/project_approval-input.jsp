@@ -70,7 +70,7 @@
         <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
-		       <form id="mainForm" method="post" action="permission-save-draft.do?flowId=${flowId}" class="form-horizontal">
+		       <form id="mainForm" method="post" action="project_approval-complete.do?flowId=${flowId}" class="form-horizontal">
 				   <input type="hidden" name="flowId" value="${flowId}">
 				   <c:if test="${model != null}">
 				       <input type="hidden" name="id" value="${model.id}">
@@ -80,72 +80,61 @@
 				       <input type="hidden" name="nodename" value="${model.nodename}">
 				       <input type="hidden" name="doneflag" value="${model.doneflag}">
 				   </c:if>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+                           <div class="form-group">
 							      <label class="control-label  col-lg-2" for="code-eventdate">日期:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.eventdate.fcEdit=='1'}">  <div class="input-append datepicker date">  <span class="add-on">    <input id="code-eventdate" type="text" name="eventdate" value="${model.eventdate}" class="text required" maxlength="10" readonly >  </span>  </div></c:if><c:if test="${nodeColumsMap.eventdate.fcEdit!='1'}">  <label>${model.eventdate}</label>  <input type="hidden" name="eventdate" value="${model.eventdate}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3"><c:if test="${nodeColumsMap.eventdate.fcEdit=='1'}">  <div class="input-append datepicker date">  <span class="add-on">    <input id="code-eventdate" type="text" name="eventdate" value="${model.eventdate}" class="text required" maxlength="10" readonly >  </span>  </div></c:if><c:if test="${nodeColumsMap.eventdate.fcEdit!='1'}">  <label>${model.eventdate}</label>  <input type="hidden" name="eventdate" value="${model.eventdate}"></c:if></div>
+						 
 							      <label class="control-label  col-lg-2" for="code-pactno">合同编号:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.pactno.fcEdit=='1'}">  <input id="code-pactno" type="text" name="pactno" value="${model.pactno}" class="text required" ></c:if><c:if test="${nodeColumsMap.pactno.fcEdit!='1'}">  <label>${model.pactno}</label>  <input type="hidden" name="pactno" value="${model.pactno}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.pactno.fcEdit=='1'}">    <input id="code-pactno" type="text" name="pactno" value="${model.pactno}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.pactno.fcEdit!='1'}">    <label>${model.pactno}</label>    <input type="hidden" name="pactno" value="${model.pactno}">  </c:if></div>
+                            </div>
+						 
+                           <div class="form-group">
 							      <label class="control-label  col-lg-2" for="code-customername">客户名称:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.customername.fcEdit=='1'}">  <input id="code-customername" type="text" name="customername" value="${model.customername}" class="text required" ></c:if><c:if test="${nodeColumsMap.customername.fcEdit!='1'}">  <label>${model.customername}</label>  <input type="hidden" name="customername" value="${model.customername}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.customername.fcEdit=='1'}">    <input id="code-customername" type="text" name="customername" value="${model.customername}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.customername.fcEdit!='1'}">    <label>${model.customername}</label>    <input type="hidden" name="customername" value="${model.customername}">  </c:if></div>
+						 
 							      <label class="control-label  col-lg-2" for="code-projectno">项目编号:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.projectno.fcEdit=='1'}">  <input id="code-projectno" type="text" name="projectno" value="${model.projectno}" class="text required" ></c:if><c:if test="${nodeColumsMap.projectno.fcEdit!='1'}">  <label>${model.projectno}</label>  <input type="hidden" name="projectno" value="${model.projectno}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.projectno.fcEdit=='1'}">    <input id="code-projectno" type="text" name="projectno" value="${model.projectno}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.projectno.fcEdit!='1'}">    <label>${model.projectno}</label>    <input type="hidden" name="projectno" value="${model.projectno}">  </c:if></div>
+                            </div>
+						 
+                           <div class="form-group">
 							      <label class="control-label  col-lg-2" for="code-projectname">项目名称:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.projectname.fcEdit=='1'}">  <input id="code-projectname" type="text" name="projectname" value="${model.projectname}" class="text required" ></c:if><c:if test="${nodeColumsMap.projectname.fcEdit!='1'}">  <label>${model.projectname}</label>  <input type="hidden" name="projectname" value="${model.projectname}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.projectname.fcEdit=='1'}">    <input id="code-projectname" type="text" name="projectname" value="${model.projectname}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.projectname.fcEdit!='1'}">    <label>${model.projectname}</label>    <input type="hidden" name="projectname" value="${model.projectname}">  </c:if></div>
+						 
 							      <label class="control-label  col-lg-2" for="code-projecttype">项目类型:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.projecttype.fcEdit=='1'}">  <input id="code-projecttype" type="text" name="projecttype" value="${model.projecttype}" class="text required" ></c:if><c:if test="${nodeColumsMap.projecttype.fcEdit!='1'}">  <label>${model.projecttype}</label>  <input type="hidden" name="projecttype" value="${model.projecttype}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.projecttype.fcEdit=='1'}">    <input id="code-projecttype" type="text" name="projecttype" value="${model.projecttype}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.projecttype.fcEdit!='1'}">    <label>${model.projecttype}</label>    <input type="hidden" name="projecttype" value="${model.projecttype}">  </c:if></div>
+                            </div>
+						 
+                           <div class="form-group">
 							      <label class="control-label  col-lg-2" for="code-salesuser">销售人员:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.salesuser.fcEdit=='1'}">  <input id="code-salesuser" type="text" name="salesuser" value="${model.salesuser}" class="text required" ></c:if><c:if test="${nodeColumsMap.salesuser.fcEdit!='1'}">  <label>${model.salesuser}</label>  <input type="hidden" name="salesuser" value="${model.salesuser}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.salesuser.fcEdit=='1'}">    <input id="code-salesuser" type="text" name="salesuser" value="${model.salesuser}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.salesuser.fcEdit!='1'}">    <label>${model.salesuser}</label>    <input type="hidden" name="salesuser" value="${model.salesuser}">  </c:if></div>
+						 
 							      <label class="control-label  col-lg-2" for="code-projectmanager">项目经理:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.projectmanager.fcEdit=='1'}">  <input id="code-projectmanager" type="text" name="projectmanager" value="${model.projectmanager}" class="text required" ></c:if><c:if test="${nodeColumsMap.projectmanager.fcEdit!='1'}">  <label>${model.projectmanager}</label>  <input type="hidden" name="projectmanager" value="${model.projectmanager}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.projectmanager.fcEdit=='1'}">    <input id="code-projectmanager" type="text" name="projectmanager" value="${model.projectmanager}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.projectmanager.fcEdit!='1'}">    <label>${model.projectmanager}</label>    <input type="hidden" name="projectmanager" value="${model.projectmanager}">  </c:if></div>
+                            </div>
+						 
+                           <div class="form-group">
 							      <label class="control-label  col-lg-2" for="code-planner">计划员:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.planner.fcEdit=='1'}">  <input id="code-planner" type="text" name="planner" value="${model.planner}" class="text required" ></c:if><c:if test="${nodeColumsMap.planner.fcEdit!='1'}">  <label>${model.planner}</label>  <input type="hidden" name="planner" value="${model.planner}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.planner.fcEdit=='1'}">    <input id="code-planner" type="text" name="planner" value="${model.planner}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.planner.fcEdit!='1'}">    <label>${model.planner}</label>    <input type="hidden" name="planner" value="${model.planner}">  </c:if></div>
+						 
 							      <label class="control-label  col-lg-2" for="code-buyer">采购员:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.buyer.fcEdit=='1'}">  <input id="code-buyer" type="text" name="buyer" value="${model.buyer}" class="text required" ></c:if><c:if test="${nodeColumsMap.buyer.fcEdit!='1'}">  <label>${model.buyer}</label>  <input type="hidden" name="buyer" value="${model.buyer}"></c:if>
-							</div>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.buyer.fcEdit=='1'}">    <input id="code-buyer" type="text" name="buyer" value="${model.buyer}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.buyer.fcEdit!='1'}">    <label>${model.buyer}</label>    <input type="hidden" name="buyer" value="${model.buyer}">  </c:if></div>
+                            </div>
+						 
+                           <div class="form-group">
 							      <label class="control-label  col-lg-2" for="code-productmanage">生成负责人:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.productmanage.fcEdit=='1'}">  <input id="code-productmanage" type="text" name="productmanage" value="${model.productmanage}" class="text required" ></c:if><c:if test="${nodeColumsMap.productmanage.fcEdit!='1'}">  <label>${model.productmanage}</label>  <input type="hidden" name="productmanage" value="${model.productmanage}"></c:if>
-							</div>
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.productmanage.fcEdit=='1'}">    <input id="code-productmanage" type="text" name="productmanage" value="${model.productmanage}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.productmanage.fcEdit!='1'}">    <label>${model.productmanage}</label>    <input type="hidden" name="productmanage" value="${model.productmanage}">  </c:if></div>
+						 
 					
 					<!--  选择下一节点办理人弹出层  -->
 				    <div id="nextTaskUserDiv" class="modal fade" tabindex="-1" style="top:20%;" >
@@ -169,7 +158,7 @@
 						                </div>
 						           </div>
 						           <div class="modal-footer">
-						                    <button class="btn btn-default btn-sm a-insert" onclick="mainFormSubmit('project_approval-complete.do')">办理</button>
+						                    <button class="btn btn-default btn-sm a-insert">办理</button>
 						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
 						           </div>
 					            </div><!-- /.modal-content -->

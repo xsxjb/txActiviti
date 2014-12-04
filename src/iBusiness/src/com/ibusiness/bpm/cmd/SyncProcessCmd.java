@@ -91,13 +91,6 @@ public class SyncProcessCmd implements Command<Void> {
         }
         if (null == bpmProcess) {
             return null;
-//            bpmProcess = new BpmProcess();
-//            bpmProcess.setId(UUID.randomUUID().toString());
-//            bpmProcess.setPackageName("test");
-//            bpmProcess.setFlowName(bpmProcessVersion.getBpmProsessKey());
-//            bpmProcess.setFlowTitle(processDefinitionEntity.getName());
-//            bpmProcess.setVersionId(bpmProcessVersion.getId());
-//            bpmProcessDao.save(bpmProcess);
         } else {
             bpmProcess.setVersionId(bpmProcessVersion.getId());
             bpmProcessDao.save(bpmProcess);
