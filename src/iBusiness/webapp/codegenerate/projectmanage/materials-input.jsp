@@ -37,7 +37,7 @@
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-materialtypeno">分类编号:</label>
                               <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">    <select id="code-materialtypeno" name="materialtypeno" class="form-control" >          <option value="" >请选择</option>        <c:forEach items="${materialtypenoItems}" var="item">          <option value="${item.key}" ${item.key==model.materialtypeno? 'selected':''} >${item.value}</option>        </c:forEach>    </select></div>
+                                      <div class="col-lg-3">    <select id="code-materialtypeno" name="materialtypeno" class="form-control required" >          <option value="" >请选择</option>        <c:forEach items="${materialtypenoItems}" var="item">          <option value="${item.key}" ${item.key==model.materialtypeno? 'selected':''} >${item.value}</option>        </c:forEach>    </select></div>
                           </div>
                       <!-- 是否显示 -->
                           <div class="form-group">
