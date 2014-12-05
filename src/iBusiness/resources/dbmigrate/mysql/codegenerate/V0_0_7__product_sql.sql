@@ -1,4 +1,15 @@
 /*==============================================================*/
+/* 仓库信息表   */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_WAREHOUSE;
+CREATE TABLE IB_WAREHOUSE (
+  ID                                   varchar(64) NOT NULL,
+  WAREHOUSENO           varchar(64) DEFAULT NULL,
+  WAREHOUSENAME      varchar(128) DEFAULT NULL,
+  WAREHOUSELOCATION varchar(128) DEFAULT NULL,
+  PRIMARY KEY (ID)
+) ENGINE=INNODB;
+/*==============================================================*/
 /* 物料分类信息表   */
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_MATERIALS_TYPE;

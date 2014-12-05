@@ -70,7 +70,7 @@
         <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
-		       <form id="mainForm" method="post" action="project_approval-complete.do?flowId=${flowId}" class="form-horizontal">
+		       <form id="mainForm" method="post" action="project_approval-complete.do" class="form-horizontal">
 				   <input type="hidden" name="flowId" value="${flowId}">
 				   <c:if test="${model != null}">
 				       <input type="hidden" name="id" value="${model.id}">

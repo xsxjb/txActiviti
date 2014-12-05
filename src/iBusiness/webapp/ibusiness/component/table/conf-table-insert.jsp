@@ -83,7 +83,7 @@
 				      <button id="submitButton" class="btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
 				      <button type="button" onclick="history.back();" class="btn btn-default btn-sm a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 				      <c:if test="${model != null}">
-				          <a href="conf-table-data-synchronization.do?packageName=${packageName}&tableName=${model.tableName}" class="btn btn-default btn-sm">表结构同步</a>
+				          <a href="conf-table-data-synchronization.do?packageName=${packageName}&tableName=${model.tableName}&isBpmTable=${isBpmTable}" class="btn btn-default btn-sm">表结构同步</a>
 				      </c:if>
 				    </div>
 				  </div>

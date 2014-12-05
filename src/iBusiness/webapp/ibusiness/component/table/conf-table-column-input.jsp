@@ -49,9 +49,8 @@
 				      <div class="col-lg-3">
 							 <select class="form-control"  id="table-columnType" name="columnType" >
 							      <option ${beanInfo.columnType == "VARCHAR" ? 'selected' : ''} >VARCHAR</option>
-							      <option ${beanInfo.columnType == "INT" ? 'selected' : ''} >INT</option>
-							      <option ${beanInfo.columnType == "DOUBLE" ? 'selected' : ''} >DOUBLE</option>
 							      <option ${beanInfo.columnType == "NUMBER" ? 'selected' : ''} >NUMBER</option>
+							      <option ${beanInfo.columnType == "DATE" ? 'selected' : ''} >DATE</option>
 							 </select>
 				       </div>
 				   </div>

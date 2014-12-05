@@ -293,7 +293,7 @@ public class TableController {
      */
     @SuppressWarnings("unchecked")
     @RequestMapping("conf-table-data-synchronization")
-    public String confTableSynchronization(@RequestParam("packageName") String packageName, @RequestParam("tableName") String tableName) {
+    public String confTableSynchronization(@RequestParam("packageName") String packageName, @RequestParam("tableName") String tableName, @RequestParam("isBpmTable") String isBpmTable) {
         // 在数据库中创建一张业务表
         String tableColumnsSql = "from ConfTableColumns where tableName=?";
         List<ConfTableColumns> tcList = confTableColumnsService.find(tableColumnsSql, tableName);
@@ -303,17 +303,19 @@ public class TableController {
             // 2.创建表
             String createSql ="CREATE TABLE " + tableName + " (";
             for (ConfTableColumns bean : tcList) {
-                createSql = createSql + bean.getColumnValue() + " " + bean.getColumnType();
-                if (!CommonUtils.isNull(bean.getColumnSize())) {
-                    createSql = createSql + "(" + bean.getColumnSize() + ")";
-                }
+                // 
+                String columnType = TableCommonUtil.getInstance().getColumnTypeByDataType(bean.getColumnType(), bean.getColumnSize());
+                createSql = createSql + bean.getColumnValue() + " " + columnType;
                 createSql = createSql + ", ";
             };
             createSql = createSql +  " PRIMARY KEY (ID))";
             createTable(createSql);
         }
-        
-        return "redirect:/table/conf-table-list.do?packageName="+packageName;
+        if ("1".equals(isBpmTable)) {
+            return "redirect:/table/conf-bpmTable-list.do?packageName="+packageName;
+        } else {
+            return "redirect:/table/conf-table-list.do?packageName="+packageName;
+        }
     }
     /**
      * 在数据库中创建一张业务表
@@ -339,16 +341,16 @@ public class TableController {
      */
     @SuppressWarnings("unchecked")
     private void alterTableColumn(ConfTableColumns bean) {
+        // 根据不同数据库生成不同 字段类型 TODO
+        String columnType = TableCommonUtil.getInstance().getColumnTypeByDataType(bean.getColumnType(), bean.getColumnSize());
+        
     	String defaultStr = "";
     	if (bean.getColumnType().indexOf("number") >= 0) {
 		    defaultStr = " default 0";
 	    }
     	// 插入数据列
 		if (CommonUtils.isNull(bean.getColumnValueOld())) {
-			String sql = "ALTER TABLE " + bean.getTableName() + " ADD " + bean.getColumnValue() + " " + bean.getColumnType();
-			if (!CommonUtils.isNull(bean.getColumnSize())) {
-				sql = sql + "(" + bean.getColumnSize() + ")";
-			}
+			String sql = "ALTER TABLE " + bean.getTableName() + " ADD " + bean.getColumnValue() + " " + columnType;
 			sql = sql + defaultStr;
 			if (0 == tableService.execute(sql)) {
 				return;
@@ -389,10 +391,7 @@ public class TableController {
 		    // 修改数据列类型
 			if (!bean.getColumnType().equals(bean.getColumnTypeOld())
 					|| (CommonUtils.isNull(bean.getColumnSize()) && !bean.getColumnSize().equals(bean.getColumnSizeOld()))) {
-				String sql = "ALTER TABLE " + bean.getTableName() + " MODIFY " + bean.getColumnValue() + " " + bean.getColumnType();
-				if (!CommonUtils.isNull(bean.getColumnSize())) {
-					sql = sql + "(" + bean.getColumnSize() + ")";
-				}
+				String sql = "ALTER TABLE " + bean.getTableName() + " MODIFY " + bean.getColumnValue() + " " + columnType;
 				if (0 == tableService.execute(sql)) {
 		            return;
 		        }

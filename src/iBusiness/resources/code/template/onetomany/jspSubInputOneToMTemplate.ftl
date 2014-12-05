@@ -49,7 +49,7 @@
 		                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
 	                                  </div>
 	                              </#if>
-                        <#if po_index%2 ==1>
+                        <#if po_index%2 ==1 || (po_index+1==columns?size)>
                             </div>
                         </#if>
 	                        

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ibusiness.common.config.ConfigProperties;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 
 /**
@@ -58,6 +59,41 @@ public class TableCommonUtil {
         // 非流程子表的预留字段
         sColumnsMap.put("ID", createTableColumn("ID","UUID主键",91,"VARCHAR","64","否"));
         sColumnsMap.put("PARENTID", createTableColumn("PARENTID","主表UUID",92,"VARCHAR","64","否"));
+    }
+    /**
+     * 根据数据类型生产字段类型
+     * @return
+     */
+    public String getColumnTypeByDataType(String columnType, String columnSize) {
+        // 去除空格
+        columnSize = columnSize.trim().replaceAll("，", ",");
+        // 文本类型
+        if ("VARCHAR".equals(columnType)) {
+            if ("MYSQL".equals(ConfigProperties.DATATYPE)) {
+                return "VARCHAR" + (!CommonUtils.isNull(columnSize)? ("(" + columnSize + ")") : "");
+            } else if ("ORACLE".equals(ConfigProperties.DATATYPE)) {
+                return "VARCHAR2" + (!CommonUtils.isNull(columnSize)? ("(" + columnSize + ")") : "");
+            }
+        } else if ("NUMBER".equals(columnType)) {
+            // 数值类型
+            if ("MYSQL".equals(ConfigProperties.DATATYPE)) {
+                if (!CommonUtils.isNull(columnSize) && columnSize.indexOf(",") > 0) {
+                    return "DOUBLE" + (!CommonUtils.isNull(columnSize)? ("(" + columnSize + ")") : "");
+                } else {
+                    return "INT" + (!CommonUtils.isNull(columnSize)? ("(" + columnSize + ")") : "");
+                }
+            } else if ("ORACLE".equals(ConfigProperties.DATATYPE)) {
+                return "NUMBER" + (!CommonUtils.isNull(columnSize)? ("(" + columnSize + ")") : "");
+            }
+        } else if ("DATE".equals(columnType)) {
+            // 日期类型
+            if ("MYSQL".equals(ConfigProperties.DATATYPE)) {
+                return "DATETIME";
+            } else if ("ORACLE".equals(ConfigProperties.DATATYPE)) {
+                return "DATE";
+            }
+        }
+        return "";
     }
     /**
      * 创建一个 表字段结构Bean 对象

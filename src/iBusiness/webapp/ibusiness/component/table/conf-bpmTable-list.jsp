@@ -56,7 +56,7 @@
 						<c:forEach items="${tableInfoList}" var="item">
 						    <tr>
 							    <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-								<td>${item.tableName}</td>
+								<td><a href="conf-table-insert.do?packageName=${packageName}&tableName=${item.tableName}&isBpmTable=1" class="a-update">${item.tableName}</a></td>
 								<td>${item.tableNameComment}</td>
 								<td>${item.packageName}</td>
 								<td>${item.id}</td>

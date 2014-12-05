@@ -28,31 +28,24 @@
     <div class="panel panel-default col-lg-10"> 
         <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
         <div class="panel-body">
-                <form id="cgForm" method="post" action="${entityName?uncap_first}-save.do" class="form-horizontal">
-                  <c:if test="${'$' + '{model != null}'}">
-                      <input id="code_id" type="hidden" name="id" value="${'$' + '{model.id}'}">
+                <form id="cgForm" method="post" action="warehouse-save.do" class="form-horizontal">
+                  <c:if test="${model != null}">
+                      <input id="code_id" type="hidden" name="id" value="${model.id}">
                   </c:if>
                   
-                  <#list columns as po>
-                      <#if po.fcDisplay="1">
-                        <#if po_index%2==0>
                           <div class="form-group">
-                        </#if>
-                              <label class="col-lg-2 control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
+                              <label class="col-lg-2 control-label" for="code-warehouseno">仓库编号:</label>
                                 <!-- 是否可编辑 -->
-                                <#if "1"=po.fcEdit>
-                                      ${po.jspTagInfo}
-                                <#else>
-	                              <div class="col-lg-4">
-	                                  <label>${'$' + '{model.${po.fieldName}}'}</label>
-	                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
-                                  </div>
-                              </#if>
-                          <#if po_index%2 ==1 || (po_index+1==columns?size)>
+                                      <div class="col-lg-3">   <input id="code-warehouseno" type="text" name="warehouseno" value="${model.warehouseno}" class="text required" ></div>
+                              <label class="col-lg-2 control-label" for="code-warehousename">仓库名称:</label>
+                                <!-- 是否可编辑 -->
+                                      <div class="col-lg-3">   <input id="code-warehousename" type="text" name="warehousename" value="${model.warehousename}" class="text required" ></div>
                             </div>
-                          </#if>
-                        </#if>
-                  </#list>
+                          <div class="form-group">
+                              <label class="col-lg-2 control-label" for="code-warehouselocation">仓库位置:</label>
+                                <!-- 是否可编辑 -->
+                                      <div class="col-lg-6">    <textarea class="form-control" id="code-warehouselocation" name="warehouselocation" rows="1" >${model.warehouselocation}</textarea></div>
+                            </div>
                   
                   <div class="form-group">
 	                  <div class="col-lg-10 col-lg-offset-2">

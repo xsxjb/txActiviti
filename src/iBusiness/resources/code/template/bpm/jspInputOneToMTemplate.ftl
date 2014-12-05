@@ -70,7 +70,7 @@
         <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
-		       <form id="mainForm" method="post" action="${entityName?uncap_first}-complete.do?flowId=${'$' + '{flowId}'}" class="form-horizontal">
+		       <form id="mainForm" method="post" action="${entityName?uncap_first}-complete.do" class="form-horizontal">
 				   <input type="hidden" name="flowId" value="${'$' + '{flowId}'}">
 				   <c:if test="${'$' + '{model != null}'}">
 				       <input type="hidden" name="id" value="${'$' + '{model.id}'}">
@@ -95,7 +95,7 @@
 		                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
 	                                  </div>
 	                              </#if>
-                          <#if po_index%2 ==1>
+                          <#if po_index%2 ==1 || (po_index+1==columns?size)>
                             </div>
                           </#if>
 						 
