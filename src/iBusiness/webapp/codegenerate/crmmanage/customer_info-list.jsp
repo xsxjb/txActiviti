@@ -21,7 +21,8 @@
 		        'filter_LIKES_id': '${param.filter_LIKES_id}'
 		    },
 			selectedItemClass: 'selectedItem',
-			gridFormId: 'gridForm'
+			gridFormId: 'gridForm',
+			exportUrl: 'customer-export.do'
 		};
 
 		var table;
@@ -46,6 +47,8 @@
 	          <div id="search" class="content content-inner">
 				  <form name="cgForm" method="post" action="customer_info-list.do" class="form-inline">
 				    <div class="form-group">
+				        <label for="code_table_typename">客户名称:</label>
+	                    <input type="text" id="code_table_customername" name="filter_LIKES_customername" value="${param.filter_LIKES_customername}">
 					    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
 					</div>
 				 </form>
@@ -56,6 +59,11 @@
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='customer_info-input.do'">新建</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+			    <button class="btn btn-small btn-sm a-export" onclick="table.exportExcel()">导出Excel</button>
+			    <form id="msg-infoForm" method="post" action="customer-import.do" class="form-horizontal" enctype="multipart/form-data">
+				    <button class="btn btn-small btn-sm a-submit" type="submit">导入Excel</button>
+					<input id="msg-info_address" type="file" name="attachment" value=""  class="text required">
+				</form>
 			</div>
 			<div class="pull-right">
 			  每页显示

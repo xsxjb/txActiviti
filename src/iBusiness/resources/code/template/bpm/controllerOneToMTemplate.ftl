@@ -249,7 +249,7 @@ public class ${entityName}Controller {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-input.do?flowId=" + flowId + "&id=" + id;
     }
-        /**
+    /**
      * 删除一条流程信息
      * @param selectedItem
      * @param redirectAttributes
@@ -258,8 +258,12 @@ public class ${entityName}Controller {
     @RequestMapping("${entityName?uncap_first}-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
         List<${entityName}Entity> entitys = ${entityName?uncap_first}Service.findByIds(selectedItem);
+        // 实例化BPM流程共用类对象
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
         for (${entityName}Entity entity : entitys) {
             ${entityName?uncap_first}Service.remove(entity);
+            // 删除流程实例
+            bpmComBusiness.deleteProcessInstance(entity.getExecutionid());
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 

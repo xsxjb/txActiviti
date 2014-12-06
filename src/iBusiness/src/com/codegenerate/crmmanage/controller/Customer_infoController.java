@@ -1,29 +1,30 @@
 package com.codegenerate.crmmanage.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.ibusiness.common.model.ConfSelectItem;
-import com.ibusiness.common.service.CommonBusiness;
-import com.ibusiness.component.form.entity.ConfFormTableColumn;
-
-import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.common.page.PropertyFilter;
-import com.ibusiness.common.page.Page;
-import com.ibusiness.common.util.CommonUtils;
 
 import com.codegenerate.crmmanage.entity.Customer_infoEntity;
 import com.codegenerate.crmmanage.service.Customer_infoService;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
+import com.ibusiness.common.page.Page;
+import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
+import com.ibusiness.core.spring.MessageHelper;
 
 /**   
  * @Title: Controller
@@ -107,7 +108,56 @@ public class Customer_infoController {
 
         return "redirect:/customer_info/customer_info-list.do";
     }
-    
+    /**
+     * excel导出
+     * 
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("customer-export")
+    public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        page = customer_infoService.pagedQuery(page, propertyFilters);
+        List<Customer_infoEntity> beans = (List<Customer_infoEntity>) page.getResult();
+
+        TableModel tableModel = new TableModel();
+        // excel文件名
+        tableModel.setExcelName("客户信息列表");
+        // 列名
+        tableModel.addHeaders("id", "customerno", "customerstate", "customername", "customertype", "customeraddress",  "phone", "telephone", "salesmanager", "systemsales",  "infosource",   "relationshipstatus",   "province", "city", "customernature",   "superviseunit", "planinfo", "customerdemand",   "cooperationinfo",  "invoicename",  "bank", "accountno", "taxid", "invoiceuser",  "invoiceusertel",   "invoicemailunitname",  "mailaddress",  "invoiczip", "invoicaddressee",  "invoicphonetel",   "customeruser", "userposition", "usertelephone", "userphone", "useremail", "userofficeaddress", "userzip");
+        tableModel.setTableName("IB_CUSTOMER_INFO");
+        tableModel.setData(beans);
+        try {
+            new ExcelCommon().exportExcel(response, tableModel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * excel导入
+     * 
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("customer-import")
+    public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
+        try {
+            File file = new File("test.xls"); 
+            attachment.transferTo(file);
+            // 
+            TableModel tableModel = new TableModel();
+            // 列名
+            tableModel.addHeaders("id", "customerno", "customerstate", "customername", "customertype", "customeraddress",  "phone", "telephone", "salesmanager", "systemsales",  "infosource",   "relationshipstatus",   "province", "city", "customernature",   "superviseunit", "planinfo", "customerdemand",   "cooperationinfo",  "invoicename",  "bank", "accountno", "taxid", "invoiceuser",  "invoiceusertel",   "invoicemailunitname",  "mailaddress",  "invoiczip", "invoicaddressee",  "invoicphonetel",   "customeruser", "userposition", "usertelephone", "userphone", "useremail", "userofficeaddress", "userzip");
+            // 导入
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.crmmanage.entity.Customer_infoEntity");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/customer_info/customer_info-list.do";
+    }
     // ======================================================================
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {

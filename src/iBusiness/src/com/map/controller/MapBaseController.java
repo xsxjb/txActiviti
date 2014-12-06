@@ -132,7 +132,7 @@ public class MapBaseController {
         return json.toString();
     }
     /**
-     * 显示站点信息
+     * 显示客户信息
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -149,7 +149,7 @@ public class MapBaseController {
         return "0";
     }
     /**
-     * 显示站点信息
+     * 显示信息
      * @return
      */
     @RequestMapping("findPointInfoToDel")
@@ -179,7 +179,7 @@ public class MapBaseController {
         try {
             mapSite.setId(UUID.randomUUID().toString());
             mapSite.setSiteNo(mapSite.getSiteNo());
-            mapSite.setSiteNo(mapSite.getSiteName());
+            mapSite.setSiteName(mapSite.getSiteName());
             // 纬度
             mapSite.setLatitude(mapSite.getLatitude());
             // 经度
@@ -218,7 +218,7 @@ public class MapBaseController {
             MapSite mapSite = new MapSite();
             mapSite.setId(UUID.randomUUID().toString());
             mapSite.setSiteNo(siteId);
-            mapSite.setSiteNo(siteName);
+            mapSite.setSiteName(siteName);
             // 纬度
             mapSite.setLatitude(pointLatitude);
             // 经度

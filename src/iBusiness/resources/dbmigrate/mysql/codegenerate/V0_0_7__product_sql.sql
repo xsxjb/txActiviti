@@ -48,7 +48,7 @@ CREATE TABLE IB_PRODUCTTYPE (
   PRIMARY KEY (ID)
 ) ENGINE=INNODB;
 /*==============================================================*/
-/* 产成品表   */
+/*  产成品表  */
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_PRODUCT;
 CREATE TABLE IB_PRODUCT (
@@ -62,3 +62,44 @@ CREATE TABLE IB_PRODUCT (
   UNITPRICE                   double(12,2) ,
   PRIMARY KEY (ID)
 ) ENGINE=INNODB;
+/*==============================================================*/
+/*  原料入库表  */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_MATERIAL_IN;
+CREATE TABLE IB_MATERIAL_IN (
+  ID varchar(64) NOT NULL,
+  EXECUTIONID varchar(64) DEFAULT NULL,
+  ASSIGNEEUSER varchar(128) DEFAULT NULL,
+  DONEFLAG int(11) DEFAULT '0',
+  USERNAME varchar(128) DEFAULT NULL,
+  TASKTITLE varchar(256) DEFAULT NULL,
+  NODENAME varchar(128) DEFAULT NULL,
+  CREATEDATEBPM datetime DEFAULT NULL,
+  EVENTDATE datetime DEFAULT NULL,
+  SUPPLIERSNAME varchar(64) DEFAULT NULL,
+  WAREHOUSENO varchar(64) DEFAULT NULL,
+  WAREHOUSENAME varchar(64) DEFAULT NULL,
+  TOTALNUM int(10) DEFAULT NULL,
+  AMOUNT double(12,2) DEFAULT NULL,
+  AMOUNTBIG varchar(64) DEFAULT NULL,
+  REMARK varchar(512) DEFAULT NULL,
+  PRIMARY KEY (ID)
+) ENGINE=INNODB;
+/*==============================================================*/
+/*  原料入库信息子表  */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_MATERIAL_IN_S;
+CREATE TABLE IB_MATERIAL_IN_S (
+  ID varchar(64) NOT NULL,
+  PARENTID varchar(64) DEFAULT NULL,
+  MATERIALNO varchar(64) DEFAULT NULL,
+  MATERIALNAME varchar(128) DEFAULT NULL,
+  MATERIALMODEL varchar(64) DEFAULT NULL,
+  MATERIALUNIT varchar(16) DEFAULT NULL,
+  MATERIALNUM int(10) DEFAULT NULL,
+  AMOUNT double(12,2) DEFAULT NULL,
+  MANUFACTURENAME varchar(64) DEFAULT NULL,
+  REMARK varchar(512) DEFAULT NULL,
+  PRIMARY KEY (ID)
+) ENGINE=INNODB;
+

@@ -142,7 +142,7 @@ public class CodeBpmTagFactory {
         str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
         str = str + "  <div class=\"input-append datepicker date\">";
         str = str + "  <span class=\"add-on\">";
-        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
+        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" readonly >";
         str = str + "  </span>";
         str = str + "  </div>";
         str = str + "</c:if>";

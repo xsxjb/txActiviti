@@ -1,5 +1,5 @@
 /**
- * 初始化站点图标
+ * 初始化客户图标
  */
 function initTB() {
 	/** */
@@ -27,9 +27,9 @@ function initTB() {
 }
 
 /**
- * 准备添加站点
- * @param path 站点类型图片的路径
- * @param type 站点类型
+ * 准备添加客户
+ * @param path 客户类型图片的路径
+ * @param type 客户类型
  */
 function readyAddSite(path, tb_sn, type) {
 	$('#id-site-img').val(pathBase + path);
@@ -47,7 +47,7 @@ function readyAddSite(path, tb_sn, type) {
 }
 
 /**
- * 添加站点时鼠标移动事件
+ * 添加客户时鼠标移动事件
  * @param e
  */
 function mouseMoveEventForAddSite(e) {
@@ -68,7 +68,7 @@ function mouseMoveEventForAddSite(e) {
 }
 
 /**
- * 添加站点时鼠标点击事件(点击后需要弹出窗口进行站点添加)
+ * 添加客户时鼠标点击事件(点击后需要弹出窗口进行客户添加)
  * @param e
  */
 function clickEventForAddSite(e) {
@@ -112,7 +112,7 @@ AutoSizeFramedCloud = OpenLayers.Class(OpenLayers.Popup.FramedCloud, {'autoSize'
 
 
 /**
- * 添加站点图标
+ * 添加客户图标
  * @param o
  */
 function addSiteMarker(o) {
@@ -126,17 +126,17 @@ function addSiteMarker(o) {
 	var icon = new OpenLayers.Icon(o.icon, size, offset);
 	feature.data.icon = icon;
 	var marker = feature.createMarker();
-	//站点鼠标悬停
+	//客户鼠标悬停
 	marker.events.register("hover", feature, function() {
 		window.mouseMoverMarker = marker;
 		mouseEventForSite(feature, o.id, o.sitetype, o.siteid,o.sitetb,o.siteInfo,'hover');
 	});
-	//站点鼠标悬停
+	//客户鼠标悬停
 	marker.events.register("mouseout", feature, function() {
 		window.mouseMoverMarker = marker;
 		mouseEventForSite(feature, o.id, o.sitetype, o.siteid,o.sitetb,o.siteInfo,'mouseout');
 	});
-	//鼠标单击站点 
+	//鼠标单击客户 
 	marker.events.register('click', feature, function() {
         window.mouseMoverMarker = marker;
 		showInforToDel(o.siteid, o.sitetype);
@@ -171,7 +171,7 @@ function addSiteMarker(o) {
 }
 
 /**
- * 初始化站点,将所有有效的站点进行标注
+ * 初始化客户,将所有有效的客户进行标注
  */
 function initSites() {
 	/** */
@@ -194,14 +194,14 @@ function initSites() {
 }
 
 /**
- * 保存站点
+ * 保存客户
  */
 function saveSite() {
 	if ("" == document.getElementById("site_name1").value) {
-		$.messager.alert('提示', '站点名称不能为空！');
+		$.messager.alert('提示', '客户名称不能为空！');
 		return false;
 	} else if ("" == document.getElementById("site_id1").value) {
-		$.messager.alert('提示', '站点编号不能为空！');
+		$.messager.alert('提示', '客户编号不能为空！');
 		return false;
 	}else if(("J"==document.getElementById("tbtype1").value)&&( map.zoom>=7)){
 		$.messager.alert('提示', map.zoom+'请将地图图层设置为上数1、2级再进行该操作！');
@@ -230,7 +230,7 @@ function saveSite() {
 					clearSiteWindow();
 					window.moveMarker = null;
 					refreshSites(2);
-					//添加站点后 自动刷新页面
+					//添加客户后 自动刷新页面
 					location.reload();
 			}
 		}
@@ -239,8 +239,8 @@ function saveSite() {
 
 
 /**
- * 删除站点时，先显示站点信息
- * @param {Object} siteid 为站点编号
+ * 删除客户时，先显示客户信息
+ * @param {Object} siteid 为客户编号
  */
 function showInforToDel(siteid, sitetype) {
 	if ("P" == sitetype) {
@@ -274,8 +274,8 @@ function showInforToDel(siteid, sitetype) {
 						document.getElementById("site_id_del").value = json.siteNo;
 						document.getElementById("site_jd_del").value = json.longitude;
 						document.getElementById("site_wd_del").value = json.latitude;
-						if(!(null==json.ADDRDEL||"null"==json.ADDRDEL)){							
-						     document.getElementById("site_addr_del").value = json.ADDRDEL;
+						if(!(null==json.customeraddress||"null"==json.customeraddress)){							
+						     document.getElementById("site_addr_del").value = json.customeraddress;
 						 }
 						document.getElementById("site_unit_del").value = json.UNITDEL;
 						if(null==json.BZDEL||"null"==json.BZDEL){
@@ -289,9 +289,6 @@ function showInforToDel(siteid, sitetype) {
 						}else{
 						  imageInfor.innerHTML="<table style=\"width:100%\" border=0><tr><td align=\"center\">暂无关联图片！</td></tr></table>";
 						}
-				        
-						//机组信息
-						unitInfor.innerHTML="<table style=\"width:100%\" border=0><tr><td align=\"center\">暂无关联机组信息！</td></tr></table>";
 					}
 				});
 	}
@@ -348,7 +345,7 @@ function openNewPage(type, title, site) {
 			}
 		});
 	}else {
-		$.messager.alert('提示', '调用js方法进行操作提示:' + title + ',站点编号:' + site);
+		$.messager.alert('提示', '调用js方法进行操作提示:' + title + ',客户编号:' + site);
 		window.open('newPage.html');
 	}
 }
@@ -356,13 +353,13 @@ function openNewPage(type, title, site) {
 
 
 /**
- * 搜索站点
+ * 搜索客户
  */
 function searchSite() {
 	$('#id-window-search-site').css('display', 'block');
 	$('#id-window-search-site').window( {
 		modal : true,
-		title : '站点搜索',
+		title : '客户搜索',
 		iconCls : 'icon-search',
 		width : 550,
 		height : 400,
@@ -375,7 +372,7 @@ function searchSite() {
 }
 
 /**
- * 搜索站点表 带出站点相关信息
+ * 搜索客户表 带出客户相关信息
  * @memberOf {TypeName} 
  * @return {TypeName} 
  */
@@ -386,10 +383,10 @@ function queryTBSite() {
 		$('#id-grid-site').datagrid({
 		                url : encodeURI(url),
 						columns : [ [ 
-								              {field : 'customerNo', title : '标注编号', width : 90 },
-								              {field : 'customerName', title : '标注名称', width : 90 },
-								              {field : 'telephone', title : '所属单位', width : 100 },
-								              {field : 'address', title : '地址', width : 100 },
+								              {field : 'customerno', title : '标注编号', width : 90 },
+								              {field : 'customername', title : '标注名称', width : 90 },
+								              {field : 'telephone', title : '联系电话', width : 100 },
+								              {field : 'customeraddress', title : '地址', width : 100 },
 										      {field : 'id', title : '操作', width : 80, formatter : function(id) {
 										    	           var ret = "<span style='color:red'><input name='aa' value='选择' onClick='javascript: showInfor1(\"" + id + "\")' type='button' /></span>"; 
 										    	           return ret;
@@ -507,14 +504,15 @@ function showInfor1( fkid){
 	      document.getElementById("tbtype1").value = $('#id-site-type').val();
 	 	 //获得关联的ID号，	
 	      document.getElementById("fkid1").value = fkid;
-	 } else if ("Z"==$('#id-site-type').val()){
+	 } else if ("Z"==$('#id-site-type').val()){ 
+		 // 根据ID取得客户信息
 		 	$.ajax({
 			    url:pathBase+'customer/queryCustomerById.do?id='+fkid,
 			    dataType:'json',
 				success:function(json){
-				      document.getElementById("site_name1").value = json.customerName;
-				      document.getElementById("site_id1").value = json.customerNo;
-				      document.getElementById("site_addr1").value = json.address;
+				      document.getElementById("site_name1").value = json.customername;
+				      document.getElementById("site_id1").value = json.customerno;
+				      document.getElementById("site_addr1").value = json.customeraddress;
 				      document.getElementById("site_unit1").value = json.telephone;	       
 			   }
 		   });

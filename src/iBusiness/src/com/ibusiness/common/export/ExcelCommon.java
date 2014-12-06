@@ -208,7 +208,10 @@ public class ExcelCommon {
                 colName = colName + ")";
                 colValue = colValue + ")";
 //                ReflectUtils.setMethodValue(entity, "id", UUID.randomUUID().toString());
-                getCommonBaseService().remove(entity);
+                // 先判断,如果存在就删除 TODO
+//                if (false) {
+//                    getCommonBaseService().remove(entity);
+//                }
                 getCommonBaseService().saveInsert(entity);
 //                String sql = "insert into "+tableModel.getTableName()+colValue+" values " + colValue;
 //                getCommonBaseService().getJdbcTemplate().update(sql);

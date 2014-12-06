@@ -1,4 +1,4 @@
-package com.codegenerate.projectmanage.controller;
+package com.codegenerate.productmanage.controller;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -32,40 +32,40 @@ import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.security.util.SpringSecurityUtils;
 import com.ibusiness.base.user.entity.UserBase;
 
-import com.codegenerate.projectmanage.entity.Project_approvalEntity;
-import com.codegenerate.projectmanage.service.Project_approvalService;
-import com.codegenerate.projectmanage.entity.Project_product_sEntity;
-import com.codegenerate.projectmanage.service.Project_product_sService;
+import com.codegenerate.productmanage.entity.Material_inEntity;
+import com.codegenerate.productmanage.service.Material_inService;
+import com.codegenerate.productmanage.entity.Material_in_sEntity;
+import com.codegenerate.productmanage.service.Material_in_sService;
 
 /**   
  * @Title: Controller
- * @Description: 项目立项表
+ * @Description: 原料入库表
  * @author JiangBo
  *
  */
 @Controller
-@RequestMapping("project_approval")
-public class Project_approvalController {
+@RequestMapping("material_in")
+public class Material_inController {
 
     private MessageHelper messageHelper;
-    private Project_approvalService project_approvalService;
-        private Project_product_sService project_product_sService;
+    private Material_inService material_inService;
+        private Material_in_sService material_in_sService;
    /**
      * 列表
      */
-    @RequestMapping("project_approval-list")
+    @RequestMapping("material_in-list")
     public String list(@ModelAttribute Page page, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "flowType", required = false) String flowType, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQI_doneflag", flowType));
         propertyFilters.add(new PropertyFilter("EQS_assigneeuser", SpringSecurityUtils.getCurrentUserId()));
         // 根据条件查询数据
-        page = project_approvalService.pagedQuery(page, propertyFilters);
+        page = material_inService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("flowId", flowId);
         model.addAttribute("flowType", flowType);
         // 返回JSP
-        return "codegenerate/projectmanage/project_approval-list.jsp";
+        return "codegenerate/productmanage/material_in-list.jsp";
     }
     /**
      * 新建一条流程, 进入流程表单信息页面
@@ -73,14 +73,14 @@ public class Project_approvalController {
      * @param model
      * @return
      */
-    @RequestMapping("project_approval-input")
+    @RequestMapping("material_in-input")
     public String input(@ModelAttribute Page page, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "id", required = false) String id, Model model) {
-        Project_approvalEntity entity = null;
+        Material_inEntity entity = null;
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         if (!CommonUtils.isNull(id)) {
-            entity = project_approvalService.get(id);
+            entity = material_inService.get(id);
         } else {
-            entity = new Project_approvalEntity();
+            entity = new Material_inEntity();
             
             // 发起一个流程, 设置当前用户执行
             String userId = SpringSecurityUtils.getCurrentUserId();
@@ -96,7 +96,7 @@ public class Project_approvalController {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
-            project_approvalService.insert(entity);
+            material_inService.insert(entity);
         }
         model.addAttribute("model", entity);
         
@@ -104,7 +104,7 @@ public class Project_approvalController {
         Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
         String nodeCode = task.getTaskDefinitionKey();
         // 根据流程和节点信息取得 流程指定节点的字段信息
-        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, entity.getExecutionid(), nodeCode, Project_approvalEntity.class);
+        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, entity.getExecutionid(), nodeCode, Material_inEntity.class);
         model.addAttribute("nodeColumsMap", json);
         
         // 子表信息
@@ -112,7 +112,7 @@ public class Project_approvalController {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(map);
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
-	        page = project_product_sService.pagedQuery(page, propertyFilters);
+	        page = material_in_sService.pagedQuery(page, propertyFilters);
 	        model.addAttribute("page", page);
         
         // 流程ID
@@ -124,30 +124,30 @@ public class Project_approvalController {
         model.addAttribute("userId", SpringSecurityUtils.getCurrentUserId());
         
         // 在controller中设置页面控件用的数据
-        return "codegenerate/projectmanage/project_approval-input.jsp";
+        return "codegenerate/productmanage/material_in-input.jsp";
     }
     
     /**
      * 子表新建
      */
-    @RequestMapping("project_product_s-input")
-    public String project_product_sInput(@RequestParam(value = "flowId", required = false) String flowId, @RequestParam("id") String id, @RequestParam("subId") String subId, Model model) {
-        Project_product_sEntity entity = project_product_sService.get(subId);
+    @RequestMapping("material_in_s-input")
+    public String material_in_sInput(@RequestParam(value = "flowId", required = false) String flowId, @RequestParam("id") String id, @RequestParam("subId") String subId, Model model) {
+        Material_in_sEntity entity = material_in_sService.get(subId);
         model.addAttribute("model", entity);
         model.addAttribute("parentid", id);
         model.addAttribute("flowId", flowId);
         
         // 取得主表中的 executionid
-        Project_approvalEntity mainEntity = project_approvalService.get(id);
+        Material_inEntity mainEntity = material_inService.get(id);
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         // 取得当前流程节点信息
         Task task = bpmComBusiness.getTaskIdByExecutionId(mainEntity.getExecutionid());
         String nodeCode = task.getTaskDefinitionKey();
         // 根据流程和节点信息取得 流程指定节点的字段信息
-        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, mainEntity.getExecutionid(), nodeCode, Project_product_sEntity.class);
+        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, mainEntity.getExecutionid(), nodeCode, Material_in_sEntity.class);
         model.addAttribute("nodeColumsMap", json);
         
-        return "codegenerate/projectmanage/project_product_s-input.jsp";
+        return "codegenerate/productmanage/material_in_s-input.jsp";
     }
     /**
      * 办理
@@ -155,11 +155,23 @@ public class Project_approvalController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("project_approval-complete")
-    public String completeTask(@ModelAttribute Project_approvalEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("material_in-complete")
+    public String completeTask(@ModelAttribute Material_inEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
+        String executionId = null;
         // 
-        if (!CommonUtils.isNull(entity.getExecutionid())) {
+        if (CommonUtils.isNull(entity.getExecutionid())) {
+            // 启动流程, 设置执行实例ID
+            executionId = bpmComBusiness.flowStart(flowId, userId);
+            entity.setExecutionid(executionId);
+            // 设置流程实例信息=========================
+            Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
+            entity.setCreatedatebpm(task.getCreateTime());
+            entity.setNodename(task.getName());
+            entity.setAssigneeuser(userId);
+            entity.setUsername(CommonBusiness.getInstance().getUserBean(userId).getDisplayName());
+            entity.setDoneflag(0);
+        } else {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
             // 办理流程
             Map<String, Object> map = new HashMap<String, Object>();
@@ -184,24 +196,24 @@ public class Project_approvalController {
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
             id = entity.getId();
-            project_approvalService.insert(entity);
+            material_inService.insert(entity);
         } else {
-            project_approvalService.update(entity);
+            material_inService.update(entity);
         }
         // 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "办理成功");
-        return "redirect:/project_approval/project_approval-list.do?flowType=0&flowId=" + flowId;
+        return "redirect:/material_in/material_in-list.do?flowType=0&flowId=" + flowId;
     }
     /**
      * 回退功能
      */
-    @RequestMapping("project_approval-rollback")
+    @RequestMapping("material_in-rollback")
     public String rollback(@RequestParam("executionId") String executiond, @RequestParam("flowId") String flowId) {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         Task task = bpmComBusiness.getTaskIdByExecutionId(executiond);
         
         new BpmComBusiness().rollback(task.getId());
-        return "redirect:/project_approval/project_approval-list.do?flowType=0&flowId=" + flowId;
+        return "redirect:/material_in/material_in-list.do?flowType=0&flowId=" + flowId;
     }
     /**
      * 草稿
@@ -209,70 +221,70 @@ public class Project_approvalController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("project_approval-save-draft")
-    public String saveDraft(@ModelAttribute Project_approvalEntity entity, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("material_in-save-draft")
+    public String saveDraft(@ModelAttribute Material_inEntity entity, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         // 再进行数据复制
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
-            project_approvalService.insert(entity);
+            material_inService.insert(entity);
             id = entity.getId();
         } else {
-            project_approvalService.update(entity);
+            material_inService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/project_approval/project_approval-input.do?flowId=" + flowId + "&id=" + id;
+        return "redirect:/material_in/material_in-input.do?flowId=" + flowId + "&id=" + id;
     }
-    /**
+        /**
      * 删除一条流程信息
      * @param selectedItem
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("project_approval-remove")
+    @RequestMapping("material_in-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
-        List<Project_approvalEntity> entitys = project_approvalService.findByIds(selectedItem);
+        List<Material_inEntity> entitys = material_inService.findByIds(selectedItem);
         // 实例化BPM流程共用类对象
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
-        for (Project_approvalEntity entity : entitys) {
-            project_approvalService.remove(entity);
+        for (Material_inEntity entity : entitys) {
+            material_inService.remove(entity);
             // 删除流程实例
             bpmComBusiness.deleteProcessInstance(entity.getExecutionid());
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/project_approval/project_approval-list.do?flowType=0&flowId=" + flowId;
+        return "redirect:/material_in/material_in-list.do?flowType=0&flowId=" + flowId;
     }
     
     /**
      * 子表保存
      */
-    @RequestMapping("project_product_s-save")
-    public String subSave(@ModelAttribute Project_product_sEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("material_in_s-save")
+    public String subSave(@ModelAttribute Material_in_sEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, RedirectAttributes redirectAttributes) throws Exception {
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             id = UUID.randomUUID().toString();
             entity.setId(id);
             entity.setParentid(parentid);
-            project_product_sService.insert(entity);
+            material_in_sService.insert(entity);
         } else {
-            project_product_sService.update(entity);
+            material_in_sService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/project_approval/project_approval-input.do?flowId=" + flowId + "&id=" + entity.getParentid();
+        return "redirect:/material_in/material_in-input.do?flowId=" + flowId + "&id=" + entity.getParentid();
     }
     /**
      * 子表删除
      */
-    @RequestMapping("project_product_s-remove")
+    @RequestMapping("material_in_s-remove")
     public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
-        List<Project_product_sEntity> entitys = project_product_sService.findByIds(selectedItem);
-        for (Project_product_sEntity entity : entitys) {
-            project_product_sService.remove(entity);
+        List<Material_in_sEntity> entitys = material_in_sService.findByIds(selectedItem);
+        for (Material_in_sEntity entity : entitys) {
+            material_in_sService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-        return "redirect:/project_approval/project_approval-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
+        return "redirect:/material_in/material_in-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
     }
 
     /**
@@ -281,9 +293,9 @@ public class Project_approvalController {
      * @param response
      * @throws Exception
      */
-    @RequestMapping("project_approval-graph")
+    @RequestMapping("material_in-graph")
     public void graphProcessDefinition(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
-        Project_approvalEntity entity = project_approvalService.get(id);
+        Material_inEntity entity = material_inService.get(id);
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         if (CommonUtils.isNull(entity.getExecutionid())) {
             return;
@@ -303,11 +315,11 @@ public class Project_approvalController {
         this.messageHelper = messageHelper;
     }
     @Resource
-    public void setProject_approvalService(Project_approvalService project_approvalService) {
-        this.project_approvalService = project_approvalService;
+    public void setMaterial_inService(Material_inService material_inService) {
+        this.material_inService = material_inService;
     }
         @Resource
-	    public void setProject_product_sService(Project_product_sService project_product_sService) {
-	        this.project_product_sService = project_product_sService;
+	    public void setMaterial_in_sService(Material_in_sService material_in_sService) {
+	        this.material_in_sService = material_in_sService;
 	    }
 }

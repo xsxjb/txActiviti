@@ -61,7 +61,7 @@
 			   <c:if test="${model == null || model.password == null}">
 					<div class="form-group">
 					    <label class="col-lg-2 control-label" for="user-base_password"><spring:message code="user.user.input.password" text="密码"/>:</label>
-						 <input id="user-base_password" type="password" name="password" class="text required" maxlength="10">
+						 <input id="user-base_password" type="password" name="password" class="text required" maxlength="20">
 					 </div>
 					 <div class="form-group">
 					    <label class="col-lg-2 control-label" for="user-base_confirmPassword"><spring:message code="user.user.input.confirmpassword" text="验证密码"/>:</label>

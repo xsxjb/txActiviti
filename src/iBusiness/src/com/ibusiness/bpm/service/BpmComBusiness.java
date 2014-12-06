@@ -438,6 +438,20 @@ public class BpmComBusiness {
         }
         return xml;
     }
+    /**
+     * 删除未结束流程
+     */
+    public void deleteProcessInstance(String processInstanceId) {
+        getProcessEngine().getRuntimeService().deleteProcessInstance(processInstanceId,"");
+        // (顺序不能换) 
+        getProcessEngine().getHistoryService().deleteHistoricProcessInstance(processInstanceId);
+    }
+    /**
+     * 删除已结束流程
+     */
+    public void deleteHistoricProcessInstance(String processInstanceId) {
+        getProcessEngine().getHistoryService().deleteHistoricProcessInstance(processInstanceId);
+    }
     // ==============================================================
     /**
      * 取得流程管理表DAO对象
