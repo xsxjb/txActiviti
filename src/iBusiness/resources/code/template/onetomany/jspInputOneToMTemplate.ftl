@@ -21,6 +21,9 @@
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm'
+			<#list subTab as sub>
+			,exportUrl: '${sub.entityName?uncap_first}-export.do'
+			</#list>
 		};
 
 		var table;
@@ -48,6 +51,15 @@
 		        errorClass: 'validate-error'
 		    });
 		})
+		
+		<#if  confForm.isImportExport=1 >
+		// 导入excel
+		<#list subTab as sub>
+		function import${sub.entityName?uncap_first}Excel(){
+			 $("#${sub.entityName?uncap_first}excelForm").submit();
+		}
+		</#list>
+	    </#if>
     </script>
   </head>
   <body>
@@ -99,6 +111,16 @@
 			    <div class="pull-left">
 				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=&flowId=${'$' + '{flowId}'}'">新建</button>
 				    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+			    <#if  confForm.isExcelExport=1 >
+				    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
+				</#if>
+			    <#if  confForm.isImportExport=1 >
+				    <button class="btn btn-default btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
+				    <form id="${sub.entityName?uncap_first}excelForm" method="post" action="${sub.entityName?uncap_first}-importExcel.do?parentid=${'$' + '{model.id}'}" class="form-horizontal" enctype="multipart/form-data">
+	                    <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="import${sub.entityName?uncap_first}Excel()"> 
+	                </form>
+	            </#if>
+	            
 				</div>
 				<div class="pull-right">
 				  每页显示

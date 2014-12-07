@@ -21,7 +21,8 @@
 		        'filter_LIKES_id': '${"$" + "{param.filter_LIKES_id}"}'
 		    },
 			selectedItemClass: 'selectedItem',
-			gridFormId: 'gridForm'
+			gridFormId: 'gridForm',
+	        exportUrl: '${entityName?uncap_first}-export.do'
 		};
 
 		var table;
@@ -31,6 +32,13 @@
 		    table.configPageInfo('.m-page-info');
 		    table.configPageSize('.m-page-size');
 		});
+		
+    <#if  confForm.isImportExport=1 >
+		// 导入excel
+		function importExcel(){
+			 $("#msgInfoForm").submit();
+		}
+	</#if>
     </script>
   </head>
 
@@ -64,6 +72,16 @@
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${entityName?uncap_first}-input.do'">新建</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+            <#if  confForm.isExcelExport=1 >
+			    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
+			</#if>
+		    <#if  confForm.isImportExport=1 >
+			    <button class="btn btn-default btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
+			    <form id="msgInfoForm" method="post" action="${entityName?uncap_first}-importExcel.do" class="form-horizontal" enctype="multipart/form-data">
+                    <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="importExcel()"> 
+                </form>
+            </#if>
+            
 			</div>
 			<div class="pull-right">
 			  每页显示

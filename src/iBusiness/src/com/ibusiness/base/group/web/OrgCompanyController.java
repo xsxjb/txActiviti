@@ -130,7 +130,7 @@ public class OrgCompanyController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("公司信息列表");
+        tableModel.setExcelName("公司信息列表"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("id", "name", "status", "descn", "scopeId");
         tableModel.setTableName("ib_company");
@@ -148,7 +148,7 @@ public class OrgCompanyController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("org-company-import-export")
+    @RequestMapping("org-company-importExcel")
     public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
         
         try {

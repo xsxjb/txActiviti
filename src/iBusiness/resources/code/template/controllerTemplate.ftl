@@ -5,12 +5,18 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import java.io.File;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.common.model.ConfSelectItem;
@@ -112,7 +118,48 @@ public class ${entityName}Controller {
 
         return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do";
     }
-    
+    /**
+     * excel导出
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("${entityName?uncap_first}-export")
+    public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
+        List<${entityName}Entity> beans = (List<${entityName}Entity>) page.getResult();
+
+        TableModel tableModel = new TableModel();
+        // excel文件名
+        tableModel.setExcelName("${ftl_description}"+CommonUtils.getInstance().getCurrentDateTime());
+        // 列名
+        tableModel.addHeaders(<#list originalColumns as po><#if po_index!=0>, </#if>"${po.fieldName}"</#list>);
+        tableModel.setTableName("${tableName}");
+        tableModel.setData(beans);
+        try {
+            new ExcelCommon().exportExcel(response, tableModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * excel导入
+     */
+    @RequestMapping("${entityName?uncap_first}-importExcel")
+    public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
+        try {
+            File file = new File("test.xls"); 
+            attachment.transferTo(file);
+            // 
+            TableModel tableModel = new TableModel();
+            // 列名
+            tableModel.addHeaders(<#list originalColumns as po><#if po_index!=0>, </#if>"${po.fieldName}"</#list>);
+            // 导入
+            new ExcelCommon().uploadExcel(file, tableModel, "${bussiPackage}.${entityPackage}.entity.${entityName}Entity");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do";
+    }
     // ======================================================================
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {

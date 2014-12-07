@@ -17,10 +17,12 @@
 		    orderBy: '${page.orderBy == null ? '' : page.orderBy}',
 		    asc: ${page.asc},
 		    params: {
-		        'id': '${model.id}'
+		        'id': '${model.id}',
+		        'flowId':'${flowId}'
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm'
+			,exportUrl: 'permission_s-export.do'
 		};
 
 		var table;
@@ -48,6 +50,11 @@
 		        errorClass: 'validate-error'
 		    });
 		})
+		
+		// 导入excel
+		function importpermission_sExcel(){
+			 $("#permission_sexcelForm").submit();
+		}
     </script>
   </head>
   <body>
@@ -69,7 +76,7 @@
         <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
-		       <form id="mainForm" method="post" action="permission-save-draft.do?flowId=${flowId}" class="form-horizontal">
+		       <form id="mainForm" method="post" action="permission-complete.do" class="form-horizontal">
 				   <input type="hidden" name="flowId" value="${flowId}">
 				   <c:if test="${model != null}">
 				       <input type="hidden" name="id" value="${model.id}">
@@ -79,12 +86,12 @@
 				       <input type="hidden" name="nodename" value="${model.nodename}">
 				       <input type="hidden" name="doneflag" value="${model.doneflag}">
 				   </c:if>
-					       <!-- 是否显示 -->
-						   <div class="form-group">
+                           <div class="form-group">
 							      <label class="control-label  col-lg-2" for="code-remark">备注:</label>
 							      <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">  <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" ></c:if><c:if test="${nodeColumsMap.remark.fcEdit!='1'}">  <label>${model.remark}</label>  <input type="hidden" name="remark" value="${model.remark}"></c:if>
-							</div>
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
+                            </div>
+						 
 					
 					<!--  选择下一节点办理人弹出层  -->
 				    <div id="nextTaskUserDiv" class="modal fade" tabindex="-1" style="top:20%;" >
@@ -108,7 +115,7 @@
 						                </div>
 						           </div>
 						           <div class="modal-footer">
-						                    <button class="btn btn-default btn-sm" onclick="mainFormSubmit('permission-complete.do')">办理</button>
+						                    <button class="btn btn-default btn-sm a-insert">办理</button>
 						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
 						           </div>
 					            </div><!-- /.modal-content -->
@@ -124,6 +131,12 @@
 			    <div class="pull-left">
 				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='permission_s-input.do?id=${model.id}&subId=&flowId=${flowId}'">新建</button>
 				    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+				    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
+				    <button class="btn btn-default btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
+				    <form id="permission_sexcelForm" method="post" action="permission_s-importExcel.do?flowId=${flowId}&parentid=${model.id}" class="form-horizontal" enctype="multipart/form-data">
+	                    <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="importpermission_sExcel()"> 
+	                </form>
+	            
 				</div>
 				<div class="pull-right">
 				  每页显示

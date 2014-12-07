@@ -8,6 +8,10 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,7 +74,7 @@ public class ${entityName}Controller {
      * @return
      */
     @RequestMapping("${entityName?uncap_first}-input")
-    public String input(@ModelAttribute Page page, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "id", required = false) String id, Model model) {
+    public String input(@ModelAttribute Page page,  @RequestParam(value = "id", required = false) String id, Model model) {
         ${entityName}Entity entity = null;
         if (!CommonUtils.isNull(id)) {
             entity = ${entityName?uncap_first}Service.get(id);
@@ -87,9 +91,6 @@ public class ${entityName}Controller {
 	        page = ${sub.entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
 	        model.addAttribute("page", page);
        </#list>
-        
-        // 流程ID
-        model.addAttribute("flowId", flowId);
         
         // 在controller中设置页面控件用的数据
         <#list columns as po>
@@ -149,7 +150,49 @@ public class ${entityName}Controller {
             ${sub.entityName?uncap_first}Service.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-input.do?flowId=" + flowId + "&id=" + entity.getParentid();
+        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-input.do?id=" + entity.getParentid();
+    }
+    /**
+     * 子表 excel导出
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("${sub.entityName?uncap_first}-export")
+    public void excel${sub.entityName}Export(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        page = ${sub.entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
+        List<${sub.entityName}Entity> beans = (List<${sub.entityName}Entity>) page.getResult();
+
+        TableModel tableModel = new TableModel();
+        // excel文件名
+        tableModel.setExcelName("${ftl_description}"+CommonUtils.getInstance().getCurrentDateTime());
+        // 列名
+        tableModel.addHeaders(<#list sub.originalColumns as subItem><#if subItem_index!=0>, </#if>"${subItem.fieldName}"</#list>);
+        tableModel.setTableName("${tableName}");
+        tableModel.setData(beans);
+        try {
+            new ExcelCommon().exportExcel(response, tableModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 子表 excel导入
+     */
+    @RequestMapping("${sub.entityName?uncap_first}-importExcel")
+    public String import${sub.entityName}Export(@RequestParam("attachment") MultipartFile attachment, @RequestParam(value = "parentid", required = false) String parentid,, HttpServletResponse response) {
+        try {
+            File file = new File("test.xls"); 
+            attachment.transferTo(file);
+            // 
+            TableModel tableModel = new TableModel();
+            // 列名
+            tableModel.addHeaders(<#list sub.originalColumns as subItem><#if subItem_index!=0>, </#if>"${subItem.fieldName}"</#list>);
+            // 导入
+            new ExcelCommon().uploadExcel(file, tableModel, "${bussiPackage}.${entityPackage}.entity.${sub.entityName}Entity");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-input.do?id=" + parentid;
     }
     </#list>
     /**

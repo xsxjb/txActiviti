@@ -288,6 +288,8 @@ public class FormController {
         confForm.setIsAdd(2);
         confForm.setIsDelete(2);
         confForm.setIsQuery(2);
+        confForm.setIsExcelExport(2);
+        confForm.setIsImportExport(2);
         if (null != selectedItems) {
             for (String selectedItem : selectedItems) {
                 if ("isEdit".equals(selectedItem)) {

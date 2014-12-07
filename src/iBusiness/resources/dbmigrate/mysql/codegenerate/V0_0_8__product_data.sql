@@ -43,7 +43,7 @@ insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,c
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_WAREHOUSE','WAREHOUSENAME','仓库名称','VARCHAR','128','是','',2);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_WAREHOUSE','WAREHOUSELOCATION','仓库位置','VARCHAR','128','是','',3);
 /* ================= 表单管理表 ==================   */
-insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('productmanage-warehouse001','productmanage','warehouse','仓库管理','/warehouse/warehouse-list.do',1,1,1,1,2);
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM) values ('productmanage-warehouse001','productmanage','warehouse','仓库管理','/warehouse/warehouse-list.do',1,1,1,1,2,2,2);
 /* ================= 表单对应数据表管理表 ==================   */
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('productmanage','warehouse','IB_WAREHOUSE','main');
 /* ================= 表单对应字段管理表 ==================   */
@@ -63,7 +63,7 @@ insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,c
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIALS_TYPE','RPARENTID','父节点ID','VARCHAR','64','是',NULL,3);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIALS_TYPE','ISLEAF','是否叶子节点','DATETIME','8','是',NULL,4);
 /* ================= 表单管理表 ==================   */
-insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('productmanage-materialsType001','productmanage','materialsType','原料分类管理',NULL,1,1,1,1,2);
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM) values ('productmanage-materialsType001','productmanage','materialsType','原料分类管理',NULL,1,1,1,1,2,2,2);
 /* ================= 表单对应数据表管理表 ==================   */
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('productmanage','materialsType','IB_MATERIALS_TYPE','main');
 /* ================= 表单对应字段管理表 ==================   */
@@ -86,7 +86,7 @@ insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,c
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIALS','MATERIALUNIT','单位','VARCHAR','8','是',NULL,5);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIALS','MODEL','规格型号','VARCHAR','64','是',NULL,6);
 /* ================= 表单管理表 ==================   */
-insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('productmanage-materials001','productmanage','materials','原料管理','/materials/materials-list.do',1,1,1,1,2);
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM) values ('productmanage-materials001','productmanage','materials','原料管理','/materials/materials-list.do',1,1,1,1,2,2,2);
 /* ================= 表单对应数据表管理表 ==================   */
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('productmanage','materials','IB_MATERIALS','main');
 /* ================= 表单对应字段管理表 ==================   */
@@ -109,7 +109,7 @@ insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,c
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PRODUCTTYPE','RPARENTID','父节点ID','VARCHAR','64','是',NULL,3);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PRODUCTTYPE','ISLEAF','是否叶子节点','VARCHAR','8','是',NULL,4);
 /* ================= 表单管理表 ==================   */
-insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('productmanage-productType001','productmanage','productType','产品分类管理','/producttype/producttype-list.do',1,1,1,1,2);
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM) values ('productmanage-productType001','productmanage','productType','产品分类管理','/producttype/producttype-list.do',1,1,1,1,2,2,2);
 /* ================= 表单对应数据表管理表 ==================   */
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('productmanage','productType','IB_PRODUCTTYPE','main');
 /* ================= 表单对应字段管理表 ==================   */
@@ -133,7 +133,7 @@ insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,c
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PRODUCT','PRODUCTUNIT','单位','VARCHAR','8','是',NULL,6);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PRODUCT','UNITPRICE','单价','NUMBER','12,2','是',NULL,7);
 /* ================= 表单管理表 ==================   */
-insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('productmanage-product001','productmanage','product','产品管理','/product/product-list.do',1,1,1,1,2);
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM) values ('productmanage-product001','productmanage','product','产品管理','/product/product-list.do',1,1,1,1,2,2,2);
 /* ================= 表单对应数据表管理表 ==================   */
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('productmanage','product','IB_PRODUCT','main');
 /* ================= 表单对应字段管理表 ==================   */
@@ -181,7 +181,7 @@ insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,co
 insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIAL_IN_S','MANUFACTURENAME','制造商','VARCHAR','64','是','',7);
 insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_MATERIAL_IN_S','REMARK','备注','VARCHAR','512','是','',8);
 /* ================= 表单管理表 ==================   */
-insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('productmanage-materialin001','productmanage','materialin','原料入库流程','/material_in/material_in-list.do',1,1,1,2,1);
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM) values ('productmanage-materialin001','productmanage','materialin','原料入库流程','/material_in/material_in-list.do',1,1,1,2,2,2,1);
 /* ================= 表单对应数据表管理表 ==================   */
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('productmanage','materialin','IB_MATERIAL_IN','main');
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('productmanage','materialin','IB_MATERIAL_IN_S','sub');

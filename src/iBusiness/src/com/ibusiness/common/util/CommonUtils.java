@@ -39,7 +39,13 @@ public class CommonUtils {
      * Log4j
      */
     private static Logger logger = LoggerFactory.getLogger(CommonUtils.class);
-	
+	/**
+	 * 获取当前系统时间
+	 * @return
+	 */
+    public String getCurrentDateTime() {
+        return ymdhms.format(new Date());
+    }
     /**
      * 判断日期之间的天数
      * 

@@ -36,6 +36,13 @@ $(function() {
     table.configPageInfo('.m-page-info');
     table.configPageSize('.m-page-size');
 });
+
+
+// 导入excel
+function importExcel(){
+	 $("#msgInfoForm").submit();
+}
+ 
     </script>
   </head>
 
@@ -49,15 +56,15 @@ $(function() {
         <div class="panel-heading"><h4 class="panel-title">公司列表</h4></div>
         <div class="panel-body">
 		    <div class="pull-left">
-		        <tags:hasPerm value="userattr">
-			    	<button class="btn btn-default btn-sm a-insert" onclick="location.href='org-company-input.do'">新建</button>
-			    </tags:hasPerm>
-			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
-			    <button class="btn btn-small btn-sm a-export" onclick="table.exportExcel()">导出Excel</button>
-			    <form id="msg-infoForm" method="post" action="org-company-import-export.do" class="form-horizontal" enctype="multipart/form-data">
-				    <button class="btn btn-small btn-sm a-submit" type="submit">导入Excel</button>
-					<input id="msg-info_address" type="file" name="attachment" value=""  class="text required">
-				</form>
+		        <div class="form-group">
+			    	<button class="btn btn-default btn-sm" onclick="location.href='org-company-input.do'">新建</button>
+				    <button class="btn btn-default btn-sm" onclick="table.removeAll()">删除</button>
+				    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
+				    <button class="btn btn-default btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
+				    <form id="msgInfoForm" method="post" action="org-company-importExcel.do" class="form-horizontal" enctype="multipart/form-data">
+                        <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="importExcel()"> 
+                    </form>
+				</div>
 		  </div>
 			<div class="pull-right">
 			  每页显示
@@ -70,7 +77,7 @@ $(function() {
 			</div>
 	    	<div class="m-clear"></div>
 	    </div>
-			<form id="orgGridForm" name="orgGridForm" method='post' action="org-company-remove.do" class="m-form-blank">
+			<form id="orgGridForm" name="orgGridForm" method='post' action="org-company-remove.do" class="form-horizontal">
 			  <table id="orgGrid" class="table table-hover table-bordered">
 			    <thead>
 			      <tr>

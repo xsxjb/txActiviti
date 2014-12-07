@@ -113,6 +113,8 @@ public class ExcelCommon {
                 Map<String, ConfFormTableColumn> formTableColumnMap = CommonBusiness.getInstance().getFormTableColumnMapByFormColumn();
                 String key = CommonUtils.toUpperCase(tableModel.getTableName())+"."+CommonUtils.toUpperCase(tableModel.getHeader(i));
                 if (formTableColumnMap.containsKey(key)) {
+                    // Excel导出文件显示字段信息
+//                    String tableColumnTitle = formTableColumnMap.get(key).getFormColumnTitle().replaceAll("<", "").replaceAll(">", "")+"<"+tableModel.getHeader(i)+">";
                     cell.setCellValue( new HSSFRichTextString(formTableColumnMap.get(key).getFormColumnTitle()));
                 } else {
                     cell.setCellValue( new HSSFRichTextString(tableModel.getHeader(i)));
@@ -255,7 +257,7 @@ public class ExcelCommon {
     }
     
     /**
-     * set method value by name.
+     * 反射设置set方法值
      */
     public static void setMethodValue(Object target, String methodName,
             Object methodValue) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
@@ -284,19 +286,6 @@ public class ExcelCommon {
             Method setMethod = target.getClass().getDeclaredMethod(setMethodName, String.class);
             setMethod.invoke(target, methodValue.toString());
         }
-        
-//        
-//        // 方法的参数列表
-//        Type[] paramTypeList = method.getGenericParameterTypes();
-//        for (Type paramType : paramTypeList) {
-//            System.out.print("  =====:"+paramType);
-//            if (1==1) {
-//                method.invoke(target, methodValue);
-//            }
-//            
-//        }
-        
-        
     }
     // ======================================================================
     public CommonBaseService getCommonBaseService() {

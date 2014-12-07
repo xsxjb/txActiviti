@@ -8,6 +8,10 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -236,7 +240,7 @@ public class PermissionController {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/permission/permission-input.do?flowId=" + flowId + "&id=" + id;
     }
-        /**
+    /**
      * 删除一条流程信息
      * @param selectedItem
      * @param redirectAttributes
@@ -245,8 +249,12 @@ public class PermissionController {
     @RequestMapping("permission-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
         List<PermissionEntity> entitys = permissionService.findByIds(selectedItem);
+        // 实例化BPM流程共用类对象
+        BpmComBusiness bpmComBusiness = new BpmComBusiness();
         for (PermissionEntity entity : entitys) {
             permissionService.remove(entity);
+            // 删除流程实例
+            bpmComBusiness.deleteProcessInstance(entity.getExecutionid());
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
@@ -281,6 +289,48 @@ public class PermissionController {
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
         return "redirect:/permission/permission-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
+    }
+    /**
+     * 子表 excel导出
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("permission_s-export")
+    public void excelPermission_sExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        page = permission_sService.pagedQuery(page, propertyFilters);
+        List<Permission_sEntity> beans = (List<Permission_sEntity>) page.getResult();
+
+        TableModel tableModel = new TableModel();
+        // excel文件名
+        tableModel.setExcelName("审批权限流程表"+CommonUtils.getInstance().getCurrentDateTime());
+        // 列名
+        tableModel.addHeaders("remark", "id", "parentid");
+        tableModel.setTableName("IB_PERMISSION");
+        tableModel.setData(beans);
+        try {
+            new ExcelCommon().exportExcel(response, tableModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 子表 excel导入
+     */
+    @RequestMapping("permission_s-importExcel")
+    public String importPermission_sExport(@RequestParam("attachment") MultipartFile attachment, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, HttpServletResponse response) {
+        try {
+            File file = new File("test.xls"); 
+            attachment.transferTo(file);
+            // 
+            TableModel tableModel = new TableModel();
+            // 列名
+            tableModel.addHeaders("remark", "id", "parentid");
+            // 导入
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.test.entity.Permission_sEntity");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/permission/permission-input.do?flowId=" + flowId + "&id=" + parentid;
     }
 
     /**

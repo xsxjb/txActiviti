@@ -60,7 +60,7 @@ insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,c
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_PRODUCT_S','PRODUCTTYPE','产品类型','VARCHAR','32','是','',8);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_PROJECT_PRODUCT_S','PRODUCTFLOWID','产品件号','VARCHAR','32','是','',9);
 /* ================= 表单管理表 ==================   */
-insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('projectmanage-projectApproval001','projectmanage','projectApproval','项目立项表单',NULL,1,1,1,2,1);
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM) values ('projectmanage-projectApproval001','projectmanage','projectApproval','项目立项表单',NULL,1,1,1,2,2,2,1);
 /* ================= 表单对应数据表管理表 ==================   */
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('projectmanage','projectApproval','IB_PROJECT_APPROVAL','main');
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('projectmanage','projectApproval','IB_PROJECT_PRODUCT_S','sub');
@@ -132,7 +132,7 @@ insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,c
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_BOM_MATERIALS','STOCKTYPE','备货类型','VARCHAR','16','是','',9);
 insert  into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_BOM_MATERIALS','COMMENTS','备注','VARCHAR','512','是','',10);
 /* ================= 表单管理表 ==================   */
-insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM) values ('bomMaterials001','projectmanage','bomMaterials','原料分解','',1,1,1,1,2);
+insert  into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM) values ('bomMaterials001','projectmanage','bomMaterials','原料分解','',1,1,1,1,2,2,2);
 /* ================= 表单对应数据表管理表 ==================   */
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('projectmanage','bomMaterials','IB_BOM','main');
 insert  into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('projectmanage','bomMaterials','IB_BOM_MATERIALS','sub');

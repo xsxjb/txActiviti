@@ -164,6 +164,8 @@ public class CodeGenerateBpmForm implements ICallBack {
                     // 取得表字段list 根据表名
                     List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName(), formName);
                     codeParamBean.setColumns(subColumlist);
+                    List<Columnt> subOriginalColumlist = getOriginalColumListByTableName(codeParamBean.getTableName(), formName);
+                    codeParamBean.setOriginalColumns(subOriginalColumlist);
                 }
             }
             // 将子表内容存入
@@ -219,7 +221,47 @@ public class CodeGenerateBpmForm implements ICallBack {
         }
         return subColumlist;
     }
-
+    /**
+     * 取得全字段list 根据表名
+     * @param tableName
+     * @return
+     */
+    private List<Columnt> getOriginalColumListByTableName(String tableName, String formName) {
+        // 取得子表对应表字段信息
+        List<ConfTableColumns> subTableColumnsList = CommonBusiness.getInstance().getTableColumnsList(tableName);
+        Map<String, ConfFormTableColumn> formTableColumnMap = CommonBusiness.getInstance().getFormTableColumnMap(tableName, formName);
+        List<Columnt> subColumlist = new ArrayList<Columnt>();
+        for (ConfTableColumns confTableColumns : subTableColumnsList) {
+            Columnt columnt = new Columnt();
+            // 字段名
+            columnt.setFieldDbName(confTableColumns.getColumnValue());
+            // 字段类型
+            columnt.setFieldType(confTableColumns.getColumnType());
+            // 长度
+            columnt.setCharmaxLength(confTableColumns.getColumnSize());
+            // 字段名
+            columnt.setFieldName(confTableColumns.getColumnValue().toLowerCase());
+            // 字段标题
+            columnt.setFiledComment(confTableColumns.getColumnName());
+            // 设置表单相关字段信息
+            ConfFormTableColumn formColumn = formTableColumnMap.get(confTableColumns.getColumnValue());
+            if (null != formColumn) {
+                // 录入宽度
+                columnt.setFcWidth(formColumn.getFcWidth());
+                // 录入高度
+                columnt.setFcHeight(formColumn.getFcHeight());
+                // 是否显示
+                columnt.setFcDisplay(formColumn.getFcDisplay());
+                // 是否编辑
+                columnt.setFcEdit(formColumn.getFcEdit());
+                // 根据标签类型生成标签
+                columnt = CodeBpmTagFactory.getInstance().CreateTagComponent(columnt, formColumn);
+            }
+            subColumlist.add(columnt);
+        }
+        return subColumlist;
+    }
+    
     /**
      * 生成文件
      */

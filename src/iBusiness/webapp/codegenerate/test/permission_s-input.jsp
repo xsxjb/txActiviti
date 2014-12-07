@@ -34,12 +34,12 @@
 					  <c:if test="${model != null}">
 					      <input id="code_id" type="hidden" name="id" value="${model.id}">
 					  </c:if>
-	                       <!-- 是否显示 -->
-	                          <div class="form-group">
+                               <div class="form-group">
 	                              <label class="control-label col-lg-2" for="code-remark">备注:</label>
 	                              <!-- 是否可编辑 -->
-	                                      <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">  <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" ></c:if><c:if test="${nodeColumsMap.remark.fcEdit!='1'}">  <label>${model.remark}</label>  <input type="hidden" name="remark" value="${model.remark}"></c:if>
-	                          </div>
+	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
+                            </div>
+	                          
 					  
 					  <div class="form-group">
 					    <div class="col-lg-10 col-lg-offset-2">

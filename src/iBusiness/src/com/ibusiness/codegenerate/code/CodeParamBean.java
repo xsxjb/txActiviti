@@ -34,6 +34,8 @@ public class CodeParamBean {
     private List<String> selectedItems = new ArrayList<String>();
     // 表对应字段信息
     private List<Columnt> columns = new ArrayList<Columnt>();
+    // 表对应全字段信息
+    private List<Columnt> originalColumns = new ArrayList<Columnt>();
     /**
      * @return the packageName
      */
@@ -177,5 +179,17 @@ public class CodeParamBean {
      */
     public void setColumns(List<Columnt> columns) {
         this.columns = columns;
+    }
+    /**
+     * @return the originalColumns
+     */
+    public List<Columnt> getOriginalColumns() {
+        return originalColumns;
+    }
+    /**
+     * @param originalColumns the originalColumns to set
+     */
+    public void setOriginalColumns(List<Columnt> originalColumns) {
+        this.originalColumns = originalColumns;
     }
 }

@@ -103,8 +103,8 @@ INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,co
 INSERT INTO ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) VALUES ('IB_SUPPLIER','YOURPHONE','联系电话','VARCHAR','16','是','',32);
 
 /* ============================= 表单管理表 =============================  */
-INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM,FORMURL) VALUES('customerInfo001','crmmanage','customerInfo','客户信息管理',1,1,1,1,2,'/customer_info/customer_info-list.do');
-INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY,ISBPMFORM,FORMURL) VALUES('supplierInfo001','crmmanage','supplierInfo','供应商管理',1,1,1,1,2,'/supplier/supplier-list.do');
+INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM,FORMURL) VALUES('customerInfo001','crmmanage','customerInfo','客户信息管理',1,1,1,2,2,1,2,'/customer_info/customer_info-list.do');
+INSERT INTO ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM,FORMURL) VALUES('supplierInfo001','crmmanage','supplierInfo','供应商管理',1,1,1,2,2,1,2,'/supplier/supplier-list.do');
 
 /* ============================= 表单对应数据表管理表 =============================  */
 INSERT INTO ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) VALUES('crmmanage','customerInfo','IB_CUSTOMER_INFO','main');
