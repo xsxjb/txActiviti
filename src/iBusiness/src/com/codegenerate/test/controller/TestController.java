@@ -3,16 +3,24 @@ package com.codegenerate.test.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import net.sf.json.JSONObject;
 
 import javax.annotation.Resource;
+import java.io.File;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.security.util.SpringSecurityUtils;
 import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
@@ -68,6 +76,8 @@ public class TestController {
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
+                String nameValue= CommonUtils.getInstance().getCurrentDateTime();model.addAttribute("nameValue", nameValue);
+                String remarkValue= CommonBusiness.getInstance().getUserBean(SpringSecurityUtils.getCurrentUserId()).getDisplayName();model.addAttribute("remarkValue", remarkValue);
         return "codegenerate/test/test-input.jsp";
     }
 
@@ -107,7 +117,48 @@ public class TestController {
 
         return "redirect:/test/test-list.do";
     }
-    
+    /**
+     * excel导出
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("test-export")
+    public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        page = testService.pagedQuery(page, propertyFilters);
+        List<TestEntity> beans = (List<TestEntity>) page.getResult();
+
+        TableModel tableModel = new TableModel();
+        // excel文件名
+        tableModel.setExcelName("测试练习表"+CommonUtils.getInstance().getCurrentDateTime());
+        // 列名
+        tableModel.addHeaders("id", "name", "remark");
+        tableModel.setTableName("IB_TEST");
+        tableModel.setData(beans);
+        try {
+            new ExcelCommon().exportExcel(response, tableModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * excel导入
+     */
+    @RequestMapping("test-importExcel")
+    public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
+        try {
+            File file = new File("test.xls"); 
+            attachment.transferTo(file);
+            // 
+            TableModel tableModel = new TableModel();
+            // 列名
+            tableModel.addHeaders("id", "name", "remark");
+            // 导入
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.test.entity.TestEntity");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/test/test-list.do";
+    }
     // ======================================================================
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {

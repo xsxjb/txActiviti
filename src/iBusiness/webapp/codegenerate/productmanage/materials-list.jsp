@@ -21,7 +21,8 @@
 		        'filter_LIKES_id': '${param.filter_LIKES_id}'
 		    },
 			selectedItemClass: 'selectedItem',
-			gridFormId: 'gridForm'
+			gridFormId: 'gridForm',
+	        exportUrl: 'materials-export.do'
 		};
 
 		var table;
@@ -31,6 +32,7 @@
 		    table.configPageInfo('.m-page-info');
 		    table.configPageSize('.m-page-size');
 		});
+		
     </script>
   </head>
 
@@ -48,6 +50,8 @@
 				    <div class="form-group">
 				                <label for="code_table_materialname">原料名称:</label>
 				                <input type="text" id="code_table_materialname" name="filter_LIKES_materialname" value="${param.filter_LIKES_materialname}">
+				                <label for="code_table_materialtypeno">原料分类:</label>
+				                <input type="text" id="code_table_materialtypeno" name="filter_LIKES_materialtypeno" value="${param.filter_LIKES_materialtypeno}">
 					    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
 					</div>
 				 </form>
@@ -58,6 +62,7 @@
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='materials-input.do'">新建</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+            
 			</div>
 			<div class="pull-right">
 			  每页显示

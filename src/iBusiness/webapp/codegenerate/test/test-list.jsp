@@ -21,7 +21,8 @@
 		        'filter_LIKES_id': '${param.filter_LIKES_id}'
 		    },
 			selectedItemClass: 'selectedItem',
-			gridFormId: 'gridForm'
+			gridFormId: 'gridForm',
+	        exportUrl: 'test-export.do'
 		};
 
 		var table;
@@ -31,6 +32,7 @@
 		    table.configPageInfo('.m-page-info');
 		    table.configPageSize('.m-page-size');
 		});
+		
     </script>
   </head>
 
@@ -58,6 +60,7 @@
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='test-input.do'">新建</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+            
 			</div>
 			<div class="pull-right">
 			  每页显示

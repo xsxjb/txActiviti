@@ -22,7 +22,7 @@
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm',
-			exportUrl: 'customer-export.do'
+	        exportUrl: 'customer_info-export.do'
 		};
 
 		var table;
@@ -32,6 +32,11 @@
 		    table.configPageInfo('.m-page-info');
 		    table.configPageSize('.m-page-size');
 		});
+		
+		// 导入excel
+		function importExcel(){
+			 $("#msgInfoForm").submit();
+		}
     </script>
   </head>
 
@@ -47,8 +52,8 @@
 	          <div id="search" class="content content-inner">
 				  <form name="cgForm" method="post" action="customer_info-list.do" class="form-inline">
 				    <div class="form-group">
-				        <label for="code_table_typename">客户名称:</label>
-	                    <input type="text" id="code_table_customername" name="filter_LIKES_customername" value="${param.filter_LIKES_customername}">
+				                <label for="code_table_customername">客户信息表.客户名称:</label>
+				                <input type="text" id="code_table_customername" name="filter_LIKES_customername" value="${param.filter_LIKES_customername}">
 					    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
 					</div>
 				 </form>
@@ -59,11 +64,12 @@
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='customer_info-input.do'">新建</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
-			    <button class="btn btn-small btn-sm a-export" onclick="table.exportExcel()">导出Excel</button>
-			    <form id="msg-infoForm" method="post" action="customer-import.do" class="form-horizontal" enctype="multipart/form-data">
-				    <button class="btn btn-small btn-sm a-submit" type="submit">导入Excel</button>
-					<input id="msg-info_address" type="file" name="attachment" value=""  class="text required">
-				</form>
+			    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
+			    <button class="btn btn-default btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
+			    <form id="msgInfoForm" method="post" action="customer_info-importExcel.do" class="form-horizontal" enctype="multipart/form-data">
+                    <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="importExcel()"> 
+                </form>
+            
 			</div>
 			<div class="pull-right">
 			  每页显示
@@ -82,10 +88,12 @@
 			      <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+					                <th class="sorting">客户编号</th>
 					                <th class="sorting">客户名称</th>
+					                <th class="sorting">客户状态</th>
 					                <th class="sorting"> 客户类别</th>
 					                <th class="sorting">客户地址</th>
-					                <th class="sorting">企业性质</th>
+					                <th class="sorting">联系电话</th>
 				        <th width="80">&nbsp;</th>
 				      </tr>
 				    </thead>
@@ -93,10 +101,12 @@
 					      <c:forEach items="${page.result}" var="item">
 					      <tr>
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+						            <td>${item.customerno}</td>
 						            <td>${item.customername}</td>
+						            <td>${item.customerstate}</td>
 						            <td>${item.customertype}</td>
 						            <td>${item.customeraddress}</td>
-						            <td>${item.customernature}</td>
+						            <td>${item.telephone}</td>
 					        <td>
 					          <a href="customer_info-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>

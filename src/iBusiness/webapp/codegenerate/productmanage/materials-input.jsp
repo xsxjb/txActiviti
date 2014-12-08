@@ -36,10 +36,10 @@
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-materialno">原料编号:</label>
                                 <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">  <label class="radio"><input type="radio" name="materialno" value="1" ${1==model.materialno? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="materialno" value="2" ${2==model.materialno? 'checked':''} >否</label> </div>
+                                      <div class="col-lg-3">   <input id="code-materialno" type="text" name="materialno" value="${model.materialno}" class="text required" ></div>
                               <label class="col-lg-2 control-label" for="code-materialname">原料名称:</label>
                                 <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">    <select id="code-materialname" name="materialname" class="form-control" >          <option value="" >请选择</option>        <c:forEach items="${materialnameItems}" var="item">          <option value="${item.key}" ${item.key==model.materialname? 'selected':''} >${item.value}</option>        </c:forEach>    </select></div>
+                                      <div class="col-lg-3">   <input id="code-materialname" type="text" name="materialname" value="${model.materialname}" class="text required" ></div>
                             </div>
                           <div class="form-group">
                               <label class="col-lg-2 control-label" for="code-materialprice">价格:</label>

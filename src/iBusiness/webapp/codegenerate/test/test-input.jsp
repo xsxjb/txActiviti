@@ -34,12 +34,12 @@
                   </c:if>
                   
                           <div class="form-group">
-                              <label class="col-lg-2 control-label" for="code-name">姓名:</label>
-                                <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">   <input id="code-name" type="text" name="name" value="${model.name}" class="text required" ></div>
-                              <label class="col-lg-2 control-label" for="code-remark">备注:</label>
-                                <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">   <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" ></div>
+                          <label class="col-lg-2 control-label" for="code-name">姓名:</label>
+                          <div class="col-lg-4">  <label>${nameValue}</label>  <input id="code-name" type="hidden" name="name" value="${nameValue}" ></div>
+                          
+                          <label class="col-lg-2 control-label" for="code-remark">备注:</label>
+                          <div class="col-lg-4">  <label>${remarkValue}</label>  <input id="code-remark" type="hidden" name="remark" value="${remarkValue}" ></div>
+                          
                             </div>
                   
                   <div class="form-group">

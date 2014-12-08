@@ -39,6 +39,18 @@ public class CommonUtils {
      * Log4j
      */
     private static Logger logger = LoggerFactory.getLogger(CommonUtils.class);
+    /**
+     * 取得CG代码生成公式计算信息
+     * @return
+     */
+    public String getFormulaByCGInfo(String formulaType) {
+        // 系统当前时间
+        if ("currentDate".equals(formulaType)) {
+            return getCurrentDateTime();
+        }
+        return "";
+    }
+    
 	/**
 	 * 获取当前系统时间
 	 * @return

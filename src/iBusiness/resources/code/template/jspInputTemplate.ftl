@@ -38,17 +38,10 @@
                         <#if po_index%2==0>
                           <div class="form-group">
                         </#if>
-                              <label class="col-lg-2 control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
-                                <!-- 是否可编辑 -->
-                                <#if "1"=po.fcEdit>
-                                      ${po.jspTagInfo}
-                                <#else>
-	                              <div class="col-lg-4">
-	                                  <label>${'$' + '{model.${po.fieldName}}'}</label>
-	                                  <input id="code-${po.fieldName}" type="hidden" name="${po.fieldName}" value="${'$' + '{model.${po.fieldName}}'}"  >
-                                  </div>
-                              </#if>
-                          <#if po_index%2 ==1 || (po_index+1==columns?size)>
+                          <label class="col-lg-2 control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
+                          ${po.jspTagInfo}
+                          
+                      <#if po_index%2 ==1 || (po_index+1==columns?size)>
                             </div>
                           </#if>
                         </#if>

@@ -1,7 +1,6 @@
 package com.ibusiness.codegenerate.common;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,9 +61,21 @@ public class CodeBpmTagFactory {
         // 根据事件类型解析事件
         try {
             if (tagComponentMap.containsKey(formColumn.getFcType())) {
-                String strMethod = tagComponentMap.get(formColumn.getFcType());
-                columnt = (Columnt) CodeBpmTagFactory.class.getDeclaredMethod(strMethod, Columnt.class, ConfFormTableColumn.class).invoke(instance, columnt, formColumn);
-                return columnt;
+                // 控件可编辑
+                if ("1".equals(columnt.getFcEdit())) {
+                    String strMethod = tagComponentMap.get(formColumn.getFcType());
+                    columnt = (Columnt) CodeBpmTagFactory.class.getDeclaredMethod(strMethod, Columnt.class, ConfFormTableColumn.class).invoke(instance, columnt, formColumn);
+                    return columnt;
+                } else {
+                    // 不可编辑
+                    String str = "";
+                    str = str + "<div class=\"col-lg-4\">";
+                    str = str + "  <label>${model."+columnt.getFieldName()+"}</label>";
+                    str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" >";
+                    str = str + "</div>";
+                    columnt.setJspTagInfo(str);
+                    return columnt;
+                }
             } else {
                 logger.error("================要求生成的页面控件不存在:" + formColumn.getFcType());
             }
@@ -187,7 +198,7 @@ public class CodeBpmTagFactory {
         // 下拉列表
         controllerInfo = controllerInfo + "List<com.ibusiness.common.model.ConfSelectItem> "+columnt.getFieldName()+"Items = (List<com.ibusiness.common.model.ConfSelectItem>) CommonUtils.getListFromJson("+columnt.getFieldName()+"FTCMap.get(\""+columnt.getFieldDbName()+"\").getConfSelectInfo(), com.ibusiness.common.model.ConfSelectItem.class);";
         controllerInfo = controllerInfo + "model.addAttribute(\""+columnt.getFieldName()+"Items\", "+columnt.getFieldName()+"Items);";
-        List<String> maList = new ArrayList<String>();
+        List<String> maList = columnt.getModelAttributeList();
         maList.add(controllerInfo);
         columnt.setModelAttributeList(maList);
         
@@ -220,7 +231,7 @@ public class CodeBpmTagFactory {
         // 取得表单对应表管理表Map
         controllerInfo = controllerInfo + "Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> "+columnt.getFieldName()+"FTCMap= CommonBusiness.getInstance().getFormTableColumnMap(\""+formColumn.getTableName()+"\", \""+formColumn.getFormName()+"\");";
         // 下拉列表
-        controllerInfo = controllerInfo + "net.sf.json.JSONObject "+columnt.getFieldName()+"JsonObj = net.sf.json.JSONObject.fromObject("+columnt.getFieldName()+"FTCMap.get(\""+columnt.getFieldDbName()+"\").getConfSelectInfo());";
+        controllerInfo = controllerInfo + "JSONObject "+columnt.getFieldName()+"JsonObj = JSONObject.fromObject("+columnt.getFieldName()+"FTCMap.get(\""+columnt.getFieldDbName()+"\").getConfSelectInfo());";
         controllerInfo = controllerInfo + "String "+columnt.getFieldName()+"Sql = "+columnt.getFieldName()+"JsonObj.getString(\"sql\");";
         controllerInfo = controllerInfo + "List<Map<String,Object>> "+columnt.getFieldName()+"List = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList("+columnt.getFieldName()+"Sql);";
         controllerInfo = controllerInfo + "List<ConfSelectItem> "+columnt.getFieldName()+"Items = new java.util.ArrayList<ConfSelectItem>();";
@@ -232,7 +243,7 @@ public class CodeBpmTagFactory {
         controllerInfo = controllerInfo + "}";
         //
         controllerInfo = controllerInfo + "model.addAttribute(\""+columnt.getFieldName()+"Items\", "+columnt.getFieldName()+"Items);";
-        List<String> maList = new ArrayList<String>();
+        List<String> maList = columnt.getModelAttributeList();
         maList.add(controllerInfo);
         columnt.setModelAttributeList(maList);
         
