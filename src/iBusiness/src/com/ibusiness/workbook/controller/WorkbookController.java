@@ -53,6 +53,7 @@ public class WorkbookController {
      * @param model
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("workbook-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         WorkbookEntity entity = null;

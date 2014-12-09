@@ -24,6 +24,7 @@ import com.ibusiness.security.util.SpringSecurityUtils;
 import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
+import com.ibusiness.common.service.FormulaCommon;
 
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.common.page.PropertyFilter;
@@ -73,6 +74,10 @@ public class ${entityName}Controller {
         } else {
             entity = new ${entityName}Entity();
         }
+        
+        // 默认值公式
+        entity = (${entityName}Entity) new FormulaCommon().defaultValue(entity, "${tableName}");
+        
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据

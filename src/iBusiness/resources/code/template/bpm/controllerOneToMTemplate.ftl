@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ibusiness.common.export.ExcelCommon;
 import com.ibusiness.common.export.TableModel;
 import com.ibusiness.security.util.SpringSecurityUtils;
+import com.ibusiness.common.service.FormulaCommon;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -107,6 +108,10 @@ public class ${entityName}Controller {
             entity.setDoneflag(0);
             ${entityName?uncap_first}Service.insert(entity);
         }
+        
+        // 默认值公式
+        entity = (${entityName}Entity) new FormulaCommon().defaultValue(entity, "${tableName}");
+        
         model.addAttribute("model", entity);
         
         // 取得当前流程节点信息

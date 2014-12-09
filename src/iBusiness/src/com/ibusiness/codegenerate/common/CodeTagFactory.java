@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ibusiness.codegenerate.code.Columnt;
-import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.common.util.Constants;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
 
@@ -72,10 +71,7 @@ public class CodeTagFactory {
                     String str = "";
                     str = str + "<div class=\"col-lg-4\">";
                     // 公式
-                    String fieldValue = CodeFormulaFactory.getInstance().getFormula(columnt, formColumn);
-                    if (CommonUtils.isNull(fieldValue)) {
-                        fieldValue = "${model."+columnt.getFieldName()+"}";
-                    }
+                    String fieldValue = "${model."+columnt.getFieldName()+"}";
                     str = str + "  <label>"+fieldValue+"</label>";
                     str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\""+fieldValue+"\" >";
                     str = str + "</div>";
@@ -105,7 +101,7 @@ public class CodeTagFactory {
     public Columnt singleInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
         str = str + "<div class=\"col-lg-3\">";
-        str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" >";
+        str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -116,7 +112,7 @@ public class CodeTagFactory {
     public Columnt multiInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
         str = str + "<div class=\"col-lg-6\">";
-        str = str + "    <textarea class=\"form-control\" id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" rows=\"1\" >${model."+columnt.getFieldName()+"}</textarea>";
+        str = str + "    <textarea class=\"form-control "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" rows=\"1\" >${model."+columnt.getFieldName()+"}</textarea>";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -127,7 +123,7 @@ public class CodeTagFactory {
     public Columnt numberInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
         str = str + "<div class=\"col-lg-3\">";
-        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text number\" >";
+        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text number "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -140,7 +136,7 @@ public class CodeTagFactory {
         str = str + "<div class=\"col-lg-3\">";
         str = str + "  <div class=\"input-append datepicker date\">";
         str = str + "  <span class=\"add-on\">";
-        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" readonly >";
+        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" readonly >";
         str = str + "  </span>";
         str = str + "  </div>";
         str = str + "</div>";
@@ -156,7 +152,7 @@ public class CodeTagFactory {
         str = str + "<div class=\"col-lg-3\">";
         str = str + "  <div class=\"input-append datepicker date\">";
         str = str + "  <span class=\"add-on\">";
-        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" maxlength=\"10\" readonly >";
+        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" maxlength=\"10\" readonly >";
         str = str + "  </span>";
         str = str + "  </div>";
         str = str + "</div>";
@@ -182,7 +178,7 @@ public class CodeTagFactory {
         // 生成JSP显示组件
         String jspTagInfo = "";
         jspTagInfo = jspTagInfo + "<div class=\"col-lg-3\">";
-        jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\" >";
+        jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
         jspTagInfo = jspTagInfo + "          <option value=\"\" >请选择</option>";
         jspTagInfo = jspTagInfo + "        <c:forEach items=\"${"+columnt.getFieldName()+"Items}\" var=\"item\">";
         jspTagInfo = jspTagInfo + "          <option value=\"${item.key}\" ${item.key==model."+columnt.getFieldName()+"? 'selected':''} >${item.value}</option>";
@@ -221,7 +217,7 @@ public class CodeTagFactory {
         // 生成JSP显示组件
         String jspTagInfo = "";
         jspTagInfo = jspTagInfo + "<div class=\"col-lg-3\">";
-        jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\" >";
+        jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
         jspTagInfo = jspTagInfo + "          <option value=\"\" >请选择</option>";
         jspTagInfo = jspTagInfo + "        <c:forEach items=\"${"+columnt.getFieldName()+"Items}\" var=\"item\">";
         jspTagInfo = jspTagInfo + "          <option value=\"${item.key}\" ${item.key==model."+columnt.getFieldName()+"? 'selected':''} >${item.value}</option>";

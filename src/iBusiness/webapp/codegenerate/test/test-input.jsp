@@ -35,10 +35,10 @@
                   
                           <div class="form-group">
                           <label class="col-lg-2 control-label" for="code-name">姓名:</label>
-                          <div class="col-lg-4">  <label>${nameValue}</label>  <input id="code-name" type="hidden" name="name" value="${nameValue}" ></div>
+                          <div class="col-lg-4">  <label>${model.name}</label>  <input id="code-name" type="hidden" name="name" value="${model.name}" ></div>
                           
                           <label class="col-lg-2 control-label" for="code-remark">备注:</label>
-                          <div class="col-lg-4">  <label>${remarkValue}</label>  <input id="code-remark" type="hidden" name="remark" value="${remarkValue}" ></div>
+                          <div class="col-lg-3">   <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" ></div>
                           
                             </div>
                   

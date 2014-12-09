@@ -12,7 +12,11 @@ import org.activiti.engine.delegate.TaskListener;
  * 
  */
 public class ProxyTaskListener implements TaskListener {
-    private List<TaskListener> taskListeners = Collections.EMPTY_LIST;
+    /**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = 1L;
+    private List<TaskListener> taskListeners = Collections.emptyList();
 
     public void notify(DelegateTask delegateTask) {
         for (TaskListener taskListener : taskListeners) {

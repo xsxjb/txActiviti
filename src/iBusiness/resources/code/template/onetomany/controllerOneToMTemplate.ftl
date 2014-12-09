@@ -14,6 +14,7 @@ import java.io.File;
 import org.springframework.web.multipart.MultipartFile;
 import com.ibusiness.common.export.ExcelCommon;
 import com.ibusiness.common.export.TableModel;
+import com.ibusiness.common.service.FormulaCommon;
 
 import com.ibusiness.security.util.SpringSecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -84,6 +85,9 @@ public class ${entityName}Controller {
         } else {
             entity = new ${entityName}Entity();
         }
+        // 默认值公式
+        entity = (${entityName}Entity) new FormulaCommon().defaultValue(entity, "${tableName}");
+        
         model.addAttribute("model", entity);
         // 子表信息
         Map<String, Object> map = new HashMap<String, Object>();

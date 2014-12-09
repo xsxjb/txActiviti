@@ -161,6 +161,7 @@ public class MapBaseController {
      * 搜索站点
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("findSites")
     @ResponseBody
     public String findSites(@RequestParam("iconId") String iconId, @RequestParam("siteName") String siteName) {
