@@ -21,14 +21,14 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_MATERIAL_IN")
 public class Material_inEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
+	/**id*/
+	private java.lang.String id;
 	/**executionid*/
 	private java.lang.String executionid;
 	/**assigneeuser*/
 	private java.lang.String assigneeuser;
 	/**doneflag*/
 	private java.lang.Integer doneflag;
-	/**id*/
-	private java.lang.String id;
 	/**username*/
 	private java.lang.String username;
 	/**tasktitle*/
@@ -54,6 +54,26 @@ public class Material_inEntity implements java.io.Serializable {
 	/**remark*/
 	private java.lang.String remark;
 	
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  id
+	 */
+	
+	@Id
+	@GeneratedValue(generator = "paymentableGenerator")
+	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
+	@Column(name ="ID",nullable=false,length=64)
+	public java.lang.String getId(){
+		return this.id;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  id
+	 */
+	public void setId(java.lang.String id){
+		this.id = id;
+	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  executionid
@@ -101,26 +121,6 @@ public class Material_inEntity implements java.io.Serializable {
 	 */
 	public void setDoneflag(java.lang.Integer doneflag){
 		this.doneflag = doneflag;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
-	 */
-	
-	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
-	@Column(name ="ID",nullable=false,length=64)
-	public java.lang.String getId(){
-		return this.id;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
-	 */
-	public void setId(java.lang.String id){
-		this.id = id;
 	}
 	/**
 	 *方法: 取得java.lang.String

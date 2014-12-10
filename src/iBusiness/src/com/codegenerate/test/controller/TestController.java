@@ -134,7 +134,7 @@ public class TestController {
         // excel文件名
         tableModel.setExcelName("测试练习表"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "name", "remark");
+        tableModel.addHeaders("id", "name", "remark", "eventtime");
         tableModel.setTableName("IB_TEST");
         tableModel.setData(beans);
         try {
@@ -154,7 +154,7 @@ public class TestController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "name", "remark");
+            tableModel.addHeaders("id", "name", "remark", "eventtime");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.test.entity.TestEntity");
         } catch (Exception e) {

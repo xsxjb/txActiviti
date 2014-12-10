@@ -28,6 +28,7 @@ import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.task.Task;
 import org.apache.commons.io.IOUtils;
 
+import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.core.spring.MessageHelper;

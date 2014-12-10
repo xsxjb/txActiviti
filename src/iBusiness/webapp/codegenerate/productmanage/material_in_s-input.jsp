@@ -35,43 +35,43 @@
 					      <input id="code_id" type="hidden" name="id" value="${model.id}">
 					  </c:if>
                                <div class="form-group">
-	                              <label class="control-label col-lg-2" for="code-materialno">原料编号:</label>
-	                              <!-- 是否可编辑 -->
-	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialno.fcEdit=='1'}">    <input id="code-materialno" type="text" name="materialno" value="${model.materialno}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialno.fcEdit!='1'}">    <label>${model.materialno}</label>    <input type="hidden" name="materialno" value="${model.materialno}">  </c:if></div>
+                              <label class="control-label col-lg-2" for="code-materialno">原料编号:</label>
+                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialno.fcEdit=='1'}">    <input id="code-materialno" type="text" name="materialno" value="${model.materialno}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialno.fcEdit!='1'}">    <label>${model.materialno}</label>    <input type="hidden" name="materialno" value="${model.materialno}">  </c:if></div>
+                              
 	                          
-	                              <label class="control-label col-lg-2" for="code-materialname">原料名称:</label>
-	                              <!-- 是否可编辑 -->
-	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialname.fcEdit=='1'}">    <input id="code-materialname" type="text" name="materialname" value="${model.materialname}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialname.fcEdit!='1'}">    <label>${model.materialname}</label>    <input type="hidden" name="materialname" value="${model.materialname}">  </c:if></div>
+                              <label class="control-label col-lg-2" for="code-materialname">原料名称:</label>
+                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialname.fcEdit=='1'}">    <input id="code-materialname" type="text" name="materialname" value="${model.materialname}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialname.fcEdit!='1'}">    <label>${model.materialname}</label>    <input type="hidden" name="materialname" value="${model.materialname}">  </c:if></div>
+                              
                             </div>
 	                          
                                <div class="form-group">
-	                              <label class="control-label col-lg-2" for="code-materialmodel">原料规格型号:</label>
-	                              <!-- 是否可编辑 -->
-	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialmodel.fcEdit=='1'}">    <input id="code-materialmodel" type="text" name="materialmodel" value="${model.materialmodel}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialmodel.fcEdit!='1'}">    <label>${model.materialmodel}</label>    <input type="hidden" name="materialmodel" value="${model.materialmodel}">  </c:if></div>
+                              <label class="control-label col-lg-2" for="code-materialmodel">原料规格型号:</label>
+                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialmodel.fcEdit=='1'}">    <input id="code-materialmodel" type="text" name="materialmodel" value="${model.materialmodel}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialmodel.fcEdit!='1'}">    <label>${model.materialmodel}</label>    <input type="hidden" name="materialmodel" value="${model.materialmodel}">  </c:if></div>
+                              
 	                          
-	                              <label class="control-label col-lg-2" for="code-materialunit">单位:</label>
-	                              <!-- 是否可编辑 -->
-	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialunit.fcEdit=='1'}">    <input id="code-materialunit" type="text" name="materialunit" value="${model.materialunit}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialunit.fcEdit!='1'}">    <label>${model.materialunit}</label>    <input type="hidden" name="materialunit" value="${model.materialunit}">  </c:if></div>
+                              <label class="control-label col-lg-2" for="code-materialunit">单位:</label>
+                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialunit.fcEdit=='1'}">    <input id="code-materialunit" type="text" name="materialunit" value="${model.materialunit}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialunit.fcEdit!='1'}">    <label>${model.materialunit}</label>    <input type="hidden" name="materialunit" value="${model.materialunit}">  </c:if></div>
+                              
                             </div>
 	                          
                                <div class="form-group">
-	                              <label class="control-label col-lg-2" for="code-materialnum">数量:</label>
-	                              <!-- 是否可编辑 -->
-	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialnum.fcEdit=='1'}">    <input id="code-materialnum" type="text" name="materialnum" value="${model.materialnum}" class="text number required" >  </c:if>  <c:if test="${nodeColumsMap.materialnum.fcEdit!='1'}">    <label>${model.materialnum}</label>    <input type="hidden" name="materialnum" value="${model.materialnum}">  </c:if></div>
+                              <label class="control-label col-lg-2" for="code-materialnum">数量:</label>
+                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialnum.fcEdit=='1'}">    <input id="code-materialnum" type="text" name="materialnum" value="${model.materialnum}" class="text number required" >  </c:if>  <c:if test="${nodeColumsMap.materialnum.fcEdit!='1'}">    <label>${model.materialnum}</label>    <input type="hidden" name="materialnum" value="${model.materialnum}">  </c:if></div>
+                              
 	                          
-	                              <label class="control-label col-lg-2" for="code-amount">金额:</label>
-	                              <!-- 是否可编辑 -->
-	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.amount.fcEdit=='1'}">    <input id="code-amount" type="text" name="amount" value="${model.amount}" class="text number required" >  </c:if>  <c:if test="${nodeColumsMap.amount.fcEdit!='1'}">    <label>${model.amount}</label>    <input type="hidden" name="amount" value="${model.amount}">  </c:if></div>
+                              <label class="control-label col-lg-2" for="code-amount">金额:</label>
+                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.amount.fcEdit=='1'}">    <input id="code-amount" type="text" name="amount" value="${model.amount}" class="text number required" >  </c:if>  <c:if test="${nodeColumsMap.amount.fcEdit!='1'}">    <label>${model.amount}</label>    <input type="hidden" name="amount" value="${model.amount}">  </c:if></div>
+                              
                             </div>
 	                          
-                            <div class="form-group">
-	                              <label class="control-label col-lg-2" for="code-manufacturename">制造商:</label>
-	                              <!-- 是否可编辑 -->
-	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.manufacturename.fcEdit=='1'}">    <input id="code-manufacturename" type="text" name="manufacturename" value="${model.manufacturename}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.manufacturename.fcEdit!='1'}">    <label>${model.manufacturename}</label>    <input type="hidden" name="manufacturename" value="${model.manufacturename}">  </c:if></div>
-                             </div>
-                             <div class="form-group">
-	                              <label class="control-label col-lg-2" for="code-remark">备注:</label>
-	                                  <div class="col-lg-6">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <textarea class="form-control" id="code-remark" name="remark" rows="1" >${model.remark}</textarea>  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
+                               <div class="form-group">
+                              <label class="control-label col-lg-2" for="code-manufacturename">制造商:</label>
+                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.manufacturename.fcEdit=='1'}">    <input id="code-manufacturename" type="text" name="manufacturename" value="${model.manufacturename}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.manufacturename.fcEdit!='1'}">    <label>${model.manufacturename}</label>    <input type="hidden" name="manufacturename" value="${model.manufacturename}">  </c:if></div>
+                              
+	                          
+                              <label class="control-label col-lg-2" for="code-remark">备注:</label>
+                              <!-- 编辑类型     多行 --><div class="col-lg-6">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <textarea class="form-control" id="code-remark" name="remark" rows="1" >${model.remark}</textarea>  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
+                              
                             </div>
 	                          
 					  

@@ -35,14 +35,25 @@
                   
                           <div class="form-group">
                           <label class="col-lg-2 control-label" for="code-name">姓名:</label>
-                          <div class="col-lg-4">  <label>${model.name}</label>  <input id="code-name" type="hidden" name="name" value="${model.name}" ></div>
+                          <div class="col-lg-3">  <label>${model.name}</label>  <input id="code-name" type="hidden" name="name" value="${model.name}" ></div>
                           
                           <label class="col-lg-2 control-label" for="code-remark">备注:</label>
                           <div class="col-lg-3">   <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" ></div>
                           
                             </div>
-                  
-                  <div class="form-group">
+				<div class="form-group">
+					<label class="col-lg-2 control-label" for="code-eventtime">日期时间:</label>
+					<div class="col-lg-3">
+						<div class="input-append datetimepicker date">
+							<span class="add-on">
+							<input  data-format="yyyy-MM-dd hh:mm:ss" type="text" name="eventtime" value="${model.eventtime}" class="text required" maxlength="20" readonly>
+							</span>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="form-group">
 	                  <div class="col-lg-10 col-lg-offset-2">
 	                      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
 	                      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>

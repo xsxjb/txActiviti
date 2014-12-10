@@ -51,10 +51,6 @@
 		    });
 		})
 		
-		// 导入excel
-		function importpermission_sExcel(){
-			 $("#permission_sexcelForm").submit();
-		}
     </script>
   </head>
   <body>
@@ -87,9 +83,9 @@
 				       <input type="hidden" name="doneflag" value="${model.doneflag}">
 				   </c:if>
                            <div class="form-group">
-							      <label class="control-label  col-lg-2" for="code-remark">备注:</label>
-							      <!-- 是否可编辑 -->
-	                                      <div class="col-lg-3">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
+						      <label class="control-label  col-lg-2" for="code-remark">备注:</label>
+                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
+	                                      
                             </div>
 						 
 					
@@ -131,11 +127,6 @@
 			    <div class="pull-left">
 				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='permission_s-input.do?id=${model.id}&subId=&flowId=${flowId}'">新建</button>
 				    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
-				    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
-				    <button class="btn btn-default btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
-				    <form id="permission_sexcelForm" method="post" action="permission_s-importExcel.do?flowId=${flowId}&parentid=${model.id}" class="form-horizontal" enctype="multipart/form-data">
-	                    <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="importpermission_sExcel()"> 
-	                </form>
 	            
 				</div>
 				<div class="pull-right">

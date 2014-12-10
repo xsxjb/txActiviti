@@ -69,8 +69,14 @@ public class CodeBpmTagFactory {
                 } else {
                     // 不可编辑
                     String str = "";
-                    str = str + "<div class=\"col-lg-4\">";
-                    str = str + "  <label>${model."+columnt.getFieldName()+"}</label>";
+                    str = str + "<div class=\"col-lg-3\">";
+                    // 日期时间
+                    if (Constants.CODE_DATE.equals(formColumn.getFcType()) || Constants.CODE_DATE_TIME.equals(formColumn.getFcType())) {
+                        str = str + "  <fmt:formatDate value=\"${creatTime}\" pattern=\"yyyy-MM-dd HH:mm:ss\" />";
+                    } else {
+                        // 非日期时间
+                        str = str + "  <label>${model."+columnt.getFieldName()+"}</label>";
+                    }
                     str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" >";
                     str = str + "</div>";
                     columnt.setJspTagInfo(str);

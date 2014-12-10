@@ -1,6 +1,7 @@
 package com.ibusiness.codegenerate.common;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,8 @@ public class CodeFormulaFactory {
     private static Map<String, String> formulaMap = new HashMap<String, String>();
     static {
         // 当前时间
-        formulaMap.put("currentDate", "getCurrentDateTime");
+        formulaMap.put("currentDateToStr", "getCurrentDateToStr");
+        formulaMap.put("currentDate", "getCurrentDate");
 //        // 当前年份
 //        formulaMap.put("year", "getCurrentYear");
 //        // 当前月份
@@ -75,8 +77,15 @@ public class CodeFormulaFactory {
      * 获取当前系统时间
      * @return
      */
-    public String getCurrentDateTime() {
+    public String getCurrentDateToStr() {
         return CommonUtils.getInstance().getCurrentDateTime();
+    }
+    /**
+     * 获取当前系统时间
+     * @return
+     */
+    public Date getCurrentDate() {
+        return new Date();
     }
     /**
      * 当前用户

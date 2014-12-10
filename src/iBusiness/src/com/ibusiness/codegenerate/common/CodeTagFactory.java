@@ -39,7 +39,7 @@ public class CodeTagFactory {
         tagComponentMap.put(Constants.CODE_NUMBER_INPUT, "numberInputParser");
         // 日期
         tagComponentMap.put(Constants.CODE_DATE, "dateParser");
-        // 时间
+        // 日期时间
         tagComponentMap.put(Constants.CODE_DATE_TIME, "dateTimeParser");
         // 下拉列表
         tagComponentMap.put(Constants.CODE_SELECT, "selectParser");
@@ -69,11 +69,15 @@ public class CodeTagFactory {
                 } else {
                     // 不可编辑
                     String str = "";
-                    str = str + "<div class=\"col-lg-4\">";
-                    // 公式
-                    String fieldValue = "${model."+columnt.getFieldName()+"}";
-                    str = str + "  <label>"+fieldValue+"</label>";
-                    str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\""+fieldValue+"\" >";
+                    str = str + "<div class=\"col-lg-3\">";
+                    // 日期时间
+                    if (Constants.CODE_DATE.equals(formColumn.getFcType()) || Constants.CODE_DATE_TIME.equals(formColumn.getFcType())) {
+                        str = str + "  <fmt:formatDate value=\"${creatTime}\" pattern=\"yyyy-MM-dd HH:mm:ss\" />";
+                    } else {
+                        // 非日期时间
+                        str = str + "  <label>${model."+columnt.getFieldName()+"}</label>";
+                    }
+                    str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" >";
                     str = str + "</div>";
                     columnt.setJspTagInfo(str);
                     return columnt;
@@ -144,15 +148,14 @@ public class CodeTagFactory {
         return columnt;
     }
     /**
-     * 时间
+     * 日期时间
      */
     public Columnt dateTimeParser(Columnt columnt, ConfFormTableColumn formColumn) {
-        // TODO 未实现
         String str ="";
         str = str + "<div class=\"col-lg-3\">";
-        str = str + "  <div class=\"input-append datepicker date\">";
+        str = str + "  <div class=\"input-append datetimepicker date\">";
         str = str + "  <span class=\"add-on\">";
-        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" maxlength=\"10\" readonly >";
+        str = str + "    <input data-format=\"yyyy-MM-dd hh:mm:ss\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" maxlength=\"20\" readonly >";
         str = str + "  </span>";
         str = str + "  </div>";
         str = str + "</div>";

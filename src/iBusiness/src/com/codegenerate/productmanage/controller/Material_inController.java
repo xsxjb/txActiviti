@@ -8,6 +8,12 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
+import com.ibusiness.security.util.SpringSecurityUtils;
+import com.ibusiness.common.service.FormulaCommon;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +28,7 @@ import org.apache.commons.io.IOUtils;
 
 import net.sf.json.JSONObject;
 
+import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.core.spring.MessageHelper;
@@ -98,6 +105,10 @@ public class Material_inController {
             entity.setDoneflag(0);
             material_inService.insert(entity);
         }
+        
+        // 默认值公式
+        entity = (Material_inEntity) new FormulaCommon().defaultValue(entity, "IB_MATERIAL_IN");
+        
         model.addAttribute("model", entity);
         
         // 取得当前流程节点信息
@@ -124,6 +135,7 @@ public class Material_inController {
         model.addAttribute("userId", SpringSecurityUtils.getCurrentUserId());
         
         // 在controller中设置页面控件用的数据
+                Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> warehousenoFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_MATERIAL_IN", "materialin");JSONObject warehousenoJsonObj = JSONObject.fromObject(warehousenoFTCMap.get("WAREHOUSENO").getConfSelectInfo());String warehousenoSql = warehousenoJsonObj.getString("sql");List<Map<String,Object>> warehousenoList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(warehousenoSql);List<ConfSelectItem> warehousenoItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : warehousenoList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    warehousenoItems.add(confSelectItem);}model.addAttribute("warehousenoItems", warehousenoItems);
         return "codegenerate/productmanage/material_in-input.jsp";
     }
     
@@ -236,7 +248,7 @@ public class Material_inController {
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         return "redirect:/material_in/material_in-input.do?flowId=" + flowId + "&id=" + id;
     }
-        /**
+    /**
      * 删除一条流程信息
      * @param selectedItem
      * @param redirectAttributes
@@ -285,6 +297,48 @@ public class Material_inController {
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
         return "redirect:/material_in/material_in-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
+    }
+    /**
+     * 子表 excel导出
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("material_in_s-export")
+    public void excelMaterial_in_sExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        page = material_in_sService.pagedQuery(page, propertyFilters);
+        List<Material_in_sEntity> beans = (List<Material_in_sEntity>) page.getResult();
+
+        TableModel tableModel = new TableModel();
+        // excel文件名
+        tableModel.setExcelName("原料入库表"+CommonUtils.getInstance().getCurrentDateTime());
+        // 列名
+        tableModel.addHeaders("materialno", "materialname", "materialmodel", "materialunit", "materialnum", "amount", "manufacturename", "remark", "id", "parentid");
+        tableModel.setTableName("IB_MATERIAL_IN");
+        tableModel.setData(beans);
+        try {
+            new ExcelCommon().exportExcel(response, tableModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 子表 excel导入
+     */
+    @RequestMapping("material_in_s-importExcel")
+    public String importMaterial_in_sExport(@RequestParam("attachment") MultipartFile attachment, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, HttpServletResponse response) {
+        try {
+            File file = new File("test.xls"); 
+            attachment.transferTo(file);
+            // 
+            TableModel tableModel = new TableModel();
+            // 列名
+            tableModel.addHeaders("materialno", "materialname", "materialmodel", "materialunit", "materialnum", "amount", "manufacturename", "remark", "id", "parentid");
+            // 导入
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.productmanage.entity.Material_in_sEntity");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/material_in/material_in-input.do?flowId=" + flowId + "&id=" + parentid;
     }
 
     /**

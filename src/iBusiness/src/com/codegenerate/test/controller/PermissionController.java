@@ -12,6 +12,8 @@ import java.io.File;
 import org.springframework.web.multipart.MultipartFile;
 import com.ibusiness.common.export.ExcelCommon;
 import com.ibusiness.common.export.TableModel;
+import com.ibusiness.security.util.SpringSecurityUtils;
+import com.ibusiness.common.service.FormulaCommon;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,7 @@ import org.apache.commons.io.IOUtils;
 
 import net.sf.json.JSONObject;
 
+import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.core.spring.MessageHelper;
@@ -102,6 +105,10 @@ public class PermissionController {
             entity.setDoneflag(0);
             permissionService.insert(entity);
         }
+        
+        // 默认值公式
+        entity = (PermissionEntity) new FormulaCommon().defaultValue(entity, "IB_PERMISSION");
+        
         model.addAttribute("model", entity);
         
         // 取得当前流程节点信息

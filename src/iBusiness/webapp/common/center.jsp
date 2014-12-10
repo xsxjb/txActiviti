@@ -29,9 +29,9 @@
     <!-- datepicker -->
     <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap-datepicker/datepicker.css">
     <script type="text/javascript" src="${ctx}/plugin/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-    <link href="${ctx}/plugin/bootstrap-datetimepicker/css/datetimepicker.css" rel="stylesheet">
+    
+    <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" >
     <script type="text/javascript" src="${ctx}/plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="${ctx}/plugin/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
     <!-- table and pager -->
     <script type="text/javascript" src="${ctx}/plugin/pagination/pagination.js"></script>
@@ -57,5 +57,16 @@
 			}
 		    // 日期控件
 		    $('.datepicker').datepicker({format:'yyyy-mm-dd'});
+		    // 日期时间控件
+		    $('.datetimepicker').datetimepicker({
+		    	language: 'zh-CN',
+		    	weekStart:1, 
+		    	todayBtn:1, 
+		    	autoclose:1, 
+		    	todayHighlight:1, 
+		    	startView:2,
+		    	minView:2,
+		    	forceParse:0
+		    	});
 		});
     </script>

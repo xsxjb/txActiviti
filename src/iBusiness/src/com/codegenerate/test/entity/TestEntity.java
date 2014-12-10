@@ -1,15 +1,15 @@
 package com.codegenerate.test.entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**   
  * @Title: Entity
@@ -27,6 +27,8 @@ public class TestEntity implements java.io.Serializable {
 	private java.lang.String name;
 	/**remark*/
 	private java.lang.String remark;
+	/**eventtime*/
+	private java.sql.Timestamp eventtime;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -79,5 +81,21 @@ public class TestEntity implements java.io.Serializable {
 	 */
 	public void setRemark(java.lang.String remark){
 		this.remark = remark;
+	}
+	/**
+	 *方法: 取得java.sql.Timestamp
+	 *@return: java.sql.Timestamp  eventtime
+	 */
+	@Column(name ="EVENTTIME",nullable=true)
+	public java.sql.Timestamp getEventtime(){
+		return this.eventtime;
+	}
+
+	/**
+	 *方法: 设置java.sql.Timestamp
+	 *@param: java.sql.Timestamp  eventtime
+	 */
+	public void setEventtime(java.sql.Timestamp eventtime){
+		this.eventtime = eventtime;
 	}
 }
