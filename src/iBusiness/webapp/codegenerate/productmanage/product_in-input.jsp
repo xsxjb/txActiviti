@@ -22,7 +22,7 @@
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm'
-			,exportUrl: 'material_in_s-export.do'
+			,exportUrl: 'product_in_s-export.do'
 		};
 
 		var table;
@@ -63,16 +63,16 @@
 	    <div class="panel-body">
 	        <div class="pull-left">
 	            <a href="#nextTaskUserDiv" role="button" class="btn btn-default btn-sm" data-toggle="modal">办理</a>
-			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('material_in-save-draft.do')">草稿</button>
-			    <button class="btn btn-default btn-sm" onclick="location.href='material_in-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
-			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='material_in-list.do?flowId=${flowId}&flowType=0'">返回</button>
+			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('product_in-save-draft.do')">草稿</button>
+			    <button class="btn btn-default btn-sm" onclick="location.href='product_in-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
+			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='product_in-list.do?flowId=${flowId}&flowType=0'">返回</button>
 			</div>
 	   </div>
 	   
         <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
-		       <form id="mainForm" method="post" action="material_in-complete.do" class="form-horizontal">
+		       <form id="mainForm" method="post" action="product_in-complete.do" class="form-horizontal">
 				   <input type="hidden" name="flowId" value="${flowId}">
 				   <c:if test="${model != null}">
 				       <input type="hidden" name="id" value="${model.id}">
@@ -93,24 +93,19 @@
                             </div>
 						 
                            <div class="form-group">
-						      <label class="control-label  col-lg-2" for="code-warehouseno">仓库名称:</label>
+						      <label class="control-label  col-lg-2" for="code-warehouseno">仓库编号:</label>
                               <div class="col-lg-3">  <c:if test="${nodeColumsMap.warehouseno.fcEdit=='1'}">    <select id="code-warehouseno" name="warehouseno" class="form-control" >          <option value="" >请选择</option>        <c:forEach items="${warehousenoItems}" var="item">          <option value="${item.key}" ${item.key==model.warehouseno? 'selected':''} >${item.value}</option>        </c:forEach>    </select>  </c:if>  <c:if test="${nodeColumsMap.warehouseno.fcEdit!='1'}">    <label>${model.warehouseno}</label>    <input type="hidden" name="warehouseno" value="${model.warehouseno}">  </c:if></div>
-	                          
-	                          <label class="control-label  col-lg-2" for="code-totalnum">总数量:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.totalnum.fcEdit=='1'}">    <input id="code-totalnum" type="text" name="totalnum" value="${model.totalnum}" class="text number required" >  </c:if>  <c:if test="${nodeColumsMap.totalnum.fcEdit!='1'}">    <label>${model.totalnum}</label>    <input type="hidden" name="totalnum" value="${model.totalnum}">  </c:if></div>
-                            </div>
+	                                      
 						 
-                           <div class="form-group">
-						      <label class="control-label  col-lg-2" for="code-amount">合计金额:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.amount.fcEdit=='1'}">    <input id="code-amount" type="text" name="amount" value="${model.amount}" class="text number required" >  </c:if>  <c:if test="${nodeColumsMap.amount.fcEdit!='1'}">    <label>${model.amount}</label>    <input type="hidden" name="amount" value="${model.amount}">  </c:if></div>
-                              
-                              <label class="control-label  col-lg-2" for="code-amountbig">合计金额大写:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.amountbig.fcEdit=='1'}">    <input id="code-amountbig" type="text" name="amountbig" value="${model.amountbig}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.amountbig.fcEdit!='1'}">    <label>${model.amountbig}</label>    <input type="hidden" name="amountbig" value="${model.amountbig}">  </c:if></div>
+						      <label class="control-label  col-lg-2" for="code-warehousename">仓库名称:</label>
+                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.warehousename.fcEdit=='1'}">    <input id="code-warehousename" type="text" name="warehousename" value="${model.warehousename}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.warehousename.fcEdit!='1'}">    <label>${model.warehousename}</label>    <input type="hidden" name="warehousename" value="${model.warehousename}">  </c:if></div>
+	                                      
                             </div>
 						 
                            <div class="form-group">
 						      <label class="control-label  col-lg-2" for="code-remark">备注:</label>
                               <!-- 编辑类型     多行 --><div class="col-lg-6">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <textarea class="form-control" id="code-remark" name="remark" rows="1" >${model.remark}</textarea>  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
+	                                      
                             </div>
 						 
 					
@@ -150,8 +145,9 @@
         <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
-				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='material_in_s-input.do?id=${model.id}&subId=&flowId=${flowId}'">新建</button>
+				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='product_in_s-input.do?id=${model.id}&subId=&flowId=${flowId}'">新建</button>
 				    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+				    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
 	            
 				</div>
 				<div class="pull-right">
@@ -166,21 +162,23 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="gridForm" name="gridForm" method='post' action="material_in_s-remove.do" class="m-form-blank">
+				<form id="gridForm" name="gridForm" method='post' action="product_in_s-remove.do" class="m-form-blank">
 				  <input type="hidden" name="flowId" value="${flowId}">
 				  <table id="codeGrid" class="table table-hover table-bordered">
 				      <thead>
 					      <tr>
 					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					          <th width="80">&nbsp;</th>
-		                      <th class="sorting">原料编号</th>
-		                      <th class="sorting">原料名称</th>
-		                      <th class="sorting">原料规格型号</th>
+		                      <th class="sorting">仓库编号</th>
+		                      <th class="sorting">仓库名称</th>
+		                      <th class="sorting">产品类型</th>
+		                      <th class="sorting">产品件号</th>
+		                      <th class="sorting">产品编号</th>
+		                      <th class="sorting">产品名</th>
+		                      <th class="sorting">规格型号</th>
 		                      <th class="sorting">单位</th>
-		                      <th class="sorting">数量</th>
-		                      <th class="sorting">金额</th>
-		                      <th class="sorting">制造商</th>
-		                      <th class="sorting">备注</th>
+		                      <th class="sorting">单价</th>
+		                      <th class="sorting">数量合计</th>
 					      </tr>
 					    </thead>
 						    <tbody>
@@ -188,16 +186,18 @@
 								  <tr>
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 									    <td>
-								            <a href="material_in_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+								            <a href="product_in_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 								        </td>
-							            <td>${item.materialno}</td>
-							            <td>${item.materialname}</td>
-							            <td>${item.materialmodel}</td>
-							            <td>${item.materialunit}</td>
-							            <td>${item.materialnum}</td>
-							            <td>${item.amount}</td>
-							            <td>${item.manufacturename}</td>
-							            <td>${item.remark}</td>
+							            <td>${item.warehouseno}</td>
+							            <td>${item.warehousename}</td>
+							            <td>${item.producttype}</td>
+							            <td>${item.productflowid}</td>
+							            <td>${item.productno}</td>
+							            <td>${item.productname}</td>
+							            <td>${item.productmodel}</td>
+							            <td>${item.productunit}</td>
+							            <td>${item.unitprice}</td>
+							            <td>${item.productnum}</td>
 								  </tr>
 						      </c:forEach>
 						    </tbody>

@@ -72,7 +72,7 @@ public class CodeBpmTagFactory {
                     str = str + "<div class=\"col-lg-3\">";
                     // 日期时间
                     if (Constants.CODE_DATE.equals(formColumn.getFcType()) || Constants.CODE_DATE_TIME.equals(formColumn.getFcType())) {
-                        str = str + "  <fmt:formatDate value=\"${creatTime}\" pattern=\"yyyy-MM-dd HH:mm:ss\" />";
+                        str = str + "  <fmt:formatDate value=\"${model."+columnt.getFieldName()+"}\" pattern=\"yyyy-MM-dd HH:mm:ss\" />";
                     } else {
                         // 非日期时间
                         str = str + "  <label>${model."+columnt.getFieldName()+"}</label>";

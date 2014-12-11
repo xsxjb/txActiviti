@@ -74,7 +74,7 @@ public class TableCommonUtil {
             } else if ("ORACLE".equals(ConfigProperties.DATATYPE)) {
                 return "VARCHAR2" + (!CommonUtils.isNull(columnSize)? ("(" + columnSize + ")") : "");
             }
-        } else if ("NUMBER".equals(columnType)) {
+        } else if ("NUMBER".equals(columnType) || "INTEGER".equals(columnType) || "INT".equals(columnType)) {
             // 数值类型
             if ("MYSQL".equals(ConfigProperties.DATATYPE)) {
                 if (!CommonUtils.isNull(columnSize) && columnSize.indexOf(",") > 0) {
@@ -85,7 +85,7 @@ public class TableCommonUtil {
             } else if ("ORACLE".equals(ConfigProperties.DATATYPE)) {
                 return "NUMBER" + (!CommonUtils.isNull(columnSize)? ("(" + columnSize + ")") : "");
             }
-        } else if ("DATE".equals(columnType)) {
+        } else if ("DATE".equals(columnType) || "DATETIME".equals(columnType)) {
             // 日期类型
             if ("MYSQL".equals(ConfigProperties.DATATYPE)) {
                 return "DATETIME";

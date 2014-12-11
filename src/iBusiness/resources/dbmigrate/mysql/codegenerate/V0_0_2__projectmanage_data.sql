@@ -11,8 +11,8 @@ INSERT INTO IB_CONF_COMPONENT(ID,PACKAGENAME,MODULENAME,PARENTID,TYPEID) VALUES(
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('projectmanageOne','项目管理','1','#','URL','5','0');
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('projectmanageTwo1','合同管理','2','#','URL','1','projectmanageOne');
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('projectmanageTwo2','项目管理','2','#','URL','1','projectmanageOne');
-INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('projectmanageThree21','原料分解','3','/bom/bom-list.do','URL','1','projectmanageTwo2');
-INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('projectmanageThree22','项目立项','3','/project_approval/project_approval-list.do?flowType=0&flowId=projectApproval001','URL','2','projectmanageTwo2');
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('projectmanageThree21','项目立项','3','/project_approval/project_approval-list.do?flowType=0&flowId=projectApproval001','URL','1','projectmanageTwo2');
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('projectmanageThree22','原料分解','3','/bom/bom-list.do','URL','2','projectmanageTwo2');
 /*===============   菜单和角色模板关联表  =============================*/
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('projectmanageOne','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('projectmanageTwo1','2');
