@@ -7,7 +7,7 @@ import com.ibusiness.common.dao.BaseEntityDao;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 
 /**
- * 流水表表结构管理DAO
+ * 表字段结构管理DAO
  */
 @Component
 @Transactional(rollbackFor = Exception.class)

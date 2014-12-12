@@ -23,6 +23,7 @@ INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID)
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('productmanageThree33','产品管理','3','/product/product-list.do','URL','3','productmanageTwo3');
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('productmanageThree41','产品入库流程','3','/product_in/product_in-list.do?flowType=0&flowId=productIn001','URL','1','productmanageTwo4');
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('productmanageThree42','项目出库流程','3','/project_out/project_out-list.do?flowType=0&flowId=productOut001','URL','2','productmanageTwo4');
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('productmanageThree43','产品库存管理','3','/warehouse_product/warehouse_product-list.do','URL','3','productmanageTwo4');
 /*===============   菜单和角色模板关联表  =============================*/
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('productmanageOne','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('productmanageTwo1','2');
@@ -39,6 +40,7 @@ INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('productmanageThree32',
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('productmanageThree33','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('productmanageThree41','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('productmanageThree42','2');
+INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('productmanageThree43','2');
 
 /* ================================================================================   */
 /* ===================================    仓库信息表          =================================   */
@@ -511,3 +513,35 @@ insert into ib_conf_flow_chart(ID,FLOWID,ITEMID,NODEID,CONTEXT) values ('db59819
 insert into ib_conf_flow_chart(ID,FLOWID,ITEMID,NODEID,CONTEXT) values ('e297b950-3f95-4759-8df4-1b1854af36c4','productOut001','e9fb7759-8f15-462d-8d01-1e9142b73864','','{\"id\":\"e9fb7759-8f15-462d-8d01-1e9142b73864\",\"name\":\"开始节点\",\"type\":\"StartNode\",\"title\":\"开始节点\",\"x\":\"70\",\"y\":\"65\",\"width\":\"50\",\"height\":\"50\",\"afterLineIds\":\"200861cf-0984-4460-8c56-098db1659518\"}');
 insert into ib_conf_flow_chart(ID,FLOWID,ITEMID,NODEID,CONTEXT) values ('e934312e-3d50-46cd-a904-6c6cfc66cb9b','productOut001','5abd612e-c4cd-4c52-9186-7598a0b13768','','{\"id\":\"5abd612e-c4cd-4c52-9186-7598a0b13768\",\"name\":\"泳道\",\"type\":\"Lane\",\"title\":\"发起\",\"x\":\"0\",\"y\":\"40\",\"width\":\"35\",\"height\":\"110\"}');
 insert into ib_conf_flow_chart(ID,FLOWID,ITEMID,NODEID,CONTEXT) values ('f2735181-c827-4561-b4b1-17347acbdc82','productOut001','539c3999-ed6b-4116-9d17-0ee8feed9f09','','{\"id\":\"539c3999-ed6b-4116-9d17-0ee8feed9f09\",\"name\":\"结束节点\",\"type\":\"EndNode\",\"title\":\"结束\",\"x\":\"550\",\"y\":\"175\",\"width\":\"50\",\"height\":\"50\",\"headLineIds\":\"3f60c19f-c9c7-45ce-9728-26d2fc1797af\"}');
+/* ================================================================================   */
+/* ==================================    产品库存管理表     =================================   */
+/* ================================================================================   */
+/*======= 表单 ==========*/ 
+insert into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL, ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT,ISIMPORTEXPORT,ISBPMFORM) values ('9a2c1d0b-3311-4efc-b7fe-b25a50c9298e','productmanage','warehouseProduct','产品库存管理表','/warehouse_product/warehouse_product-list.do',1,1,1,1,1,2,2);
+/*======= 表单对应表 ==========*/
+insert into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT','main');
+/*======= 表单字段 ==========*/
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.PRODUCTTYPE','产品类型','PRODUCTTYPE','IB_WAREHOUSE_PRODUCT',1,'1','null','null','1','1','2','null','null','null');
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.PRODUCTFLOWID','产品件号','PRODUCTFLOWID','IB_WAREHOUSE_PRODUCT',2,'1','null','null','1','1','2','null','null','null');
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.PRODUCTNO','产品编号','PRODUCTNO','IB_WAREHOUSE_PRODUCT',3,'1','null','null','1','1','2','null','null','null');
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.PRODUCTNAME','产品名','PRODUCTNAME','IB_WAREHOUSE_PRODUCT',4,'1','','','1','1','1','1','','');
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.PRODUCTMODEL','规格型号','PRODUCTMODEL','IB_WAREHOUSE_PRODUCT',5,'1','null','null','1','1','2','null','null','null');
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.PRODUCTUNIT','单位','PRODUCTUNIT','IB_WAREHOUSE_PRODUCT',6,'1','null','null','1','1','2','null','null','null');
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.PRODUCTPRICE','单价','PRODUCTPRICE','IB_WAREHOUSE_PRODUCT',7,'5','','','1','1','2','1','','');
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.PRODUCTNUM','数量','PRODUCTNUM','IB_WAREHOUSE_PRODUCT',8,'5','','','1','1','2','1','','');
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.WAREHOUSENO','仓库编号','WAREHOUSENO','IB_WAREHOUSE_PRODUCT',9,'1','null','null','1','1','2','null','null','null');
+insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.WAREHOUSENAME','仓库名称','WAREHOUSENAME','IB_WAREHOUSE_PRODUCT',10,'1','null','null','1','1','2','null','null','null');
+/*======= 表 ==========*/
+insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('7e587168-4429-4d71-a804-c67a8afa5f19','productmanage','IB_WAREHOUSE_PRODUCT','产品库存管理表','1','null',2);
+/*======= 表字段 ==========*/
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTTYPE','产品类型','VARCHAR','64','是','',1);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTFLOWID','产品件号','VARCHAR','64','是','',2);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTNO','产品编号','VARCHAR','64','是','',3);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTNAME','产品名','VARCHAR','128','是','',4);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTMODEL','规格型号','VARCHAR','64','是','',5);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTUNIT','单位','VARCHAR','8','是','',6);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTPRICE','单价','NUMBER','12,2','是','',7);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTNUM','数量','NUMBER','10','是','',8);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','WAREHOUSENO','仓库编号','VARCHAR','64','是','',9);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','WAREHOUSENAME','仓库名称','VARCHAR','128','是','',10);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','ID','UUID主键','VARCHAR','64','否','null',91);

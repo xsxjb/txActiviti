@@ -20,6 +20,8 @@ public class ConfFlowChart {
     private String flowId;
     // 图控件Id
     private String itemId;
+    // 流程节点Id
+    private String nodeId;
     // JSON内容
     private String context;
     
@@ -69,5 +71,18 @@ public class ConfFlowChart {
      */
     public void setContext(String context) {
         this.context = context;
+    }
+    /**
+     * @return the nodeId
+     */
+    @Column(name = "NODEID")
+    public String getNodeId() {
+        return nodeId;
+    }
+    /**
+     * @param nodeId the nodeId to set
+     */
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
 }
