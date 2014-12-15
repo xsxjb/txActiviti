@@ -532,7 +532,7 @@ insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMN
 insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.WAREHOUSENO','仓库编号','WAREHOUSENO','IB_WAREHOUSE_PRODUCT',9,'1','null','null','1','1','2','null','null','null');
 insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('productmanage','warehouseProduct','IB_WAREHOUSE_PRODUCT.WAREHOUSENAME','仓库名称','WAREHOUSENAME','IB_WAREHOUSE_PRODUCT',10,'1','null','null','1','1','2','null','null','null');
 /*======= 表 ==========*/
-insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('7e587168-4429-4d71-a804-c67a8afa5f19','productmanage','IB_WAREHOUSE_PRODUCT','产品库存管理表','1','null',2);
+insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('ib_warehouse_product001','productmanage','IB_WAREHOUSE_PRODUCT','产品库存管理表','1','null',2);
 /*======= 表字段 ==========*/
 insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTTYPE','产品类型','VARCHAR','64','是','',1);
 insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_WAREHOUSE_PRODUCT','PRODUCTFLOWID','产品件号','VARCHAR','64','是','',2);

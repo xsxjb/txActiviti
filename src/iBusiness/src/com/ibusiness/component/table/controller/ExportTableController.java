@@ -63,7 +63,7 @@ public class ExportTableController {
     @RequestMapping("export-table-show")
     public String exportTableShow(Model model) {
         // 在controller中设置页面控件用的数据
-        String formidSql = "select id vKey, formTitle vValue from IB_CONF_FORM ";
+        String formidSql = "select id vKey, formTitle vValue from IB_CONF_FORM Order by formTitle ";
         List<Map<String, Object>> formidList = com.ibusiness.core.spring.ApplicationContextHelper
                 .getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate()
                 .queryForList(formidSql);
@@ -109,7 +109,7 @@ public class ExportTableController {
             String bpmSql = "/*======= 流程 ==========*/\r\n";
             bpmSql = bpmSql + "INSERT INTO IB_BPM_PROCESS(ID,PACKAGENAME,FLOWNAME,FLOWTITLE,VERSIONID, FORMID,FLOWURL) VALUES(";
             bpmSql = bpmSql + "'" + bpmProcess.getId() + "','" + bpmProcess.getPackageName() + "','" + bpmProcess.getFlowName() + "','" + bpmProcess.getFlowTitle() + "','" + bpmProcess.getVersionId();
-            bpmSql = bpmSql + "','" + bpmProcess.getFormId() + "','" + bpmProcess.getFlowUrl() + "');";
+            bpmSql = bpmSql + "','" + bpmProcess.getFormId() + "','" + bpmProcess.getFlowUrl() + "');\r\n";
             // 写文件
             fileInputByStr(bpmSql, filePath);
             menuurl = bpmProcess.getFlowUrl();
@@ -195,6 +195,7 @@ public class ExportTableController {
             // 生成建表语句
             if (null != tableColumnsList && tableColumnsList.size() > 0) {
                 // 创建表
+                createSql = createSql + "DROP TABLE IF EXISTS " + formTable.getTableName() + ";\r\n";
                 createSql = createSql + "CREATE TABLE " + formTable.getTableName() + " (";
                 for (ConfTableColumns bean : tableColumnsList) {
                     String columnType = TableCommonUtil.getInstance().getColumnTypeByDataType(bean.getColumnType(), bean.getColumnSize());

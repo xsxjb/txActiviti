@@ -1,4 +1,4 @@
-package com.codegenerate.crmmanage.controller;
+package com.codegenerate.projectmanage.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -31,33 +31,33 @@ import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
 
-import com.codegenerate.crmmanage.entity.SupplierEntity;
-import com.codegenerate.crmmanage.service.SupplierService;
+import com.codegenerate.projectmanage.entity.Material_wasteEntity;
+import com.codegenerate.projectmanage.service.Material_wasteService;
 
 /**   
  * @Title: Controller
- * @Description: 原材料供应商维护
+ * @Description: 作废产品原料清单
  * @author JiangBo
  *
  */
 @Controller
-@RequestMapping("supplier")
-public class SupplierController {
+@RequestMapping("material_waste")
+public class Material_wasteController {
 
     private MessageHelper messageHelper;
-    private SupplierService supplierService;
+    private Material_wasteService material_wasteService;
    /**
      * 列表
      */
-    @RequestMapping("supplier-list")
+    @RequestMapping("material_waste-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         // 根据条件查询数据
-        page = supplierService.pagedQuery(page, propertyFilters);
+        page = material_wasteService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "codegenerate/crmmanage/supplier-list.jsp";
+        return "codegenerate/projectmanage/material_waste-list.jsp";
     }
     
     /**
@@ -66,22 +66,22 @@ public class SupplierController {
      * @param model
      * @return
      */
-    @RequestMapping("supplier-input")
+    @RequestMapping("material_waste-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
-        SupplierEntity entity = null;
+        Material_wasteEntity entity = null;
         if (!CommonUtils.isNull(id)) {
-            entity = supplierService.get(id);
+            entity = material_wasteService.get(id);
         } else {
-            entity = new SupplierEntity();
+            entity = new Material_wasteEntity();
         }
         
         // 默认值公式
-        entity = (SupplierEntity) new FormulaCommon().defaultValue(entity, "IB_SUPPLIER");
+        entity = (Material_wasteEntity) new FormulaCommon().defaultValue(entity, "IB_MATERIAL_WASTE");
         
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
-        return "codegenerate/crmmanage/supplier-input.jsp";
+        return "codegenerate/projectmanage/material_waste-input.jsp";
     }
 
     /**
@@ -90,19 +90,19 @@ public class SupplierController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("supplier-save")
-    public String save(@ModelAttribute SupplierEntity entity, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("material_waste-save")
+    public String save(@ModelAttribute Material_wasteEntity entity, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         // 再进行数据复制
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
-            supplierService.insert(entity);
+            material_wasteService.insert(entity);
         } else {
-            supplierService.update(entity);
+            material_wasteService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/supplier/supplier-list.do";
+        return "redirect:/material_waste/material_waste-list.do";
     }
    /**
      * 删除
@@ -110,32 +110,32 @@ public class SupplierController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("supplier-remove")
+    @RequestMapping("material_waste-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
-        List<SupplierEntity> entitys = supplierService.findByIds(selectedItem);
-        for (SupplierEntity entity : entitys) {
-            supplierService.remove(entity);
+        List<Material_wasteEntity> entitys = material_wasteService.findByIds(selectedItem);
+        for (Material_wasteEntity entity : entitys) {
+            material_wasteService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/supplier/supplier-list.do";
+        return "redirect:/material_waste/material_waste-list.do";
     }
     /**
      * excel导出
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping("supplier-export")
+    @RequestMapping("material_waste-export")
     public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        page = supplierService.pagedQuery(page, propertyFilters);
-        List<SupplierEntity> beans = (List<SupplierEntity>) page.getResult();
+        page = material_wasteService.pagedQuery(page, propertyFilters);
+        List<Material_wasteEntity> beans = (List<Material_wasteEntity>) page.getResult();
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("原材料供应商维护"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("作废产品原料清单"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "accountno", "beneficiary", "businesscontacts", "category", "companyfax", "companyphone", "contactfax", "contactmobilephone", "contacttelephone", "enrolltime", "estinationcity", "financialcall", "financialcontacts", "financialfax", "financialphone", "information", "product", "registered", "remittancename", "suppliernumber", "taxno", "telephone", "unitname", "updatas", "url", "useraddress", "userfax", "usermobilephone", "userperson", "userphone", "youraddress", "yourcompany", "yourname", "yourphone");
-        tableModel.setTableName("IB_SUPPLIER");
+        tableModel.addHeaders("materialno", "materialname", "model", "materialnum", "currentstatus", "processingresults", "id");
+        tableModel.setTableName("IB_MATERIAL_WASTE");
         tableModel.setData(beans);
         try {
             new ExcelCommon().exportExcel(response, tableModel);
@@ -146,7 +146,7 @@ public class SupplierController {
     /**
      * excel导入
      */
-    @RequestMapping("supplier-importExcel")
+    @RequestMapping("material_waste-importExcel")
     public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
         try {
             File file = new File("test.xls"); 
@@ -154,13 +154,13 @@ public class SupplierController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "accountno", "beneficiary", "businesscontacts", "category", "companyfax", "companyphone", "contactfax", "contactmobilephone", "contacttelephone", "enrolltime", "estinationcity", "financialcall", "financialcontacts", "financialfax", "financialphone", "information", "product", "registered", "remittancename", "suppliernumber", "taxno", "telephone", "unitname", "updatas", "url", "useraddress", "userfax", "usermobilephone", "userperson", "userphone", "youraddress", "yourcompany", "yourname", "yourphone");
+            tableModel.addHeaders("materialno", "materialname", "model", "materialnum", "currentstatus", "processingresults", "id");
             // 导入
-            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.crmmanage.entity.SupplierEntity");
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.projectmanage.entity.Material_wasteEntity");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/supplier/supplier-list.do";
+        return "redirect:/material_waste/material_waste-list.do";
     }
     // ======================================================================
     @Resource
@@ -169,8 +169,8 @@ public class SupplierController {
     }
 
     @Resource
-    public void setSupplierService(SupplierService supplierService) {
-        this.supplierService = supplierService;
+    public void setMaterial_wasteService(Material_wasteService material_wasteService) {
+        this.material_wasteService = material_wasteService;
     }
     
 }

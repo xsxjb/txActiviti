@@ -1,29 +1,32 @@
 package com.codegenerate.productmanage.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.ibusiness.common.model.ConfSelectItem;
-import com.ibusiness.common.service.CommonBusiness;
-import com.ibusiness.component.form.entity.ConfFormTableColumn;
-
-import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.common.page.PropertyFilter;
-import com.ibusiness.common.page.Page;
-import com.ibusiness.common.util.CommonUtils;
 
 import com.codegenerate.productmanage.entity.Materials_typeEntity;
 import com.codegenerate.productmanage.service.Materials_typeService;
+import com.ibusiness.common.model.ConfSelectItem;
+import com.ibusiness.common.page.Page;
+import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.common.util.CommonUtils;
+import com.ibusiness.component.portal.entity.ConfComponent;
+import com.ibusiness.core.spring.MessageHelper;
 
 /**   
  * @Title: Controller
@@ -38,6 +41,40 @@ public class Materials_typeController {
     private MessageHelper messageHelper;
     private Materials_typeService materials_typeService;
    /**
+     * 树
+     */
+    @ResponseBody
+    @RequestMapping("materials-type-tree")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Map<String, Object>> tree(Model model) {
+//        String hql = "from ConfComponent where parentid = '0' ";
+        
+//        List<ConfComponent> entities = componentDao.find(hql);
+        // 制造一个根节点,用于对业务模块进行 增删改
+        Map<String, Object> map = new HashMap<String, Object>();
+//        { id:1, pId:0, name:"父节点 1", open:true},
+
+        map.put("id", 1);
+        map.put("pId", 0);
+        map.put("name", "物料类型");
+        map.put("open", "true");  // 展开
+      //  map.put("icon", "../plugin/ztree/zTreeStyle/img/diy/1_open.png");
+        map.put("children",generateEntities());
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        list.add(map);
+        return list;
+    }
+    private List<Map<String, Object>> generateEntities() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map = new HashMap<String, Object>();
+//        { id:11, pId:1, name:"叶子节点 1-1"}
+        map.put("id", 11);
+        map.put("pId", 1);
+        map.put("name", "物料叶子类型");
+        list.add(map);
+        return list;
+    }
+    /**
      * 列表
      */
     @RequestMapping("materials_type-list")
@@ -48,7 +85,7 @@ public class Materials_typeController {
         page = materials_typeService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "codegenerate/productmanage/materials_type-list.jsp";
+        return "codegenerate/productmanage/materials-type-tree.jsp";
     }
     
     /**

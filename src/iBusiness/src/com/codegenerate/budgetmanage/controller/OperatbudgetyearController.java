@@ -1,4 +1,4 @@
-package com.codegenerate.crmmanage.controller;
+package com.codegenerate.budgetmanage.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -31,33 +31,33 @@ import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
 
-import com.codegenerate.crmmanage.entity.SupplierEntity;
-import com.codegenerate.crmmanage.service.SupplierService;
+import com.codegenerate.budgetmanage.entity.OperatbudgetyearEntity;
+import com.codegenerate.budgetmanage.service.OperatbudgetyearService;
 
 /**   
  * @Title: Controller
- * @Description: 原材料供应商维护
+ * @Description: 经营预算年度数据表
  * @author JiangBo
  *
  */
 @Controller
-@RequestMapping("supplier")
-public class SupplierController {
+@RequestMapping("operatbudgetyear")
+public class OperatbudgetyearController {
 
     private MessageHelper messageHelper;
-    private SupplierService supplierService;
+    private OperatbudgetyearService operatbudgetyearService;
    /**
      * 列表
      */
-    @RequestMapping("supplier-list")
+    @RequestMapping("operatbudgetyear-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         // 根据条件查询数据
-        page = supplierService.pagedQuery(page, propertyFilters);
+        page = operatbudgetyearService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "codegenerate/crmmanage/supplier-list.jsp";
+        return "codegenerate/budgetmanage/operatbudgetyear-list.jsp";
     }
     
     /**
@@ -66,22 +66,22 @@ public class SupplierController {
      * @param model
      * @return
      */
-    @RequestMapping("supplier-input")
+    @RequestMapping("operatbudgetyear-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
-        SupplierEntity entity = null;
+        OperatbudgetyearEntity entity = null;
         if (!CommonUtils.isNull(id)) {
-            entity = supplierService.get(id);
+            entity = operatbudgetyearService.get(id);
         } else {
-            entity = new SupplierEntity();
+            entity = new OperatbudgetyearEntity();
         }
         
         // 默认值公式
-        entity = (SupplierEntity) new FormulaCommon().defaultValue(entity, "IB_SUPPLIER");
+        entity = (OperatbudgetyearEntity) new FormulaCommon().defaultValue(entity, "IB_OPERATBUDGETYEAR");
         
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
-        return "codegenerate/crmmanage/supplier-input.jsp";
+        return "codegenerate/budgetmanage/operatbudgetyear-input.jsp";
     }
 
     /**
@@ -90,19 +90,19 @@ public class SupplierController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("supplier-save")
-    public String save(@ModelAttribute SupplierEntity entity, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("operatbudgetyear-save")
+    public String save(@ModelAttribute OperatbudgetyearEntity entity, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         // 再进行数据复制
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
-            supplierService.insert(entity);
+            operatbudgetyearService.insert(entity);
         } else {
-            supplierService.update(entity);
+            operatbudgetyearService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/supplier/supplier-list.do";
+        return "redirect:/operatbudgetyear/operatbudgetyear-list.do";
     }
    /**
      * 删除
@@ -110,32 +110,32 @@ public class SupplierController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("supplier-remove")
+    @RequestMapping("operatbudgetyear-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
-        List<SupplierEntity> entitys = supplierService.findByIds(selectedItem);
-        for (SupplierEntity entity : entitys) {
-            supplierService.remove(entity);
+        List<OperatbudgetyearEntity> entitys = operatbudgetyearService.findByIds(selectedItem);
+        for (OperatbudgetyearEntity entity : entitys) {
+            operatbudgetyearService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/supplier/supplier-list.do";
+        return "redirect:/operatbudgetyear/operatbudgetyear-list.do";
     }
     /**
      * excel导出
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping("supplier-export")
+    @RequestMapping("operatbudgetyear-export")
     public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        page = supplierService.pagedQuery(page, propertyFilters);
-        List<SupplierEntity> beans = (List<SupplierEntity>) page.getResult();
+        page = operatbudgetyearService.pagedQuery(page, propertyFilters);
+        List<OperatbudgetyearEntity> beans = (List<OperatbudgetyearEntity>) page.getResult();
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("原材料供应商维护"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("经营预算年度数据表"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "accountno", "beneficiary", "businesscontacts", "category", "companyfax", "companyphone", "contactfax", "contactmobilephone", "contacttelephone", "enrolltime", "estinationcity", "financialcall", "financialcontacts", "financialfax", "financialphone", "information", "product", "registered", "remittancename", "suppliernumber", "taxno", "telephone", "unitname", "updatas", "url", "useraddress", "userfax", "usermobilephone", "userperson", "userphone", "youraddress", "yourcompany", "yourname", "yourphone");
-        tableModel.setTableName("IB_SUPPLIER");
+        tableModel.addHeaders("id", "planyear", "projecttype", "projectname", "changeplanam", "addplanamount", "planamount", "yearplanbalance", "amount", "dept");
+        tableModel.setTableName("IB_OPERATBUDGETYEAR");
         tableModel.setData(beans);
         try {
             new ExcelCommon().exportExcel(response, tableModel);
@@ -146,7 +146,7 @@ public class SupplierController {
     /**
      * excel导入
      */
-    @RequestMapping("supplier-importExcel")
+    @RequestMapping("operatbudgetyear-importExcel")
     public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
         try {
             File file = new File("test.xls"); 
@@ -154,13 +154,13 @@ public class SupplierController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "accountno", "beneficiary", "businesscontacts", "category", "companyfax", "companyphone", "contactfax", "contactmobilephone", "contacttelephone", "enrolltime", "estinationcity", "financialcall", "financialcontacts", "financialfax", "financialphone", "information", "product", "registered", "remittancename", "suppliernumber", "taxno", "telephone", "unitname", "updatas", "url", "useraddress", "userfax", "usermobilephone", "userperson", "userphone", "youraddress", "yourcompany", "yourname", "yourphone");
+            tableModel.addHeaders("id", "planyear", "projecttype", "projectname", "changeplanam", "addplanamount", "planamount", "yearplanbalance", "amount", "dept");
             // 导入
-            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.crmmanage.entity.SupplierEntity");
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.budgetmanage.entity.OperatbudgetyearEntity");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/supplier/supplier-list.do";
+        return "redirect:/operatbudgetyear/operatbudgetyear-list.do";
     }
     // ======================================================================
     @Resource
@@ -169,8 +169,8 @@ public class SupplierController {
     }
 
     @Resource
-    public void setSupplierService(SupplierService supplierService) {
-        this.supplierService = supplierService;
+    public void setOperatbudgetyearService(OperatbudgetyearService operatbudgetyearService) {
+        this.operatbudgetyearService = operatbudgetyearService;
     }
     
 }

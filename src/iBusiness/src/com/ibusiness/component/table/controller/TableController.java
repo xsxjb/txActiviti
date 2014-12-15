@@ -233,6 +233,7 @@ public class TableController {
             List<ConfTableColumns> list = new ArrayList<ConfTableColumns>();
             confTableColumns.setTableName(tableName.toUpperCase());//转成大写
             confTableColumns.setColumnValue(confTableColumns.getColumnValue().toUpperCase());//转成大写
+            confTableColumns.setColumnSize(confTableColumns.getColumnSize().replace("，", ",")); // 将全角逗号替换成半角
             list.add(confTableColumns);
             // 插入
             tableService.insertConfTableColumns(list);
