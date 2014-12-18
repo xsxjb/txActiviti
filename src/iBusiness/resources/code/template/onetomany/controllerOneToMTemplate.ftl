@@ -187,7 +187,7 @@ public class ${entityName}Controller {
      * 子表 excel导入
      */
     @RequestMapping("${sub.entityName?uncap_first}-importExcel")
-    public String import${sub.entityName}Export(@RequestParam("attachment") MultipartFile attachment, @RequestParam(value = "parentid", required = false) String parentid,, HttpServletResponse response) {
+    public String import${sub.entityName}Export(@RequestParam("attachment") MultipartFile attachment, @RequestParam(value = "parentid", required = false) String parentid, HttpServletResponse response) {
         try {
             File file = new File("test.xls"); 
             attachment.transferTo(file);

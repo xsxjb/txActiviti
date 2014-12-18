@@ -256,7 +256,7 @@ public class CodeController {
             String tableHql = "from ConfTable where tableName=? AND packageName=?";
             List<ConfTable> tables = tableDao.find(tableHql, confFormTable.getTableName(), packageName);
             if (null != tables && tables.size() > 0) {
-                bean.setEntityTitle(tables.get(0).getTableNameComment());
+                bean.setEntityTitle(tables.get(0).getTableNameComment() + ((null != tables.get(0).getIsBpmTable() && 1 ==tables.get(0).getIsBpmTable()) ? "流程" : "页面"));
             }
             // 每行字段数目 1
             bean.setRowNumber("1");
@@ -298,7 +298,7 @@ public class CodeController {
                 String tableHql = "from ConfTable where tableName=? AND packageName=?";
                 List<ConfTable> tables = tableDao.find(tableHql, confFormTable.getTableName(), packageName);
                 if (null != tables && tables.size() > 0) {
-                    subbean.setEntityTitle(tables.get(0).getTableNameComment());
+                    subbean.setEntityTitle(tables.get(0).getTableNameComment() + ((null != tables.get(0).getIsBpmTable() && 1 ==tables.get(0).getIsBpmTable()) ? "流程" : "页面"));
                 }
                 // 每行字段数目2
                 subbean.setRowNumber("2");

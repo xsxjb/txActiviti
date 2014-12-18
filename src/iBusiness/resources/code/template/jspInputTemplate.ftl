@@ -4,7 +4,7 @@
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>编辑</title>
+    <title>${confForm.formTitle}编辑</title>
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
@@ -26,7 +26,7 @@
     <div class="col-lg-1"></div>
     <!-- start of main -->
     <div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">${confForm.formTitle}编辑</h4></div>
         <div class="panel-body">
                 <form id="cgForm" method="post" action="${entityName?uncap_first}-save.do" class="form-horizontal">
                   <c:if test="${'$' + '{model != null}'}">

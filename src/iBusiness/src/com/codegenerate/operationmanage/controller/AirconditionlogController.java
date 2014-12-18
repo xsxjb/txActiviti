@@ -1,38 +1,32 @@
 package com.codegenerate.operationmanage.controller;
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import net.sf.json.JSONObject;
 
 import javax.annotation.Resource;
-import java.io.File;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.multipart.MultipartFile;
-import com.ibusiness.common.export.ExcelCommon;
-import com.ibusiness.common.export.TableModel;
 
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.ibusiness.security.util.SpringSecurityUtils;
-import com.ibusiness.common.model.ConfSelectItem;
-import com.ibusiness.common.service.CommonBusiness;
-import com.ibusiness.component.form.entity.ConfFormTableColumn;
-import com.ibusiness.common.service.FormulaCommon;
-
-import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.common.page.PropertyFilter;
-import com.ibusiness.common.page.Page;
-import com.ibusiness.common.util.CommonUtils;
 
 import com.codegenerate.operationmanage.entity.AirconditionlogEntity;
 import com.codegenerate.operationmanage.service.AirconditionlogService;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
+import com.ibusiness.common.page.Page;
+import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.FormulaCommon;
+import com.ibusiness.common.util.CommonUtils;
+import com.ibusiness.core.spring.MessageHelper;
 
 /**   
  * @Title: Controller
@@ -92,8 +86,6 @@ public class AirconditionlogController {
      */
     @RequestMapping("airconditionlog-save")
     public String save(@ModelAttribute AirconditionlogEntity entity, RedirectAttributes redirectAttributes) throws Exception {
-        // 先进行校验
-        // 再进行数据复制
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());

@@ -13,18 +13,26 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 项目生产进度表流程
+ * @Description: 项目生产计划表
  * @author JiangBo
  *
  */
 @Entity
-@Table(name = "IB_PRODUCTION_SCHEDULE_S")
-public class Production_schedule_sEntity implements java.io.Serializable {
+@Table(name = "IB_PRODUCTION_PLAN_S")
+public class Production_plan_sEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-	/**parentid*/
-	private java.lang.String parentid;
+	/**projectno*/
+	private java.lang.String projectno;
+	/**projectname*/
+	private java.lang.String projectname;
 	/**batchno*/
 	private java.lang.String batchno;
+	/**productiontype*/
+	private java.lang.String productiontype;
+	/**productionmode*/
+	private java.lang.String productionmode;
+	/**productionaddress*/
+	private java.lang.String productionaddress;
 	/**producttype*/
 	private java.lang.String producttype;
 	/**productflowid*/
@@ -35,32 +43,50 @@ public class Production_schedule_sEntity implements java.io.Serializable {
 	private java.lang.String productname;
 	/**productmodel*/
 	private java.lang.String productmodel;
-	/**materialnum*/
-	private java.lang.String materialnum;
+	/**productnum*/
+	private java.lang.Integer productnum;
+	/**workingday*/
+	private java.lang.Integer workingday;
 	/**starttime*/
 	private java.util.Date starttime;
 	/**endtime*/
 	private java.util.Date endtime;
-	/**productionaddress*/
-	private java.lang.String productionaddress;
 	/**id*/
 	private java.lang.String id;
+	/**parentid*/
+	private java.lang.String parentid;
 	
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  parentid
+	 *@return: java.lang.String  projectno
 	 */
-	@Column(name ="PARENTID",nullable=true,length=64)
-	public java.lang.String getParentid(){
-		return this.parentid;
+	@Column(name ="PROJECTNO",nullable=true,length=64)
+	public java.lang.String getProjectno(){
+		return this.projectno;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  parentid
+	 *@param: java.lang.String  projectno
 	 */
-	public void setParentid(java.lang.String parentid){
-		this.parentid = parentid;
+	public void setProjectno(java.lang.String projectno){
+		this.projectno = projectno;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  projectname
+	 */
+	@Column(name ="PROJECTNAME",nullable=true,length=128)
+	public java.lang.String getProjectname(){
+		return this.projectname;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  projectname
+	 */
+	public void setProjectname(java.lang.String projectname){
+		this.projectname = projectname;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -77,6 +103,54 @@ public class Production_schedule_sEntity implements java.io.Serializable {
 	 */
 	public void setBatchno(java.lang.String batchno){
 		this.batchno = batchno;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  productiontype
+	 */
+	@Column(name ="PRODUCTIONTYPE",nullable=true,length=64)
+	public java.lang.String getProductiontype(){
+		return this.productiontype;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  productiontype
+	 */
+	public void setProductiontype(java.lang.String productiontype){
+		this.productiontype = productiontype;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  productionmode
+	 */
+	@Column(name ="PRODUCTIONMODE",nullable=true,length=64)
+	public java.lang.String getProductionmode(){
+		return this.productionmode;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  productionmode
+	 */
+	public void setProductionmode(java.lang.String productionmode){
+		this.productionmode = productionmode;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  productionaddress
+	 */
+	@Column(name ="PRODUCTIONADDRESS",nullable=true,length=128)
+	public java.lang.String getProductionaddress(){
+		return this.productionaddress;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  productionaddress
+	 */
+	public void setProductionaddress(java.lang.String productionaddress){
+		this.productionaddress = productionaddress;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -159,20 +233,36 @@ public class Production_schedule_sEntity implements java.io.Serializable {
 		this.productmodel = productmodel;
 	}
 	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  materialnum
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  productnum
 	 */
-	@Column(name ="MATERIALNUM",nullable=true,length=10)
-	public java.lang.String getMaterialnum(){
-		return this.materialnum;
+	@Column(name ="PRODUCTNUM",nullable=true,precision=10,scale=0)
+	public java.lang.Integer getProductnum(){
+		return this.productnum;
 	}
 
 	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  materialnum
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  productnum
 	 */
-	public void setMaterialnum(java.lang.String materialnum){
-		this.materialnum = materialnum;
+	public void setProductnum(java.lang.Integer productnum){
+		this.productnum = productnum;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  workingday
+	 */
+	@Column(name ="WORKINGDAY",nullable=true,precision=10,scale=0)
+	public java.lang.Integer getWorkingday(){
+		return this.workingday;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  workingday
+	 */
+	public void setWorkingday(java.lang.Integer workingday){
+		this.workingday = workingday;
 	}
 	/**
 	 *方法: 取得java.util.Date
@@ -208,22 +298,6 @@ public class Production_schedule_sEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  productionaddress
-	 */
-	@Column(name ="PRODUCTIONADDRESS",nullable=true,length=128)
-	public java.lang.String getProductionaddress(){
-		return this.productionaddress;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  productionaddress
-	 */
-	public void setProductionaddress(java.lang.String productionaddress){
-		this.productionaddress = productionaddress;
-	}
-	/**
-	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  id
 	 */
 	
@@ -241,5 +315,21 @@ public class Production_schedule_sEntity implements java.io.Serializable {
 	 */
 	public void setId(java.lang.String id){
 		this.id = id;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  parentid
+	 */
+	@Column(name ="PARENTID",nullable=true,length=64)
+	public java.lang.String getParentid(){
+		return this.parentid;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  parentid
+	 */
+	public void setParentid(java.lang.String parentid){
+		this.parentid = parentid;
 	}
 }

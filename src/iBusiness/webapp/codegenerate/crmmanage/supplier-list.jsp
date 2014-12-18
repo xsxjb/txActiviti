@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>列表</title>
+    <title>供应商管理列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -47,7 +47,7 @@
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
 	<!-- 查询条件 -->
-	   <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+	   <div class="panel-heading"><h4 class="panel-title">供应商管理列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='supplier-input.do'">新建</button>
@@ -77,39 +77,10 @@
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					                <th class="sorting">填表人</th>
 					                <th class="sorting">供应商编号</th>
-					                <th class="sorting">类别</th>
 					                <th class="sorting">企业名称</th>
 					                <th class="sorting">企业地址</th>
-					                <th class="sorting">企业性质</th>
-					                <th class="sorting">注册资本</th>
-					                <th class="sorting">注册时间</th>
 					                <th class="sorting">网址</th>
 					                <th class="sorting">公司电话</th>
-					                <th class="sorting">公司传真</th>
-					                <th class="sorting">供应产品</th>
-					                <th class="sorting">企业负责人</th>
-					                <th class="sorting">负责人电话</th>
-					                <th class="sorting">负责人手机</th>
-					                <th class="sorting">负责人传真</th>
-					                <th class="sorting">业务联系人</th>
-					                <th class="sorting">联系人电话</th>
-					                <th class="sorting">联系人手机</th>
-					                <th class="sorting">联系人传真</th>
-					                <th class="sorting">财务联系人</th>
-					                <th class="sorting">财务电话</th>
-					                <th class="sorting">财务手机</th>
-					                <th class="sorting">财务传真</th>
-					                <th class="sorting">汇款单位名称</th>
-					                <th class="sorting">开户行</th>
-					                <th class="sorting">税号</th>
-					                <th class="sorting">帐号</th>
-					                <th class="sorting">收件公司</th>
-					                <th class="sorting">收件地址</th>
-					                <th class="sorting">收件人姓名</th>
-					                <th class="sorting">联系电话</th>
-					                <th class="sorting">固定电话</th>
-					                <th class="sorting">目的地城市</th>
-					                <th class="sorting">上传资料</th>
 				        <th width="80">&nbsp;</th>
 				      </tr>
 				    </thead>
@@ -119,39 +90,10 @@
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 						            <td>${item.information}</td>
 						            <td>${item.suppliernumber}</td>
-						            <td>${item.category}</td>
 						            <td>${item.unitname}</td>
 						            <td>${item.useraddress}</td>
-						            <td>${item.unitcharacter}</td>
-						            <td>${item.registered}</td>
-						            <td>${item.enrolltime}</td>
 						            <td>${item.url}</td>
 						            <td>${item.companyphone}</td>
-						            <td>${item.companyfax}</td>
-						            <td>${item.product}</td>
-						            <td>${item.userperson}</td>
-						            <td>${item.userphone}</td>
-						            <td>${item.usermobilephone}</td>
-						            <td>${item.userfax}</td>
-						            <td>${item.businesscontacts}</td>
-						            <td>${item.contacttelephone}</td>
-						            <td>${item.contactmobilephone}</td>
-						            <td>${item.contactfax}</td>
-						            <td>${item.financialcontacts}</td>
-						            <td>${item.financialcall}</td>
-						            <td>${item.financialphone}</td>
-						            <td>${item.financialfax}</td>
-						            <td>${item.remittancename}</td>
-						            <td>${item.beneficiary}</td>
-						            <td>${item.taxno}</td>
-						            <td>${item.accountno}</td>
-						            <td>${item.yourcompany}</td>
-						            <td>${item.youraddress}</td>
-						            <td>${item.yourname}</td>
-						            <td>${item.yourphone}</td>
-						            <td>${item.telephone}</td>
-						            <td>${item.estinationcity}</td>
-						            <td>${item.updatas}</td>
 					        <td>
 					          <a href="supplier-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>

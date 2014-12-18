@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 产品分类表
+ * @Description: 产品分类表页面
  * @author JiangBo
  *
  */
@@ -27,8 +27,8 @@ public class ProducttypeEntity implements java.io.Serializable {
 	private java.lang.String typeno;
 	/**typename*/
 	private java.lang.String typename;
-	/**rparentid*/
-	private java.lang.String rparentid;
+	/**parentid*/
+	private java.lang.String parentid;
 	/**isleaf*/
 	private java.lang.String isleaf;
 	
@@ -38,8 +38,6 @@ public class ProducttypeEntity implements java.io.Serializable {
 	 */
 	
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	@Column(name ="ID",nullable=false,length=64)
 	public java.lang.String getId(){
 		return this.id;
@@ -86,19 +84,19 @@ public class ProducttypeEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  rparentid
+	 *@return: java.lang.String  parentid
 	 */
-	@Column(name ="RPARENTID",nullable=true,length=64)
-	public java.lang.String getRparentid(){
-		return this.rparentid;
+	@Column(name ="PARENTID",nullable=true,length=64)
+	public java.lang.String getParentid(){
+		return this.parentid;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  rparentid
+	 *@param: java.lang.String  parentid
 	 */
-	public void setRparentid(java.lang.String rparentid){
-		this.rparentid = rparentid;
+	public void setParentid(java.lang.String parentid){
+		this.parentid = parentid;
 	}
 	/**
 	 *方法: 取得java.lang.String

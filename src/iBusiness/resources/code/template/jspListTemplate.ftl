@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>列表</title>
+    <title>${confForm.formTitle}列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -67,7 +67,7 @@
 			  </div>
 		  </div>
       </#if>
-	   <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+	   <div class="panel-heading"><h4 class="panel-title">${confForm.formTitle}列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${entityName?uncap_first}-input.do'">新建</button>

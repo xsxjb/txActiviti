@@ -107,6 +107,8 @@ public class ${entityName}Controller {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
+            // 流程标题
+            entity.setTasktitle("${confForm.formTitle}");
             ${entityName?uncap_first}Service.insert(entity);
         }
         

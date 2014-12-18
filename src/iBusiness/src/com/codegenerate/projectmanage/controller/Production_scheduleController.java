@@ -46,7 +46,7 @@ import com.codegenerate.projectmanage.service.Production_schedule_sService;
 
 /**   
  * @Title: Controller
- * @Description: 项目生产进度表
+ * @Description: 项目生产进度表流程
  * @author JiangBo
  *
  */
@@ -103,6 +103,8 @@ public class Production_scheduleController {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
+            // 流程标题
+            entity.setTasktitle("项目生产进度流程");
             production_scheduleService.insert(entity);
         }
         
@@ -309,7 +311,7 @@ public class Production_scheduleController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("项目生产进度表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("项目生产进度表流程"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("parentid", "batchno", "producttype", "productflowid", "productno", "productname", "productmodel", "materialnum", "starttime", "endtime", "productionaddress", "id");
         tableModel.setTableName("IB_PRODUCTION_SCHEDULE");

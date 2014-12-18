@@ -4,7 +4,7 @@
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>编辑</title>
+    <title>产品分类管理编辑</title>
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
@@ -26,7 +26,7 @@
     <div class="col-lg-1"></div>
     <!-- start of main -->
     <div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">产品分类管理编辑</h4></div>
         <div class="panel-body">
                 <form id="cgForm" method="post" action="producttype-save.do" class="form-horizontal">
                   <c:if test="${model != null}">
@@ -34,20 +34,17 @@
                   </c:if>
                   
                           <div class="form-group">
-                              <label class="col-lg-2 control-label" for="code-typeno">分类编号:</label>
-                                <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">   <input id="code-typeno" type="text" name="typeno" value="${model.typeno}" class="text required" ></div>
-                              <label class="col-lg-2 control-label" for="code-typename">分类名称:</label>
-                                <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">   <input id="code-typename" type="text" name="typename" value="${model.typename}" class="text required" ></div>
+                          <label class="col-lg-2 control-label" for="code-typeno">分类编号:</label>
+                          <div class="col-lg-3">   <input id="code-typeno" type="text" name="typeno" value="${model.typeno}" class="text " ></div>
+                          
+                          <label class="col-lg-2 control-label" for="code-typename">分类名称:</label>
+                          <div class="col-lg-3">   <input id="code-typename" type="text" name="typename" value="${model.typename}" class="text " ></div>
+                          
                             </div>
                           <div class="form-group">
-                              <label class="col-lg-2 control-label" for="code-rparentid">父节点ID:</label>
-                                <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">    <select id="code-rparentid" name="rparentid" class="form-control" >          <option value="" >请选择</option>        <c:forEach items="${rparentidItems}" var="item">          <option value="${item.key}" ${item.key==model.rparentid? 'selected':''} >${item.value}</option>        </c:forEach>    </select></div>
-                              <label class="col-lg-2 control-label" for="code-isleaf">是否叶子节点:</label>
-                                <!-- 是否可编辑 -->
-                                      <div class="col-lg-3">  <label class="radio"><input type="radio" name="isleaf" value="1" ${1==model.isleaf? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="isleaf" value="2" ${2==model.isleaf? 'checked':''} >否</label> </div>
+                          <label class="col-lg-2 control-label" for="code-isleaf">是否叶子节点:</label>
+                          <div class="col-lg-3">  <label class="radio"><input type="radio" name="isleaf" value="1" ${1==model.isleaf? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="isleaf" value="2" ${2==model.isleaf? 'checked':''} >否</label> </div>
+                          
                             </div>
                   
                   <div class="form-group">

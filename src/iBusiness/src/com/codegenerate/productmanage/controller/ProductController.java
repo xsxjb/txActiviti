@@ -68,7 +68,22 @@ public class ProductController {
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
-                Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> producttypeFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_PRODUCT", "product");net.sf.json.JSONObject producttypeJsonObj = net.sf.json.JSONObject.fromObject(producttypeFTCMap.get("PRODUCTTYPE").getConfSelectInfo());String producttypeSql = producttypeJsonObj.getString("sql");List<Map<String,Object>> producttypeList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(producttypeSql);List<ConfSelectItem> producttypeItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : producttypeList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    producttypeItems.add(confSelectItem);}model.addAttribute("producttypeItems", producttypeItems);
+        Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> producttypeFTCMap = CommonBusiness
+                .getInstance().getFormTableColumnMap("IB_PRODUCT", "product");
+        net.sf.json.JSONObject producttypeJsonObj = net.sf.json.JSONObject.fromObject(producttypeFTCMap.get(
+                "PRODUCTTYPE").getConfSelectInfo());
+        String producttypeSql = producttypeJsonObj.getString("sql");
+        List<Map<String, Object>> producttypeList = com.ibusiness.core.spring.ApplicationContextHelper
+                .getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate()
+                .queryForList(producttypeSql);
+        List<ConfSelectItem> producttypeItems = new java.util.ArrayList<ConfSelectItem>();
+        for (Map<String, Object> mapBean : producttypeList) {
+            ConfSelectItem confSelectItem = new ConfSelectItem();
+            confSelectItem.setKey(mapBean.get("vKey").toString());
+            confSelectItem.setValue(mapBean.get("vValue").toString());
+            producttypeItems.add(confSelectItem);
+        }
+        model.addAttribute("producttypeItems", producttypeItems);
         return "codegenerate/productmanage/product-input.jsp";
     }
 

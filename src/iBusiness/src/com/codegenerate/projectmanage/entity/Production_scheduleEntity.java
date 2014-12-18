@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 项目生产进度表
+ * @Description: 项目生产进度表流程
  * @author JiangBo
  *
  */

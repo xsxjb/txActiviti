@@ -24,7 +24,7 @@ public class AirconditionlogEntity implements java.io.Serializable {
 	/**id*/
 	private java.lang.String id;
 	/**eventtime*/
-	private java.util.Date eventtime;
+	private Date eventtime;
 	/**controlinfo*/
 	private java.lang.String controlinfo;
 	/**controluser*/

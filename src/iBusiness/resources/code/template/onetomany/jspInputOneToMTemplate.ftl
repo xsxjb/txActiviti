@@ -4,7 +4,7 @@
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>编辑</title>
+    <title>${confForm.formTitle}编辑</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -68,7 +68,7 @@
 	<div class="span2"></div>
 	<!-- start of main -->
 	<div class="panel panel-default col-md-10"> 
-        <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">${confForm.formTitle}流程</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
 		       <form id="mainForm" method="post" action="${entityName?uncap_first}-save.do" class="form-horizontal">

@@ -1,36 +1,42 @@
 package com.codegenerate.productmanage.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import net.sf.json.JSONObject;
 
 import javax.annotation.Resource;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import java.io.File;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.ibusiness.security.util.SpringSecurityUtils;
+import com.ibusiness.common.model.ConfSelectItem;
+import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.component.form.entity.ConfFormTableColumn;
+import com.ibusiness.common.service.FormulaCommon;
+
+import com.ibusiness.core.spring.MessageHelper;
+import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.page.Page;
+import com.ibusiness.common.util.CommonUtils;
 
 import com.codegenerate.productmanage.entity.Materials_typeEntity;
 import com.codegenerate.productmanage.service.Materials_typeService;
-import com.ibusiness.common.model.ConfSelectItem;
-import com.ibusiness.common.page.Page;
-import com.ibusiness.common.page.PropertyFilter;
-import com.ibusiness.common.service.CommonBusiness;
-import com.ibusiness.common.util.CommonUtils;
-import com.ibusiness.component.portal.entity.ConfComponent;
-import com.ibusiness.core.spring.MessageHelper;
 
 /**   
  * @Title: Controller
- * @Description: 原料分类表
+ * @Description: 原料分类表页面
  * @author JiangBo
  *
  */
@@ -41,40 +47,6 @@ public class Materials_typeController {
     private MessageHelper messageHelper;
     private Materials_typeService materials_typeService;
    /**
-     * 树
-     */
-    @ResponseBody
-    @RequestMapping("materials-type-tree")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Map<String, Object>> tree(Model model) {
-//        String hql = "from ConfComponent where parentid = '0' ";
-        
-//        List<ConfComponent> entities = componentDao.find(hql);
-        // 制造一个根节点,用于对业务模块进行 增删改
-        Map<String, Object> map = new HashMap<String, Object>();
-//        { id:1, pId:0, name:"父节点 1", open:true},
-
-        map.put("id", 1);
-        map.put("pId", 0);
-        map.put("name", "物料类型");
-        map.put("open", "true");  // 展开
-      //  map.put("icon", "../plugin/ztree/zTreeStyle/img/diy/1_open.png");
-        map.put("children",generateEntities());
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        list.add(map);
-        return list;
-    }
-    private List<Map<String, Object>> generateEntities() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Map<String, Object> map = new HashMap<String, Object>();
-//        { id:11, pId:1, name:"叶子节点 1-1"}
-        map.put("id", 11);
-        map.put("pId", 1);
-        map.put("name", "物料叶子类型");
-        list.add(map);
-        return list;
-    }
-    /**
      * 列表
      */
     @RequestMapping("materials_type-list")
@@ -85,7 +57,7 @@ public class Materials_typeController {
         page = materials_typeService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "codegenerate/productmanage/materials-type-tree.jsp";
+        return "codegenerate/productmanage/materials_type-list.jsp";
     }
     
     /**
@@ -102,10 +74,13 @@ public class Materials_typeController {
         } else {
             entity = new Materials_typeEntity();
         }
+        
+        // 默认值公式
+        entity = (Materials_typeEntity) new FormulaCommon().defaultValue(entity, "IB_MATERIALS_TYPE");
+        
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
-                Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> rparentidFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_MATERIALS_TYPE", "materialsType");net.sf.json.JSONObject rparentidJsonObj = net.sf.json.JSONObject.fromObject(rparentidFTCMap.get("RPARENTID").getConfSelectInfo());String rparentidSql = rparentidJsonObj.getString("sql");List<Map<String,Object>> rparentidList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(rparentidSql);List<ConfSelectItem> rparentidItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : rparentidList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    rparentidItems.add(confSelectItem);}model.addAttribute("rparentidItems", rparentidItems);
         return "codegenerate/productmanage/materials_type-input.jsp";
     }
 
@@ -145,7 +120,48 @@ public class Materials_typeController {
 
         return "redirect:/materials_type/materials_type-list.do";
     }
-    
+    /**
+     * excel导出
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("materials_type-export")
+    public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        page = materials_typeService.pagedQuery(page, propertyFilters);
+        List<Materials_typeEntity> beans = (List<Materials_typeEntity>) page.getResult();
+
+        TableModel tableModel = new TableModel();
+        // excel文件名
+        tableModel.setExcelName("原料分类表页面"+CommonUtils.getInstance().getCurrentDateTime());
+        // 列名
+        tableModel.addHeaders("id", "typeno", "typename", "parentid", "isleaf");
+        tableModel.setTableName("IB_MATERIALS_TYPE");
+        tableModel.setData(beans);
+        try {
+            new ExcelCommon().exportExcel(response, tableModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * excel导入
+     */
+    @RequestMapping("materials_type-importExcel")
+    public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
+        try {
+            File file = new File("test.xls"); 
+            attachment.transferTo(file);
+            // 
+            TableModel tableModel = new TableModel();
+            // 列名
+            tableModel.addHeaders("id", "typeno", "typename", "parentid", "isleaf");
+            // 导入
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.productmanage.entity.Materials_typeEntity");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/materials_type/materials_type-list.do";
+    }
     // ======================================================================
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {

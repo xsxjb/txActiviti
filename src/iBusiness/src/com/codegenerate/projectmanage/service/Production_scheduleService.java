@@ -10,7 +10,7 @@ import com.codegenerate.projectmanage.entity.Production_scheduleEntity;
 
 /**   
  * @Title: Service
- * @Description: 项目生产进度表
+ * @Description: 项目生产进度表流程
  * @author JiangBo
  *
  */

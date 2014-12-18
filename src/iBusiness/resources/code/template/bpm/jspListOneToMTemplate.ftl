@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>列表</title>
+    <title>${confForm.formTitle}列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -50,7 +50,7 @@
 			    <c:if test="${'$' + '{flowType == \'0\'}'}">
 			    <div id=bpmBase class="tab-pane fade  ${'$' + '{flowType == \'0\'? \'active in\' : \'\'}'}">
 				    <!-- 查询条件 -->
-			        <div class="panel-heading"><h4 class="panel-title">待办流程查询</h4></div>
+			        <div class="panel-heading"><h4 class="panel-title">${confForm.formTitle}流程查询</h4></div>
 			        <div class="panel-body">
 				          <div id="search" class="content content-inner">
 							  <form name="bpmFlowForm" method="post" action="${entityName?uncap_first}-list.do?flowId=${'$' + '{flowId}'}&flowType=0" class="form-inline">

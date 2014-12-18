@@ -35,8 +35,6 @@ public class ${entityName}Entity implements java.io.Serializable {
 	
 	<#if cg_primary_key_policy == 'uuid'>
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	</#if>
 	<#if cg_primary_key_policy == 'identity'>
 	@Id

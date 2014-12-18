@@ -36,7 +36,7 @@ import com.codegenerate.crmmanage.service.SupplierService;
 
 /**   
  * @Title: Controller
- * @Description: 原材料供应商维护
+ * @Description: 原材料供应商维护页面
  * @author JiangBo
  *
  */
@@ -132,9 +132,9 @@ public class SupplierController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("原材料供应商维护"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("原材料供应商维护页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "accountno", "beneficiary", "businesscontacts", "category", "companyfax", "companyphone", "contactfax", "contactmobilephone", "contacttelephone", "enrolltime", "estinationcity", "financialcall", "financialcontacts", "financialfax", "financialphone", "information", "product", "registered", "remittancename", "suppliernumber", "taxno", "telephone", "unitname", "updatas", "url", "useraddress", "userfax", "usermobilephone", "userperson", "userphone", "youraddress", "yourcompany", "yourname", "yourphone");
+        tableModel.addHeaders("information", "suppliernumber", "category", "unitname", "useraddress", "unitcharacter", "registered", "enrolltime", "url", "companyphone", "companyfax", "product", "userperson", "userphone", "usermobilephone", "userfax", "businesscontacts", "contacttelephone", "contactmobilephone", "contactfax", "financialcontacts", "financialcall", "financialphone", "financialfax", "remittancename", "beneficiary", "taxno", "accountno", "yourcompany", "youraddress", "yourname", "yourphone", "telephone", "estinationcity", "updatas", "id");
         tableModel.setTableName("IB_SUPPLIER");
         tableModel.setData(beans);
         try {
@@ -154,7 +154,7 @@ public class SupplierController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "accountno", "beneficiary", "businesscontacts", "category", "companyfax", "companyphone", "contactfax", "contactmobilephone", "contacttelephone", "enrolltime", "estinationcity", "financialcall", "financialcontacts", "financialfax", "financialphone", "information", "product", "registered", "remittancename", "suppliernumber", "taxno", "telephone", "unitname", "updatas", "url", "useraddress", "userfax", "usermobilephone", "userperson", "userphone", "youraddress", "yourcompany", "yourname", "yourphone");
+            tableModel.addHeaders("information", "suppliernumber", "category", "unitname", "useraddress", "unitcharacter", "registered", "enrolltime", "url", "companyphone", "companyfax", "product", "userperson", "userphone", "usermobilephone", "userfax", "businesscontacts", "contacttelephone", "contactmobilephone", "contactfax", "financialcontacts", "financialcall", "financialphone", "financialfax", "remittancename", "beneficiary", "taxno", "accountno", "yourcompany", "youraddress", "yourname", "yourphone", "telephone", "estinationcity", "updatas", "id");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.crmmanage.entity.SupplierEntity");
         } catch (Exception e) {

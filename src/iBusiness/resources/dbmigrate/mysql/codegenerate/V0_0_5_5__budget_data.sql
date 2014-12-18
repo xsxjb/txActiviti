@@ -12,11 +12,13 @@ INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID)
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('budgetmanageTwo1','年度预算 ','2','#','URL','1','budgetmanageOne');
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('budgetmanageTwo2','月度预算 ','2','#','URL','2','budgetmanageOne');
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('budgetmanageThree21','经营预算年度数据','3','/operatbudgetyear/operatbudgetyear-list.do','URL','1','budgetmanageTwo1');
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('budgetmanageThree22','经营预算年度计划申报流程','3','/operatbudgetplan/operatbudgetplan-list.do?flowType=0&flowId=operatBudgetPlan001','URL','2','budgetmanageTwo1');
 /*===============   菜单和角色模板关联表  =============================*/
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('budgetmanageOne','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('budgetmanageTwo1','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('budgetmanageTwo2','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('budgetmanageThree21','2');
+INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('budgetmanageThree22','2');
 
 /* ================================================================================   */
 /* ================================   经营预算年度数据表      =================================   */
@@ -103,7 +105,7 @@ insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMN
 insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('budgetmanage','operatBudgetPlan','IB_OPERATBUDGETPLAN_S.INFO','措施/内容','INFO','IB_OPERATBUDGETPLAN_S',11,'1','null','null','1','1','2','null','null','null');
 insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('budgetmanage','operatBudgetPlan','IB_OPERATBUDGETPLAN_S.DEPT','所属部门','DEPT','IB_OPERATBUDGETPLAN_S',12,'1','null','null','1','1','2','null','null','null');
 insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('budgetmanage','operatBudgetPlan','IB_OPERATBUDGETPLAN_S.REMARK','备注','REMARK','IB_OPERATBUDGETPLAN_S',13,'1','null','null','1','1','2','null','null','null');
-/*======= 表 ==========*/IB_OPERATBUDGETPLAN
+/*======= 表 ==========*/
 insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('ib_operatbudgetplan001','budgetmanage','IB_OPERATBUDGETPLAN','经营预算年度计划申报表','1','null',1);
 insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('ib_operatbudgetplan_s001','budgetmanage','IB_OPERATBUDGETPLAN_S','经营预算年度计划申报子表','2','null',1);
 /*======= 表字段 ==========*/

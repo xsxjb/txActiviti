@@ -139,7 +139,7 @@ public class ExportTableController {
         formSql = formSql +  "," + confForm.getIsImportExport() + "," + confForm.getIsBpmForm();
         formSql = formSql + ");\r\n";
         // 写文件
-        fileInputByStr(formSql, filePath);
+        fileInputByStr(formSql.replaceAll("'null'", "''"), filePath);
         if (CommonUtils.isNull(menuurl)) {
             menuurl = confForm.getFormURL();
         }
@@ -167,7 +167,7 @@ public class ExportTableController {
             formTableColumsSql = formTableColumsSql + "','" + bean.getConfSelectInfo() + "');\r\n";
         }
         // 写文件
-        fileInputByStr(formTableColumsSql, filePath);
+        fileInputByStr(formTableColumsSql.replaceAll("'null'", "''"), filePath);
         
         // 4.导出 表
         String tableSql = "/*======= 表 ==========*/\r\n";
@@ -206,7 +206,7 @@ public class ExportTableController {
             }
         }
         // 写文件
-        fileInputByStr(tableColumnsSql, filePath);
+        fileInputByStr(tableColumnsSql.replaceAll("'null'", "''"), filePath);
         fileInputByStr(createSql, filePath);
         // 菜单
         List<Menu> menuList = menuDao.find("from Menu where menuUrl=?", menuurl);

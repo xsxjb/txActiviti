@@ -1,15 +1,12 @@
 package com.codegenerate.productmanage.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
@@ -19,7 +16,7 @@ import javax.persistence.SequenceGenerator;
  */
 @Entity
 @Table(name = "IB_MATERIALS_TYPE")
-public class Materials_typeEntity implements java.io.Serializable {
+public class MaterialsType implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 	/**id*/
 	private java.lang.String id;
@@ -38,8 +35,6 @@ public class Materials_typeEntity implements java.io.Serializable {
 	 */
 	
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	@Column(name ="ID",nullable=false,length=64)
 	public java.lang.String getId(){
 		return this.id;

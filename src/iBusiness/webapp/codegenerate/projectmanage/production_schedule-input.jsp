@@ -4,7 +4,7 @@
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>编辑</title>
+    <title>项目生产进度流程编辑</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -59,7 +59,7 @@
 	<div class="span2"></div>
 	<!-- start of main -->
 	<div class="panel panel-default col-md-10"> 
-	    <div class="panel-heading"><h4 class="panel-title">流程控制</h4></div>
+	    <div class="panel-heading"><h4 class="panel-title">项目生产进度流程流程控制</h4></div>
 	    <div class="panel-body">
 	        <div class="pull-left">
 	            <a href="#nextTaskUserDiv" role="button" class="btn btn-default btn-sm" data-toggle="modal">办理</a>

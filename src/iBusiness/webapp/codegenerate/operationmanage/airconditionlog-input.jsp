@@ -34,10 +34,13 @@
                   </c:if>
                   
                           <div class="form-group">
-                          <label class="col-lg-2 control-label" for="code-eventtime">操作时间:</label>
-                          <div class="col-lg-3">  <fmt:formatDate value="${model.eventtime}" pattern="yyyy-MM-dd HH:mm:ss" />  <input id="code-eventtime" type="hidden" name="eventtime" value="${model.eventtime}" ></div>
-                          
-                          <label class="col-lg-2 control-label" for="code-controluser">操作人员:</label>
+                          <label class="col-lg-2 control-label" >操作时间:</label>
+					<div class="col-lg-3">
+						<fmt:formatDate value="${model.eventtime}" pattern="yyyy-MM-dd HH:mm:ss" />
+						<input type="hidden" name="eventtime" value="${model.eventtime}">
+					</div>
+
+					<label class="col-lg-2 control-label" for="code-controluser">操作人员:</label>
                           <div class="col-lg-3">   <input id="code-controluser" type="text" name="controluser" value="${model.controluser}" class="text required" ></div>
                           
                             </div>

@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>列表</title>
+    <title>原料分类管理列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -21,7 +21,8 @@
 		        'filter_LIKES_id': '${param.filter_LIKES_id}'
 		    },
 			selectedItemClass: 'selectedItem',
-			gridFormId: 'gridForm'
+			gridFormId: 'gridForm',
+	        exportUrl: 'materials_type-export.do'
 		};
 
 		var table;
@@ -31,6 +32,7 @@
 		    table.configPageInfo('.m-page-info');
 		    table.configPageSize('.m-page-size');
 		});
+		
     </script>
   </head>
 
@@ -46,18 +48,25 @@
 	          <div id="search" class="content content-inner">
 				  <form name="cgForm" method="post" action="materials_type-list.do" class="form-inline">
 				    <div class="form-group">
+				                <label for="code_table_isleaf">是否叶子节点:</label>
+				                <input type="text" id="code_table_isleaf" name="filter_LIKES_isleaf" value="${param.filter_LIKES_isleaf}">
+				                <label for="code_table_parentid">父节点:</label>
+				                <input type="text" id="code_table_parentid" name="filter_LIKES_parentid" value="${param.filter_LIKES_parentid}">
 				                <label for="code_table_typename">原料分类名称:</label>
 				                <input type="text" id="code_table_typename" name="filter_LIKES_typename" value="${param.filter_LIKES_typename}">
+				                <label for="code_table_typeno">原料分类编号:</label>
+				                <input type="text" id="code_table_typeno" name="filter_LIKES_typeno" value="${param.filter_LIKES_typeno}">
 					    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
 					</div>
 				 </form>
 			  </div>
 		  </div>
-	   <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+	   <div class="panel-heading"><h4 class="panel-title">原料分类管理列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='materials_type-input.do'">新建</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+            
 			</div>
 			<div class="pull-right">
 			  每页显示
@@ -78,7 +87,6 @@
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					                <th class="sorting">分类编号</th>
 					                <th class="sorting">分类名称</th>
-					                <th class="sorting">父节点ID</th>
 					                <th class="sorting">是否叶子节点</th>
 				        <th width="80">&nbsp;</th>
 				      </tr>
@@ -89,7 +97,6 @@
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 						            <td>${item.typeno}</td>
 						            <td>${item.typename}</td>
-						            <td>${item.rparentid}</td>
 						            <td>${item.isleaf}</td>
 					        <td>
 					          <a href="materials_type-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>

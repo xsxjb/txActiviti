@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>列表</title>
+    <title>产品分类列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript" src="${ctx}/plugin/ibusiness/flowchart/js/uuid.js"></script>
     <script type="text/javascript">
@@ -14,7 +14,7 @@
     		// 采用异步方式获取子节点数据,默认false  
     		async: {
     			enable: true,
-    			url: "${scopePrefix}/materialsTypeTree/show-tree.do",
+    			url: "${scopePrefix}/productTypeTree/show-tree.do",
     			// 通过autoParam指定查询时要提交父节点的哪些属性作为查询条件
     			autoParam:["id"],
     		},
@@ -98,7 +98,7 @@
 		var callbackFlag = $("#callbackTrigger").attr("checked");
 		zTree.removeNode(treeNode, callbackFlag);
 		$.ajax({
-			url: "${scopePrefix}/materialsTypeTree/remove-tree.do",
+			url: "${scopePrefix}/productTypeTree/remove-tree.do",
 			data: {
 				id : treeNode.id
     		},
@@ -114,7 +114,7 @@
 		var jsonStr = JSON.stringify(zTree.getNodes());
 		jsonStr = encodeURI(jsonStr , "utf-8");
 		$.ajax({
-			url: "${scopePrefix}/materialsTypeTree/save-tree.do",
+			url: "${scopePrefix}/productTypeTree/save-tree.do",
 			data: {
 				nodes : jsonStr
     		},
@@ -144,7 +144,7 @@
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
 	<!-- 查询条件 -->
-	   <div class="panel-heading"><h4 class="panel-title">物料类型树列表</h4></div>
+	   <div class="panel-heading"><h4 class="panel-title">产品类型树</h4></div>
 	   <div class="panel-body">
 	       <div class="pull-left">
 		        <button id="submitButton" class="btn btn-default btn-sm" onclick="saveTree()" >保存</button>

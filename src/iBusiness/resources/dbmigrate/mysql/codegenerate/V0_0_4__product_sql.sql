@@ -17,7 +17,7 @@ CREATE TABLE IB_MATERIALS_TYPE (
   ID                      varchar(64) NOT NULL,
   TYPENO            varchar(64) ,
   TYPENAME      varchar(128) ,
-  RPARENTID     varchar(64) ,
+  PARENTID     varchar(64) ,
   ISLEAF             varchar(8) ,
   PRIMARY KEY (ID)
 ) ENGINE=INNODB;
@@ -43,7 +43,7 @@ CREATE TABLE IB_PRODUCTTYPE (
   ID                      varchar(64) NOT NULL,
   TYPENO            varchar(64) ,
   TYPENAME      varchar(128) ,
-  RPARENTID     varchar(64) ,
+  PARENTID     varchar(64) ,
   ISLEAF             varchar(8) ,
   PRIMARY KEY (ID)
 ) ENGINE=INNODB;
