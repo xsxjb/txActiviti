@@ -10,7 +10,7 @@ import com.codegenerate.test.entity.TestEntity;
 
 /**   
  * @Title: Service
- * @Description: 测试练习表
+ * @Description: 测试练习表页面
  * @author JiangBo
  *
  */

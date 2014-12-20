@@ -33,7 +33,7 @@ INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,co
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','EXECUTIONID','流程执行实例ID','VARCHAR','64','是',92);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','CREATEDATEBPM','流程创建时间','DATE','','是',93);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','ASSIGNEEUSER','负责人','VARCHAR','64','是',94);
-INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','USERNAME','负责人名','VARCHAR','128','是',95);
+INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','@USERNAME','负责人名','VARCHAR','128','是',95);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','NODENAME','流程节点名','VARCHAR','64','是',96);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','DONEFLAG','流程结束标记','INT','4','是',97);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','TASKTITLE','流程实例标题','VARCHAR','256','是',98);

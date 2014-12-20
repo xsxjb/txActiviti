@@ -31,14 +31,14 @@ public class CodeFormulaFactory {
     private static Map<String, String> formulaMap = new HashMap<String, String>();
     static {
         // 当前时间
-        formulaMap.put("currentDateToStr", "getCurrentDateToStr");
-        formulaMap.put("currentDate", "getCurrentDate");
+        formulaMap.put("@currentDateToStr", "getCurrentDateToStr");
+        formulaMap.put("@currentDate", "getCurrentDate");
 //        // 当前年份
 //        formulaMap.put("year", "getCurrentYear");
 //        // 当前月份
 //        formulaMap.put("month", "getCurrentMonth");
         // 当前用户
-        formulaMap.put("userName", "getCurrentUserName");
+        formulaMap.put("@userName", "getCurrentUserName");
 //        // 当前用户ID
 //        formulaMap.put("userId", "getCurrentUserId");
     }

@@ -1,19 +1,19 @@
 package com.codegenerate.test.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 测试练习表
+ * @Description: 测试练习表页面
  * @author JiangBo
  *
  */
@@ -28,7 +28,7 @@ public class TestEntity implements java.io.Serializable {
 	/**remark*/
 	private java.lang.String remark;
 	/**eventtime*/
-	private java.sql.Timestamp eventtime;
+	private java.util.Date eventtime;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -36,8 +36,6 @@ public class TestEntity implements java.io.Serializable {
 	 */
 	
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	@Column(name ="ID",nullable=false,length=64)
 	public java.lang.String getId(){
 		return this.id;
@@ -83,19 +81,19 @@ public class TestEntity implements java.io.Serializable {
 		this.remark = remark;
 	}
 	/**
-	 *方法: 取得java.sql.Timestamp
-	 *@return: java.sql.Timestamp  eventtime
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  eventtime
 	 */
 	@Column(name ="EVENTTIME",nullable=true)
-	public java.sql.Timestamp getEventtime(){
+	public java.util.Date getEventtime(){
 		return this.eventtime;
 	}
 
 	/**
-	 *方法: 设置java.sql.Timestamp
-	 *@param: java.sql.Timestamp  eventtime
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  eventtime
 	 */
-	public void setEventtime(java.sql.Timestamp eventtime){
+	public void setEventtime(java.util.Date eventtime){
 		this.eventtime = eventtime;
 	}
 }

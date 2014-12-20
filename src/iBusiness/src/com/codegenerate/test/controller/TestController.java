@@ -36,7 +36,7 @@ import com.codegenerate.test.service.TestService;
 
 /**   
  * @Title: Controller
- * @Description: 测试练习表
+ * @Description: 测试练习表页面
  * @author JiangBo
  *
  */
@@ -132,7 +132,7 @@ public class TestController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("测试练习表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("测试练习表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("id", "name", "remark", "eventtime");
         tableModel.setTableName("IB_TEST");
