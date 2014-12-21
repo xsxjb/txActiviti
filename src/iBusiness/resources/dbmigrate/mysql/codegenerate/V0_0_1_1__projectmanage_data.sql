@@ -210,7 +210,7 @@ insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMN
 insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('projectmanage','productionPlan','IB_PRODUCTION_PLAN_S.ENDTIME','计划结束时间','ENDTIME','IB_PRODUCTION_PLAN_S',15,'3','','','1','1','2','1','','');
 /*======= 表 ==========*/
 insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('ib_production_plan001','projectmanage','IB_PRODUCTION_PLAN','项目生产计划表','1','',2);
-insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('c4405147-f50d-4907-9294-3c504e13e0b8','projectmanage','IB_PRODUCTION_PLAN_S','项目生产计划子表','2','null',2);
+insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('c4405147-f50d-4907-9294-3c504e13e0b8','projectmanage','IB_PRODUCTION_PLAN_S','项目生产计划子表','2','',2);
 /*======= 表字段 ==========*/
 insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_PRODUCTION_PLAN','PROJECTNO','项目编号','VARCHAR','64','是','',1);
 insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_PRODUCTION_PLAN','PROJECTNAME','项目名称','VARCHAR','64','是','',2);

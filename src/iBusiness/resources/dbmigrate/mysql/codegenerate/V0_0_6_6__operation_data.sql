@@ -30,9 +30,9 @@ insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMN
 insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('operationmanage','airConditionLog','IB_AIRCONDITIONLOG.CONTROLUSER','操作人员','CONTROLUSER','IB_AIRCONDITIONLOG',2,'1','','','1','1','1','1','','');
 insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values ('operationmanage','airConditionLog','IB_AIRCONDITIONLOG.CONTROLINFO','控制内容','CONTROLINFO','IB_AIRCONDITIONLOG',3,'2','','','1','1','2','2','','');
 /*======= 表 ==========*/
-insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('ib_airconditionlog001','operationmanage','IB_AIRCONDITIONLOG','空调控制记录','1','null',2);
+insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values ('ib_airconditionlog001','operationmanage','IB_AIRCONDITIONLOG','空调控制记录','1','',2);
 /*======= 表字段 ==========*/
 insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_AIRCONDITIONLOG','EVENTTIME','操作时间','DATE','0','是','',1);
 insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_AIRCONDITIONLOG','CONTROLUSER','操作人员','VARCHAR','64','是','',2);
 insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_AIRCONDITIONLOG','CONTROLINFO','控制内容','VARCHAR','512','是','',3);
-insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_AIRCONDITIONLOG','ID','UUID主键','VARCHAR','64','否','null',91);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values ('IB_AIRCONDITIONLOG','ID','UUID主键','VARCHAR','64','否','',91);
