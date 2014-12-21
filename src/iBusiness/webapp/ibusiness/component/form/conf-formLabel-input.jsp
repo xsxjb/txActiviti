@@ -55,6 +55,7 @@
                                     <option value="7" ${model.fcType==7 ? 'selected' : ''}>下拉数据字典</option>
                                     <option value="8" ${model.fcType==8 ? 'selected' : ''}>单选按钮</option>
                                     <option value="9" ${model.fcType==9 ? 'selected' : ''}>多选按钮</option>
+                                    <option value="10" ${model.fcType==10 ? 'selected' : ''}>选择带出</option>
                                </select>
                            </div>
                       </div>

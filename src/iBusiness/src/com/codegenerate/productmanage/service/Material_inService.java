@@ -10,7 +10,7 @@ import com.codegenerate.productmanage.entity.Material_inEntity;
 
 /**   
  * @Title: Service
- * @Description: 原料入库表
+ * @Description: 原料入库表流程
  * @author JiangBo
  *
  */

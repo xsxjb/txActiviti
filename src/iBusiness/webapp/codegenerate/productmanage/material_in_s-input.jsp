@@ -23,6 +23,7 @@
 		        errorClass: 'validate-error'
 		    });
 		})
+	
     </script>
 	<div class="span2"></div>
 	<!-- start of main -->
@@ -40,8 +41,75 @@
                               
 	                          
                               <label class="control-label col-lg-2" for="code-materialname">原料名称:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialname.fcEdit=='1'}">    <input id="code-materialname" type="text" name="materialname" value="${model.materialname}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialname.fcEdit!='1'}">    <label>${model.materialname}</label>    <input type="hidden" name="materialname" value="${model.materialname}">  </c:if></div>
-                              
+                              <div class="col-lg-3">
+                                <c:if test="${nodeColumsMap.materialname.fcEdit=='1'}">
+                                    <input id="code-materialname" type="text" name="materialname" value="${model.materialname}" class="text required" >
+              <!-- ======================================= -->         
+              <a href="#materialnameDiv" class="btn btn-default btn-sm" data-toggle="modal" >选择</a>
+                                </c:if>
+                                        <c:if test="${nodeColumsMap.materialname.fcEdit!='1'}">    <label>${model.materialname}</label>    <input type="hidden" name="materialname" value="${model.materialname}">  </c:if></div>
+         <!--  选择带出  -->
+         <script type="text/javascript">
+		// 设置值
+		function changeValue(materialno,materialname,materialprice,materialtypeno,materialunit,model){
+			$("#code-materialno").val(materialno);
+        	$("#code-materialname").val(materialname);
+			$("#code-materialmodel").val(model);
+			$("#code-materialunit").val(materialunit);
+		//	$("#code-materialnum").val(materialname);
+			$("#code-amount").val(materialprice);
+		//	$("#code-manufacturename").val(materialname);
+		//	$("#code-remark").val(materialname);
+		}
+    </script>
+				    <div id="materialnameDiv" class="modal fade" tabindex="-1" style="top:20%;" >
+				            <div class="modal-dialog">
+						    <div class="modal-content">
+							      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>
+								        <h4 class="modal-title">选择带出</h4>
+							      </div>
+							      <div class="modal-body">
+									    <div class="content">
+									    	<table id="codeGrid" class="table table-hover table-bordered">
+									        <thead>
+										      <tr>
+										          <th width="80">&nbsp;</th>
+									                <th class="sorting">原料编号</th>
+									                <th class="sorting">原料名称</th>
+									                <th class="sorting">价格</th>
+									                <th class="sorting">分类编号</th>
+									                <th class="sorting">单位</th>
+									                <th class="sorting">规格型号</th>
+										        
+										      </tr>
+										    </thead>
+										    <tbody>
+										      <c:forEach items="${page.result}" var="item">
+										      <tr>
+										        <td>
+										        <a href="#" class="btn btn-default btn-sm" 
+										        onClick="changeValue('${item.materialno}','${item.materialname}','${item.materialprice}','${item.materialtypeno}','${item.materialunit}','${item.model}')" data-dismiss="modal">选择</a>
+										        </td>
+									            <td>${item.materialno}</td>
+									            <td>${item.materialname}</td>
+									            <td>${item.materialprice}</td>
+									            <td>${item.materialtypeno}</td>
+									            <td>${item.materialunit}</td>
+									            <td>${item.model}</td>
+										      </tr>
+										      </c:forEach>
+										    </tbody>
+										  </table>
+						                </div>
+						           </div>
+						           <div class="modal-footer">
+					                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+						           </div>
+					            </div><!-- /.modal-content -->
+						  </div><!-- /.modal-dialog -->
+				    </div>
+				    
                             </div>
 	                          
                                <div class="form-group">
@@ -63,17 +131,16 @@
                               <div class="col-lg-3">  <c:if test="${nodeColumsMap.amount.fcEdit=='1'}">    <input id="code-amount" type="text" name="amount" value="${model.amount}" class="text number required" >  </c:if>  <c:if test="${nodeColumsMap.amount.fcEdit!='1'}">    <label>${model.amount}</label>    <input type="hidden" name="amount" value="${model.amount}">  </c:if></div>
                               
                             </div>
-	                          
-                               <div class="form-group">
+                          <div class="form-group">
                               <label class="control-label col-lg-2" for="code-manufacturename">制造商:</label>
                               <div class="col-lg-3">  <c:if test="${nodeColumsMap.manufacturename.fcEdit=='1'}">    <input id="code-manufacturename" type="text" name="manufacturename" value="${model.manufacturename}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.manufacturename.fcEdit!='1'}">    <label>${model.manufacturename}</label>    <input type="hidden" name="manufacturename" value="${model.manufacturename}">  </c:if></div>
-                              
-	                          
+                           </div>
+                           <div class="form-group">
                               <label class="control-label col-lg-2" for="code-remark">备注:</label>
                               <!-- 编辑类型     多行 --><div class="col-lg-6">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <textarea class="form-control" id="code-remark" name="remark" rows="1" >${model.remark}</textarea>  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
-                              
-                            </div>
-	                          
+                           </div>
+	                  
+
 					  
 					  <div class="form-group">
 					    <div class="col-lg-10 col-lg-offset-2">

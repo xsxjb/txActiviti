@@ -1,5 +1,6 @@
 package com.codegenerate.productmanage.controller;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -8,45 +9,43 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import org.springframework.web.multipart.MultipartFile;
-import com.ibusiness.common.export.ExcelCommon;
-import com.ibusiness.common.export.TableModel;
-import com.ibusiness.security.util.SpringSecurityUtils;
-import com.ibusiness.common.service.FormulaCommon;
 
+import net.sf.json.JSONObject;
+
+import org.activiti.engine.impl.interceptor.Command;
+import org.activiti.engine.task.Task;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import org.activiti.engine.impl.interceptor.Command;
-import org.activiti.engine.task.Task;
-import org.apache.commons.io.IOUtils;
-
-import net.sf.json.JSONObject;
-
-import com.ibusiness.common.model.ConfSelectItem;
+import com.codegenerate.productmanage.entity.Material_inEntity;
+import com.codegenerate.productmanage.entity.Material_in_sEntity;
+import com.codegenerate.productmanage.service.Material_inService;
+import com.codegenerate.productmanage.service.Material_in_sService;
+import com.codegenerate.productmanage.service.MaterialsService;
+import com.ibusiness.base.user.entity.UserBase;
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
-import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
+import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.page.Page;
+import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.common.service.FormulaCommon;
 import com.ibusiness.common.util.CommonUtils;
+import com.ibusiness.core.spring.ApplicationContextHelper;
+import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.util.SpringSecurityUtils;
-import com.ibusiness.base.user.entity.UserBase;
-
-import com.codegenerate.productmanage.entity.Material_inEntity;
-import com.codegenerate.productmanage.service.Material_inService;
-import com.codegenerate.productmanage.entity.Material_in_sEntity;
-import com.codegenerate.productmanage.service.Material_in_sService;
 
 /**   
  * @Title: Controller
- * @Description: 原料入库表
+ * @Description: 原料入库表流程
  * @author JiangBo
  *
  */
@@ -103,6 +102,8 @@ public class Material_inController {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
+            // 流程标题
+            entity.setTasktitle("原料入库流程");
             material_inService.insert(entity);
         }
         
@@ -135,6 +136,7 @@ public class Material_inController {
         model.addAttribute("userId", SpringSecurityUtils.getCurrentUserId());
         
         // 在controller中设置页面控件用的数据
+                Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> suppliersnameFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_MATERIAL_IN", "materialin");JSONObject suppliersnameJsonObj = JSONObject.fromObject(suppliersnameFTCMap.get("SUPPLIERSNAME").getConfSelectInfo());String suppliersnameSql = suppliersnameJsonObj.getString("sql");List<Map<String,Object>> suppliersnameList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(suppliersnameSql);List<ConfSelectItem> suppliersnameItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : suppliersnameList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    suppliersnameItems.add(confSelectItem);}model.addAttribute("suppliersnameItems", suppliersnameItems);
                 Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> warehousenoFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_MATERIAL_IN", "materialin");JSONObject warehousenoJsonObj = JSONObject.fromObject(warehousenoFTCMap.get("WAREHOUSENO").getConfSelectInfo());String warehousenoSql = warehousenoJsonObj.getString("sql");List<Map<String,Object>> warehousenoList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(warehousenoSql);List<ConfSelectItem> warehousenoItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : warehousenoList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    warehousenoItems.add(confSelectItem);}model.addAttribute("warehousenoItems", warehousenoItems);
         return "codegenerate/productmanage/material_in-input.jsp";
     }
@@ -158,6 +160,15 @@ public class Material_inController {
         // 根据流程和节点信息取得 流程指定节点的字段信息
         JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, mainEntity.getExecutionid(), nodeCode, Material_in_sEntity.class);
         model.addAttribute("nodeColumsMap", json);
+        
+        // ========================
+        // 查询条件Filter过滤器
+        Map<String, Object> parameterMap = new HashMap<String, Object>();
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 根据条件查询数据
+        Page page = new Page();
+        page = ApplicationContextHelper.getBean(MaterialsService.class).pagedQuery(page, propertyFilters);
+        model.addAttribute("page", page);
         
         return "codegenerate/productmanage/material_in_s-input.jsp";
     }
@@ -310,7 +321,7 @@ public class Material_inController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("原料入库表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("原料入库表流程"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("materialno", "materialname", "materialmodel", "materialunit", "materialnum", "amount", "manufacturename", "remark", "id", "parentid");
         tableModel.setTableName("IB_MATERIAL_IN");

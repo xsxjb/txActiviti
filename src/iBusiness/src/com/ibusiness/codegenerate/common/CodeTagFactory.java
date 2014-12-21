@@ -8,9 +8,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.codegenerate.productmanage.service.MaterialsService;
 import com.ibusiness.codegenerate.code.Columnt;
+import com.ibusiness.common.page.Page;
+import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.util.Constants;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
+import com.ibusiness.core.spring.ApplicationContextHelper;
 
 
 /**
@@ -49,6 +53,8 @@ public class CodeTagFactory {
         tagComponentMap.put(Constants.CODE_RADIOBOX, "radioBoxParser");
         // 复选按钮
         tagComponentMap.put(Constants.CODE_CHECKBOX, "checkBoxParser");
+        // 选择带出
+        tagComponentMap.put(Constants.CODE_SELECT_INPUT, "selectInputParser");
     }
     
     /**
@@ -251,6 +257,89 @@ public class CodeTagFactory {
         String str = "";
         str = str + "<div class=\"col-lg-3\">";
         str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text required\" >";
+        str = str + "</div>";
+        columnt.setJspTagInfo(str);
+        return columnt;
+    }
+    /**
+     * 选择带出
+     */
+    public Columnt selectInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
+    	// TODO
+    	// 生成controller类中的Attribute
+        String controllerInfo = "";
+        // 取得表单对应表管理表Map
+        // 查询条件Filter过滤器
+        controllerInfo = controllerInfo + "Map<String, Object> parameterMap = new HashMap<String, Object>();";
+        controllerInfo = controllerInfo + "List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);";
+        // 根据条件查询数据
+        controllerInfo = controllerInfo + "Page page = new Page();";
+        controllerInfo = controllerInfo + "page = ApplicationContextHelper.getBean(MaterialsService.class).pagedQuery(page, propertyFilters);";
+        controllerInfo = controllerInfo + "model.addAttribute(\""+columnt.getFieldName()+"Page\", page);";
+        List<String> maList = columnt.getModelAttributeList();
+        maList.add(controllerInfo);
+        columnt.setModelAttributeList(maList);
+        
+        // ============================================================================
+        // 生成JSP显示组件
+        String str = "";
+        str = str + "<div class=\"col-lg-3\">";
+        str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
+        // ===================================
+        str = str + "   <script type=\"text/javascript\">";
+        str = str + "   	function changeValue(materialno,materialname,materialprice,materialtypeno,materialunit,model){";
+//			$("#code-materialno").val(materialno);
+//        	$("#code-materialname").val(materialname);
+//			$("#code-materialmodel").val(model);
+//			$("#code-materialunit").val(materialunit);
+//			$("#code-amount").val(materialprice);
+        str = str + "       }";
+		str = str + "   </script>";
+        // ===================================
+        str = str + "   <div id=\"materialnameDiv\" class=\"modal fade\" tabindex=\"-1\" style=\"top:20%;\" >";
+        str = str + "     <div class=\"modal-dialog\">";
+        str = str + "       <div class=\"modal-content\">";
+        str = str + "         <div class=\"modal-header\">";
+        str = str + "           <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span >&times;</span><span class=\"sr-only\">Close</span></button>";
+        str = str + "           <h4 class=\"modal-title\">选择带出</h4>";
+        str = str + "         </div>";
+        str = str + "         <div class=\"modal-body\">";
+        str = str + "           <div class=\"content\">";
+        str = str + "           	<table id=\"codeGrid\" class=\"table table-hover table-bordered\">";
+        str = str + "           	   <thead>";
+        str = str + "           	   <tr>";
+        str = str + "           	      <th width=\"80\">&nbsp;</th>";
+//				                <th class="sorting">原料编号</th>";
+//				                <th class="sorting">原料名称</th>
+//				                <th class="sorting">价格</th>
+//				                <th class="sorting">分类编号</th>
+//				                <th class="sorting">单位</th>
+//				                <th class="sorting">规格型号</th>
+        str = str + "           	   </tr>";
+        str = str + "           	</thead>";
+        str = str + "           	<tbody>";
+        str = str + "           	   <c:forEach items=\"${"+columnt.getFieldName()+"Page.result}\" var=\"item\">";
+        str = str + "           	     <tr>";
+        str = str + "           	        <td><a href=\"#\" class=\"btn btn-default btn-sm\" onClick=\"changeValue('${item.materialno}','${item.materialname}','${item.materialprice}','${item.materialtypeno}','${item.materialunit}','${item.model}')\" data-dismiss=\"modal\">选择</a></td>";
+//				            <td>${item.materialno}</td>";
+//				            <td>${item.materialname}</td>
+//				            <td>${item.materialprice}</td>
+//				            <td>${item.materialtypeno}</td>
+//				            <td>${item.materialunit}</td>
+//				            <td>${item.model}</td>
+        str = str + "           	     </tr>";
+        str = str + "           	  </c:forEach>";
+        str = str + "           	</tbody>";
+        str = str + "           </table>";
+        str = str + "         </div>";
+        str = str + "       </div>";
+        str = str + "       <div class=\"modal-footer\">";
+        str = str + "         <button class=\"btn btn-default btn-sm\" data-dismiss=\"modal\" >关闭</button>";
+        str = str + "       </div>";
+        str = str + "     </div>";
+        str = str + "    </div>";
+        str = str + "  </div>";
+        
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;

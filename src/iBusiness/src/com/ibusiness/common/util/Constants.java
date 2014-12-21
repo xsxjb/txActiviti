@@ -77,4 +77,6 @@ public interface Constants {
     String CODE_RADIOBOX = "8";
     // 复选按钮
     String CODE_CHECKBOX = "9";
+    // 选择带出
+    String CODE_SELECT_INPUT = "10";
 }
