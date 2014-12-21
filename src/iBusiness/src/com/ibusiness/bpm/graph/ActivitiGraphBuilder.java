@@ -50,7 +50,7 @@ public class ActivitiGraphBuilder {
      * @return
      */
     public Node visitNode(PvmActivity pvmActivity) {
-        if (visitedNodeIds.contains(pvmActivity.getId())) {
+        if (null == pvmActivity || visitedNodeIds.contains(pvmActivity.getId())) {
             return null;
         }
         visitedNodeIds.add(pvmActivity.getId());

@@ -296,6 +296,9 @@ public class BpmComBusiness {
      * @return
      */
     private String editXmlByFlowChart(String xml, ConfFlowChart nodeBean, Map<String, ConfFlowChart> confFlowChartMap) {
+    	if (null == nodeBean) {
+    		return "";
+    	}
         JSONObject flowChartObj= JSONObject.fromObject(nodeBean.getContext());
         // 开始节点
         if ("StartNode".equals(flowChartObj.get("type"))) {
@@ -368,6 +371,9 @@ public class BpmComBusiness {
      */
     private String editDiagramXmlByFlowChart(String xml, ConfFlowChart confFlowChart,
             Map<String, ConfFlowChart> confFlowChartMap) {
+    	if (null == confFlowChart) {
+    		return "";
+    	}
         JSONObject flowChartObj= JSONObject.fromObject(confFlowChart.getContext());
         // 开始节点
         if ("StartNode".equals(flowChartObj.get("type"))) {

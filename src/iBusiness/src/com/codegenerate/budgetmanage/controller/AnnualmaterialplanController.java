@@ -39,40 +39,40 @@ import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.security.util.SpringSecurityUtils;
 import com.ibusiness.base.user.entity.UserBase;
 
-import com.codegenerate.budgetmanage.entity.OperatbudgetplanEntity;
-import com.codegenerate.budgetmanage.service.OperatbudgetplanService;
-import com.codegenerate.budgetmanage.entity.Operatbudgetplan_sEntity;
-import com.codegenerate.budgetmanage.service.Operatbudgetplan_sService;
+import com.codegenerate.budgetmanage.entity.AnnualmaterialplanEntity;
+import com.codegenerate.budgetmanage.service.AnnualmaterialplanService;
+import com.codegenerate.budgetmanage.entity.Annualmaterialplan_sEntity;
+import com.codegenerate.budgetmanage.service.Annualmaterialplan_sService;
 
 /**   
  * @Title: Controller
- * @Description: 经营预算年度计划申报表流程
+ * @Description: 年度经营预算材料计划汇总表流程
  * @author JiangBo
  *
  */
 @Controller
-@RequestMapping("operatbudgetplan")
-public class OperatbudgetplanController {
+@RequestMapping("annualmaterialplan")
+public class AnnualmaterialplanController {
 
     private MessageHelper messageHelper;
-    private OperatbudgetplanService operatbudgetplanService;
-        private Operatbudgetplan_sService operatbudgetplan_sService;
+    private AnnualmaterialplanService annualmaterialplanService;
+        private Annualmaterialplan_sService annualmaterialplan_sService;
    /**
      * 列表
      */
-    @RequestMapping("operatbudgetplan-list")
+    @RequestMapping("annualmaterialplan-list")
     public String list(@ModelAttribute Page page, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "flowType", required = false) String flowType, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQI_doneflag", flowType));
         propertyFilters.add(new PropertyFilter("EQS_assigneeuser", SpringSecurityUtils.getCurrentUserId()));
         // 根据条件查询数据
-        page = operatbudgetplanService.pagedQuery(page, propertyFilters);
+        page = annualmaterialplanService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("flowId", flowId);
         model.addAttribute("flowType", flowType);
         // 返回JSP
-        return "codegenerate/budgetmanage/operatbudgetplan-list.jsp";
+        return "codegenerate/budgetmanage/annualmaterialplan-list.jsp";
     }
     /**
      * 新建一条流程, 进入流程表单信息页面
@@ -80,14 +80,14 @@ public class OperatbudgetplanController {
      * @param model
      * @return
      */
-    @RequestMapping("operatbudgetplan-input")
+    @RequestMapping("annualmaterialplan-input")
     public String input(@ModelAttribute Page page, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "id", required = false) String id, Model model) {
-        OperatbudgetplanEntity entity = null;
+        AnnualmaterialplanEntity entity = null;
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         if (!CommonUtils.isNull(id)) {
-            entity = operatbudgetplanService.get(id);
+            entity = annualmaterialplanService.get(id);
         } else {
-            entity = new OperatbudgetplanEntity();
+            entity = new AnnualmaterialplanEntity();
             
             // 发起一个流程, 设置当前用户执行
             String userId = SpringSecurityUtils.getCurrentUserId();
@@ -104,12 +104,12 @@ public class OperatbudgetplanController {
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
             // 流程标题
-            entity.setTasktitle("经营预算年度计划申报表");
-            operatbudgetplanService.insert(entity);
+            entity.setTasktitle("年度经营预算材料计划汇总表");
+            annualmaterialplanService.insert(entity);
         }
         
         // 默认值公式
-        entity = (OperatbudgetplanEntity) new FormulaCommon().defaultValue(entity, "IB_OPERATBUDGETPLAN");
+        entity = (AnnualmaterialplanEntity) new FormulaCommon().defaultValue(entity, "IB_ANNUALMATERIALPLAN");
         
         model.addAttribute("model", entity);
         
@@ -117,7 +117,7 @@ public class OperatbudgetplanController {
         Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
         String nodeCode = task.getTaskDefinitionKey();
         // 根据流程和节点信息取得 流程指定节点的字段信息
-        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, entity.getExecutionid(), nodeCode, OperatbudgetplanEntity.class);
+        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, entity.getExecutionid(), nodeCode, AnnualmaterialplanEntity.class);
         model.addAttribute("nodeColumsMap", json);
         
         // 子表信息
@@ -125,7 +125,7 @@ public class OperatbudgetplanController {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(map);
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
-	        page = operatbudgetplan_sService.pagedQuery(page, propertyFilters);
+	        page = annualmaterialplan_sService.pagedQuery(page, propertyFilters);
 	        model.addAttribute("page", page);
         
         // 流程ID
@@ -137,30 +137,30 @@ public class OperatbudgetplanController {
         model.addAttribute("userId", SpringSecurityUtils.getCurrentUserId());
         
         // 在controller中设置页面控件用的数据
-        return "codegenerate/budgetmanage/operatbudgetplan-input.jsp";
+        return "codegenerate/budgetmanage/annualmaterialplan-input.jsp";
     }
     
     /**
      * 子表新建
      */
-    @RequestMapping("operatbudgetplan_s-input")
-    public String operatbudgetplan_sInput(@RequestParam(value = "flowId", required = false) String flowId, @RequestParam("id") String id, @RequestParam("subId") String subId, Model model) {
-        Operatbudgetplan_sEntity entity = operatbudgetplan_sService.get(subId);
+    @RequestMapping("annualmaterialplan_s-input")
+    public String annualmaterialplan_sInput(@RequestParam(value = "flowId", required = false) String flowId, @RequestParam("id") String id, @RequestParam("subId") String subId, Model model) {
+        Annualmaterialplan_sEntity entity = annualmaterialplan_sService.get(subId);
         model.addAttribute("model", entity);
         model.addAttribute("parentid", id);
         model.addAttribute("flowId", flowId);
         
         // 取得主表中的 executionid
-        OperatbudgetplanEntity mainEntity = operatbudgetplanService.get(id);
+        AnnualmaterialplanEntity mainEntity = annualmaterialplanService.get(id);
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         // 取得当前流程节点信息
         Task task = bpmComBusiness.getTaskIdByExecutionId(mainEntity.getExecutionid());
         String nodeCode = task.getTaskDefinitionKey();
         // 根据流程和节点信息取得 流程指定节点的字段信息
-        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, mainEntity.getExecutionid(), nodeCode, Operatbudgetplan_sEntity.class);
+        JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, mainEntity.getExecutionid(), nodeCode, Annualmaterialplan_sEntity.class);
         model.addAttribute("nodeColumsMap", json);
         
-        return "codegenerate/budgetmanage/operatbudgetplan_s-input.jsp";
+        return "codegenerate/budgetmanage/annualmaterialplan_s-input.jsp";
     }
     /**
      * 办理
@@ -168,8 +168,8 @@ public class OperatbudgetplanController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("operatbudgetplan-complete")
-    public String completeTask(@ModelAttribute OperatbudgetplanEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("annualmaterialplan-complete")
+    public String completeTask(@ModelAttribute AnnualmaterialplanEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         String executionId = null;
         // 
@@ -209,24 +209,24 @@ public class OperatbudgetplanController {
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
             id = entity.getId();
-            operatbudgetplanService.insert(entity);
+            annualmaterialplanService.insert(entity);
         } else {
-            operatbudgetplanService.update(entity);
+            annualmaterialplanService.update(entity);
         }
         // 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "办理成功");
-        return "redirect:/operatbudgetplan/operatbudgetplan-list.do?flowType=0&flowId=" + flowId;
+        return "redirect:/annualmaterialplan/annualmaterialplan-list.do?flowType=0&flowId=" + flowId;
     }
     /**
      * 回退功能
      */
-    @RequestMapping("operatbudgetplan-rollback")
+    @RequestMapping("annualmaterialplan-rollback")
     public String rollback(@RequestParam("executionId") String executiond, @RequestParam("flowId") String flowId) {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         Task task = bpmComBusiness.getTaskIdByExecutionId(executiond);
         
         new BpmComBusiness().rollback(task.getId());
-        return "redirect:/operatbudgetplan/operatbudgetplan-list.do?flowType=0&flowId=" + flowId;
+        return "redirect:/annualmaterialplan/annualmaterialplan-list.do?flowType=0&flowId=" + flowId;
     }
     /**
      * 草稿
@@ -234,20 +234,20 @@ public class OperatbudgetplanController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("operatbudgetplan-save-draft")
-    public String saveDraft(@ModelAttribute OperatbudgetplanEntity entity, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("annualmaterialplan-save-draft")
+    public String saveDraft(@ModelAttribute AnnualmaterialplanEntity entity, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         // 再进行数据复制
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
-            operatbudgetplanService.insert(entity);
+            annualmaterialplanService.insert(entity);
             id = entity.getId();
         } else {
-            operatbudgetplanService.update(entity);
+            annualmaterialplanService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/operatbudgetplan/operatbudgetplan-input.do?flowId=" + flowId + "&id=" + id;
+        return "redirect:/annualmaterialplan/annualmaterialplan-input.do?flowId=" + flowId + "&id=" + id;
     }
     /**
      * 删除一条流程信息
@@ -255,66 +255,66 @@ public class OperatbudgetplanController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("operatbudgetplan-remove")
+    @RequestMapping("annualmaterialplan-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) {
-        List<OperatbudgetplanEntity> entitys = operatbudgetplanService.findByIds(selectedItem);
+        List<AnnualmaterialplanEntity> entitys = annualmaterialplanService.findByIds(selectedItem);
         // 实例化BPM流程共用类对象
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
-        for (OperatbudgetplanEntity entity : entitys) {
-            operatbudgetplanService.remove(entity);
+        for (AnnualmaterialplanEntity entity : entitys) {
+            annualmaterialplanService.remove(entity);
             // 删除流程实例
             bpmComBusiness.deleteProcessInstance(entity.getExecutionid());
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/operatbudgetplan/operatbudgetplan-list.do?flowType=0&flowId=" + flowId;
+        return "redirect:/annualmaterialplan/annualmaterialplan-list.do?flowType=0&flowId=" + flowId;
     }
     
     /**
      * 子表保存
      */
-    @RequestMapping("operatbudgetplan_s-save")
-    public String subSave(@ModelAttribute Operatbudgetplan_sEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("annualmaterialplan_s-save")
+    public String subSave(@ModelAttribute Annualmaterialplan_sEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, RedirectAttributes redirectAttributes) throws Exception {
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             id = UUID.randomUUID().toString();
             entity.setId(id);
             entity.setParentid(parentid);
-            operatbudgetplan_sService.insert(entity);
+            annualmaterialplan_sService.insert(entity);
         } else {
-            operatbudgetplan_sService.update(entity);
+            annualmaterialplan_sService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/operatbudgetplan/operatbudgetplan-input.do?flowId=" + flowId + "&id=" + entity.getParentid();
+        return "redirect:/annualmaterialplan/annualmaterialplan-input.do?flowId=" + flowId + "&id=" + entity.getParentid();
     }
     /**
      * 子表删除
      */
-    @RequestMapping("operatbudgetplan_s-remove")
+    @RequestMapping("annualmaterialplan_s-remove")
     public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
-        List<Operatbudgetplan_sEntity> entitys = operatbudgetplan_sService.findByIds(selectedItem);
-        for (Operatbudgetplan_sEntity entity : entitys) {
-            operatbudgetplan_sService.remove(entity);
+        List<Annualmaterialplan_sEntity> entitys = annualmaterialplan_sService.findByIds(selectedItem);
+        for (Annualmaterialplan_sEntity entity : entitys) {
+            annualmaterialplan_sService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-        return "redirect:/operatbudgetplan/operatbudgetplan-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
+        return "redirect:/annualmaterialplan/annualmaterialplan-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
     }
     /**
      * 子表 excel导出
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping("operatbudgetplan_s-export")
-    public void excelOperatbudgetplan_sExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+    @RequestMapping("annualmaterialplan_s-export")
+    public void excelAnnualmaterialplan_sExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        page = operatbudgetplan_sService.pagedQuery(page, propertyFilters);
-        List<Operatbudgetplan_sEntity> beans = (List<Operatbudgetplan_sEntity>) page.getResult();
+        page = annualmaterialplan_sService.pagedQuery(page, propertyFilters);
+        List<Annualmaterialplan_sEntity> beans = (List<Annualmaterialplan_sEntity>) page.getResult();
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("经营预算年度计划申报表流程"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("年度经营预算材料计划汇总表流程"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("projecttype", "projectname", "materialtype", "materialname", "spec", "unit", "price", "numb", "planamounts", "reason", "info", "dept", "remark", "id", "parentid");
-        tableModel.setTableName("IB_OPERATBUDGETPLAN");
+        tableModel.addHeaders("projecttype", "projectname", "materialtype", "materialname", "planamounts", "deptname", "remark", "id", "parentid");
+        tableModel.setTableName("IB_ANNUALMATERIALPLAN");
         tableModel.setData(beans);
         try {
             new ExcelCommon().exportExcel(response, tableModel);
@@ -325,21 +325,21 @@ public class OperatbudgetplanController {
     /**
      * 子表 excel导入
      */
-    @RequestMapping("operatbudgetplan_s-importExcel")
-    public String importOperatbudgetplan_sExport(@RequestParam("attachment") MultipartFile attachment, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, HttpServletResponse response) {
+    @RequestMapping("annualmaterialplan_s-importExcel")
+    public String importAnnualmaterialplan_sExport(@RequestParam("attachment") MultipartFile attachment, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, HttpServletResponse response) {
         try {
             File file = new File("test.xls"); 
             attachment.transferTo(file);
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("projecttype", "projectname", "materialtype", "materialname", "spec", "unit", "price", "numb", "planamounts", "reason", "info", "dept", "remark", "id", "parentid");
+            tableModel.addHeaders("projecttype", "projectname", "materialtype", "materialname", "planamounts", "deptname", "remark", "id", "parentid");
             // 导入
-            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.budgetmanage.entity.Operatbudgetplan_sEntity");
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.budgetmanage.entity.Annualmaterialplan_sEntity");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/operatbudgetplan/operatbudgetplan-input.do?flowId=" + flowId + "&id=" + parentid;
+        return "redirect:/annualmaterialplan/annualmaterialplan-input.do?flowId=" + flowId + "&id=" + parentid;
     }
 
     /**
@@ -348,9 +348,9 @@ public class OperatbudgetplanController {
      * @param response
      * @throws Exception
      */
-    @RequestMapping("operatbudgetplan-graph")
+    @RequestMapping("annualmaterialplan-graph")
     public void graphProcessDefinition(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
-        OperatbudgetplanEntity entity = operatbudgetplanService.get(id);
+        AnnualmaterialplanEntity entity = annualmaterialplanService.get(id);
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
         if (CommonUtils.isNull(entity.getExecutionid())) {
             return;
@@ -370,11 +370,11 @@ public class OperatbudgetplanController {
         this.messageHelper = messageHelper;
     }
     @Resource
-    public void setOperatbudgetplanService(OperatbudgetplanService operatbudgetplanService) {
-        this.operatbudgetplanService = operatbudgetplanService;
+    public void setAnnualmaterialplanService(AnnualmaterialplanService annualmaterialplanService) {
+        this.annualmaterialplanService = annualmaterialplanService;
     }
         @Resource
-	    public void setOperatbudgetplan_sService(Operatbudgetplan_sService operatbudgetplan_sService) {
-	        this.operatbudgetplan_sService = operatbudgetplan_sService;
+	    public void setAnnualmaterialplan_sService(Annualmaterialplan_sService annualmaterialplan_sService) {
+	        this.annualmaterialplan_sService = annualmaterialplan_sService;
 	    }
 }

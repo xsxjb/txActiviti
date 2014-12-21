@@ -6,17 +6,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ibusiness.common.page.HibernateEntityDao;
-import com.codegenerate.budgetmanage.entity.Operatbudgetplan_sEntity;
+import com.codegenerate.budgetmanage.entity.MonthplananalysisEntity;
 
 /**   
  * @Title: Service
- * @Description: 经营预算年度计划申报表流程
+ * @Description: 预算月度计划执行情况分析汇总表流程
  * @author JiangBo
  *
  */
 @Service
 @Transactional
-public class Operatbudgetplan_sService extends HibernateEntityDao<Operatbudgetplan_sEntity> {
+public class MonthplananalysisService extends HibernateEntityDao<MonthplananalysisEntity> {
     /**
      * 插入
      * @param entity
@@ -28,7 +28,7 @@ public class Operatbudgetplan_sService extends HibernateEntityDao<Operatbudgetpl
      * 删除
      * @param entity
      */
-    public void remove(Operatbudgetplan_sEntity entity) {
+    public void remove(MonthplananalysisEntity entity) {
         super.remove(entity);
     }
 }

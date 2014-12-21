@@ -10,7 +10,7 @@ import com.codegenerate.budgetmanage.entity.OperatbudgetplanEntity;
 
 /**   
  * @Title: Service
- * @Description: 经营预算年度计划申报表
+ * @Description: 经营预算年度计划申报表流程
  * @author JiangBo
  *
  */

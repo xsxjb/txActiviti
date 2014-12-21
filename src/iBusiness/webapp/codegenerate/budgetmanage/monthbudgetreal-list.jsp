@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>经营预算年度计划申报表列表</title>
+    <title>经营预算月计划执行表列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -42,18 +42,18 @@
 	<div class="panel panel-default col-md-10 ">
         <!-- tabs  -->
         <ul class="nav nav-tabs">
-		  <li class="${flowType =='0' ? 'active' : ''} "><a href="${scopePrefix}/operatbudgetplan/operatbudgetplan-list.do?flowId=${flowId}&flowType=0" >待办</a></li>
-		  <li class="${flowType =='1' ? 'active' : ''} "><a href="${scopePrefix}/operatbudgetplan/operatbudgetplan-list.do?flowId=${flowId}&flowType=1" >已办</a></li>
+		  <li class="${flowType =='0' ? 'active' : ''} "><a href="${scopePrefix}/monthbudgetreal/monthbudgetreal-list.do?flowId=${flowId}&flowType=0" >待办</a></li>
+		  <li class="${flowType =='1' ? 'active' : ''} "><a href="${scopePrefix}/monthbudgetreal/monthbudgetreal-list.do?flowId=${flowId}&flowType=1" >已办</a></li>
 		</ul>
 		<div id="tabContent" class="tab-content">
 		    <!-- ========================== 待办流程信息 =================================================== -->
 			    <c:if test="${flowType == '0'}">
 			    <div id=bpmBase class="tab-pane fade  ${flowType == '0'? 'active in' : ''}">
 				    <!-- 查询条件 -->
-			        <div class="panel-heading"><h4 class="panel-title">经营预算年度计划申报表流程查询</h4></div>
+			        <div class="panel-heading"><h4 class="panel-title">经营预算月计划执行表流程查询</h4></div>
 			        <div class="panel-body">
 				          <div id="search" class="content content-inner">
-							  <form name="bpmFlowForm" method="post" action="operatbudgetplan-list.do?flowId=${flowId}&flowType=0" class="form-inline">
+							  <form name="bpmFlowForm" method="post" action="monthbudgetreal-list.do?flowId=${flowId}&flowType=0" class="form-inline">
 							    <div class="form-group">
 					                <label for="code_table_flownamebpm">待办流程标题:</label>
 					                <input type="text" id="code_table_tasktitle" name="filter_LIKES_tasktitle" value="${param.filter_LIKES_tasktitle}">
@@ -64,7 +64,7 @@
 					</div>
 			        <div class="panel-body">
 					    <div class="pull-left">
-						    <button class="btn btn-default btn-sm a-insert" onclick="location.href='operatbudgetplan-input.do?flowId=${flowId}'">新建</button>
+						    <button class="btn btn-default btn-sm a-insert" onclick="location.href='monthbudgetreal-input.do?flowId=${flowId}'">新建</button>
 						    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
 						</div>
 						<div class="pull-right">
@@ -79,7 +79,7 @@
 					    <div class="m-clear"></div>
 				    </div>
 				    <div class="content">
-						<form id="gridForm" name="gridForm" method='post' action="operatbudgetplan-remove.do" class="m-form-blank">
+						<form id="gridForm" name="gridForm" method='post' action="monthbudgetreal-remove.do" class="m-form-blank">
 						    <input type="hidden" name="flowId" value="${flowId}">
 						  <table id="codeGrid" class="table table-hover table-bordered">
 						      <thead>
@@ -98,14 +98,14 @@
 								      <tr>
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 								        <td>
-								          <a href="operatbudgetplan-input.do?flowId=${flowId}&id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+								          <a href="monthbudgetreal-input.do?flowId=${flowId}&id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 								        </td>
 								        <td><fmt:formatDate value="${item.createdatebpm}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 								        <td>${item.nodename}</td>
 								        <td>${item.username}</td>
 								        <td>${item.tasktitle}</td>
 								        <td>
-								            <a target="_blank"  href="operatbudgetplan-graph.do?flowId=${flowId}&id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="图"/></a>
+								            <a target="_blank"  href="monthbudgetreal-graph.do?flowId=${flowId}&id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="图"/></a>
 								        </td>
 								      </tr>
 								      </c:forEach>
@@ -133,7 +133,7 @@
 				    <!-- 查询条件 -->
 			        <div class="panel-body">
 				          <div id="search" class="content content-inner">
-							  <form name="bpmFlowForm" method="post" action="operatbudgetplan-list.do" class="form-inline">
+							  <form name="bpmFlowForm" method="post" action="monthbudgetreal-list.do" class="form-inline">
 							    <div class="form-group">
 					                <label for="code_table_flownamebpm">已办流程标题:</label>
 					                <input type="text" id="code_table_flownamebpm" name="filter_LIKES_flownamebpm" value="${param.filter_LIKES_flownamebpm}">
@@ -155,7 +155,7 @@
 					    <div class="m-clear"></div>
 				    </div>
 				    <div class="content">
-						<form id="gridForm" name="gridForm" method='post' action="operatbudgetplan-remove.do" class="m-form-blank">
+						<form id="gridForm" name="gridForm" method='post' action="monthbudgetreal-remove.do" class="m-form-blank">
 						  <input type="hidden" name="flowId" value="${flowId}">
 						  <table id="codeGrid" class="table table-hover table-bordered">
 						      <thead>

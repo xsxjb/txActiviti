@@ -62,7 +62,7 @@ public class MapBaseController {
         //地图-IP
         map.put("MAP_IP", "localhost");
         //地图-PORT端口
-        map.put("MAP_PORT", "9999");
+        map.put("MAP_PORT", "8899");
         //地图-CITY城市
         map.put("MAP_CITY", "haerbin");
         //地图-是否显示在线地图

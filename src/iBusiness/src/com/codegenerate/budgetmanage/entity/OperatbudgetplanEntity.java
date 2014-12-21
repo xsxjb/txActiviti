@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 经营预算年度计划申报表
+ * @Description: 经营预算年度计划申报表流程
  * @author JiangBo
  *
  */
@@ -21,82 +21,82 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_OPERATBUDGETPLAN")
 public class OperatbudgetplanEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-	/**assigneeuser*/
-	private java.lang.String assigneeuser;
-	/**createdatebpm*/
-	private java.util.Date createdatebpm;
+	/**planyear*/
+	private java.lang.String planyear;
+	/**planname*/
+	private java.lang.String planname;
 	/**dept*/
 	private java.lang.String dept;
+	/**eventtime*/
+	private java.util.Date eventtime;
+	/**no*/
+	private java.lang.String no;
+	/**planamount*/
+	private java.lang.Double planamount;
 	/**deptleader*/
 	private java.lang.String deptleader;
 	/**directormanager*/
 	private java.lang.String directormanager;
-	/**doneflag*/
-	private java.lang.Integer doneflag;
-	/**eventtime*/
-	private java.util.Date eventtime;
-	/**executionid*/
-	private java.lang.String executionid;
 	/**generalmanager*/
 	private java.lang.String generalmanager;
-	/**id*/
-	private java.lang.String id;
-	/**isdm*/
-	private java.lang.String isdm;
-	/**isgm*/
-	private java.lang.String isgm;
-	/**no*/
-	private java.lang.String no;
-	/**nodename*/
-	private java.lang.String nodename;
-	/**planamount*/
-	private java.lang.Double planamount;
-	/**planname*/
-	private java.lang.String planname;
 	/**planner*/
 	private java.lang.String planner;
-	/**planyear*/
-	private java.lang.String planyear;
-	/**projectnamesum*/
-	private java.lang.Double projectnamesum;
 	/**projecttypesum*/
 	private java.lang.Double projecttypesum;
-	/**tasktitle*/
-	private java.lang.String tasktitle;
+	/**projectnamesum*/
+	private java.lang.Double projectnamesum;
+	/**isgm*/
+	private java.lang.String isgm;
+	/**isdm*/
+	private java.lang.String isdm;
+	/**id*/
+	private java.lang.String id;
+	/**executionid*/
+	private java.lang.String executionid;
+	/**createdatebpm*/
+	private java.util.Date createdatebpm;
+	/**nodename*/
+	private java.lang.String nodename;
 	/**username*/
 	private java.lang.String username;
+	/**assigneeuser*/
+	private java.lang.String assigneeuser;
+	/**doneflag*/
+	private java.lang.Integer doneflag;
+	/**tasktitle*/
+	private java.lang.String tasktitle;
 	
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  assigneeuser
+	 *@return: java.lang.String  planyear
 	 */
-	@Column(name ="ASSIGNEEUSER",nullable=true,length=64)
-	public java.lang.String getAssigneeuser(){
-		return this.assigneeuser;
+	@Column(name ="PLANYEAR",nullable=true,length=32)
+	public java.lang.String getPlanyear(){
+		return this.planyear;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  assigneeuser
+	 *@param: java.lang.String  planyear
 	 */
-	public void setAssigneeuser(java.lang.String assigneeuser){
-		this.assigneeuser = assigneeuser;
+	public void setPlanyear(java.lang.String planyear){
+		this.planyear = planyear;
 	}
 	/**
-	 *方法: 取得java.util.Date
-	 *@return: java.util.Date  createdatebpm
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  planname
 	 */
-	@Column(name ="CREATEDATEBPM",nullable=true)
-	public java.util.Date getCreatedatebpm(){
-		return this.createdatebpm;
+	@Column(name ="PLANNAME",nullable=true,length=256)
+	public java.lang.String getPlanname(){
+		return this.planname;
 	}
 
 	/**
-	 *方法: 设置java.util.Date
-	 *@param: java.util.Date  createdatebpm
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  planname
 	 */
-	public void setCreatedatebpm(java.util.Date createdatebpm){
-		this.createdatebpm = createdatebpm;
+	public void setPlanname(java.lang.String planname){
+		this.planname = planname;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -113,6 +113,54 @@ public class OperatbudgetplanEntity implements java.io.Serializable {
 	 */
 	public void setDept(java.lang.String dept){
 		this.dept = dept;
+	}
+	/**
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  eventtime
+	 */
+	@Column(name ="EVENTTIME",nullable=true)
+	public java.util.Date getEventtime(){
+		return this.eventtime;
+	}
+
+	/**
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  eventtime
+	 */
+	public void setEventtime(java.util.Date eventtime){
+		this.eventtime = eventtime;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  no
+	 */
+	@Column(name ="NO",nullable=true,length=64)
+	public java.lang.String getNo(){
+		return this.no;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  no
+	 */
+	public void setNo(java.lang.String no){
+		this.no = no;
+	}
+	/**
+	 *方法: 取得java.lang.Double
+	 *@return: java.lang.Double  planamount
+	 */
+	@Column(name ="PLANAMOUNT",nullable=true,precision=12,scale=2)
+	public java.lang.Double getPlanamount(){
+		return this.planamount;
+	}
+
+	/**
+	 *方法: 设置java.lang.Double
+	 *@param: java.lang.Double  planamount
+	 */
+	public void setPlanamount(java.lang.Double planamount){
+		this.planamount = planamount;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -147,54 +195,6 @@ public class OperatbudgetplanEntity implements java.io.Serializable {
 		this.directormanager = directormanager;
 	}
 	/**
-	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  doneflag
-	 */
-	@Column(name ="DONEFLAG",nullable=true,precision=10,scale=0)
-	public java.lang.Integer getDoneflag(){
-		return this.doneflag;
-	}
-
-	/**
-	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  doneflag
-	 */
-	public void setDoneflag(java.lang.Integer doneflag){
-		this.doneflag = doneflag;
-	}
-	/**
-	 *方法: 取得java.util.Date
-	 *@return: java.util.Date  eventtime
-	 */
-	@Column(name ="EVENTTIME",nullable=true)
-	public java.util.Date getEventtime(){
-		return this.eventtime;
-	}
-
-	/**
-	 *方法: 设置java.util.Date
-	 *@param: java.util.Date  eventtime
-	 */
-	public void setEventtime(java.util.Date eventtime){
-		this.eventtime = eventtime;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  executionid
-	 */
-	@Column(name ="EXECUTIONID",nullable=true,length=64)
-	public java.lang.String getExecutionid(){
-		return this.executionid;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  executionid
-	 */
-	public void setExecutionid(java.lang.String executionid){
-		this.executionid = executionid;
-	}
-	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  generalmanager
 	 */
@@ -212,39 +212,51 @@ public class OperatbudgetplanEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
+	 *@return: java.lang.String  planner
 	 */
-	
-	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
-	@Column(name ="ID",nullable=false,length=64)
-	public java.lang.String getId(){
-		return this.id;
+	@Column(name ="PLANNER",nullable=true,length=512)
+	public java.lang.String getPlanner(){
+		return this.planner;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
+	 *@param: java.lang.String  planner
 	 */
-	public void setId(java.lang.String id){
-		this.id = id;
+	public void setPlanner(java.lang.String planner){
+		this.planner = planner;
 	}
 	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  isdm
+	 *方法: 取得java.lang.Double
+	 *@return: java.lang.Double  projecttypesum
 	 */
-	@Column(name ="ISDM",nullable=true,length=16)
-	public java.lang.String getIsdm(){
-		return this.isdm;
+	@Column(name ="PROJECTTYPESUM",nullable=true,precision=12,scale=2)
+	public java.lang.Double getProjecttypesum(){
+		return this.projecttypesum;
 	}
 
 	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  isdm
+	 *方法: 设置java.lang.Double
+	 *@param: java.lang.Double  projecttypesum
 	 */
-	public void setIsdm(java.lang.String isdm){
-		this.isdm = isdm;
+	public void setProjecttypesum(java.lang.Double projecttypesum){
+		this.projecttypesum = projecttypesum;
+	}
+	/**
+	 *方法: 取得java.lang.Double
+	 *@return: java.lang.Double  projectnamesum
+	 */
+	@Column(name ="PROJECTNAMESUM",nullable=true,precision=12,scale=2)
+	public java.lang.Double getProjectnamesum(){
+		return this.projectnamesum;
+	}
+
+	/**
+	 *方法: 设置java.lang.Double
+	 *@param: java.lang.Double  projectnamesum
+	 */
+	public void setProjectnamesum(java.lang.Double projectnamesum){
+		this.projectnamesum = projectnamesum;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -264,19 +276,69 @@ public class OperatbudgetplanEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  no
+	 *@return: java.lang.String  isdm
 	 */
-	@Column(name ="NO",nullable=true,length=64)
-	public java.lang.String getNo(){
-		return this.no;
+	@Column(name ="ISDM",nullable=true,length=16)
+	public java.lang.String getIsdm(){
+		return this.isdm;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  no
+	 *@param: java.lang.String  isdm
 	 */
-	public void setNo(java.lang.String no){
-		this.no = no;
+	public void setIsdm(java.lang.String isdm){
+		this.isdm = isdm;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  id
+	 */
+	
+	@Id
+	@Column(name ="ID",nullable=false,length=64)
+	public java.lang.String getId(){
+		return this.id;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  id
+	 */
+	public void setId(java.lang.String id){
+		this.id = id;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  executionid
+	 */
+	@Column(name ="EXECUTIONID",nullable=true,length=64)
+	public java.lang.String getExecutionid(){
+		return this.executionid;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  executionid
+	 */
+	public void setExecutionid(java.lang.String executionid){
+		this.executionid = executionid;
+	}
+	/**
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  createdatebpm
+	 */
+	@Column(name ="CREATEDATEBPM",nullable=true)
+	public java.util.Date getCreatedatebpm(){
+		return this.createdatebpm;
+	}
+
+	/**
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  createdatebpm
+	 */
+	public void setCreatedatebpm(java.util.Date createdatebpm){
+		this.createdatebpm = createdatebpm;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -295,100 +357,52 @@ public class OperatbudgetplanEntity implements java.io.Serializable {
 		this.nodename = nodename;
 	}
 	/**
-	 *方法: 取得java.lang.Double
-	 *@return: java.lang.Double  planamount
-	 */
-	@Column(name ="PLANAMOUNT",nullable=true,precision=12,scale=2)
-	public java.lang.Double getPlanamount(){
-		return this.planamount;
-	}
-
-	/**
-	 *方法: 设置java.lang.Double
-	 *@param: java.lang.Double  planamount
-	 */
-	public void setPlanamount(java.lang.Double planamount){
-		this.planamount = planamount;
-	}
-	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  planname
+	 *@return: java.lang.String  username
 	 */
-	@Column(name ="PLANNAME",nullable=true,length=256)
-	public java.lang.String getPlanname(){
-		return this.planname;
+	@Column(name ="USERNAME",nullable=true,length=128)
+	public java.lang.String getUsername(){
+		return this.username;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  planname
+	 *@param: java.lang.String  username
 	 */
-	public void setPlanname(java.lang.String planname){
-		this.planname = planname;
+	public void setUsername(java.lang.String username){
+		this.username = username;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  planner
+	 *@return: java.lang.String  assigneeuser
 	 */
-	@Column(name ="PLANNER",nullable=true,length=512)
-	public java.lang.String getPlanner(){
-		return this.planner;
+	@Column(name ="ASSIGNEEUSER",nullable=true,length=64)
+	public java.lang.String getAssigneeuser(){
+		return this.assigneeuser;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  planner
+	 *@param: java.lang.String  assigneeuser
 	 */
-	public void setPlanner(java.lang.String planner){
-		this.planner = planner;
+	public void setAssigneeuser(java.lang.String assigneeuser){
+		this.assigneeuser = assigneeuser;
 	}
 	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  planyear
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  doneflag
 	 */
-	@Column(name ="PLANYEAR",nullable=true,length=32)
-	public java.lang.String getPlanyear(){
-		return this.planyear;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  planyear
-	 */
-	public void setPlanyear(java.lang.String planyear){
-		this.planyear = planyear;
-	}
-	/**
-	 *方法: 取得java.lang.Double
-	 *@return: java.lang.Double  projectnamesum
-	 */
-	@Column(name ="PROJECTNAMESUM",nullable=true,precision=12,scale=2)
-	public java.lang.Double getProjectnamesum(){
-		return this.projectnamesum;
+	@Column(name ="DONEFLAG",nullable=true,precision=10,scale=0)
+	public java.lang.Integer getDoneflag(){
+		return this.doneflag;
 	}
 
 	/**
-	 *方法: 设置java.lang.Double
-	 *@param: java.lang.Double  projectnamesum
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  doneflag
 	 */
-	public void setProjectnamesum(java.lang.Double projectnamesum){
-		this.projectnamesum = projectnamesum;
-	}
-	/**
-	 *方法: 取得java.lang.Double
-	 *@return: java.lang.Double  projecttypesum
-	 */
-	@Column(name ="PROJECTTYPESUM",nullable=true,precision=12,scale=2)
-	public java.lang.Double getProjecttypesum(){
-		return this.projecttypesum;
-	}
-
-	/**
-	 *方法: 设置java.lang.Double
-	 *@param: java.lang.Double  projecttypesum
-	 */
-	public void setProjecttypesum(java.lang.Double projecttypesum){
-		this.projecttypesum = projecttypesum;
+	public void setDoneflag(java.lang.Integer doneflag){
+		this.doneflag = doneflag;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -405,21 +419,5 @@ public class OperatbudgetplanEntity implements java.io.Serializable {
 	 */
 	public void setTasktitle(java.lang.String tasktitle){
 		this.tasktitle = tasktitle;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  username
-	 */
-	@Column(name ="USERNAME",nullable=true,length=128)
-	public java.lang.String getUsername(){
-		return this.username;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  username
-	 */
-	public void setUsername(java.lang.String username){
-		this.username = username;
 	}
 }

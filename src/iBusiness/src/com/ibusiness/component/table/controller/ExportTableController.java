@@ -76,7 +76,7 @@ public class ExportTableController {
         }
         model.addAttribute("formidItems", formidItems);
         // 
-        String flowidSql = "select id vKey, flowTitle vValue from IB_BPM_PROCESS ";
+        String flowidSql = "select id vKey, flowTitle vValue from IB_BPM_PROCESS Order by flowTitle ";
         List<Map<String, Object>> flowidList = com.ibusiness.core.spring.ApplicationContextHelper
                 .getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate()
                 .queryForList(flowidSql);
