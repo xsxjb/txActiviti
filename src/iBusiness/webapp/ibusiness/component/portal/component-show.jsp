@@ -26,9 +26,9 @@ $(function() {
   </head>
 
   <body>
-
+    <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
-		<%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
+	<%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
 		<!-- start of main -->
 		<div class="panel panel-default col-lg-10"> 
 	        <div class="panel-body">

@@ -17,6 +17,10 @@ public class ProduceScheduleChart implements java.io.Serializable {
     private String produceNum;
     // 计划生产数
 	private String planNum;
+	// 产品名
+    private String productName;
+    // 总金额
+    private String totalAmount;
     /**
      * @return the eventTime
      */
@@ -65,4 +69,16 @@ public class ProduceScheduleChart implements java.io.Serializable {
     public void setPlanNum(String planNum) {
         this.planNum = planNum;
     }
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(String totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 }

@@ -35,15 +35,17 @@
                   
                           <div class="form-group">
                           <label class="col-lg-2 control-label" for="code-name">姓名:</label>
-                          <div class="col-lg-3">  <label>${model.name}</label>  <input id="code-name" type="hidden" name="name" value="${model.name}" ></div>
+                          <div class="col-lg-3">   <input id="code-name" type="text" name="name" value="${model.name}" class="text required" ></div>
                           
                           <label class="col-lg-2 control-label" for="code-remark">备注:</label>
-                          <div class="col-lg-3">   <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" ></div>
-                          
-                            </div>
-                          <div class="form-group">
-                          <label class="col-lg-2 control-label" for="code-eventtime">日期时间:</label>
-                          <div class="col-lg-3">  <div class="input-append datetimepicker date">  <span class="add-on">    <input data-format="yyyy-MM-dd hh:mm:ss" type="text" name="eventtime" value="${model.eventtime}" class="text required" maxlength="20" readonly >  </span>  </div></div>
+                          <div class="col-lg-3">   <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" >   <a href="#remarkSInputDiv" class="btn btn-default btn-sm" data-toggle="modal" >选择</a>   
+                          <script type="text/javascript">  
+                          function changeValue(materialno,materialname,model){ 
+                        	  $("#code-materialno").val(materialno);
+                        	  $("#code-name").val(materialname);
+                        	  $("#code-remark").val(model);
+                        	  }
+                          </script>   <div id="remarkSInputDiv" class="modal fade" tabindex="-1" style="top:20%;" >     <div class="modal-dialog">       <div class="modal-content">         <div class="modal-header">           <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>           <h4 class="modal-title">选择带出</h4>         </div>         <div class="modal-body">           <div class="content">           	<table id="codeGrid" class="table table-hover table-bordered">           	   <thead>           	   <tr>           	      <th width="80">&nbsp;</th>   <th class="sorting">原料编号</th>   <th class="sorting">原料名称</th>   <th class="sorting">规格型号</th>           	   </tr>           	</thead>           	<tbody>           	   <c:forEach items="${remarkPage.result}" var="item">           	     <tr>           	        <td><a href="#" class="btn btn-default btn-sm" onClick="changeValue('${item.materialno}','${item.materialname}','${item.model}')" data-dismiss="modal">选择</a></td>  <td>${item.materialno}</td>  <td>${item.materialname}</td>  <td>${item.model}</td>           	     </tr>           	  </c:forEach>           	</tbody>           </table>         </div>       </div>       <div class="modal-footer">         <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>       </div>     </div>    </div>  </div></div>
                           
                             </div>
                   

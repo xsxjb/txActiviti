@@ -1,12 +1,10 @@
 package com.codegenerate.productmanage.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ibusiness.common.page.HibernateEntityDao;
 import com.codegenerate.productmanage.entity.ProductEntity;
+import com.ibusiness.common.page.HibernateEntityDao;
 
 /**   
  * @Title: Service

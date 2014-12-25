@@ -5,16 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.codegenerate.productmanage.service.MaterialsService;
 import com.ibusiness.codegenerate.code.Columnt;
-import com.ibusiness.common.page.Page;
-import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.common.util.Constants;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
-import com.ibusiness.core.spring.ApplicationContextHelper;
 
 
 /**
@@ -264,17 +263,24 @@ public class CodeTagFactory {
     /**
      * 选择带出
      */
-    public Columnt selectInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
+    @SuppressWarnings("unchecked")
+	public Columnt selectInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
+    	String confSelectInfo = formColumn.getConfSelectInfo();
+    	JSONObject jsonObject= JSONObject.fromObject(confSelectInfo);
+    	// java先關信息
+    	
+    	// JSP相關信息
+    	List<SelectInputBean> list = ((List<SelectInputBean>) CommonUtils.getListFromJson(jsonObject.get("jsplist").toString(), SelectInputBean.class));
     	// TODO
     	// 生成controller类中的Attribute
         String controllerInfo = "";
         // 取得表单对应表管理表Map
         // 查询条件Filter过滤器
-        controllerInfo = controllerInfo + "Map<String, Object> parameterMap = new HashMap<String, Object>();";
+        controllerInfo = controllerInfo + "Map<String, Object> parameterMap = new java.util.HashMap<String, Object>();";
         controllerInfo = controllerInfo + "List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);";
         // 根据条件查询数据
         controllerInfo = controllerInfo + "Page page = new Page();";
-        controllerInfo = controllerInfo + "page = ApplicationContextHelper.getBean(MaterialsService.class).pagedQuery(page, propertyFilters);";
+        controllerInfo = controllerInfo + "page = com.ibusiness.core.spring.ApplicationContextHelper.getBean("+jsonObject.getString("className")+".class).pagedQuery(page, propertyFilters);";
         controllerInfo = controllerInfo + "model.addAttribute(\""+columnt.getFieldName()+"Page\", page);";
         List<String> maList = columnt.getModelAttributeList();
         maList.add(controllerInfo);
@@ -285,18 +291,25 @@ public class CodeTagFactory {
         String str = "";
         str = str + "<div class=\"col-lg-3\">";
         str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
+        str = str + "   <a href=\"#"+columnt.getFieldName()+"SInputDiv\" class=\"btn btn-default btn-sm\" data-toggle=\"modal\" >选择</a>";
         // ===================================
         str = str + "   <script type=\"text/javascript\">";
-        str = str + "   	function changeValue(materialno,materialname,materialprice,materialtypeno,materialunit,model){";
-//			$("#code-materialno").val(materialno);
-//        	$("#code-materialname").val(materialname);
-//			$("#code-materialmodel").val(model);
-//			$("#code-materialunit").val(materialunit);
-//			$("#code-amount").val(materialprice);
+        str = str + "   	function changeValue(";
+		for (int i=0; i<list.size(); i++) {
+			if (0 != i) {
+				str = str + ",";
+			}
+        	str = str + list.get(i).getInputValue();
+        }
+		str = str + "){";
+        for (SelectInputBean inputBean : list) {
+        	str = str + "   	$(\"#code-"+inputBean.getInputKey()+"\").val("+inputBean.getInputValue()+");";
+        }
+
         str = str + "       }";
 		str = str + "   </script>";
         // ===================================
-        str = str + "   <div id=\"materialnameDiv\" class=\"modal fade\" tabindex=\"-1\" style=\"top:20%;\" >";
+        str = str + "   <div id=\""+columnt.getFieldName()+"SInputDiv\" class=\"modal fade\" tabindex=\"-1\" style=\"top:20%;\" >";
         str = str + "     <div class=\"modal-dialog\">";
         str = str + "       <div class=\"modal-content\">";
         str = str + "         <div class=\"modal-header\">";
@@ -309,24 +322,25 @@ public class CodeTagFactory {
         str = str + "           	   <thead>";
         str = str + "           	   <tr>";
         str = str + "           	      <th width=\"80\">&nbsp;</th>";
-//				                <th class="sorting">原料编号</th>";
-//				                <th class="sorting">原料名称</th>
-//				                <th class="sorting">价格</th>
-//				                <th class="sorting">分类编号</th>
-//				                <th class="sorting">单位</th>
-//				                <th class="sorting">规格型号</th>
+        for (SelectInputBean inputBean : list) {
+        	str = str + "   <th class=\"sorting\">" + inputBean.getInputTitle() + "</th>";
+        }
         str = str + "           	   </tr>";
         str = str + "           	</thead>";
         str = str + "           	<tbody>";
         str = str + "           	   <c:forEach items=\"${"+columnt.getFieldName()+"Page.result}\" var=\"item\">";
         str = str + "           	     <tr>";
-        str = str + "           	        <td><a href=\"#\" class=\"btn btn-default btn-sm\" onClick=\"changeValue('${item.materialno}','${item.materialname}','${item.materialprice}','${item.materialtypeno}','${item.materialunit}','${item.model}')\" data-dismiss=\"modal\">选择</a></td>";
-//				            <td>${item.materialno}</td>";
-//				            <td>${item.materialname}</td>
-//				            <td>${item.materialprice}</td>
-//				            <td>${item.materialtypeno}</td>
-//				            <td>${item.materialunit}</td>
-//				            <td>${item.model}</td>
+        str = str + "           	        <td><a href=\"#\" class=\"btn btn-default btn-sm\" onClick=\"changeValue(";
+		for (int i=0; i<list.size(); i++) {
+			if (0 != i) {
+				str = str + ",";
+			}
+        	str = str + "'${item."+list.get(i).getInputValue()+"}'";
+        }
+		str = str + ")\" data-dismiss=\"modal\">选择</a></td>";
+        for (SelectInputBean inputBean : list) {
+        	str = str + "  <td>${item."+inputBean.getInputValue()+"}</td>";
+        }
         str = str + "           	     </tr>";
         str = str + "           	  </c:forEach>";
         str = str + "           	</tbody>";

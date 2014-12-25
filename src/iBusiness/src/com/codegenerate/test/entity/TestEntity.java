@@ -27,8 +27,6 @@ public class TestEntity implements java.io.Serializable {
 	private java.lang.String name;
 	/**remark*/
 	private java.lang.String remark;
-	/**eventtime*/
-	private java.util.Date eventtime;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -79,21 +77,5 @@ public class TestEntity implements java.io.Serializable {
 	 */
 	public void setRemark(java.lang.String remark){
 		this.remark = remark;
-	}
-	/**
-	 *方法: 取得java.util.Date
-	 *@return: java.util.Date  eventtime
-	 */
-	@Column(name ="EVENTTIME",nullable=true)
-	public java.util.Date getEventtime(){
-		return this.eventtime;
-	}
-
-	/**
-	 *方法: 设置java.util.Date
-	 *@param: java.util.Date  eventtime
-	 */
-	public void setEventtime(java.util.Date eventtime){
-		this.eventtime = eventtime;
 	}
 }

@@ -1,14 +1,20 @@
 package com.codegenerate.test.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import net.sf.json.JSONObject;
 
 import javax.annotation.Resource;
+
 import java.io.File;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.multipart.MultipartFile;
+
 import com.ibusiness.common.export.ExcelCommon;
 import com.ibusiness.common.export.TableModel;
 
@@ -17,7 +23,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.security.util.SpringSecurityUtils;
@@ -25,12 +30,11 @@ import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.common.service.FormulaCommon;
-
+import com.ibusiness.core.spring.ApplicationContextHelper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
-
 import com.codegenerate.test.entity.TestEntity;
 import com.codegenerate.test.service.TestService;
 
@@ -81,6 +85,7 @@ public class TestController {
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
+                Map<String, Object> parameterMap = new HashMap<String, Object>();List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);Page page = new Page();page = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.codegenerate.productmanage.service.MaterialsService.class).pagedQuery(page, propertyFilters);model.addAttribute("remarkPage", page);
         return "codegenerate/test/test-input.jsp";
     }
 
@@ -134,7 +139,7 @@ public class TestController {
         // excel文件名
         tableModel.setExcelName("测试练习表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "name", "remark", "eventtime");
+        tableModel.addHeaders("id", "name", "remark");
         tableModel.setTableName("IB_TEST");
         tableModel.setData(beans);
         try {
@@ -154,7 +159,7 @@ public class TestController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "name", "remark", "eventtime");
+            tableModel.addHeaders("id", "name", "remark");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.test.entity.TestEntity");
         } catch (Exception e) {

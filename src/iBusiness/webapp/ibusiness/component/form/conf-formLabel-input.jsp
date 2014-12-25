@@ -62,14 +62,21 @@
                       <div class="form-group">
                           <div class="col-lg-1"></div>
                           <div class="col-lg-10">
-                          <label class="control-label" for="form-confSelectInfo">下拉列表内容:
-                            设置下拉列表固定值：[{"key":"1","value":"男"},{"key":"2","value":"女"}]<br/>
-                             设置数据字典值：{"sql":"select id vKey, name vValue from ib_job_title "}
+                          <label class="control-label" for="form-confSelectInfo">
+                          
+                          <p class="text-left">
+              下拉列表内容:1.设置下拉列表固定值：[{"key":"1","value":"男"},{"key":"2","value":"女"}]<br/>
+                  2.设置数据字典值：{"sql":"select id vKey, name vValue from ib_job_title "}<br/>
+                  3.选择带出值：{"jsplist":[{"inputKey":"materialname","inputValue":"materialname","inputTitle":"原料名称"},
+                      <br/>{"inputKey":"materialmodel","inputValue":"model","inputTitle":"规格型号"}],
+                     <br/>"className":"com.codegenerate.productmanage.service.MaterialsService"}
+                          </p>
+                     
                           </label>
                           </div>
                           <div class="col-lg-2"></div>
                           <div class="col-lg-6">
-                              <textarea class="form-control" id="form-confSelectInfo" rows="2" name="confSelectInfo"  >${model.confSelectInfo}</textarea>
+                              <textarea class="form-control" id="form-confSelectInfo" rows="4" name="confSelectInfo"  >${model.confSelectInfo}</textarea>
                           </div>
                       </div>
                       <div class="form-group">

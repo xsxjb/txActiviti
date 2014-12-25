@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.codegenerate.productmanage.entity.ProductEntity;
+import com.codegenerate.productmanage.service.ProductService;
 import com.ibusiness.boss.entity.ProduceScheduleChart;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
@@ -25,7 +29,7 @@ import com.ibusiness.common.util.CommonUtils;
 @RequestMapping("produce-schedule-chart")
 public class ProduceScheduleChartController {
 
-//    private TestService testService;
+    private ProductService productService;
     /**
      * 曲线列表
      */
@@ -58,11 +62,72 @@ public class ProduceScheduleChartController {
         // 返回JSON
         return CommonUtils.getJsonFromList(list, null).toString();
     }
-   
     // ======================================================================
-//    @Resource
-//    public void setTestService(TestService testService) {
-//        this.testService = testService;
-//    }
+    /**
+     * 柱形图列表
+     */
+    @RequestMapping("list-productSell")
+    public String productSellList(Model model) {
+        // 返回JSP
+        return "ibusiness/boss/productSellHistogram.jsp";
+    }
+    /**
+     * 柱状图
+     */
+    @ResponseBody
+    @RequestMapping("show-histogram")
+    public String showproductSell(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
+    	// 产品列表
+    	List<ProductEntity> productList = productService.getAll();
+        List<ProduceScheduleChart> list = new ArrayList<ProduceScheduleChart>();
+        if (null != productList && productList.size() > 0) {
+        	for (ProductEntity productEntity : productList) {
+                ProduceScheduleChart bean = new ProduceScheduleChart();
+                bean.setEventTime(new Date());
+                bean.setProductName(productEntity.getProductname());
+                //  
+                bean.setProduceNum(""+Math.round(Math.random()*200+100));
+                list.add(bean);
+            }
+        }
+        // 返回JSON
+        return CommonUtils.getJsonFromList(list, null).toString();
+    }
+    // ======================================================================
+    /**
+     * 饼图列表
+     */
+    @RequestMapping("list-pieDonut")
+    public String productSellPieDonutList(Model model) {
+        // 返回JSP
+        return "ibusiness/boss/productSellPicDonut.jsp";
+    }
+    /**
+     * 饼图
+     */
+    @ResponseBody
+    @RequestMapping("show-pieDonut")
+    public String showPieDonut(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
+    	// 产品列表
+    	List<ProductEntity> productList = productService.getAll();
+        List<ProduceScheduleChart> list = new ArrayList<ProduceScheduleChart>();
+        if (null != productList && productList.size() > 0) {
+        	for (ProductEntity productEntity : productList) {
+                ProduceScheduleChart bean = new ProduceScheduleChart();
+                bean.setEventTime(new Date());
+                bean.setProductName(productEntity.getProductname());
+                //  
+                bean.setTotalAmount(""+Math.round(Math.random()*200+100));
+                list.add(bean);
+            }
+        }
+        // 返回JSON
+        return CommonUtils.getJsonFromList(list, null).toString();
+    }
+    // ======================================================================
+    @Resource
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
     
 }

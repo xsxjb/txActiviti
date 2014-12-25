@@ -104,7 +104,7 @@
 	     		// 指定厚度的图线（或柱边）。
 	     		graph.lineThickness = 2;
 	     		graph.valueField = "planNum";
-	     		graph.title = '计划生产'
+	     		graph.title = '计划生产';
 	     		stockPanel.addStockGraph(graph);
 	     		// 实际生产数
 	     		var graph1 = new AmCharts.StockGraph();
@@ -174,10 +174,10 @@
 	        <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
 	        <div class="panel-body">
 		          <div id="search" class="content content-inner">
-					  <form name="cgForm" method="post" action="test-list.do" class="form-inline">
+					  <form name="cgForm" method="post" action="list-chart.do" class="form-inline">
 					    <div class="form-group">
-					                <label for="code_table_name">产品名:</label>
-					                <input type="text" id="code_table_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
+			                <label for="code_table_name">产品名:</label>
+			                <input type="text" id="code_table_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
 						    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
 						</div>
 					 </form>

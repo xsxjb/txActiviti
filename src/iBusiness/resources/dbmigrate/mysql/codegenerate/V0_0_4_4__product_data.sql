@@ -207,6 +207,11 @@ insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUM
 insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT,CONFSELECTINFO) values ('productmanage','product','IB_PRODUCT.PRODUCTTYPE','产品类型','PRODUCTTYPE','IB_PRODUCT',1,'7','','','1','1','2','','','{\"sql\":\"select id vKey, typeName vValue from IB_PRODUCTTYPE where isleaf=\'false\' \"} ');
 insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT,CONFSELECTINFO) values ('productmanage','product','IB_PRODUCT.PRODUCTUNIT','单位','PRODUCTUNIT','IB_PRODUCT',6,'1','','','1','1','2','','',NULL);
 insert  into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN,TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT,CONFSELECTINFO) values ('productmanage','product','IB_PRODUCT.UNITPRICE','单价','UNITPRICE','IB_PRODUCT',7,'5','','','1','1','2','','',NULL);
+/* ================= 插入数据 ==================   */
+insert into ib_product(ID,PRODUCTTYPE,PRODUCTFLOWID,PRODUCTNO,PRODUCTNAME,PRODUCTMODEL,PRODUCTUNIT,UNITPRICE) values ('productno100001','100001010','100001','100001','木糖醇注射液','250ml:25g','箱',122.00);
+insert into ib_product(ID,PRODUCTTYPE,PRODUCTFLOWID,PRODUCTNO,PRODUCTNAME,PRODUCTMODEL,PRODUCTUNIT,UNITPRICE) values ('productno100002','100002010','100002','100001','羟乙基淀粉','500ml','箱',222.00);
+insert into ib_product(ID,PRODUCTTYPE,PRODUCTFLOWID,PRODUCTNO,PRODUCTNAME,PRODUCTMODEL,PRODUCTUNIT,UNITPRICE) values ('productno100003','100001010','100003','100003','月见草油胶丸','0.3g','箱',111.00);
+insert into ib_product(ID,PRODUCTTYPE,PRODUCTFLOWID,PRODUCTNO,PRODUCTNAME,PRODUCTMODEL,PRODUCTUNIT,UNITPRICE) values ('productno100004','100002010','100004','100004','洛索洛芬钠胶囊','2x10粒/板/盒','箱',211.00);
 
 /* ================================================================================   */
 /* ====================================   原料入库表   ====================================   */

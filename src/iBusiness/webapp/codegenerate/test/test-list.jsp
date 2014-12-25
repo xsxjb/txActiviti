@@ -81,7 +81,6 @@
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					                <th class="sorting">姓名</th>
 					                <th class="sorting">备注</th>
-					                <th class="sorting">日期时间</th>
 				        <th width="80">&nbsp;</th>
 				      </tr>
 				    </thead>
@@ -91,7 +90,6 @@
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 						            <td>${item.name}</td>
 						            <td>${item.remark}</td>
-						            <td>${item.eventtime}</td>
 					        <td>
 					          <a href="test-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>
