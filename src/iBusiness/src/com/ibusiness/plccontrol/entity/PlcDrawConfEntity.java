@@ -1,25 +1,19 @@
-package com.codegenerate.test.entity;
-
-import java.util.Date;
+package com.ibusiness.plccontrol.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 
 /**   
- * @Title: Entity
- * @Description: 测试练习表页面
+ * PLC绘图页面 设备对象配置管理
+ * 
  * @author JiangBo
  *
  */
 @Entity
-@Table(name = "IB_TEST")
-public class TestEntity implements java.io.Serializable {
+@Table(name = "IB_CONF_PLCDRAW")
+public class PlcDrawConfEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 	/**id*/
 	private java.lang.String id;

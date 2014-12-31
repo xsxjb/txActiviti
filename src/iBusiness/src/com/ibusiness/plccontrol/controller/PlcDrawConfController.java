@@ -1,63 +1,55 @@
-package com.codegenerate.test.controller;
+package com.ibusiness.plccontrol.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import net.sf.json.JSONObject;
 
 import javax.annotation.Resource;
-import java.io.File;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.multipart.MultipartFile;
-import com.ibusiness.common.export.ExcelCommon;
-import com.ibusiness.common.export.TableModel;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ibusiness.security.util.SpringSecurityUtils;
-import com.ibusiness.common.model.ConfSelectItem;
-import com.ibusiness.common.service.CommonBusiness;
-import com.ibusiness.component.form.entity.ConfFormTableColumn;
-import com.ibusiness.common.service.FormulaCommon;
-
-import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
 import com.ibusiness.common.page.Page;
+import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.FormulaCommon;
 import com.ibusiness.common.util.CommonUtils;
-
-import com.codegenerate.test.entity.TestEntity;
-import com.codegenerate.test.service.TestService;
+import com.ibusiness.core.spring.MessageHelper;
+import com.ibusiness.plccontrol.entity.PlcDrawConfEntity;
+import com.ibusiness.plccontrol.service.PlcDrawConfService;
 
 /**   
- * @Title: Controller
- * @Description: 测试练习表页面
+ * PLC绘图页面 设备对象配置管理controller
+ * 
  * @author JiangBo
  *
  */
 @Controller
-@RequestMapping("test")
-public class TestController {
+@RequestMapping("drawConf")
+public class PlcDrawConfController {
 
     private MessageHelper messageHelper;
-    private TestService testService;
+    private PlcDrawConfService plcDrawConfService;
    /**
      * 列表
      */
-    @RequestMapping("test-list")
+    @RequestMapping("drawConf-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         // 根据条件查询数据
-        page = testService.pagedQuery(page, propertyFilters);
+        page = plcDrawConfService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "codegenerate/test/test-list.jsp";
+        return "ibusiness/plc-control/draw-conf-list.jsp";
     }
     
     /**
@@ -66,22 +58,22 @@ public class TestController {
      * @param model
      * @return
      */
-    @RequestMapping("test-input")
+    @RequestMapping("drawConf-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
-        TestEntity entity = null;
+        PlcDrawConfEntity entity = null;
         if (!CommonUtils.isNull(id)) {
-            entity = testService.get(id);
+            entity = plcDrawConfService.get(id);
         } else {
-            entity = new TestEntity();
+            entity = new PlcDrawConfEntity();
         }
         
         // 默认值公式
-        entity = (TestEntity) new FormulaCommon().defaultValue(entity, "IB_TEST");
+        entity = (PlcDrawConfEntity) new FormulaCommon().defaultValue(entity, "IB_CONF_PLCDRAW");
         
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
-        return "codegenerate/test/test-input.jsp";
+        return "ibusiness/plc-control/draw-conf-input.jsp";
     }
 
     /**
@@ -90,19 +82,19 @@ public class TestController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("test-save")
-    public String save(@ModelAttribute TestEntity entity, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("drawConf-save")
+    public String save(@ModelAttribute PlcDrawConfEntity entity, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         // 再进行数据复制
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
-            testService.insert(entity);
+            plcDrawConfService.insert(entity);
         } else {
-            testService.update(entity);
+            plcDrawConfService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/test/test-list.do";
+        return "redirect:/drawConf/drawConf-list.do";
     }
    /**
      * 删除
@@ -110,32 +102,32 @@ public class TestController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("test-remove")
+    @RequestMapping("drawConf-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
-        List<TestEntity> entitys = testService.findByIds(selectedItem);
-        for (TestEntity entity : entitys) {
-            testService.remove(entity);
+        List<PlcDrawConfEntity> entitys = plcDrawConfService.findByIds(selectedItem);
+        for (PlcDrawConfEntity entity : entitys) {
+            plcDrawConfService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/test/test-list.do";
+        return "redirect:/drawConf/drawConf-list.do";
     }
     /**
      * excel导出
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping("test-export")
+    @RequestMapping("drawConf-export")
     public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        page = testService.pagedQuery(page, propertyFilters);
-        List<TestEntity> beans = (List<TestEntity>) page.getResult();
+        page = plcDrawConfService.pagedQuery(page, propertyFilters);
+        List<PlcDrawConfEntity> beans = (List<PlcDrawConfEntity>) page.getResult();
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("测试练习表页面"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("PLC绘图页面设备对象配置页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("id", "remark", "itemid", "itemname", "itemtype", "itemtitle", "imghurl", "imgvurl");
-        tableModel.setTableName("IB_TEST");
+        tableModel.setTableName("IB_CONF_PLCDRAW");
         tableModel.setData(beans);
         try {
             new ExcelCommon().exportExcel(response, tableModel);
@@ -146,7 +138,7 @@ public class TestController {
     /**
      * excel导入
      */
-    @RequestMapping("test-importExcel")
+    @RequestMapping("drawConf-importExcel")
     public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
         try {
             File file = new File("test.xls"); 
@@ -156,11 +148,11 @@ public class TestController {
             // 列名
             tableModel.addHeaders("id", "remark", "itemid", "itemname", "itemtype", "itemtitle", "imghurl", "imgvurl");
             // 导入
-            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.test.entity.TestEntity");
+            new ExcelCommon().uploadExcel(file, tableModel, "com.ibusiness.plccontrol.entity.PlcDrawConfEntity");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/test/test-list.do";
+        return "redirect:/drawConf/drawConf-list.do";
     }
     // ======================================================================
     @Resource
@@ -169,8 +161,8 @@ public class TestController {
     }
 
     @Resource
-    public void setTestService(TestService testService) {
-        this.testService = testService;
+    public void setPlcDrawConfService(PlcDrawConfService plcDrawConfService) {
+        this.plcDrawConfService = plcDrawConfService;
     }
     
 }

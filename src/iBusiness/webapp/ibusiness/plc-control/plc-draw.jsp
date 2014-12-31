@@ -10,25 +10,27 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
-	<%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
 	
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/uuid.js"></script>
-		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/ArrayList.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/plc-control/js/ArrayList.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/HashMap.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/html5/excanvas.js"></script>
-		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/CruciateAuxiliaryLine.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/plc-control/js/CruciateAuxiliaryLine.js"></script>
 		<!--  -->
+		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/plc-control/js/AdjustValve.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/plc-control/js/CyclePump.js"></script>
+		
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/StartNode.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/EndNode.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Gateway.js"></script> 
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/ReviveScene.js"></script>
-		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Lane.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/TaskNode.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Texts.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Pipeline.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/CalculatePos.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Line.js"></script>
-		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/eventDraw.js"></script>
+		
+		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/plc-control/js/eventDraw.js"></script>
 		<style type="text/css">
 			.tool {height: 30px; float: left; cursor: pointer; padding: 5px; filter: alpha(Opacity = 70); opacity: 0.7; }
 		</style>
@@ -43,7 +45,7 @@
 		        },
 		        errorClass: 'validate-error'
 		    });
-		})
+		});
 		// 任务节点基础信息
 		function taskNodeBase(){
 			// 设置显示标签
@@ -55,8 +57,6 @@
 		}
 		// 任务节点弹出层
 		function popConfTaskNode(){
-	//	    var url = "/iBusiness/default/flowchart/pop-conf-taskNode.do?flowId="+$("#bpmId").val()+"&packageName="+$("#packageName").val()+"&id="+$("#taskNodeId").val();
-	//	    $("#taskNodeIframe").attr("src", url );
 		    // 设置显示标签
 		    $("#taskNodeBaseTabs").attr("class"," ");
 		    $("#popConfTaskNodeTabs").attr("class","active");
@@ -67,13 +67,20 @@
 		
     </script>
 	<!-- start of main -->
+	<div class="col-lg-1"></div>
 	<div class="panel panel-default col-md-10" >
 	        <input id="bpmId" type="hidden" name="bpmId" value="${bpmId}">
 	        <input id="packageName" type="hidden" name="packageName" value="${packageName}">
 	        <input id="taskNodeId" type="hidden" name="taskNodeId"  >
 	        <!--  -->
 	        	<div id="toolCanvas"  style="position: relative; height: 40px; width:1080px; border: 1px solid;">
-						<div class="tool"  title="泳道" id="addLane"><img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/lanebg.png" /></div>
+	        	    <div class="tool" title="循环泵" id="CyclePump">
+						<img name="icon" id="xhbImg" height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/plc-control/img/xhb1-v-0.png" />
+					</div>
+					<div class="tool" title="调节阀" id="AdjustValve">
+						<img name="icon" id="iconImg" height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/plc-control/img/tf-v.png" />
+					</div>
+					
 						<div class="tool"  title="开始" id="StartNode">
 							<img height="30px" width="30px" name="startNode" id="startNodeImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/startnode.png" />
 						</div>

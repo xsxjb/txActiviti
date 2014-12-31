@@ -22,7 +22,7 @@
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm',
-	        exportUrl: 'test-export.do'
+	        exportUrl: 'drawConf-export.do'
 		};
 
 		var table;
@@ -46,7 +46,7 @@
         <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
           <div class="panel-body">
 	          <div id="search" class="content content-inner">
-				  <form name="cgForm" method="post" action="test-list.do" class="form-inline">
+				  <form name="cgForm" method="post" action="drawConf-list.do" class="form-inline">
 				    <div class="form-group">
 				                <label for="code_table_itemname">设备对象名:</label>
 				                <input type="text" id="code_table_itemname" name="filter_LIKES_itemname" value="${param.filter_LIKES_itemname}">
@@ -58,7 +58,7 @@
 	   <div class="panel-heading"><h4 class="panel-title">工艺图绘图设备对象列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
-			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='test-input.do'">新建</button>
+			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='drawConf-input.do'">新建</button>
 			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
             
 			</div>
@@ -74,7 +74,7 @@
 		    <div class="m-clear"></div>
 	   </div>
 	   <div class="content">
-			<form id="gridForm" name="gridForm" method='post' action="test-remove.do" class="m-form-blank">
+			<form id="gridForm" name="gridForm" method='post' action="drawConf-remove.do" class="m-form-blank">
 			  <table id="codeGrid" class="table table-hover table-bordered">
 			      <thead>
 				      <tr>
@@ -101,7 +101,7 @@
 						            <td>${item.imgvurl}</td>
 						            <td>${item.remark}</td>
 					        <td>
-					          <a href="test-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+					          <a href="drawConf-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>
 					      </tr>
 					      </c:forEach>

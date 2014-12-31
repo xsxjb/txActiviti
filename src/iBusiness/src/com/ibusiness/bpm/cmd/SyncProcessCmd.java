@@ -170,8 +170,11 @@ public class SyncProcessCmd implements Command<Void> {
      */
     @SuppressWarnings("unchecked")
     private void insertBpmFlowNode(String formId, BpmFlowNode bpmFlowNode) {
-        // 
+        // 取得表单信息,如果表单信息为空则返回
         ConfForm confForm = getConfFormDao().get(formId);
+        if (null == confForm) {
+        	return;
+        }
         String sql = "from ConfFormTableColumn where formName=?";
         List<ConfFormTableColumn> confFormTableColumns = getConfFormTableColumnDao().find(sql, confForm.getFormName());
         // 

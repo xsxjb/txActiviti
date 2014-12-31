@@ -4,7 +4,7 @@
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>测试练习表单编辑</title>
+    <title>工艺图绘图设备对象编辑</title>
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
@@ -26,9 +26,9 @@
     <div class="col-lg-1"></div>
     <!-- start of main -->
     <div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">测试练习表单编辑</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">工艺图绘图设备对象编辑</h4></div>
         <div class="panel-body">
-                <form id="cgForm" method="post" action="test-save.do" class="form-horizontal">
+                <form id="cgForm" method="post" action="drawConf-save.do" class="form-horizontal">
                   <c:if test="${model != null}">
                       <input id="code_id" type="hidden" name="id" value="${model.id}">
                   </c:if>
