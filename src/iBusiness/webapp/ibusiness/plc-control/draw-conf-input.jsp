@@ -50,13 +50,19 @@
                           
                             </div>
                           <div class="form-group">
-                          <label class="col-lg-2 control-label" for="code-imghurl">横版图片路径:</label>
-                          <div class="col-lg-3">   <input id="code-imghurl" type="text" name="imghurl" value="${model.imghurl}" class="text required" ></div>
-                          
-                          <label class="col-lg-2 control-label" for="code-imgvurl">竖版图片路径:</label>
-                          <div class="col-lg-3">   <input id="code-imgvurl" type="text" name="imgvurl" value="${model.imgvurl}" class="text required" ></div>
-                          
-                            </div>
+					<label class="col-lg-2 control-label" for="code-imghurl">横版图片路径:</label>
+					<div class="col-lg-3">
+						<input id="code-imghurl" type="text" name="imghurl" value="${model.imghurl}" class="text required">
+						<a href="#" class="btn btn-default btn-sm">上传</a>
+					</div>
+
+					<label class="col-lg-2 control-label" for="code-imgvurl">竖版图片路径:</label>
+					<div class="col-lg-3">
+						<input id="code-imgvurl" type="text" name="imgvurl" value="${model.imgvurl}" class="text required">
+					    <a href="#" class="btn btn-default btn-sm">上传</a>
+					</div>
+
+				</div>
                           <div class="form-group">
                           <label class="col-lg-2 control-label" for="code-remark">备注:</label>
                           <div class="col-lg-6">    <textarea class="form-control " id="code-remark" name="remark" rows="1" >${model.remark}</textarea></div>
@@ -65,8 +71,8 @@
                   
                   <div class="form-group">
 	                  <div class="col-lg-10 col-lg-offset-2">
-	                      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-	                      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+	                      <button id="submitButton" class="btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
+	                      <button type="button" onclick="history.back();" class="btn btn-default btn-sm a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 	                  </div>
                   </div>
                 </form>
