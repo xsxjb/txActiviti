@@ -56,6 +56,7 @@ public class TableCommonUtil {
         bpmSColumnsMap.put("PARENTID", createTableColumn("PARENTID","主表UUID",92,"VARCHAR","64","否"));
         // 非流程主表的预留字段
         mColumnsMap.put("ID", createTableColumn("ID","UUID主键",91,"VARCHAR","64","否"));
+        mColumnsMap.put("ID", createTableColumn("SCOPEID","范围",92,"VARCHAR","64","否"));
         // 非流程子表的预留字段
         sColumnsMap.put("ID", createTableColumn("ID","UUID主键",91,"VARCHAR","64","否"));
         sColumnsMap.put("PARENTID", createTableColumn("PARENTID","主表UUID",92,"VARCHAR","64","否"));

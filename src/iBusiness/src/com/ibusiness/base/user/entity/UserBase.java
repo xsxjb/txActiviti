@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ibusiness.base.auth.entity.RoleDef;
 import com.ibusiness.base.group.entity.JobInfo;
@@ -23,56 +24,47 @@ public class UserBase implements java.io.Serializable {
 
     /** 编号. */
     private String id;
-
-    /** 用户库列表 */
-    private UserRepo userRepo;
-
     /** 帐号 */
     private String username;
-
     /** 显示名 */
     private String displayName;
-
     /** 密码 */
     private String password;
-
     /** 状态. */
     private Integer status;
-
-    /** 引用. */
-    private String ref;
-
-    /** 范围. */
-    private String scopeId;
-
+    /** 引用排序 */
+    private Integer ref;
+    /** 多租户范围. */
+    private String scopeid;
     /** 邮箱. */
     private String email;
-
     /** 手机. */
     private String mobile;
-    
     /** 职务管理表. */
     private JobInfo jobInfo;
-    
     /** 角色模板管理表. */
     private RoleDef roleDef;
-    
     /** 对应页面的css样式 */
     private String css;
+    /** 公司编号. */
+    private String companyId;
+    /** 公司名称 */
+    private String companyName;
+    /** 用户库列表ID  -- 准备废弃字段 */
+    private String userRepoId;
 
     public UserBase() {
     }
-
-    public UserBase(UserRepo userRepo, String username, String displayName,
-            String password, Integer status, String ref, String scopeId,
+    public UserBase(String userRepoId, String username, String displayName,
+            String password, Integer status, Integer ref, String scopeId,
             String email, String mobile, JobInfo jobInfo, String css, RoleDef roleDef) {
-        this.userRepo = userRepo;
+        this.userRepoId = userRepoId;
         this.username = username;
         this.displayName = displayName;
         this.password = password;
         this.status = status;
         this.ref = ref;
-        this.scopeId = scopeId;
+        this.scopeid = scopeId;
         this.email = email;
         this.mobile = mobile;
         this.jobInfo = jobInfo;
@@ -86,64 +78,52 @@ public class UserBase implements java.io.Serializable {
     public String getId() {
         return this.id;
     }
-
     /**
      * @param id
-     *            null.
      */
     public void setId(String id) {
         this.id = id;
     }
-
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_REPO_ID")
-    public UserRepo getUserRepo() {
-        return this.userRepo;
-    }
-
     /**
-     * @param userRepo
-     *            null.
-     */
-    public void setUserRepo(UserRepo userRepo) {
-        this.userRepo = userRepo;
-    }
-
-    /** @return null. */
+	 * @return the userRepoId
+	 */
+    @Column(name = "USER_REPO_ID")
+	public String getUserRepoId() {
+		return userRepoId;
+	}
+	/**
+	 * @param userRepoId the userRepoId to set
+	 */
+	public void setUserRepoId(String userRepoId) {
+		this.userRepoId = userRepoId;
+	}
+	/** @return null. */
     @Column(name = "USERNAME", length = 50)
     public String getUsername() {
         return this.username;
     }
-
     /**
      * @param username
-     *            null.
      */
     public void setUsername(String username) {
         this.username = username;
     }
-
     /** @return null. */
     @Column(name = "DISPLAY_NAME", length = 50)
     public String getDisplayName() {
         return this.displayName;
     }
-
     /**
      * @param displayName
-     *            null.
      */
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
-
     /** @return null. */
     @Column(name = "PASSWORD", length = 50)
     public String getPassword() {
         return this.password;
     }
-
     /**
      * @param password
      *            null.
@@ -151,13 +131,11 @@ public class UserBase implements java.io.Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
     /** @return null. */
     @Column(name = "STATUS")
     public Integer getStatus() {
         return this.status;
     }
-
     /**
      * @param status
      *            null.
@@ -165,33 +143,28 @@ public class UserBase implements java.io.Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
-
     /** @return null. */
-    @Column(name = "REF", length = 200)
-    public String getRef() {
+    @Column(name = "REF")
+    public Integer getRef() {
         return this.ref;
     }
-
     /**
      * @param ref
-     *            null.
      */
-    public void setRef(String ref) {
+    public void setRef(Integer ref) {
         this.ref = ref;
     }
-
     /** @return null. */
     @Column(name = "SCOPE_ID", length = 50)
-    public String getScopeId() {
-        return this.scopeId;
+    public String getScopeid() {
+        return this.scopeid;
     }
-
     /**
      * @param scopeId
      *            null.
      */
-    public void setScopeId(String scopeId) {
-        this.scopeId = scopeId;
+    public void setScopeid(String scopeid) {
+        this.scopeid = scopeid;
     }
 
     /** @return null. */
@@ -199,7 +172,6 @@ public class UserBase implements java.io.Serializable {
     public String getEmail() {
         return this.email;
     }
-
     /**
      * @param email
      *            null.
@@ -207,13 +179,11 @@ public class UserBase implements java.io.Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
     /** @return null. */
     @Column(name = "MOBILE", length = 50)
     public String getMobile() {
         return this.mobile;
     }
-
     /**
      * @param mobile
      *            null.
@@ -221,14 +191,12 @@ public class UserBase implements java.io.Serializable {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
-
     /** @return null. */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "JOB_INFO_ID")
     public JobInfo getJobInfo() {
         return this.jobInfo;
     }
-
     /**
      * @param jobInfo
      *            null.
@@ -236,7 +204,6 @@ public class UserBase implements java.io.Serializable {
     public void setJobInfo(JobInfo jobInfo) {
         this.jobInfo = jobInfo;
     }
-
     /**
      * @return the css
      */
@@ -244,14 +211,12 @@ public class UserBase implements java.io.Serializable {
     public String getCss() {
         return css;
     }
-
     /**
      * @param css the css to set
      */
     public void setCss(String css) {
         this.css = css;
     }
-
     /**
      * @return the roleDef
      */
@@ -260,11 +225,36 @@ public class UserBase implements java.io.Serializable {
     public RoleDef getRoleDef() {
         return roleDef;
     }
-
     /**
      * @param roleDef the roleDef to set
      */
     public void setRoleDef(RoleDef roleDef) {
         this.roleDef = roleDef;
     }
+	/**
+	 * @return the companyid
+	 */
+    @Column(name = "COMPANYID")
+	public String getCompanyId() {
+		return companyId;
+	}
+	/**
+	 * @param companyid the companyid to set
+	 */
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
+	/**
+	 * @return the companyName
+	 */
+	@Transient
+	public String getCompanyName() {
+		return companyName;
+	}
+	/**
+	 * @param companyName the companyName to set
+	 */
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 }

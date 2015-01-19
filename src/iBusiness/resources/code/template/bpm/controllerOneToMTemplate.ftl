@@ -131,7 +131,7 @@ public class ${entityName}Controller {
         // 根据条件查询数据
         <#list subTab as sub>
 	        page = ${sub.entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("${sub.entityName?uncap_first}Page", page);
        </#list>
         
         // 流程ID

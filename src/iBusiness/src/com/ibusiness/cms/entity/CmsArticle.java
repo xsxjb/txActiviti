@@ -87,7 +87,8 @@ public class CmsArticle implements java.io.Serializable {
 
     /** null. */
     private String userId;
-
+    // 范围
+    private String scopeid;
     /** . */
     private Set<CmsComment> cmsComments = new HashSet<CmsComment>(0);
 
@@ -395,12 +396,23 @@ public class CmsArticle implements java.io.Serializable {
     public Set<CmsComment> getCmsComments() {
         return this.cmsComments;
     }
-
     /**
      * @param cmsComments
-     *            .
      */
     public void setCmsComments(Set<CmsComment> cmsComments) {
         this.cmsComments = cmsComments;
     }
+	/**
+	 * @return the scopeid
+	 */
+    @Column(name = "SCOPEID")
+	public String getScopeid() {
+		return scopeid;
+	}
+	/**
+	 * @param scopeid the scopeid to set
+	 */
+	public void setScopeid(String scopeid) {
+		this.scopeid = scopeid;
+	}
 }

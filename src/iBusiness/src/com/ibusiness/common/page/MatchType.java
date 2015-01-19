@@ -3,7 +3,7 @@ package com.ibusiness.common.page;
 /**
  * MatchType.查询条件枚举类
  * 
- * @author Lingo
+ * @author JiangBo
  */
 public enum MatchType {
     /** not equals !=. */

@@ -106,7 +106,7 @@
 						<div style="float: right;padding-top:8px;padding-right:5px">
 							<input type="radio" name="animated" id="animated" value="1">显示动画
 							<input type="radio" name="animated" id="animated" value="0" checked>不显示动画
-							<a href="${scopePrefix}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" class="btn btn-default btn-sm " >返回</a>
+							<a href="${ctx}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" class="btn btn-default btn-sm " >返回</a>
 						</div>
 					</div>
 					

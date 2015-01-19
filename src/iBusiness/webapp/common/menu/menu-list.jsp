@@ -18,7 +18,10 @@
 		    orderBy: '${page.orderBy == null ? "" : page.orderBy}',
 		    asc: ${page.asc},
 		    params: {
-		        'filter_LIKES_value': '${param.filter_LIKES_value}'
+		        'filter_LIKES_value': '${param.filter_LIKES_value}',
+	        	'menuLevel': '${menuLevel}',
+	        	'menuLevelOne': '${menuLevelOne}',
+		        'menuLevelTwo':'${menuLevelTwo}'
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'menuGridForm'
@@ -73,9 +76,9 @@
 	<div class="panel panel-default col-lg-10">
         <!-- tabs  -->
         <ul class="nav nav-tabs">
-		  <li class="${menuLevel == '1' ? 'active' : ''}"><a href="${scopePrefix}/menu/menu-list.do?menuLevel=1&menuLevelOne=0&menuLevelTwo=0" >一级菜单</a></li>
-		  <li class="${menuLevel == '2' ? 'active' : ''}"><a href="${scopePrefix}/menu/menu-list.do?menuLevel=2&menuLevelOne=0&menuLevelTwo=0" >二级菜单</a></li>
-		  <li class="${menuLevel == '3' ? 'active' : ''}"><a href="${scopePrefix}/menu/menu-list.do?menuLevel=3&menuLevelOne=0&menuLevelTwo=0">三级菜单</a></li>
+		  <li class="${menuLevel == '1' ? 'active' : ''}"><a href="${ctx}/menu/menu-list.do?menuLevel=1&menuLevelOne=0&menuLevelTwo=0" >一级菜单</a></li>
+		  <li class="${menuLevel == '2' ? 'active' : ''}"><a href="${ctx}/menu/menu-list.do?menuLevel=2&menuLevelOne=0&menuLevelTwo=0" >二级菜单</a></li>
+		  <li class="${menuLevel == '3' ? 'active' : ''}"><a href="${ctx}/menu/menu-list.do?menuLevel=3&menuLevelOne=0&menuLevelTwo=0">三级菜单</a></li>
 		</ul>
 		<div id="myTabContent" class="tab-content">
 		  <!-- 三级菜单 -->
@@ -156,9 +159,9 @@
 						  		共100条记录 显示1到10条记录
 					</div>
 					<div class="btn-group m-pagination pull-right">
-							  <button class="btn btn-default  btn-sm">&lt;</button>
-							  <button class="btn btn-default  btn-sm">1</button>
-							  <button class="btn btn-default  btn-sm">&gt;</button>
+							  <button class="btn btn-default btn-sm">&lt;</button>
+							  <button class="btn btn-default btn-sm">1</button>
+							  <button class="btn btn-default btn-sm">&gt;</button>
 					</div>
 
 		  </div>

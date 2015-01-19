@@ -18,27 +18,22 @@ import javax.persistence.TemporalType;
 @Table(name = "IB_DOC_INFO")
 public class DocInfo implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-
     /** null. */
     private String id;
-
     /** null. */
     private String name;
-
     /** null. */
     private String path;
-
     /** null. */
     private Integer docType;
-
     /** null. */
     private Date createTime;
-
     /** null. */
     private String userId;
-
     /** null. */
     private String descn;
+    // 范围
+    private String scopeid;
 
     /** @return null. */
     @Id
@@ -131,12 +126,23 @@ public class DocInfo implements java.io.Serializable {
     public String getDescn() {
         return this.descn;
     }
-
     /**
      * @param descn
-     *            null.
      */
     public void setDescn(String descn) {
         this.descn = descn;
     }
+	/**
+	 * @return the scopeid
+	 */
+    @Column(name = "SCOPEID")
+	public String getScopeid() {
+		return scopeid;
+	}
+	/**
+	 * @param scopeid the scopeid to set
+	 */
+	public void setScopeid(String scopeid) {
+		this.scopeid = scopeid;
+	}
 }

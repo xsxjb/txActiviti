@@ -19,7 +19,7 @@ import com.ibusiness.core.hibernate.HibernateGenericDao;
 /**
  * 提供分页查询功能.
  * 
- * @author Lingo
+ * @author JiangBo
  */
 public class HibernatePagingDao extends HibernateGenericDao {
     /** default constructor. */

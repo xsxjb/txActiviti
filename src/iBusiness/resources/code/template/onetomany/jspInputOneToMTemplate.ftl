@@ -65,9 +65,9 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
-	<div class="span2"></div>
+	<div class="col-lg-1"></div>
 	<!-- start of main -->
-	<div class="panel panel-default col-md-10"> 
+	<div class="panel panel-default col-lg-10"> 
         <div class="panel-heading"><h4 class="panel-title">${confForm.formTitle}流程</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
@@ -139,7 +139,7 @@
 					      </tr>
 					    </thead>
 						    <tbody>
-						      <c:forEach items="${'$' + '{page.result}'}" var="item">
+						      <c:forEach items="${'$' + '{${sub.entityName?uncap_first}Page.result}'}" var="item">
 								  <tr>
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
 									        <#list sub.columns as subItem>

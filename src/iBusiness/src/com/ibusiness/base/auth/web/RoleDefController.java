@@ -22,6 +22,7 @@ import com.ibusiness.base.auth.dao.RoleDefDao;
 import com.ibusiness.base.auth.entity.RoleDef;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
@@ -54,7 +55,8 @@ public class RoleDefController {
     public String list(@ModelAttribute Page page, @RequestParam
     Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = roleDefDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
 
@@ -94,7 +96,7 @@ public class RoleDefController {
                 roleDefDao.save(dest);
             } else {
                 dest = roleDef;
-                dest.setScopeId(ScopeHolder.getScopeId());
+                dest.setScopeid(ScopeHolder.getScopeId());
                 dest.setId(UUID.randomUUID().toString());
                 roleDefDao.saveInsert(dest);
             }
@@ -127,18 +129,23 @@ public class RoleDefController {
         return "redirect:/auth/role-def-list.do";
     }
 
+    /**
+     * 后台check角色名是否重复
+     * @param name
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("role-def-checkName")
     @ResponseBody
     public boolean checkName(@RequestParam("name")
     String name, @RequestParam(value = "id", required = false) String id) throws Exception {
-        String hql = "from RoleDef where scopeId=" + ScopeHolder.getScopeId() + " and name=?";
-        Object[] params = {
-            name };
+        String hql = "from RoleDef where scopeid='" + ScopeHolder.getScopeId() + "' and name=?";
+		Object[] params = { name };
 
         if (id != null) {
-            hql = "from RoleDef where scopeId=" + ScopeHolder.getScopeId() + " and name=? and id<>?";
-            params = new Object[] {
-                    name, id };
+            hql = "from RoleDef where scopeid='" + ScopeHolder.getScopeId() + "' and name=? and id<>?";
+			params = new Object[] { name, id };
         }
 
         boolean result = roleDefDao.findUnique(hql, params) == null;

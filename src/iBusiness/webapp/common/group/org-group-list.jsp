@@ -38,7 +38,7 @@ var table = new Table(config);
 
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
-        <div class="panel-heading"><h4 class="panel-title">部门列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">小组列表</h4></div>
         <div class="panel-body">
             <div class="pull-left">
 	            <button class="btn btn-default btn-sm a-insert" onclick="location.href='org-group-input.do'">新建</button>
@@ -62,8 +62,8 @@ var table = new Table(config);
 		        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 		        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
 		        <th class="sorting" name="name">小组名称</th>
-		        <th class="sorting" name="companyid">公司编号</th>
-		        <th class="sorting" name="deptid">部门编号</th>
+		        <th class="sorting" name="companyid">公司名称</th>
+		        <th class="sorting" name="deptid">部门名称</th>
 		        <th width="80">&nbsp;</th>
 		      </tr>
 		    </thead>
@@ -74,8 +74,8 @@ var table = new Table(config);
 		        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 		        <td>${item.id}</td>
 		        <td>${item.name}</td>
-		        <td>${item.companyid}</td>
-		        <td>${item.deptid}</td>
+		        <td>${item.companyName}</td>
+		        <td>${item.deptName}</td>
 		        <td>
 		          <a href="org-group-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 		        </td>

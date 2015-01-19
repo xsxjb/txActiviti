@@ -37,25 +37,25 @@
 		  obj.style['opacity'] = 1;   
 		  obj.style['filter'] = 'alpha(opacity=100)';}
 	</script>
-<link rel="stylesheet" href="<%=basePath%>default/map/css/theme/default/style.css" type="text/css"/>
-<link href="<%=basePath%>default/map/css/jquery.bigcolorpicker.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="<%=basePath%>map/css/theme/default/style.css" type="text/css"/>
+<link href="<%=basePath%>map/css/jquery.bigcolorpicker.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/plugin/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/plugin/easyui/themes/icon.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/plugin/jquery/jquery.min.js"></script>
-<script src="<%=basePath%>default/map/js/jquery.bigcolorpicker.min.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/jquery.bigcolorpicker.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/plugin/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/plugin/easyui/easyui-lang-zh_CN.js" type="text/javascript"></script>
 
-<script src="<%=basePath%>default/map/js/mapFunction.js" type="text/javascript"></script>
-<script src="<%=basePath%>default/map/js/lib/OpenLayers.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/mapFunction.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/lib/OpenLayers.js" type="text/javascript"></script>
 
-<script src="<%=basePath%>default/map/js/common.js" type="text/javascript"></script>
-<script src="<%=basePath%>default/map/js/site.js" type="text/javascript"></script>
-<script src="<%=basePath%>default/map/js/point.js" type="text/javascript"></script>
-<script src="<%=basePath%>default/map/js/btRegister.js" type="text/javascript"></script>
-<script src="<%=basePath%>default/map/js/sourceAndStation.js" type="text/javascript"></script>
-<script src="<%=basePath%>default/map/js/querySite.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/common.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/site.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/point.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/btRegister.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/sourceAndStation.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/querySite.js" type="text/javascript"></script>
 
 <!-- 
  <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
@@ -393,5 +393,5 @@ if('1'==flag0){
 		<div id="map" class="smallmap" style=" z-index:0;position:relative;background-image:url("+<%=basePath %>+"images/fbg.gif);" ></div>
     
 </body>
-<script src="<%=basePath%>default/map/js/control.js" type="text/javascript"></script>
+<script src="<%=basePath%>map/js/control.js" type="text/javascript"></script>
 </html>

@@ -93,7 +93,8 @@ public class InitServlet extends HttpServlet {
     }
     // A~Z,0~9
     private String getNumber(int size) {
-        String chars = "ABCDEFGHIJKLMNOPQ" + "RSTUVWXYZ0123456789";
+//        String chars = "ABCDEFGHIJKLMNOPQ" + "RSTUVWXYZ0123456789";
+    	String chars = "0123456789";
         String number = "";
         Random r = new Random();
         for (int i = 0; i < size; i++) {

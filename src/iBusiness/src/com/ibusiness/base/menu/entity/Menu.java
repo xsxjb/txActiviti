@@ -35,7 +35,7 @@ public class Menu implements java.io.Serializable {
 	private String menuLevel;//菜单等级
 	private String menuUrl;//菜单地址
 	private String menuIframe;//菜单地址打开方式
-	private String menuOrder;//菜单排序
+	private Integer menuOrder;//菜单排序
 	private String desktopIcon;//是否桌面显示
 	private String iconUrl;//对应图标
 	private String dataCount;// 数据条数(主页面显示用)
@@ -89,11 +89,11 @@ public class Menu implements java.io.Serializable {
 		this.menuUrl = menuUrl;
 	}
 	@Column(name = "menuorder")
-	public String getMenuOrder() {
+	public Integer getMenuOrder() {
 		return menuOrder;
 	}
 
-	public void setMenuOrder(String menuOrder) {
+	public void setMenuOrder(Integer menuOrder) {
 		this.menuOrder = menuOrder;
 	}
 	@Column(name = "menuiframe")

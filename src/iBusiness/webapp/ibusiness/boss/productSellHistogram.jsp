@@ -20,7 +20,7 @@
 	    // 取得数据
 		function getChartData() {
 			$.ajax({
-				url: "${scopePrefix}/produce-schedule-chart/show-histogram.do",
+				url: "${ctx}/produce-schedule-chart/show-histogram.do",
 				data: {
 	    		},
 	    		dataType : 'json',

@@ -59,7 +59,7 @@ public class AccessDao extends HibernateEntityDao<Access> {
             access = new Access();
             access.setType(type);
             access.setValue(value);
-            access.setScopeId(scopeId);
+            access.setScopeid(scopeId);
             this.save(access);
         }
 
@@ -74,7 +74,7 @@ public class AccessDao extends HibernateEntityDao<Access> {
             perm = new Perm();
             perm.setCode(code);
             perm.setName(code);
-            perm.setScopeId(scopeId);
+            perm.setScopeid(scopeId);
             this.save(perm);
         }
 

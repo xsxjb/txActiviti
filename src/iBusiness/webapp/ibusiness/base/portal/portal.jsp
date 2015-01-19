@@ -35,7 +35,7 @@
           <!--***************************   ***********************************-->
           <c:forEach items="${deskMenuItems}" var="item">
              <div class="icon imageBoxItem" style="width:30px">
-                   <a href="${scopePrefix}${item.menuUrl}">
+                   <a href="${ctx}${item.menuUrl}">
                        <img src="${ctx}/plugin/ibusiness/${item.iconUrl}" title="${item.menuName}"  />
                        <span class="badge">${item.menuName}</span>
                     </a>

@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 部门表实体Department .
@@ -15,27 +16,22 @@ import javax.persistence.Table;
 @Table(name = "IB_DEPARTMENT")
 public class OrgDepartment implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-
     /** 编号. */
     private String id;
-
     /** 公司编号. */
     private String companyid;
-
+    /** 公司名称 */
+    private String companyName;
     /** 部门名称. */
     private String name;
-
     /** 备注. */
     private String descn;
-
     /** null. */
     private Integer status;
-
     /** null. */
     private String ref;
-
     /** null. */
-    private String scopeId;
+    private String scopeid;
 
     public OrgDepartment() {
     }
@@ -47,16 +43,14 @@ public class OrgDepartment implements java.io.Serializable {
         this.descn = descn;
         this.status = status;
         this.ref = ref;
-        this.scopeId = scopeId;
+        this.scopeid = scopeId;
     }
-
     /** @return null. */
     @Id
     @Column(name = "ID", unique = true, nullable = false)
     public String getId() {
         return this.id;
     }
-
     /**
      * @param id
      *            null.
@@ -64,27 +58,23 @@ public class OrgDepartment implements java.io.Serializable {
     public void setId(String id) {
         this.id = id;
     }
-
     /**
      * @return the companyid
      */
     public String getCompanyid() {
         return companyid;
     }
-
     /**
      * @param companyid the companyid to set
      */
     public void setCompanyid(String companyid) {
         this.companyid = companyid;
     }
-
     /** @return null. */
     @Column(name = "NAME", length = 200)
     public String getName() {
         return this.name;
     }
-
     /**
      * @param name
      *            null.
@@ -92,13 +82,11 @@ public class OrgDepartment implements java.io.Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
     /** @return null. */
     @Column(name = "DESCN", length = 200)
     public String getDescn() {
         return this.descn;
     }
-
     /**
      * @param descn
      *            null.
@@ -106,13 +94,11 @@ public class OrgDepartment implements java.io.Serializable {
     public void setDescn(String descn) {
         this.descn = descn;
     }
-
     /** @return null. */
     @Column(name = "STATUS")
     public Integer getStatus() {
         return this.status;
     }
-
     /**
      * @param status
      *            null.
@@ -120,13 +106,11 @@ public class OrgDepartment implements java.io.Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
-
     /** @return null. */
     @Column(name = "REF", length = 200)
     public String getRef() {
         return this.ref;
     }
-
     /**
      * @param ref
      *            null.
@@ -134,18 +118,25 @@ public class OrgDepartment implements java.io.Serializable {
     public void setRef(String ref) {
         this.ref = ref;
     }
-
-    /** @return null. */
-    @Column(name = "SCOPE_ID", length = 50)
-    public String getScopeId() {
-        return this.scopeId;
-    }
-
     /**
-     * @param scopeId
-     *            null.
-     */
-    public void setScopeId(String scopeId) {
-        this.scopeId = scopeId;
-    }
+	 * @return the scopeid
+	 */
+    @Column(name = "SCOPE_ID", length = 50)
+	public String getScopeid() {
+		return scopeid;
+	}
+	/**
+	 * @param scopeid the scopeid to set
+	 */
+	public void setScopeid(String scopeid) {
+		this.scopeid = scopeid;
+	}
+
+	@Transient
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 }

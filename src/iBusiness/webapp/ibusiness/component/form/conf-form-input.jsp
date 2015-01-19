@@ -30,10 +30,10 @@
 		<div class="panel panel-default col-md-10 " > 
 		    <!-- tabs  -->
 	        <ul class="nav nav-tabs">
-			  <li class="${tabType == 'formBase' ? 'active' : ''} "><a href="${scopePrefix}/form/conf-form-input.do?packageName=${packageName}&formId=${formId}&isBpmForm=${isBpmForm}" >表单基础信息</a></li>
-			  <li class="${tabType == 'formTables' ? 'active' : ''}"><a href="${scopePrefix}/form/conf-formTables-input.do?packageName=${packageName}&formId=${formId}" >关联表字段</a></li>
-			  <li class="${tabType == 'formLabel' ? 'active' : ''}"><a href="${scopePrefix}/form/conf-formLabel-list.do?packageName=${packageName}&formId=${formId}">控件类型</a></li>
-		      <li class="${tabType == 'formCode' ? 'active' : ''}"><a href="${scopePrefix}/code/code-generate-input.do?packageName=${packageName}&formId=${formId}&isBpmForm=${isBpmForm}">代码生成</a></li>
+			  <li class="${tabType == 'formBase' ? 'active' : ''} "><a href="${ctx}/form/conf-form-input.do?packageName=${packageName}&formId=${formId}&isBpmForm=${isBpmForm}" >表单基础信息</a></li>
+			  <li class="${tabType == 'formTables' ? 'active' : ''}"><a href="${ctx}/form/conf-formTables-input.do?packageName=${packageName}&formId=${formId}" >关联表字段</a></li>
+			  <li class="${tabType == 'formLabel' ? 'active' : ''}"><a href="${ctx}/form/conf-formLabel-list.do?packageName=${packageName}&formId=${formId}">控件类型</a></li>
+		      <li class="${tabType == 'formCode' ? 'active' : ''}"><a href="${ctx}/code/code-generate-input.do?packageName=${packageName}&formId=${formId}&isBpmForm=${isBpmForm}">代码生成</a></li>
 			</ul>
 			<div id="tabContent" class="tab-content">
 			  <!-- ================================================================================ -->

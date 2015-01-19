@@ -46,9 +46,9 @@
 		<!-- 组织机构适配 
         <property name="customSessionFactories">
 			<list>
-				<bean class="com.mossle.bpm.CustomGroupEntityManagerFactory" >
+				<bean class="com.ibusiness.bpm.CustomGroupEntityManagerFactory" >
 					<property name="groupEntityManager">
-						<bean class="com.mossle.bpm.CustomGroupEntityManager">
+						<bean class="com.ibusiness.bpm.CustomGroupEntityManager">
 							<property name="jdbcTemplate" ref="jdbcTemplate"/>
 						</bean>
                     </property>

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ibusiness.bridge.user.UserConnector;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.core.util.IoUtils;
@@ -36,7 +36,6 @@ import com.ibusiness.security.util.SpringSecurityUtils;
 public class DocInfoController {
     private DocInfoService docInfoService;
     private BeanMapper beanMapper = new BeanMapper();
-    private UserConnector userConnector;
     private MessageHelper messageHelper;
     private StoreConnector storeConnector;
 
@@ -51,9 +50,10 @@ public class DocInfoController {
     @RequestMapping("doc-info-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        // 
-        String userId = userConnector.findByUsername(SpringSecurityUtils.getCurrentUsername(),
-                ScopeHolder.getUserRepoRef()).getId();
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
+        // 当前用户
+        String userId = SpringSecurityUtils.getCurrentUserId();
         propertyFilters.add(new PropertyFilter("EQS_userId", userId));
         page = docInfoService.pagedQuery(page, propertyFilters);
 
@@ -63,7 +63,7 @@ public class DocInfoController {
     }
 
     /**
-     * 
+     * 编辑页面
      * @param id
      * @param model
      * @return
@@ -111,6 +111,7 @@ public class DocInfoController {
             dest.setId(UUID.randomUUID().toString());
             dest.setName(attachment.getOriginalFilename());
             dest.setPath(storeDto.getKey());
+            dest.setScopeid(ScopeHolder.getScopeId());
             docInfoService.saveInsert(dest);
         }
 
@@ -166,9 +167,5 @@ public class DocInfoController {
     @Resource
     public void setStoreConnector(StoreConnector storeConnector) {
         this.storeConnector = storeConnector;
-    }
-    @Resource
-    public void setUserConnector(UserConnector userConnector) {
-        this.userConnector = userConnector;
     }
 }

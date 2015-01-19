@@ -2,10 +2,7 @@ var isDrawSite = false;//为true时，表示为添加站点并且鼠标已经在
 var isDrawLine = false;//为true时，表示
 var mouseFlag = 0 ; //鼠标恢复标志位
 
-var pathBase = window.location.protocol + "//" + window.location.host
-		+ "/iBusiness/default/";
-var pathImg = window.location.protocol + "//" + window.location.host
-		+ "/webByBPM/";
+var pathBase = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split("/")[1] + "/";
 // 权限设置有权限
 var inforid = 1;
 $(function() {

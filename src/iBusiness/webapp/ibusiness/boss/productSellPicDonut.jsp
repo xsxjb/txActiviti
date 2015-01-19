@@ -20,7 +20,7 @@
 	    // 取得数据
 		function getChartData() {
 			$.ajax({
-				url: "${scopePrefix}/produce-schedule-chart/show-pieDonut.do?",
+				url: "${ctx}/produce-schedule-chart/show-pieDonut.do?",
 				data: {
 	    		},
 	    		dataType : 'json',

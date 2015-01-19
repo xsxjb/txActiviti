@@ -414,6 +414,7 @@ public class TableController {
         String hql = "from ConfFormTableColumn where tableName=? AND tableColumn=?";
         List<ConfFormTableColumn> list = confFormTableColumnDao.find(hql, CommonUtils.toUpperCase(tableName), CommonUtils.toUpperCase(columnValue));
         confFormTableColumnDao.removeAll(list);
+        // 删除表单字段 
 	}
     // ============================================================================================
     /**

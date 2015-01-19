@@ -17,6 +17,7 @@ INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID)
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('operationmanageThree13','工艺图-弹出页面组件配置','3','/pop_conf_ctrlobj/pop_conf_ctrlobj-list.do','URL','3','operationmanageTwo1');
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('operationmanageThree21','工艺图-展示','3','/ibusiness/plc-control/plc-show.jsp','URL','1','operationmanageTwo2');
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('operationmanageThree22','工艺图-绘图','3','/ibusiness/plc-control/plc-draw.jsp','URL','2','operationmanageTwo2');
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('operationmanageThree23','工艺图-弹出页面绘图','3','/ibusiness/plc-control/popup-draw.jsp','URL','2','operationmanageTwo2');
 INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID) VALUES('operationmanageThree31','空调控制记录','3','/airconditionlog/airconditionlog-list.do','URL','1','operationmanageTwo3');
 /*===============   菜单和角色模板关联表  =============================*/
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('operationmanageOne','2');
@@ -28,6 +29,7 @@ INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('operationmanageThree12
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('operationmanageThree13','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('operationmanageThree21','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('operationmanageThree22','2');
+INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('operationmanageThree23','2');
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('operationmanageThree31','2');
 
 /* ================================================================================   */

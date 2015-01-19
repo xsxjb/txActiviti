@@ -16,7 +16,7 @@ function ReviveScene(model){
 		//windowResize();
 		$.ajax({
 			 type: "POST",
-			 url: "/iBusiness/default/flowchart/query-flow-chart.do?flowId="+flowId,
+			 url: "/"+window.location.pathname.split("/")[1]+"/flowchart/query-flow-chart.do?flowId="+flowId,
 			 dataType: "text",
 			 success: function(data){
 				 this.jsons = JSON.parse(data);

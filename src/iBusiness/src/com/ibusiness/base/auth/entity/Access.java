@@ -38,7 +38,7 @@ public class Access implements java.io.Serializable {
     private String descn;
 
     /** null. */
-    private String scopeId;
+    private String scopeid;
     /** 菜单 */
     private String menuId;
 
@@ -52,7 +52,7 @@ public class Access implements java.io.Serializable {
         this.value = value;
         this.priority = priority;
         this.descn = descn;
-        this.scopeId = scopeId;
+        this.scopeid = scopeId;
         this.menuId = menuId;
     }
 
@@ -145,16 +145,16 @@ public class Access implements java.io.Serializable {
 
     /** @return null. */
     @Column(name = "SCOPE_ID", length = 50)
-    public String getScopeId() {
-        return this.scopeId;
+    public String getScopeid() {
+        return this.scopeid;
     }
 
     /**
      * @param scopeId
      *            null.
      */
-    public void setScopeId(String scopeId) {
-        this.scopeId = scopeId;
+    public void setScopeid(String scopeid) {
+        this.scopeid = scopeid;
     }
 
     /**

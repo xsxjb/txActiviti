@@ -47,7 +47,7 @@ $(function() {
 				  <div class="form-group">
 				    <label class="col-lg-2 control-label" for="confirmPassword"><spring:message code="user.user.changepassword.confirm" text="确认密码"/>:</label>
 					<div class="controls">
-				      <input id="col-lg-3 confirmPassword" name="confirmPassword" type="password" value="" equalTo="#newPassword">
+				      <input id="confirmPassword" name="confirmPassword" type="password" value="" class="col-lg-3 required" maxlength="20" equalTo="#newPassword">
 				    </div>
 				  </div>
 				  <div class="form-group">

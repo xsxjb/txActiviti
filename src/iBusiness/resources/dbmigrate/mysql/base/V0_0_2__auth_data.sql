@@ -1,7 +1,6 @@
 /*===============  IB_SCOPE_INFO 应用管理表  =============================*/
 TRUNCATE TABLE IB_SCOPE_INFO;
-INSERT INTO IB_SCOPE_INFO(ID,NAME,CODE,REF,SHARED,USER_REPO_REF,TYPE) VALUES('1','默认','default','1',0,'1',0);
-INSERT INTO IB_SCOPE_INFO(ID,NAME,CODE,REF,SHARED,USER_REPO_REF,TYPE) VALUES('2','cms','cms','2',0,'1',1);
+INSERT INTO IB_SCOPE_INFO(ID,NAME,CODE,REF,SHARED,USER_REPO_REF,TYPE) VALUES('1','默认范围','default','1',0,'1',0);
 
 /*-------------------------------------------------------------------------------*/
 /*--  role def 角色模板管理表 */

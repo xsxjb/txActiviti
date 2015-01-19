@@ -61,7 +61,7 @@
 		      <span class="icon-bar"></span>
 		      <span class="icon-bar"></span>
 		    </button>
-		    <a class="navbar-brand" href="${scopePrefix}/">天翔</a>
+		    <a class="navbar-brand" href="${ctx}/">天翔</a>
 	    </div>
 	    <div class="navbar-collapse collapse navbar-responsive-collapse">
 		    <!-- 动态菜单部分 -->
@@ -74,7 +74,7 @@
 								    	<a href="#"> ${item.menuName}</a>
 								    </c:if>
 								    <c:if test="${item.menuUrl != '#'}">
-								    	<a href="${scopePrefix}${item.menuUrl}"> ${item.menuName}</a>
+								    	<a href="${ctx}${item.menuUrl}"> ${item.menuName}</a>
 								    </c:if>
 						        </li>
 				        </c:if>
@@ -90,7 +90,7 @@
 												    	<a href="#"> ${son.menuName}</a>
 												    </c:if>
 												    <c:if test="${son.menuUrl != '#'}">
-												    	<a href="${scopePrefix}${son.menuUrl}"> ${son.menuName}</a>
+												    	<a href="${ctx}${son.menuUrl}"> ${son.menuName}</a>
 												    </c:if>
 												</li>
 											</c:if>
@@ -104,7 +104,7 @@
 															    	<a href="#"><i class="icon-user"></i>${grandson.menuName}</a>
 															    </c:if>
 															    <c:if test="${grandson.menuUrl != '#'}">
-															    	<a href="${scopePrefix}${grandson.menuUrl}"><i class="icon-user"></i>${grandson.menuName}</a>
+															    	<a href="${ctx}${grandson.menuUrl}"><i class="icon-user"></i>${grandson.menuName}</a>
 															    </c:if>
 															</li>
 														</c:forEach>
@@ -125,10 +125,10 @@
 	                  <b class="caret"></b>
 	                </a>
 	                <ul class="dropdown-menu">
-	                  <li><a href="${scopePrefix}/user/change-password-input.do">修改密码</a></li>
-	                  <li><a href="${scopePrefix}/user/profile-list.do">个人信息</a></li>
+	                  <li><a href="${ctx}/user/change-password-input.do">修改密码</a></li>
+	                  <li><a href="${ctx}/user/profile-list.do">个人信息</a></li>
 	                  <li class="divider"></li>
-	                  <li><a href="${scopePrefix}/j_spring_security_logout">退出</a></li>
+	                  <li><a href="${ctx}/j_spring_security_logout">退出</a></li>
 	                </ul>
                 </li>
                 
@@ -136,23 +136,23 @@
 	                <a data-toggle="dropdown" class="dropdown-toggle" href="#">皮肤切换</a>
 	                <ul class="dropdown-menu">
 	                  <li class="divider"></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cerulean">Cerulean</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Slate">Slate</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cosmo">Cosmo</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Cyborg">Cyborg</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Darkly">Darkly</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Flatly">Flatly</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Superhero">Superhero</a></li>
-					  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=United">United</a></li>
-					  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Yeti">Yeti</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Cerulean">Cerulean</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Slate">Slate</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Cosmo">Cosmo</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Cyborg">Cyborg</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Darkly">Darkly</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Flatly">Flatly</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Superhero">Superhero</a></li>
+					  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=United">United</a></li>
+					  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Yeti">Yeti</a></li>
 	                  <li class="divider"></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Journal">Journal</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Lumen">Lumen</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Paper">Paper</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Readable">Readable</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Sandstone">Sandstone</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Simplex">Simplex</a></li>
-	                  <li><a href="${scopePrefix}/uicss/uicss-save.do?userCSS=Spacelab">Spacelab</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Journal">Journal</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Lumen">Lumen</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Paper">Paper</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Readable">Readable</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Sandstone">Sandstone</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Simplex">Simplex</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Spacelab">Spacelab</a></li>
 	                  <li class="divider"></li>
 	                </ul>
               </li>

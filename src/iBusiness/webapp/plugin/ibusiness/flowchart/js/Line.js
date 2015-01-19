@@ -5,6 +5,7 @@
  *	@author	JiangBo
  */
 function Line(id,x,y){
+	var pathBase = "/"+window.location.pathname.split("/")[1]; // URL path
 	this.model = 'design';//设定2个模式（design/control）
 	this.id = id;
 	this.name = '线';

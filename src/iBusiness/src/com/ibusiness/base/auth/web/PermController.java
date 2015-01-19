@@ -19,6 +19,7 @@ import com.ibusiness.base.auth.entity.Perm;
 import com.ibusiness.base.auth.entity.PermType;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
@@ -51,7 +52,8 @@ public class PermController {
     Page page, @RequestParam
     Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         propertyFilters.add(new PropertyFilter("NEQS_permType.id", "7"));
         page = permDao.pagedQuery(page, propertyFilters);
 
@@ -73,7 +75,7 @@ public class PermController {
             Perm perm = permDao.get(id);
             model.addAttribute("model", perm);
         }
-        List<PermType> permTypes = permTypeDao.findBy("scopeId", ScopeHolder.getScopeId());
+        List<PermType> permTypes = permTypeDao.findBy("scopeid", ScopeHolder.getScopeId());
         model.addAttribute("permTypes", permTypes);
         return "common/auth/perm-input.jsp";
     }
@@ -98,7 +100,7 @@ public class PermController {
             permDao.save(dest);
         } else {
             dest = perm;
-            dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setScopeid(ScopeHolder.getScopeId());
             dest.setId(UUID.randomUUID().toString());
             dest.setPermType(permType);
             permDao.saveInsert(dest);

@@ -30,8 +30,8 @@
 	<div class="panel panel-default col-md-10 " > 
 		    <!-- tabs  -->
 	        <ul class="nav nav-pills">
-			  <li class="${tabType == 'bpmBase' ? 'active' : ''} "><a href="${scopePrefix}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" >流程基础信息</a></li>
-			  <li class="${tabType == 'confNode' ? 'active' : ''}"><a href="${scopePrefix}/bpm-process/bpm-conf-node-list.do?packageName=${packageName}&flowVersionId=${model.versionId}&bpmId=${bpmId}" >流程设置</a></li>
+			  <li class="${tabType == 'bpmBase' ? 'active' : ''} "><a href="${ctx}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" >流程基础信息</a></li>
+			  <li class="${tabType == 'confNode' ? 'active' : ''}"><a href="${ctx}/bpm-process/bpm-conf-node-list.do?packageName=${packageName}&flowVersionId=${model.versionId}&bpmId=${bpmId}" >流程设置</a></li>
 			</ul>
 			<div id="tabContent" class="tab-content">
 			    <!-- ========================== 流程基础信息 =================================================== -->
@@ -90,7 +90,7 @@
 											    <label class="col-lg-2 control-label" >配置:</label>
 												<div class="col-lg-3">
 												    <!-- style="display:none" -->
-												    <a class="btn btn-primary"  href="${scopePrefix}/flowchart/init-flow-chart.do?packageName=${packageName}&bpmId=${bpmId}" >配置</a>
+												    <a class="btn btn-primary"  href="${ctx}/flowchart/init-flow-chart.do?packageName=${packageName}&bpmId=${bpmId}" >配置</a>
 											    </div>
 											</div>
 									</c:if>
@@ -107,7 +107,7 @@
 											    <label class="col-lg-2 control-label" >图形:</label>
 												<div class="col-lg-3">
 												    <!--  -->
-												    <a class="btn btn-primary" target="_blank" href="${scopePrefix}/bpm-process/bpm-process-graph.do?bpmProcessId=${model.id}"  >图形</a>
+												    <a class="btn btn-primary" target="_blank" href="${ctx}/bpm-process/bpm-process-graph.do?bpmProcessId=${model.id}"  >图形</a>
 											    </div>
 											</div>
 									</c:if>

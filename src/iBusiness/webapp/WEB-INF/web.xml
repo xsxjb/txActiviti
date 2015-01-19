@@ -55,7 +55,7 @@
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>InitServlet</servlet-name>
-    	<url-pattern>/default/common/checkcode</url-pattern>
+    	<url-pattern>/common/checkcode</url-pattern>
   	</servlet-mapping>
   	
   	<!-- 验证码 -->
@@ -65,7 +65,7 @@
   	</servlet>
   	<servlet-mapping>
     	<servlet-name>captchaAjax</servlet-name>
-    	<url-pattern>/default/common/captchaAjax</url-pattern>
+    	<url-pattern>/common/captchaAjax</url-pattern>
   	</servlet-mapping>
   	
 </web-app>

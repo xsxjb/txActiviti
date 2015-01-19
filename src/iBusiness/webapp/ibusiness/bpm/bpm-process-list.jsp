@@ -85,7 +85,7 @@
 			            <a href="bpm-process-input.do?bpmId=${item.id}&packageName=${packageName}" class="a-update">编辑</a>
 			        </td>
 			        <td>
-			            <a href="${scopePrefix}/bpm-process/bpm-process-graph.do?bpmProcessId=${item.id}" target="_blank" >图形</a>
+			            <a href="${ctx}/bpm-process/bpm-process-graph.do?bpmProcessId=${item.id}" target="_blank" >图形</a>
 			        </td>
 			        <td>
 			            <a href="bpm-conf-node-list.do?packageName=${packageName}&flowVersionId=${item.versionId}&bpmId=${item.id}" >配置</a>

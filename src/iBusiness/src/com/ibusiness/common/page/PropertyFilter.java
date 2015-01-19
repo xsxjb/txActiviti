@@ -17,7 +17,7 @@ import org.springframework.util.Assert;
 /**
  * property filter.查询条件字段过滤器
  * 
- * @author Lingo
+ * @author JiangBo
  */
 public class PropertyFilter {
     /** or seperator. */

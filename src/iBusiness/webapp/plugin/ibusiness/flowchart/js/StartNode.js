@@ -5,6 +5,7 @@
  *	@author	jiangbo
  */
 function StartNode( id,x,y ){
+	var pathBase = "/"+window.location.pathname.split("/")[1]; // URL path
 	this.model = 'design';//设定2个模式（design/control）
 	this.id = id;
 	this.name = '开始节点';
@@ -39,11 +40,11 @@ function StartNode( id,x,y ){
 	 */
 	this.init = function( json ){
 	    //开始节点图片
-		this.bark.src = "../../plugin/ibusiness/flowchart/img/startnode.png";
+		this.bark.src = pathBase + "/plugin/ibusiness/flowchart/img/startnode.png";
 		// 建立下一节点按钮图片
-		this.imageNextTaskBtn.src = "../../plugin/ibusiness/flowchart/img/add.png";
+		this.imageNextTaskBtn.src = pathBase + "/plugin/ibusiness/flowchart/img/add.png";
 		// 删除子
-		this.imageDeleteBtn.src="../../plugin/ibusiness/flowchart/img/cross.png";
+		this.imageDeleteBtn.src= pathBase + "/plugin/ibusiness/flowchart/img/cross.png";
 		if( null != json ) {
 			this.id = json.id;
 			this.name = json.name;

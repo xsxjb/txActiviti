@@ -37,7 +37,7 @@ public class PermType implements java.io.Serializable {
     private String descn;
 
     /** null. */
-    private String scopeId;
+    private String scopeid;
 
     /** . */
     private Set<Perm> perms = new HashSet<Perm>(0);
@@ -51,7 +51,7 @@ public class PermType implements java.io.Serializable {
         this.type = type;
         this.priority = priority;
         this.descn = descn;
-        this.scopeId = scopeId;
+        this.scopeid = scopeId;
         this.perms = perms;
     }
 
@@ -128,16 +128,16 @@ public class PermType implements java.io.Serializable {
 
     /** @return null. */
     @Column(name = "SCOPE_ID", length = 50)
-    public String getScopeId() {
-        return this.scopeId;
+    public String getScopeid() {
+        return this.scopeid;
     }
 
     /**
      * @param scopeId
      *            null.
      */
-    public void setScopeId(String scopeId) {
-        this.scopeId = scopeId;
+    public void setScopeid(String scopeid) {
+        this.scopeid = scopeid;
     }
 
     /** @return . */

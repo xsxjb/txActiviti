@@ -5,6 +5,7 @@
  *	@author	JiangBo
  */
 function Gateway(id,x,y ){
+	var pathBase = "/"+window.location.pathname.split("/")[1]; // URL path
 	this.model = 'design';//设定2个模式（design/control）
 	this.id = id;
 	this.name = '判断节点';
@@ -55,15 +56,15 @@ function Gateway(id,x,y ){
 	 */
 	this.init = function( json ){
 	    // 主对象图片
-		this.imageMain.src = "../../plugin/ibusiness/flowchart/img/gateway.png";
+		this.imageMain.src = pathBase + "/plugin/ibusiness/flowchart/img/gateway.png";
 		// 编辑子对象图片
-		this.imageEditBtn.src = "../../plugin/ibusiness/flowchart/img/edit.png";
+		this.imageEditBtn.src = pathBase + "/plugin/ibusiness/flowchart/img/edit.png";
 		// 删除子
-		this.imageDeleteBtn.src="../../plugin/ibusiness/flowchart/img/cross.png";
+		this.imageDeleteBtn.src=pathBase + "/plugin/ibusiness/flowchart/img/cross.png";
 		// 建立下一节点按钮图片
-		this.imageNextTaskBtn.src = "../../plugin/ibusiness/flowchart/img/add.png";
+		this.imageNextTaskBtn.src = pathBase + "/plugin/ibusiness/flowchart/img/add.png";
 		// 结束节点图片
-		this.imageEndBtn.src = "../../plugin/ibusiness/flowchart/img/endnode.png";
+		this.imageEndBtn.src = pathBase + "/plugin/ibusiness/flowchart/img/endnode.png";
 		if( null != json ){
 			this.id = json.id;
 			this.name = json.name;

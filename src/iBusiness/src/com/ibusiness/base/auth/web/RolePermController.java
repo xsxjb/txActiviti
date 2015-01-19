@@ -112,8 +112,9 @@ public class RolePermController {
             selectedItem.add(perm.getId());
         }
 
-        String hql = "from PermType where id!=7 and type=0 and scopeId=?";
+        String hql = "from PermType where id!=7 and type=0 and scopeid=?";
         List<PermType> permTypes = permTypeDao.find(hql, ScopeHolder.getScopeId());
+        
         model.addAttribute("permTypes", permTypes);
         model.addAttribute("selectedItem", selectedItem);
         model.addAttribute("id", id);
@@ -209,7 +210,7 @@ public class RolePermController {
             dest = accessList.get(0);
         } else {
             dest.setId(UUID.randomUUID().toString());
-            dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setScopeid(ScopeHolder.getScopeId());
             dest.setMenuId(menu.getId());
         }
         // 资源value设置为菜单URL的.do之前的部分 + *
@@ -232,7 +233,7 @@ public class RolePermController {
             perm.setName(menu.getMenuName());
             perm.setPermType(permTypeDao.get("7"));
             // 优先级
-            perm.setScopeId("1");
+            perm.setScopeid("1");
         }
         //
         permDao.save(perm);

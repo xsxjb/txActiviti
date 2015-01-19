@@ -2,9 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<!-- 配置过滤器 -->
+	<!-- 配置过滤器:负责对用户的请求资源进行安全认证 -->
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 		<constructor-arg>
+		    <!-- 只要有一个投票器通过验证就允许用户访问 -->
 			<list>
 				<bean class="com.ibusiness.security.client.AuthenticatedVoter"/>
 				<bean class="com.ibusiness.security.perm.PermissionVoter">

@@ -4,6 +4,7 @@
  *	@author	JiangBo
  */
 function TaskNode(id,x,y ){
+	var pathBase = "/"+window.location.pathname.split("/")[1]; // URL path
 	this.model = 'design';//设定2个模式（design/control）
 	this.id = id;
 	this.name = '发起节点';
@@ -54,15 +55,15 @@ function TaskNode(id,x,y ){
 	 */
 	this.init = function( json ){
 	    // 主对象图片
-		this.imageMain.src = "../../plugin/ibusiness/flowchart/img/tasknode.png";
+		this.imageMain.src = pathBase + "/plugin/ibusiness/flowchart/img/tasknode.png";
 		// 判断子对象图片
-		this.imageGateWayBtn.src = "../../plugin/ibusiness/flowchart/img/gateway.png";
+		this.imageGateWayBtn.src = pathBase + "/plugin/ibusiness/flowchart/img/gateway.png";
 		// 删除子
-		this.imageDeleteBtn.src="../../plugin/ibusiness/flowchart/img/cross.png";
+		this.imageDeleteBtn.src= pathBase + "/plugin/ibusiness/flowchart/img/cross.png";
 		// 建立下一节点按钮图片
-		this.imageNextTaskBtn.src = "../../plugin/ibusiness/flowchart/img/add.png";
+		this.imageNextTaskBtn.src = pathBase + "/plugin/ibusiness/flowchart/img/add.png";
 		// 结束节点图片
-		this.imageEndBtn.src = "../../plugin/ibusiness/flowchart/img/endnode.png";
+		this.imageEndBtn.src = pathBase + "/plugin/ibusiness/flowchart/img/endnode.png";
 		if( null != json ){
 			this.id = json.id;
 			this.name = json.name;
@@ -138,7 +139,7 @@ function TaskNode(id,x,y ){
 		// alert( this.id+this.name+'被单击（编辑）!' );
 		if (this.moveOver == 1) {
 			
-			var url = "/iBusiness/default/flowchart/pop-conf-taskNode.do?flowId="+$("#bpmId").val()+"&packageName="+$("#packageName").val()+"&id="+this.id;
+			var url = pathBase + "/flowchart/pop-conf-taskNode.do?flowId="+$("#bpmId").val()+"&packageName="+$("#packageName").val()+"&id="+this.id;
 			$("#taskNodeIframe").attr("src", url );
 		//	$("#taskNodeDiv").css({width:570 ,height:380});
 			

@@ -43,7 +43,7 @@
 		      <span class="icon-bar"></span>
 		      <span class="icon-bar"></span>
 		    </button>
-		    <a class="navbar-brand" href="${scopePrefix}/">iBusiness</a>
+		    <a class="navbar-brand" href="${ctx}/">iBusiness</a>
 	    </div>
 	</div>
 	<!-- end of header bar -->
@@ -54,14 +54,15 @@
 		<div class="panel panel-default col-lg-6"> 
 	        <div class="panel-heading"><h4 class="panel-title">登录</h4></div>
 	        <div class="panel-body">
-		        <div class="alert alert-dismissable  alert-warning"${param.error==true ? '' : 'style="display:none"'}>
+	            <!-- 登录失败返回信息 -->
+		        <div class="alert alert-dismissable alert-warning"${param.error==true ? '' : 'style="display:none"'}>
 					<strong><spring:message code="core.failure.save" text="登陆失败" /></strong> &nbsp;
 					${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}
 				</div>
 				<br/>
 				
 				<!-- 并监听默认的URL  j_spring_security_check 提交登陆信息的URL地址-->
-				<form id="userForm" name="f" method="post" action="${scopePrefix}/j_spring_security_check" class="form-horizontal">
+				<form id="userForm" name="f" method="post" action="${ctx}/j_spring_security_check" class="form-horizontal">
 				    <div class="form-group">
 					    <label class="col-lg-2 control-label" for="username"><spring:message code="core.login.username" text="账号" />:</label>
 					    <div class="col-lg-4">
@@ -80,8 +81,8 @@
 					     <div class="col-lg-4">
 					         <input name="number" class="form-control" id="codeinput" onkeyup='checkcode()'/><span STYLE="color: red" id="checkcodemsg"></span><br/>
 					     </div>
-					     <img src="checkcode" id="img1" onclick="document.getElementById('img1').src='${scopePrefix}/common/checkcode?' + Math.random();" />
-					     <a href="javascript:;"  onclick="document.getElementById('img1').src='${scopePrefix}/common/checkcode?' + Math.random();">看不清</a><br/>
+					     <img src="checkcode" id="img1" onclick="document.getElementById('img1').src='${ctx}/common/checkcode?' + Math.random();" />
+					     <a href="javascript:;"  onclick="document.getElementById('img1').src='${ctx}/common/checkcode?' + Math.random();">看不清</a><br/>
 				    </div>
 					<div class="col-lg-10 col-lg-offset-2">
 						<input id="input_commit" class=" btn btn-primary" name="submit" type="submit" value="<spring:message code='core.login.submit' text='提交'/>"  disabled="disable" />

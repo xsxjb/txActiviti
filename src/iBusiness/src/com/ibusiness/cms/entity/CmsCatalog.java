@@ -51,6 +51,8 @@ public class CmsCatalog implements java.io.Serializable {
 
     /** null. */
     private String description;
+    // 范围
+    private String scopeid;
 
     /** . */
     private Set<CmsCatalog> cmsCatalogs = new HashSet<CmsCatalog>(0);
@@ -218,12 +220,23 @@ public class CmsCatalog implements java.io.Serializable {
     public Set<CmsArticle> getCmsArticles() {
         return this.cmsArticles;
     }
-
     /**
      * @param cmsArticles
-     *            .
      */
     public void setCmsArticles(Set<CmsArticle> cmsArticles) {
         this.cmsArticles = cmsArticles;
     }
+	/**
+	 * @return the scopeid
+	 */
+    @Column(name = "SCOPEID")
+	public String getScopeid() {
+		return scopeid;
+	}
+	/**
+	 * @param scopeid the scopeid to set
+	 */
+	public void setScopeid(String scopeid) {
+		this.scopeid = scopeid;
+	}
 }

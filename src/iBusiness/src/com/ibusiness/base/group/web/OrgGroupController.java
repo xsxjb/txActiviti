@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.base.group.dao.OrgCompanyDao;
+import com.ibusiness.base.group.dao.OrgDepartmentDao;
 import com.ibusiness.base.group.dao.OrgGroupDao;
+import com.ibusiness.base.group.entity.OrgCompany;
+import com.ibusiness.base.group.entity.OrgDepartment;
 import com.ibusiness.base.group.entity.OrgGroup;
 import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.page.Page;
@@ -33,6 +37,8 @@ import com.ibusiness.security.api.scope.ScopeHolder;
 @RequestMapping("group")
 public class OrgGroupController {
     private OrgGroupDao orgGroupDao;
+    private OrgDepartmentDao orgDepartmentDao;
+    private OrgCompanyDao orgCompanyDao;
     private MessageHelper messageHelper;
     private BeanMapper beanMapper = new BeanMapper();
 
@@ -43,14 +49,25 @@ public class OrgGroupController {
      * @param model
      * @return
      */
-    @RequestMapping("org-group-list")
+    @SuppressWarnings("unchecked")
+	@RequestMapping("org-group-list")
     public String list(@ModelAttribute
     Page page, @RequestParam
     Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = orgGroupDao.pagedQuery(page, propertyFilters);
-
+        // 设置公司名称，部门名称
+        List<OrgGroup> list = (List<OrgGroup>) page.getResult();
+        Map<String, OrgCompany> companyMap = CommonBusiness.getInstance().getCompanyMap();
+        Map<String, OrgDepartment> departmentMap = CommonBusiness.getInstance().getDepartmentMap();
+        for (OrgGroup bean : list) {
+        	if (companyMap.containsKey(bean.getCompanyid())) {
+        		bean.setCompanyName(companyMap.get(bean.getCompanyid()).getName());
+        		bean.setDeptName(departmentMap.get(bean.getDeptid()).getName());
+        	}
+        }
         model.addAttribute("page", page);
 
         return "common/group/org-group-list.jsp";
@@ -69,9 +86,29 @@ public class OrgGroupController {
             model.addAttribute("model", orgGroup);
         }
         // 在controller中设置页面控件用的数据
-        Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> companyidFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_TEST", "testForm");net.sf.json.JSONObject companyidJsonObj = net.sf.json.JSONObject.fromObject(companyidFTCMap.get("COMPANYID").getConfSelectInfo());String companyidSql = companyidJsonObj.getString("sql");List<Map<String,Object>> companyidList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(companyidSql);List<ConfSelectItem> companyidItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : companyidList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    companyidItems.add(confSelectItem);}model.addAttribute("companyidItems", companyidItems);
-        Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> deptidFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_TEST", "testForm");net.sf.json.JSONObject deptidJsonObj = net.sf.json.JSONObject.fromObject(deptidFTCMap.get("DEPTID").getConfSelectInfo());String deptidSql = deptidJsonObj.getString("sql");List<Map<String,Object>> deptidList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(deptidSql);List<ConfSelectItem> deptidItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : deptidList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    deptidItems.add(confSelectItem);}model.addAttribute("deptidItems", deptidItems);
-        
+        // 公司信息下拉框
+        String companySql = "select id vKey, name vValue from IB_COMPANY WHERE SCOPE_ID='"+ScopeHolder.getScopeId()+"'";
+		List<Map<String, Object>> list = orgCompanyDao.getJdbcTemplate().queryForList(companySql);
+		List<ConfSelectItem> companyidItems = new java.util.ArrayList<ConfSelectItem>();
+		for (Map<String, Object> mapBean : list) {
+			ConfSelectItem confSelectItem = new ConfSelectItem();
+			confSelectItem.setKey(mapBean.get("vKey").toString());
+			confSelectItem.setValue(mapBean.get("vValue").toString());
+			companyidItems.add(confSelectItem);
+		}
+		model.addAttribute("companyidItems", companyidItems);
+		// 部门下拉框
+		String deptidSql = "select id vKey, name vValue from IB_DEPARTMENT WHERE SCOPE_ID='"+ScopeHolder.getScopeId()+"'";
+		List<Map<String, Object>> deptidList = orgDepartmentDao.getJdbcTemplate().queryForList(deptidSql);
+		List<ConfSelectItem> deptidItems = new java.util.ArrayList<ConfSelectItem>();
+		for (Map<String, Object> mapBean : deptidList) {
+			ConfSelectItem confSelectItem = new ConfSelectItem();
+			confSelectItem.setKey(mapBean.get("vKey").toString());
+			confSelectItem.setValue(mapBean.get("vValue").toString());
+			deptidItems.add(confSelectItem);
+		}
+		model.addAttribute("deptidItems", deptidItems);
+
         return "common/group/org-group-input.jsp";
     }
 
@@ -87,7 +124,7 @@ public class OrgGroupController {
             orgGroupDao.save(dest);
         } else {
             dest = orgGroup;
-            dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setScopeid(ScopeHolder.getScopeId());
             dest.setId(UUID.randomUUID().toString());
             orgGroupDao.saveInsert(dest);
         }
@@ -115,7 +152,14 @@ public class OrgGroupController {
     public void setOrgGroupDao(OrgGroupDao orgGroupDao) {
         this.orgGroupDao = orgGroupDao;
     }
-
+    @Resource
+    public void setOrgDepartmentDao(OrgDepartmentDao orgDepartmentDao) {
+        this.orgDepartmentDao = orgDepartmentDao;
+    }
+    @Resource
+    public void setOrgCompanyDao(OrgCompanyDao orgCompanyDao) {
+        this.orgCompanyDao = orgCompanyDao;
+    }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;

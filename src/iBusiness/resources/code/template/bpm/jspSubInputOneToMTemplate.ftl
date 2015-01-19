@@ -24,9 +24,9 @@
 		    });
 		})
     </script>
-	<div class="span2"></div>
+	<div class="col-lg-2"></div>
 	<!-- start of main -->
-    <div class="panel panel-default col-md-10">
+    <div class="panel panel-default col-lg-10">
         <div class="panel-heading"><h4 class="panel-title">编辑子表</h4></div>
         <div class="panel-body">
 			<div class="content content-inner">

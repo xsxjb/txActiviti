@@ -65,10 +65,12 @@ public class ProfileController {
         if (id != null) {
             dest = userBaseDao.get(id);
             beanMapper.copy(userBase, dest);
-            userService.updateUser(dest, userRepoId);
+            dest.setUserRepoId("1");
+            userService.updateUser(dest);
         } else {
             dest = userBase;
-            userService.insertUser(dest, userRepoId);
+            dest.setUserRepoId("1");
+            userService.insertUser(dest);
         }
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");

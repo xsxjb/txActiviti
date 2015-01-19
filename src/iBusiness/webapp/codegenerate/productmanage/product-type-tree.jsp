@@ -17,7 +17,7 @@
     		// 采用异步方式获取子节点数据,默认false  
     		async: {
     			enable: true,
-    			url: "${scopePrefix}/productTypeTree/show-tree.do",
+    			url: "${ctx}/productTypeTree/show-tree.do",
     			// 通过autoParam指定查询时要提交父节点的哪些属性作为查询条件
     			autoParam:["id"],
     		},
@@ -101,7 +101,7 @@
 		var callbackFlag = $("#callbackTrigger").attr("checked");
 		zTree.removeNode(treeNode, callbackFlag);
 		$.ajax({
-			url: "${scopePrefix}/productTypeTree/remove-tree.do",
+			url: "${ctx}/productTypeTree/remove-tree.do",
 			data: {
 				id : treeNode.id
     		},
@@ -117,7 +117,7 @@
 		var jsonStr = JSON.stringify(zTree.getNodes());
 		jsonStr = encodeURI(jsonStr , "utf-8");
 		$.ajax({
-			url: "${scopePrefix}/productTypeTree/save-tree.do",
+			url: "${ctx}/productTypeTree/save-tree.do",
 			data: {
 				nodes : jsonStr
     		},

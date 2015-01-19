@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ibusiness.common.export.ExcelCommon;
 import com.ibusiness.common.export.TableModel;
 import com.ibusiness.common.service.FormulaCommon;
+import com.ibusiness.common.service.CommonBusiness;
 
 import com.ibusiness.security.util.SpringSecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -66,6 +67,8 @@ public class ${entityName}Controller {
     public String list(@ModelAttribute Page page,  @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -97,7 +100,7 @@ public class ${entityName}Controller {
         // 根据条件查询数据
         <#list subTab as sub>
 	        page = ${sub.entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("${sub.entityName?uncap_first}Page", page);
        </#list>
         
         // 在controller中设置页面控件用的数据

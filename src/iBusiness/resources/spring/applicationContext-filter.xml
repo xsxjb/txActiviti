@@ -13,8 +13,10 @@
 				<ref bean="acceptLanguageHeaderFilter"/>
 				<!-- 监控Java应用程序过滤器 -->
 				<ref bean="javasimonFilter"/>
-				<!-- 应用管理过滤器 -->
+				<!-- 应用管理过滤器 
+				TODO 应用管理过滤器想取消掉 这样以后 url上就不用有default之类的了
 				<ref bean="scopeFilter"/>
+				-->
 				<!-- 通知公告过滤器 -->
 				 <!-- 拦截所有的访问请求进行权限校验和访问控制过滤器 -->
 				<ref bean="springSecurityFilterChainProxy"/>
@@ -60,7 +62,8 @@
 			</map>
 		</property>
 	</bean>
-    <!-- 应用管理过滤器-->
+    <!-- 应用管理过滤器 
+    TODO 应用管理过滤器想取消掉 这样以后 url上就不用有default之类的了
 	<bean id="scopeFilter" class="com.ibusiness.core.servlet.ProxyFilter">
 		<property name="name" value="scope"/>
 		<property name="filter">
@@ -71,6 +74,7 @@
 		</property>
 		<property name="enable" value="${filter.scope.enable}"/>
 	</bean>
+	 -->
 	
     <!-- 拦截所有的访问请求进行权限校验和访问控制过滤器 -->
 	<bean id="springSecurityFilterChainProxy" class="com.ibusiness.core.servlet.ProxyFilter">

@@ -5,6 +5,7 @@
  *	@time	2013-05-20
  */
 function Pipeline(id,x,y,length,endElmId){
+	var pathBase = "/"+window.location.pathname.split("/")[1]; // URL path
 	this.model = 'design';//设定2个模式（design/control）
 	this.id = id;
 	this.name = '管道';

@@ -42,8 +42,8 @@
 	<div class="panel panel-default col-md-10 ">
         <!-- tabs  -->
         <ul class="nav nav-tabs">
-		  <li class="${flowType =='0' ? 'active' : ''} "><a href="${scopePrefix}/project_approval/project_approval-list.do?flowId=${flowId}&flowType=0" >待办</a></li>
-		  <li class="${flowType =='1' ? 'active' : ''} "><a href="${scopePrefix}/project_approval/project_approval-list.do?flowId=${flowId}&flowType=1" >已办</a></li>
+		  <li class="${flowType =='0' ? 'active' : ''} "><a href="${ctx}/project_approval/project_approval-list.do?flowId=${flowId}&flowType=0" >待办</a></li>
+		  <li class="${flowType =='1' ? 'active' : ''} "><a href="${ctx}/project_approval/project_approval-list.do?flowId=${flowId}&flowType=1" >已办</a></li>
 		</ul>
 		<div id="tabContent" class="tab-content">
 		    <!-- ========================== 待办流程信息 =================================================== -->
@@ -177,7 +177,7 @@
 								        <td>${item.assigneeuser}</td>
 								        <td>${item.tasktitle}</td>
 								        <td>
-								            <a href="${scopePrefix}/bpm-workspace/workspace-viewHistory.do?processInstanceId=${item.executionid}" class="a-update"><spring:message code="core.list.edit" text="历史"/></a>
+								            <a href="${ctx}/bpm-workspace/workspace-viewHistory.do?processInstanceId=${item.executionid}" class="a-update"><spring:message code="core.list.edit" text="历史"/></a>
 								        </td>
 								      </tr>
 								      </c:forEach>

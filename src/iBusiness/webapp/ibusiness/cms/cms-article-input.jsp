@@ -19,7 +19,7 @@ $(function() {
         errorClass: 'validate-error'
     });
 	var editor = CKEDITOR.replace('cmsArticle_content');
-	editor.config.filebrowserImageUploadUrl = "${scopePrefix}/cms/cms-article-uploadImage.do";
+	editor.config.filebrowserImageUploadUrl = "${ctx}/cms/cms-article-uploadImage.do";
 })
     </script>
   </head>

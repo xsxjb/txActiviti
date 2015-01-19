@@ -27,21 +27,18 @@ public class CmsComment implements java.io.Serializable {
 
     /** null. */
     private CmsArticle cmsArticle;
-
     /** null. */
     private String title;
-
     /** null. */
     private String content;
-
     /** null. */
     private Integer status;
-
     /** null. */
     private Date createTime;
-
     /** null. */
     private String userId;
+    // 范围
+    private String scopeid;
 
     @Id
     @Column(name = "ID", unique = true, nullable = false)
@@ -128,18 +125,28 @@ public class CmsComment implements java.io.Serializable {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
     /** @return null. */
     @Column(name = "USER_ID", length = 200)
     public String getUserId() {
         return this.userId;
     }
-
     /**
      * @param userId
-     *            null.
      */
     public void setUserId(String userId) {
         this.userId = userId;
     }
+	/**
+	 * @return the scopeid
+	 */
+    @Column(name = "SCOPEID")
+	public String getScopeid() {
+		return scopeid;
+	}
+	/**
+	 * @param scopeid the scopeid to set
+	 */
+	public void setScopeid(String scopeid) {
+		this.scopeid = scopeid;
+	}
 }

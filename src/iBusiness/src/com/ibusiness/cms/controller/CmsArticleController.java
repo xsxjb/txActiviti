@@ -23,11 +23,13 @@ import com.ibusiness.cms.service.CmsArticleService;
 import com.ibusiness.cms.service.CmsCatalogService;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.doc.store.StoreConnector;
 import com.ibusiness.doc.store.StoreDTO;
+import com.ibusiness.security.api.scope.ScopeHolder;
 import com.ibusiness.security.util.SpringSecurityUtils;
 /**
  * 公告,文章管理controller
@@ -55,6 +57,8 @@ public class CmsArticleController {
     @RequestMapping("cms-article-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = cmsArticleService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
 
@@ -74,7 +78,7 @@ public class CmsArticleController {
             model.addAttribute("model", cmsArticle);
         }
 
-        model.addAttribute("cmsCatalogs", cmsCatalogService.getAll());
+        model.addAttribute("cmsCatalogs", cmsCatalogService.findBy("scopeid", CommonBusiness.getInstance().getCurrentUserScopeId()));
 
         return "ibusiness/cms/cms-article-input.jsp";
     }
@@ -103,7 +107,7 @@ public class CmsArticleController {
             dest.setCreateTime(new Date());
             dest.setCmsCatalog(cmsCatalogService.get(cmsCatalogId));
             dest.setId(UUID.randomUUID().toString());
-            
+            dest.setScopeid(ScopeHolder.getScopeId());
             cmsArticleService.saveInsert(dest);
         }
 
@@ -223,6 +227,8 @@ public class CmsArticleController {
     @RequestMapping("cms-article-view-list")
     public String viewList(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 设置排序信息
         page.setOrderBy("createTime");
         page.setOrder("DESC");

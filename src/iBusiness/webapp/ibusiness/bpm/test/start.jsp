@@ -15,7 +15,7 @@
 
 	// Start a process instance
 	Map params = new HashMap();
-	params.put("assignee", "Lingo");
+	params.put("assignee", "JiangBo");
 	params.put("participants", "user1,user2");
 	runtimeService.startProcessInstanceById(request.getParameter("id"), params);
 

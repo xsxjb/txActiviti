@@ -27,7 +27,7 @@ public class JobTitle implements java.io.Serializable {
     private String name;
 
     /** null. */
-    private String scopeId;
+    private String scopeid;
 
     /** . */
     private Set<JobInfo> jobInfos = new HashSet<JobInfo>(0);
@@ -37,7 +37,7 @@ public class JobTitle implements java.io.Serializable {
 
     public JobTitle(String name, String scopeId, Set<JobInfo> jobInfos) {
         this.name = name;
-        this.scopeId = scopeId;
+        this.scopeid = scopeId;
         this.jobInfos = jobInfos;
     }
 
@@ -72,16 +72,16 @@ public class JobTitle implements java.io.Serializable {
 
     /** @return null. */
     @Column(name = "SCOPE_ID", length = 50)
-    public String getScopeId() {
-        return this.scopeId;
+    public String getScopeid() {
+        return this.scopeid;
     }
 
     /**
      * @param scopeId
      *            null.
      */
-    public void setScopeId(String scopeId) {
-        this.scopeId = scopeId;
+    public void setScopeid(String scopeid) {
+        this.scopeid = scopeid;
     }
 
     /** @return . */

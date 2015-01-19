@@ -5,7 +5,7 @@
  *	@author	jiangbo
  */
 function Lane( id,x,y ){
-
+	var pathBase = "/"+window.location.pathname.split("/")[1]; // URL path
 	this.model = 'design';//设定2个模式（design/control）
 	this.id = id;
 	this.name = '泳道';
@@ -18,7 +18,7 @@ function Lane( id,x,y ){
 	this.moveOver = 1;		//是否可以移入（0：没有边框,1:画边框）
 	this.bark = new Image(); 
 	// 泳道图片
-	this.bark.src = "../../plugin/ibusiness/flowchart/img/lanebg2.png";
+	this.bark.src = pathBase + "/plugin/ibusiness/flowchart/img/lanebg2.png";
 
 	/**
 	 *	初始化

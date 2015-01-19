@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 小组实体Group .
@@ -20,9 +21,12 @@ public class OrgGroup implements java.io.Serializable {
 
     /** 公司编号. */
     private String companyid;
-    
+    /** 公司名称 */
+    private String companyName;
     /** 部门编号. */
     private String deptid;
+    /** 部门名称 */
+    private String deptName;
     /** 小组名称. */
     private String name;
     /** 备注. */
@@ -35,7 +39,7 @@ public class OrgGroup implements java.io.Serializable {
     private String ref;
 
     /** null. */
-    private String scopeId;
+    private String scopeid;
 
     public OrgGroup() {
     }
@@ -48,7 +52,7 @@ public class OrgGroup implements java.io.Serializable {
         this.descn = descn;
         this.status = status;
         this.ref = ref;
-        this.scopeId = scopeId;
+        this.scopeid = scopeId;
     }
 
     /** @return null. */
@@ -124,16 +128,16 @@ public class OrgGroup implements java.io.Serializable {
 
     /** @return null. */
     @Column(name = "SCOPE_ID", length = 50)
-    public String getScopeId() {
-        return this.scopeId;
+    public String getScopeid() {
+        return this.scopeid;
     }
 
     /**
      * @param scopeId
      *            null.
      */
-    public void setScopeId(String scopeId) {
-        this.scopeId = scopeId;
+    public void setScopeid(String scopeid) {
+        this.scopeid = scopeid;
     }
 
     /**
@@ -149,18 +153,42 @@ public class OrgGroup implements java.io.Serializable {
     public void setCompanyid(String companyid) {
         this.companyid = companyid;
     }
-
     /**
      * @return the deptid
      */
     public String getDeptid() {
         return deptid;
     }
-
     /**
      * @param deptid the deptid to set
      */
     public void setDeptid(String deptid) {
         this.deptid = deptid;
     }
+	/**
+	 * @return the companyName
+	 */
+    @Transient
+	public String getCompanyName() {
+		return companyName;
+	}
+	/**
+	 * @param companyName the companyName to set
+	 */
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	/**
+	 * @return the deptName
+	 */
+	@Transient
+	public String getDeptName() {
+		return deptName;
+	}
+	/**
+	 * @param deptName the deptName to set
+	 */
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 }

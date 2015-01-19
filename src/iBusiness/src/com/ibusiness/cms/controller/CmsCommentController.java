@@ -17,8 +17,10 @@ import com.ibusiness.cms.entity.CmsComment;
 import com.ibusiness.cms.service.CmsCommentService;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
+import com.ibusiness.security.api.scope.ScopeHolder;
 /**
  * 公告评论管理
  * @author JiangBo
@@ -31,11 +33,20 @@ public class CmsCommentController {
     private BeanMapper beanMapper = new BeanMapper();
     private MessageHelper messageHelper;
 
+    /**
+     * 
+     * @param page
+     * @param parameterMap
+     * @param model
+     * @return
+     */
     @RequestMapping("cms-comment-list")
     public String list(@ModelAttribute
     Page page, @RequestParam
     Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = cmsCommentService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
 
@@ -68,6 +79,7 @@ public class CmsCommentController {
             beanMapper.copy(cmsComment, dest);
         } else {
             dest = cmsComment;
+            dest.setScopeid(ScopeHolder.getScopeId());
         }
 
         cmsCommentService.save(dest);

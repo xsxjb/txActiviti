@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * property type.字段类型枚举类
  * 
- * @author Lingo
+ * @author JiangBo
  */
 public enum PropertyType {
     /** String. */

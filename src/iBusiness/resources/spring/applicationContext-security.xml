@@ -7,7 +7,9 @@
 	<!-- 该路径下的资源不用过滤 -->
 	<!-- 不要过滤图片等静态资源，其中**代表可以跨越目录，*不可以跨越目录 -->
 	<http security="none" pattern="/plugin/**" />
+	<http security="none" pattern="/webindex/**" />
 	<http security="none" pattern="/favicon.ico" />
+	<http security="none" pattern="/**/*.html" />
 	<http security="none" pattern="/**/*.js" />
 	<http security="none" pattern="/**/*.css" />
 	<http security="none" pattern="/**/*.jpg" />
@@ -17,6 +19,7 @@
 	<!-- auto-config='true'将自动配置几种常用的权限控制机制，包括form, anonymous, rememberMe -->
 	<!-- 创建autoLoginFilter,switchUserFilter,并使用它们替换系统原来创建的那个过滤器 -->
 	<http auto-config='true' access-decision-manager-ref='accessDecisionManager' security-context-repository-ref="securityContextRepository">
+		<!-- 让没登陆的用户可以访问login.jsp   authentication-failure-url表示用户登陆失败时，跳转到哪个页面   default-target-url表示登陆成功时，跳转到哪个页面 -->
 		<form-login login-page="/common/login.jsp" authentication-failure-url="/common/login.jsp?error=true" default-target-url="/" />
 		<!-- 自定义 自动登录过滤器.
 		       custom-filter标签，它表示将autoLoginFilter放在框架原来的SECURITY_CONTEXT_FILTER过滤器之前，

@@ -67,7 +67,7 @@ public class MenuCommon {
             menu.setMenuLevel(menuLevel);//菜单等级
             menu.setMenuUrl(menuUrl);//菜单地址
             menu.setMenuIframe("URL");//菜单地址打开方式
-            menu.setMenuOrder("9");//菜单排序
+            menu.setMenuOrder(9);//菜单排序
             menu.setDesktopIcon("0");//是否桌面显示
             if ("1".equals(menuLevel)) {
                 Menu ibMenu = new Menu();

@@ -25,13 +25,13 @@ import com.ibusiness.security.util.SpringSecurityUtils;
  */
 @Controller
 @RequestMapping("portal")
-public class portalController {
+public class PortalController {
 
     private UserBaseDao userBaseDao;
     private MenuDao menuDao;
     
     /**
-     * 
+     * 首页
      * @param model
      * @param session
      * @return

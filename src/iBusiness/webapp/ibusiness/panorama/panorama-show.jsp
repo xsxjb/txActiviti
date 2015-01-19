@@ -29,7 +29,7 @@
 				<div id="tabContent" class="tab-content">
 	              <!-- 全景 -->
 	              <div id="popConfTaskNodeDiv" style="height:600px;" >
-	                 <iframe id="panoramaIframe" src="/iBusiness/default/ibusiness/panorama/html/360.Html" width="100%" height="100%" ></iframe>
+	                 <iframe id="panoramaIframe" src="${ctx}/ibusiness/panorama/html/360.Html" width="100%" height="100%" ></iframe>
 	              </div>
 		        </div>
 		    </div>

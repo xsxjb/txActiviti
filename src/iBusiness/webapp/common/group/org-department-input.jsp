@@ -56,21 +56,21 @@ $(function() {
 				  	<input id="org_id" type="hidden" name="id" value="${model.id}">
 				  </c:if>
 				  <div class="form-group">
-                              <label class="col-lg-2 control-label" for="org_companyname">公司名:</label>
-                               <div class="col-lg-3">
-                                   <select id="org_companyname" name="companyid" class="form-control required" >
-                                         <option value="" >请选择</option>
-                                      <c:forEach items="${companyidItems}" var="item">
-                                         <option value="${item.key}" ${item.key==model.companyid? 'selected':''} >${item.value}</option>
-                                      </c:forEach>
-                                   </select>
-                               </div>
+                      <label class="col-lg-2 control-label" for="org_companyname">公司名:</label>
+                       <div class="col-lg-3">
+                           <select id="org_companyname" name="companyid" class="form-control required" >
+                                 <option value="" >请选择</option>
+                              <c:forEach items="${companyidItems}" var="item">
+                                 <option value="${item.key}" ${item.key==model.companyid? 'selected':''} >${item.value}</option>
+                              </c:forEach>
+                           </select>
+                       </div>
                   </div>
                   <div class="form-group">
-                          <label class="col-lg-2 control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="部门名称"/>:</label>
-				          <div class="col-lg-3">
-				                  <input id="org_orgname" type="text" name="name" value="${model.name}" class="text required"  maxlength="50">
-				          </div>
+                      <label class="col-lg-2 control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="部门名称"/>:</label>
+			          <div class="col-lg-3">
+			                  <input id="org_orgname" type="text" name="name" value="${model.name}" class="text required"  maxlength="50">
+			          </div>
                   </div>
 				  <div class="form-group">
 	                  <div class="col-lg-10 col-lg-offset-2">

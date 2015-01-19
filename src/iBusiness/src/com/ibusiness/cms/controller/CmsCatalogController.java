@@ -18,8 +18,10 @@ import com.ibusiness.cms.entity.CmsCatalog;
 import com.ibusiness.cms.service.CmsCatalogService;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
+import com.ibusiness.security.api.scope.ScopeHolder;
 /**
  * 公告栏目管理controller
  * 
@@ -43,8 +45,9 @@ public class CmsCatalogController {
      */
     @RequestMapping("cms-catalog-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
-        List<PropertyFilter> propertyFilters = PropertyFilter
-                .buildFromMap(parameterMap);
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = cmsCatalogService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
 
@@ -85,6 +88,7 @@ public class CmsCatalogController {
         } else {
             dest = cmsCatalog;
             dest.setId(UUID.randomUUID().toString());
+            dest.setScopeid(ScopeHolder.getScopeId());
             cmsCatalogService.saveInsert(dest);
         }
         

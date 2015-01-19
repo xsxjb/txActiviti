@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.base.group.dao.OrgCompanyDao;
 import com.ibusiness.base.group.dao.OrgDepartmentDao;
+import com.ibusiness.base.group.entity.OrgCompany;
 import com.ibusiness.base.group.entity.OrgDepartment;
 import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.page.Page;
@@ -33,6 +35,7 @@ import com.ibusiness.security.api.scope.ScopeHolder;
 @RequestMapping("group")
 public class OrgDepartmentController {
     private OrgDepartmentDao orgDepartmentDao;
+    private OrgCompanyDao orgCompanyDao;
     private MessageHelper messageHelper;
     private BeanMapper beanMapper = new BeanMapper();
 
@@ -43,18 +46,29 @@ public class OrgDepartmentController {
      * @param model
      * @return
      */
-    @RequestMapping("org-department-list")
+    @SuppressWarnings("unchecked")
+	@RequestMapping("org-department-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        propertyFilters.add(new PropertyFilter("EQS_scopeId", ScopeHolder.getScopeId()));
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = orgDepartmentDao.pagedQuery(page, propertyFilters);
+        // 查询公司名字
+        List<OrgDepartment> list = (List<OrgDepartment>) page.getResult();
+        Map<String, OrgCompany> map = CommonBusiness.getInstance().getCompanyMap();
+        for (OrgDepartment bean : list) {
+        	if (map.containsKey(bean.getCompanyid())) {
+        		bean.setCompanyName(map.get(bean.getCompanyid()).getName());
+        	}
+        }
+        page.setResult(list);
         model.addAttribute("page", page);
 
         return "common/group/org-department-list.jsp";
     }
 
     /**
-     * 部门信息保存
+     * 进入部门信息编辑页面
      * @param id
      * @param model
      * @return
@@ -65,12 +79,28 @@ public class OrgDepartmentController {
             OrgDepartment orgDepartment = orgDepartmentDao.get(id);
             model.addAttribute("model", orgDepartment);
         }
-        // 在controller中设置页面控件用的数据
-        Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> formTableColumnMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_TEST", "testForm");net.sf.json.JSONObject jsonObj = net.sf.json.JSONObject.fromObject(formTableColumnMap.get("COMPANYID").getConfSelectInfo());String sql = jsonObj.getString("sql");List<Map<String,Object>> list = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(sql);List<ConfSelectItem> companyidItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : list) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    companyidItems.add(confSelectItem);}model.addAttribute("companyidItems", companyidItems);
-        
+        // 设置页面 公司信息下拉 控件用的数据
+		String sql = "select id vKey, name vValue from IB_COMPANY where SCOPE_ID='"+ScopeHolder.getScopeId()+"'";
+		List<Map<String, Object>> list = orgCompanyDao.getJdbcTemplate().queryForList(sql);
+		List<ConfSelectItem> companyidItems = new java.util.ArrayList<ConfSelectItem>();
+		for (Map<String, Object> mapBean : list) {
+			ConfSelectItem confSelectItem = new ConfSelectItem();
+			confSelectItem.setKey(mapBean.get("vKey").toString());
+			confSelectItem.setValue(mapBean.get("vValue").toString());
+			companyidItems.add(confSelectItem);
+		}
+		model.addAttribute("companyidItems", companyidItems);
+
         return "common/group/org-department-input.jsp";
     }
 
+    /**
+     * 保存部门信息
+     * 
+     * @param orgDepartment
+     * @param redirectAttributes
+     * @return
+     */
     @RequestMapping("org-department-save")
     public String save(@ModelAttribute OrgDepartment orgDepartment, RedirectAttributes redirectAttributes) {
         OrgDepartment dest = null;
@@ -81,7 +111,7 @@ public class OrgDepartmentController {
             beanMapper.copy(orgDepartment, dest);
         } else {
             dest = orgDepartment;
-            dest.setScopeId(ScopeHolder.getScopeId());
+            dest.setScopeid(ScopeHolder.getScopeId());
             dest.setId(UUID.randomUUID().toString());
         }
 
@@ -92,6 +122,12 @@ public class OrgDepartmentController {
         return "redirect:/group/org-department-list.do";
     }
 
+    /**
+     * 删除部门信息
+     * @param selectedItem
+     * @param redirectAttributes
+     * @return
+     */
     @RequestMapping("org-department-remove")
     public String remove(@RequestParam("selectedItem")
     List<String> selectedItem, RedirectAttributes redirectAttributes) {
@@ -111,7 +147,10 @@ public class OrgDepartmentController {
     public void setOrgDepartmentDao(OrgDepartmentDao orgDepartmentDao) {
         this.orgDepartmentDao = orgDepartmentDao;
     }
-
+    @Resource
+    public void setOrgCompanyDao(OrgCompanyDao orgCompanyDao) {
+        this.orgCompanyDao = orgCompanyDao;
+    }
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;

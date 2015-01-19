@@ -7,7 +7,7 @@ import java.util.Locale;
 /**
  * 分页参数与分页结果.
  * 
- * @author Lingo
+ * @author JiangBo
  */
 public class Page {
     // ==========================================

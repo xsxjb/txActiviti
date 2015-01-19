@@ -29,7 +29,7 @@ import org.springframework.util.Assert;
 /**
  * hibernate utils.工具类
  * 
- * @author Lingo
+ * @author JiangBo
  */
 public class HibernateUtils {
     /** logger. */

@@ -5,7 +5,8 @@
  *	@author	jiangbo
  */
 function EndNode( id,x,y ){
-this.model = 'design';//设定2个模式（design/control）
+	var pathBase = "/"+window.location.pathname.split("/")[1]; // URL path
+    this.model = 'design';//设定2个模式（design/control）
 	this.id = id;
 	this.name = '结束节点';
 	this.type = 'EndNode';
@@ -31,9 +32,9 @@ this.model = 'design';//设定2个模式（design/control）
 	 */
 	this.init = function( json ){
 	    //结束节点图片
-		this.bark.src = "../../plugin/ibusiness/flowchart/img/endnode.png";
+		this.bark.src = pathBase + "/plugin/ibusiness/flowchart/img/endnode.png";
 		// 删除子
-		this.imageDeleteBtn.src="../../plugin/ibusiness/flowchart/img/cross.png";
+		this.imageDeleteBtn.src= pathBase + "/plugin/ibusiness/flowchart/img/cross.png";
 		
 		if( null != json ) {
 			this.id = json.id;

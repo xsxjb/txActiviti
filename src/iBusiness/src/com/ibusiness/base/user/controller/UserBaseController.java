@@ -17,20 +17,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.base.auth.dao.RoleDefDao;
 import com.ibusiness.base.group.dao.JobInfoDao;
+import com.ibusiness.base.group.dao.OrgCompanyDao;
 import com.ibusiness.base.user.dao.UserBaseDao;
-import com.ibusiness.base.user.dao.UserRepoDao;
 import com.ibusiness.base.user.entity.UserBase;
-import com.ibusiness.base.user.entity.UserRepo;
 import com.ibusiness.base.user.service.UserService;
 import com.ibusiness.bridge.user.UserCache;
 import com.ibusiness.bridge.user.UserDTO;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
-import com.ibusiness.security.api.scope.ScopeHolder;
 import com.ibusiness.security.util.SimplePasswordEncoder;
+import com.ibusiness.security.util.SpringSecurityUtils;
 
 /**
  * 用户管理
@@ -42,7 +42,6 @@ import com.ibusiness.security.util.SimplePasswordEncoder;
 @RequestMapping("user")
 public class UserBaseController {
     private UserBaseDao userBaseDao;
-    private UserRepoDao userRepoDao;
     private UserCache userCache;
     private MessageHelper messageHelper;
     private BeanMapper beanMapper = new BeanMapper();
@@ -52,6 +51,8 @@ public class UserBaseController {
     private JobInfoDao jobInfoDao;
     // 角色模板表DAO
     private RoleDefDao roleDefDao;
+    // 公司信息
+    private OrgCompanyDao orgCompanyDao;
 
     /**
      * 查看
@@ -64,9 +65,12 @@ public class UserBaseController {
     @RequestMapping("user-base-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        UserRepo userRepo = userRepoDao.findUniqueBy("code", ScopeHolder.getScopeCode());
-        propertyFilters.add(new PropertyFilter("EQS_userRepo.id", userRepo.getId()));
-        page = userBaseDao.pagedQuery(page, propertyFilters);
+    	// 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
+    	page = userBaseDao.pagedQuery(page, propertyFilters);
+    	// 设置排序信息
+        page.setOrderBy("ref");
+        page.setOrder("ASC");
         
         model.addAttribute("page", page);
 
@@ -83,20 +87,25 @@ public class UserBaseController {
     @RequestMapping("user-base-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
         UserBase userBase = null;
-
+        // 
         if (!CommonUtils.isNull(id)) {
             userBase = userBaseDao.get(id);
         } else {
             userBase = new UserBase();
-            UserRepo userRepo = userRepoDao.findUniqueBy("code", ScopeHolder.getScopeCode());
-            userBase.setUserRepo(userRepo);
+            String companyId = userBaseDao.get(SpringSecurityUtils.getCurrentUserId()).getCompanyId();
+            userBase.setCompanyId(companyId);
+            userBase.setUserRepoId("1");
         }
-
+        // 
         model.addAttribute("model", userBase);
         // 设置职务管理下拉数据
         model.addAttribute("jobInfos", jobInfoDao.getAll());
         // 角色模板管理下拉数据
         model.addAttribute("roleDefs", roleDefDao.getAll());
+        // 公司信息下拉数据
+        model.addAttribute("companyidItems", orgCompanyDao.getAll());
+        // 当前用户
+        model.addAttribute("currentUserName", SpringSecurityUtils.getCurrentUsername());
 
         return "common/user/user-base-input.jsp";
     }
@@ -139,8 +148,12 @@ public class UserBaseController {
             dest.setJobInfo(jobInfoDao.get(jobId));
             // 保存角色信息
             dest.setRoleDef(roleDefDao.get(roleId));
+            // 用户组织ID
+            dest.setUserRepoId("1");
+            // 设置范围ID
+            dest.setScopeid(dest.getCompanyId());
             // 更新用户基础信息
-            userService.updateUser(dest, userRepoId);
+            userService.updateUser(dest);
         } else {
             dest = userBase;
             // 保存职务信息
@@ -151,7 +164,10 @@ public class UserBaseController {
             dest.setCss("Cerulean");
             // UUID
             dest.setId(UUID.randomUUID().toString());
-            userService.insertUser(dest, userRepoId);
+            // 设置范围ID
+            dest.setScopeid(dest.getCompanyId());
+            dest.setUserRepoId("1");
+            userService.insertUser(dest);
         }
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
@@ -159,7 +175,7 @@ public class UserBaseController {
         UserDTO userDto = new UserDTO();
         userDto.setId(dest.getId());
         userDto.setUsername(dest.getUsername());
-        userDto.setRef(dest.getRef());
+        userDto.setRef(null == dest.getRef()? "9" : dest.getRef().toString());
         userDto.setUserRepoRef(userRepoId);
         userCache.removeUser(userDto);
 
@@ -183,8 +199,8 @@ public class UserBaseController {
             UserDTO userDto = new UserDTO();
             userDto.setId(userBase.getId());
             userDto.setUsername(userBase.getUsername());
-            userDto.setRef(userBase.getRef());
-            userDto.setUserRepoRef(userBase.getUserRepo().getId());
+            userDto.setRef(null == userBase.getRef() ? "9" : userBase.getRef().toString());
+            userDto.setUserRepoRef("1");
             userCache.removeUser(userDto);
         }
 
@@ -246,27 +262,18 @@ public class UserBaseController {
     public void setUserBaseDao(UserBaseDao userBaseDao) {
         this.userBaseDao = userBaseDao;
     }
-
-    @Resource
-    public void setUserRepoDao(UserRepoDao userRepoDao) {
-        this.userRepoDao = userRepoDao;
-    }
-
     @Resource
     public void setUserCache(UserCache userCache) {
         this.userCache = userCache;
     }
-
     @Resource
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
     }
-
     @Resource
     public void setSimplePasswordEncoder(SimplePasswordEncoder simplePasswordEncoder) {
         this.simplePasswordEncoder = simplePasswordEncoder;
     }
-
     @Resource
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -278,5 +285,10 @@ public class UserBaseController {
     @Resource
     public void setRoleDefDao(RoleDefDao roleDefDao) {
         this.roleDefDao = roleDefDao;
+    }
+    // 公司信息
+    @Resource
+    public void setOrgCompanyDao(OrgCompanyDao orgCompanyDao) {
+        this.orgCompanyDao = orgCompanyDao;
     }
 }

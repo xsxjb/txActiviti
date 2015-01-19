@@ -28,11 +28,11 @@
 		var setting = {
 			async: {
 				enable: true,
-				url: "${scopePrefix}/rs/component/left-menu-tree?packageName=${packageName}&typeId=${typeId}&parentId=${parentId}"
+				url: "${ctx}/rs/component/left-menu-tree?packageName=${packageName}&typeId=${typeId}&parentId=${parentId}"
 			},
 			callback: {
 				onClick: function(event, treeId, treeNode) {
-					location.href = '${scopePrefix}/component/component-action.do?packageName=' +  treeNode.packageName + '&typeId=' + treeNode.typeId
+					location.href = '${ctx}/component/component-action.do?packageName=' +  treeNode.packageName + '&typeId=' + treeNode.typeId
 							   + '&tableName=' + treeNode.tableName + '&formId=' + treeNode.formId + '&flowId='  + treeNode.flowId;
 				}
 			}

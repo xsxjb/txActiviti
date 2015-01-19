@@ -5,8 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ibusiness.base.group.dao.OrgCompanyDao;
+import com.ibusiness.base.group.dao.OrgDepartmentDao;
+import com.ibusiness.base.group.entity.OrgCompany;
+import com.ibusiness.base.group.entity.OrgDepartment;
 import com.ibusiness.base.user.dao.UserBaseDao;
 import com.ibusiness.base.user.entity.UserBase;
+import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.component.form.dao.ConfFormDao;
 import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
@@ -15,6 +20,8 @@ import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.component.table.dao.TableColumnsDao;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 import com.ibusiness.core.spring.ApplicationContextHelper;
+import com.ibusiness.security.api.scope.ScopeHolder;
+import com.ibusiness.security.util.SpringSecurityUtils;
 
 /**
  * CommonBusiness单例对象类
@@ -28,9 +35,9 @@ public class CommonBusiness {
     public static CommonBusiness getInstance() {
         return instance;
     }
-    // 流水表表结构管理List
+    // 表结构管理List
     private List<ConfTableColumns> tableColumnsList = new ArrayList<ConfTableColumns>();
-    // 流水表表结构管理Map
+    // 表结构管理Map
     private Map<String, ConfTableColumns> tableColumnsMap = new HashMap<String, ConfTableColumns>();
 
     // 表单List
@@ -38,6 +45,12 @@ public class CommonBusiness {
     // 表单对应表管理表List
     private List<ConfFormTableColumn> formTableColumnList = new ArrayList<ConfFormTableColumn>();
     private Map<String, ConfFormTableColumn> formTableColumnMap = new HashMap<String, ConfFormTableColumn>();
+    
+    // 公司信息Map
+    private Map<String, OrgCompany> companyMap = new HashMap<String, OrgCompany>();
+    // 部门信息Map
+    private Map<String, OrgDepartment> departmentMap = new HashMap<String, OrgDepartment>();
+    
     /**
      * 取得用户表所有用户
      */
@@ -119,6 +132,66 @@ public class CommonBusiness {
         }
         return formTableColumnMap;
     }
+    /**
+     * 公司信息Map
+     */
+    public Map<String, OrgCompany> getCompanyMap() {
+    	// 查询公司信息
+    	List<OrgCompany> companyList = getOrgCompanyDao().getAll();
+    	this.companyMap.clear();
+        for (OrgCompany bean : companyList) {
+        	this.companyMap.put(bean.getId(), bean);
+        }
+        return this.companyMap;
+    }
+    /**
+     * 部门信息Map
+     */
+    public Map<String, OrgDepartment> getDepartmentMap() {
+    	// 查询部门信息
+    	List<OrgDepartment> list = getOrgDepartmentDao().getAll();
+    	this.departmentMap.clear();
+        for (OrgDepartment bean : list) {
+        	this.departmentMap.put(bean.getId(), bean);
+        }
+        return this.departmentMap;
+    }
+    /**
+     *  取得当前登录用户所属范围
+     * @return
+     */
+    public String getCurrentUserScopeId() {
+    	String currentUserId = SpringSecurityUtils.getCurrentUserId();
+    	if (CommonUtils.isNull(currentUserId)) {
+    		return "";
+    	} else {
+    		return getUserBaseDao().get(currentUserId).getScopeid();
+    	}
+    }
+    /**
+     * 通过账号 查询  用户所属范围
+     * @param userName
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+	public String getCurrentUserScopeIdByUserName(String userName) {
+    	List<UserBase> list = getUserBaseDao().find("from UserBase where username=?", userName);
+    	if (null == list || list.size() < 1) {
+    		return "";
+    	} else {
+    		return list.get(0).getScopeid();
+    	}
+    }
+    /**
+     * 编辑查询参数--关于公司ID
+     * @return
+     */
+    public List<PropertyFilter> editPFByScopeId(List<PropertyFilter> propertyFilters) {
+    	if (!"admin".equals(SpringSecurityUtils.getCurrentUsername())) {
+    		propertyFilters.add(new PropertyFilter("EQS_scopeid", ScopeHolder.getScopeId()));
+    	}
+    	return propertyFilters;
+    }
     // ======================================================================
     public UserBaseDao getUserBaseDao() {
         return ApplicationContextHelper.getBean(UserBaseDao.class);
@@ -131,5 +204,13 @@ public class CommonBusiness {
     }
     public ConfFormTableColumnDao getConfFormTableColumnDao() {
         return ApplicationContextHelper.getBean(ConfFormTableColumnDao.class);
+    }
+    // 公司
+    public OrgCompanyDao getOrgCompanyDao() {
+        return ApplicationContextHelper.getBean(OrgCompanyDao.class);
+    }
+    // 部门
+    public OrgDepartmentDao getOrgDepartmentDao() {
+        return ApplicationContextHelper.getBean(OrgDepartmentDao.class);
     }
 }
