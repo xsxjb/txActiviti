@@ -50,6 +50,8 @@ public class CommonBusiness {
     private Map<String, OrgCompany> companyMap = new HashMap<String, OrgCompany>();
     // 部门信息Map
     private Map<String, OrgDepartment> departmentMap = new HashMap<String, OrgDepartment>();
+    // 用户MAP
+    private Map<String, UserBase> userBaseMap = new HashMap<String, UserBase>();
     
     /**
      * 取得用户表所有用户
@@ -59,6 +61,24 @@ public class CommonBusiness {
         return list;
     }
     /**
+     * 取得用户表所有用户根据Map并存在内存中
+     */
+    public Map<String, UserBase> getUserBaseMap() {
+    	if (null == userBaseMap || userBaseMap.size() < 1) {
+    		List<UserBase> list = getUserBaseDao().getAll();
+        	for (UserBase bean : list) {
+        		userBaseMap.put(bean.getId(), bean);
+        	}
+    	}
+        return userBaseMap;
+    }
+    /**
+     * 设置内存中的用户信息
+     */
+	public void setUserBaseMap(Map<String, UserBase> userBaseMap) {
+		this.userBaseMap = userBaseMap;
+	}
+	/**
      * 取得用户表的用户信息
      */
     public UserBase getUserBean(String id) {
@@ -165,7 +185,7 @@ public class CommonBusiness {
     	if (CommonUtils.isNull(currentUserId)) {
     		return "";
     	} else {
-    		return getUserBaseDao().get(currentUserId).getScopeid();
+    		return getUserBaseMap().get(currentUserId).getScopeid();
     	}
     }
     /**

@@ -169,9 +169,12 @@ public class UserBaseController {
             dest.setUserRepoId("1");
             userService.insertUser(dest);
         }
+        // 更新重设内存数据
+        CommonBusiness.getInstance().setUserBaseMap(new HashMap<String, UserBase>());
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 
+        // 帐号/用户缓存接口
         UserDTO userDto = new UserDTO();
         userDto.setId(dest.getId());
         userDto.setUsername(dest.getUsername());
