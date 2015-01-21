@@ -52,6 +52,10 @@ public class UserBase implements java.io.Serializable {
     private String companyName;
     /** 用户库列表ID  -- 准备废弃字段 */
     private String userRepoId;
+    // 个性签名
+    private String signMsg;
+    // 上传照片
+    private String photoFile;
 
     public UserBase() {
     }
@@ -256,5 +260,31 @@ public class UserBase implements java.io.Serializable {
 	 */
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	/**
+	 * @return the signMsg
+	 */
+	@Column(name = "SIGNMSG")
+	public String getSignMsg() {
+		return signMsg;
+	}
+	/**
+	 * @param signMsg the signMsg to set
+	 */
+	public void setSignMsg(String signMsg) {
+		this.signMsg = signMsg;
+	}
+	/**
+	 * @return the photoFile
+	 */
+	@Column(name = "PHOTOFILE")
+	public String getPhotoFile() {
+		return photoFile;
+	}
+	/**
+	 * @param photoFile the photoFile to set
+	 */
+	public void setPhotoFile(String photoFile) {
+		this.photoFile = photoFile;
 	}
 }

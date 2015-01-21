@@ -126,7 +126,9 @@ public class OrgCompanyController {
         for (OrgCompany orgCompany : orgCompanies) {
             orgCompanyDao.remove(orgCompany);
             // 删除多租户范围
-            scopeInfoService.removeById(orgCompany.getId());
+            if (null != scopeInfoService.get(orgCompany.getId())) {
+            	scopeInfoService.removeById(orgCompany.getId());
+            }
         }
 
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
@@ -151,7 +153,7 @@ public class OrgCompanyController {
         // excel文件名
         tableModel.setExcelName("公司信息列表"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "name", "status", "descn", "scopeId");
+        tableModel.addHeaders("公司id", "公司名", "公司状态", "范围");
         tableModel.setTableName("ib_company");
         tableModel.setData(beans);
         try {
@@ -178,7 +180,7 @@ public class OrgCompanyController {
             // excel文件名
             tableModel.setExcelName("org");
             // 列名
-            tableModel.addHeaders("id", "name", "status", "descn", "scopeId");
+            tableModel.addHeaders("id", "name", "status", "scopeid");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.ibusiness.base.group.entity.OrgCompany");
         } catch (IOException e) {

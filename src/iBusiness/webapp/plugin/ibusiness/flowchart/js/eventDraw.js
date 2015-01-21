@@ -31,7 +31,6 @@ $(function() {
     	
 	/**
 	 * 查询【流程信息】下拉列表信息
-	*/
     function getFlowList(){
 		//向服务端获取二级菜单列表
     	var urlPath = '/'+window.location.pathname.split("/")[1] +'/flowchart/flow-list.do?flowId='+getParam("bpmId");
@@ -43,12 +42,8 @@ $(function() {
 		});
 	}
     getFlowList();
+    */
 	 
-    /** 查询流程下拉菜单 
-	$.get("flow-list.do?flowId=${bpmId}",function(data){
-		$('#select_flowname').append(data);
-	});*/
-    
 	/**
 	 * 获得画板的移动事件
 	 */
@@ -338,20 +333,8 @@ $(function() {
 		}
 	});
 	
-	//工具栏的单击事件（选中某一个）
+	/**工具栏的单击事件（选中某一个）*/
 	$('.tool').click(function() {
-		if( isQuery == false && $(this).attr("id") != 'search' && $(this).attr("id") != 'save' ){
-			alert('请查询完对应【中继站】信息后再试！');
-			return;
-		}
-		if( $('#station option:selected').val() == '%' || $('#unit option:selected').val() == '%' ){
-			if( $(this).attr("id") != 'search' && $(this).attr("id") != 'save' ){
-				alert('请选择对应【中继站】后再试！');
-				//初始化工具栏
-				initTools();
-				return;	
-			}
-		}
 		selectId = $(this).attr("id");
 		//select($(this).children().attr("name"), $(this).children().attr("src"))
 		
@@ -365,6 +348,7 @@ $(function() {
 		
 		mouseImage = null;
 	});
+	
 	//默认为【选择】手型
 	var selectId = 'select';
 	//工具栏的鼠标事件
@@ -524,6 +508,7 @@ $(function() {
 			$("#baseForm").hide(300);
 		}
 	});
+	/**
 	//------------------------------------------------
 	//单击【查询】按钮，将返回的json数据显示到页面上
 	$("#search").click(function(e) {
@@ -534,12 +519,14 @@ $(function() {
 			return;
 		}
 		//获得用于选中的【流程】
-		var flowId = $('#select_flowname option:selected').val();
+		// var flowId = $('#select_flowname option:selected').val();
 		// 查询数据
-		searchChartInfo(flowId);
+		searchChartInfo(getParam("bpmId"));
 	});
+	*/
+	//------------------------------------------------
 	// 查询数据
-	function searchChartInfo(flowId){
+	this.searchChartInfo = function(flowId){
 		//清空页面上的所有元素。
 		elements.clear();
 		//添加一个控制台，用于显示鼠标信息
@@ -556,8 +543,9 @@ $(function() {
 		//初始化工具栏
 		initTools();
 		isQuery = true;
-	}
+	};
 	//------------------------------------------------
+	/**
 	//单击【保存】按钮，将页面上的对象，保存到表中
 	$("#save").click(function(e) {
 		if(isQuery == false ||  $('#select_flowname option:selected').val() == ''){
@@ -572,10 +560,23 @@ $(function() {
 			initTools();
 			return ;
 		}
-		//获得用于选中的【热力站】和机组
+		//获得用于选中的【流程】
 		var flowId = $('#select_flowname option:selected').val();
-		var jsonString = "[";
+		
+	});
+	*/
+	//------------------------------------------------
+	// 保存数据
+	this.saveChart = function(flowId){
+		// 确认保存
+		var result = window.confirm("您确认要保存流程画图信息吗？");
+		if( result == false ){
+			//初始化工具栏
+			initTools();
+			return ;
+		}
 		//遍历所有的元素，生成json格式的数据。
+		var jsonString = "[";
 		for(var i=0;i<elements.size();i++){
 			var json = elements.get(i).getJson();
 			if( elements.get(i).id == 'console'  || elements.get(i).id == 'line'){
@@ -595,8 +596,12 @@ $(function() {
 			 url: "/"+window.location.pathname.split("/")[1]+"/flowchart/save-flow-chart.do?contexts="+jsonString+"&flowId="+flowId,
 			 dataType: "text",
 			 success: function(data){
-				//初始化工具栏
-				initTools();
+				 if (data == "failure") {
+					 alert('保存失败！');
+				 } else {
+					//初始化工具栏
+					initTools();
+				 }
 			 },
 			 error: function (XMLHttpRequest, textStatus, errorThrown) {
 				 elements.getId('console').realData = '请求数据出错了!';
@@ -604,9 +609,8 @@ $(function() {
 	    		initTools();
 	         } 
 		});
-	});
-	
-	//------------------------------------------------
+	};
+	/**
 	//单击【删除】按钮，将页面上的对象，保存到表中
 	$("#delete").click(function(e) {
 		if( isQuery == false ){
@@ -627,16 +631,28 @@ $(function() {
 			initTools();
 			return ;
 		}
-		//获得用于选中的【热力站】和机组
+		//获得用于选中的【流程】
 		var flowId = $('#select_flowname option:selected').val();
+	});
+	*/
+	//------------------------------------------------
+	// 删除数据
+	this.deleteChart = function(flowId){
+		// 确认删除
+		var result = window.confirm("您确认要删除流程图信息吗？");
+		if( result == false ){
+			//初始化工具栏
+			initTools();
+			return ;
+		}
 		//发起AJAX请求，提交参数
 		$.ajax({
 			 type: "POST",
 			 url: "/"+window.location.pathname.split("/")[1]+"/flowchart/delete-flow-chart.do?flowId="+flowId,
 			 dataType: "text",
 			 success: function(data){
-				 var json = JSON.parse(data);
-				 if( json == '工艺图形数据删除成功!' ){
+				 // 流程图形数据删除成功!
+				 if( data == "success" ){
 					 elements.clear();
 				 }
 				//初始化工具栏
@@ -648,7 +664,7 @@ $(function() {
 	    		initTools();
 	         } 
 		});
-	});
+	};
 	//------------------------------------------------
 	//单击【泳道】按钮，在页面上添加一个泳道对象
 	$("#addLane").click(function(e) {
@@ -718,38 +734,6 @@ $(function() {
 			elements.get(i).mouseClick = 0;
 		}
 	}
-	////定义箭头线条
-	function Arrow() {
-		this.start_x = 0;
-		this.start_y = 0;
-		this.end_x = 0;
-		this.end_y = 0;
-		this.length = 0; // 两点之间的长度
-		this.radii = 0; // 圆点的半径
-		this.arrow_len = 10; // 箭头的长度
-		this.color = "#ffff00";
-		this.rotation = 0;
-	}
-	Arrow.prototype.draw = function(context) {
-		context.save();
-		context.translate(this.start_x, this.start_y);
-		context.rotate(this.rotation);
-		context.lineWidth = 2;
-		context.fillStyle = this.color;
-		context.beginPath();
-		context.moveTo(0, 0);
-		context.lineTo(0, -2);
-		context.lineTo(-(this.length - this.radii - this.arrow_len), -2);
-		context.lineTo(-(this.length - this.radii - this.arrow_len), -4);
-		context.lineTo(-(this.length - this.radii), 0);
-		context.lineTo(-(this.length - this.radii - this.arrow_len), 4);
-		context.lineTo(-(this.length - this.radii - this.arrow_len), 2);
-		context.lineTo(0, 2);
-		context.closePath();
-		context.stroke();
-		context.restore();
-	};
-	
 	// 查询数据
-	searchChartInfo(getParam("bpmId"));
+	this.searchChartInfo(getParam("bpmId"));
 });

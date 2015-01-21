@@ -10,7 +10,7 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
-	<%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
+	    <%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
 	
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/uuid.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/ArrayList.js"></script>
@@ -29,9 +29,6 @@
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/CalculatePos.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/Line.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/eventDraw.js"></script>
-		<style type="text/css">
-			.tool {height: 30px; float: left; cursor: pointer; padding: 5px; filter: alpha(Opacity = 70); opacity: 0.7; }
-		</style>
 	<!-- ================================================================================= -->
 	<script type="text/javascript">
 		$(function() {
@@ -64,52 +61,65 @@
 			$("#taskNodeBaseDiv").attr("class","tab-pane fade ");
 			$("#popConfTaskNodeDiv").attr("class","tab-pane fade active in ");
 		}
+		// ===================================================================
 		
+		// ===================================================================
     </script>
 	<!-- start of main -->
-	<div class="panel panel-default col-md-10" >
-	        <input id="bpmId" type="hidden" name="bpmId" value="${bpmId}">
-	        <input id="packageName" type="hidden" name="packageName" value="${packageName}">
-	        <input id="taskNodeId" type="hidden" name="taskNodeId"  >
-	        <!--  -->
-	        	<div id="toolCanvas"  style="position: relative; height: 40px; width:1080px; border: 1px solid;">
-						<div class="tool"  title="泳道" id="addLane"><img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/lanebg.png" /></div>
-						<div class="tool"  title="开始" id="StartNode">
-							<img height="30px" width="30px" name="startNode" id="startNodeImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/startnode.png" />
-						</div>
-						<div class="tool"  title="任务节点" id="TaskNode">
-							<img height="30px" width="30px" name="taskNode" id="taskNodeImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/tasknode.png" />
-						</div>
-						<div class="tool"  title="结束" id="EndNode">
-							<img height="30px" width="30px" name="endNode" id="endNodeImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/endnode.png" />
-						</div>
-						<div class="tool"  title="线" id="Pipeline">
-							<img height="30px" width="30px" name="line" id="lineImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/waterflow.png" />
-						</div>
-						<div class="tool"  title="判断" id="Gateway">
-							<img height="30px" width="30px" name="gateway" id="gatewayImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/gateway.png" />
-						</div>
-						<div class="tool"  title="选择" id="select">
-							<img height="30px" width="30px" name="select" id="selectImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/select.jpg" />
-						</div>
-						<!--  -->
-						<div  style="height: 30px; float: left; cursor: pointer; padding: 5px; filter: alpha(Opacity = 100); opacity: 1;" >
-						    <label class="control-label" for="select_flowname">关联流程:</label>
-							<select id="select_flowname" name="flowId" >
-							      <option value="" selected>请选择流程:</option>
-							</select>
-						</div>
-						<!--  -->
-						<div class="tool"  title="查询" id="search"><img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/query.gif" /></div>
-						<div class="tool"  title="保存" id="save"><img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/save.gif" /></div>
-						<div class="tool"  title="删除所有" id="delete"><img height="30px" width="30px"  src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/delete.png" /></div>
-						<div style="float: right;padding-top:8px;padding-right:5px">
-							<input type="radio" name="animated" id="animated" value="1">显示动画
-							<input type="radio" name="animated" id="animated" value="0" checked>不显示动画
-							<a href="${ctx}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" class="btn btn-default btn-sm " >返回</a>
-						</div>
+	<div class="panel panel-default col-lg-10" >
+	    <div class="row">
+	        <!-- 工具条 -->
+	        <div class="col-lg-12">
+	        <nav class="navbar navbar-default">
+	            <div class="navbar-form navbar-left" >
+				    <label class="control-label" for="select_flowname">关联流程:</label>
+				    <label>${bpmProcess.flowTitle}</label>
+				    <input type="hidden" name="flowId" value="${bpmProcess.id}">
+				</div>
+				<button class="btn btn-default btn-sm" onclick="searchChartInfo('${bpmProcess.id}');" ><span class="glyphicon glyphicon-search"></span>查询</button>
+				<button class="btn btn-default btn-sm" onclick="saveChart('${bpmProcess.id}');" ><span class="glyphicon glyphicon-tasks"></span>保存</button>
+				<button class="btn btn-default btn-sm" onclick="deleteChart('${bpmProcess.id}');" ><span class="glyphicon glyphicon-trash"></span>删除</button>
+				<!-- 
+				<div class="navbar-form navbar-left" title="查询" id="search"><img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/query.gif" /></div>
+				<div class="navbar-form navbar-left" title="保存" id="save"><img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/save.gif" /></div>
+				<div class="navbar-form navbar-left" title="删除所有" id="delete"><img height="30px" width="30px"  src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/delete.png" /></div>
+				 -->
+				<div class="navbar-right">
+				    <a href="${ctx}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" class="btn btn-default btn-sm " >返回</a>
+					<input type="radio" name="animated" id="animated" value="1">显示动画
+					<input type="radio" name="animated" id="animated" value="0" checked>不显示动画
+				</div>
+			</nav>
+	        </div>
+	        
+	        <div class="col-lg-1">
+					<div class="tool"  title="泳道" id="addLane">
+					    <img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/lanebg.png" />
 					</div>
-					
+					<div class="tool"  title="开始" id="StartNode">
+						<img height="30px" width="30px" name="startNode" id="startNodeImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/startnode.png" />
+					</div>
+					<div class="tool"  title="任务节点" id="TaskNode">
+						<img height="30px" width="30px" name="taskNode" id="taskNodeImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/tasknode.png" />
+					</div>
+					<div class="tool"  title="结束" id="EndNode">
+						<img height="30px" width="30px" name="endNode" id="endNodeImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/endnode.png" />
+					</div>
+					<div class="tool"  title="线" id="Pipeline">
+						<img height="30px" width="30px" name="line" id="lineImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/waterflow.png" />
+					</div>
+					<div class="tool"  title="判断" id="Gateway">
+						<img height="30px" width="30px" name="gateway" id="gatewayImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/gateway.png" />
+					</div>
+					<div class="tool"  title="选择" id="select">
+						<img height="30px" width="30px" name="select" id="selectImg" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/select.jpg" />
+					</div>
+	        </div>
+	        <div id="canvasDiv" class="panel panel-default col-lg-11" >
+		        <input id="bpmId" type="hidden" name="bpmId" value="${bpmId}">
+		        <input id="packageName" type="hidden" name="packageName" value="${packageName}">
+		        <input id="taskNodeId" type="hidden" name="taskNodeId"  >
+		        <!--  -->
 					<!-- 基础弹出form页面 -->
 					<div id ="baseForm"  style="width: 200px;position: absolute; top: 330; left: 400; z-index: 1000; text-align: center; background-color: #CFDFEF; display: none;">
 						<table style="width:200px;">
@@ -228,14 +238,18 @@
 					<!-- 画图面板 -->
 					<canvas id="canvas" style="border:1px solid #DDDDDD"></canvas>
         	</div>
+        	</div>
+        </div>
     </div>
 	<!-- end of main -->
 		<script type="text/javascript">
 			var elements = new ArrayList();
 			var canvas = null;
 			var ctx = null;
-			var width = 1080;
-			var height = 500;
+			var width = document.getElementById("canvasDiv").offsetWidth - 30;
+			alert("width:"+width + "  height:" + document.getElementById("canvasDiv").offsetHeight);
+// $("#content").height()， offsetHeight
+			var height = 600;
 			var deviceTyleList = null;
 			/**
 			 *	页面初始化
@@ -273,6 +287,5 @@
 			// 
 			init();
 		</script>
-	
   </body>
 </html>

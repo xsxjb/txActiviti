@@ -272,7 +272,7 @@ public class ExcelCommon {
             setMethod.invoke(target, methodValue.toString());
         } else if (returnType == Integer.class) {
             Method setMethod = target.getClass().getDeclaredMethod(setMethodName, Integer.class);
-            setMethod.invoke(target, Integer.parseInt(methodValue.toString()));
+            setMethod.invoke(target, Integer.parseInt(methodValue.toString().substring(0,methodValue.toString().indexOf("."))));
         } else if (returnType == Long.class) {
             Method setMethod = target.getClass().getDeclaredMethod(setMethodName, Long.class);
             setMethod.invoke(target, methodValue);

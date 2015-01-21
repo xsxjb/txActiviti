@@ -67,6 +67,9 @@ public class FlowChartController {
         
         // 包名
         model.addAttribute("packageName", packageName);
+        // 关联流程
+        BpmProcess bpmProcess= bpmProcessDao.get(bpmId);
+        model.addAttribute("bpmProcess", bpmProcess);
         
         return "ibusiness/flowchart/flowchart-draw.jsp";
     }
@@ -112,15 +115,20 @@ public class FlowChartController {
      * 保存
      * @return
      */
+    @ResponseBody
     @RequestMapping("save-flow-chart")
     public String saveFlowChart(@RequestParam(value = "contexts") String contexts, @RequestParam(value = "flowId") String flowId) {
-        // 保存在线画图信息流程图数据
-        saveConfFlowChart(contexts, flowId);
-        
-        // 保存修改流程相关BPMN.XML信息
-        saveBpmnXmlInfo(flowId);
-        
-        return "/ibusiness/flowchart/draw.jsp";
+    	try {
+    		// 保存在线画图信息流程图数据
+            saveConfFlowChart(contexts, flowId);
+            
+            // 保存修改流程相关BPMN.XML信息
+            saveBpmnXmlInfo(flowId);
+            return flowId;
+    	} catch (Exception e) {
+    		return "failure";
+    	}
+//        return "/ibusiness/flowchart/draw.jsp";
     }
 
     /**
@@ -207,6 +215,7 @@ public class FlowChartController {
      * @return
      */
     @SuppressWarnings("unchecked")
+    @ResponseBody
     @RequestMapping("delete-flow-chart")
     public String deleteFlowChart(@RequestParam(value = "flowId") String flowId) {
         String hql = "from ConfFlowChart where flowId=?";
@@ -214,7 +223,8 @@ public class FlowChartController {
         if (null != list && list.size() > 0) {
             flowChartService.removeAll(list);
         }
-        return "redirect:/flowchart/query-flow-chart.do?flowId="+flowId;
+//        return "redirect:/flowchart/query-flow-chart.do?flowId="+flowId;
+        return "success";
     }
     
     /**
