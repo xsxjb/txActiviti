@@ -68,4 +68,14 @@
     	<url-pattern>/common/captchaAjax</url-pattern>
   	</servlet-mapping>
   	
+  	<!-- 后台入口 -->
+  	<servlet>
+    	<servlet-name>manage</servlet-name>
+    	<servlet-class>com.ibusiness.common.sevlet.ManageServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>manage</servlet-name>
+    	<url-pattern>/manage</url-pattern>
+  	</servlet-mapping>
+  	
 </web-app>

@@ -8,7 +8,7 @@
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/component/manage/header-manage.jsp"%>
     <div class="row">
 	    <%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
 	
@@ -31,16 +31,6 @@
 		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/js/eventDraw.js"></script>
 	<!-- ================================================================================= -->
 	<script type="text/javascript">
-		$(function() {
-		    $("#bpmBaseForm").validate({
-		        submitHandler: function(form) {
-					bootbox.animate(false);
-					var box = bootbox.dialog('<div class="progress progress-striped active" style="margin:0px;"><div class="bar" style="width: 100%;"></div></div>');
-		            form.submit();
-		        },
-		        errorClass: 'validate-error'
-		    });
-		})
 		// 任务节点基础信息
 		function taskNodeBase(){
 			// 设置显示标签
@@ -52,8 +42,6 @@
 		}
 		// 任务节点弹出层
 		function popConfTaskNode(){
-	//	    var url = "/iBusiness/default/flowchart/pop-conf-taskNode.do?flowId="+$("#bpmId").val()+"&packageName="+$("#packageName").val()+"&id="+$("#taskNodeId").val();
-	//	    $("#taskNodeIframe").attr("src", url );
 		    // 设置显示标签
 		    $("#taskNodeBaseTabs").attr("class"," ");
 		    $("#popConfTaskNodeTabs").attr("class","active");
@@ -247,7 +235,6 @@
 			var canvas = null;
 			var ctx = null;
 			var width = document.getElementById("canvasDiv").offsetWidth - 30;
-			alert("width:"+width + "  height:" + document.getElementById("canvasDiv").offsetHeight);
 // $("#content").height()， offsetHeight
 			var height = 600;
 			var deviceTyleList = null;

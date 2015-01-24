@@ -53,6 +53,8 @@ public class TestController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = testService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -134,7 +136,7 @@ public class TestController {
         // excel文件名
         tableModel.setExcelName("测试练习表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "remark", "itemid", "itemname", "itemtype", "itemtitle", "imghurl", "imgvurl");
+        tableModel.addHeaders("id", "mapip", "mapport", "mapcity", "mapshowonline", "mapgrid", "mapcenterlongitude", "mapcenterlatitude");
         tableModel.setTableName("IB_TEST");
         tableModel.setData(beans);
         try {
@@ -154,7 +156,7 @@ public class TestController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "remark", "itemid", "itemname", "itemtype", "itemtitle", "imghurl", "imgvurl");
+            tableModel.addHeaders("id", "mapip", "mapport", "mapcity", "mapshowonline", "mapgrid", "mapcenterlongitude", "mapcenterlatitude");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.test.entity.TestEntity");
         } catch (Exception e) {

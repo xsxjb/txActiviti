@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>工艺图绘图设备对象列表</title>
+    <title>测试练习表单列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -43,19 +43,7 @@
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
 	<!-- 查询条件 -->
-        <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
-          <div class="panel-body">
-	          <div id="search" class="content content-inner">
-				  <form name="cgForm" method="post" action="test-list.do" class="form-inline">
-				    <div class="form-group">
-				                <label for="code_table_itemname">设备对象名:</label>
-				                <input type="text" id="code_table_itemname" name="filter_LIKES_itemname" value="${param.filter_LIKES_itemname}">
-					    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
-					</div>
-				 </form>
-			  </div>
-		  </div>
-	   <div class="panel-heading"><h4 class="panel-title">工艺图绘图设备对象列表</h4></div>
+	   <div class="panel-heading"><h4 class="panel-title">测试练习表单列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
 			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='test-input.do'">新建</button>
@@ -79,13 +67,13 @@
 			      <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					                <th class="sorting">对象编号</th>
-					                <th class="sorting">对象名</th>
-					                <th class="sorting">对象类型</th>
-					                <th class="sorting">标题</th>
-					                <th class="sorting">横版图片路径</th>
-					                <th class="sorting">竖版图片路径</th>
-					                <th class="sorting">备注</th>
+					                <th class="sorting">地图-IP</th>
+					                <th class="sorting">地图-PORT端口</th>
+					                <th class="sorting">地图-CITY城市</th>
+					                <th class="sorting">地图-是否显示在线地图</th>
+					                <th class="sorting">地图-初始级别</th>
+					                <th class="sorting">地图-地图初始页面中心经度</th>
+					                <th class="sorting">地图-地图初始页面中心纬度</th>
 				        <th width="80">&nbsp;</th>
 				      </tr>
 				    </thead>
@@ -93,13 +81,13 @@
 					      <c:forEach items="${page.result}" var="item">
 					      <tr>
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-						            <td>${item.itemid}</td>
-						            <td>${item.itemname}</td>
-						            <td>${item.itemtype}</td>
-						            <td>${item.itemtitle}</td>
-						            <td>${item.imghurl}</td>
-						            <td>${item.imgvurl}</td>
-						            <td>${item.remark}</td>
+						            <td>${item.mapip}</td>
+						            <td>${item.mapport}</td>
+						            <td>${item.mapcity}</td>
+						            <td>${item.mapshowonline}</td>
+						            <td>${item.mapgrid}</td>
+						            <td>${item.mapcenterlongitude}</td>
+						            <td>${item.mapcenterlatitude}</td>
 					        <td>
 					          <a href="test-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 					        </td>

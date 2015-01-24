@@ -17,9 +17,10 @@ function ReviveScene(model){
 		$.ajax({
 			 type: "POST",
 			 url: "/"+window.location.pathname.split("/")[1]+"/flowchart/query-flow-chart.do?flowId="+flowId,
-			 dataType: "text",
+			 dataType: "json",
 			 success: function(data){
-				 this.jsons = JSON.parse(data);
+				 this.jsons = data;
+				// this.jsons = JSON.parse(data);
 				 //将json创建各种对象
 				for(var i=0;i<this.jsons.length;i++){
 					var jsonString = this.jsons[i].context;

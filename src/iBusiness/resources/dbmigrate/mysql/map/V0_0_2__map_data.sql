@@ -1,3 +1,9 @@
+/* ========================= 地图基础配置表 ========================= */
+truncate table IB_MAP_CONF;
+insert into IB_MAP_CONF(MAPIP,MAPPORT,MAPCITY,MAPSHOWONLINE,MAPGRID,MAPCENTERLONGITUDE,MAPCENTERLATITUDE) 
+values ('localhost','8088','haerbin','false','3','0','0');
+commit;
+
 /*=============客户表  =================================================*/
 truncate table IB_CUSTOMER_INFO;
 insert into IB_CUSTOMER_INFO(ID,CUSTOMERNO,CUSTOMERSTATE,CUSTOMERNAME,CUSTOMERTYPE,ADDRESS,PHONE,TELEPHONE)

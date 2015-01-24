@@ -52,7 +52,7 @@ public class InitServlet extends HttpServlet {
 //        //注入到CommonBusiness单例对象中
         
 
-        logger.error("Initialize servlet start success.");
+        logger.error("============= Initialize servlet start success. =============");
     }
     
     private int height = 30;

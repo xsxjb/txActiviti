@@ -8,7 +8,7 @@
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/component/manage/header-manage.jsp"%>
     <script type="text/javascript">
 		$(function() {
 		    $("#cgForm").validate({

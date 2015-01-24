@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 管理controller
+ * 共用管理controller
  * 
  * @author JiangBo
  * 

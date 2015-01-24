@@ -12,16 +12,19 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.common.util.CommonUtils;
-import com.map.entity.MapBase;
+import com.map.entity.MapConf;
 import com.map.entity.MapIcon;
 import com.map.entity.MapIconType;
 import com.map.entity.MapSite;
 import com.map.service.MapComBusiness;
+import com.map.service.MapConfService;
 import com.map.service.MapIconService;
 import com.map.service.MapIconTypeService;
 import com.map.service.MapSiteService;
@@ -40,15 +43,45 @@ public class MapBaseController {
     private MapIconTypeService mapIconTypeService;
     // 节点Service
     private MapSiteService mapSiteService;
+    // 地图基础信息配置
+    private MapConfService mapConfService;
     /**
      * 初始化Map地图基础数据
      * @return
      */
     @RequestMapping("init-map-base")
     public String initMapBase(Model model) {
-        MapBase mapBase = new MapBase();
-        model.addAttribute("mapBase", mapBase);
+    	List<MapConf> list = mapConfService.getAll();
+    	MapConf mapConf = new MapConf();
+    	if (null != list && list.size() > 0) {
+    		mapConf = list.get(0);
+    	}
+        model.addAttribute("mapBase", mapConf);
         return "map/map.jsp";
+    }
+    /**
+     * 地图基础信息配置页面
+     */
+    @RequestMapping("map-conf-input")
+    public String input(Model model) {
+    	List<MapConf> list = mapConfService.getAll();
+    	MapConf entity = new MapConf();
+    	if (null != list && list.size() > 0) {
+    		entity = list.get(0);
+    	}
+        model.addAttribute("model", entity);
+        
+        // 在controller中设置页面控件用的数据
+        return "map/map-conf-input.jsp";
+    }
+
+    /**
+     * 保存地图基础配置信息
+     */
+    @RequestMapping("map-conf-save")
+    public String save(@ModelAttribute MapConf entity, RedirectAttributes redirectAttributes) throws Exception {
+    	mapConfService.update(entity);
+        return "redirect:/map/map-conf-input.do";
     }
     /**
      * 获得地图的初始配置数据
@@ -267,5 +300,9 @@ public class MapBaseController {
     @Resource
     public void setMapSiteService(MapSiteService mapSiteService) {
         this.mapSiteService = mapSiteService;
+    }
+    @Resource
+    public void setMapConfService(MapConfService mapConfService) {
+        this.mapConfService = mapConfService;
     }
 }

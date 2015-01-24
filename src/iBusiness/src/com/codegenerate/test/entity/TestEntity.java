@@ -23,20 +23,20 @@ public class TestEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 	/**id*/
 	private java.lang.String id;
-	/**remark*/
-	private java.lang.String remark;
-	/**itemid*/
-	private java.lang.String itemid;
-	/**itemname*/
-	private java.lang.String itemname;
-	/**itemtype*/
-	private java.lang.String itemtype;
-	/**itemtitle*/
-	private java.lang.String itemtitle;
-	/**imghurl*/
-	private java.lang.String imghurl;
-	/**imgvurl*/
-	private java.lang.String imgvurl;
+	/**mapip*/
+	private java.lang.String mapip;
+	/**mapport*/
+	private java.lang.String mapport;
+	/**mapcity*/
+	private java.lang.String mapcity;
+	/**mapshowonline*/
+	private java.lang.String mapshowonline;
+	/**mapgrid*/
+	private java.lang.String mapgrid;
+	/**mapcenterlongitude*/
+	private java.lang.String mapcenterlongitude;
+	/**mapcenterlatitude*/
+	private java.lang.String mapcenterlatitude;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -58,114 +58,114 @@ public class TestEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  remark
+	 *@return: java.lang.String  mapip
 	 */
-	@Column(name ="REMARK",nullable=true,length=1024)
-	public java.lang.String getRemark(){
-		return this.remark;
+	@Column(name ="MAPIP",nullable=true,length=32)
+	public java.lang.String getMapip(){
+		return this.mapip;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  remark
+	 *@param: java.lang.String  mapip
 	 */
-	public void setRemark(java.lang.String remark){
-		this.remark = remark;
+	public void setMapip(java.lang.String mapip){
+		this.mapip = mapip;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  itemid
+	 *@return: java.lang.String  mapport
 	 */
-	@Column(name ="ITEMID",nullable=true,length=64)
-	public java.lang.String getItemid(){
-		return this.itemid;
+	@Column(name ="MAPPORT",nullable=true,length=32)
+	public java.lang.String getMapport(){
+		return this.mapport;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  itemid
+	 *@param: java.lang.String  mapport
 	 */
-	public void setItemid(java.lang.String itemid){
-		this.itemid = itemid;
+	public void setMapport(java.lang.String mapport){
+		this.mapport = mapport;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  itemname
+	 *@return: java.lang.String  mapcity
 	 */
-	@Column(name ="ITEMNAME",nullable=true,length=64)
-	public java.lang.String getItemname(){
-		return this.itemname;
+	@Column(name ="MAPCITY",nullable=true,length=32)
+	public java.lang.String getMapcity(){
+		return this.mapcity;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  itemname
+	 *@param: java.lang.String  mapcity
 	 */
-	public void setItemname(java.lang.String itemname){
-		this.itemname = itemname;
+	public void setMapcity(java.lang.String mapcity){
+		this.mapcity = mapcity;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  itemtype
+	 *@return: java.lang.String  mapshowonline
 	 */
-	@Column(name ="ITEMTYPE",nullable=true,length=32)
-	public java.lang.String getItemtype(){
-		return this.itemtype;
+	@Column(name ="MAPSHOWONLINE",nullable=true,length=32)
+	public java.lang.String getMapshowonline(){
+		return this.mapshowonline;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  itemtype
+	 *@param: java.lang.String  mapshowonline
 	 */
-	public void setItemtype(java.lang.String itemtype){
-		this.itemtype = itemtype;
+	public void setMapshowonline(java.lang.String mapshowonline){
+		this.mapshowonline = mapshowonline;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  itemtitle
+	 *@return: java.lang.String  mapgrid
 	 */
-	@Column(name ="ITEMTITLE",nullable=true,length=32)
-	public java.lang.String getItemtitle(){
-		return this.itemtitle;
+	@Column(name ="MAPGRID",nullable=true,length=3)
+	public java.lang.String getMapgrid(){
+		return this.mapgrid;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  itemtitle
+	 *@param: java.lang.String  mapgrid
 	 */
-	public void setItemtitle(java.lang.String itemtitle){
-		this.itemtitle = itemtitle;
+	public void setMapgrid(java.lang.String mapgrid){
+		this.mapgrid = mapgrid;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  imghurl
+	 *@return: java.lang.String  mapcenterlongitude
 	 */
-	@Column(name ="IMGHURL",nullable=true,length=64)
-	public java.lang.String getImghurl(){
-		return this.imghurl;
+	@Column(name ="MAPCENTERLONGITUDE",nullable=true,length=32)
+	public java.lang.String getMapcenterlongitude(){
+		return this.mapcenterlongitude;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  imghurl
+	 *@param: java.lang.String  mapcenterlongitude
 	 */
-	public void setImghurl(java.lang.String imghurl){
-		this.imghurl = imghurl;
+	public void setMapcenterlongitude(java.lang.String mapcenterlongitude){
+		this.mapcenterlongitude = mapcenterlongitude;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  imgvurl
+	 *@return: java.lang.String  mapcenterlatitude
 	 */
-	@Column(name ="IMGVURL",nullable=true,length=64)
-	public java.lang.String getImgvurl(){
-		return this.imgvurl;
+	@Column(name ="MAPCENTERLATITUDE",nullable=true,length=32)
+	public java.lang.String getMapcenterlatitude(){
+		return this.mapcenterlatitude;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  imgvurl
+	 *@param: java.lang.String  mapcenterlatitude
 	 */
-	public void setImgvurl(java.lang.String imgvurl){
-		this.imgvurl = imgvurl;
+	public void setMapcenterlatitude(java.lang.String mapcenterlatitude){
+		this.mapcenterlatitude = mapcenterlatitude;
 	}
 }

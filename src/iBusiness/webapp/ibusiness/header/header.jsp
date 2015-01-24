@@ -136,23 +136,22 @@
 	                <a data-toggle="dropdown" class="dropdown-toggle" href="#">皮肤切换</a>
 	                <ul class="dropdown-menu">
 	                  <li class="divider"></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Cerulean">Cerulean</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Slate">Slate</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Cosmo">Cosmo</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Cyborg">Cyborg</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Darkly">Darkly</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Flatly">Flatly</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Superhero">Superhero</a></li>
-					  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=United">United</a></li>
-					  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Yeti">Yeti</a></li>
-	                  <li class="divider"></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Journal">Journal</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Lumen">Lumen</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Paper">Paper</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Readable">Readable</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Sandstone">Sandstone</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Simplex">Simplex</a></li>
-	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Spacelab">Spacelab</a></li>
+	                  <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Cerulean">Cerulean蓝白经典</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Slate">Slate金属黑</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Cosmo">Cosmo黑白宇宙</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Cyborg">Cyborg黑黑</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Darkly">Darkly绿黑</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Flatly">Flatly绿白</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Superhero">Superhero红蓝</a></li>
+			           <li><a href="${ctx}/uicss/uicss-save.do?userCSS=United">United红白</a></li>
+			           <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Yeti">Yeti蓝白</a></li>
+		               <li class="divider"></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Lumen">Lumen白白</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Paper">Paper纸白</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Readable">Readable标题白</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Sandstone">Sandstone草绿白</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Simplex">Simplex酒红白</a></li>
+		               <li><a href="${ctx}/uicss/uicss-save.do?userCSS=Spacelab">Spacelab金属灰</a></li>
 	                  <li class="divider"></li>
 	                </ul>
               </li>

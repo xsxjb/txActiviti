@@ -1,17 +1,25 @@
 package com.map.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Map地图基础信息
  * 
  * @author JiangBo
  *
  */
-public class MapBase {
+@Entity
+@Table(name = "IB_MAP_CONF")
+public class MapConf {
     //地图-IP
     private String mapIp = "localhost";
     //地图-PORT端口
     private String mapPort = "8088";
     //地图-CITY城市
-    private String mapCity = "pingliang";
+    private String mapCity = "haerbin";
     //地图-是否显示在线地图
     private String mapShowOnline = "false";
     //地图-初始级别
@@ -23,6 +31,8 @@ public class MapBase {
     /**
      * @return the mapIp
      */
+    @Id
+    @Column(name = "MAPIP", nullable = false)
     public String getMapIp() {
         return mapIp;
     }
@@ -35,6 +45,7 @@ public class MapBase {
     /**
      * @return the mapPort
      */
+    @Column(name = "MAPPORT")
     public String getMapPort() {
         return mapPort;
     }
@@ -47,6 +58,7 @@ public class MapBase {
     /**
      * @return the mapCity
      */
+    @Column(name = "MAPCITY")
     public String getMapCity() {
         return mapCity;
     }
@@ -59,6 +71,7 @@ public class MapBase {
     /**
      * @return the mapShowOnline
      */
+    @Column(name = "MAPSHOWONLINE")
     public String getMapShowOnline() {
         return mapShowOnline;
     }
@@ -71,6 +84,7 @@ public class MapBase {
     /**
      * @return the mapGrid
      */
+    @Column(name = "MAPGRID")
     public String getMapGrid() {
         return mapGrid;
     }
@@ -83,6 +97,7 @@ public class MapBase {
     /**
      * @return the mapCenterLongitude
      */
+    @Column(name = "MAPCENTERLONGITUDE")
     public String getMapCenterLongitude() {
         return mapCenterLongitude;
     }
@@ -95,6 +110,7 @@ public class MapBase {
     /**
      * @return the mapCenterLatitude
      */
+    @Column(name = "MAPCENTERLATITUDE")
     public String getMapCenterLatitude() {
         return mapCenterLatitude;
     }

@@ -2,6 +2,19 @@
 /* 创建map表 */
 /*=================================================================*/
 /*==============================================================*/
+/* 地图基础配置表   */
+/*==============================================================*/
+CREATE TABLE IB_MAP_CONF (
+    mapIp          VARCHAR(32),
+    mapPort        VARCHAR(32),
+    mapCity        VARCHAR(32),
+    mapShowOnline  VARCHAR(32),
+    mapGrid        VARCHAR(32),
+    mapCenterLongitude       VARCHAR(32),
+    mapCenterLatitude        VARCHAR(32),
+    CONSTRAINT PK_IB_MAP_CONF PRIMARY KEY(mapIp)
+) ENGINE=INNODB;
+/*==============================================================*/
 /* 客户表   */
 /*==============================================================*/
 DROP TABLE IF EXISTS IB_CUSTOMER_INFO;

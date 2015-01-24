@@ -10,7 +10,7 @@
   </head>
 
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/component/manage/header-manage.jsp"%>
 
 	<div class="row">
 	<%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>

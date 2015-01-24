@@ -35,7 +35,7 @@
   </head>
 
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/component/manage/header-manage.jsp"%>
     <%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
 
 	<!-- start of main -->

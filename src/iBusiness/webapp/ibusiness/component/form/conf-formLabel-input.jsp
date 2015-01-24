@@ -16,7 +16,7 @@
     </script>
   </head>
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/component/manage/header-manage.jsp"%>
     
     <div class="col-lg-1"></div>
     <!-- start of main -->

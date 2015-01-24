@@ -34,32 +34,32 @@
                   </c:if>
                   
                           <div class="form-group">
-                          <label class="col-lg-2 control-label" for="code-itemid">对象编号:</label>
-                          <div class="col-lg-3">   <input id="code-itemid" type="text" name="itemid" value="${model.itemid}" class="text required" ></div>
+                          <label class="col-lg-2 control-label" for="code-mapip">地图-IP:</label>
+                          <div class="col-lg-3">   <input id="code-mapip" type="text" name="mapip" value="${model.mapip}" class="text required" ></div>
                           
-                          <label class="col-lg-2 control-label" for="code-itemname">对象名:</label>
-                          <div class="col-lg-3">   <input id="code-itemname" type="text" name="itemname" value="${model.itemname}" class="text required" ></div>
-                          
-                            </div>
-                          <div class="form-group">
-                          <label class="col-lg-2 control-label" for="code-itemtype">对象类型:</label>
-                          <div class="col-lg-3">   <input id="code-itemtype" type="text" name="itemtype" value="${model.itemtype}" class="text required" ></div>
-                          
-                          <label class="col-lg-2 control-label" for="code-itemtitle">标题:</label>
-                          <div class="col-lg-3">   <input id="code-itemtitle" type="text" name="itemtitle" value="${model.itemtitle}" class="text required" ></div>
+                          <label class="col-lg-2 control-label" for="code-mapport">地图-PORT端口:</label>
+                          <div class="col-lg-3">   <input id="code-mapport" type="text" name="mapport" value="${model.mapport}" class="text required" ></div>
                           
                             </div>
                           <div class="form-group">
-                          <label class="col-lg-2 control-label" for="code-imghurl">横版图片路径:</label>
-                          <div class="col-lg-3">   <input id="code-imghurl" type="text" name="imghurl" value="${model.imghurl}" class="text required" ></div>
+                          <label class="col-lg-2 control-label" for="code-mapcity">地图-CITY城市:</label>
+                          <div class="col-lg-3">   <input id="code-mapcity" type="text" name="mapcity" value="${model.mapcity}" class="text required" ></div>
                           
-                          <label class="col-lg-2 control-label" for="code-imgvurl">竖版图片路径:</label>
-                          <div class="col-lg-3">   <input id="code-imgvurl" type="text" name="imgvurl" value="${model.imgvurl}" class="text required" ></div>
+                          <label class="col-lg-2 control-label" for="code-mapshowonline">地图-是否显示在线地图:</label>
+                          <div class="col-lg-3">   <input id="code-mapshowonline" type="text" name="mapshowonline" value="${model.mapshowonline}" class="text required" ></div>
                           
                             </div>
                           <div class="form-group">
-                          <label class="col-lg-2 control-label" for="code-remark">备注:</label>
-                          <div class="col-lg-6">    <textarea class="form-control " id="code-remark" name="remark" rows="1" >${model.remark}</textarea></div>
+                          <label class="col-lg-2 control-label" for="code-mapgrid">地图-初始级别:</label>
+                          <div class="col-lg-3">   <input id="code-mapgrid" type="text" name="mapgrid" value="${model.mapgrid}" class="text required" ></div>
+                          
+                          <label class="col-lg-2 control-label" for="code-mapcenterlongitude">地图-地图初始页面中心经度:</label>
+                          <div class="col-lg-3">   <input id="code-mapcenterlongitude" type="text" name="mapcenterlongitude" value="${model.mapcenterlongitude}" class="text required" ></div>
+                          
+                            </div>
+                          <div class="form-group">
+                          <label class="col-lg-2 control-label" for="code-mapcenterlatitude">地图-地图初始页面中心纬度:</label>
+                          <div class="col-lg-3">   <input id="code-mapcenterlatitude" type="text" name="mapcenterlatitude" value="${model.mapcenterlatitude}" class="text required" ></div>
                           
                             </div>
                   

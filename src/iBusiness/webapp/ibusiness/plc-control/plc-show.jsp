@@ -55,8 +55,6 @@
 		}
 		// 任务节点弹出层
 		function popConfTaskNode(){
-	//	    var url = "/iBusiness/default/flowchart/pop-conf-taskNode.do?flowId="+$("#bpmId").val()+"&packageName="+$("#packageName").val()+"&id="+$("#taskNodeId").val();
-	//	    $("#taskNodeIframe").attr("src", url );
 		    // 设置显示标签
 		    $("#taskNodeBaseTabs").attr("class"," ");
 		    $("#popConfTaskNodeTabs").attr("class","active");

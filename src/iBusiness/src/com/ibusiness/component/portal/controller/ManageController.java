@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
+@RequestMapping("manage")
 public class ManageController {
     /**
      * 后台管理首页
@@ -21,11 +22,11 @@ public class ManageController {
      * @param model
      * @return
      */
-    @RequestMapping("manage")
+    @RequestMapping("manage-show")
     public String show(@RequestParam Map<String, Object> parameterMap, Model model) {
         model.addAttribute("parentId", 0);
         // 返回JSP
-        return "ibusiness/component/portal/component-show.jsp";
+        return "ibusiness/component/manage/manage-index.jsp";
     }
     // ======================================================================
 }

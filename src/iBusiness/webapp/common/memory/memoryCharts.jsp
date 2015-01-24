@@ -181,7 +181,7 @@
   </head>
 
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/component/manage/header-manage.jsp"%>
     <div class="row">
 	    <div class="col-lg-1"></div>
 		<!-- start of main -->
@@ -194,7 +194,7 @@
 						</div>
 				  </div>
 			</div>
-	           
+	        
 		   <div class="content">
 		           <div id="chartdiv" style="width:100%; height:500px;"></div>
 		   </div>

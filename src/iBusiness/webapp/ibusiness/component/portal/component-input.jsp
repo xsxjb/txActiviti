@@ -10,7 +10,7 @@
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
+    <%@include file="/ibusiness/component/manage/header-manage.jsp"%>
     <div class="col-lg-1"></div>
 	<!-- start of main -->
     <div class="panel panel-default col-lg-10 " >
