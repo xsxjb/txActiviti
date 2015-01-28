@@ -40,6 +40,7 @@ public class CodeGenerate implements ICallBack {
     private static final Log log = LogFactory.getLog(CodeGenerate.class);
     private static String entityPackage = "test";
     private static String entityName = "Company";
+    private static String mainEntityName = "mainCompany";
     private static String formName = "";
     private static String tableName = "person";
     private static String tableDescription = "分公司";
@@ -72,6 +73,9 @@ public class CodeGenerate implements ICallBack {
     }
     public CodeGenerate(CodeParamBean codeParamBean, CreateFileProperty createFileProperty) {
         CodeGenerate.entityName = codeParamBean.getEntityName();
+        if (!CommonUtils.isNull(codeParamBean.getMainEntityName())) {
+        	CodeGenerate.mainEntityName = codeParamBean.getMainEntityName();
+        }
         CodeGenerate.formName = codeParamBean.getFormName();
         CodeGenerate.entityPackage = codeParamBean.getPackageName();
         CodeGenerate.tableName = codeParamBean.getTableName();
@@ -92,6 +96,8 @@ public class CodeGenerate implements ICallBack {
         localHashMap.put("entityPackage", entityPackage);
         // 实体名
         localHashMap.put("entityName", entityName);
+        // 当前实体的主实体名(用于子表生成时)
+        localHashMap.put("mainEntityName", mainEntityName);
         // 表名
         localHashMap.put("tableName", tableName);
         // 表描述

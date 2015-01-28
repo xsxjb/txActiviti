@@ -93,7 +93,6 @@
 				        <th class="sorting">显示名</th>
 				        <th class="sorting">状态</th>
 				        <th class="sorting">公司名称</th>
-				        <th class="sorting">职务</th>
 				        <th width="60">&nbsp;</th>
 				      </tr>
 				    </thead>
@@ -105,7 +104,7 @@
 				        <td>${item.username}</td>
 				        <td>${item.displayName}</td>
 				        <td>${item.status == 1 ? '启用' : '禁用'}</td>
-				        <td>${item.jobInfo.jobTitle.name}</td>
+				        <td>${item.companyName}</td>
 				        <td>
 				          <a href="user-base-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
 				        </td>

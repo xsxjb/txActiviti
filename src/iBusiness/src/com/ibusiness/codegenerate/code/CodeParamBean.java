@@ -16,6 +16,8 @@ public class CodeParamBean {
     private String formName;
     // 实体类名(首字母大写)
     private String entityName;
+    // 当前实体的主表实体类名(子表生成时用)
+    private String mainEntityName;
     // 表名
     private String tableName;
     // 主键生成测率 UUID
@@ -192,4 +194,16 @@ public class CodeParamBean {
     public void setOriginalColumns(List<Columnt> originalColumns) {
         this.originalColumns = originalColumns;
     }
+	/**
+	 * @return the mainEntityName
+	 */
+	public String getMainEntityName() {
+		return mainEntityName;
+	}
+	/**
+	 * @param mainEntityName the mainEntityName to set
+	 */
+	public void setMainEntityName(String mainEntityName) {
+		this.mainEntityName = mainEntityName;
+	}
 }

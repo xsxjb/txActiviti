@@ -181,6 +181,7 @@ public class CodeController {
                     subParamBean.setFormName(bean.getFormName());
                     subParamBean.setTableName(codeGenerateBean.getTableName());
                     subParamBean.setEntityName(codeGenerateBean.getEntityName());
+                    subParamBean.setMainEntityName(bean.getEntityName());
                     subParamBean.setKeyType("uuid");
                     subParamBean.setEntityTitle(bean.getEntityTitle());
                     subParamBean.setRowNumber(bean.getRowNumber());

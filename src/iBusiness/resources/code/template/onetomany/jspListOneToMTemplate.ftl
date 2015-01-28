@@ -42,7 +42,7 @@
 	<div class="panel panel-default col-lg-10 ">
 	    <!-- 查询条件 -->
 	    <#if  confForm.isQuery=1 >
-	          <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
+	          <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
 	          <div class="panel-body">
 		          <div id="search" class="content content-inner">
 					  <form name="cgForm" method="post" action="${entityName?uncap_first}-list.do" class="form-inline">
@@ -53,17 +53,17 @@
 					                <input type="text" id="code_table_${formTableColumn.tableColumnLower}" name="filter_LIKES_${formTableColumn.tableColumnLower}" value="${'$' + '{param.filter_LIKES_${formTableColumn.tableColumnLower}}'}">
 					            </#if>
 					        </#list>
-						    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
+						    <button class="btn btn-primary btn-sm" onclick="document.cgForm.submit()"><span class="glyphicon glyphicon-search"></span>查询</button>
 						</div>
 					 </form>
 				  </div>
 			  </div>
 	      </#if>
-		      <div class="panel-heading"><h4 class="panel-title">${confForm.formTitle}列表</h4></div>
+		      <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">${confForm.formTitle}列表</h4></div>
 		      <div class="panel-body">
 				    <div class="pull-left">
-					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${entityName?uncap_first}-input.do?flowId=${'$' + '{flowId}'}'">新建</button>
-					    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+					    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='${entityName?uncap_first}-input.do?flowId=${'$' + '{flowId}'}'"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+					    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 					</div>
 					<div class="pull-right">
 					  每页显示
@@ -80,7 +80,7 @@
 					<form id="gridForm" name="gridForm" method='post' action="${entityName?uncap_first}-remove.do" class="m-form-blank">
 					  <table id="codeGrid" class="table table-hover table-bordered">
 					      <thead>
-						      <tr>
+						      <tr class="success">
 						          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 						          <#list columns as column>
 						              <#if column.fcDisplay="1">
@@ -91,8 +91,8 @@
 						      </tr>
 						    </thead>
 							    <tbody>
-							      <c:forEach items="${'$' + '{page.result}'}" var="item">
-							      <tr>
+							      <c:forEach items="${'$' + '{page.result}'}" var="item" varStatus="status">
+							      <tr class="${'$' + '{status.index%2==1? \'active\':\'\'}'}">
 							        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
 							        <#list columns as column>
 							            <#if column.fcDisplay="1">
@@ -100,7 +100,7 @@
 				                        </#if>
 				                    </#list>
 							        <td>
-							          <a href="${entityName?uncap_first}-input.do?id=${'$' + '{item.id}'}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+							          <a href="${entityName?uncap_first}-input.do?id=${'$' + '{item.id}'}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 							        </td>
 							      </tr>
 							      </c:forEach>

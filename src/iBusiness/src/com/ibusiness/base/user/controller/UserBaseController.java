@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ibusiness.base.auth.dao.RoleDefDao;
 import com.ibusiness.base.group.dao.JobInfoDao;
 import com.ibusiness.base.group.dao.OrgCompanyDao;
+import com.ibusiness.base.group.entity.OrgCompany;
 import com.ibusiness.base.user.dao.UserBaseDao;
 import com.ibusiness.base.user.entity.UserBase;
 import com.ibusiness.base.user.service.UserService;
@@ -62,16 +63,25 @@ public class UserBaseController {
      * @param model
      * @return
      */
-    @RequestMapping("user-base-list")
+    @SuppressWarnings("unchecked")
+	@RequestMapping("user-base-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
     	// 添加当前公司(用户范围)ID查询
     	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
-    	page = userBaseDao.pagedQuery(page, propertyFilters);
     	// 设置排序信息
         page.setOrderBy("ref");
         page.setOrder("ASC");
-        
+    	page = userBaseDao.pagedQuery(page, propertyFilters);
+    	
+        // 查询公司名字
+        List<UserBase> list = (List<UserBase>) page.getResult();
+        Map<String, OrgCompany> map = CommonBusiness.getInstance().getCompanyMap();
+        for (UserBase bean : list) {
+        	if (map.containsKey(bean.getCompanyId())) {
+        		bean.setCompanyName(map.get(bean.getCompanyId()).getName());
+        	}
+        }
         model.addAttribute("page", page);
 
         return "common/user/user-base-list.jsp";

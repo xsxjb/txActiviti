@@ -38,6 +38,24 @@ public class ComponentResource {
     private ConfFormDao confFormDao;
     private BpmProcessDao cpmProcessDao;
 
+//    @POST
+//    @Path("left-test")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String leftTest(@QueryParam("packageName") String packageName, @QueryParam("typeId") String strTypeId,
+//            @QueryParam("parentId") String parentId) {
+//        // 制造一个根节点,用于对业务模块进行 增删改
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("id", 0);
+//        map.put("name", "业务模块(增删改)");
+//        map.put("packageName", "root");
+//        map.put("typeId", "root");
+//        map.put("open", "true");  // 展开
+//        map.put("icon", "../plugin/ztree/zTreeStyle/img/diy/1_open.png");
+//        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+//        list.add(map);
+//        return list.toString();
+//    }
+    
     /**
      * 后台管理页面  左边树列表信息
      * @param packageName

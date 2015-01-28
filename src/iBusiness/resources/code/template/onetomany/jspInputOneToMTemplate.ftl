@@ -68,13 +68,13 @@
 	<div class="col-lg-1"></div>
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">${confForm.formTitle}流程</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">${confForm.formTitle}流程</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
 		       <form id="mainForm" method="post" action="${entityName?uncap_first}-save.do" class="form-horizontal">
 		           <div class="controls">
-					      <button id="submitButton" class="btn btn-default btn-sm a-submit">保存</button>
-					      <button type="button" onclick="location.href='${entityName?uncap_first}-list.do'" class="btn btn-default btn-sm a-cancel">返回</button>
+					      <button id="submitButton" class="btn btn-primary btn-sm a-submit"><span class="glyphicon glyphicon-floppy-save"></span>保存</button>
+					      <button type="button" onclick="location.href='${entityName?uncap_first}-list.do'" class="btn btn-primary btn-sm a-cancel"><span class="glyphicon glyphicon-log-out"></span>返回</button>
 				   </div>
 				   <input type="hidden" name="flowId" value="${'$' + '{flowId}'}">
 				   <c:if test="${'$' + '{model != null}'}">
@@ -99,16 +99,16 @@
         </div> 
         <!-- ==================== 子表 ========================================== -->
         <#list subTab as sub>
-        <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
-				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=&flowId=${'$' + '{flowId}'}'">新建</button>
-				    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+			        <button class="btn btn-primary btn-sm a-insert" href="${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=&flowId=${'$' + '{flowId}'}'" data-target="#${sub.entityName?uncap_first}ModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 			    <#if  confForm.isExcelExport=1 >
-				    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
+				    <button class="btn btn-primary btn-sm" onclick="table.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
 				</#if>
 			    <#if  confForm.isImportExport=1 >
-				    <button class="btn btn-default btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
+				    <button class="btn btn-primary btn-sm"  onclick="importExcelAdd.click()"><span class="glyphicon glyphicon-import"></span>导入Excel</button>
 				    <form id="${sub.entityName?uncap_first}excelForm" method="post" action="${sub.entityName?uncap_first}-importExcel.do?parentid=${'$' + '{model.id}'}" class="form-horizontal" enctype="multipart/form-data">
 	                    <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="import${sub.entityName?uncap_first}Excel()"> 
 	                </form>
@@ -146,7 +146,7 @@
 									            <td>${'$' + '{item.${subItem.fieldName}}'}</td>
 									        </#list>
 								        <td>
-								          <a href="${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=${'$' + '{item.id}'}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+								          <a href="${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=${'$' + '{item.id}'}" class="a-update" data-target="#${sub.entityName?uncap_first}ModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
 								        </td>
 								  </tr>
 						      </c:forEach>
@@ -154,6 +154,14 @@
 						  </table>
 						</form>
 		        </div>
+		        
+		      <!-- 模态框 -->
+			  <div id="${sub.entityName?uncap_first}ModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
+				  <div class="modal-dialog modal-lg">
+					  <div class="modal-content" style="text-align: center;height: 600px">
+					  </div>
+				  </div>
+			  </div>
 			  <article>
 			    <div class="m-page-info pull-left">
 				  共100条记录 显示1到10条记录

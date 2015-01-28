@@ -276,12 +276,12 @@ public class CodeTagFactory {
         String controllerInfo = "";
         // 取得表单对应表管理表Map
         // 查询条件Filter过滤器
-        controllerInfo = controllerInfo + "Map<String, Object> parameterMap = new java.util.HashMap<String, Object>();";
-        controllerInfo = controllerInfo + "List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);";
+        controllerInfo = controllerInfo + "Map<String, Object> "+columnt.getFieldName()+"ParameterMap = new java.util.HashMap<String, Object>();";
+        controllerInfo = controllerInfo + "List<PropertyFilter> "+columnt.getFieldName()+"PropertyFilters = PropertyFilter.buildFromMap("+columnt.getFieldName()+"ParameterMap);";
         // 根据条件查询数据
-        controllerInfo = controllerInfo + "Page page = new Page();";
-        controllerInfo = controllerInfo + "page = com.ibusiness.core.spring.ApplicationContextHelper.getBean("+jsonObject.getString("className")+".class).pagedQuery(page, propertyFilters);";
-        controllerInfo = controllerInfo + "model.addAttribute(\""+columnt.getFieldName()+"Page\", page);";
+        controllerInfo = controllerInfo + "Page "+columnt.getFieldName()+"Page = new Page();";
+        controllerInfo = controllerInfo + columnt.getFieldName()+"Page = com.ibusiness.core.spring.ApplicationContextHelper.getBean("+jsonObject.getString("className")+".class).pagedQuery("+columnt.getFieldName()+"Page, "+columnt.getFieldName()+"PropertyFilters);";
+        controllerInfo = controllerInfo + "model.addAttribute(\""+columnt.getFieldName()+"Page\", "+columnt.getFieldName()+"Page);";
         List<String> maList = columnt.getModelAttributeList();
         maList.add(controllerInfo);
         columnt.setModelAttributeList(maList);
@@ -291,7 +291,7 @@ public class CodeTagFactory {
         String str = "";
         str = str + "<div class=\"col-lg-3\">";
         str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
-        str = str + "   <a href=\"#"+columnt.getFieldName()+"SInputDiv\" class=\"btn btn-default btn-sm\" data-toggle=\"modal\" >选择</a>";
+        str = str + "   <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#"+columnt.getFieldName()+"SInputDiv').modal('show');\" >选择</a>";
         // ===================================
         str = str + "   <script type=\"text/javascript\">";
         str = str + "   	function changeValue(";
@@ -305,7 +305,7 @@ public class CodeTagFactory {
         for (SelectInputBean inputBean : list) {
         	str = str + "   	$(\"#code-"+inputBean.getInputKey()+"\").val("+inputBean.getInputValue()+");";
         }
-
+        str = str + "$('#"+columnt.getFieldName()+"SInputDiv').modal('hide'); ";
         str = str + "       }";
 		str = str + "   </script>";
         // ===================================
@@ -313,8 +313,8 @@ public class CodeTagFactory {
         str = str + "     <div class=\"modal-dialog\">";
         str = str + "       <div class=\"modal-content\">";
         str = str + "         <div class=\"modal-header\">";
-        str = str + "           <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span >&times;</span><span class=\"sr-only\">Close</span></button>";
-        str = str + "           <h4 class=\"modal-title\">选择带出</h4>";
+        str = str + "           <a href=\"#\" class=\"close btn btn-primary btn-sm\" onclick=\"$('#"+columnt.getFieldName()+"SInputDiv').modal('hide');\" ><span >&times;</span><span class=\"sr-only\">Close</span></a>";
+        str = str + "           <h4 class=\"modal-title glyphicon glyphicon-paperclip\">选择带出</h4>";
         str = str + "         </div>";
         str = str + "         <div class=\"modal-body\">";
         str = str + "           <div class=\"content\">";
@@ -330,14 +330,14 @@ public class CodeTagFactory {
         str = str + "           	<tbody>";
         str = str + "           	   <c:forEach items=\"${"+columnt.getFieldName()+"Page.result}\" var=\"item\">";
         str = str + "           	     <tr>";
-        str = str + "           	        <td><a href=\"#\" class=\"btn btn-default btn-sm\" onClick=\"changeValue(";
+        str = str + "           	        <td><a href=\"#\" class=\"btn btn-primary btn-sm\" onClick=\"changeValue(";
 		for (int i=0; i<list.size(); i++) {
 			if (0 != i) {
 				str = str + ",";
 			}
         	str = str + "'${item."+list.get(i).getInputValue()+"}'";
         }
-		str = str + ")\" data-dismiss=\"modal\">选择</a></td>";
+		str = str + ")\" >选择</a></td>";
         for (SelectInputBean inputBean : list) {
         	str = str + "  <td>${item."+inputBean.getInputValue()+"}</td>";
         }
@@ -348,7 +348,7 @@ public class CodeTagFactory {
         str = str + "         </div>";
         str = str + "       </div>";
         str = str + "       <div class=\"modal-footer\">";
-        str = str + "         <button class=\"btn btn-default btn-sm\" data-dismiss=\"modal\" >关闭</button>";
+        str = str + "         <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#"+columnt.getFieldName()+"SInputDiv').modal('hide');\" >关闭</a>";
         str = str + "       </div>";
         str = str + "     </div>";
         str = str + "    </div>";
