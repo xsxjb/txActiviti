@@ -41,19 +41,19 @@
 		<!-- start of main -->
 		<div class="panel panel-default col-lg-10">
 		<!-- 查询条件 -->
-	        <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
+	        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
 	          <div class="panel-body">
 		          <div id="search" class="content content-inner">
 					  <form name="cgForm" method="post" action="phonebook-list.do" class="form-inline">
 					    <div class="form-group">
 					                <label for="code_table_displayname">用户名:</label>
 					                <input type="text" id="code_table_displayName" name="filter_LIKES_displayName" value="${param.filter_LIKES_displayName}">
-						    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
+						    <button class="btn btn-primary btn-sm" onclick="document.cgForm.submit()">查询</button>
 						</div>
 					 </form>
 				  </div>
 			  </div>
-		   <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+		   <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">列表</h4></div>
 	       <div class="panel-body">
 				<div class="pull-right">
 				  每页显示
@@ -68,7 +68,7 @@
 		   </div>
 		   <div class="content">
 				<form id="gridForm" name="gridForm" method='post' action="phonebook-remove.do" class="m-form-blank">
-				  <table id="codeGrid" class="table table-hover table-bordered">
+				  <table id="codeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
 					        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>

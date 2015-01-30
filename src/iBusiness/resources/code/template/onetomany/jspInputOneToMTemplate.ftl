@@ -7,32 +7,33 @@
     <title>${confForm.formTitle}编辑</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
-		var config = {
-		    id: 'codeGrid',
-		    pageNo: ${"$" + "{page.pageNo}"},
-		    pageSize: ${"$" + "{page.pageSize}"},
-		    totalCount:${"$" + "{page.totalCount}"},
-		    resultSize: ${"$" + "{page.resultSize}"},
-		    pageCount: ${"$" + "{page.pageCount}"},
-		    orderBy: '${"$" + "{page.orderBy == null ? "+ "''" +" : page.orderBy}"}',
-		    asc: ${"$" + "{page.asc}"},
+        <#list subTab as sub>
+        // 实例化config对象
+        var ${sub.entityName?uncap_first}Config = {
+		    id: '${sub.entityName?uncap_first}CodeGrid',
+		    pageNo: ${"$" + "{${sub.entityName?uncap_first}Page.pageNo}"},
+		    pageSize: ${"$" + "{${sub.entityName?uncap_first}Page.pageSize}"},
+		    totalCount:${"$" + "{${sub.entityName?uncap_first}Page.totalCount}"},
+		    resultSize: ${"$" + "{${sub.entityName?uncap_first}Page.resultSize}"},
+		    pageCount: ${"$" + "{${sub.entityName?uncap_first}Page.pageCount}"},
+		    orderBy: '${"$" + "{${sub.entityName?uncap_first}Page.orderBy == null ? "+ "''" +" : ${sub.entityName?uncap_first}Page.orderBy}"}',
+		    asc: ${"$" + "{${sub.entityName?uncap_first}Page.asc}"},
 		    params: {
 		        'id': '${"$" + "{model.id}"}'
 		    },
-			selectedItemClass: 'selectedItem',
-			gridFormId: 'gridForm'
-			<#list subTab as sub>
-			,exportUrl: '${sub.entityName?uncap_first}-export.do'
-			</#list>
+			selectedItemClass: '${sub.entityName?uncap_first}SelectedItem',
+			gridFormId: '${sub.entityName?uncap_first}GridForm',
+			exportUrl: '${sub.entityName?uncap_first}-export.do'
 		};
-
-		var table;
+        // 实例化table对象
+		var ${sub.entityName?uncap_first}Table;
 		$(function() {
-			table = new Table(config);
-		    table.configPagination('.m-pagination');
-		    table.configPageInfo('.m-page-info');
-		    table.configPageSize('.m-page-size');
+			${sub.entityName?uncap_first}Table = new Table(${sub.entityName?uncap_first}Config);
+		    ${sub.entityName?uncap_first}Table.configPagination('.${sub.entityName?uncap_first}M-pagination');
+		    ${sub.entityName?uncap_first}Table.configPageInfo('.${sub.entityName?uncap_first}M-page-info');
+		    ${sub.entityName?uncap_first}Table.configPageSize('.${sub.entityName?uncap_first}M-page-size');
 		});
+		</#list>
 		// 提交方法--通过传入路径 提交到不同的controller
 		function mainFormSubmit(path){
 			${"$" + "('#mainForm').attr('action', path).submit()"};
@@ -97,15 +98,16 @@
 				</form>
 		</div>
         </div> 
-        <!-- ==================== 子表 ========================================== -->
+        
         <#list subTab as sub>
+        <!-- ==================== 子表 ========================================== -->
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
 			        <button class="btn btn-primary btn-sm a-insert" href="${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=&flowId=${'$' + '{flowId}'}'" data-target="#${sub.entityName?uncap_first}ModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
-				    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="${sub.entityName?uncap_first}Table.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 			    <#if  confForm.isExcelExport=1 >
-				    <button class="btn btn-primary btn-sm" onclick="table.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
+				    <button class="btn btn-primary btn-sm" onclick="${sub.entityName?uncap_first}Table.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
 				</#if>
 			    <#if  confForm.isImportExport=1 >
 				    <button class="btn btn-primary btn-sm"  onclick="importExcelAdd.click()"><span class="glyphicon glyphicon-import"></span>导入Excel</button>
@@ -117,7 +119,7 @@
 				</div>
 				<div class="pull-right">
 				  每页显示
-				  <select class="m-page-size">
+				  <select class="${sub.entityName?uncap_first}M-page-size">
 				    <option value="10">10</option>
 				    <option value="20">20</option>
 				    <option value="50">50</option>
@@ -127,8 +129,8 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="gridForm" name="gridForm" method='post' action="${entityName?uncap_first}-remove.do" class="m-form-blank">
-				  <table id="codeGrid" class="table table-hover table-bordered">
+				<form id="${sub.entityName?uncap_first}GridForm" name="${sub.entityName?uncap_first}GridForm" method='post' action="${sub.entityName?uncap_first}-remove.do" class="m-form-blank">
+				  <table id="${sub.entityName?uncap_first}CodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
 					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -141,7 +143,7 @@
 						    <tbody>
 						      <c:forEach items="${'$' + '{${sub.entityName?uncap_first}Page.result}'}" var="item">
 								  <tr>
-								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
+								        <td><input type="checkbox" class="${sub.entityName?uncap_first}SelectedItem a-check" name="${sub.entityName?uncap_first}SelectedItem" value="${'$' + '{item.id}'}"></td>
 									        <#list sub.columns as subItem>
 									            <td>${'$' + '{item.${subItem.fieldName}}'}</td>
 									        </#list>
@@ -162,17 +164,19 @@
 					  </div>
 				  </div>
 			  </div>
-			  <article>
-			    <div class="m-page-info pull-left">
-				  共100条记录 显示1到10条记录
-				</div>
-				<div class="btn-group m-pagination pull-right">
-				  <button class="btn btn-small">${"&lt"};</button>
-				  <button class="btn btn-small">1</button>
-				  <button class="btn btn-small">${"&gt"};</button>
-				</div>
-			    <div class="m-clear"></div>
-		      </article>
+			  <div class="panel-body">
+				  <article>
+				    <div class="${sub.entityName?uncap_first}M-page-info pull-left">
+					  共100条记录 显示1到10条记录
+					</div>
+					<div class="btn-group ${sub.entityName?uncap_first}M-pagination pull-right">
+					  <button class="btn btn-small">${"&lt"};</button>
+					  <button class="btn btn-small">1</button>
+					  <button class="btn btn-small">${"&gt"};</button>
+					</div>
+				    <div class="m-clear"></div>
+			      </article>
+			  </div>
 		  </#list>
       </div>
 	<!-- end of main -->

@@ -186,11 +186,11 @@
 	    <div class="col-lg-1"></div>
 		<!-- start of main -->
 		<div class="panel panel-default col-lg-10">
-	        <div class="panel-heading"><h4 class="panel-title">内存监控</h4></div>
+	        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">内存监控</h4></div>
 	        <div class="panel-body">
 		          <div id="search" class="content content-inner">
 					    <div class="form-group">
-						    <button class="btn btn-default btn-sm" onclick="history.back();">返回</button>
+						    <button class="btn btn-primary btn-sm" onclick="history.back();">返回</button>
 						</div>
 				  </div>
 			</div>

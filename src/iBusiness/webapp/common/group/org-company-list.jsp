@@ -53,14 +53,14 @@ function importExcel(){
     
 	<!-- start of main -->
     <div class="panel panel-default col-lg-10">
-        <div class="panel-heading"><h4 class="panel-title">公司列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">公司列表</h4></div>
         <div class="panel-body">
 		    <div class="pull-left">
 		        <div class="form-group">
-			    	<button class="btn btn-default btn-sm" onclick="location.href='org-company-input.do'">新建</button>
-				    <button class="btn btn-default btn-sm" onclick="table.removeAll()">删除</button>
-				    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
-				    <button class="btn btn-default btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
+			    	<button class="btn btn-primary btn-sm" onclick="location.href='org-company-input.do'">新建</button>
+				    <button class="btn btn-primary btn-sm" onclick="table.removeAll()">删除</button>
+				    <button class="btn btn-primary btn-sm" onclick="table.exportExcel()">导出Excel</button>
+				    <button class="btn btn-primary btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
 				    <form id="msgInfoForm" method="post" action="org-company-importExcel.do" class="form-horizontal" enctype="multipart/form-data">
                         <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="importExcel()"> 
                     </form>
@@ -78,7 +78,7 @@ function importExcel(){
 	    	<div class="m-clear"></div>
 	    </div>
 			<form id="orgGridForm" name="orgGridForm" method='post' action="org-company-remove.do" class="form-horizontal">
-			  <table id="orgGrid" class="table table-hover table-bordered">
+			  <table id="orgGrid" class="table table-hover table-striped">
 			    <thead>
 			      <tr>
 			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -109,9 +109,9 @@ function importExcel(){
 			</div>
 	
 			<div class="btn-group m-pagination pull-right">
-				  <button class="btn btn-default btn-sm">&lt;</button>
-				  <button class="btn btn-default btn-sm">1</button>
-				  <button class="btn btn-default btn-sm">&gt;</button>
+				  <button class="btn btn-primary btn-sm">&lt;</button>
+				  <button class="btn btn-primary btn-sm">1</button>
+				  <button class="btn btn-primary btn-sm">&gt;</button>
 			</div>
 	
 		    <div class="m-clear"></div>

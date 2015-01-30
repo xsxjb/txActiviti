@@ -64,16 +64,16 @@
 				    <label>${bpmProcess.flowTitle}</label>
 				    <input type="hidden" name="flowId" value="${bpmProcess.id}">
 				</div>
-				<button class="btn btn-default btn-sm" onclick="searchChartInfo('${bpmProcess.id}');" ><span class="glyphicon glyphicon-search"></span>查询</button>
-				<button class="btn btn-default btn-sm" onclick="saveChart('${bpmProcess.id}');" ><span class="glyphicon glyphicon-tasks"></span>保存</button>
-				<button class="btn btn-default btn-sm" onclick="deleteChart('${bpmProcess.id}');" ><span class="glyphicon glyphicon-trash"></span>删除</button>
+				<button class="btn btn-primary btn-sm" onclick="searchChartInfo('${bpmProcess.id}');" ><span class="glyphicon glyphicon-search"></span>查询</button>
+				<button class="btn btn-primary btn-sm" onclick="saveChart('${bpmProcess.id}');" ><span class="glyphicon glyphicon-tasks"></span>保存</button>
+				<button class="btn btn-primary btn-sm" onclick="deleteChart('${bpmProcess.id}');" ><span class="glyphicon glyphicon-trash"></span>删除</button>
 				<!-- 
 				<div class="navbar-form navbar-left" title="查询" id="search"><img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/query.gif" /></div>
 				<div class="navbar-form navbar-left" title="保存" id="save"><img height="30px" width="30px" src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/save.gif" /></div>
 				<div class="navbar-form navbar-left" title="删除所有" id="delete"><img height="30px" width="30px"  src="<%=request.getContextPath()%>/plugin/ibusiness/flowchart/img/delete.png" /></div>
 				 -->
 				<div class="navbar-right">
-				    <a href="${ctx}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" class="btn btn-default btn-sm " >返回</a>
+				    <a href="${ctx}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" class="btn btn-primary btn-sm " >返回</a>
 					<input type="radio" name="animated" id="animated" value="1">显示动画
 					<input type="radio" name="animated" id="animated" value="0" checked>不显示动画
 				</div>
@@ -160,8 +160,8 @@
 							            </div>
 						      </div>
 						      <div class="modal-footer">
-						          <a href="#"  id = "submitGateway" class="btn btn-default btn-sm"  >确定</a>
-						          <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+						          <a href="#"  id = "submitGateway" class="btn btn-primary btn-sm"  >确定</a>
+						          <button class="btn btn-primary btn-sm" data-dismiss="modal" >关闭</button>
 						      </div>
 					    </div>
 				    </div>
@@ -204,8 +204,8 @@
 										                </div>
 										                <br/>
 										                <div class="form-group">
-												          <a href="#"  id = "taskNodeSave" class="btn btn-default btn-sm"  >确定</a>
-												          <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+												          <a href="#"  id = "taskNodeSave" class="btn btn-primary btn-sm"  >确定</a>
+												          <button class="btn btn-primary btn-sm" data-dismiss="modal" >关闭</button>
 												      </div>
 											      </div>
 											      </div>
@@ -217,7 +217,7 @@
 							               </div>
 						           </div>
 						           <div class="modal-footer">
-						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+						                    <button class="btn btn-primary btn-sm" data-dismiss="modal" >关闭</button>
 						           </div>
 					            </div>
 						  </div>

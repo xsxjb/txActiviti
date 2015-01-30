@@ -27,7 +27,7 @@ $(function() {
     <div class="col-lg-1"></div>
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">编辑文档</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">编辑文档</h4></div>
         <div class="panel-body">
 				<form id="msg-infoForm" method="post" action="doc-info-save.do" class="form-horizontal" enctype="multipart/form-data">
 				  <c:if test="${model != null}">
@@ -47,9 +47,9 @@ $(function() {
 				  </div>
 				  <div class="form-group">
 				    <div class="controls">
-				      <button type="submit" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
+				      <button type="submit" class="btn btn-primary a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					  &nbsp;
-				      <button type="button" class="btn btn-default a-cancel" onclick="history.back();"><spring:message code='core.input.back' text='返回'/></button>
+				      <button type="button" class="btn btn-primary a-cancel" onclick="history.back();"><spring:message code='core.input.back' text='返回'/></button>
 				    </div>
 				  </div>
 				</form>

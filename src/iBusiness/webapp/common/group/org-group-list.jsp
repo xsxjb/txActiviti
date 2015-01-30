@@ -38,11 +38,11 @@ var table = new Table(config);
 
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
-        <div class="panel-heading"><h4 class="panel-title">小组列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">小组列表</h4></div>
         <div class="panel-body">
             <div class="pull-left">
-	            <button class="btn btn-default btn-sm a-insert" onclick="location.href='org-group-input.do'">新建</button>
-			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+	            <button class="btn btn-primary btn-sm a-insert" onclick="location.href='org-group-input.do'">新建</button>
+			    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()">删除</button>
 			 </div>
 	        <div class="pull-right">
 			    每页显示
@@ -56,7 +56,7 @@ var table = new Table(config);
         </div>
         
         <form id="orgGridForm" name="orgGridForm" method='post' action="org-group-remove.do" class="m-form-blank">
-		  <table id="orgGrid" class="table table-hover table-bordered">
+		  <table id="orgGrid" class="table table-hover table-striped">
 		    <thead>
 		      <tr>
 		        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -88,9 +88,9 @@ var table = new Table(config);
 		  共100条记录 显示1到10条记录
 		</div>
 		<div class="btn-group m-pagination pull-right">
-		  <button class="btn btn-default btn-sm">&lt;</button>
-		  <button class="btn btn-default btn-sm">1</button>
-		  <button class="btn btn-default btn-sm">&gt;</button>
+		  <button class="btn btn-primary btn-sm">&lt;</button>
+		  <button class="btn btn-primary btn-sm">1</button>
+		  <button class="btn btn-primary btn-sm">&gt;</button>
 		</div>
         
     </div>

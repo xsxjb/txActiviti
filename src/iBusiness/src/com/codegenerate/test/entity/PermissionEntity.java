@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 审批权限流程表
+ * @Description: 审批权限流程表流程
  * @author JiangBo
  *
  */
@@ -46,8 +46,6 @@ public class PermissionEntity implements java.io.Serializable {
 	 */
 	
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	@Column(name ="ID",nullable=false,length=64)
 	public java.lang.String getId(){
 		return this.id;

@@ -27,7 +27,7 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
-        <div class="panel-heading"><h4 class="panel-title">新建表存储模型</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">新建表存储模型</h4></div>
         <div class="panel-body">
         
 			<div class="content content-inner">
@@ -80,10 +80,10 @@
 				  
 				  <div class="form-group">
 				    <div class="controls">
-				      <button id="submitButton" class="btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
-				      <button type="button" onclick="history.back();" class="btn btn-default btn-sm a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+				      <button id="submitButton" class="btn btn-primary btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
+				      <button type="button" onclick="history.back();" class="btn btn-primary btn-sm a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 				      <c:if test="${model != null}">
-				          <a href="conf-table-data-synchronization.do?packageName=${packageName}&tableName=${model.tableName}&isBpmTable=${isBpmTable}" class="btn btn-default btn-sm">表结构同步</a>
+				          <a href="conf-table-data-synchronization.do?packageName=${packageName}&tableName=${model.tableName}&isBpmTable=${isBpmTable}" class="btn btn-primary btn-sm">表结构同步</a>
 				      </c:if>
 				    </div>
 				  </div>

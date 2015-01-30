@@ -103,14 +103,14 @@
 		<!-- start of main -->
 		<div class="panel panel-default col-lg-10">
 		<!-- 查询条件 -->
-	        <div class="panel-heading"><h4 class="panel-title">产品销售柱形图查询</h4></div>
+	        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">产品销售柱形图查询</h4></div>
 	        <div class="panel-body">
 		          <div id="search" class="content content-inner">
 					  <form name="cgForm" method="post" action="list-productSell.do" class="form-inline">
 					    <div class="form-group">
 			                <label for="code_table_name">产品名:</label>
 			                <input type="text" id="code_table_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
-						    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
+						    <button class="btn btn-primary btn-sm" onclick="document.cgForm.submit()">查询</button>
 						</div>
 					 </form>
 				  </div>

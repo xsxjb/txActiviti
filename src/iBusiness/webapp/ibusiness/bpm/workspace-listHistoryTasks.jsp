@@ -17,9 +17,9 @@
       <!-- start of main -->
       <div class="col-lg-1"></div>
       <div class="panel panel-default col-lg-10">
-        <div class="panel-heading"><h4 class="panel-title">已办流程列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">已办流程列表</h4></div>
         <div class="panel-body">
-			  <table id="demoGrid" class="table table-hover table-bordered">
+			  <table id="demoGrid" class="table table-hover table-striped">
 			    <thead>
 			      <tr>
 			        <th class="sorting" >流程标题</th>

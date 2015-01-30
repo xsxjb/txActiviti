@@ -42,22 +42,22 @@ $(function() {
     <div class="col-lg-1"></div>
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
-          <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
+          <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
           <div class="panel-body">
         	  <div id="cmsCatalogSearch" class="content content-inner">
 				  <form name="cmsCatalogForm" method="post" action="cms-catalog-list.do" class="form-inline">
 				    <label for="cmsCatalog_name"><spring:message code='cmsCatalog.cmsCatalog.list.search.name' text='账号'/>:</label>
 				    <input type="text" id="cmsCatalog_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
-					<button class="btn btn-default btn-small" onclick="document.cmsCatalogForm.submit()">查询</button>
+					<button class="btn btn-primary btn-small" onclick="document.cmsCatalogForm.submit()">查询</button>
 				  </form>
 			  </div>
 		</div>
-		<div class="panel-heading"><h4 class="panel-title">文章列表</h4></div>
+		<div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">文章列表</h4></div>
           <div class="panel-body">
 			    <div class="pull-left">
 			        <p>
-					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='cms-catalog-input.do'">新建</button>
-					    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+					    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='cms-catalog-input.do'">新建</button>
+					    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				    </p>
 				</div>
 				<div class="pull-right">
@@ -72,11 +72,11 @@ $(function() {
 				</div>
 				<div class="m-clear"></div>
 	    </div>
-	    <div class="panel-heading"><h4 class="panel-title">栏目列表</h4></div>
+	    <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">栏目列表</h4></div>
         <div class="panel-body">
 	          <div class="content">
 				<form id="cmsCatalogGridForm" name="cmsCatalogGridForm" method='post' action="cms-catalog-remove.do" class="m-form-blank">
-				  <table id="cmsCatalogGrid" class="table table-hover table-bordered">
+				  <table id="cmsCatalogGrid" class="table table-hover table-striped">
 				    <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>

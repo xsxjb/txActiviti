@@ -55,7 +55,7 @@ var table = new Table(config);
 			</div>
         </div>
         <form id="orgGridForm" name="orgGridForm" method='post' action="job-info-remove.do" class="m-form-blank">
-		  <table id="orgGrid" class="table table-hover table-bordered">
+		  <table id="orgGrid" class="table table-hover table-striped">
 		    <thead>
 		      <tr>
 		        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>

@@ -42,7 +42,7 @@
 								  <input  type="hidden" name="flowId" value="${flowId}">
 								  <input  type="hidden" name="nodeId" value="${nodeId}">
 				        		  <div class="panel-body">
-						        	      <table class="table table-hover table-bordered" id=“tableModelGrid” >
+						        	      <table class="table table-hover table-striped" id=“tableModelGrid” >
 												<thead>
 													<tr>
 													    <th>字段</th>
@@ -66,7 +66,7 @@
 							  	   </div>
 								  <!-- 保存 -->
 								  <div class="col-lg-10 col-lg-offset-2">
-								      <button  class="btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
+								      <button  class="btn btn-primary btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
 								  </div>
 							  </form>
 					  </c:forEach>

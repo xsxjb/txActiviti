@@ -305,7 +305,7 @@ public class ${entityName}Controller {
      * 子表删除
      */
     @RequestMapping("${sub.entityName?uncap_first}-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String ${sub.entityName?uncap_first}Remove(@RequestParam("${sub.entityName?uncap_first}SelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<${sub.entityName}Entity> entitys = ${sub.entityName?uncap_first}Service.findByIds(selectedItem);
         for (${sub.entityName}Entity entity : entitys) {
             ${sub.entityName?uncap_first}Service.remove(entity);

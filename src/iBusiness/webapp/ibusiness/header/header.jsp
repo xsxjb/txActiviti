@@ -54,7 +54,7 @@
     </style>
 	
     <!-- start of header bar -->
-    <div class="navbar navbar-default">
+    <div class="navbar navbar-inverse">
 		  <div class="navbar-header">
 		    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
 		      <span class="icon-bar"></span>

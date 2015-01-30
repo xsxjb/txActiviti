@@ -22,9 +22,9 @@
 					  <c:if test="${null != bpmNodeTables}">
 					  <c:forEach items="${bpmNodeTables}" var="confNodeColumns">
 						      <form   method="post" action="save-conf-node-colums.do?packageName=${packageName}&flowId=${flowId}&nodeId=${nodeId}" class="form-horizontal">
-								  <div class="panel-heading"><h4 class="panel-title">表字段设置：</h4></div>
+								  <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">表字段设置：</h4></div>
 				        		  <div class="panel-body">
-						        	      <table class="table table-hover table-bordered" id=“tableModelGrid” >
+						        	      <table class="table table-hover table-striped" id=“tableModelGrid” >
 												<thead>
 													<tr>
 													    <th>字段</th>
@@ -52,8 +52,8 @@
 							  	   </div>
 								  <!-- 保存 -->
 								  <div class="col-lg-10 col-lg-offset-2">
-								      <button  class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-								      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+								      <button  class="btn btn-primary a-submit"><spring:message code='core.input.save' text='保存'/></button>
+								      <button type="button" onclick="history.back();" class="btn btn-primary a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 								  </div>
 							  </form>
 					  </c:forEach>

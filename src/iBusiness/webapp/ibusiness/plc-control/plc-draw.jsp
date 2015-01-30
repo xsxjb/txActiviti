@@ -113,7 +113,7 @@
 						<div style="float: right;padding-top:8px;padding-right:5px">
 							<input type="radio" name="animated" id="animated" value="1">显示动画
 							<input type="radio" name="animated" id="animated" value="0" checked>不显示动画
-							<a href="${ctx}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" class="btn btn-default btn-sm " >返回</a>
+							<a href="${ctx}/bpm-process/bpm-process-input.do?packageName=${packageName}&bpmId=${bpmId}" class="btn btn-primary btn-sm " >返回</a>
 						</div>
 					</div>
 					
@@ -169,8 +169,8 @@
 							            </div>
 						      </div>
 						      <div class="modal-footer">
-						          <a href="#"  id = "submitGateway" class="btn btn-default btn-sm"  >确定</a>
-						          <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+						          <a href="#"  id = "submitGateway" class="btn btn-primary btn-sm"  >确定</a>
+						          <button class="btn btn-primary btn-sm" data-dismiss="modal" >关闭</button>
 						      </div>
 					    </div>
 				    </div>
@@ -213,8 +213,8 @@
 										                </div>
 										                <br/>
 										                <div class="form-group">
-												          <a href="#"  id = "taskNodeSave" class="btn btn-default btn-sm"  >确定</a>
-												          <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+												          <a href="#"  id = "taskNodeSave" class="btn btn-primary btn-sm"  >确定</a>
+												          <button class="btn btn-primary btn-sm" data-dismiss="modal" >关闭</button>
 												      </div>
 											      </div>
 											      </div>
@@ -226,7 +226,7 @@
 							               </div>
 						           </div>
 						           <div class="modal-footer">
-						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+						                    <button class="btn btn-primary btn-sm" data-dismiss="modal" >关闭</button>
 						           </div>
 					            </div>
 						  </div>

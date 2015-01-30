@@ -16,9 +16,9 @@
     <div class="col-lg-1"></div>
 	<!-- start of main -->
     <div class="panel panel-default col-lg-10">
-        <div class="panel-heading"><h4 class="panel-title">待办流程列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">待办流程列表</h4></div>
         <div class="panel-body">
-			  <table id="demoGrid" class="table table-hover table-bordered">
+			  <table id="demoGrid" class="table table-hover table-striped">
 			    <thead>
 			      <tr>
 			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>

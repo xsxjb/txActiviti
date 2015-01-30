@@ -17,7 +17,7 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">流程配置</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">流程配置</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
 				<table class="table">
@@ -42,55 +42,55 @@
 			          <td>${item.nodeName}</td>
 			          <td>
 					    <c:if test="${item.confUser == 0}">
-						  <a href="bpm-conf-user-list.do?bpmConfNodeId=${item.id}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-user-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 						<c:if test="${item.confUser == 1}">
-						  <a href="bpm-conf-user-list.do?bpmConfNodeId=${item.id}" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-user-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 						&nbsp;
 				      </td>
 			          <td>
 					    <c:if test="${item.confListener == 0}">
-						  <a href="bpm-conf-listener-list.do?bpmConfNodeId=${item.id}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-listener-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 					    <c:if test="${item.confListener == 1}">
-						  <a href="bpm-conf-listener-list.do?bpmConfNodeId=${item.id}" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-listener-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 						&nbsp;
 				      </td>
 			          <td>
 					    <c:if test="${item.confRule == 0}">
-						  <a href="bpm-conf-rule-list.do?bpmConfNodeId=${item.id}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-rule-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 					    <c:if test="${item.confRule == 1}">
-						  <a href="bpm-conf-rule-list.do?bpmConfNodeId=${item.id}" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-rule-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 						&nbsp;
 				      </td>
 			          <td>
 					    <c:if test="${item.confForm == 0}">
-						  <a href="bpm-conf-form-list.do?bpmConfNodeId=${item.id}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-form-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 					    <c:if test="${item.confForm == 1}">
-						  <a href="bpm-conf-form-list.do?bpmConfNodeId=${item.id}" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-form-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 						&nbsp;
 				      </td>
 			          <td>
 					    <c:if test="${item.confOperation == 0}">
-						  <a href="bpm-conf-operation-list.do?bpmConfNodeId=${item.id}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-operation-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 					    <c:if test="${item.confOperation == 1}">
-						  <a href="bpm-conf-operation-list.do?bpmConfNodeId=${item.id}" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-operation-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 						&nbsp;
 				      </td>
 			          <td>
 					    <c:if test="${item.confNotice == 0}">
-						  <a href="bpm-conf-notice-list.do?bpmConfNodeId=${item.id}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-notice-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 					    <c:if test="${item.confNotice == 1}">
-						  <a href="bpm-conf-notice-list.do?bpmConfNodeId=${item.id}" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+						  <a href="bpm-conf-notice-list.do?bpmConfNodeId=${item.id}" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 						</c:if>
 						&nbsp;
 				      </td>

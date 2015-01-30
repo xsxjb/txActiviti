@@ -46,22 +46,22 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
-          <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
+          <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
           <div class="panel-body">
 	          <div id="doc-infoSearch" class="content content-inner">
 				  <form name="doc-infoForm" method="post" action="doc-info-list.do" class="form-inline">
 				    <label for="doc-info_name"><spring:message code='doc-info.doc-info.list.search.name' text='名称'/>:</label>
 				    <input type="text" id="doc-info_name" name="filter_LIKES_name" value="${param.filter_LIKES_name}">
-					<button class="btn btn-default btn-small a-search" onclick="document.doc-infoForm.submit()">查询</button>&nbsp;
+					<button class="btn btn-primary btn-small a-search" onclick="document.doc-infoForm.submit()">查询</button>&nbsp;
 				  </form>
 			  </div>
 	      </div>
-		  <div class="panel-heading"><h4 class="panel-title">文件列表</h4></div>
+		  <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">文件列表</h4></div>
           <div class="panel-body">
 			    <div class="pull-left">
 			        <p>
-					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='doc-info-input.do'">新建</button>
-					    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+					    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='doc-info-input.do'">新建</button>
+					    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				    </p>
 				</div>
 				<div class="pull-right">
@@ -77,11 +77,11 @@
 				<div class="m-clear"></div>
 	    </div>
 		
-        <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">列表</h4></div>
         <div class="panel-body">
 	          <div class="content">
 				<form id="doc-infoGridForm" name="doc-infoGridForm" method='post' action="doc-info-remove.do" class="m-form-blank">
-				  <table id="doc-infoGrid" class="table table-hover table-bordered">
+				  <table id="doc-infoGrid" class="table table-hover table-striped">
 				    <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>

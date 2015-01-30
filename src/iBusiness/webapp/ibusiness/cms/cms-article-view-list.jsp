@@ -44,13 +44,13 @@ $(function() {
 	
 		<!-- start of main -->
 		<div class="panel panel-default col-lg-10">
-	          <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
+	          <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
 	          <div class="panel-body">
 		        <div id="cmsArticleSearch" class="content content-inner">
 					  <form name="cmsArticleForm" method="post" action="cms-article-list.do" class="form-inline">
 						    <label for="cmsArticle_titlee"><spring:message code='cmsArticle.cmsArticle.list.search.title' text='标题'/>:</label>
 						    <input type="text" id="cmsArticle_title" name="filter_LIKES_title" value="${param.filter_LIKES_title}">
-							<button class="btn btn-default btn-small" onclick="document.cmsArticleForm.submit()">查询</button>
+							<button class="btn btn-primary btn-small" onclick="document.cmsArticleForm.submit()">查询</button>
 					  </form>
 					  <div class="pull-right">
 						  每页显示
@@ -64,11 +64,11 @@ $(function() {
 					</div>
 				</div>
 			</div>
-		    <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+		    <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">列表</h4></div>
 	        <div class="panel-body">
 		          <div class="content">
 						<form id="cmsArticleGridForm" name="cmsArticleGridForm" method='post' action="cms-article-remove.do" class="m-form-blank">
-						  <table id="cmsArticleGrid" class="table table-hover table-bordered">
+						  <table id="cmsArticleGrid" class="table table-hover table-striped">
 						    <thead>
 						      <tr>
 						          <th class="sorting col-lg-2" >发布日期</th>

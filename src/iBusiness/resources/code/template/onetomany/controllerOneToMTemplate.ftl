@@ -76,7 +76,7 @@ public class ${entityName}Controller {
         return "codegenerate/${entityPackage}/${entityName?uncap_first}-list.jsp";
     }
     /**
-     * 新建一条流程, 进入流程表单信息页面
+     * 进入主表表单编辑页面
      * @param id
      * @param model
      * @return
@@ -205,9 +205,24 @@ public class ${entityName}Controller {
         }
         return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-input.do?id=" + parentid;
     }
+    /**
+     * 删除子表信息
+     */
+    @RequestMapping("${sub.entityName?uncap_first}-remove")
+    public String ${sub.entityName?uncap_first}Remove(@RequestParam("${sub.entityName?uncap_first}SelectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+        List<${sub.entityName}Entity> entitys = ${sub.entityName?uncap_first}Service.findByIds(selectedItem);
+        String parentid = null;
+        for (${sub.entityName}Entity entity : entitys) {
+            parentid = entity.getParentid();
+            ${sub.entityName?uncap_first}Service.remove(entity);
+        }
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+        
+        return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-input.do?id=" + parentid;
+    }
     </#list>
     /**
-     * 删除一条流程信息
+     * 删除一条主表信息
      * @param selectedItem
      * @param redirectAttributes
      * @return

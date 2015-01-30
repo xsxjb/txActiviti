@@ -83,8 +83,8 @@
 								       </div>
 							  </div>
 							  <div class="col-lg-10 col-lg-offset-2">
-							      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-							      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+							      <button id="submitButton" class="btn btn-primary a-submit"><spring:message code='core.input.save' text='保存'/></button>
+							      <button type="button" onclick="history.back();" class="btn btn-primary a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 							  </div>
 						</form>
 	        		</div>
@@ -97,7 +97,7 @@
 	        	  <div id="formTables" class="tab-pane fade ${tabType == 'formTables' ? 'active in' : ''}">
 	        	  <c:if test="${tabType == 'formTables'}">
 	        	      <div class="panel panel-primary">
-		        		  <div class="panel-heading"><h4 class="panel-title">选择主表/单表：</h4></div>
+		        		  <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">选择主表/单表：</h4></div>
 					          <div class="panel-body">
 								   <form name="formTablesForm" method="post" action="conf-formTables-save.do?tableType=main&packageName=${packageName}" class="form-inline">
 								      <c:if test="${formName != null}">
@@ -113,7 +113,7 @@
 											  </c:forEach>
 										  </select>
 										  <span class="input-group-btn">
-										      <button class="btn btn-default btn-sm a-submit" ><spring:message code='core.success.save' text='添加'/></button>
+										      <button class="btn btn-primary btn-sm a-submit" ><spring:message code='core.success.save' text='添加'/></button>
 										  </span>
 									   </div>
 									 </form>
@@ -123,8 +123,8 @@
 										      <div class="row-fluid">
 										          <div class="well ">
 										              <div class="">${mainFormTable.tableTitle}</div>
-										              <button class="btn btn-default btn-sm a-remove" onclick="location.href='conf-formTables-remove.do?packageName=${packageName}&tableName=${mainFormTable.tableName}&formName=${mainFormTable.formName}'" >删除</button>
-												      <table class="table table-striped table-hover table-bordered">
+										              <button class="btn btn-primary btn-sm a-remove" onclick="location.href='conf-formTables-remove.do?packageName=${packageName}&tableName=${mainFormTable.tableName}&formName=${mainFormTable.formName}'" >删除</button>
+												      <table class="table table-striped table-hover table-striped">
 														  <thead>
 														    <tr>
 														         <th>标题：</th>
@@ -148,7 +148,7 @@
 									  </div>
 								  
 					          </div>
-					          <div class="panel-heading"><h4 class="panel-title">选择子表：</h4></div>
+					          <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">选择子表：</h4></div>
 					          <div class="panel-body">
 								  <form name="formTablesForm" method="post" action="conf-formTables-save.do?tableType=sub" class="form-inline">
 				  	                  <input id="conf-form_name" type="hidden" name="formId" value="${formId}">
@@ -162,7 +162,7 @@
 											  </c:forEach>
 										  </select>
 										  <span class="input-group-btn">
-										      <button class="btn btn-default btn-sm a-submit" >添加</button>
+										      <button class="btn btn-primary btn-sm a-submit" >添加</button>
 										  </span>
 									    </div>
 								    </form>
@@ -172,8 +172,8 @@
 									      <div class="row-fluid col-lg-4">
 									          <div class="well ">
 									              <div class="">${subFormTable.tableTitle}</div>
-									              <button class="btn btn-default btn-sm a-remove" onclick="location.href='conf-formTables-remove.do?packageName=${packageName}&tableName=${subFormTable.tableName}&formName=${subFormTable.formName}'" >删除</button>
-											      <table class="table table-striped table-hover table-bordered">
+									              <button class="btn btn-primary btn-sm a-remove" onclick="location.href='conf-formTables-remove.do?packageName=${packageName}&tableName=${subFormTable.tableName}&formName=${subFormTable.formName}'" >删除</button>
+											      <table class="table table-striped table-hover table-striped">
 													  <thead>
 															<tr>
 																<th>字段</th>
@@ -204,9 +204,9 @@
 	        	  <div id="formLabel" class="tab-pane fade ${tabType == 'formLabel' ? 'active in' : ''}">
 	        	  <c:if test="${tabType == 'formLabel'}">
 	        	      <div class="panel panel-primary">
-		        		  <div class="panel-heading"><h4 class="panel-title">主表字段设置：</h4></div>
+		        		  <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">主表字段设置：</h4></div>
 		        		  <div class="panel-body">
-			        	      <table class="table table-hover table-bordered" id=“tableModelGrid” >
+			        	      <table class="table table-hover table-striped" id=“tableModelGrid” >
 									<thead>
 										<tr>
 										    <th>字段</th>
@@ -236,9 +236,9 @@
 						  <!-- 子表 -->
 						  <c:if test="${null != confSubFormTables}">
 						  <c:forEach items="${confSubFormTables}" var="subFormTable">
-							  <div class="panel-heading"><h4 class="panel-title">子表字段设置：</h4></div>
+							  <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">子表字段设置：</h4></div>
 			        		  <div class="panel-body">
-				        	      <table class="table table-hover table-bordered" id=“tableModelGrid” >
+				        	      <table class="table table-hover table-striped" id=“tableModelGrid” >
 										<thead>
 											<tr>
 											    <th>字段</th>
@@ -278,18 +278,18 @@
 	        	  <c:if test="${tabType == 'formCode'}">
 	        	      <form id="codeGForm" method="post" action="code-generate-save.do" class="form-horizontal">
 	        	        <div class="panel panel-primary">
-	        	            <div class="panel-heading"><h4 class="panel-title">代码生成操作</h4></div>
+	        	            <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">代码生成操作</h4></div>
 					        <div class="panel-body">
 						        <!-- =============== 按钮 ================== -->
 							     <div class="form-group">
 									  <div class="controls">
-									      <button id="submitButton" class="btn btn-default btn-sm  a-submit"><spring:message code='core.input.save' text='生成'/></button>
+									      <button id="submitButton" class="btn btn-primary btn-sm  a-submit"><spring:message code='core.input.save' text='生成'/></button>
 										  &nbsp;
-									      <button class="btn btn-default btn-sm" type="button" onclick="history.back();" ><spring:message code='core.input.back' text='返回'/></button>
+									      <button class="btn btn-primary btn-sm" type="button" onclick="history.back();" ><spring:message code='core.input.back' text='返回'/></button>
 									  </div>
 								  </div>
 					        </div>
-		        	        <div class="panel-heading"><h4 class="panel-title">${model.entityTitle}内容</h4></div>
+		        	        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">${model.entityTitle}内容</h4></div>
 					        <div class="panel-body">
 							  <!-- =============== 主表内容 ================== -->
 									  <c:if test="${model != null}">
@@ -353,7 +353,7 @@
 					        </div>
 					        <!-- =============== 子表生成内容 =============== -->
 					        <c:forEach items="${model.subCodeGenerateBeans}" var="subModel"  varStatus="status">
-							     <div class="panel-heading"><h4 class="panel-title">${subModel.entityTitle}内容</h4></div>
+							     <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">${subModel.entityTitle}内容</h4></div>
 							     <div class="panel-body">
 						             <div class="form-group">
 									      <div class="col-lg-6">

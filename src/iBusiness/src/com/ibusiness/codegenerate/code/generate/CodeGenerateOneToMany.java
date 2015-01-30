@@ -160,6 +160,8 @@ public class CodeGenerateOneToMany implements ICallBack {
                 // 取得表字段list 根据表名
                 List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName(), formName);
                 codeParamBean.setColumns(subColumlist);
+                // 表对应全字段信息 TODO
+                codeParamBean.setOriginalColumns(this.dbFiledToJspUtil.readOriginalTableColumn(codeParamBean.getTableName()));
             }
             // 将子表内容存入
             localHashMap.put("subTab", subTabParamList);

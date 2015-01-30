@@ -8,7 +8,7 @@
 	<div class="panel-heading">
 		<a class="accordion-toggle" data-toggle="collapse"
 			data-parent="#m-sidebar" href="#collapse-group"> <i
-			class="icon-user"></i> <span class="title"><h4 class="panel-title">业务模块组件</h4></span>
+			class="icon-user"></i> <span class="title"><h4 class="panel-title glyphicon glyphicon-paperclip">业务模块组件</h4></span>
 		</a>
 	</div>
 	<div class="panel-body">

@@ -46,7 +46,7 @@ import com.codegenerate.test.service.Permission_sService;
 
 /**   
  * @Title: Controller
- * @Description: 审批权限流程表
+ * @Description: 审批权限流程表流程
  * @author JiangBo
  *
  */
@@ -103,6 +103,8 @@ public class PermissionController {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
+            // 流程标题
+            entity.setTasktitle("审批流程表单");
             permissionService.insert(entity);
         }
         
@@ -124,7 +126,7 @@ public class PermissionController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = permission_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("permission_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -289,7 +291,7 @@ public class PermissionController {
      * 子表删除
      */
     @RequestMapping("permission_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String permission_sRemove(@RequestParam("permission_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Permission_sEntity> entitys = permission_sService.findByIds(selectedItem);
         for (Permission_sEntity entity : entitys) {
             permission_sService.remove(entity);
@@ -309,7 +311,7 @@ public class PermissionController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("审批权限流程表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("审批权限流程表流程"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("remark", "id", "parentid");
         tableModel.setTableName("IB_PERMISSION");

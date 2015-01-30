@@ -42,7 +42,7 @@ $(function() {
 	    <div class="col-lg-1"></div>
 		<!-- start of main -->
 		<div class="panel panel-default col-lg-10">
-	          <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
+	          <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
 	          <div class="panel-body">
 	       	  	<div id="cmsCommentSearch" class="content content-inner">
 					  <form name="cmsCommentForm" method="post" action="cms-comment-list.do" class="form-inline">
@@ -58,12 +58,12 @@ $(function() {
 					  </form>
 			    </div>
 		  </div>
-	      <div class="panel-heading"><h4 class="panel-title">文章列表</h4></div>
+	      <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">文章列表</h4></div>
 	          <div class="panel-body">
 				    <div class="pull-left">
 				        <p>
-						    <button class="btn btn-default btn-sm a-insert" onclick="location.href='cms-comment-input.do'">新建</button>
-						    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+						    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='cms-comment-input.do'">新建</button>
+						    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()">删除</button>
 					    </p>
 					</div>
 					<div class="pull-right">
@@ -78,11 +78,11 @@ $(function() {
 					</div>
 					<div class="m-clear"></div>
 		    </div>
-		    <div class="panel-heading"><h4 class="panel-title">评论列表</h4></div>
+		    <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">评论列表</h4></div>
 	        <div class="panel-body">
 		          <div class="content">
 						<form id="cmsCommentGridForm" name="cmsCommentGridForm" method='post' action="cms-comment-remove.do" class="m-form-blank">
-						  <table id="cmsCommentGrid" class="table table-hover table-bordered">
+						  <table id="cmsCommentGrid" class="table table-hover table-striped">
 						    <thead>
 						      <tr>
 						        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>

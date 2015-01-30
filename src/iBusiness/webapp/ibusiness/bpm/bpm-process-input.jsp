@@ -113,8 +113,8 @@
 									</c:if>
 								  
 								  <div class="col-lg-10 col-lg-offset-2">
-								      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-								      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+								      <button id="submitButton" class="btn btn-primary a-submit"><spring:message code='core.input.save' text='保存'/></button>
+								      <button type="button" onclick="history.back();" class="btn btn-primary a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 								  </div>
 								</form>
 						</div>
@@ -127,7 +127,7 @@
         	    <input  type="hidden" name="packageName" value="${packageName}">
         	    <input  type="hidden" name="bpmId" value="${bpmId}">
         	    
-        	        <div class="panel-heading"><h4 class="panel-title">流程配置</h4></div>
+        	        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">流程配置</h4></div>
 			        <div class="panel-body">
 					<div class="content content-inner">
 							<table class="table">
@@ -152,55 +152,55 @@
 						          <td>${item.nodeName}</td>
 						          <td>
 								    <c:if test="${item.confUser == 0}">
-									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 									<c:if test="${item.confUser == 1}">
-									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 									&nbsp;
 							      </td>
 						          <td>
 								    <c:if test="${item.confListener == 0}">
-									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 								    <c:if test="${item.confListener == 1}">
-									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 									&nbsp;
 							      </td>
 						          <td>
 								    <c:if test="${item.confRule == 0}">
-									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 								    <c:if test="${item.confRule == 1}">
-									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 									&nbsp;
 							      </td>
 						          <td>
 								    <c:if test="${item.confForm == 0}">
-									  <a href="conf-node-colums.do?packageName=${packageName}&flowId=${bpmId}&nodeId=${item.id}" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="conf-node-colums.do?packageName=${packageName}&flowId=${bpmId}&nodeId=${item.id}" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 								    <c:if test="${item.confForm == 1}">
-									  <a href="conf-node-colums.do?packageName=${packageName}&flowId=${bpmId}&nodeId=${item.id}" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="conf-node-colums.do?packageName=${packageName}&flowId=${bpmId}&nodeId=${item.id}" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 									&nbsp;
 							      </td>
 						          <td>
 								    <c:if test="${item.confOperation == 0}">
-									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 								    <c:if test="${item.confOperation == 1}">
-									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 									&nbsp;
 							      </td>
 						          <td>
 								    <c:if test="${item.confNotice == 0}">
-									  <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 								    <c:if test="${item.confNotice == 1}">
-									  <a href="#" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+									  <a href="#" class="btn btn-primary btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
 									</c:if>
 									&nbsp;
 							      </td>

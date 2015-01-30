@@ -40,12 +40,12 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
-        <div class="panel-heading"><h4 class="panel-title">表单列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">表单列表</h4></div>
           <div class="panel-body">
 			    <div class="pull-left">
 			        <p>
-					    <button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-form-input.do?packageName=${packageName}&isBpmForm=1'">新建</button>
-					    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+					    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='conf-form-input.do?packageName=${packageName}&isBpmForm=1'">新建</button>
+					    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				    </p>
 				</div>
 				<div class="pull-right">
@@ -61,7 +61,7 @@
 	    </div>
 		<div class="content">
 			<form id="formGridForm" name="formGridForm" method='post' action="conf-form-remove.do?packageName=${packageName}" class="m-form-blank">
-			  <table id="formGrid" class="table table-hover table-bordered">
+			  <table id="formGrid" class="table table-hover table-striped">
 			    <thead>
 			      <tr>
 			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -93,9 +93,9 @@
 		  共100条记录 显示1到10条记录
 		</div>
 		<div class="btn-group m-pagination pull-right">
-		  <button class="btn btn-default btn-sm">&lt;</button>
-		  <button class="btn btn-default btn-sm">1</button>
-		  <button class="btn btn-default btn-sm">&gt;</button>
+		  <button class="btn btn-primary btn-sm">&lt;</button>
+		  <button class="btn btn-primary btn-sm">1</button>
+		  <button class="btn btn-primary btn-sm">&gt;</button>
 		</div>
 	    <div class="m-clear"></div>
       </article>

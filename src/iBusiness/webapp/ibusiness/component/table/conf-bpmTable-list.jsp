@@ -33,15 +33,15 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
-          <div class="panel-heading"><h4 class="panel-title">流程表模型</h4></div>
+          <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">流程表模型</h4></div>
           <div class="panel-body">
                 <div id="tableCategorySearch" class="content content-inner">
-				  	<button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}&tableName=&isBpmTable=1'">新建</button>
-				  	<button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+				  	<button class="btn btn-primary btn-sm a-insert" onclick="location.href='conf-table-insert.do?packageName=${packageName}&tableName=&isBpmTable=1'">新建</button>
+				  	<button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()">删除</button>
 				</div>
             </div>
             <form id="tableGridForm" name="tableGridForm" method='post' action="conf-table-remove.do?packageName=${packageName}" class="m-form-blank">
-				  <table class="table table-hover table-bordered" id=“tableModelGrid” >
+				  <table class="table table-hover table-striped" id=“tableModelGrid” >
 						<thead>
 							<tr>
 							    <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>

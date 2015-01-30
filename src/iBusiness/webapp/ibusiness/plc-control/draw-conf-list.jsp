@@ -43,23 +43,23 @@
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
 	<!-- 查询条件 -->
-        <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
           <div class="panel-body">
 	          <div id="search" class="content content-inner">
 				  <form name="cgForm" method="post" action="drawConf-list.do" class="form-inline">
 				    <div class="form-group">
 				                <label for="code_table_itemname">设备对象名:</label>
 				                <input type="text" id="code_table_itemname" name="filter_LIKES_itemname" value="${param.filter_LIKES_itemname}">
-					    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
+					    <button class="btn btn-primary btn-sm" onclick="document.cgForm.submit()">查询</button>
 					</div>
 				 </form>
 			  </div>
 		  </div>
-	   <div class="panel-heading"><h4 class="panel-title">工艺图绘图设备对象列表</h4></div>
+	   <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">工艺图绘图设备对象列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
-			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='drawConf-input.do'">新建</button>
-			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+			    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='drawConf-input.do'">新建</button>
+			    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()">删除</button>
             
 			</div>
 			<div class="pull-right">
@@ -75,7 +75,7 @@
 	   </div>
 	   <div class="content">
 			<form id="gridForm" name="gridForm" method='post' action="drawConf-remove.do" class="m-form-blank">
-			  <table id="codeGrid" class="table table-hover table-bordered">
+			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>

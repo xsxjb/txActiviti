@@ -96,9 +96,9 @@
 	   </div>
 	   <div class="content">
 			<form id="gridForm" name="gridForm" method='post' action="${entityName?uncap_first}-remove.do" class="m-form-blank">
-			  <table id="codeGrid" class="table table-hover table-bordered">
+			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
-				      <tr class="success">
+				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					        <#list columns as po>
 					            <#if po.fcDisplay="1">

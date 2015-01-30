@@ -35,7 +35,7 @@
 					</div>
 			    </div>
 			    <div class="col-lg-10 col-lg-offset-5">
-			        <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+			        <button type="button" onclick="history.back();" class="btn btn-primary a-cancel"><spring:message code='core.input.back' text='返回'/></button>
 			    </div>
 			 </div>
 		</div>

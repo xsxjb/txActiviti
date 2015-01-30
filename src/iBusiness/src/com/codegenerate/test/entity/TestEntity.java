@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 测试练习表页面
+ * @Description: 测试表页面
  * @author JiangBo
  *
  */
@@ -21,23 +21,29 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_TEST")
 public class TestEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
+	/**scopeid*/
+	private java.lang.String scopeid;
 	/**id*/
 	private java.lang.String id;
-	/**mapip*/
-	private java.lang.String mapip;
-	/**mapport*/
-	private java.lang.String mapport;
-	/**mapcity*/
-	private java.lang.String mapcity;
-	/**mapshowonline*/
-	private java.lang.String mapshowonline;
-	/**mapgrid*/
-	private java.lang.String mapgrid;
-	/**mapcenterlongitude*/
-	private java.lang.String mapcenterlongitude;
-	/**mapcenterlatitude*/
-	private java.lang.String mapcenterlatitude;
+	/**name*/
+	private java.lang.String name;
 	
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  scopeid
+	 */
+	@Column(name ="SCOPEID",nullable=true,length=64)
+	public java.lang.String getScopeid(){
+		return this.scopeid;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  scopeid
+	 */
+	public void setScopeid(java.lang.String scopeid){
+		this.scopeid = scopeid;
+	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  id
@@ -58,114 +64,18 @@ public class TestEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  mapip
+	 *@return: java.lang.String  name
 	 */
-	@Column(name ="MAPIP",nullable=true,length=32)
-	public java.lang.String getMapip(){
-		return this.mapip;
+	@Column(name ="NAME",nullable=true,length=64)
+	public java.lang.String getName(){
+		return this.name;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  mapip
+	 *@param: java.lang.String  name
 	 */
-	public void setMapip(java.lang.String mapip){
-		this.mapip = mapip;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  mapport
-	 */
-	@Column(name ="MAPPORT",nullable=true,length=32)
-	public java.lang.String getMapport(){
-		return this.mapport;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  mapport
-	 */
-	public void setMapport(java.lang.String mapport){
-		this.mapport = mapport;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  mapcity
-	 */
-	@Column(name ="MAPCITY",nullable=true,length=32)
-	public java.lang.String getMapcity(){
-		return this.mapcity;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  mapcity
-	 */
-	public void setMapcity(java.lang.String mapcity){
-		this.mapcity = mapcity;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  mapshowonline
-	 */
-	@Column(name ="MAPSHOWONLINE",nullable=true,length=32)
-	public java.lang.String getMapshowonline(){
-		return this.mapshowonline;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  mapshowonline
-	 */
-	public void setMapshowonline(java.lang.String mapshowonline){
-		this.mapshowonline = mapshowonline;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  mapgrid
-	 */
-	@Column(name ="MAPGRID",nullable=true,length=3)
-	public java.lang.String getMapgrid(){
-		return this.mapgrid;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  mapgrid
-	 */
-	public void setMapgrid(java.lang.String mapgrid){
-		this.mapgrid = mapgrid;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  mapcenterlongitude
-	 */
-	@Column(name ="MAPCENTERLONGITUDE",nullable=true,length=32)
-	public java.lang.String getMapcenterlongitude(){
-		return this.mapcenterlongitude;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  mapcenterlongitude
-	 */
-	public void setMapcenterlongitude(java.lang.String mapcenterlongitude){
-		this.mapcenterlongitude = mapcenterlongitude;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  mapcenterlatitude
-	 */
-	@Column(name ="MAPCENTERLATITUDE",nullable=true,length=32)
-	public java.lang.String getMapcenterlatitude(){
-		return this.mapcenterlatitude;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  mapcenterlatitude
-	 */
-	public void setMapcenterlatitude(java.lang.String mapcenterlatitude){
-		this.mapcenterlatitude = mapcenterlatitude;
+	public void setName(java.lang.String name){
+		this.name = name;
 	}
 }

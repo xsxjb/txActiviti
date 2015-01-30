@@ -46,7 +46,7 @@
     <div class="col-lg-1"></div>
     <!-- start of main -->
     <div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">编辑用户</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">编辑用户</h4></div>
         <div class="panel-body">
         
         <form id="userForm" method="post" action="user-base-save.do?operationMode=STORE" class="form-horizontal">
@@ -137,8 +137,8 @@
                   </div>
                   <div class="form-group">
                       <div class="col-lg-10 col-lg-offset-2">
-                          <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-                          <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+                          <button id="submitButton" class="btn btn-primary a-submit"><spring:message code='core.input.save' text='保存'/></button>
+                          <button type="button" onclick="history.back();" class="btn btn-primary a-cancel"><spring:message code='core.input.back' text='返回'/></button>
                       </div>
                   </div>
              </form>

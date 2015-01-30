@@ -26,7 +26,7 @@ $(function() {
     <div class="col-lg-1"></div>
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">编辑评论</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">编辑评论</h4></div>
         <div class="panel-body">
 			<div class="content content-inner">
 				<form id="cmsCommentForm" method="post" action="cms-comment-save.do" class="form-horizontal">

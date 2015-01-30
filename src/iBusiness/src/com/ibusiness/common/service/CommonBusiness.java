@@ -9,6 +9,10 @@ import com.ibusiness.base.group.dao.OrgCompanyDao;
 import com.ibusiness.base.group.dao.OrgDepartmentDao;
 import com.ibusiness.base.group.entity.OrgCompany;
 import com.ibusiness.base.group.entity.OrgDepartment;
+import com.ibusiness.base.menu.dao.MenuDao;
+import com.ibusiness.base.menu.dao.MenuRoleDefDao;
+import com.ibusiness.base.menu.entity.Menu;
+import com.ibusiness.base.menu.entity.MenuRoleDef;
 import com.ibusiness.base.user.dao.UserBaseDao;
 import com.ibusiness.base.user.entity.UserBase;
 import com.ibusiness.common.page.PropertyFilter;
@@ -53,6 +57,30 @@ public class CommonBusiness {
     // 用户MAP
     private Map<String, UserBase> userBaseMap = new HashMap<String, UserBase>();
     
+    /**
+     * 判断当前用户是否有菜单权限
+     */
+    @SuppressWarnings("unchecked")
+	public String isPermByMenu(String menuUrl) {
+    	String currentUserId = SpringSecurityUtils.getCurrentUserId();
+    	if (CommonUtils.isNull(currentUserId)) {
+    		return "false";
+    	}
+    	UserBase userBase = getUserBaseDao().get(currentUserId);
+    	// 角色
+    	userBase.getRoleDef();
+    	// 菜单
+    	List<Menu> menuList = getMenuDao().find("from Menu where menuUrl=? ",menuUrl);
+    	if (null!=menuList && menuList.size() > 0) {
+    		Menu menu = menuList.get(0);
+    		// 菜单和角色模板关联表
+    		List<MenuRoleDef> menuRoleDefList = getMenuRoleDefDao().find("from MenuRoleDef where menuId=? AND roleDefId=?",menu.getId(), userBase.getRoleDef().getId());
+    		if (null != menuRoleDefList && menuRoleDefList.size() > 0) {
+    			return "true";
+    		}
+    	}
+    	return "false";
+    }
     /**
      * 取得用户表所有用户
      */
@@ -213,6 +241,7 @@ public class CommonBusiness {
     	return propertyFilters;
     }
     // ======================================================================
+    // 用户
     public UserBaseDao getUserBaseDao() {
         return ApplicationContextHelper.getBean(UserBaseDao.class);
     }
@@ -232,5 +261,13 @@ public class CommonBusiness {
     // 部门
     public OrgDepartmentDao getOrgDepartmentDao() {
         return ApplicationContextHelper.getBean(OrgDepartmentDao.class);
+    }
+    // 菜单和角色模板关联表
+    public MenuRoleDefDao getMenuRoleDefDao() {
+        return ApplicationContextHelper.getBean(MenuRoleDefDao.class);
+    }
+    // 菜单
+    public MenuDao getMenuDao() {
+        return ApplicationContextHelper.getBean(MenuDao.class);
     }
 }

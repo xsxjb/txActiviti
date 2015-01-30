@@ -10,7 +10,7 @@ import com.codegenerate.test.entity.PermissionEntity;
 
 /**   
  * @Title: Service
- * @Description: 审批权限流程表
+ * @Description: 审批权限流程表流程
  * @author JiangBo
  *
  */

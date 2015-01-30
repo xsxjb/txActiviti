@@ -18,7 +18,7 @@
 
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
-        <div class="panel-heading"><h4 class="panel-title">菜单管理</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">菜单管理</h4></div>
         <div class="panel-body">
               <form id="menuForm" method="post" action="menu-save.do" class="form-horizontal">
 				  <c:if test="${model != null}">
@@ -61,9 +61,9 @@
 				  </div>
 				  <div class="form-group">
 				    <div class="controls col-lg-10 col-lg-offset-2">
-				      <button id="submitButton" class=" btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
+				      <button id="submitButton" class=" btn btn-primary btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
 					  &nbsp;
-				      <button type="button" onclick="history.back();" class="btn btn-default btn-sm"><spring:message code='core.input.back' text='返回'/></button>
+				      <button type="button" onclick="history.back();" class="btn btn-primary btn-sm"><spring:message code='core.input.back' text='返回'/></button>
 				    </div>
 				  </div>
 				</form>

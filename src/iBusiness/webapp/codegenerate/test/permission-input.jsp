@@ -4,34 +4,35 @@
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>编辑</title>
+    <title>审批流程表单编辑</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
-		var config = {
-		    id: 'codeGrid',
-		    pageNo: ${page.pageNo},
-		    pageSize: ${page.pageSize},
-		    totalCount:${page.totalCount},
-		    resultSize: ${page.resultSize},
-		    pageCount: ${page.pageCount},
-		    orderBy: '${page.orderBy == null ? '' : page.orderBy}',
-		    asc: ${page.asc},
+        // 实例化config对象
+        var permission_sConfig = {
+		    id: 'permission_sCodeGrid',
+		    pageNo: ${permission_sPage.pageNo},
+		    pageSize: ${permission_sPage.pageSize},
+		    totalCount:${permission_sPage.totalCount},
+		    resultSize: ${permission_sPage.resultSize},
+		    pageCount: ${permission_sPage.pageCount},
+		    orderBy: '${permission_sPage.orderBy == null ? '' : permission_sPage.orderBy}',
+		    asc: ${permission_sPage.asc},
 		    params: {
-		        'id': '${model.id}',
-		        'flowId':'${flowId}'
+		        'id': '${model.id}'
 		    },
-			selectedItemClass: 'selectedItem',
-			gridFormId: 'gridForm'
-			,exportUrl: 'permission_s-export.do'
+			selectedItemClass: 'permission_sSelectedItem',
+			gridFormId: 'permission_sGridForm',
+			exportUrl: 'permission_s-export.do'
 		};
-
-		var table;
+        // 实例化table对象
+		var permission_sTable;
 		$(function() {
-			table = new Table(config);
-		    table.configPagination('.m-pagination');
-		    table.configPageInfo('.m-page-info');
-		    table.configPageSize('.m-page-size');
+			permission_sTable = new Table(permission_sConfig);
+		    permission_sTable.configPagination('.permission_sM-pagination');
+		    permission_sTable.configPageInfo('.permission_sM-page-info');
+		    permission_sTable.configPageSize('.permission_sM-page-size');
 		});
+		
 		// 提交方法--通过传入路径 提交到不同的controller
 		function mainFormSubmit(path){
 			$('#mainForm').attr('action', path).submit();
@@ -56,22 +57,22 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
-	<div class="span2"></div>
+	<div class="col-lg-1"></div>
 	<!-- start of main -->
-	<div class="panel panel-default col-md-10"> 
-	    <div class="panel-heading"><h4 class="panel-title">流程控制</h4></div>
+	<div class="panel panel-default col-lg-10"> 
+	    <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">审批流程表单流程控制</h4></div>
 	    <div class="panel-body">
 	        <div class="pull-left">
-	            <a href="#nextTaskUserDiv" role="button" class="btn btn-default btn-sm" data-toggle="modal">办理</a>
-			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('permission-save-draft.do')">草稿</button>
-			    <button class="btn btn-default btn-sm" onclick="location.href='permission-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
-			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='permission-list.do?flowId=${flowId}&flowType=0'">返回</button>
+	            <a href="#nextTaskUserDiv" role="button" class="btn btn-primary btn-sm" data-toggle="modal">办理</a>
+			    <button class="btn btn-primary btn-sm a-submit" onclick="mainFormSubmit('permission-save-draft.do')">草稿</button>
+			    <button class="btn btn-primary btn-sm" onclick="location.href='permission-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
+			    <button class="btn btn-primary btn-sm a-remove" onclick="location.href='permission-list.do?flowId=${flowId}&flowType=0'">返回</button>
 			</div>
 	   </div>
 	   
-        <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">流程内容</h4></div>
         <div class="panel-body">
-		<div class="content content-inner">
+		  <div class="content content-inner">
 		       <form id="mainForm" method="post" action="permission-complete.do" class="form-horizontal">
 				   <input type="hidden" name="flowId" value="${flowId}">
 				   <c:if test="${model != null}">
@@ -86,12 +87,11 @@
 						      <label class="control-label  col-lg-2" for="code-remark">备注:</label>
                               <div class="col-lg-3">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <input id="code-remark" type="text" name="remark" value="${model.remark}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
 	                                      
-                            </div>
 						 
 					
 					<!--  选择下一节点办理人弹出层  -->
 				    <div id="nextTaskUserDiv" class="modal fade" tabindex="-1" style="top:20%;" >
-				            <div class="modal-dialog">
+				        <div class="modal-dialog">
 						    <div class="modal-content">
 							      <div class="modal-header">
 								        <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>
@@ -111,27 +111,28 @@
 						                </div>
 						           </div>
 						           <div class="modal-footer">
-						                    <button class="btn btn-default btn-sm a-insert">办理</button>
-						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+						                    <button class="btn btn-primary btn-sm a-insert">办理</button>
+						                    <button class="btn btn-primary btn-sm" data-dismiss="modal" >关闭</button>
 						           </div>
 					            </div><!-- /.modal-content -->
 						  </div><!-- /.modal-dialog -->
 				    </div>
 					
 				</form>
-		</div>
+		  </div>
         </div> 
+        
         <!-- ==================== 子表 ========================================== -->
-        <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
-				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='permission_s-input.do?id=${model.id}&subId=&flowId=${flowId}'">新建</button>
-				    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+				    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='permission_s-input.do?id=${model.id}&subId=&flowId=${flowId}'"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="permission_sTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 	            
 				</div>
 				<div class="pull-right">
 				  每页显示
-				  <select class="m-page-size">
+				  <select class="permission_sM-page-size">
 				    <option value="10">10</option>
 				    <option value="20">20</option>
 				    <option value="50">50</option>
@@ -141,9 +142,9 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="gridForm" name="gridForm" method='post' action="permission_s-remove.do" class="m-form-blank">
+				<form id="permission_sGridForm" name="permission_sGridForm" method='post' action="permission_s-remove.do" class="m-form-blank">
 				  <input type="hidden" name="flowId" value="${flowId}">
-				  <table id="codeGrid" class="table table-hover table-bordered">
+				  <table id="permission_sCodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
 					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -152,11 +153,11 @@
 					      </tr>
 					    </thead>
 						    <tbody>
-						      <c:forEach items="${page.result}" var="item">
-								  <tr>
-								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+						      <c:forEach items="${permission_sPage.result}" var="item" varStatus="status">
+								  <tr class="${status.index%2==1? 'active':''}">
+								        <td><input type="checkbox" class="permission_sSelectedItem a-check" name="permission_sSelectedItem" value="${item.id}"></td>
 									    <td>
-								            <a href="permission_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+								            <a href="permission_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 								        </td>
 							            <td>${item.remark}</td>
 								  </tr>
@@ -166,10 +167,10 @@
 						</form>
 		        </div>
 			  <article>
-			    <div class="m-page-info pull-left">
+			    <div class="permission_sM-page-info pull-left">
 				  共100条记录 显示1到10条记录
 				</div>
-				<div class="btn-group m-pagination pull-right">
+				<div class="btn-group permission_sM-pagination pull-right">
 				  <button class="btn btn-small">&lt;</button>
 				  <button class="btn btn-small">1</button>
 				  <button class="btn btn-small">&gt;</button>

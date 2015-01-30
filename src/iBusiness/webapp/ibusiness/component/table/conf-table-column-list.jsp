@@ -27,16 +27,16 @@
 	  <%@include file="/ibusiness/component/portal/component-leftmenu.jsp"%>
 	      <!-- start of main -->
 	      <div class="panel panel-default col-lg-10">
-              <div class="panel-heading"><h4 class="panel-title">表列字段</h4></div>
+              <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">表列字段</h4></div>
                <div class="panel-body">
 	               <div id="tableCategorySearch" class="content content-inner">
-	                     <button class="btn btn-default btn-sm a-insert" onclick="location.href='conf-table-column-input.do?tableName=${tableName}&columnValue='">新建</button>
-					  	 <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+	                     <button class="btn btn-primary btn-sm a-insert" onclick="location.href='conf-table-column-input.do?tableName=${tableName}&columnValue='">新建</button>
+					  	 <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()">删除</button>
 					  	 <label class="control-label" >${tableName}表:</label>
 					</div>
                </div>
                <form id="tableGridForm" name="tableGridForm" method='post' action="conf-table-columns-remove.do?tableName=${tableName}" class="m-form-blank">
-			          <table class="table table-hover table-bordered">
+			          <table class="table table-hover table-striped">
 						<thead>
 						  <tr>
 						    <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>

@@ -21,7 +21,7 @@
     <div class="col-lg-1"></div>
     <!-- start of main -->
     <div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">编辑表单组件</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">编辑表单组件</h4></div>
         <div class="panel-body">
                 <form id="formLabelForm" method="post" action="conf-formLabel-save.do" class="form-horizontal">
                     <c:if test="${model != null}">
@@ -126,7 +126,7 @@
                           <div class="input-group col-lg-4">
 						      <input id="form-fcDefault" type="text" name="fcDefault" value="${model.fcDefault}" class="form-control">
 						      <div class="input-group-btn">
-						        <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">公式<span class="caret"></span></button>
+						        <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">公式<span class="caret"></span></button>
 						        <ul class="dropdown-menu dropdown-menu-right">
 						          <li><a href="#" onClick="defailtChange('@currentDate')" >当前日期时间</a></li>
 						          <li><a href="#" onClick="defailtChange('@currentDateToStr')" >当前日期时间字符串</a></li>
@@ -145,8 +145,8 @@
                       </div>
                   <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
-                      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-                      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+                      <button id="submitButton" class="btn btn-primary a-submit"><spring:message code='core.input.save' text='保存'/></button>
+                      <button type="button" onclick="history.back();" class="btn btn-primary a-cancel"><spring:message code='core.input.back' text='返回'/></button>
                     </div>
                   </div>
                 </form>
