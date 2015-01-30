@@ -53,6 +53,8 @@ public class Conf_popup_pageController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = conf_popup_pageService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -136,7 +138,7 @@ public class Conf_popup_pageController {
         // excel文件名
         tableModel.setExcelName("PLC弹出页面页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("pagename", "popuptype", "pageurl", "pagetype", "mainpageid", "id", "pagehight", "pagewidth", "pagetitle");
+        tableModel.addHeaders("pagename", "pagetitle", "popuptype", "pageurl", "pagetype", "mainpageid", "pagehight", "pagewidth", "id");
         tableModel.setTableName("IB_CONF_POPUP_PAGE");
         tableModel.setData(beans);
         try {
@@ -156,7 +158,7 @@ public class Conf_popup_pageController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("pagename", "popuptype", "pageurl", "pagetype", "mainpageid", "id", "pagehight", "pagewidth", "pagetitle");
+            tableModel.addHeaders("pagename", "pagetitle", "popuptype", "pageurl", "pagetype", "mainpageid", "pagehight", "pagewidth", "id");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.operationmanage.entity.Conf_popup_pageEntity");
         } catch (Exception e) {

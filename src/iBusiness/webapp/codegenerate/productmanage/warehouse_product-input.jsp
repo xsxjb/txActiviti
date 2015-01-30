@@ -4,11 +4,10 @@
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>编辑</title>
+    <title>产品库存管理表编辑</title>
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
     <script type="text/javascript">
 		$(function() {
 		    $("#cgForm").validate({
@@ -25,8 +24,8 @@
     </script>
     <div class="col-lg-1"></div>
     <!-- start of main -->
-    <div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
+    <div class="panel panel-default col-lg-12"> 
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">产品库存管理表编辑</h4></div>
         <div class="panel-body">
                 <form id="cgForm" method="post" action="warehouse_product-save.do" class="form-horizontal">
                   <c:if test="${model != null}">
@@ -76,8 +75,8 @@
                   
                   <div class="form-group">
 	                  <div class="col-lg-10 col-lg-offset-2">
-	                      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-	                      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+	                      <button id="submitButton" class="btn btn-primary btn-sm a-submit"><span class="glyphicon glyphicon-floppy-save"></span>保存</button>
+	                      <button type="button" onclick="location.href='warehouse_product-list.do'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-log-out"></span> 关闭</button>
 	                  </div>
                   </div>
                 </form>

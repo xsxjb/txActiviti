@@ -21,41 +21,23 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_POP_CONF_CTRLOBJ")
 public class Pop_conf_ctrlobjEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-	/**id*/
-	private java.lang.String id;
 	/**objname*/
 	private java.lang.String objname;
-	/**objimg*/
-	private java.lang.String objimg;
 	/**objtitle*/
 	private java.lang.String objtitle;
 	/**objtype*/
 	private java.lang.String objtype;
+	/**objimg*/
+	private java.lang.String objimg;
 	/**objimg2*/
 	private java.lang.String objimg2;
 	/**objimg3*/
 	private java.lang.String objimg3;
 	/**objimg4*/
 	private java.lang.String objimg4;
+	/**id*/
+	private java.lang.String id;
 	
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
-	 */
-	
-	@Id
-	@Column(name ="ID",nullable=false,length=64)
-	public java.lang.String getId(){
-		return this.id;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
-	 */
-	public void setId(java.lang.String id){
-		this.id = id;
-	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  objname
@@ -71,22 +53,6 @@ public class Pop_conf_ctrlobjEntity implements java.io.Serializable {
 	 */
 	public void setObjname(java.lang.String objname){
 		this.objname = objname;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  objimg
-	 */
-	@Column(name ="OBJIMG",nullable=true,length=128)
-	public java.lang.String getObjimg(){
-		return this.objimg;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  objimg
-	 */
-	public void setObjimg(java.lang.String objimg){
-		this.objimg = objimg;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -119,6 +85,22 @@ public class Pop_conf_ctrlobjEntity implements java.io.Serializable {
 	 */
 	public void setObjtype(java.lang.String objtype){
 		this.objtype = objtype;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  objimg
+	 */
+	@Column(name ="OBJIMG",nullable=true,length=128)
+	public java.lang.String getObjimg(){
+		return this.objimg;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  objimg
+	 */
+	public void setObjimg(java.lang.String objimg){
+		this.objimg = objimg;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -167,5 +149,23 @@ public class Pop_conf_ctrlobjEntity implements java.io.Serializable {
 	 */
 	public void setObjimg4(java.lang.String objimg4){
 		this.objimg4 = objimg4;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  id
+	 */
+	
+	@Id
+	@Column(name ="ID",nullable=false,length=64)
+	public java.lang.String getId(){
+		return this.id;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  id
+	 */
+	public void setId(java.lang.String id){
+		this.id = id;
 	}
 }

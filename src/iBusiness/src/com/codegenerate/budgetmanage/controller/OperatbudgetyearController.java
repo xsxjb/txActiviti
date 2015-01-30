@@ -36,7 +36,7 @@ import com.codegenerate.budgetmanage.service.OperatbudgetyearService;
 
 /**   
  * @Title: Controller
- * @Description: 经营预算年度数据表
+ * @Description: 经营预算年度数据表页面
  * @author JiangBo
  *
  */
@@ -53,6 +53,8 @@ public class OperatbudgetyearController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = operatbudgetyearService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -132,9 +134,9 @@ public class OperatbudgetyearController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("经营预算年度数据表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("经营预算年度数据表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "planyear", "projecttype", "projectname", "changeplanam", "addplanamount", "planamount", "yearplanbalance", "amount", "dept");
+        tableModel.addHeaders("planyear", "projecttype", "projectname", "changeplanam", "addplanamount", "planamount", "yearplanbalance", "amount", "dept", "id");
         tableModel.setTableName("IB_OPERATBUDGETYEAR");
         tableModel.setData(beans);
         try {
@@ -154,7 +156,7 @@ public class OperatbudgetyearController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "planyear", "projecttype", "projectname", "changeplanam", "addplanamount", "planamount", "yearplanbalance", "amount", "dept");
+            tableModel.addHeaders("planyear", "projecttype", "projectname", "changeplanam", "addplanamount", "planamount", "yearplanbalance", "amount", "dept", "id");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.budgetmanage.entity.OperatbudgetyearEntity");
         } catch (Exception e) {

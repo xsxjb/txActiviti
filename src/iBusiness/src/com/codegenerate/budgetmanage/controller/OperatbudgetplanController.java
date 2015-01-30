@@ -126,7 +126,7 @@ public class OperatbudgetplanController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = operatbudgetplan_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("operatbudgetplan_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -291,7 +291,7 @@ public class OperatbudgetplanController {
      * 子表删除
      */
     @RequestMapping("operatbudgetplan_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String operatbudgetplan_sRemove(@RequestParam("operatbudgetplan_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Operatbudgetplan_sEntity> entitys = operatbudgetplan_sService.findByIds(selectedItem);
         for (Operatbudgetplan_sEntity entity : entitys) {
             operatbudgetplan_sService.remove(entity);

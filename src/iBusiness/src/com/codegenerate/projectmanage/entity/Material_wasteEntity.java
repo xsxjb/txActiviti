@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 作废产品原料清单
+ * @Description: 作废产品原料清单页面
  * @author JiangBo
  *
  */
@@ -138,8 +138,6 @@ public class Material_wasteEntity implements java.io.Serializable {
 	 */
 	
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	@Column(name ="ID",nullable=false,length=64)
 	public java.lang.String getId(){
 		return this.id;

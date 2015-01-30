@@ -3,18 +3,12 @@ package com.codegenerate.crmmanage.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import net.sf.json.JSONObject;
 
 import javax.annotation.Resource;
-
 import java.io.File;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.multipart.MultipartFile;
-
-import com.ibusiness.codegenerate.common.CodeFormulaFactory;
 import com.ibusiness.common.export.ExcelCommon;
 import com.ibusiness.common.export.TableModel;
 
@@ -23,22 +17,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.security.util.SpringSecurityUtils;
 import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.service.CommonBusiness;
-import com.ibusiness.common.service.FormulaCommon;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
+import com.ibusiness.common.service.FormulaCommon;
+
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
+
 import com.codegenerate.crmmanage.entity.Customer_infoEntity;
 import com.codegenerate.crmmanage.service.Customer_infoService;
 
 /**   
  * @Title: Controller
- * @Description: 客户信息表
+ * @Description: 客户信息表页面
  * @author JiangBo
  *
  */
@@ -55,6 +53,8 @@ public class Customer_infoController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = customer_infoService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -76,9 +76,9 @@ public class Customer_infoController {
         } else {
             entity = new Customer_infoEntity();
         }
+        
         // 默认值公式
-        FormulaCommon FormulaCommon = new FormulaCommon();
-        entity = (Customer_infoEntity) FormulaCommon.defaultValue(entity, "IB_CUSTOMER_INFO");
+        entity = (Customer_infoEntity) new FormulaCommon().defaultValue(entity, "IB_CUSTOMER_INFO");
         
         model.addAttribute("model", entity);
         
@@ -134,7 +134,7 @@ public class Customer_infoController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("客户信息表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("客户信息表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("id", "customerno", "customerstate", "customername", "customertype", "customeraddress", "phone", "telephone", "salesmanager", "systemsales", "infosource", "relationshipstatus", "province", "city", "customernature", "superviseunit", "planinfo", "customerdemand", "cooperationinfo", "invoicename", "bank", "accountno", "taxid", "invoiceuser", "invoiceusertel", "invoicemailunitname", "mailaddress", "invoiczip", "invoicaddressee", "invoicphonetel", "customeruser", "userposition", "usertelephone", "userphone", "useremail", "userofficeaddress", "userzip");
         tableModel.setTableName("IB_CUSTOMER_INFO");

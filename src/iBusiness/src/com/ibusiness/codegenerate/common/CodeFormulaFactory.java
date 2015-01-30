@@ -32,13 +32,16 @@ public class CodeFormulaFactory {
     static {
         // 当前时间
         formulaMap.put("@currentDateToStr", "getCurrentDateToStr");
+        formulaMap.put("@CURRENTDATETOSTR", "getCurrentDateToStr");
         formulaMap.put("@currentDate", "getCurrentDate");
+        formulaMap.put("@CURRENTDATE", "getCurrentDate");
 //        // 当前年份
 //        formulaMap.put("year", "getCurrentYear");
 //        // 当前月份
 //        formulaMap.put("month", "getCurrentMonth");
         // 当前用户
         formulaMap.put("@userName", "getCurrentUserName");
+        formulaMap.put("@USERNAME", "getCurrentUserName");
 //        // 当前用户ID
 //        formulaMap.put("userId", "getCurrentUserId");
     }

@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 项目立项表
+ * @Description: 项目立项表流程
  * @author JiangBo
  *
  */
@@ -50,8 +50,6 @@ public class Project_product_sEntity implements java.io.Serializable {
 	 */
 	
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	@Column(name ="ID",nullable=false,length=64)
 	public java.lang.String getId(){
 		return this.id;

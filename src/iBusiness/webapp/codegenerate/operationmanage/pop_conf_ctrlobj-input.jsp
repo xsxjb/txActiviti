@@ -8,7 +8,6 @@
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
     <script type="text/javascript">
 		$(function() {
 		    $("#cgForm").validate({
@@ -25,8 +24,8 @@
     </script>
     <div class="col-lg-1"></div>
     <!-- start of main -->
-    <div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">弹出页面组件配置页面编辑</h4></div>
+    <div class="panel panel-default col-lg-12"> 
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">弹出页面组件配置页面编辑</h4></div>
         <div class="panel-body">
                 <form id="cgForm" method="post" action="pop_conf_ctrlobj-save.do" class="form-horizontal">
                   <c:if test="${model != null}">
@@ -41,47 +40,32 @@
                           <div class="col-lg-3">   <input id="code-objtitle" type="text" name="objtitle" value="${model.objtitle}" class="text required" ></div>
                           
                             </div>
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="code-objtype">控件类型:</label>
-					<div class="col-lg-3">
-						<input id="code-objtype" type="text" name="objtype"
-							value="${model.objtype}" class="text required">
-					</div>
-
-					<label class="col-lg-2 control-label" for="code-objimg">控件图片1:</label>
-					<div class="col-lg-3">
-						<input id="code-objimg" type="text" name="objimg" value="${model.objimg}" class="text">
-					    <a href="#" class="btn btn-default btn-sm">上传</a>
-					</div>
-
-				</div>
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="code-objimg2">控件图片2:</label>
-					<div class="col-lg-3">
-						<input id="code-objimg2" type="text" name="objimg2" value="${model.objimg2}" class="text">
-					    <a href="#" class="btn btn-default btn-sm">上传</a>
-					</div>
-
-					<label class="col-lg-2 control-label" for="code-objimg3">控件图片3:</label>
-					<div class="col-lg-3">
-						<input id="code-objimg3" type="text" name="objimg3" value="${model.objimg3}" class="text">
-					    <a href="#" class="btn btn-default btn-sm">上传</a>
-					</div>
-
-				</div>
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="code-objimg4">控件图片4:</label>
-					<div class="col-lg-3">
-						<input id="code-objimg4" type="text" name="objimg4" value="${model.objimg4}" class="text">
-					    <a href="#" class="btn btn-default btn-sm">上传</a>
-					</div>
-
-				</div>
-
-				<div class="form-group">
+                          <div class="form-group">
+                          <label class="col-lg-2 control-label" for="code-objtype">控件类型:</label>
+                          <div class="col-lg-3">   <input id="code-objtype" type="text" name="objtype" value="${model.objtype}" class="text required" ></div>
+                          
+                          <label class="col-lg-2 control-label" for="code-objimg">控件图片1:</label>
+                          <div class="col-lg-3">   <input id="code-objimg" type="text" name="objimg" value="${model.objimg}" class="text " ></div>
+                          
+                            </div>
+                          <div class="form-group">
+                          <label class="col-lg-2 control-label" for="code-objimg2">控件图片2:</label>
+                          <div class="col-lg-3">   <input id="code-objimg2" type="text" name="objimg2" value="${model.objimg2}" class="text " ></div>
+                          
+                          <label class="col-lg-2 control-label" for="code-objimg3">控件图片3:</label>
+                          <div class="col-lg-3">   <input id="code-objimg3" type="text" name="objimg3" value="${model.objimg3}" class="text " ></div>
+                          
+                            </div>
+                          <div class="form-group">
+                          <label class="col-lg-2 control-label" for="code-objimg4">控件图片4:</label>
+                          <div class="col-lg-3">   <input id="code-objimg4" type="text" name="objimg4" value="${model.objimg4}" class="text " ></div>
+                          
+                            </div>
+                  
+                  <div class="form-group">
 	                  <div class="col-lg-10 col-lg-offset-2">
-	                      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-	                      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+	                      <button id="submitButton" class="btn btn-primary btn-sm a-submit"><span class="glyphicon glyphicon-floppy-save"></span>保存</button>
+	                      <button type="button" onclick="location.href='pop_conf_ctrlobj-list.do'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-log-out"></span> 关闭</button>
 	                  </div>
                   </div>
                 </form>

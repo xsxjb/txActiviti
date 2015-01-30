@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 空调控制记录
+ * @Description: 空调控制记录页面
  * @author JiangBo
  *
  */
@@ -21,35 +21,15 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_AIRCONDITIONLOG")
 public class AirconditionlogEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-	/**id*/
-	private java.lang.String id;
 	/**eventtime*/
-	private Date eventtime;
-	/**controlinfo*/
-	private java.lang.String controlinfo;
+	private java.util.Date eventtime;
 	/**controluser*/
 	private java.lang.String controluser;
+	/**controlinfo*/
+	private java.lang.String controlinfo;
+	/**id*/
+	private java.lang.String id;
 	
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
-	 */
-	
-	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
-	@Column(name ="ID",nullable=false,length=64)
-	public java.lang.String getId(){
-		return this.id;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
-	 */
-	public void setId(java.lang.String id){
-		this.id = id;
-	}
 	/**
 	 *方法: 取得java.util.Date
 	 *@return: java.util.Date  eventtime
@@ -65,6 +45,22 @@ public class AirconditionlogEntity implements java.io.Serializable {
 	 */
 	public void setEventtime(java.util.Date eventtime){
 		this.eventtime = eventtime;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  controluser
+	 */
+	@Column(name ="CONTROLUSER",nullable=true,length=64)
+	public java.lang.String getControluser(){
+		return this.controluser;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  controluser
+	 */
+	public void setControluser(java.lang.String controluser){
+		this.controluser = controluser;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -84,18 +80,20 @@ public class AirconditionlogEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  controluser
+	 *@return: java.lang.String  id
 	 */
-	@Column(name ="CONTROLUSER",nullable=true,length=64)
-	public java.lang.String getControluser(){
-		return this.controluser;
+	
+	@Id
+	@Column(name ="ID",nullable=false,length=64)
+	public java.lang.String getId(){
+		return this.id;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  controluser
+	 *@param: java.lang.String  id
 	 */
-	public void setControluser(java.lang.String controluser){
-		this.controluser = controluser;
+	public void setId(java.lang.String id){
+		this.id = id;
 	}
 }

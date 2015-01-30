@@ -7,31 +7,32 @@
     <title>经营预算月计划表编辑</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
-		var config = {
-		    id: 'codeGrid',
-		    pageNo: ${page.pageNo},
-		    pageSize: ${page.pageSize},
-		    totalCount:${page.totalCount},
-		    resultSize: ${page.resultSize},
-		    pageCount: ${page.pageCount},
-		    orderBy: '${page.orderBy == null ? '' : page.orderBy}',
-		    asc: ${page.asc},
+        // 实例化config对象
+        var monthbudgetplan_sConfig = {
+		    id: 'monthbudgetplan_sCodeGrid',
+		    pageNo: ${monthbudgetplan_sPage.pageNo},
+		    pageSize: ${monthbudgetplan_sPage.pageSize},
+		    totalCount:${monthbudgetplan_sPage.totalCount},
+		    resultSize: ${monthbudgetplan_sPage.resultSize},
+		    pageCount: ${monthbudgetplan_sPage.pageCount},
+		    orderBy: '${monthbudgetplan_sPage.orderBy == null ? '' : monthbudgetplan_sPage.orderBy}',
+		    asc: ${monthbudgetplan_sPage.asc},
 		    params: {
-		        'id': '${model.id}',
-		        'flowId':'${flowId}'
+		        'id': '${model.id}'
 		    },
-			selectedItemClass: 'selectedItem',
-			gridFormId: 'gridForm'
-			,exportUrl: 'monthbudgetplan_s-export.do'
+			selectedItemClass: 'monthbudgetplan_sSelectedItem',
+			gridFormId: 'monthbudgetplan_sGridForm',
+			exportUrl: 'monthbudgetplan_s-export.do'
 		};
-
-		var table;
+        // 实例化table对象
+		var monthbudgetplan_sTable;
 		$(function() {
-			table = new Table(config);
-		    table.configPagination('.m-pagination');
-		    table.configPageInfo('.m-page-info');
-		    table.configPageSize('.m-page-size');
+			monthbudgetplan_sTable = new Table(monthbudgetplan_sConfig);
+		    monthbudgetplan_sTable.configPagination('.monthbudgetplan_sM-pagination');
+		    monthbudgetplan_sTable.configPageInfo('.monthbudgetplan_sM-page-info');
+		    monthbudgetplan_sTable.configPageSize('.monthbudgetplan_sM-page-size');
 		});
+		
 		// 提交方法--通过传入路径 提交到不同的controller
 		function mainFormSubmit(path){
 			$('#mainForm').attr('action', path).submit();
@@ -56,22 +57,22 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
-	<div class="span2"></div>
+	<div class="col-lg-1"></div>
 	<!-- start of main -->
-	<div class="panel panel-default col-md-10"> 
-	    <div class="panel-heading"><h4 class="panel-title">经营预算月计划表流程控制</h4></div>
+	<div class="panel panel-default col-lg-10"> 
+	    <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">经营预算月计划表流程控制</h4></div>
 	    <div class="panel-body">
 	        <div class="pull-left">
-	            <a href="#nextTaskUserDiv" role="button" class="btn btn-default btn-sm" data-toggle="modal">办理</a>
-			    <button class="btn btn-default btn-sm a-submit" onclick="mainFormSubmit('monthbudgetplan-save-draft.do')">草稿</button>
-			    <button class="btn btn-default btn-sm" onclick="location.href='monthbudgetplan-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
-			    <button class="btn btn-default btn-sm a-remove" onclick="location.href='monthbudgetplan-list.do?flowId=${flowId}&flowType=0'">返回</button>
+	            <a href="#nextTaskUserDiv" role="button" class="btn btn-primary btn-sm" data-toggle="modal">办理</a>
+			    <button class="btn btn-primary btn-sm a-submit" onclick="mainFormSubmit('monthbudgetplan-save-draft.do')">草稿</button>
+			    <button class="btn btn-primary btn-sm" onclick="location.href='monthbudgetplan-rollback.do?executionId=${model.executionid}&flowId=${flowId}&flowType=0'">回退</button>
+			    <button class="btn btn-primary btn-sm a-remove" onclick="location.href='monthbudgetplan-list.do?flowId=${flowId}&flowType=0'">返回</button>
 			</div>
 	   </div>
 	   
-        <div class="panel-heading"><h4 class="panel-title">流程内容</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">流程内容</h4></div>
         <div class="panel-body">
-		<div class="content content-inner">
+		  <div class="content content-inner">
 		       <form id="mainForm" method="post" action="monthbudgetplan-complete.do" class="form-horizontal">
 				   <input type="hidden" name="flowId" value="${flowId}">
 				   <c:if test="${model != null}">
@@ -155,7 +156,7 @@
 					
 					<!--  选择下一节点办理人弹出层  -->
 				    <div id="nextTaskUserDiv" class="modal fade" tabindex="-1" style="top:20%;" >
-				            <div class="modal-dialog">
+				        <div class="modal-dialog">
 						    <div class="modal-content">
 							      <div class="modal-header">
 								        <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>
@@ -175,28 +176,29 @@
 						                </div>
 						           </div>
 						           <div class="modal-footer">
-						                    <button class="btn btn-default btn-sm a-insert">办理</button>
-						                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
+						                    <button class="btn btn-primary btn-sm a-insert">办理</button>
+						                    <button class="btn btn-primary btn-sm" data-dismiss="modal" >关闭</button>
 						           </div>
 					            </div><!-- /.modal-content -->
 						  </div><!-- /.modal-dialog -->
 				    </div>
 					
 				</form>
-		</div>
+		  </div>
         </div> 
+        
         <!-- ==================== 子表 ========================================== -->
-        <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
-				    <button class="btn btn-default btn-sm a-insert" onclick="location.href='monthbudgetplan_s-input.do?id=${model.id}&subId=&flowId=${flowId}'">新建</button>
-				    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
-				    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
+				    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='monthbudgetplan_s-input.do?id=${model.id}&subId=&flowId=${flowId}'"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="monthbudgetplan_sTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
+				    <button class="btn btn-primary btn-sm" onclick="monthbudgetplan_sTable.exportExcel()">导出Excel</button>
 	            
 				</div>
 				<div class="pull-right">
 				  每页显示
-				  <select class="m-page-size">
+				  <select class="monthbudgetplan_sM-page-size">
 				    <option value="10">10</option>
 				    <option value="20">20</option>
 				    <option value="50">50</option>
@@ -206,9 +208,9 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="gridForm" name="gridForm" method='post' action="monthbudgetplan_s-remove.do" class="m-form-blank">
+				<form id="monthbudgetplan_sGridForm" name="monthbudgetplan_sGridForm" method='post' action="monthbudgetplan_s-remove.do" class="m-form-blank">
 				  <input type="hidden" name="flowId" value="${flowId}">
-				  <table id="codeGrid" class="table table-hover table-bordered">
+				  <table id="monthbudgetplan_sCodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
 					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -230,11 +232,11 @@
 					      </tr>
 					    </thead>
 						    <tbody>
-						      <c:forEach items="${page.result}" var="item">
-								  <tr>
-								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+						      <c:forEach items="${monthbudgetplan_sPage.result}" var="item" varStatus="status">
+								  <tr class="${status.index%2==1? 'active':''}">
+								        <td><input type="checkbox" class="monthbudgetplan_sSelectedItem a-check" name="monthbudgetplan_sSelectedItem" value="${item.id}"></td>
 									    <td>
-								            <a href="monthbudgetplan_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+								            <a href="monthbudgetplan_s-input.do?id=${model.id}&subId=${item.id}&flowId=${flowId}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 								        </td>
 							            <td>${item.planyear}</td>
 							            <td>${item.planmonth}</td>
@@ -257,10 +259,10 @@
 						</form>
 		        </div>
 			  <article>
-			    <div class="m-page-info pull-left">
+			    <div class="monthbudgetplan_sM-page-info pull-left">
 				  共100条记录 显示1到10条记录
 				</div>
-				<div class="btn-group m-pagination pull-right">
+				<div class="btn-group monthbudgetplan_sM-pagination pull-right">
 				  <button class="btn btn-small">&lt;</button>
 				  <button class="btn btn-small">1</button>
 				  <button class="btn btn-small">&gt;</button>

@@ -53,6 +53,8 @@ public class Pop_conf_ctrlobjController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = pop_conf_ctrlobjService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -134,7 +136,7 @@ public class Pop_conf_ctrlobjController {
         // excel文件名
         tableModel.setExcelName("PLC弹出页面控件对象配置表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "objname", "objimg", "objtitle", "objtype", "objimg2", "objimg3", "objimg4");
+        tableModel.addHeaders("objname", "objtitle", "objtype", "objimg", "objimg2", "objimg3", "objimg4", "id");
         tableModel.setTableName("IB_POP_CONF_CTRLOBJ");
         tableModel.setData(beans);
         try {
@@ -154,7 +156,7 @@ public class Pop_conf_ctrlobjController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "objname", "objimg", "objtitle", "objtype", "objimg2", "objimg3", "objimg4");
+            tableModel.addHeaders("objname", "objtitle", "objtype", "objimg", "objimg2", "objimg3", "objimg4", "id");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.operationmanage.entity.Pop_conf_ctrlobjEntity");
         } catch (Exception e) {

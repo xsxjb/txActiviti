@@ -8,7 +8,6 @@
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
     <script type="text/javascript">
 		$(function() {
 		    $("#cgForm").validate({
@@ -25,8 +24,8 @@
     </script>
     <div class="col-lg-1"></div>
     <!-- start of main -->
-    <div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">供应商管理编辑</h4></div>
+    <div class="panel panel-default col-lg-12"> 
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">供应商管理编辑</h4></div>
         <div class="panel-body">
                 <form id="cgForm" method="post" action="supplier-save.do" class="form-horizontal">
                   <c:if test="${model != null}">
@@ -35,7 +34,7 @@
                   
                           <div class="form-group">
                           <label class="col-lg-2 control-label" for="code-information">填表人:</label>
-                          <div class="col-lg-3">   <input id="code-information" type="text" name="information" value="${model.information}" class="text " ></div>
+                          <div class="col-lg-3">  <label>${model.information}</label>  <input id="code-information" type="hidden" name="information" value="${model.information}" ></div>
                           
                           <label class="col-lg-2 control-label" for="code-suppliernumber">供应商编号:</label>
                           <div class="col-lg-3">   <input id="code-suppliernumber" type="text" name="suppliernumber" value="${model.suppliernumber}" class="text " ></div>
@@ -177,8 +176,8 @@
                   
                   <div class="form-group">
 	                  <div class="col-lg-10 col-lg-offset-2">
-	                      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-	                      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+	                      <button id="submitButton" class="btn btn-primary btn-sm a-submit"><span class="glyphicon glyphicon-floppy-save"></span>保存</button>
+	                      <button type="button" onclick="location.href='supplier-list.do'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-log-out"></span> 关闭</button>
 	                  </div>
                   </div>
                 </form>

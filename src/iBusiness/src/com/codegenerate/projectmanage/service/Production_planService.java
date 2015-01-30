@@ -10,7 +10,7 @@ import com.codegenerate.projectmanage.entity.Production_planEntity;
 
 /**   
  * @Title: Service
- * @Description: 项目生产计划表
+ * @Description: 项目生产计划表页面
  * @author JiangBo
  *
  */

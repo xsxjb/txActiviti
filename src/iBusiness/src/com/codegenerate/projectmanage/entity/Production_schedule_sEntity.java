@@ -228,8 +228,6 @@ public class Production_schedule_sEntity implements java.io.Serializable {
 	 */
 	
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	@Column(name ="ID",nullable=false,length=64)
 	public java.lang.String getId(){
 		return this.id;

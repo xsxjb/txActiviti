@@ -10,7 +10,7 @@ import com.codegenerate.projectmanage.entity.Material_wasteEntity;
 
 /**   
  * @Title: Service
- * @Description: 作废产品原料清单
+ * @Description: 作废产品原料清单页面
  * @author JiangBo
  *
  */

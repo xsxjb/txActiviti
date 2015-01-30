@@ -8,6 +8,12 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
+import com.ibusiness.security.util.SpringSecurityUtils;
+import com.ibusiness.common.service.FormulaCommon;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +28,7 @@ import org.apache.commons.io.IOUtils;
 
 import net.sf.json.JSONObject;
 
+import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.core.spring.MessageHelper;
@@ -39,7 +46,7 @@ import com.codegenerate.projectmanage.service.Project_product_sService;
 
 /**   
  * @Title: Controller
- * @Description: 项目立项表
+ * @Description: 项目立项表流程
  * @author JiangBo
  *
  */
@@ -96,8 +103,14 @@ public class Project_approvalController {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
+            // 流程标题
+            entity.setTasktitle("项目立项表单");
             project_approvalService.insert(entity);
         }
+        
+        // 默认值公式
+        entity = (Project_approvalEntity) new FormulaCommon().defaultValue(entity, "IB_PROJECT_APPROVAL");
+        
         model.addAttribute("model", entity);
         
         // 取得当前流程节点信息
@@ -113,7 +126,7 @@ public class Project_approvalController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = project_product_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("project_product_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -158,8 +171,20 @@ public class Project_approvalController {
     @RequestMapping("project_approval-complete")
     public String completeTask(@ModelAttribute Project_approvalEntity entity, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "userId", required = false) String userId, RedirectAttributes redirectAttributes) throws Exception {
         BpmComBusiness bpmComBusiness = new BpmComBusiness();
+        String executionId = null;
         // 
-        if (!CommonUtils.isNull(entity.getExecutionid())) {
+        if (CommonUtils.isNull(entity.getExecutionid())) {
+            // 启动流程, 设置执行实例ID
+            executionId = bpmComBusiness.flowStart(flowId, userId);
+            entity.setExecutionid(executionId);
+            // 设置流程实例信息=========================
+            Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
+            entity.setCreatedatebpm(task.getCreateTime());
+            entity.setNodename(task.getName());
+            entity.setAssigneeuser(userId);
+            entity.setUsername(CommonBusiness.getInstance().getUserBean(userId).getDisplayName());
+            entity.setDoneflag(0);
+        } else {
             Task task = bpmComBusiness.getTaskIdByExecutionId(entity.getExecutionid());
             // 办理流程
             Map<String, Object> map = new HashMap<String, Object>();
@@ -266,13 +291,55 @@ public class Project_approvalController {
      * 子表删除
      */
     @RequestMapping("project_product_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String project_product_sRemove(@RequestParam("project_product_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Project_product_sEntity> entitys = project_product_sService.findByIds(selectedItem);
         for (Project_product_sEntity entity : entitys) {
             project_product_sService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
         return "redirect:/project_approval/project_approval-input.do?flowId=" + flowId + "&id=" + entitys.get(0).getParentid();
+    }
+    /**
+     * 子表 excel导出
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("project_product_s-export")
+    public void excelProject_product_sExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        page = project_product_sService.pagedQuery(page, propertyFilters);
+        List<Project_product_sEntity> beans = (List<Project_product_sEntity>) page.getResult();
+
+        TableModel tableModel = new TableModel();
+        // excel文件名
+        tableModel.setExcelName("项目立项表流程"+CommonUtils.getInstance().getCurrentDateTime());
+        // 列名
+        tableModel.addHeaders("productno", "productname", "productmodel", "productnumber", "productunit", "unitprice", "amount", "producttype", "productflowid", "id", "parentid");
+        tableModel.setTableName("IB_PROJECT_APPROVAL");
+        tableModel.setData(beans);
+        try {
+            new ExcelCommon().exportExcel(response, tableModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 子表 excel导入
+     */
+    @RequestMapping("project_product_s-importExcel")
+    public String importProject_product_sExport(@RequestParam("attachment") MultipartFile attachment, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "parentid", required = false) String parentid, HttpServletResponse response) {
+        try {
+            File file = new File("test.xls"); 
+            attachment.transferTo(file);
+            // 
+            TableModel tableModel = new TableModel();
+            // 列名
+            tableModel.addHeaders("productno", "productname", "productmodel", "productnumber", "productunit", "unitprice", "amount", "producttype", "productflowid", "id", "parentid");
+            // 导入
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.projectmanage.entity.Project_product_sEntity");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/project_approval/project_approval-input.do?flowId=" + flowId + "&id=" + parentid;
     }
 
     /**

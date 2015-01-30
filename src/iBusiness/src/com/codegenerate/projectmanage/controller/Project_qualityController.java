@@ -36,7 +36,7 @@ import com.codegenerate.projectmanage.service.Project_qualityService;
 
 /**   
  * @Title: Controller
- * @Description: 产品质监任务表
+ * @Description: 产品质监任务表页面
  * @author JiangBo
  *
  */
@@ -53,6 +53,8 @@ public class Project_qualityController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = project_qualityService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -132,7 +134,7 @@ public class Project_qualityController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("产品质监任务表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("产品质监任务表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("projectno", "batchno", "producttype", "productflowid", "productno", "productname", "productmodel", "materialnum", "qualitydate", "qualityresult", "qualityuser", "qualityreport", "id");
         tableModel.setTableName("IB_PROJECT_QUALITY");

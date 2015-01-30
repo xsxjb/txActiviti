@@ -126,7 +126,7 @@ public class MonthbudgetrealController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = monthbudgetreal_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("monthbudgetreal_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -291,7 +291,7 @@ public class MonthbudgetrealController {
      * 子表删除
      */
     @RequestMapping("monthbudgetreal_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String monthbudgetreal_sRemove(@RequestParam("monthbudgetreal_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Monthbudgetreal_sEntity> entitys = monthbudgetreal_sService.findByIds(selectedItem);
         for (Monthbudgetreal_sEntity entity : entitys) {
             monthbudgetreal_sService.remove(entity);

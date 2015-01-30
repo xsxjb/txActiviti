@@ -10,7 +10,7 @@ import com.codegenerate.productmanage.entity.Project_outEntity;
 
 /**   
  * @Title: Service
- * @Description:  项目出库申请表
+ * @Description: 项目出库表流程
  * @author JiangBo
  *
  */

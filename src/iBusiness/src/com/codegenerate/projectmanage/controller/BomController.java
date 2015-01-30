@@ -6,9 +6,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import net.sf.json.JSONObject;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
+import com.ibusiness.common.service.FormulaCommon;
+import com.ibusiness.common.service.CommonBusiness;
 
+import com.ibusiness.security.util.SpringSecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +29,7 @@ import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.task.Task;
 import org.apache.commons.io.IOUtils;
 
+import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
 import com.ibusiness.core.spring.MessageHelper;
@@ -35,7 +45,7 @@ import com.codegenerate.projectmanage.service.Bom_materialsService;
 
 /**   
  * @Title: Controller
- * @Description: 原料BOM分解表
+ * @Description: 原料BOM分解表页面
  * @author JiangBo
  *
  */
@@ -53,6 +63,8 @@ public class BomController {
     public String list(@ModelAttribute Page page,  @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = bomService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -60,19 +72,22 @@ public class BomController {
         return "codegenerate/projectmanage/bom-list.jsp";
     }
     /**
-     * 新建一条流程, 进入流程表单信息页面
+     * 进入主表表单编辑页面
      * @param id
      * @param model
      * @return
      */
     @RequestMapping("bom-input")
-    public String input(@ModelAttribute Page page, @RequestParam(value = "flowId", required = false) String flowId, @RequestParam(value = "id", required = false) String id, Model model) {
+    public String input(@ModelAttribute Page page,  @RequestParam(value = "id", required = false) String id, Model model) {
         BomEntity entity = null;
         if (!CommonUtils.isNull(id)) {
             entity = bomService.get(id);
         } else {
             entity = new BomEntity();
         }
+        // 默认值公式
+        entity = (BomEntity) new FormulaCommon().defaultValue(entity, "IB_BOM");
+        
         model.addAttribute("model", entity);
         // 子表信息
         Map<String, Object> map = new HashMap<String, Object>();
@@ -80,10 +95,7 @@ public class BomController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = bom_materialsService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
-        
-        // 流程ID
-        model.addAttribute("flowId", flowId);
+	        model.addAttribute("bom_materialsPage", page);
         
         // 在controller中设置页面控件用的数据
         return "codegenerate/projectmanage/bom-input.jsp";
@@ -135,10 +147,67 @@ public class BomController {
             bom_materialsService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/bom/bom-input.do?flowId=" + flowId + "&id=" + entity.getParentid();
+        return "redirect:/bom/bom-input.do?id=" + entity.getParentid();
     }
     /**
-     * 删除一条流程信息
+     * 子表 excel导出
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("bom_materials-export")
+    public void excelBom_materialsExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
+        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        page = bom_materialsService.pagedQuery(page, propertyFilters);
+        List<Bom_materialsEntity> beans = (List<Bom_materialsEntity>) page.getResult();
+
+        TableModel tableModel = new TableModel();
+        // excel文件名
+        tableModel.setExcelName("原料BOM分解表页面"+CommonUtils.getInstance().getCurrentDateTime());
+        // 列名
+        tableModel.addHeaders("comments", "id", "materialname", "materialno", "materialnum", "materialprice", "materialtypeno", "materialunit", "model", "parentid", "stocktype");
+        tableModel.setTableName("IB_BOM");
+        tableModel.setData(beans);
+        try {
+            new ExcelCommon().exportExcel(response, tableModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 子表 excel导入
+     */
+    @RequestMapping("bom_materials-importExcel")
+    public String importBom_materialsExport(@RequestParam("attachment") MultipartFile attachment, @RequestParam(value = "parentid", required = false) String parentid, HttpServletResponse response) {
+        try {
+            File file = new File("test.xls"); 
+            attachment.transferTo(file);
+            // 
+            TableModel tableModel = new TableModel();
+            // 列名
+            tableModel.addHeaders("comments", "id", "materialname", "materialno", "materialnum", "materialprice", "materialtypeno", "materialunit", "model", "parentid", "stocktype");
+            // 导入
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.projectmanage.entity.Bom_materialsEntity");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/bom/bom-input.do?id=" + parentid;
+    }
+    /**
+     * 删除子表信息
+     */
+    @RequestMapping("bom_materials-remove")
+    public String bom_materialsRemove(@RequestParam("bom_materialsSelectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+        List<Bom_materialsEntity> entitys = bom_materialsService.findByIds(selectedItem);
+        String parentid = null;
+        for (Bom_materialsEntity entity : entitys) {
+            parentid = entity.getParentid();
+            bom_materialsService.remove(entity);
+        }
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+        
+        return "redirect:/bom/bom-input.do?id=" + parentid;
+    }
+    /**
+     * 删除一条主表信息
      * @param selectedItem
      * @param redirectAttributes
      * @return

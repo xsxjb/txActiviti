@@ -126,7 +126,7 @@ public class AnnualmaterialplanController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = annualmaterialplan_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("annualmaterialplan_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -291,7 +291,7 @@ public class AnnualmaterialplanController {
      * 子表删除
      */
     @RequestMapping("annualmaterialplan_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String annualmaterialplan_sRemove(@RequestParam("annualmaterialplan_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Annualmaterialplan_sEntity> entitys = annualmaterialplan_sService.findByIds(selectedItem);
         for (Annualmaterialplan_sEntity entity : entitys) {
             annualmaterialplan_sService.remove(entity);

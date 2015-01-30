@@ -126,7 +126,7 @@ public class AnnualchangeplanController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = annualchangeplan_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("annualchangeplan_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -291,7 +291,7 @@ public class AnnualchangeplanController {
      * 子表删除
      */
     @RequestMapping("annualchangeplan_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String annualchangeplan_sRemove(@RequestParam("annualchangeplan_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Annualchangeplan_sEntity> entitys = annualchangeplan_sService.findByIds(selectedItem);
         for (Annualchangeplan_sEntity entity : entitys) {
             annualchangeplan_sService.remove(entity);

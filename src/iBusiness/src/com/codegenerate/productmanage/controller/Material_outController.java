@@ -46,7 +46,7 @@ import com.codegenerate.productmanage.service.Material_out_sService;
 
 /**   
  * @Title: Controller
- * @Description: (领料)原料出库表
+ * @Description: (领料)原料出库表流程
  * @author JiangBo
  *
  */
@@ -103,6 +103,8 @@ public class Material_outController {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
+            // 流程标题
+            entity.setTasktitle("(领料)原料出库信息");
             material_outService.insert(entity);
         }
         
@@ -124,7 +126,7 @@ public class Material_outController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = material_out_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("material_out_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -291,7 +293,7 @@ public class Material_outController {
      * 子表删除
      */
     @RequestMapping("material_out_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String material_out_sRemove(@RequestParam("material_out_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Material_out_sEntity> entitys = material_out_sService.findByIds(selectedItem);
         for (Material_out_sEntity entity : entitys) {
             material_out_sService.remove(entity);
@@ -311,7 +313,7 @@ public class Material_outController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("(领料)原料出库表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("(领料)原料出库表流程"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("materialno", "materialname", "materialmodel", "materialunit", "materialnum", "manufacturename", "remark", "id", "parentid");
         tableModel.setTableName("IB_MATERIAL_OUT");

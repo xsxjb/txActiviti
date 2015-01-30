@@ -23,6 +23,8 @@ public class Conf_popup_pageEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
 	/**pagename*/
 	private java.lang.String pagename;
+	/**pagetitle*/
+	private java.lang.String pagetitle;
 	/**popuptype*/
 	private java.lang.String popuptype;
 	/**pageurl*/
@@ -31,14 +33,12 @@ public class Conf_popup_pageEntity implements java.io.Serializable {
 	private java.lang.String pagetype;
 	/**mainpageid*/
 	private java.lang.String mainpageid;
-	/**id*/
-	private java.lang.String id;
 	/**pagehight*/
 	private java.lang.String pagehight;
 	/**pagewidth*/
 	private java.lang.String pagewidth;
-	/**pagetitle*/
-	private java.lang.String pagetitle;
+	/**id*/
+	private java.lang.String id;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -55,6 +55,22 @@ public class Conf_popup_pageEntity implements java.io.Serializable {
 	 */
 	public void setPagename(java.lang.String pagename){
 		this.pagename = pagename;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  pagetitle
+	 */
+	@Column(name ="PAGETITLE",nullable=true,length=128)
+	public java.lang.String getPagetitle(){
+		return this.pagetitle;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  pagetitle
+	 */
+	public void setPagetitle(java.lang.String pagetitle){
+		this.pagetitle = pagetitle;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -122,24 +138,6 @@ public class Conf_popup_pageEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
-	 */
-	
-	@Id
-	@Column(name ="ID",nullable=false,length=64)
-	public java.lang.String getId(){
-		return this.id;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
-	 */
-	public void setId(java.lang.String id){
-		this.id = id;
-	}
-	/**
-	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  pagehight
 	 */
 	@Column(name ="PAGEHIGHT",nullable=true,length=8)
@@ -172,18 +170,20 @@ public class Conf_popup_pageEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  pagetitle
+	 *@return: java.lang.String  id
 	 */
-	@Column(name ="PAGETITLE",nullable=true,length=128)
-	public java.lang.String getPagetitle(){
-		return this.pagetitle;
+	
+	@Id
+	@Column(name ="ID",nullable=false,length=64)
+	public java.lang.String getId(){
+		return this.id;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  pagetitle
+	 *@param: java.lang.String  id
 	 */
-	public void setPagetitle(java.lang.String pagetitle){
-		this.pagetitle = pagetitle;
+	public void setId(java.lang.String id){
+		this.id = id;
 	}
 }

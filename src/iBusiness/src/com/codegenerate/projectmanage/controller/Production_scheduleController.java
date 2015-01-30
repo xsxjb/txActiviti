@@ -104,7 +104,7 @@ public class Production_scheduleController {
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
             // 流程标题
-            entity.setTasktitle("项目生产进度流程");
+            entity.setTasktitle("项目生产进度表");
             production_scheduleService.insert(entity);
         }
         
@@ -126,7 +126,7 @@ public class Production_scheduleController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = production_schedule_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("production_schedule_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -291,7 +291,7 @@ public class Production_scheduleController {
      * 子表删除
      */
     @RequestMapping("production_schedule_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String production_schedule_sRemove(@RequestParam("production_schedule_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Production_schedule_sEntity> entitys = production_schedule_sService.findByIds(selectedItem);
         for (Production_schedule_sEntity entity : entitys) {
             production_schedule_sService.remove(entity);

@@ -10,7 +10,7 @@ import com.codegenerate.projectmanage.entity.Project_approvalEntity;
 
 /**   
  * @Title: Service
- * @Description: 项目立项表
+ * @Description: 项目立项表流程
  * @author JiangBo
  *
  */

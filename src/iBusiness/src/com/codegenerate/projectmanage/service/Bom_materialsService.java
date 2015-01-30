@@ -10,7 +10,7 @@ import com.codegenerate.projectmanage.entity.Bom_materialsEntity;
 
 /**   
  * @Title: Service
- * @Description: 原料BOM分解表
+ * @Description: 原料BOM分解表页面
  * @author JiangBo
  *
  */

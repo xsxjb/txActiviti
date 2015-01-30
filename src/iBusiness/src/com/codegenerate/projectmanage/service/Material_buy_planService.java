@@ -10,7 +10,7 @@ import com.codegenerate.projectmanage.entity.Material_buy_planEntity;
 
 /**   
  * @Title: Service
- * @Description: 材料采购计划申请表
+ * @Description: 材料采购计划申请表流程
  * @author JiangBo
  *
  */

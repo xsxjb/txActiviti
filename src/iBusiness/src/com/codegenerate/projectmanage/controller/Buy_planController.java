@@ -46,7 +46,7 @@ import com.codegenerate.projectmanage.service.Material_buy_planService;
 
 /**   
  * @Title: Controller
- * @Description: 材料采购计划申请表
+ * @Description: 材料采购计划申请表流程
  * @author JiangBo
  *
  */
@@ -103,6 +103,8 @@ public class Buy_planController {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
+            // 流程标题
+            entity.setTasktitle("材料采购计划申请表");
             buy_planService.insert(entity);
         }
         
@@ -124,7 +126,7 @@ public class Buy_planController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = material_buy_planService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("material_buy_planPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -289,7 +291,7 @@ public class Buy_planController {
      * 子表删除
      */
     @RequestMapping("material_buy_plan-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String material_buy_planRemove(@RequestParam("material_buy_planSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Material_buy_planEntity> entitys = material_buy_planService.findByIds(selectedItem);
         for (Material_buy_planEntity entity : entitys) {
             material_buy_planService.remove(entity);
@@ -309,7 +311,7 @@ public class Buy_planController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("材料采购计划申请表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("材料采购计划申请表流程"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("materialno", "materialname", "model", "materialnum", "deliverydate", "id", "parentid");
         tableModel.setTableName("IB_BUY_PLAN");

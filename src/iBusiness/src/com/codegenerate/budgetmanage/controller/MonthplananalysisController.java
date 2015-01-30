@@ -126,7 +126,7 @@ public class MonthplananalysisController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = monthplananaly_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("monthplananaly_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -291,7 +291,7 @@ public class MonthplananalysisController {
      * 子表删除
      */
     @RequestMapping("monthplananaly_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String monthplananaly_sRemove(@RequestParam("monthplananaly_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Monthplananaly_sEntity> entitys = monthplananaly_sService.findByIds(selectedItem);
         for (Monthplananaly_sEntity entity : entitys) {
             monthplananaly_sService.remove(entity);

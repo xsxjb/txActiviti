@@ -21,10 +21,6 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_MONTHBUDGETPLAN_S")
 public class Monthbudgetplan_sEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-	/**id*/
-	private java.lang.String id;
-	/**parentid*/
-	private java.lang.String parentid;
 	/**planyear*/
 	private java.lang.String planyear;
 	/**planmonth*/
@@ -53,46 +49,16 @@ public class Monthbudgetplan_sEntity implements java.io.Serializable {
 	private java.lang.String deptname;
 	/**remark*/
 	private java.lang.String remark;
+	/**id*/
+	private java.lang.String id;
+	/**parentid*/
+	private java.lang.String parentid;
 	
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
-	 */
-	
-	@Id
-	@Column(name ="ID",nullable=false,length=64)
-	public java.lang.String getId(){
-		return this.id;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
-	 */
-	public void setId(java.lang.String id){
-		this.id = id;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  parentid
-	 */
-	@Column(name ="PARENTID",nullable=true,length=64)
-	public java.lang.String getParentid(){
-		return this.parentid;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  parentid
-	 */
-	public void setParentid(java.lang.String parentid){
-		this.parentid = parentid;
-	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  planyear
 	 */
-	@Column(name ="PLANYEAR",nullable=true,length=32)
+	@Column(name ="PLANYEAR",nullable=true,length=8)
 	public java.lang.String getPlanyear(){
 		return this.planyear;
 	}
@@ -108,7 +74,7 @@ public class Monthbudgetplan_sEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  planmonth
 	 */
-	@Column(name ="PLANMONTH",nullable=true,length=8)
+	@Column(name ="PLANMONTH",nullable=true,length=4)
 	public java.lang.String getPlanmonth(){
 		return this.planmonth;
 	}
@@ -311,5 +277,39 @@ public class Monthbudgetplan_sEntity implements java.io.Serializable {
 	 */
 	public void setRemark(java.lang.String remark){
 		this.remark = remark;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  id
+	 */
+	
+	@Id
+	@Column(name ="ID",nullable=false,length=64)
+	public java.lang.String getId(){
+		return this.id;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  id
+	 */
+	public void setId(java.lang.String id){
+		this.id = id;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  parentid
+	 */
+	@Column(name ="PARENTID",nullable=true,length=64)
+	public java.lang.String getParentid(){
+		return this.parentid;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  parentid
+	 */
+	public void setParentid(java.lang.String parentid){
+		this.parentid = parentid;
 	}
 }

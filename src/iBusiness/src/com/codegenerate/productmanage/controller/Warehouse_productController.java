@@ -36,7 +36,7 @@ import com.codegenerate.productmanage.service.Warehouse_productService;
 
 /**   
  * @Title: Controller
- * @Description: 产品库存管理表
+ * @Description: 产品库存管理表页面
  * @author JiangBo
  *
  */
@@ -53,6 +53,8 @@ public class Warehouse_productController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = warehouse_productService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -132,9 +134,9 @@ public class Warehouse_productController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("产品库存管理表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("产品库存管理表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "producttype", "productflowid", "productno", "productname", "productmodel", "productunit", "productprice", "productnum", "warehouseno", "warehousename");
+        tableModel.addHeaders("id", "productflowid", "productmodel", "productname", "productno", "productnum", "productprice", "producttype", "productunit", "warehousename", "warehouseno");
         tableModel.setTableName("IB_WAREHOUSE_PRODUCT");
         tableModel.setData(beans);
         try {
@@ -154,7 +156,7 @@ public class Warehouse_productController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "producttype", "productflowid", "productno", "productname", "productmodel", "productunit", "productprice", "productnum", "warehouseno", "warehousename");
+            tableModel.addHeaders("id", "productflowid", "productmodel", "productname", "productno", "productnum", "productprice", "producttype", "productunit", "warehousename", "warehouseno");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.productmanage.entity.Warehouse_productEntity");
         } catch (Exception e) {

@@ -10,7 +10,7 @@ import com.codegenerate.projectmanage.entity.Project_qualityEntity;
 
 /**   
  * @Title: Service
- * @Description: 产品质监任务表
+ * @Description: 产品质监任务表页面
  * @author JiangBo
  *
  */

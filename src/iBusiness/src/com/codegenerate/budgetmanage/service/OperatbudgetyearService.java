@@ -10,7 +10,7 @@ import com.codegenerate.budgetmanage.entity.OperatbudgetyearEntity;
 
 /**   
  * @Title: Service
- * @Description: 经营预算年度数据表
+ * @Description: 经营预算年度数据表页面
  * @author JiangBo
  *
  */

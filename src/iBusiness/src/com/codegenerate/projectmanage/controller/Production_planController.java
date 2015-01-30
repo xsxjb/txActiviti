@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ibusiness.common.export.ExcelCommon;
 import com.ibusiness.common.export.TableModel;
 import com.ibusiness.common.service.FormulaCommon;
+import com.ibusiness.common.service.CommonBusiness;
 
 import com.ibusiness.security.util.SpringSecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,7 @@ import com.codegenerate.projectmanage.service.Production_plan_sService;
 
 /**   
  * @Title: Controller
- * @Description: 项目生产计划表
+ * @Description: 项目生产计划表页面
  * @author JiangBo
  *
  */
@@ -62,6 +63,8 @@ public class Production_planController {
     public String list(@ModelAttribute Page page,  @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = production_planService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -69,7 +72,7 @@ public class Production_planController {
         return "codegenerate/projectmanage/production_plan-list.jsp";
     }
     /**
-     * 新建一条流程, 进入流程表单信息页面
+     * 进入主表表单编辑页面
      * @param id
      * @param model
      * @return
@@ -92,7 +95,7 @@ public class Production_planController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = production_plan_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("production_plan_sPage", page);
         
         // 在controller中设置页面控件用的数据
         return "codegenerate/projectmanage/production_plan-input.jsp";
@@ -158,9 +161,9 @@ public class Production_planController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("项目生产计划表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("项目生产计划表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders();
+        tableModel.addHeaders("projectno", "projectname", "batchno", "productiontype", "productionmode", "productionaddress", "producttype", "productflowid", "productno", "productname", "productmodel", "productnum", "workingday", "starttime", "endtime", "id", "parentid");
         tableModel.setTableName("IB_PRODUCTION_PLAN");
         tableModel.setData(beans);
         try {
@@ -180,7 +183,7 @@ public class Production_planController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders();
+            tableModel.addHeaders("projectno", "projectname", "batchno", "productiontype", "productionmode", "productionaddress", "producttype", "productflowid", "productno", "productname", "productmodel", "productnum", "workingday", "starttime", "endtime", "id", "parentid");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.projectmanage.entity.Production_plan_sEntity");
         } catch (Exception e) {
@@ -189,7 +192,22 @@ public class Production_planController {
         return "redirect:/production_plan/production_plan-input.do?id=" + parentid;
     }
     /**
-     * 删除一条流程信息
+     * 删除子表信息
+     */
+    @RequestMapping("production_plan_s-remove")
+    public String production_plan_sRemove(@RequestParam("production_plan_sSelectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+        List<Production_plan_sEntity> entitys = production_plan_sService.findByIds(selectedItem);
+        String parentid = null;
+        for (Production_plan_sEntity entity : entitys) {
+            parentid = entity.getParentid();
+            production_plan_sService.remove(entity);
+        }
+        messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
+        
+        return "redirect:/production_plan/production_plan-input.do?id=" + parentid;
+    }
+    /**
+     * 删除一条主表信息
      * @param selectedItem
      * @param redirectAttributes
      * @return

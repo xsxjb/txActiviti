@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 产品入库表
+ * @Description: 产品入库表流程
  * @author JiangBo
  *
  */
@@ -25,24 +25,26 @@ public class Product_in_sEntity implements java.io.Serializable {
 	private java.lang.String id;
 	/**parentid*/
 	private java.lang.String parentid;
-	/**warehouseno*/
-	private java.lang.String warehouseno;
-	/**warehousename*/
-	private java.lang.String warehousename;
-	/**producttype*/
-	private java.lang.String producttype;
 	/**productflowid*/
 	private java.lang.String productflowid;
-	/**productno*/
-	private java.lang.String productno;
-	/**productname*/
-	private java.lang.String productname;
 	/**productmodel*/
 	private java.lang.String productmodel;
-	/**productunit*/
-	private java.lang.String productunit;
+	/**productname*/
+	private java.lang.String productname;
+	/**productno*/
+	private java.lang.String productno;
 	/**productnum*/
 	private java.lang.Integer productnum;
+	/**producttype*/
+	private java.lang.String producttype;
+	/**productunit*/
+	private java.lang.String productunit;
+	/**unitprice*/
+	private java.lang.Double unitprice;
+	/**warehousename*/
+	private java.lang.String warehousename;
+	/**warehouseno*/
+	private java.lang.String warehouseno;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -50,8 +52,6 @@ public class Product_in_sEntity implements java.io.Serializable {
 	 */
 	
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	@Column(name ="ID",nullable=false,length=64)
 	public java.lang.String getId(){
 		return this.id;
@@ -82,54 +82,6 @@ public class Product_in_sEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  warehouseno
-	 */
-	@Column(name ="WAREHOUSENO",nullable=true,length=64)
-	public java.lang.String getWarehouseno(){
-		return this.warehouseno;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  warehouseno
-	 */
-	public void setWarehouseno(java.lang.String warehouseno){
-		this.warehouseno = warehouseno;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  warehousename
-	 */
-	@Column(name ="WAREHOUSENAME",nullable=true,length=64)
-	public java.lang.String getWarehousename(){
-		return this.warehousename;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  warehousename
-	 */
-	public void setWarehousename(java.lang.String warehousename){
-		this.warehousename = warehousename;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  producttype
-	 */
-	@Column(name ="PRODUCTTYPE",nullable=true,length=64)
-	public java.lang.String getProducttype(){
-		return this.producttype;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  producttype
-	 */
-	public void setProducttype(java.lang.String producttype){
-		this.producttype = producttype;
-	}
-	/**
-	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  productflowid
 	 */
 	@Column(name ="PRODUCTFLOWID",nullable=true,length=64)
@@ -143,38 +95,6 @@ public class Product_in_sEntity implements java.io.Serializable {
 	 */
 	public void setProductflowid(java.lang.String productflowid){
 		this.productflowid = productflowid;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  productno
-	 */
-	@Column(name ="PRODUCTNO",nullable=true,length=64)
-	public java.lang.String getProductno(){
-		return this.productno;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  productno
-	 */
-	public void setProductno(java.lang.String productno){
-		this.productno = productno;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  productname
-	 */
-	@Column(name ="PRODUCTNAME",nullable=true,length=128)
-	public java.lang.String getProductname(){
-		return this.productname;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  productname
-	 */
-	public void setProductname(java.lang.String productname){
-		this.productname = productname;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -194,19 +114,35 @@ public class Product_in_sEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  productunit
+	 *@return: java.lang.String  productname
 	 */
-	@Column(name ="PRODUCTUNIT",nullable=true,length=8)
-	public java.lang.String getProductunit(){
-		return this.productunit;
+	@Column(name ="PRODUCTNAME",nullable=true,length=128)
+	public java.lang.String getProductname(){
+		return this.productname;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  productunit
+	 *@param: java.lang.String  productname
 	 */
-	public void setProductunit(java.lang.String productunit){
-		this.productunit = productunit;
+	public void setProductname(java.lang.String productname){
+		this.productname = productname;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  productno
+	 */
+	@Column(name ="PRODUCTNO",nullable=true,length=64)
+	public java.lang.String getProductno(){
+		return this.productno;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  productno
+	 */
+	public void setProductno(java.lang.String productno){
+		this.productno = productno;
 	}
 	/**
 	 *方法: 取得java.lang.Integer
@@ -223,5 +159,85 @@ public class Product_in_sEntity implements java.io.Serializable {
 	 */
 	public void setProductnum(java.lang.Integer productnum){
 		this.productnum = productnum;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  producttype
+	 */
+	@Column(name ="PRODUCTTYPE",nullable=true,length=64)
+	public java.lang.String getProducttype(){
+		return this.producttype;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  producttype
+	 */
+	public void setProducttype(java.lang.String producttype){
+		this.producttype = producttype;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  productunit
+	 */
+	@Column(name ="PRODUCTUNIT",nullable=true,length=8)
+	public java.lang.String getProductunit(){
+		return this.productunit;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  productunit
+	 */
+	public void setProductunit(java.lang.String productunit){
+		this.productunit = productunit;
+	}
+	/**
+	 *方法: 取得java.lang.Double
+	 *@return: java.lang.Double  unitprice
+	 */
+	@Column(name ="UNITPRICE",nullable=true,precision=12,scale=2)
+	public java.lang.Double getUnitprice(){
+		return this.unitprice;
+	}
+
+	/**
+	 *方法: 设置java.lang.Double
+	 *@param: java.lang.Double  unitprice
+	 */
+	public void setUnitprice(java.lang.Double unitprice){
+		this.unitprice = unitprice;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  warehousename
+	 */
+	@Column(name ="WAREHOUSENAME",nullable=true,length=64)
+	public java.lang.String getWarehousename(){
+		return this.warehousename;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  warehousename
+	 */
+	public void setWarehousename(java.lang.String warehousename){
+		this.warehousename = warehousename;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  warehouseno
+	 */
+	@Column(name ="WAREHOUSENO",nullable=true,length=64)
+	public java.lang.String getWarehouseno(){
+		return this.warehouseno;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  warehouseno
+	 */
+	public void setWarehouseno(java.lang.String warehouseno){
+		this.warehouseno = warehouseno;
 	}
 }

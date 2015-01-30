@@ -10,7 +10,7 @@ import com.codegenerate.crmmanage.entity.Customer_infoEntity;
 
 /**   
  * @Title: Service
- * @Description: 客户信息表
+ * @Description: 客户信息表页面
  * @author JiangBo
  *
  */

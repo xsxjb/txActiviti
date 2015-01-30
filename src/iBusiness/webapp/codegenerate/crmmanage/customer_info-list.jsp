@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>列表</title>
+    <title>客户信息管理列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -47,25 +47,25 @@
 	<!-- start of main -->
 	<div class="panel panel-default col-lg-10">
 	<!-- 查询条件 -->
-        <div class="panel-heading"><h4 class="panel-title">查询</h4></div>
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
           <div class="panel-body">
 	          <div id="search" class="content content-inner">
 				  <form name="cgForm" method="post" action="customer_info-list.do" class="form-inline">
 				    <div class="form-group">
-				                <label for="code_table_customername">客户信息表.客户名称:</label>
+				                <label for="code_table_customername">客户名称:</label>
 				                <input type="text" id="code_table_customername" name="filter_LIKES_customername" value="${param.filter_LIKES_customername}">
-					    <button class="btn btn-default btn-sm" onclick="document.cgForm.submit()">查询</button>
+					    <button class="btn btn-primary btn-sm" onclick="document.cgForm.submit()"><span class="glyphicon glyphicon-search"></span>查询</button>
 					</div>
 				 </form>
 			  </div>
 		  </div>
-	   <div class="panel-heading"><h4 class="panel-title">列表</h4></div>
+	   <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">客户信息管理列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
-			    <button class="btn btn-default btn-sm a-insert" onclick="location.href='customer_info-input.do'">新建</button>
-			    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
-			    <button class="btn btn-default btn-sm" onclick="table.exportExcel()">导出Excel</button>
-			    <button class="btn btn-default btn-sm"  onclick="importExcelAdd.click()">导入Excel</button>
+			    <button class="btn btn-primary btn-sm a-insert" href="customer_info-input.do" data-target="#modalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+			    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
+			    <button class="btn btn-primary btn-sm" onclick="table.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
+			    <button class="btn btn-primary btn-sm"  onclick="importExcelAdd.click()"><span class="glyphicon glyphicon-import"></span>导入Excel</button>
 			    <form id="msgInfoForm" method="post" action="customer_info-importExcel.do" class="form-horizontal" enctype="multipart/form-data">
                     <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="importExcel()"> 
                 </form>
@@ -84,31 +84,29 @@
 	   </div>
 	   <div class="content">
 			<form id="gridForm" name="gridForm" method='post' action="customer_info-remove.do" class="m-form-blank">
-			  <table id="codeGrid" class="table table-hover table-bordered">
+			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
 				      <tr>
 				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					                <th class="sorting">客户编号</th>
 					                <th class="sorting">客户名称</th>
-					                <th class="sorting">客户状态</th>
-					                <th class="sorting"> 客户类别</th>
+					                <th class="sorting">客户类别</th>
 					                <th class="sorting">客户地址</th>
+					                <th class="sorting">手机</th>
 					                <th class="sorting">联系电话</th>
 				        <th width="80">&nbsp;</th>
 				      </tr>
 				    </thead>
 					    <tbody>
-					      <c:forEach items="${page.result}" var="item">
-					      <tr>
+					      <c:forEach items="${page.result}" var="item" varStatus="status">  
+					      <tr class="${status.index%2==1? 'active':''}">
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-						            <td>${item.customerno}</td>
 						            <td>${item.customername}</td>
-						            <td>${item.customerstate}</td>
 						            <td>${item.customertype}</td>
 						            <td>${item.customeraddress}</td>
+						            <td>${item.phone}</td>
 						            <td>${item.telephone}</td>
 					        <td>
-					          <a href="customer_info-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+					          <a href="customer_info-input.do?id=${item.id}" class="a-update" data-target="#modalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
 					        </td>
 					      </tr>
 					      </c:forEach>
@@ -127,6 +125,13 @@
 			</div>
 		    <div class="m-clear"></div>
 	      </article>
+	  </div>
+	  <!-- 模态框 -->
+	  <div id="modalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
+		  <div class="modal-dialog modal-lg">
+			  <div class="modal-content" style="text-align: center;height: 600px">
+			  </div>
+		  </div>
 	  </div>
 	<!-- end of main -->
 	</div>

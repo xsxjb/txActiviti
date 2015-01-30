@@ -36,7 +36,7 @@ import com.codegenerate.projectmanage.service.Material_wasteService;
 
 /**   
  * @Title: Controller
- * @Description: 作废产品原料清单
+ * @Description: 作废产品原料清单页面
  * @author JiangBo
  *
  */
@@ -53,6 +53,8 @@ public class Material_wasteController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = material_wasteService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -132,7 +134,7 @@ public class Material_wasteController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("作废产品原料清单"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("作废产品原料清单页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("materialno", "materialname", "model", "materialnum", "currentstatus", "processingresults", "id");
         tableModel.setTableName("IB_MATERIAL_WASTE");

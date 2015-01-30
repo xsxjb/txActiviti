@@ -126,7 +126,7 @@ public class MonthbudgetplanController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = monthbudgetplan_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("monthbudgetplan_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -291,7 +291,7 @@ public class MonthbudgetplanController {
      * 子表删除
      */
     @RequestMapping("monthbudgetplan_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String monthbudgetplan_sRemove(@RequestParam("monthbudgetplan_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Monthbudgetplan_sEntity> entitys = monthbudgetplan_sService.findByIds(selectedItem);
         for (Monthbudgetplan_sEntity entity : entitys) {
             monthbudgetplan_sService.remove(entity);

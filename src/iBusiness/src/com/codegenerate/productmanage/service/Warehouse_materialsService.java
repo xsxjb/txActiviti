@@ -10,7 +10,7 @@ import com.codegenerate.productmanage.entity.Warehouse_materialsEntity;
 
 /**   
  * @Title: Service
- * @Description: 原料库存管理表
+ * @Description: 原料库存管理表页面
  * @author JiangBo
  *
  */

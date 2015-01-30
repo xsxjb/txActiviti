@@ -37,9 +37,9 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
-    <div class="span2"></div>
+    <div class="col-lg-1"></div>
 	<!-- start of main -->
-	<div class="panel panel-default col-md-10 ">
+	<div class="panel panel-default col-lg-10 ">
         <!-- tabs  -->
         <ul class="nav nav-tabs">
 		  <li class="${flowType =='0' ? 'active' : ''} "><a href="${ctx}/annualchangeplan/annualchangeplan-list.do?flowId=${flowId}&flowType=0" >待办</a></li>
@@ -47,25 +47,28 @@
 		</ul>
 		<div id="tabContent" class="tab-content">
 		    <!-- ========================== 待办流程信息 =================================================== -->
-			    <c:if test="${flowType == '0'}">
+			<c:if test="${flowType == '0'}">
 			    <div id=bpmBase class="tab-pane fade  ${flowType == '0'? 'active in' : ''}">
+			    <div class="panel panel-default">
 				    <!-- 查询条件 -->
-			        <div class="panel-heading"><h4 class="panel-title">经营预算年度计划增补、变更流程表流程查询</h4></div>
+			        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">经营预算年度计划增补、变更流程表流程查询</h4></div>
 			        <div class="panel-body">
 				          <div id="search" class="content content-inner">
 							  <form name="bpmFlowForm" method="post" action="annualchangeplan-list.do?flowId=${flowId}&flowType=0" class="form-inline">
 							    <div class="form-group">
 					                <label for="code_table_flownamebpm">待办流程标题:</label>
 					                <input type="text" id="code_table_tasktitle" name="filter_LIKES_tasktitle" value="${param.filter_LIKES_tasktitle}">
-								    <button class="btn btn-default btn-sm" onclick="document.bpmFlowForm.submit()">查询</button>
+								    <button class="btn btn-primary btn-sm" onclick="document.bpmFlowForm.submit()"><span class="glyphicon glyphicon-search"></span>查询</button>
 								</div>
 							 </form>
 						  </div>
 					</div>
+					
+					<div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">流程列表</h4></div>
 			        <div class="panel-body">
 					    <div class="pull-left">
-						    <button class="btn btn-default btn-sm a-insert" onclick="location.href='annualchangeplan-input.do?flowId=${flowId}'">新建</button>
-						    <button class="btn btn-default btn-sm a-remove" onclick="table.removeAll()">删除</button>
+						    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='annualchangeplan-input.do?flowId=${flowId}'"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+						    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 						</div>
 						<div class="pull-right">
 						  每页显示
@@ -81,7 +84,7 @@
 				    <div class="content">
 						<form id="gridForm" name="gridForm" method='post' action="annualchangeplan-remove.do" class="m-form-blank">
 						    <input type="hidden" name="flowId" value="${flowId}">
-						  <table id="codeGrid" class="table table-hover table-bordered">
+						  <table id="codeGrid" class="table table-hover table-striped">
 						      <thead>
 							      <tr>
 							          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -94,11 +97,11 @@
 							      </tr>
 							    </thead>
 								    <tbody>
-								      <c:forEach items="${page.result}" var="item">
-								      <tr>
+								      <c:forEach items="${page.result}" var="item" varStatus="status">
+								      <tr class="${status.index%2==1? 'active':''}">
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 								        <td>
-								          <a href="annualchangeplan-input.do?flowId=${flowId}&id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+								          <a href="annualchangeplan-input.do?flowId=${flowId}&id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 								        </td>
 								        <td><fmt:formatDate value="${item.createdatebpm}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 								        <td>${item.nodename}</td>
@@ -125,23 +128,28 @@
 					    <div class="m-clear"></div>
 				      </article>
 			  </div>
-			  </c:if>
+			  </div>
+			</c:if>
 			  
 			  <!-- ========================== 已办流程信息 =================================================== -->
 			   <c:if test="${flowType =='1'}">
 			   <div id=bpmBase class="tab-pane fade  ${flowType == '1' ?' active in' : ''}">
+			   <div class="panel panel-default">
 				    <!-- 查询条件 -->
+			        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">已办经营预算年度计划增补、变更流程表流程查询</h4></div>
 			        <div class="panel-body">
 				          <div id="search" class="content content-inner">
 							  <form name="bpmFlowForm" method="post" action="annualchangeplan-list.do" class="form-inline">
 							    <div class="form-group">
 					                <label for="code_table_flownamebpm">已办流程标题:</label>
 					                <input type="text" id="code_table_flownamebpm" name="filter_LIKES_flownamebpm" value="${param.filter_LIKES_flownamebpm}">
-								    <button class="btn btn-default btn-sm" onclick="document.bpmFlowForm.submit()">查询</button>
+								    <button class="btn btn-primary btn-sm" onclick="document.bpmFlowForm.submit()"><span class="glyphicon glyphicon-search"></span>查询</button>
 								</div>
 							 </form>
 						  </div>
 					</div>
+					
+					<div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">已办流程列表</h4></div>
 			        <div class="panel-body">
 						<div class="pull-right">
 						  每页显示
@@ -157,7 +165,7 @@
 				    <div class="content">
 						<form id="gridForm" name="gridForm" method='post' action="annualchangeplan-remove.do" class="m-form-blank">
 						  <input type="hidden" name="flowId" value="${flowId}">
-						  <table id="codeGrid" class="table table-hover table-bordered">
+						  <table id="codeGrid" class="table table-hover table-striped">
 						      <thead>
 							      <tr>
 							          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -169,8 +177,8 @@
 							      </tr>
 							    </thead>
 								    <tbody>
-								      <c:forEach items="${page.result}" var="item">
-								      <tr>
+								      <c:forEach items="${page.result}" var="item" varStatus="status">
+								      <tr class="${status.index%2==1? 'active':''}">
 								        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 								        <td><fmt:formatDate value="${item.createdatebpm}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 								        <td>${item.nodename}</td>
@@ -196,6 +204,7 @@
 						</div>
 					    <div class="m-clear"></div>
 				      </article>
+			  </div>
 			  </div>
 			  </c:if>
 			  

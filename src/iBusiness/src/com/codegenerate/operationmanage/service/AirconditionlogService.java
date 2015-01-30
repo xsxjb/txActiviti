@@ -10,7 +10,7 @@ import com.codegenerate.operationmanage.entity.AirconditionlogEntity;
 
 /**   
  * @Title: Service
- * @Description: 空调控制记录
+ * @Description: 空调控制记录页面
  * @author JiangBo
  *
  */

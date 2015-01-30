@@ -21,22 +21,6 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_ANNUALMATERIALPLAN")
 public class AnnualmaterialplanEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-	/**executionid*/
-	private java.lang.String executionid;
-	/**assigneeuser*/
-	private java.lang.String assigneeuser;
-	/**doneflag*/
-	private java.lang.Integer doneflag;
-	/**id*/
-	private java.lang.String id;
-	/**username*/
-	private java.lang.String username;
-	/**tasktitle*/
-	private java.lang.String tasktitle;
-	/**nodename*/
-	private java.lang.String nodename;
-	/**createdatebpm*/
-	private java.util.Date createdatebpm;
 	/**planyear*/
 	private java.lang.String planyear;
 	/**deptname*/
@@ -55,137 +39,23 @@ public class AnnualmaterialplanEntity implements java.io.Serializable {
 	private java.lang.String financialleader;
 	/**generalmanager*/
 	private java.lang.String generalmanager;
+	/**id*/
+	private java.lang.String id;
+	/**executionid*/
+	private java.lang.String executionid;
+	/**createdatebpm*/
+	private java.util.Date createdatebpm;
+	/**nodename*/
+	private java.lang.String nodename;
+	/**username*/
+	private java.lang.String username;
+	/**assigneeuser*/
+	private java.lang.String assigneeuser;
+	/**doneflag*/
+	private java.lang.Integer doneflag;
+	/**tasktitle*/
+	private java.lang.String tasktitle;
 	
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  executionid
-	 */
-	@Column(name ="EXECUTIONID",nullable=true,length=64)
-	public java.lang.String getExecutionid(){
-		return this.executionid;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  executionid
-	 */
-	public void setExecutionid(java.lang.String executionid){
-		this.executionid = executionid;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  assigneeuser
-	 */
-	@Column(name ="ASSIGNEEUSER",nullable=true,length=128)
-	public java.lang.String getAssigneeuser(){
-		return this.assigneeuser;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  assigneeuser
-	 */
-	public void setAssigneeuser(java.lang.String assigneeuser){
-		this.assigneeuser = assigneeuser;
-	}
-	/**
-	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  doneflag
-	 */
-	@Column(name ="DONEFLAG",nullable=true,precision=10,scale=0)
-	public java.lang.Integer getDoneflag(){
-		return this.doneflag;
-	}
-
-	/**
-	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  doneflag
-	 */
-	public void setDoneflag(java.lang.Integer doneflag){
-		this.doneflag = doneflag;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
-	 */
-	
-	@Id
-	@Column(name ="ID",nullable=false,length=64)
-	public java.lang.String getId(){
-		return this.id;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
-	 */
-	public void setId(java.lang.String id){
-		this.id = id;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  username
-	 */
-	@Column(name ="USERNAME",nullable=true,length=128)
-	public java.lang.String getUsername(){
-		return this.username;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  username
-	 */
-	public void setUsername(java.lang.String username){
-		this.username = username;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  tasktitle
-	 */
-	@Column(name ="TASKTITLE",nullable=true,length=256)
-	public java.lang.String getTasktitle(){
-		return this.tasktitle;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  tasktitle
-	 */
-	public void setTasktitle(java.lang.String tasktitle){
-		this.tasktitle = tasktitle;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  nodename
-	 */
-	@Column(name ="NODENAME",nullable=true,length=128)
-	public java.lang.String getNodename(){
-		return this.nodename;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  nodename
-	 */
-	public void setNodename(java.lang.String nodename){
-		this.nodename = nodename;
-	}
-	/**
-	 *方法: 取得java.util.Date
-	 *@return: java.util.Date  createdatebpm
-	 */
-	@Column(name ="CREATEDATEBPM",nullable=true)
-	public java.util.Date getCreatedatebpm(){
-		return this.createdatebpm;
-	}
-
-	/**
-	 *方法: 设置java.util.Date
-	 *@param: java.util.Date  createdatebpm
-	 */
-	public void setCreatedatebpm(java.util.Date createdatebpm){
-		this.createdatebpm = createdatebpm;
-	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  planyear
@@ -329,5 +199,135 @@ public class AnnualmaterialplanEntity implements java.io.Serializable {
 	 */
 	public void setGeneralmanager(java.lang.String generalmanager){
 		this.generalmanager = generalmanager;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  id
+	 */
+	
+	@Id
+	@Column(name ="ID",nullable=false,length=64)
+	public java.lang.String getId(){
+		return this.id;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  id
+	 */
+	public void setId(java.lang.String id){
+		this.id = id;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  executionid
+	 */
+	@Column(name ="EXECUTIONID",nullable=true,length=64)
+	public java.lang.String getExecutionid(){
+		return this.executionid;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  executionid
+	 */
+	public void setExecutionid(java.lang.String executionid){
+		this.executionid = executionid;
+	}
+	/**
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  createdatebpm
+	 */
+	@Column(name ="CREATEDATEBPM",nullable=true)
+	public java.util.Date getCreatedatebpm(){
+		return this.createdatebpm;
+	}
+
+	/**
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  createdatebpm
+	 */
+	public void setCreatedatebpm(java.util.Date createdatebpm){
+		this.createdatebpm = createdatebpm;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  nodename
+	 */
+	@Column(name ="NODENAME",nullable=true,length=128)
+	public java.lang.String getNodename(){
+		return this.nodename;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  nodename
+	 */
+	public void setNodename(java.lang.String nodename){
+		this.nodename = nodename;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  username
+	 */
+	@Column(name ="USERNAME",nullable=true,length=128)
+	public java.lang.String getUsername(){
+		return this.username;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  username
+	 */
+	public void setUsername(java.lang.String username){
+		this.username = username;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  assigneeuser
+	 */
+	@Column(name ="ASSIGNEEUSER",nullable=true,length=64)
+	public java.lang.String getAssigneeuser(){
+		return this.assigneeuser;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  assigneeuser
+	 */
+	public void setAssigneeuser(java.lang.String assigneeuser){
+		this.assigneeuser = assigneeuser;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  doneflag
+	 */
+	@Column(name ="DONEFLAG",nullable=true,precision=10,scale=0)
+	public java.lang.Integer getDoneflag(){
+		return this.doneflag;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  doneflag
+	 */
+	public void setDoneflag(java.lang.Integer doneflag){
+		this.doneflag = doneflag;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  tasktitle
+	 */
+	@Column(name ="TASKTITLE",nullable=true,length=256)
+	public java.lang.String getTasktitle(){
+		return this.tasktitle;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  tasktitle
+	 */
+	public void setTasktitle(java.lang.String tasktitle){
+		this.tasktitle = tasktitle;
 	}
 }

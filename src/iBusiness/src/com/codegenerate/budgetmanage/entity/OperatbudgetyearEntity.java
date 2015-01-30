@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 经营预算年度数据表
+ * @Description: 经营预算年度数据表页面
  * @author JiangBo
  *
  */
@@ -21,8 +21,6 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_OPERATBUDGETYEAR")
 public class OperatbudgetyearEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-	/**id*/
-	private java.lang.String id;
 	/**planyear*/
 	private java.lang.String planyear;
 	/**projecttype*/
@@ -41,27 +39,9 @@ public class OperatbudgetyearEntity implements java.io.Serializable {
 	private java.lang.Double amount;
 	/**dept*/
 	private java.lang.String dept;
+	/**id*/
+	private java.lang.String id;
 	
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
-	 */
-	
-	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
-	@Column(name ="ID",nullable=false,length=64)
-	public java.lang.String getId(){
-		return this.id;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
-	 */
-	public void setId(java.lang.String id){
-		this.id = id;
-	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  planyear
@@ -205,5 +185,23 @@ public class OperatbudgetyearEntity implements java.io.Serializable {
 	 */
 	public void setDept(java.lang.String dept){
 		this.dept = dept;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  id
+	 */
+	
+	@Id
+	@Column(name ="ID",nullable=false,length=64)
+	public java.lang.String getId(){
+		return this.id;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  id
+	 */
+	public void setId(java.lang.String id){
+		this.id = id;
 	}
 }

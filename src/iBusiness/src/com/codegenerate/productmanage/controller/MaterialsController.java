@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibusiness.security.util.SpringSecurityUtils;
 import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
+import com.ibusiness.common.service.FormulaCommon;
 
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.common.page.PropertyFilter;
@@ -34,7 +36,7 @@ import com.codegenerate.productmanage.service.MaterialsService;
 
 /**   
  * @Title: Controller
- * @Description: 原料表
+ * @Description: 原料表页面
  * @author JiangBo
  *
  */
@@ -51,6 +53,8 @@ public class MaterialsController {
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 添加当前公司(用户范围)ID查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
         page = materialsService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
@@ -72,6 +76,10 @@ public class MaterialsController {
         } else {
             entity = new MaterialsEntity();
         }
+        
+        // 默认值公式
+        entity = (MaterialsEntity) new FormulaCommon().defaultValue(entity, "IB_MATERIALS");
+        
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
@@ -127,7 +135,7 @@ public class MaterialsController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("原料表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("原料表页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("id", "materialtypeno", "materialno", "materialname", "model", "materialprice", "materialunit");
         tableModel.setTableName("IB_MATERIALS");

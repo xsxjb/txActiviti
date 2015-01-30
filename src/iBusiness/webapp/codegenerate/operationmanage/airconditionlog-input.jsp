@@ -4,11 +4,10 @@
 <html>
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>编辑</title>
+    <title>空调控制记录编辑</title>
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
     <script type="text/javascript">
 		$(function() {
 		    $("#cgForm").validate({
@@ -25,8 +24,8 @@
     </script>
     <div class="col-lg-1"></div>
     <!-- start of main -->
-    <div class="panel panel-default col-lg-10"> 
-        <div class="panel-heading"><h4 class="panel-title">编辑</h4></div>
+    <div class="panel panel-default col-lg-12"> 
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">空调控制记录编辑</h4></div>
         <div class="panel-body">
                 <form id="cgForm" method="post" action="airconditionlog-save.do" class="form-horizontal">
                   <c:if test="${model != null}">
@@ -34,13 +33,10 @@
                   </c:if>
                   
                           <div class="form-group">
-                          <label class="col-lg-2 control-label" >操作时间:</label>
-					<div class="col-lg-3">
-						<fmt:formatDate value="${model.eventtime}" pattern="yyyy-MM-dd HH:mm:ss" />
-						<input type="hidden" name="eventtime" value="${model.eventtime}">
-					</div>
-
-					<label class="col-lg-2 control-label" for="code-controluser">操作人员:</label>
+                          <label class="col-lg-2 control-label" for="code-eventtime">操作时间:</label>
+                          <div class="col-lg-3">  <fmt:formatDate value="${model.eventtime}" pattern="yyyy-MM-dd HH:mm:ss" />  <input id="code-eventtime" type="hidden" name="eventtime" value="${model.eventtime}" ></div>
+                          
+                          <label class="col-lg-2 control-label" for="code-controluser">操作人员:</label>
                           <div class="col-lg-3">   <input id="code-controluser" type="text" name="controluser" value="${model.controluser}" class="text required" ></div>
                           
                             </div>
@@ -52,8 +48,8 @@
                   
                   <div class="form-group">
 	                  <div class="col-lg-10 col-lg-offset-2">
-	                      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-	                      <button type="button" onclick="history.back();" class="btn btn-default a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+	                      <button id="submitButton" class="btn btn-primary btn-sm a-submit"><span class="glyphicon glyphicon-floppy-save"></span>保存</button>
+	                      <button type="button" onclick="location.href='airconditionlog-list.do'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-log-out"></span> 关闭</button>
 	                  </div>
                   </div>
                 </form>

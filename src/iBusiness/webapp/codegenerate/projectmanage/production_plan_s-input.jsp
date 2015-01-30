@@ -8,7 +8,6 @@
     <%@include file="/common/center.jsp"%>
   </head>
   <body>
-    <%@include file="/ibusiness/header/header-portal.jsp"%>
     <script type="text/javascript">
         // 表单验证JS
 		$(function() {
@@ -24,10 +23,9 @@
 		    });
 		})
     </script>
-	<div class="span2"></div>
 	<!-- start of main -->
-    <div class="panel panel-default col-md-10">
-        <div class="panel-heading"><h4 class="panel-title">编辑子表</h4></div>
+    <div class="panel panel-default col-lg-12">
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">编辑子表</h4></div>
         <div class="panel-body">
 			<div class="content content-inner">
 					<form id="subForm" method="post" action="production_plan_s-save.do?parentid=${parentid}&flowId=${flowId}" class="form-horizontal">
@@ -98,8 +96,8 @@
 					  
 					  <div class="form-group">
 					    <div class="controls">
-					      <button id="submitButton" class="btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
-					      <button type="button" onclick="history.back();" class="btn btn-default btn-sm a-cancel"><spring:message code='core.input.back' text='返回'/></button>
+					      <button id="submitButton" class="btn btn-primary btn-sm a-submit"><span class="glyphicon glyphicon-floppy-save"></span>保存</button>
+					      <button type="button" onclick="location.href='production_plan-input.do?id=${parentid}'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-log-out"></span>返回</button>
 					    </div>
 					  </div>
 					</form>

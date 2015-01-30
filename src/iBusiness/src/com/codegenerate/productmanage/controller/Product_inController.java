@@ -46,7 +46,7 @@ import com.codegenerate.productmanage.service.Product_in_sService;
 
 /**   
  * @Title: Controller
- * @Description: 产品入库表
+ * @Description: 产品入库表流程
  * @author JiangBo
  *
  */
@@ -103,6 +103,8 @@ public class Product_inController {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
+            // 流程标题
+            entity.setTasktitle("产品入库");
             product_inService.insert(entity);
         }
         
@@ -124,7 +126,7 @@ public class Product_inController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = product_in_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("product_in_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -135,21 +137,7 @@ public class Product_inController {
         model.addAttribute("userId", SpringSecurityUtils.getCurrentUserId());
         
         // 在controller中设置页面控件用的数据
-        Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> warehousenoFTCMap = CommonBusiness
-                .getInstance().getFormTableColumnMap("IB_PRODUCT_IN", "productIn");
-        JSONObject warehousenoJsonObj = JSONObject.fromObject(warehousenoFTCMap.get("WAREHOUSENO").getConfSelectInfo());
-        String warehousenoSql = warehousenoJsonObj.getString("sql");
-        List<Map<String, Object>> warehousenoList = com.ibusiness.core.spring.ApplicationContextHelper
-                .getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate()
-                .queryForList(warehousenoSql);
-        List<ConfSelectItem> warehousenoItems = new java.util.ArrayList<ConfSelectItem>();
-        for (Map<String, Object> mapBean : warehousenoList) {
-            ConfSelectItem confSelectItem = new ConfSelectItem();
-            confSelectItem.setKey(mapBean.get("vKey").toString());
-            confSelectItem.setValue(mapBean.get("vValue").toString());
-            warehousenoItems.add(confSelectItem);
-        }
-        model.addAttribute("warehousenoItems", warehousenoItems);
+                Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> warehousenoFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_PRODUCT_IN", "productIn");JSONObject warehousenoJsonObj = JSONObject.fromObject(warehousenoFTCMap.get("WAREHOUSENO").getConfSelectInfo());String warehousenoSql = warehousenoJsonObj.getString("sql");List<Map<String,Object>> warehousenoList = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.common.service.CommonBaseService.class).getJdbcTemplate().queryForList(warehousenoSql);List<ConfSelectItem> warehousenoItems = new java.util.ArrayList<ConfSelectItem>();for (Map<String,Object> mapBean : warehousenoList) {    ConfSelectItem confSelectItem = new ConfSelectItem();    confSelectItem.setKey(mapBean.get("vKey").toString());    confSelectItem.setValue(mapBean.get("vValue").toString());    warehousenoItems.add(confSelectItem);}model.addAttribute("warehousenoItems", warehousenoItems);
         return "codegenerate/productmanage/product_in-input.jsp";
     }
     
@@ -304,7 +292,7 @@ public class Product_inController {
      * 子表删除
      */
     @RequestMapping("product_in_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String product_in_sRemove(@RequestParam("product_in_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Product_in_sEntity> entitys = product_in_sService.findByIds(selectedItem);
         for (Product_in_sEntity entity : entitys) {
             product_in_sService.remove(entity);
@@ -324,7 +312,7 @@ public class Product_inController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("产品入库表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("产品入库表流程"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("parentid", "warehouseno", "warehousename", "producttype", "productflowid", "productno", "productname", "productmodel", "productunit", "unitprice", "productnum", "id");
         tableModel.setTableName("IB_PRODUCT_IN");

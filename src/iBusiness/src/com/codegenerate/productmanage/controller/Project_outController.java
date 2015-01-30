@@ -46,7 +46,7 @@ import com.codegenerate.productmanage.service.Product_out_sService;
 
 /**   
  * @Title: Controller
- * @Description:  项目出库申请表
+ * @Description: 项目出库表流程
  * @author JiangBo
  *
  */
@@ -103,6 +103,8 @@ public class Project_outController {
             // 进行存储
             entity.setId(UUID.randomUUID().toString());
             entity.setDoneflag(0);
+            // 流程标题
+            entity.setTasktitle("项目出库");
             project_outService.insert(entity);
         }
         
@@ -124,7 +126,7 @@ public class Project_outController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = product_out_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("product_out_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -289,7 +291,7 @@ public class Project_outController {
      * 子表删除
      */
     @RequestMapping("product_out_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String product_out_sRemove(@RequestParam("product_out_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Product_out_sEntity> entitys = product_out_sService.findByIds(selectedItem);
         for (Product_out_sEntity entity : entitys) {
             product_out_sService.remove(entity);
@@ -309,7 +311,7 @@ public class Project_outController {
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName(" 项目出库申请表"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("项目出库表流程"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders("parentid", "batchno", "stationname", "productflowid", "productno", "productname", "modeltype", "unit", "sizes", "deliverydate", "materialnum", "unitprice", "price", "outtype", "goodsaddress", "id");
         tableModel.setTableName("IB_PROJECT_OUT");
