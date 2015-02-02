@@ -21,13 +21,13 @@
 			  <table id="demoGrid" class="table table-hover table-striped">
 			    <thead>
 			      <tr>
-			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			        <th width="25" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 			        <th class="sorting" >流程标题</th>
 			        <th class="sorting" >节点名称</th>
 			        <th class="sorting" >创建时间</th>
 			        <th class="sorting" >负责人</th>
 			        <th class="sorting" >状态</th>
-			        <th width="170">&nbsp;</th>
+			        <th >&nbsp;</th>
 			      </tr>
 			    </thead>
 			

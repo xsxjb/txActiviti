@@ -133,11 +133,11 @@
 				  <table id="${sub.entityName?uncap_first}CodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
-					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					          <#list sub.columns as subItem>
 			                      <th class="sorting">${subItem.filedComment}</th>
 			                  </#list>
-					          <th width="80">&nbsp;</th>
+					          <th width="30">&nbsp;</th>
 					      </tr>
 					    </thead>
 						    <tbody>

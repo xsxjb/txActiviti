@@ -66,3 +66,9 @@
 		    	});
 		});
     </script>
+    
+    <!-- 自动换行 -->
+    <style type="text/css">
+        table {table-layout:fixed}
+        td {word-break:break-all;overflow:hidden;} 
+    </style>

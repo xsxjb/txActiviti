@@ -99,13 +99,13 @@
 			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
 				      <tr>
-				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					        <#list columns as po>
 					            <#if po.fcDisplay="1">
 					                <th class="sorting">${po.filedComment}</th>
 					            </#if>
 					        </#list>
-				        <th width="80">${"&nbsp"};</th>
+				        <th width="30">${"&nbsp"};</th>
 				      </tr>
 				    </thead>
 					    <tbody>

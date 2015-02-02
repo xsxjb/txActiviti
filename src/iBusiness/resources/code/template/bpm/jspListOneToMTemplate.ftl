@@ -168,12 +168,12 @@
 						  <table id="codeGrid" class="table table-hover table-striped">
 						      <thead>
 							      <tr>
-							          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+							          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					                  <th class="sorting">日期</th>
 					                  <th class="sorting">流程节点</th>
 					                  <th class="sorting">来自用户</th>
 					                  <th class="sorting">流程标题</th>
-							          <th width="60">&nbsp;</th>
+							          <th width="30">&nbsp;</th>
 							      </tr>
 							    </thead>
 								    <tbody>

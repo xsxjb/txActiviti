@@ -2,13 +2,11 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-		<title>&#20013;&#24515;&#24191;&#22330;</title>
+		<title>&#39134;&#40060;&#27927;&#34915;</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		
-		<script type="text/javascript" src="swfobject.js">
-		</script>
 		<script type="text/javascript">
 			// hide URL field on the iPhone/iPod touch
 			function hideUrlBar() {
@@ -97,40 +95,15 @@
 		</div>
 		<script type="text/javascript">
 	
-		// check for CSS3 3D transformations and WebGL
-		if (ggHasHtml5Css3D() || ggHasWebGL()) {
-		// use HTML5 panorama
 	
 			// create the panorama player with the container
 			pano=new pano2vrPlayer("container");
 			// add the skin object
 			skin=new pano2vrSkin(pano);
 			// load the configuration
-			pano.readConfigUrl("1_out.xml");
+			pano.readConfigUrl("fyxy.xml");
 			// hide the URL bar on the iPhone
 			hideUrlBar();
-		} else 
-		if (swfobject.hasFlashPlayerVersion("9.0.0")) {
-			var flashvars = {};
-			var params = {};
-			params.quality = "high";
-			params.bgcolor = "#ffffff";
-			params.allowscriptaccess = "sameDomain";
-			params.allowfullscreen = "true";
-			var attributes = {};
-			attributes.id = "pano";
-			attributes.name = "pano";
-			attributes.align = "middle";
-			flashvars.skinxml="skin.xml";
-			flashvars.panoxml="1_out.xml";
-			params.base=".";
-			swfobject.embedSWF(
-				"pano2vr_player.swf", "container", 
-				"100%", "100%",
-				"9.0.0", "", 
-				flashvars, params, attributes);
-			
-		}
 		</script>
 		<noscript>
 			<p><b>Please enable Javascript!</b></p>

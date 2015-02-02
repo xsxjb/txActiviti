@@ -236,7 +236,7 @@
 			var ctx = null;
 			var width = document.getElementById("canvasDiv").offsetWidth - 30;
 // $("#content").height()， offsetHeight
-			var height = 600;
+			var height = $(document).height();
 			var deviceTyleList = null;
 			/**
 			 *	页面初始化
@@ -273,6 +273,26 @@
 			}
 			// 
 			init();
+			//窗口改变尺寸后自适应
+			/* */
+			window.onresize = function() {
+			//	var newwidth = $(document).width() - 2 * canvas.offsetLeft;
+			    var newwidth = $(window).width() - 2 * canvas.offsetLeft;
+				var newheight = $(window).height() - 2 * canvas.offsetTop;
+				canvas.width = newwidth;
+				canvas.height = newheight;
+				//放大、缩小
+			//	ctx.scale(newwidth / width, newheight / height);
+				
+			//	width = newwidth;
+			//	height = newheight;
+				//alert( "width:"+width +",height:"+height);
+			}
+			/* 
+			$(window).resize(function (){
+			     alert('窗口大小');
+			 });
+			*/
 		</script>
   </body>
 </html>
