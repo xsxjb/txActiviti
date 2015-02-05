@@ -84,11 +84,11 @@
 				  <table id="doc-infoGrid" class="table table-hover table-striped">
 				    <thead>
 				      <tr>
-				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 				        <th class="sorting" ><spring:message code="doc-info.doc-info.list.id" text="编号"/></th>
 				        <th class="sorting" ><spring:message code="doc-info.doc-info.list.name" text="名称"/></th>
 				        <th class="sorting" >创建时间</th>
-				        <th width="80">&nbsp;</th>
+				        <th width="30">&nbsp;</th>
 				      </tr>
 				    </thead>
 				
@@ -100,7 +100,7 @@
 				        <td>${item.name}</td>
 				        <td>${item.createTime}</td>
 				        <td>
-				          <a href="doc-info-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+				          <a href="doc-info-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 				          <a href="doc-info-download.do?id=${item.id}">下载</a>
 				        </td>
 				      </tr>

@@ -58,11 +58,11 @@ var table = new Table(config);
 		  <table id="orgGrid" class="table table-hover table-striped">
 		    <thead>
 		      <tr>
-		        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+		        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 		        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
 		        <th class="sorting" name="name">职务名称</th>
 		        <th class="sorting" name="name">职位类型</th>
-		        <th width="80">&nbsp;</th>
+		        <th width="30">&nbsp;</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -73,7 +73,7 @@ var table = new Table(config);
 		        <td>${item.jobTitle.name}</td>
 		        <td>${item.jobType.name}</td>
 		        <td>
-		          <a href="job-info-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+		          <a href="job-info-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 		        </td>
 		      </tr>
 		      </c:forEach>

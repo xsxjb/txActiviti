@@ -78,7 +78,7 @@
 			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
 				      <tr>
-				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					                <th class="sorting">对象编号</th>
 					                <th class="sorting">对象名</th>
 					                <th class="sorting">对象类型</th>
@@ -86,7 +86,7 @@
 					                <th class="sorting">横版图片路径</th>
 					                <th class="sorting">竖版图片路径</th>
 					                <th class="sorting">备注</th>
-				        <th width="80">&nbsp;</th>
+				        <th width="30">&nbsp;</th>
 				      </tr>
 				    </thead>
 					    <tbody>
@@ -101,7 +101,7 @@
 						            <td>${item.imgvurl}</td>
 						            <td>${item.remark}</td>
 					        <td>
-					          <a href="drawConf-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+					          <a href="drawConf-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 					        </td>
 					      </tr>
 					      </c:forEach>

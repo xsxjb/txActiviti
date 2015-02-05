@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ibusiness.base.menu.dao.MenuDao;
 import com.ibusiness.base.menu.entity.Menu;
-import com.ibusiness.base.user.dao.UserBaseDao;
 import com.ibusiness.base.user.entity.UserBase;
 import com.ibusiness.bpm.service.BpmComBusiness;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.security.util.SpringSecurityUtils;
 /**
  * 登录后首页controller
@@ -27,7 +27,6 @@ import com.ibusiness.security.util.SpringSecurityUtils;
 @RequestMapping("portal")
 public class PortalController {
 
-    private UserBaseDao userBaseDao;
     private MenuDao menuDao;
     
     /**
@@ -40,7 +39,7 @@ public class PortalController {
     public String list(Model model, HttpSession session) {
         // 当前用户ID
         String userId = SpringSecurityUtils.getCurrentUserId();
-        UserBase userBase = userBaseDao.get(userId);
+        UserBase userBase = CommonBusiness.getInstance().getUserBaseMap().get(userId);
         // 设置当前用户CSS样式
         session.setAttribute("userCSS",userBase.getCss());
         // 设置菜单
@@ -125,13 +124,7 @@ public class PortalController {
     }
     
     // ==================================================
-    /**
-     * @return the userBaseDao
-     */
-    @Resource
-    public void setUserBaseDao(UserBaseDao userBaseDao) {
-        this.userBaseDao = userBaseDao;
-    }
+    // 菜单
     @Resource
     public void setMenuDao(MenuDao menuDao) {
         this.menuDao = menuDao;

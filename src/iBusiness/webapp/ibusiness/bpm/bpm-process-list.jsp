@@ -64,11 +64,11 @@
 			  <table id="formGrid" class="table table-hover table-striped">
 			    <thead>
 			      <tr>
-			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 			        <th class="sorting">包名</th>
 			        <th class="sorting" >流程名</th>
 			        <th class="sorting">流程标题</th>
-			        <th width="60">&nbsp;</th>
+			        <th width="30">&nbsp;</th>
 			        <th width="60">&nbsp;</th>
 			        <th width="60">&nbsp;</th>
 			      </tr>
@@ -82,7 +82,7 @@
 			        <td>${item.flowName}</td>
 			        <td>${item.flowTitle}</td>
 			        <td>
-			            <a href="bpm-process-input.do?bpmId=${item.id}&packageName=${packageName}" class="a-update">编辑</a>
+			            <a href="bpm-process-input.do?bpmId=${item.id}&packageName=${packageName}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 			        </td>
 			        <td>
 			            <a href="${ctx}/bpm-process/bpm-process-graph.do?bpmProcessId=${item.id}" target="_blank" >图形</a>

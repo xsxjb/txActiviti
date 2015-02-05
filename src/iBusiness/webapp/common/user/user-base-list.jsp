@@ -88,12 +88,12 @@
 				  <table id="userGrid" class="table table-hover table-striped">
 				    <thead>
 				      <tr>
-				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 				        <th class="sorting">账号</th>
 				        <th class="sorting">显示名</th>
 				        <th class="sorting">状态</th>
 				        <th class="sorting">公司名称</th>
-				        <th width="60">&nbsp;</th>
+				        <th width="30">&nbsp;</th>
 				      </tr>
 				    </thead>
 				
@@ -106,7 +106,7 @@
 				        <td>${item.status == 1 ? '启用' : '禁用'}</td>
 				        <td>${item.companyName}</td>
 				        <td>
-				          <a href="user-base-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+				          <a href="user-base-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 				        </td>
 				      </tr>
 				      </c:forEach>

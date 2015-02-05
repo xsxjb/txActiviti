@@ -87,12 +87,12 @@
 			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
 				      <tr>
-				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					                <th class="sorting">企业名称</th>
 					                <th class="sorting">企业地址</th>
 					                <th class="sorting">企业性质</th>
 					                <th class="sorting">公司电话</th>
-				        <th width="80">&nbsp;</th>
+				        <th width="30">&nbsp;</th>
 				      </tr>
 				    </thead>
 					    <tbody>

@@ -79,7 +79,7 @@
 			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
 				      <tr>
-				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					                <th class="sorting">计划年</th>
 					                <th class="sorting">资金项目类别</th>
 					                <th class="sorting">项目计划名称</th>
@@ -89,7 +89,7 @@
 					                <th class="sorting">年计划数余额</th>
 					                <th class="sorting">实际发生数</th>
 					                <th class="sorting">所属部门</th>
-				        <th width="80">&nbsp;</th>
+				        <th width="30">&nbsp;</th>
 				      </tr>
 				    </thead>
 					    <tbody>

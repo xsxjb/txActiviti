@@ -66,11 +66,11 @@ $(function() {
 		  <table id="orgGrid" class="table table-hover table-striped">
 		    <thead>
 		      <tr>
-		        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+		        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 		        <th class="sorting" ><spring:message code="org.org.list.id" text="编号"/></th>
 		        <th class="sorting" >部门名称</th>
 		        <th class="sorting" >公司名称</th>
-		        <th width="80">&nbsp;</th>
+		        <th width="30">&nbsp;</th>
 		      </tr>
 		    </thead>
 		
@@ -82,7 +82,7 @@ $(function() {
 		        <td>${item.name}</td>
 		        <td>${item.companyName}</td>
 		        <td>
-		          <a href="org-department-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+		          <a href="org-department-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 		        </td>
 		      </tr>
 		      </c:forEach>

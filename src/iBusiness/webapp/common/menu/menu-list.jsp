@@ -131,12 +131,12 @@
 						  <table id="menuGrid" class="table table-hover table-striped">
 						      <thead>
 						        <tr>
-						          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+						          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 						          <th class="sorting" ><spring:message code="auth.access.list.type" text="菜单名"/></th>
 						          <th class="sorting" ><spring:message code="auth.access.list.value" text="菜单级别"/></th>
 						          <th class="sorting" ><spring:message code="auth.access.list.perm" text="URL"/></th>
 						          <th class="sorting" ><spring:message code="auth.access.list.priority" text="排序"/></th>
-						          <th width="60">&nbsp;</th>
+						          <th width="30">&nbsp;</th>
 						        </tr>
 						      </thead>
 						      <tbody>
@@ -148,7 +148,7 @@
 						          <td>${item.menuUrl}</td>
 						          <td>${item.menuOrder}</td>
 						          <td>
-						            <a href="menu-input.do?id=${item.id}&menuLevel=${menuLevel}&menuLevelOne=0&menuLevelTwo=${menuLevelTwo}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>&nbsp;
+						            <a href="menu-input.do?id=${item.id}&menuLevel=${menuLevel}&menuLevelOne=0&menuLevelTwo=${menuLevelTwo}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 						          </td>
 						        </tr>
 						        </c:forEach>

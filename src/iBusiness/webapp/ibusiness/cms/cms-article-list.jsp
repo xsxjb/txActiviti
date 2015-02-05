@@ -81,13 +81,14 @@ $(function() {
 					  <table id="cmsArticleGrid" class="table table-hover table-striped">
 					    <thead>
 					      <tr>
-					        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+					        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					        <th class="sorting" ><spring:message code="cmsArticle.cmsArticle.list.id" text="编号"/></th>
 					        <th class="sorting" >标题</th>
 					        <th class="sorting" >状态</th>
 					        <th class="sorting" >作者</th>
 					        <th class="sorting" >创建时间</th>
-					        <th width="80">&nbsp;</th>
+					        <th width="50">&nbsp;</th>
+					        <th width="30">&nbsp;</th>
 					      </tr>
 					    </thead>
 					
@@ -102,7 +103,9 @@ $(function() {
 					        <td>${item.createTime}</td>
 					        <td>
 					            <a href="cms-article-view.do?id=${item.id}">预览</a>
-					            <a href="cms-article-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+					        </td>
+					        <td>
+					            <a href="cms-article-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 					        </td>
 					      </tr>
 					      </c:forEach>

@@ -87,13 +87,12 @@
 			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
 				      <tr>
-				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					                <th class="sorting">客户名称</th>
-					                <th class="sorting">客户类别</th>
-					                <th class="sorting">客户地址</th>
 					                <th class="sorting">手机</th>
-					                <th class="sorting">联系电话</th>
-				        <th width="80">&nbsp;</th>
+					                <th class="sorting">省</th>
+					                <th class="sorting">市</th>
+				        <th width="30">&nbsp;</th>
 				      </tr>
 				    </thead>
 					    <tbody>
@@ -101,10 +100,9 @@
 					      <tr class="${status.index%2==1? 'active':''}">
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 						            <td>${item.customername}</td>
-						            <td>${item.customertype}</td>
-						            <td>${item.customeraddress}</td>
 						            <td>${item.phone}</td>
-						            <td>${item.telephone}</td>
+						            <td>${item.province}</td>
+						            <td>${item.city}</td>
 					        <td>
 					          <a href="customer_info-input.do?id=${item.id}" class="a-update" data-target="#modalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
 					        </td>

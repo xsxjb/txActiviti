@@ -39,7 +39,7 @@
 			          <table class="table table-hover table-striped">
 						<thead>
 						  <tr>
-						    <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+						    <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 							<th>字段</th>
 							<th>字段标题</th>
 							<th>类型</th>
@@ -47,7 +47,7 @@
 							<th>允许空</th>
 							<th>默认值</th>
 							<th>排序</th>
-							<th width="60">&nbsp;</th>
+							<th width="30">&nbsp;</th>
 						  </tr>
 						</thead>
 						<tbody>
@@ -67,7 +67,7 @@
 							<td>${item.columnNo}</td>
 							<td>
 								<c:if test="${item.columnValue!='ID' && item.columnValue!='SCOPEID' && item.columnValue!='CREATEDATEBPM'  && item.columnValue!='EXECUTIONID'  && item.columnValue!='NODENAME'  && item.columnValue!='TASKTITLE' && item.columnValue!='ASSIGNEEUSER' && item.columnValue!='USERNAME' && item.columnValue!='DONEFLAG' && item.columnValue!='PARENTID'}">
-						            <a href="conf-table-column-input.do?tableName=${tableName}&columnValue=${item.columnValue}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+						            <a href="conf-table-column-input.do?tableName=${tableName}&columnValue=${item.columnValue}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 					            </c:if>
 					        </td>
 						  </tr>

@@ -71,11 +71,11 @@
 				  <table id="codeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
-					        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+					        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 						                <th class="sorting">用户编号</th>
 						                <th class="sorting">用户名</th>
 						                <th class="sorting">电话号</th>
-					        <th width="80">&nbsp;</th>
+					        <th width="30">&nbsp;</th>
 					      </tr>
 					    </thead>
 						    <tbody>
@@ -86,7 +86,7 @@
 							            <td>${item.displayName}</td>
 							            <td>${item.mobile}</td>
 						        <td>
-						          <a href="phonebook-input.do?id=${item.id}" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+						          <a href="phonebook-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 						        </td>
 						      </tr>
 						      </c:forEach>

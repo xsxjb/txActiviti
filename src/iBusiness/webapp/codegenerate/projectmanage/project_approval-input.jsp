@@ -197,8 +197,8 @@
 				  <table id="project_product_sCodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
-					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					          <th width="80">&nbsp;</th>
+					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+					          <th width="30">&nbsp;</th>
 		                      <th class="sorting">产品编号</th>
 		                      <th class="sorting">产品名</th>
 		                      <th class="sorting">规格型号</th>

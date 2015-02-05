@@ -64,11 +64,11 @@
 			  <table id="formGrid" class="table table-hover table-striped">
 			    <thead>
 			      <tr>
-			        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 			        <th class="sorting" ><spring:message code="user.user.list.formName" text="表单名"/></th>
 			        <th class="sorting"><spring:message code="user.user.list.formTitle" text="表单标题"/></th>
 			        <th class="sorting"><spring:message code="user.user.list.packageName" text="包名"/></th>
-			        <th width="60">&nbsp;</th>
+			        <th width="30">&nbsp;</th>
 			      </tr>
 			    </thead>
 			    
@@ -80,7 +80,7 @@
 			        <td>${item.formTitle}</td>
 			        <td>${item.packageName}</td>
 			        <td>
-			          <a href="conf-form-input.do?formId=${item.id}&packageName=${packageName}&isBpmForm=2" class="a-update"><spring:message code="core.list.edit" text="编辑"/></a>
+			          <a href="conf-form-input.do?formId=${item.id}&packageName=${packageName}&isBpmForm=2" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 			        </td>
 			      </tr>
 			      </c:forEach>

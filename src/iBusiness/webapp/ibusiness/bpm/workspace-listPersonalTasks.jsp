@@ -21,13 +21,14 @@
 			  <table id="demoGrid" class="table table-hover table-striped">
 			    <thead>
 			      <tr>
-			        <th width="25" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 			        <th class="sorting" >流程标题</th>
 			        <th class="sorting" >节点名称</th>
 			        <th class="sorting" >创建时间</th>
 			        <th class="sorting" >负责人</th>
 			        <th class="sorting" >状态</th>
-			        <th >&nbsp;</th>
+			        <th width="50">&nbsp;</th>
+			        <th width="50">&nbsp;</th>
 			      </tr>
 			    </thead>
 			
@@ -42,6 +43,8 @@
 				    <td>${item.suspended ? '挂起' : '激活'}</td>
 			        <td>
 			          <a href="${ctx}${item.flowUrl}">办理</a>
+			        </td>
+			        <td>
 			          <a href="workspace-viewHistory.do?processInstanceId=${item.processInstanceId}">历史</a>
 			        </td>
 			      </tr>

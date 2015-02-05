@@ -44,12 +44,12 @@
 				  <table class="table table-hover table-striped" id=“tableModelGrid” >
 						<thead>
 							<tr>
-							    <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+							    <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 								<th>表名</th>
 								<th>标题</th>
 								<th>所在模块</th>
 								<th>唯一标识</th>
-								<th width="120">&nbsp;</th>
+								<th width="30">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -61,7 +61,7 @@
 								<td>${item.packageName}</td>
 								<td>${item.id}</td>
 								<td>
-						          <a href="conf-table-column-list.do?tableName=${item.tableName}&isBpmTable=2" class="a-update"><spring:message code="core.list.edit" text="编辑表字段"/></a>
+						          <a href="conf-table-column-list.do?tableName=${item.tableName}&isBpmTable=2" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 						        </td>
 						    </tr>
 						  </c:forEach>

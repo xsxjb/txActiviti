@@ -21,187 +21,116 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_MATERIAL_IN_S")
 public class Material_in_sEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-	/**id*/
-	private java.lang.String id;
-	/**parentid*/
-	private java.lang.String parentid;
-	/**materialno*/
-	private java.lang.String materialno;
-	/**materialname*/
-	private java.lang.String materialname;
-	/**materialmodel*/
-	private java.lang.String materialmodel;
-	/**materialunit*/
-	private java.lang.String materialunit;
-	/**materialnum*/
-	private java.lang.Integer materialnum;
-	/**amount*/
-	private java.lang.Double amount;
-	/**manufacturename*/
-	private java.lang.String manufacturename;
-	/**remark*/
-	private java.lang.String remark;
-	
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
-	 */
-	
-	@Id
-	@Column(name ="ID",nullable=false,length=64)
-	public java.lang.String getId(){
-		return this.id;
-	}
 
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
-	 */
-	public void setId(java.lang.String id){
-		this.id = id;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  parentid
-	 */
-	@Column(name ="PARENTID",nullable=true,length=64)
-	public java.lang.String getParentid(){
-		return this.parentid;
-	}
+Expression originalColumns is undefined on line 24, column 16 in entityTemplate.ftl.
+The problematic instruction:
+----------
+==> list originalColumns as po [on line 24, column 9 in entityTemplate.ftl]
+----------
 
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  parentid
-	 */
-	public void setParentid(java.lang.String parentid){
-		this.parentid = parentid;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  materialno
-	 */
-	@Column(name ="MATERIALNO",nullable=true,length=64)
-	public java.lang.String getMaterialno(){
-		return this.materialno;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  materialno
-	 */
-	public void setMaterialno(java.lang.String materialno){
-		this.materialno = materialno;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  materialname
-	 */
-	@Column(name ="MATERIALNAME",nullable=true,length=128)
-	public java.lang.String getMaterialname(){
-		return this.materialname;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  materialname
-	 */
-	public void setMaterialname(java.lang.String materialname){
-		this.materialname = materialname;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  materialmodel
-	 */
-	@Column(name ="MATERIALMODEL",nullable=true,length=64)
-	public java.lang.String getMaterialmodel(){
-		return this.materialmodel;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  materialmodel
-	 */
-	public void setMaterialmodel(java.lang.String materialmodel){
-		this.materialmodel = materialmodel;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  materialunit
-	 */
-	@Column(name ="MATERIALUNIT",nullable=true,length=16)
-	public java.lang.String getMaterialunit(){
-		return this.materialunit;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  materialunit
-	 */
-	public void setMaterialunit(java.lang.String materialunit){
-		this.materialunit = materialunit;
-	}
-	/**
-	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  materialnum
-	 */
-	@Column(name ="MATERIALNUM",nullable=true,precision=10,scale=0)
-	public java.lang.Integer getMaterialnum(){
-		return this.materialnum;
-	}
-
-	/**
-	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  materialnum
-	 */
-	public void setMaterialnum(java.lang.Integer materialnum){
-		this.materialnum = materialnum;
-	}
-	/**
-	 *方法: 取得java.lang.Double
-	 *@return: java.lang.Double  amount
-	 */
-	@Column(name ="AMOUNT",nullable=true,precision=12,scale=2)
-	public java.lang.Double getAmount(){
-		return this.amount;
-	}
-
-	/**
-	 *方法: 设置java.lang.Double
-	 *@param: java.lang.Double  amount
-	 */
-	public void setAmount(java.lang.Double amount){
-		this.amount = amount;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  manufacturename
-	 */
-	@Column(name ="MANUFACTURENAME",nullable=true,length=64)
-	public java.lang.String getManufacturename(){
-		return this.manufacturename;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  manufacturename
-	 */
-	public void setManufacturename(java.lang.String manufacturename){
-		this.manufacturename = manufacturename;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  remark
-	 */
-	@Column(name ="REMARK",nullable=true,length=512)
-	public java.lang.String getRemark(){
-		return this.remark;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  remark
-	 */
-	public void setRemark(java.lang.String remark){
-		this.remark = remark;
-	}
-}
+Java backtrace for programmers:
+----------
+freemarker.core.InvalidReferenceException: Expression originalColumns is undefined on line 24, column 16 in entityTemplate.ftl.
+	at freemarker.core.TemplateObject.assertNonNull(TemplateObject.java:125)
+	at freemarker.core.IteratorBlock.accept(IteratorBlock.java:100)
+	at freemarker.core.Environment.visit(Environment.java:221)
+	at freemarker.core.MixedContent.accept(MixedContent.java:92)
+	at freemarker.core.Environment.visit(Environment.java:221)
+	at freemarker.core.Environment.process(Environment.java:199)
+	at freemarker.template.Template.process(Template.java:259)
+	at com.ibusiness.codegenerate.code.generate.CodeFactory.generateFile(CodeFactory.java:51)
+	at com.ibusiness.codegenerate.code.generate.CodeFactory.invoke(CodeFactory.java:146)
+	at com.ibusiness.codegenerate.code.generate.CodeGenerate.generateToFile(CodeGenerate.java:257)
+	at com.ibusiness.component.code.controller.CodeController.codeGenerateSave(CodeController.java:144)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:215)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:749)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:689)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:83)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:938)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:870)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:961)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:863)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:646)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:837)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:727)
+	at com.ibusiness.core.servlet.ProxyServlet.service(ProxyServlet.java:67)
+	at com.ibusiness.core.servlet.ServletFilter.doFilter(ServletFilter.java:61)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:78)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:81)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at org.springframework.orm.hibernate4.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:152)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:108)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:330)
+	at org.springframework.security.web.authentication.switchuser.SwitchUserFilter.doFilter(SwitchUserFilter.java:181)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:118)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:84)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:113)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:103)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:113)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:154)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:45)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilter(BasicAuthenticationFilter.java:150)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:199)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:50)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at com.ibusiness.security.client.AutoLoginFilter.doFilter(AutoLoginFilter.java:42)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:192)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:160)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at org.javasimon.javaee.SimonServletFilter.doFilterWithMonitoring(SimonServletFilter.java:219)
+	at org.javasimon.javaee.SimonServletFilter.doFilter(SimonServletFilter.java:209)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at com.ibusiness.core.i18n.AcceptLanguageHeaderFilter.doFilter(AcceptLanguageHeaderFilter.java:30)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:108)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at com.ibusiness.core.servlet.CompositeFilter.doFilter(CompositeFilter.java:42)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:950)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1070)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:611)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:662)

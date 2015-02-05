@@ -1,5 +1,7 @@
 package com.ibusiness.base.cssui.web;
 
+import java.util.HashMap;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ibusiness.base.user.dao.UserBaseDao;
 import com.ibusiness.base.user.entity.UserBase;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.security.util.SpringSecurityUtils;
 
 /**
@@ -31,6 +34,8 @@ public class UicssController {
         UserBase userBase = userBaseDao.get(userId);
         userBase.setCss(userCSS);
         userBaseDao.save(userBase);
+        // 清空设置内存中对象
+        CommonBusiness.getInstance().setUserBaseMap(new HashMap<String, UserBase>());
         // 设置request
         session.setAttribute("userCSS",userBase.getCss());
         return "redirect:/portal/portal.do";

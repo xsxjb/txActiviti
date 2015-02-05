@@ -146,10 +146,11 @@
                            <div class="form-group">
 						      <label class="control-label  col-lg-2" for="code-deptuser">科员备注:</label>
                               <!-- 编辑类型     多行 --><div class="col-lg-6">  <c:if test="${nodeColumsMap.deptuser.fcEdit=='1'}">    <textarea class="form-control" id="code-deptuser" name="deptuser" rows="1" >${model.deptuser}</textarea>  </c:if>  <c:if test="${nodeColumsMap.deptuser.fcEdit!='1'}">    <label>${model.deptuser}</label>    <input type="hidden" name="deptuser" value="${model.deptuser}">  </c:if></div>
-	                       </div>        
-						   <div class="form-group">
+	                                      
+						 
 						      <label class="control-label  col-lg-2" for="code-deptleader">科长审批:</label>
                               <!-- 编辑类型     多行 --><div class="col-lg-6">  <c:if test="${nodeColumsMap.deptleader.fcEdit=='1'}">    <textarea class="form-control" id="code-deptleader" name="deptleader" rows="1" >${model.deptleader}</textarea>  </c:if>  <c:if test="${nodeColumsMap.deptleader.fcEdit!='1'}">    <label>${model.deptleader}</label>    <input type="hidden" name="deptleader" value="${model.deptleader}">  </c:if></div>
+	                                      
                             </div>
 						 
                            <div class="form-group">
@@ -218,8 +219,8 @@
 				  <table id="annualchangeplan_sCodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
-					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					          <th width="80">&nbsp;</th>
+					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+					          <th width="30">&nbsp;</th>
 		                      <th class="sorting">项目类别</th>
 		                      <th class="sorting">项目名称</th>
 		                      <th class="sorting">材料类别</th>

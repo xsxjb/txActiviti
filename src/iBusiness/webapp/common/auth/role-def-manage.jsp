@@ -90,11 +90,11 @@ $(function() {
 		    <table id="roleDefGrid" class="table table-hover table-bordered">
 		      <thead>
 		        <tr>
-		          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+		          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 		          <th class="sorting" name="id"><spring:message code="auth.roleDef.list.id" text="编号"/></th>
 		          <th class="sorting" name="name"><spring:message code="auth.roleDef.list.name" text="名称"/></th>
 		          <th class="sorting" name="name">状态</th>
-		          <th width="150">&nbsp;</th>
+		          <th width="30">&nbsp;</th>
 		        </tr>
 		      </thead>
 		      <tbody>

@@ -23,136 +23,127 @@
 		        errorClass: 'validate-error'
 		    });
 		})
-	
     </script>
-	<div class="span2"></div>
+	<div class="col-lg-1"></div>
 	<!-- start of main -->
-    <div class="panel panel-default col-md-10">
-        <div class="panel-heading"><h4 class="panel-title">编辑子表</h4></div>
+    <div class="panel panel-default col-lg-10">
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">编辑子表</h4></div>
         <div class="panel-body">
 			<div class="content content-inner">
 					<form id="subForm" method="post" action="material_in_s-save.do?parentid=${parentid}&flowId=${flowId}" class="form-horizontal">
 					  <c:if test="${model != null}">
 					      <input id="code_id" type="hidden" name="id" value="${model.id}">
 					  </c:if>
-                               <div class="form-group">
-                              <label class="control-label col-lg-2" for="code-materialno">原料编号:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialno.fcEdit=='1'}">    <input id="code-materialno" type="text" name="materialno" value="${model.materialno}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialno.fcEdit!='1'}">    <label>${model.materialno}</label>    <input type="hidden" name="materialno" value="${model.materialno}">  </c:if></div>
-                              
-	                          
-                              <label class="control-label col-lg-2" for="code-materialname">原料名称:</label>
-                              <div class="col-lg-3">
-                                <c:if test="${nodeColumsMap.materialname.fcEdit=='1'}">
-                                    <input id="code-materialname" type="text" name="materialname" value="${model.materialname}" class="text required" >
-              <!-- ======================================= -->         
-              <a href="#materialnameDiv" class="btn btn-default btn-sm" data-toggle="modal" >选择</a>
-                                </c:if>
-                                        <c:if test="${nodeColumsMap.materialname.fcEdit!='1'}">    <label>${model.materialname}</label>    <input type="hidden" name="materialname" value="${model.materialname}">  </c:if></div>
-         <!--  选择带出  -->
-         <script type="text/javascript">
-		// 设置值
-		function changeValue(materialno,materialname,materialprice,materialtypeno,materialunit,model){
-			$("#code-materialno").val(materialno);
-        	$("#code-materialname").val(materialname);
-			$("#code-materialmodel").val(model);
-			$("#code-materialunit").val(materialunit);
-		//	$("#code-materialnum").val(materialname);
-			$("#code-amount").val(materialprice);
-		//	$("#code-manufacturename").val(materialname);
-		//	$("#code-remark").val(materialname);
-		}
-    </script>
-				    <div id="materialnameDiv" class="modal fade" tabindex="-1" style="top:20%;" >
-				            <div class="modal-dialog">
-						    <div class="modal-content">
-							      <div class="modal-header">
-								        <button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button>
-								        <h4 class="modal-title">选择带出</h4>
-							      </div>
-							      <div class="modal-body">
-									    <div class="content">
-									    	<table id="codeGrid" class="table table-hover table-bordered">
-									        <thead>
-										      <tr>
-										          <th width="80">&nbsp;</th>
-									                <th class="sorting">原料编号</th>
-									                <th class="sorting">原料名称</th>
-									                <th class="sorting">价格</th>
-									                <th class="sorting">分类编号</th>
-									                <th class="sorting">单位</th>
-									                <th class="sorting">规格型号</th>
-										        
-										      </tr>
-										    </thead>
-										    <tbody>
-										      <c:forEach items="${page.result}" var="item">
-										      <tr>
-										        <td>
-										        <a href="#" class="btn btn-default btn-sm" 
-										        onClick="changeValue('${item.materialno}','${item.materialname}','${item.materialprice}','${item.materialtypeno}','${item.materialunit}','${item.model}')" data-dismiss="modal">选择</a>
-										        </td>
-									            <td>${item.materialno}</td>
-									            <td>${item.materialname}</td>
-									            <td>${item.materialprice}</td>
-									            <td>${item.materialtypeno}</td>
-									            <td>${item.materialunit}</td>
-									            <td>${item.model}</td>
-										      </tr>
-										      </c:forEach>
-										    </tbody>
-										  </table>
-						                </div>
-						           </div>
-						           <div class="modal-footer">
-					                    <button class="btn btn-default btn-sm" data-dismiss="modal" >关闭</button>
-						           </div>
-					            </div><!-- /.modal-content -->
-						  </div><!-- /.modal-dialog -->
-				    </div>
-				    
-                            </div>
-	                          
-                               <div class="form-group">
-                              <label class="control-label col-lg-2" for="code-materialmodel">原料规格型号:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialmodel.fcEdit=='1'}">    <input id="code-materialmodel" type="text" name="materialmodel" value="${model.materialmodel}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialmodel.fcEdit!='1'}">    <label>${model.materialmodel}</label>    <input type="hidden" name="materialmodel" value="${model.materialmodel}">  </c:if></div>
-                              
-	                          
-                              <label class="control-label col-lg-2" for="code-materialunit">单位:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialunit.fcEdit=='1'}">    <input id="code-materialunit" type="text" name="materialunit" value="${model.materialunit}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.materialunit.fcEdit!='1'}">    <label>${model.materialunit}</label>    <input type="hidden" name="materialunit" value="${model.materialunit}">  </c:if></div>
-                              
-                            </div>
-	                          
-                               <div class="form-group">
-                              <label class="control-label col-lg-2" for="code-materialnum">数量:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.materialnum.fcEdit=='1'}">    <input id="code-materialnum" type="text" name="materialnum" value="${model.materialnum}" class="text number required" >  </c:if>  <c:if test="${nodeColumsMap.materialnum.fcEdit!='1'}">    <label>${model.materialnum}</label>    <input type="hidden" name="materialnum" value="${model.materialnum}">  </c:if></div>
-                              
-	                          
-                              <label class="control-label col-lg-2" for="code-amount">金额:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.amount.fcEdit=='1'}">    <input id="code-amount" type="text" name="amount" value="${model.amount}" class="text number required" >  </c:if>  <c:if test="${nodeColumsMap.amount.fcEdit!='1'}">    <label>${model.amount}</label>    <input type="hidden" name="amount" value="${model.amount}">  </c:if></div>
-                              
-                            </div>
-                          <div class="form-group">
-                              <label class="control-label col-lg-2" for="code-manufacturename">制造商:</label>
-                              <div class="col-lg-3">  <c:if test="${nodeColumsMap.manufacturename.fcEdit=='1'}">    <input id="code-manufacturename" type="text" name="manufacturename" value="${model.manufacturename}" class="text required" >  </c:if>  <c:if test="${nodeColumsMap.manufacturename.fcEdit!='1'}">    <label>${model.manufacturename}</label>    <input type="hidden" name="manufacturename" value="${model.manufacturename}">  </c:if></div>
-                           </div>
-                           <div class="form-group">
-                              <label class="control-label col-lg-2" for="code-remark">备注:</label>
-                              <!-- 编辑类型     多行 --><div class="col-lg-6">  <c:if test="${nodeColumsMap.remark.fcEdit=='1'}">    <textarea class="form-control" id="code-remark" name="remark" rows="1" >${model.remark}</textarea>  </c:if>  <c:if test="${nodeColumsMap.remark.fcEdit!='1'}">    <label>${model.remark}</label>    <input type="hidden" name="remark" value="${model.remark}">  </c:if></div>
-                           </div>
-	                  
 
-					  
-					  <div class="form-group">
-					    <div class="col-lg-10 col-lg-offset-2">
-					      <button id="submitButton" class="btn btn-default btn-sm a-submit"><spring:message code='core.input.save' text='保存'/></button>
-					      <button type="button" onclick="history.back();" class="btn btn-default btn-sm a-cancel"><spring:message code='core.input.back' text='返回'/></button>
-					    </div>
-					  </div>
-					</form>
-			</div>
-		
-      </div>
-    </div>
-	<!-- end of main -->
-  </body>
-</html>
+Expression columns is undefined on line 37, column 51 in bpm/jspSubInputOneToMTemplate.ftl.
+The problematic instruction:
+----------
+==> list columns as po [on line 37, column 44 in bpm/jspSubInputOneToMTemplate.ftl]
+----------
+
+Java backtrace for programmers:
+----------
+freemarker.core.InvalidReferenceException: Expression columns is undefined on line 37, column 51 in bpm/jspSubInputOneToMTemplate.ftl.
+	at freemarker.core.TemplateObject.assertNonNull(TemplateObject.java:125)
+	at freemarker.core.IteratorBlock.accept(IteratorBlock.java:100)
+	at freemarker.core.Environment.visit(Environment.java:221)
+	at freemarker.core.MixedContent.accept(MixedContent.java:92)
+	at freemarker.core.Environment.visit(Environment.java:221)
+	at freemarker.core.Environment.process(Environment.java:199)
+	at freemarker.template.Template.process(Template.java:259)
+	at com.ibusiness.codegenerate.code.generate.CodeFactory.generateFile(CodeFactory.java:51)
+	at com.ibusiness.codegenerate.code.generate.CodeFactory.invoke(CodeFactory.java:146)
+	at com.ibusiness.codegenerate.code.generate.CodeGenerate.generateToFile(CodeGenerate.java:240)
+	at com.ibusiness.component.code.controller.CodeController.codeGenerateSave(CodeController.java:144)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:215)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:749)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:689)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:83)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:938)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:870)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:961)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:863)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:646)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:837)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:727)
+	at com.ibusiness.core.servlet.ProxyServlet.service(ProxyServlet.java:67)
+	at com.ibusiness.core.servlet.ServletFilter.doFilter(ServletFilter.java:61)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:78)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:81)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at org.springframework.orm.hibernate4.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:152)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:108)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:330)
+	at org.springframework.security.web.authentication.switchuser.SwitchUserFilter.doFilter(SwitchUserFilter.java:181)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:118)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:84)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:113)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:103)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:113)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:154)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:45)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilter(BasicAuthenticationFilter.java:150)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:199)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:50)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at com.ibusiness.security.client.AutoLoginFilter.doFilter(AutoLoginFilter.java:42)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:192)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:160)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at org.javasimon.javaee.SimonServletFilter.doFilterWithMonitoring(SimonServletFilter.java:219)
+	at org.javasimon.javaee.SimonServletFilter.doFilter(SimonServletFilter.java:209)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at com.ibusiness.core.i18n.AcceptLanguageHeaderFilter.doFilter(AcceptLanguageHeaderFilter.java:30)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:108)
+	at com.ibusiness.core.servlet.ProxyFilter.doFilter(ProxyFilter.java:76)
+	at com.ibusiness.core.servlet.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:65)
+	at com.ibusiness.core.servlet.CompositeFilter.doFilter(CompositeFilter.java:42)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:950)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1070)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:611)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:662)

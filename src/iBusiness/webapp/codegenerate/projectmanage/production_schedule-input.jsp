@@ -177,8 +177,8 @@
 				  <table id="production_schedule_sCodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
-					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					          <th width="80">&nbsp;</th>
+					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+					          <th width="30">&nbsp;</th>
 		                      <th class="sorting">批次号</th>
 		                      <th class="sorting">产品类型</th>
 		                      <th class="sorting">产品件号</th>

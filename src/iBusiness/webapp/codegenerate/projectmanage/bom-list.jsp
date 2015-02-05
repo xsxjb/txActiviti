@@ -77,22 +77,40 @@
 					  <table id="codeGrid" class="table table-hover table-striped">
 					      <thead>
 						      <tr>
-						          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+						          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+				                          <th class="sorting">项目编号</th>
 				                          <th class="sorting">项目名</th>
 				                          <th class="sorting">名称客户</th>
 				                          <th class="sorting">产品类型</th>
+				                          <th class="sorting">产品件号</th>
+				                          <th class="sorting">产品编号</th>
 				                          <th class="sorting">产品名</th>
-						          <th width="60">&nbsp;</th>
+				                          <th class="sorting">规格型号</th>
+				                          <th class="sorting">单位</th>
+				                          <th class="sorting">单价</th>
+				                          <th class="sorting">数量</th>
+				                          <th class="sorting">原料设计员</th>
+				                          <th class="sorting">审核人员</th>
+						          <th width="30">&nbsp;</th>
 						      </tr>
 						    </thead>
 							    <tbody>
 							      <c:forEach items="${page.result}" var="item" varStatus="status">
 							      <tr class="${status.index%2==1? 'active':''}">
 							        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+				                            <td>${item.projectno}</td>
 				                            <td>${item.projectname}</td>
 				                            <td>${item.customername}</td>
 				                            <td>${item.producttype}</td>
+				                            <td>${item.productflowid}</td>
+				                            <td>${item.productno}</td>
 				                            <td>${item.productname}</td>
+				                            <td>${item.productmodel}</td>
+				                            <td>${item.productunit}</td>
+				                            <td>${item.unitprice}</td>
+				                            <td>${item.productnumber}</td>
+				                            <td>${item.designuser}</td>
+				                            <td>${item.audituser}</td>
 							        <td>
 							          <a href="bom-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 							        </td>

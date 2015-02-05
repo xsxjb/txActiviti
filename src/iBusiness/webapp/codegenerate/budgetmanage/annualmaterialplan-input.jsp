@@ -189,8 +189,8 @@
 				  <table id="annualmaterialplan_sCodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
-					          <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					          <th width="80">&nbsp;</th>
+					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+					          <th width="30">&nbsp;</th>
 		                      <th class="sorting">资金项目类别</th>
 		                      <th class="sorting">项目名称</th>
 		                      <th class="sorting">物料类别</th>
