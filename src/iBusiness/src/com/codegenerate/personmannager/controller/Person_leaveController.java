@@ -1,4 +1,4 @@
-package com.codegenerate.crmmanage.controller;
+package com.codegenerate.personmannager.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -31,35 +31,35 @@ import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
 
-import com.codegenerate.crmmanage.entity.Customer_infoEntity;
-import com.codegenerate.crmmanage.service.Customer_infoService;
+import com.codegenerate.personmannager.entity.Person_leaveEntity;
+import com.codegenerate.personmannager.service.Person_leaveService;
 
 /**   
  * @Title: Controller
- * @Description: 客户信息表页面
+ * @Description: 员工离职页面
  * @author JiangBo
  *
  */
 @Controller
-@RequestMapping("customer_info")
-public class Customer_infoController {
+@RequestMapping("person_leave")
+public class Person_leaveController {
 
     private MessageHelper messageHelper;
-    private Customer_infoService customer_infoService;
+    private Person_leaveService person_leaveService;
    /**
      * 列表
      */
-    @RequestMapping("customer_info-list")
+    @RequestMapping("person_leave-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         // 添加当前公司(用户范围)ID查询
     	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
-        page = customer_infoService.pagedQuery(page, propertyFilters);
+        page = person_leaveService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "codegenerate/crmmanage/customer_info-list.jsp";
+        return "codegenerate/personmannager/person_leave-list.jsp";
     }
     
     /**
@@ -68,22 +68,24 @@ public class Customer_infoController {
      * @param model
      * @return
      */
-    @RequestMapping("customer_info-input")
+    @RequestMapping("person_leave-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
-        Customer_infoEntity entity = null;
+        Person_leaveEntity entity = null;
         if (!CommonUtils.isNull(id)) {
-            entity = customer_infoService.get(id);
+            entity = person_leaveService.get(id);
         } else {
-            entity = new Customer_infoEntity();
+            entity = new Person_leaveEntity();
         }
         
         // 默认值公式
-        entity = (Customer_infoEntity) new FormulaCommon().defaultValue(entity, "IB_CUSTOMER_INFO");
+        entity = (Person_leaveEntity) new FormulaCommon().defaultValue(entity, "IB_PERSON_LEAVE");
         
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
-        return "codegenerate/crmmanage/customer_info-input.jsp";
+                Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> leavesortFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_PERSON_LEAVE", "personLeave");List<com.ibusiness.common.model.ConfSelectItem> leavesortItems = (List<com.ibusiness.common.model.ConfSelectItem>) CommonUtils.getListFromJson(leavesortFTCMap.get("LEAVESORT").getConfSelectInfo(), com.ibusiness.common.model.ConfSelectItem.class);model.addAttribute("leavesortItems", leavesortItems);
+                Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> leavestateFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_PERSON_LEAVE", "personLeave");List<com.ibusiness.common.model.ConfSelectItem> leavestateItems = (List<com.ibusiness.common.model.ConfSelectItem>) CommonUtils.getListFromJson(leavestateFTCMap.get("LEAVESTATE").getConfSelectInfo(), com.ibusiness.common.model.ConfSelectItem.class);model.addAttribute("leavestateItems", leavestateItems);
+        return "codegenerate/personmannager/person_leave-input.jsp";
     }
 
     /**
@@ -92,19 +94,21 @@ public class Customer_infoController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("customer_info-save")
-    public String save(@ModelAttribute Customer_infoEntity entity, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("person_leave-save")
+    public String save(@ModelAttribute Person_leaveEntity entity, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         // 再进行数据复制
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
-            customer_infoService.insert(entity);
+            // 设置范围ID
+            entity.setScopeid(CommonBusiness.getInstance().getCurrentUserScopeId());
+            person_leaveService.insert(entity);
         } else {
-            customer_infoService.update(entity);
+            person_leaveService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/customer_info/customer_info-list.do";
+        return "redirect:/person_leave/person_leave-list.do";
     }
    /**
      * 删除
@@ -112,32 +116,32 @@ public class Customer_infoController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("customer_info-remove")
+    @RequestMapping("person_leave-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
-        List<Customer_infoEntity> entitys = customer_infoService.findByIds(selectedItem);
-        for (Customer_infoEntity entity : entitys) {
-            customer_infoService.remove(entity);
+        List<Person_leaveEntity> entitys = person_leaveService.findByIds(selectedItem);
+        for (Person_leaveEntity entity : entitys) {
+            person_leaveService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/customer_info/customer_info-list.do";
+        return "redirect:/person_leave/person_leave-list.do";
     }
     /**
      * excel导出
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping("customer_info-export")
+    @RequestMapping("person_leave-export")
     public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        page = customer_infoService.pagedQuery(page, propertyFilters);
-        List<Customer_infoEntity> beans = (List<Customer_infoEntity>) page.getResult();
+        page = person_leaveService.pagedQuery(page, propertyFilters);
+        List<Person_leaveEntity> beans = (List<Person_leaveEntity>) page.getResult();
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("客户信息表页面"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("员工离职页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "customerno", "customerstate", "customername", "customeraddress", "phone", "telephone", "salesmanager", "infosource", "province", "city");
-        tableModel.setTableName("IB_CUSTOMER_INFO");
+        tableModel.addHeaders("name", "leavesort", "leavestate", "leavesection", "leavejob", "leavedate", "stopdate", "remark", "id", "scopeid");
+        tableModel.setTableName("IB_PERSON_LEAVE");
         tableModel.setData(beans);
         try {
             new ExcelCommon().exportExcel(response, tableModel);
@@ -148,7 +152,7 @@ public class Customer_infoController {
     /**
      * excel导入
      */
-    @RequestMapping("customer_info-importExcel")
+    @RequestMapping("person_leave-importExcel")
     public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
         try {
             File file = new File("test.xls"); 
@@ -156,13 +160,13 @@ public class Customer_infoController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "customerno", "customerstate", "customername", "customeraddress", "phone", "telephone", "salesmanager", "infosource", "province", "city");
+            tableModel.addHeaders("name", "leavesort", "leavestate", "leavesection", "leavejob", "leavedate", "stopdate", "remark", "id", "scopeid");
             // 导入
-            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.crmmanage.entity.Customer_infoEntity");
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.personmannager.entity.Person_leaveEntity");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/customer_info/customer_info-list.do";
+        return "redirect:/person_leave/person_leave-list.do";
     }
     // ======================================================================
     @Resource
@@ -171,8 +175,8 @@ public class Customer_infoController {
     }
 
     @Resource
-    public void setCustomer_infoService(Customer_infoService customer_infoService) {
-        this.customer_infoService = customer_infoService;
+    public void setPerson_leaveService(Person_leaveService person_leaveService) {
+        this.person_leaveService = person_leaveService;
     }
     
 }

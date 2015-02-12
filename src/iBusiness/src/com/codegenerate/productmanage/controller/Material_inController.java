@@ -1,6 +1,5 @@
 package com.codegenerate.productmanage.controller;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -9,39 +8,41 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
+import com.ibusiness.common.export.ExcelCommon;
+import com.ibusiness.common.export.TableModel;
+import com.ibusiness.security.util.SpringSecurityUtils;
+import com.ibusiness.common.service.FormulaCommon;
 
-import net.sf.json.JSONObject;
-
-import org.activiti.engine.impl.interceptor.Command;
-import org.activiti.engine.task.Task;
-import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.codegenerate.productmanage.entity.Material_inEntity;
-import com.codegenerate.productmanage.entity.Material_in_sEntity;
-import com.codegenerate.productmanage.service.Material_inService;
-import com.codegenerate.productmanage.service.Material_in_sService;
-import com.codegenerate.productmanage.service.MaterialsService;
-import com.ibusiness.base.user.entity.UserBase;
+import org.activiti.engine.impl.interceptor.Command;
+import org.activiti.engine.task.Task;
+import org.apache.commons.io.IOUtils;
+
+import net.sf.json.JSONObject;
+
+import com.ibusiness.common.model.ConfSelectItem;
 import com.ibusiness.bpm.cmd.ProcessInstanceDiagramCmd;
 import com.ibusiness.bpm.service.BpmComBusiness;
-import com.ibusiness.common.export.ExcelCommon;
-import com.ibusiness.common.export.TableModel;
-import com.ibusiness.common.model.ConfSelectItem;
-import com.ibusiness.common.page.Page;
-import com.ibusiness.common.page.PropertyFilter;
-import com.ibusiness.common.service.CommonBusiness;
-import com.ibusiness.common.service.FormulaCommon;
-import com.ibusiness.common.util.CommonUtils;
-import com.ibusiness.core.spring.ApplicationContextHelper;
 import com.ibusiness.core.spring.MessageHelper;
+import com.ibusiness.common.page.PropertyFilter;
+import com.ibusiness.common.page.Page;
+import com.ibusiness.common.service.CommonBusiness;
+import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.security.util.SpringSecurityUtils;
+import com.ibusiness.base.user.entity.UserBase;
+
+import com.codegenerate.productmanage.entity.Material_inEntity;
+import com.codegenerate.productmanage.service.Material_inService;
+import com.codegenerate.productmanage.entity.Material_in_sEntity;
+import com.codegenerate.productmanage.service.Material_in_sService;
 
 /**   
  * @Title: Controller
@@ -125,7 +126,7 @@ public class Material_inController {
         propertyFilters.add(new PropertyFilter("EQS_parentid", id));
         // 根据条件查询数据
 	        page = material_in_sService.pagedQuery(page, propertyFilters);
-	        model.addAttribute("page", page);
+	        model.addAttribute("material_in_sPage", page);
         
         // 流程ID
         model.addAttribute("flowId", flowId);
@@ -160,15 +161,6 @@ public class Material_inController {
         // 根据流程和节点信息取得 流程指定节点的字段信息
         JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, mainEntity.getExecutionid(), nodeCode, Material_in_sEntity.class);
         model.addAttribute("nodeColumsMap", json);
-        
-        // ========================
-        // 查询条件Filter过滤器
-        Map<String, Object> parameterMap = new HashMap<String, Object>();
-        List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        // 根据条件查询数据
-        Page page = new Page();
-        page = ApplicationContextHelper.getBean(MaterialsService.class).pagedQuery(page, propertyFilters);
-        model.addAttribute("page", page);
         
         return "codegenerate/productmanage/material_in_s-input.jsp";
     }
@@ -301,7 +293,7 @@ public class Material_inController {
      * 子表删除
      */
     @RequestMapping("material_in_s-remove")
-    public String subRemove(@RequestParam("selectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
+    public String material_in_sRemove(@RequestParam("material_in_sSelectedItem") List<String> selectedItem, @RequestParam(value = "flowId", required = false) String flowId, RedirectAttributes redirectAttributes) throws Exception {
         List<Material_in_sEntity> entitys = material_in_sService.findByIds(selectedItem);
         for (Material_in_sEntity entity : entitys) {
             material_in_sService.remove(entity);
@@ -323,7 +315,7 @@ public class Material_inController {
         // excel文件名
         tableModel.setExcelName("原料入库表流程"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("materialno", "materialname", "materialmodel", "materialunit", "materialnum", "amount", "manufacturename", "remark", "id", "parentid");
+        tableModel.addHeaders("materialname", "materialmodel", "materialunit", "materialnum", "amount", "manufacturename", "remark", "id", "parentid");
         tableModel.setTableName("IB_MATERIAL_IN");
         tableModel.setData(beans);
         try {
@@ -343,7 +335,7 @@ public class Material_inController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("materialno", "materialname", "materialmodel", "materialunit", "materialnum", "amount", "manufacturename", "remark", "id", "parentid");
+            tableModel.addHeaders("materialname", "materialmodel", "materialunit", "materialnum", "amount", "manufacturename", "remark", "id", "parentid");
             // 导入
             new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.productmanage.entity.Material_in_sEntity");
         } catch (Exception e) {

@@ -40,7 +40,11 @@
     
     <!-- layout -->
     <script type="text/javascript" src="${ctx}/plugin/ibusiness/js/table.js"></script>
-    
+    <style>
+		.datepicker{
+			z-index:99999999;
+		}
+	 </style>
     <script type="text/javascript">
 		$(function() {
 			// 显示信息

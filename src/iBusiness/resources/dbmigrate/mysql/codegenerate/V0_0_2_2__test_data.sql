@@ -28,6 +28,7 @@ INSERT INTO IB_CONF_TABLE(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE,IS
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_TEST','ID','UUID主键','VARCHAR','64','否',1);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_TEST','NAME','姓名','VARCHAR','64','是',2);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_TEST','REMARK','备注','VARCHAR','1024','是',8);
+insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize,isNull,defaultValue,columnNo) values ('IB_TEST','SCOPEID','范围','VARCHAR','64','否','',92);
 /* ====== 审批权限流程表 =====  */
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','ID','UUID主键','VARCHAR','64','否',91);
 INSERT INTO ib_conf_table_columns(tablename,columnvalue,columnname,columntype,columnsize,isnull,columnno) VALUES('IB_PERMISSION','EXECUTIONID','流程执行实例ID','VARCHAR','64','是',92);

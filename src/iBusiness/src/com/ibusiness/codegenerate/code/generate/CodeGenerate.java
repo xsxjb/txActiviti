@@ -76,6 +76,7 @@ public class CodeGenerate implements ICallBack {
         if (!CommonUtils.isNull(codeParamBean.getMainEntityName())) {
         	CodeGenerate.mainEntityName = codeParamBean.getMainEntityName();
         }
+        this.originalColumns = codeParamBean.getOriginalColumns();
         CodeGenerate.formName = codeParamBean.getFormName();
         CodeGenerate.entityPackage = codeParamBean.getPackageName();
         CodeGenerate.tableName = codeParamBean.getTableName();
@@ -128,6 +129,9 @@ public class CodeGenerate implements ICallBack {
             Map<String, ConfTableColumns> tableColumnsMap = CommonBusiness.getInstance().getTableColumnsMap(tableName);
             if (tableColumnsMap.size() > 0) {
                 for (Columnt columnt : this.columns) {
+                	if (null == columnt) {
+                		continue;
+                	}
                     String key = columnt.getFieldDbName();
                     if (tableColumnsMap.containsKey(key)) {
                         columnt.setFiledComment(tableColumnsMap.get(key).getColumnName());
@@ -152,7 +156,9 @@ public class CodeGenerate implements ICallBack {
             localHashMap.put("formTableColumnList", formTableColumnList);
             
             // 读取指定表名的表字段(原值)List
-            this.originalColumns = this.dbFiledToJspUtil.readOriginalTableColumn(tableName);
+            if (null == this.originalColumns || this.originalColumns.size() < 1) {
+            	this.originalColumns = this.dbFiledToJspUtil.readOriginalTableColumn(tableName);
+            }
             localHashMap.put("originalColumns", this.originalColumns);
             // 设置值
             for (Columnt columnt : originalColumns) {

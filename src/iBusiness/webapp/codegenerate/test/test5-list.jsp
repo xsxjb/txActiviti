@@ -5,7 +5,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title>客户信息管理列表</title>
+    <title>测试555列表</title>
     <%@include file="/common/center.jsp"%>
     <script type="text/javascript">
 		var config = {
@@ -22,7 +22,7 @@
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm',
-	        exportUrl: 'customer_info-export.do'
+	        exportUrl: 'test5-export.do'
 		};
 
 		var table;
@@ -50,23 +50,21 @@
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
           <div class="panel-body">
 	          <div id="search" class="content content-inner">
-				  <form name="cgForm" method="post" action="customer_info-list.do" class="form-inline">
+				  <form name="cgForm" method="post" action="test5-list.do" class="form-inline">
 				    <div class="form-group">
-				                <label for="code_table_customername">客户名称:</label>
-				                <input type="text" id="code_table_customername" name="filter_LIKES_customername" value="${param.filter_LIKES_customername}">
 					    <button class="btn btn-primary btn-sm" onclick="document.cgForm.submit()"><span class="glyphicon glyphicon-search"></span>查询</button>
 					</div>
 				 </form>
 			  </div>
 		  </div>
-	   <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">客户信息管理列表</h4></div>
+	   <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">测试555列表</h4></div>
        <div class="panel-body">
 		    <div class="pull-left">
-			    <button class="btn btn-primary btn-sm a-insert" href="customer_info-input.do" data-target="#modalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+			    <button class="btn btn-primary btn-sm a-insert" href="test5-input.do" data-target="#modalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
 			    <button class="btn btn-primary btn-sm a-remove" onclick="table.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 			    <button class="btn btn-primary btn-sm" onclick="table.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
 			    <button class="btn btn-primary btn-sm"  onclick="importExcelAdd.click()"><span class="glyphicon glyphicon-import"></span>导入Excel</button>
-			    <form id="msgInfoForm" method="post" action="customer_info-importExcel.do" class="form-horizontal" enctype="multipart/form-data">
+			    <form id="msgInfoForm" method="post" action="test5-importExcel.do" class="form-horizontal" enctype="multipart/form-data">
                     <input id="importExcelAdd" type="file" name="attachment"  style="display:none;" onChange="importExcel()"> 
                 </form>
             
@@ -83,21 +81,13 @@
 		    <div class="m-clear"></div>
 	   </div>
 	   <div class="content">
-			<form id="gridForm" name="gridForm" method='post' action="customer_info-remove.do" class="m-form-blank">
+			<form id="gridForm" name="gridForm" method='post' action="test5-remove.do" class="m-form-blank">
 			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
 				      <tr>
 				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					                <th class="sorting">客户编号</th>
-					                <th class="sorting">客户状态</th>
-					                <th class="sorting">客户地址</th>
-					                <th class="sorting">手机</th>
-					                <th class="sorting">联系电话</th>
-					                <th class="sorting">负责经理</th>
-					                <th class="sorting">客户名称</th>
-					                <th class="sorting">信息来源</th>
-					                <th class="sorting">省</th>
-					                <th class="sorting">市</th>
+					                <th class="sorting">名</th>
+					                <th class="sorting">邮件</th>
 				        <th width="30">&nbsp;</th>
 				      </tr>
 				    </thead>
@@ -105,18 +95,10 @@
 					      <c:forEach items="${page.result}" var="item" varStatus="status">  
 					      <tr class="${status.index%2==1? 'active':''}">
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-						            <td>${item.customerno}</td>
-						            <td>${item.customerstate}</td>
-						            <td>${item.customeraddress}</td>
-						            <td>${item.phone}</td>
-						            <td>${item.telephone}</td>
-						            <td>${item.salesmanager}</td>
-						            <td>${item.customername}</td>
-						            <td>${item.infosource}</td>
-						            <td>${item.province}</td>
-						            <td>${item.city}</td>
+						            <td>${item.name}</td>
+						            <td>${item.email}</td>
 					        <td>
-					          <a href="customer_info-input.do?id=${item.id}" class="a-update" data-target="#modalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
+					          <a href="test5-input.do?id=${item.id}" class="a-update" data-target="#modalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
 					        </td>
 					      </tr>
 					      </c:forEach>

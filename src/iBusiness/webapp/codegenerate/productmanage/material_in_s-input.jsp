@@ -35,17 +35,25 @@
 					      <input id="code_id" type="hidden" name="id" value="${model.id}">
 					  </c:if>
 
-Expression columns is undefined on line 37, column 51 in bpm/jspSubInputOneToMTemplate.ftl.
+Expression po is undefined on line 38, column 56 in bpm/jspSubInputOneToMTemplate.ftl.
 The problematic instruction:
 ----------
-==> list columns as po [on line 37, column 44 in bpm/jspSubInputOneToMTemplate.ftl]
+==> if po.fcDisplay="1" [on line 38, column 51 in bpm/jspSubInputOneToMTemplate.ftl]
 ----------
 
 Java backtrace for programmers:
 ----------
-freemarker.core.InvalidReferenceException: Expression columns is undefined on line 37, column 51 in bpm/jspSubInputOneToMTemplate.ftl.
+freemarker.core.InvalidReferenceException: Expression po is undefined on line 38, column 56 in bpm/jspSubInputOneToMTemplate.ftl.
 	at freemarker.core.TemplateObject.assertNonNull(TemplateObject.java:125)
-	at freemarker.core.IteratorBlock.accept(IteratorBlock.java:100)
+	at freemarker.core.TemplateObject.invalidTypeException(TemplateObject.java:135)
+	at freemarker.core.Dot._getAsTemplateModel(Dot.java:78)
+	at freemarker.core.Expression.getAsTemplateModel(Expression.java:89)
+	at freemarker.core.ComparisonExpression.isTrue(ComparisonExpression.java:111)
+	at freemarker.core.ConditionalBlock.accept(ConditionalBlock.java:77)
+	at freemarker.core.Environment.visit(Environment.java:221)
+	at freemarker.core.IteratorBlock$Context.runLoop(IteratorBlock.java:179)
+	at freemarker.core.Environment.visit(Environment.java:428)
+	at freemarker.core.IteratorBlock.accept(IteratorBlock.java:102)
 	at freemarker.core.Environment.visit(Environment.java:221)
 	at freemarker.core.MixedContent.accept(MixedContent.java:92)
 	at freemarker.core.Environment.visit(Environment.java:221)
@@ -53,7 +61,7 @@ freemarker.core.InvalidReferenceException: Expression columns is undefined on li
 	at freemarker.template.Template.process(Template.java:259)
 	at com.ibusiness.codegenerate.code.generate.CodeFactory.generateFile(CodeFactory.java:51)
 	at com.ibusiness.codegenerate.code.generate.CodeFactory.invoke(CodeFactory.java:146)
-	at com.ibusiness.codegenerate.code.generate.CodeGenerate.generateToFile(CodeGenerate.java:240)
+	at com.ibusiness.codegenerate.code.generate.CodeGenerate.generateToFile(CodeGenerate.java:246)
 	at com.ibusiness.component.code.controller.CodeController.codeGenerateSave(CodeController.java:144)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)

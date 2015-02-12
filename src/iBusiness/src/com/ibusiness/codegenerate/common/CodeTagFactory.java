@@ -145,7 +145,7 @@ public class CodeTagFactory {
         str = str + "<div class=\"col-lg-3\">";
         str = str + "  <div class=\"input-append datepicker date\">";
         str = str + "  <span class=\"add-on\">";
-        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" readonly >";
+        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" placeholder=\"点击选择\" class=\"form-control "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" readonly >";
         str = str + "  </span>";
         str = str + "  </div>";
         str = str + "</div>";
@@ -160,7 +160,7 @@ public class CodeTagFactory {
         str = str + "<div class=\"col-lg-3\">";
         str = str + "  <div class=\"input-append datetimepicker date\">";
         str = str + "  <span class=\"add-on\">";
-        str = str + "    <input data-format=\"yyyy-MM-dd hh:mm:ss\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" maxlength=\"20\" readonly >";
+        str = str + "    <input data-format=\"yyyy-MM-dd hh:mm:ss\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" placeholder=\"点击选择\" class=\"form-control "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" maxlength=\"20\" readonly >";
         str = str + "  </span>";
         str = str + "  </div>";
         str = str + "</div>";

@@ -217,7 +217,9 @@ public class CodeGenerateBpmForm implements ICallBack {
                 // 根据标签类型生成标签
                 columnt = CodeBpmTagFactory.getInstance().CreateTagComponent(columnt, formColumn);
             }
-            subColumlist.add(columnt);
+            if (null != columnt) {
+            	subColumlist.add(columnt);
+            }
         }
         return subColumlist;
     }
@@ -257,7 +259,9 @@ public class CodeGenerateBpmForm implements ICallBack {
                 // 根据标签类型生成标签
                 columnt = CodeBpmTagFactory.getInstance().CreateTagComponent(columnt, formColumn);
             }
-            subColumlist.add(columnt);
+            if (null != columnt) {
+            	subColumlist.add(columnt);
+            }
         }
         return subColumlist;
     }

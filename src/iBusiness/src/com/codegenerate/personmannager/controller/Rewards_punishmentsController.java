@@ -1,4 +1,4 @@
-package com.codegenerate.crmmanage.controller;
+package com.codegenerate.personmannager.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -31,35 +31,35 @@ import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.util.CommonUtils;
 
-import com.codegenerate.crmmanage.entity.Customer_infoEntity;
-import com.codegenerate.crmmanage.service.Customer_infoService;
+import com.codegenerate.personmannager.entity.Rewards_punishmentsEntity;
+import com.codegenerate.personmannager.service.Rewards_punishmentsService;
 
 /**   
  * @Title: Controller
- * @Description: 客户信息表页面
+ * @Description: 奖惩记录页面
  * @author JiangBo
  *
  */
 @Controller
-@RequestMapping("customer_info")
-public class Customer_infoController {
+@RequestMapping("rewards_punishments")
+public class Rewards_punishmentsController {
 
     private MessageHelper messageHelper;
-    private Customer_infoService customer_infoService;
+    private Rewards_punishmentsService rewards_punishmentsService;
    /**
      * 列表
      */
-    @RequestMapping("customer_info-list")
+    @RequestMapping("rewards_punishments-list")
     public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         // 查询条件Filter过滤器
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         // 添加当前公司(用户范围)ID查询
     	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         // 根据条件查询数据
-        page = customer_infoService.pagedQuery(page, propertyFilters);
+        page = rewards_punishmentsService.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         // 返回JSP
-        return "codegenerate/crmmanage/customer_info-list.jsp";
+        return "codegenerate/personmannager/rewards_punishments-list.jsp";
     }
     
     /**
@@ -68,22 +68,23 @@ public class Customer_infoController {
      * @param model
      * @return
      */
-    @RequestMapping("customer_info-input")
+    @RequestMapping("rewards_punishments-input")
     public String input(@RequestParam(value = "id", required = false) String id, Model model) {
-        Customer_infoEntity entity = null;
+        Rewards_punishmentsEntity entity = null;
         if (!CommonUtils.isNull(id)) {
-            entity = customer_infoService.get(id);
+            entity = rewards_punishmentsService.get(id);
         } else {
-            entity = new Customer_infoEntity();
+            entity = new Rewards_punishmentsEntity();
         }
         
         // 默认值公式
-        entity = (Customer_infoEntity) new FormulaCommon().defaultValue(entity, "IB_CUSTOMER_INFO");
+        entity = (Rewards_punishmentsEntity) new FormulaCommon().defaultValue(entity, "IB_REWARDS_PUNISHMENTS");
         
         model.addAttribute("model", entity);
         
         // 在controller中设置页面控件用的数据
-        return "codegenerate/crmmanage/customer_info-input.jsp";
+                Map<String, com.ibusiness.component.form.entity.ConfFormTableColumn> typeFTCMap= CommonBusiness.getInstance().getFormTableColumnMap("IB_REWARDS_PUNISHMENTS", "rewardAndPunishments");List<com.ibusiness.common.model.ConfSelectItem> typeItems = (List<com.ibusiness.common.model.ConfSelectItem>) CommonUtils.getListFromJson(typeFTCMap.get("TYPE").getConfSelectInfo(), com.ibusiness.common.model.ConfSelectItem.class);model.addAttribute("typeItems", typeItems);
+        return "codegenerate/personmannager/rewards_punishments-input.jsp";
     }
 
     /**
@@ -92,19 +93,21 @@ public class Customer_infoController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("customer_info-save")
-    public String save(@ModelAttribute Customer_infoEntity entity, RedirectAttributes redirectAttributes) throws Exception {
+    @RequestMapping("rewards_punishments-save")
+    public String save(@ModelAttribute Rewards_punishmentsEntity entity, RedirectAttributes redirectAttributes) throws Exception {
         // 先进行校验
         // 再进行数据复制
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
-            customer_infoService.insert(entity);
+            // 设置范围ID
+            entity.setScopeid(CommonBusiness.getInstance().getCurrentUserScopeId());
+            rewards_punishmentsService.insert(entity);
         } else {
-            customer_infoService.update(entity);
+            rewards_punishmentsService.update(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-        return "redirect:/customer_info/customer_info-list.do";
+        return "redirect:/rewards_punishments/rewards_punishments-list.do";
     }
    /**
      * 删除
@@ -112,32 +115,32 @@ public class Customer_infoController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping("customer_info-remove")
+    @RequestMapping("rewards_punishments-remove")
     public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
-        List<Customer_infoEntity> entitys = customer_infoService.findByIds(selectedItem);
-        for (Customer_infoEntity entity : entitys) {
-            customer_infoService.remove(entity);
+        List<Rewards_punishmentsEntity> entitys = rewards_punishmentsService.findByIds(selectedItem);
+        for (Rewards_punishmentsEntity entity : entitys) {
+            rewards_punishmentsService.remove(entity);
         }
         messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 
-        return "redirect:/customer_info/customer_info-list.do";
+        return "redirect:/rewards_punishments/rewards_punishments-list.do";
     }
     /**
      * excel导出
      */
     @SuppressWarnings("unchecked")
-    @RequestMapping("customer_info-export")
+    @RequestMapping("rewards_punishments-export")
     public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
-        page = customer_infoService.pagedQuery(page, propertyFilters);
-        List<Customer_infoEntity> beans = (List<Customer_infoEntity>) page.getResult();
+        page = rewards_punishmentsService.pagedQuery(page, propertyFilters);
+        List<Rewards_punishmentsEntity> beans = (List<Rewards_punishmentsEntity>) page.getResult();
 
         TableModel tableModel = new TableModel();
         // excel文件名
-        tableModel.setExcelName("客户信息表页面"+CommonUtils.getInstance().getCurrentDateTime());
+        tableModel.setExcelName("奖惩记录页面"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
-        tableModel.addHeaders("id", "customerno", "customerstate", "customername", "customeraddress", "phone", "telephone", "salesmanager", "infosource", "province", "city");
-        tableModel.setTableName("IB_CUSTOMER_INFO");
+        tableModel.addHeaders("name", "date", "type", "num", "salary", "assess", "motionman", "remark", "id", "scopeid");
+        tableModel.setTableName("IB_REWARDS_PUNISHMENTS");
         tableModel.setData(beans);
         try {
             new ExcelCommon().exportExcel(response, tableModel);
@@ -148,7 +151,7 @@ public class Customer_infoController {
     /**
      * excel导入
      */
-    @RequestMapping("customer_info-importExcel")
+    @RequestMapping("rewards_punishments-importExcel")
     public String importExport(@RequestParam("attachment") MultipartFile attachment, HttpServletResponse response) {
         try {
             File file = new File("test.xls"); 
@@ -156,13 +159,13 @@ public class Customer_infoController {
             // 
             TableModel tableModel = new TableModel();
             // 列名
-            tableModel.addHeaders("id", "customerno", "customerstate", "customername", "customeraddress", "phone", "telephone", "salesmanager", "infosource", "province", "city");
+            tableModel.addHeaders("name", "date", "type", "num", "salary", "assess", "motionman", "remark", "id", "scopeid");
             // 导入
-            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.crmmanage.entity.Customer_infoEntity");
+            new ExcelCommon().uploadExcel(file, tableModel, "com.codegenerate.personmannager.entity.Rewards_punishmentsEntity");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/customer_info/customer_info-list.do";
+        return "redirect:/rewards_punishments/rewards_punishments-list.do";
     }
     // ======================================================================
     @Resource
@@ -171,8 +174,8 @@ public class Customer_infoController {
     }
 
     @Resource
-    public void setCustomer_infoService(Customer_infoService customer_infoService) {
-        this.customer_infoService = customer_infoService;
+    public void setRewards_punishmentsService(Rewards_punishmentsService rewards_punishmentsService) {
+        this.rewards_punishmentsService = rewards_punishmentsService;
     }
     
 }
