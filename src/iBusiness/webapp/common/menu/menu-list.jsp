@@ -87,6 +87,9 @@
 		            <input id="hidden_menuLevelOne" type="hidden" name="menuLevelOne" value="${menuLevelOne}">
 		            <input id="hidden_menuLevelTwo" type="hidden" name="menuLevelTwo" value="${menuLevelTwo}">
 				            <div class="form-group">
+								  <c:if test="${menuLevel != 1}">
+							            <button class="btn btn-primary  btn-sm" onclick="location.href='menu-list.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val() ">查询</button>
+							  	  </c:if>
 								  <button class="btn btn-primary  btn-sm" onclick="location.href='menu-input.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val()">新建</button>
 								  <button class="btn btn-primary  btn-sm a-remove" onclick="table.removeAll()"><spring:message code="core.list.delete" text="删除"/></button>
 								  <!-- 一级父菜单 -->
@@ -113,9 +116,7 @@
 										  </select>
 									  </div>
 							      </c:if>
-							      <c:if test="${menuLevel != 1}">
-							            <button class="btn btn-primary  btn-sm" onclick="location.href='menu-list.do?menuLevel=${menuLevel}&menuLevelOne='+$(hidden_menuLevelOne).val()+'&menuLevelTwo='+$(hidden_menuLevelTwo).val() ">查询</button>
-							  	  </c:if>
+							      
 						  	</div>
 				        <div class="pull-right">
 						  每页显示

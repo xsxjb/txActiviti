@@ -45,24 +45,24 @@
 						<thead>
 							<tr>
 							    <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+								<th width="30">&nbsp;</th>
 								<th>表名</th>
 								<th>标题</th>
 								<th>所在模块</th>
 								<th>唯一标识</th>
-								<th width="30">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 						<c:forEach items="${tableInfoList}" var="item">
 						    <tr>
 							    <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
+								<td>
+						          <a href="conf-table-column-list.do?tableName=${item.tableName}&isBpmTable=2" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
+						        </td>
 								<td><a href="conf-table-insert.do?packageName=${packageName}&tableName=${item.tableName}&isBpmTable=2" class="a-update">${item.tableName}</a></td>
 								<td>${item.tableNameComment}</td>
 								<td>${item.packageName}</td>
 								<td>${item.id}</td>
-								<td>
-						          <a href="conf-table-column-list.do?tableName=${item.tableName}&isBpmTable=2" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
-						        </td>
 						    </tr>
 						  </c:forEach>
 						</tbody>

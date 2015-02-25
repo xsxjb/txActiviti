@@ -65,10 +65,10 @@
 			    <thead>
 			      <tr>
 			        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			        <th width="30">&nbsp;</th>
 			        <th class="sorting" ><spring:message code="user.user.list.formName" text="表单名"/></th>
 			        <th class="sorting"><spring:message code="user.user.list.formTitle" text="表单标题"/></th>
 			        <th class="sorting"><spring:message code="user.user.list.packageName" text="包名"/></th>
-			        <th width="30">&nbsp;</th>
 			      </tr>
 			    </thead>
 			    
@@ -76,12 +76,12 @@
 			      <c:forEach items="${page.result}" var="item">
 			      <tr>
 			        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-			        <td>${item.formName}</td>
-			        <td>${item.formTitle}</td>
-			        <td>${item.packageName}</td>
 			        <td>
 			          <a href="conf-form-input.do?formId=${item.id}&packageName=${packageName}&isBpmForm=2" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 			        </td>
+			        <td>${item.formName}</td>
+			        <td>${item.formTitle}</td>
+			        <td>${item.packageName}</td>
 			      </tr>
 			      </c:forEach>
 			    </tbody>

@@ -66,8 +66,8 @@
 				    <label class="col-lg-2 control-label" for="table-type">表类型:</label>
 					<div class="col-lg-3">
 				          <select id="table-type" name="tableType"  class="form-control">
-						        <option value="1">单表/主表</option>
-							    <option value="2">子表</option>
+						        <option value="1" ${model.tableType == 1 ? 'selected' : ''}>单表/主表</option>
+							    <option value="2" ${model.tableType == 2 ? 'selected' : ''}>子表</option>
 						   </select>
 				    </div>
 				  </div>

@@ -18,7 +18,8 @@
 		    orderBy: '${"$" + "{page.orderBy == null ? "+ "''" +" : page.orderBy}"}',
 		    asc: ${"$" + "{page.asc}"},
 		    params: {
-		        'filter_LIKES_id': '${"$" + "{param.filter_LIKES_id}"}'
+		        'filter_LIKES_tasktitle': '${"$" + "{param.filter_LIKES_tasktitle}"}'
+		        ,'filter_LIKES_flownamebpm': '${"$" + "{param.filter_LIKES_flownamebpm}"}'
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm'

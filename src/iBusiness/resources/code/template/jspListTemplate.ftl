@@ -19,6 +19,11 @@
 		    asc: ${"$" + "{page.asc}"},
 		    params: {
 		        'filter_LIKES_id': '${"$" + "{param.filter_LIKES_id}"}'
+		        <#list formTableColumnList as formTableColumn>
+				    <#if  '1' ==formTableColumn.fcQuery >
+		                ,'filter_LIKES_${formTableColumn.tableColumnLower}': '${'$' + '{param.filter_LIKES_${formTableColumn.tableColumnLower}}'}'
+		            </#if>
+		        </#list>
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm',
