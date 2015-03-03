@@ -316,7 +316,7 @@ public class CodeTagFactory {
         str = str + "function searchOwnername(urlStr) { ";
         str = str + " $.ajax({ ";
         str = str + " 	 type: \"POST\", ";
-        str = str + "	 url: \"/\"+window.location.pathname.split(\"/\")[1]+\"/\"+urlStr +$(\"#code_table_roomnum\").val(), ";
+        str = str + "	 url: \"/\"+window.location.pathname.split(\"/\")[1]+\"/\"+urlStr +$(\"#code_table_"+jsonObject.getString("queryName")+"\").val(), ";
         str = str + "	 dataType:\"json\", ";
         str = str + "	 success: function(jsonData){ ";
         str = str + "	   $(\"#"+columnt.getFieldName()+"Rowadd tr\").remove();  ";
@@ -425,7 +425,7 @@ public class CodeTagFactory {
 		// 下载
 		methodStr = methodStr + " @RequestMapping(\""+columnt.getFieldName()+"-download\")";
 		methodStr = methodStr + " public void download(@RequestParam(\"path\") String path, @RequestParam(\"filename\") String filename, HttpServletResponse response) throws Exception {";
-		methodStr = methodStr + "    InputStream is = null;";
+		methodStr = methodStr + "    java.io.InputStream is = null;";
 		methodStr = methodStr + "    try {";
 		methodStr = methodStr + "        com.ibusiness.core.util.ServletUtils.setFileDownloadHeader(response, filename);";
 		methodStr = methodStr + "        is = storeConnector.get(\""+pathName+"\", path).getInputStream();";

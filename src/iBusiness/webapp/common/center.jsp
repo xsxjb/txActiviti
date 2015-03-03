@@ -30,9 +30,14 @@
     <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap-datepicker/datepicker.css">
     <script type="text/javascript" src="${ctx}/plugin/bootstrap-datepicker/bootstrap-datepicker.js"></script>
     
-    <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" >
+    <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" >
     <script type="text/javascript" src="${ctx}/plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-
+    <style>
+		.datepicker{
+			z-index:99999999;
+		}
+	</style>
+	 
     <!-- table and pager -->
     <script type="text/javascript" src="${ctx}/plugin/pagination/pagination.js"></script>
     <script type="text/javascript" src="${ctx}/plugin/table/table.js"></script>
@@ -40,11 +45,10 @@
     
     <!-- layout -->
     <script type="text/javascript" src="${ctx}/plugin/ibusiness/js/table.js"></script>
-    <style>
-		.datepicker{
-			z-index:99999999;
-		}
-	 </style>
+    
+    <!-- ajax submit -->
+	<script type="text/javascript" src="${ctx}/plugin/jquery/jquery.form.js"></script>
+    
     <script type="text/javascript">
 		$(function() {
 			// 显示信息
