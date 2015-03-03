@@ -53,6 +53,13 @@
 	                  </div>
                   </div>
                 </form>
+            <#list columns as po>
+			    <#if po.fcDisplay="1">
+			        <#list po.jspFormList as jspForm>
+			            ${jspForm}
+			        </#list>
+			    </#if>
+			</#list>
         </div>
     </div>
     <!-- end of main -->

@@ -20,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.activiti.engine.impl.interceptor.Command;
@@ -151,6 +153,15 @@ public class ${entityName}Controller {
         return "codegenerate/${entityPackage}/${entityName?uncap_first}-input.jsp";
     }
     
+    /**
+     * 控件添加的方法 ========
+     */
+    <#list columns as po>
+            <#list po.methodList as me>
+                ${me}
+            </#list>
+    </#list>
+    
     <#list subTab as sub>
     /**
      * 子表新建
@@ -172,6 +183,12 @@ public class ${entityName}Controller {
         JSONObject json = bpmComBusiness.getNodeColumsInfo(flowId, mainEntity.getExecutionid(), nodeCode, ${sub.entityName}Entity.class);
         model.addAttribute("nodeColumsMap", json);
         
+        // 在controller中设置页面控件用的数据
+        <#list sub.columns as po>
+            <#list po.modelAttributeList as ma>
+                ${ma}
+            </#list>
+        </#list>
         return "codegenerate/${entityPackage}/${sub.entityName?uncap_first}-input.jsp";
     }
     </#list>
@@ -320,6 +337,8 @@ public class ${entityName}Controller {
     @RequestMapping("${sub.entityName?uncap_first}-export")
     public void excel${sub.entityName}Export(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 根据当前公司(用户范围)ID进行查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = ${sub.entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
         List<${sub.entityName}Entity> beans = (List<${sub.entityName}Entity>) page.getResult();
 

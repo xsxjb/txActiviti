@@ -81,6 +81,7 @@
 				   <c:if test="${'$' + '{model != null}'}">
 				       <input type="hidden" name="id" value="${'$' + '{model.id}'}">
 				   </c:if>
+				   
 				   <#list columns as po>
 				       <#if po.fcDisplay="1">
 				          <#if po_index%2==0>
@@ -96,6 +97,13 @@
 					    </#if>
 					</#list>
 				</form>
+				<#list columns as po>
+				    <#if po.fcDisplay="1">
+				        <#list po.jspFormList as jspForm>
+				            ${jspForm}
+				        </#list>
+				    </#if>
+				</#list>
 		</div>
         </div> 
         

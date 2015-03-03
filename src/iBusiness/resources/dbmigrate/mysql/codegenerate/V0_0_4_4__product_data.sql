@@ -45,7 +45,7 @@ INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('productmanageThree42',
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('productmanageThree43','2');
 
 /* ================================================================================   */
-/* ===================================    仓库信息表          =================================   */
+/* =================================== 仓库信息表   =================================   */
 /* ================================================================================   */
 /* ================= 业务表结构管理表 ==================   */
 insert  into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE,PARENTTABLEID,ISBPMTABLE) values ('ib_warehouse001','productmanage','IB_WAREHOUSE','仓库信息','1',NULL,2);

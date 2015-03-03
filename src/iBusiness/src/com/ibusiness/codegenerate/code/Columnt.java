@@ -16,6 +16,10 @@ public class Columnt {
     private String jspTagInfo;
     // controller java类向model中设置值Attribute
     private List<String> modelAttributeList = new ArrayList<String>();
+    // controller java类中设置值method方法
+    private List<String> methodList = new ArrayList<String>();
+    // JSP 中设置添加 from方法
+    private List<String> jspFormList = new ArrayList<String>();
     //
     private String fieldDbName;
     // 字段名小写
@@ -216,4 +220,16 @@ public class Columnt {
     public void setModelAttributeList(List<String> modelAttributeList) {
         this.modelAttributeList = modelAttributeList;
     }
+	public List<String> getMethodList() {
+		return methodList;
+	}
+	public void setMethodList(List<String> methodList) {
+		this.methodList = methodList;
+	}
+	public List<String> getJspFormList() {
+		return jspFormList;
+	}
+	public void setJspFormList(List<String> jspFormList) {
+		this.jspFormList = jspFormList;
+	}
 }

@@ -56,6 +56,7 @@
                                     <option value="8" ${model.fcType==8 ? 'selected' : ''}>单选按钮</option>
                                     <option value="9" ${model.fcType==9 ? 'selected' : ''}>多选按钮</option>
                                     <option value="10" ${model.fcType==10 ? 'selected' : ''}>选择带出</option>
+                                    <option value="11" ${model.fcType==11 ? 'selected' : ''}>附件上传组件</option>
                                </select>
                            </div>
                       </div>
@@ -67,9 +68,10 @@
                           <p class="text-left">
               下拉列表内容:1.设置下拉列表固定值：[{"key":"1","value":"男"},{"key":"2","value":"女"}]<br/>
                   2.设置数据字典值：{"sql":"select id vKey, name vValue from ib_job_title "}<br/>
-                  3.选择带出值：{"jsplist":[{"inputKey":"materialname","inputValue":"materialname","inputTitle":"原料名称"},
+                  3.选择带出值：{"jsplist":[{"inputKey":"查询name","inputValue":"目标name","inputTitle":"标题名称"},
                       <br/>{"inputKey":"materialmodel","inputValue":"model","inputTitle":"规格型号"}],
-                     <br/>"className":"com.codegenerate.productmanage.service.MaterialsService"}
+                     <br/>"className":"com.codegenerate.productmanage.service.MaterialsService","queryTitle":"查询标题名","queryName":"查询对象"}<br/>
+                   4.单附件上传组件：{"pathName":"存储地址uas360"}<br/>
                           </p>
                      
                           </label>

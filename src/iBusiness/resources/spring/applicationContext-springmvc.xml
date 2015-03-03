@@ -40,7 +40,7 @@
     <!-- 通用的多部分解析器 上传文件等用 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="utf-8"/>
-		<property name="maxUploadSize" value="100000"/>
+		<property name="maxUploadSize" value="10485000"/>
 	</bean>
     
     <!-- 启用注解驱动格式化功能

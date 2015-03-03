@@ -79,4 +79,8 @@ public interface Constants {
     String CODE_CHECKBOX = "9";
     // 选择带出
     String CODE_SELECT_INPUT = "10";
+    // 附件上传组件
+    String CODE_UPLOAD = "11";
+    // 附件下载组件
+    String CODE_DOWNLOAD = "12";
 }

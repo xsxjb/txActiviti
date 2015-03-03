@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -128,12 +129,23 @@ public class ${entityName}Controller {
         return "redirect:/${entityName?uncap_first}/${entityName?uncap_first}-list.do";
     }
     /**
+     * 控件添加的方法 ========
+     */
+    <#list columns as po>
+            <#list po.methodList as me>
+                ${me}
+            </#list>
+    </#list>
+    
+    /**
      * excel导出
      */
     @SuppressWarnings("unchecked")
     @RequestMapping("${entityName?uncap_first}-export")
     public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 根据当前公司(用户范围)ID进行查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
         List<${entityName}Entity> beans = (List<${entityName}Entity>) page.getResult();
 
