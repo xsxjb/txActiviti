@@ -112,9 +112,13 @@ public class CodeTagFactory {
      * 单行输入框
      */
     public Columnt singleInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
+        // 取得参数里面最大 / 最小 输入长度
+        String maxlength = getMaxlength(formColumn.getConfSelectInfo());
+        String minlength = getMinlength(formColumn.getConfSelectInfo());
+        // 
         String str = "";
         str = str + "<div class=\"col-lg-3\">";
-        str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text form-control input-sm "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
+        str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text form-control input-sm "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" "+(null==maxlength? "":" maxlength=\""+maxlength+"\"")+(null==minlength? "":" minlength=\""+minlength+"\"")+" >";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -123,9 +127,12 @@ public class CodeTagFactory {
      * 多行输入框
      */
     public Columnt multiInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
+        // 取得参数里面最大 / 最小 输入长度
+        String maxlength = getMaxlength(formColumn.getConfSelectInfo());
+        String minlength = getMinlength(formColumn.getConfSelectInfo());
         String str = "";
-        str = str + "<div class=\"col-lg-6\">";
-        str = str + "    <textarea class=\"form-control "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" rows=\"2\" >${model."+columnt.getFieldName()+"}</textarea>";
+        str = str + "<div class=\"col-lg-8\">";
+        str = str + "    <textarea class=\"form-control "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" rows=\"2\" "+(null==maxlength? "":" maxlength=\""+maxlength+"\"")+(null==minlength? "":" minlength=\""+minlength+"\"")+">${model."+columnt.getFieldName()+"}</textarea>";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -134,9 +141,13 @@ public class CodeTagFactory {
      * 数值
      */
     public Columnt numberInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
+        // 取得参数里面最大 / 最小 输入长度
+        String maxlength = getMaxlength(formColumn.getConfSelectInfo());
+        String minlength = getMinlength(formColumn.getConfSelectInfo());
+        
         String str = "";
         str = str + "<div class=\"col-lg-3\">";
-        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text  form-control input-sm number "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
+        str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text  form-control input-sm number "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" "+(null==maxlength? "":" maxlength=\""+maxlength+"\"")+(null==minlength? "":" minlength=\""+minlength+"\"")+">";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
         return columnt;
@@ -486,6 +497,36 @@ public class CodeTagFactory {
         // 
     	return columnt;
     }
-    
-    // ======================================================================
+	
+	// =========================================================================
+	// =========================================================================
+	/**
+     * 取得参数里面最小输入长度check
+     */
+    private String getMinlength(String confSelectInfo) {
+    	if (CommonUtils.isNull(confSelectInfo)) {
+    		return null;
+    	}
+    	JSONObject jsonObject= JSONObject.fromObject(confSelectInfo);
+        String minlength = null;
+        if (null != jsonObject && jsonObject.containsKey("minlength")) {
+            minlength = jsonObject.getString("minlength");
+        }
+        return minlength;
+    }
+
+    /**
+     * 取得参数里面最大输入长度check
+     */
+    private String getMaxlength(String confSelectInfo) {
+    	if (CommonUtils.isNull(confSelectInfo)) {
+    		return null;
+    	}
+    	JSONObject jsonObject= JSONObject.fromObject(confSelectInfo);
+        String maxlength = null;
+        if (null != jsonObject && jsonObject.containsKey("maxlength")) {
+            maxlength = jsonObject.getString("maxlength");
+        }
+        return maxlength;
+    }
 }

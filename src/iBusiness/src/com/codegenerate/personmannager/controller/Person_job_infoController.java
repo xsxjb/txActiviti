@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -100,8 +101,6 @@ public class Person_job_infoController {
         String id = entity.getId();
         if (CommonUtils.isNull(id)) {
             entity.setId(UUID.randomUUID().toString());
-            // 设置范围ID
-            entity.setScopeid(CommonBusiness.getInstance().getCurrentUserScopeId());
             person_job_infoService.insert(entity);
         } else {
             person_job_infoService.update(entity);
@@ -126,12 +125,19 @@ public class Person_job_infoController {
         return "redirect:/person_job_info/person_job_info-list.do";
     }
     /**
+     * 控件添加的方法 ========
+     */
+                @ResponseBody @RequestMapping("name-list")public String ajaxroomlist(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap) {List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);page = com.ibusiness.core.spring.ApplicationContextHelper.getBean(com.ibusiness.base.group.dao.OrgDepartmentDao.class).pagedQuery(page, propertyFilters);List list = (java.util.ArrayList)page.getResult();return CommonUtils.getJsonFromList(list, null).toString();}
+    
+    /**
      * excel导出
      */
     @SuppressWarnings("unchecked")
     @RequestMapping("person_job_info-export")
     public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 根据当前公司(用户范围)ID进行查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = person_job_infoService.pagedQuery(page, propertyFilters);
         List<Person_job_infoEntity> beans = (List<Person_job_infoEntity>) page.getResult();
 

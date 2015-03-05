@@ -16,7 +16,6 @@
     <script type="text/javascript" src="${ctx}/plugin/jquery/jquery-migrate-1.2.1.min.js"></script>
     
     <link type="text/css" rel="stylesheet" href="${ctx}/plugin/jquery-validation/jquery.validate.css">
-    <script type="text/javascript" src="${ctx}/plugin/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="${ctx}/plugin/jquery-validation/jquery.validate.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugin/jquery-validation/localization/messages_zh_CN.js"></script>
     

@@ -223,7 +223,9 @@ public class CodeGenerate implements ICallBack {
             }
             
             // ADD
-            subColumlist.add(columnt);
+            if (null != columnt) {
+                subColumlist.add(columnt);
+            }
         }
         return subColumlist;
     }

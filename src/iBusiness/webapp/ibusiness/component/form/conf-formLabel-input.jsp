@@ -45,7 +45,26 @@
                       <div class="form-group">
                           <label class="control-label col-lg-2" for="form-fcType">组件类型:</label>
                           <div class="col-lg-2">
-                              <select id="form-fcType" name="fcType"  class="form-control">
+                          <script type="text/javascript">
+								function setConfSelectInfo(str) {
+									if ("" == $('#form-confSelectInfo').attr('value') || null==$('#form-confSelectInfo').attr('value')) {
+										if ("6" == str) {
+											$('#form-confSelectInfo').attr('value', "[{\"key\":\"1\",\"value\":\"男\"},{\"key\":\"2\",\"value\":\"女\"}]");
+										} else if ("7" == str) {
+											$('#form-confSelectInfo').attr('value', "[{\"sql\":\"select id vKey, name vValue from ib_job_title\"}]");
+										} else if ("10" == str) {
+											$('#form-confSelectInfo').attr('value', "{\"jsplist\":[{\"inputKey\":\"目标属性名\",\"inputValue\":\"查询属性名\",\"inputTitle\":\"标题名称\"},{\"inputKey\":\"materialmodel\",\"inputValue\":\"model\",\"inputTitle\":\"规格型号\"}],\"className\":\"com.codegenerate.productmanage.service.MaterialsService\",\"queryTitle\":\"查询标题名\",\"queryName\":\"查询对象\"}");
+										} else if ("11" == str) {
+											$('#form-confSelectInfo').attr('value', "{\"pathName\":\"存储地址\"}");
+										}
+									} else {
+										if ("1" == str || "2" == str || "3" == str || "4" == str || "5" == str || "8" == str || "9" == str) {
+											$('#form-confSelectInfo').attr('value', "");
+										}
+									}
+								}
+							</script>
+                              <select id="form-fcType" name="fcType"  class="form-control" onChange="setConfSelectInfo(this.value);" >
                                     <option value="1" ${model.fcType==1 ? 'selected' : ''}>单行</option>
                                     <option value="2" ${model.fcType==2 ? 'selected' : ''}>多行</option>
                                     <option value="3" ${model.fcType==3 ? 'selected' : ''}>日期</option>
@@ -62,23 +81,24 @@
                       </div>
                       <div class="form-group">
                           <div class="col-lg-1"></div>
-                          <div class="col-lg-10">
+                          <div class="col-lg-11">
                           <label class="control-label" for="form-confSelectInfo">
                           
                           <p class="text-left">
-              下拉列表内容:1.设置下拉列表固定值：[{"key":"1","value":"男"},{"key":"2","value":"女"}]<br/>
-                  2.设置数据字典值：{"sql":"select id vKey, name vValue from ib_job_title "}<br/>
-                  3.选择带出值：{"jsplist":[{"inputKey":"查询name","inputValue":"目标name","inputTitle":"标题名称"},
-                      <br/>{"inputKey":"materialmodel","inputValue":"model","inputTitle":"规格型号"}],
-                     <br/>"className":"com.codegenerate.productmanage.service.MaterialsService","queryTitle":"查询标题名","queryName":"查询对象"}<br/>
-                   4.单附件上传组件：{"pathName":"存储地址uas360"}<br/>
+              *组件类型:选择组件类型后如果下面框中内容为空,会自动在框中提示参数写法,如果已有内容则不提示。<br/>
+                  1.输入范围Check：{"maxlength":"30","minlength":"2"}<br/>
+                  2.设置下拉列表固定值：[{"key":"1","value":"男"},{"key":"2","value":"女"}]<br/>
+                  3.设置数据字典值：是一句SQL文,只能返回名字为vKey,和vValue两个返回值。<br/>
+                  4.选择带出值：inputKey:目标属性名  inputValue:查询属性名  inputTitle:显示标题 <br/>
+                               className:service名及全路径 queryTitle:查询标题名  queryName:查询对象<br/>
+                  5.单附件上传组件：{"pathName":"存储文件夹名"}<br/>
                           </p>
                      
                           </label>
                           </div>
-                          <div class="col-lg-2"></div>
-                          <div class="col-lg-6">
-                              <textarea class="form-control" id="form-confSelectInfo" rows="4" name="confSelectInfo"  >${model.confSelectInfo}</textarea>
+                          <div class="col-lg-1"></div>
+                          <div class="col-lg-9">
+                              <textarea id="form-confSelectInfo" class="form-control" rows="4" name="confSelectInfo"  >${model.confSelectInfo}</textarea>
                           </div>
                       </div>
                       <div class="form-group">

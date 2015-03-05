@@ -66,7 +66,7 @@ public class InitServlet extends HttpServlet {
         Graphics g = image.getGraphics();
         // step3, 给笔上颜色
         Random r = new Random();
-        g.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+        g.setColor(new Color((int)(100+Math.random()*(255-99)), (int)(100+Math.random()*(255-99)), (int)(100+Math.random()*(255-99))));
         // step4, 给画布设置一个背景颜色
         g.fillRect(0, 0, width, height);
         // step5,绘图

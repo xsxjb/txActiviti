@@ -214,7 +214,9 @@ public class CodeGenerateOneToMany implements ICallBack {
                 // 根据标签类型生成标签
                 columnt = CodeTagFactory.getInstance().CreateTagComponent(columnt, formColumn);
             }
-            subColumlist.add(columnt);
+            if (null != columnt) {
+                subColumlist.add(columnt);
+            }
         }
         return subColumlist;
     }

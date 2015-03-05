@@ -66,26 +66,26 @@
 				    <div class="form-group">
 					    <label class="col-lg-2 control-label" for="username"><spring:message code="core.login.username" text="账号" />:</label>
 					    <div class="col-lg-4">
-					       <input type='text' id="username" name='j_username' class="form-control" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}">
+					       <input type='text' id="username" name='j_username' class="form-control input-sm" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}">
 					    </div>
 					</div>
 					<div class="form-group">
 					    <label class="col-lg-2 control-label" for="password"><spring:message code="core.login.password" text="密码" />:</label>
 					    <div class="col-lg-4">
-						    <input type='password' id="password" name='j_password' class="form-control" value=''>
+						    <input type='password' id="password" name='j_password' class="form-control input-sm" value=''>
 					    </div>
 					</div>
 					<!-- 验证码  -->
 					<div class="form-group">
-					     <label class="col-lg-2 control-label" for="codeinput"><spring:message code="core.login.password" text="验证码"/></label>
+					     <label class="col-lg-2 control-label" for="codeinput">验证码:</label>
 					     <div class="col-lg-4">
-					         <input name="number" class="form-control" id="codeinput" onkeyup='checkcode()'/><span STYLE="color: red" id="checkcodemsg"></span><br/>
+					         <input name="number" class="form-control input-sm" id="codeinput" onkeyup='checkcode()'/><span STYLE="color: red" id="checkcodemsg"></span><br/>
 					     </div>
 					     <img src="checkcode" id="img1" onclick="document.getElementById('img1').src='${ctx}/common/checkcode?' + Math.random();" />
 					     <a href="javascript:;"  onclick="document.getElementById('img1').src='${ctx}/common/checkcode?' + Math.random();">看不清</a><br/>
 				    </div>
 					<div class="col-lg-10 col-lg-offset-2">
-						<input id="input_commit" class=" btn btn-primary" name="submit" type="submit" value="<spring:message code='core.login.submit' text='提交'/>"  disabled="disable" />
+						<input id="input_commit" class=" btn btn-primary btn-sm" name="submit" type="submit" value="提交"  disabled="disable" />
 					</div>
 			    </form>
 	        </div>

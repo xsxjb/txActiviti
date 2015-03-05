@@ -6,7 +6,7 @@
   <head>
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <%@include file="/common/meta.jsp"%>
-    <title>dashboard</title>
+    <title>iBusiness智能平台</title>
     <%@include file="/common/center.jsp"%>
     <!-- CSS  -->
     <link rel="stylesheet" href="${ctx}/plugin/ibusiness/imac/css/style.css" type="text/css" />

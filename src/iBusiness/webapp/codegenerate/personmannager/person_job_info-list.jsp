@@ -19,6 +19,7 @@
 		    asc: ${page.asc},
 		    params: {
 		        'filter_LIKES_id': '${param.filter_LIKES_id}'
+		                ,'filter_LIKES_name': '${param.filter_LIKES_name}'
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm',
@@ -84,6 +85,12 @@
 					                <th class="sorting">所属部门</th>
 					                <th class="sorting">职务</th>
 					                <th class="sorting">职称</th>
+					                <th class="sorting">取得职称时间</th>
+					                <th class="sorting">身份</th>
+					                <th class="sorting">行政级别</th>
+					                <th class="sorting">工资标准</th>
+					                <th class="sorting">就职时间</th>
+					                <th class="sorting">备注</th>
 				        <th width="30">&nbsp;</th>
 				      </tr>
 				    </thead>
@@ -95,6 +102,12 @@
 						            <td>${item.department}</td>
 						            <td>${item.post}</td>
 						            <td>${item.posttitle}</td>
+						            <td>${item.obtaindate}</td>
+						            <td>${item.identity}</td>
+						            <td>${item.adminlevel}</td>
+						            <td>${item.salarystandard}</td>
+						            <td>${item.enterdate}</td>
+						            <td>${item.remark}</td>
 					        <td>
 					          <a href="person_job_info-input.do?id=${item.id}" class="a-update" data-target="#modalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
 					        </td>
