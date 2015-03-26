@@ -420,11 +420,6 @@ public class CodeTagFactory {
 		// java相关信息 ======================================================================
 		String methodStr = "";
 		//上传下载功能
-		methodStr = methodStr + " private com.ibusiness.doc.store.StoreConnector storeConnector;";
-		methodStr = methodStr + " @Resource";
-		methodStr = methodStr + " public void setStoreConnector(com.ibusiness.doc.store.StoreConnector storeConnector) {";
-		methodStr = methodStr + "    this.storeConnector = storeConnector;}";
-	    
 		methodStr = methodStr + " @ResponseBody @RequestMapping(\""+columnt.getFieldName()+"-upload\") ";
 		methodStr = methodStr + " public String "+columnt.getFieldName()+"Upload(@org.springframework.beans.factory.annotation.Qualifier(\"attachment\") MultipartFile attachment, HttpServletResponse response) {";
 		methodStr = methodStr + " 	com.ibusiness.doc.store.StoreDTO storeDTO = null; ";
@@ -435,7 +430,7 @@ public class CodeTagFactory {
 		methodStr = methodStr + "    return null == storeDTO ? \"\" : storeDTO.getKey();}";
 		// 下载
 		methodStr = methodStr + " @RequestMapping(\""+columnt.getFieldName()+"-download\")";
-		methodStr = methodStr + " public void download(@RequestParam(\"path\") String path, @RequestParam(\"filename\") String filename, HttpServletResponse response) throws Exception {";
+		methodStr = methodStr + " public void "+columnt.getFieldName()+"Download(@RequestParam(\"path\") String path, @RequestParam(\"filename\") String filename, HttpServletResponse response) throws Exception {";
 		methodStr = methodStr + "    java.io.InputStream is = null;";
 		methodStr = methodStr + "    try {";
 		methodStr = methodStr + "        com.ibusiness.core.util.ServletUtils.setFileDownloadHeader(response, filename);";

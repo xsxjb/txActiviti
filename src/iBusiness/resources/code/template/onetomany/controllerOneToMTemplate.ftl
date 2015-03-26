@@ -57,6 +57,7 @@ import ${bussiPackage}.${sub.packageName}.service.${sub.entityName}Service;
 public class ${entityName}Controller {
 
     private MessageHelper messageHelper;
+    private com.ibusiness.doc.store.StoreConnector storeConnector;
     private ${entityName}Service ${entityName?uncap_first}Service;
     <#list subTab as sub>
         private ${sub.entityName}Service ${sub.entityName?uncap_first}Service;
@@ -122,6 +123,14 @@ public class ${entityName}Controller {
     </#list>
         
     <#list subTab as sub>
+    /**
+     * 添加子表控件的方法 ========
+     */
+    <#list sub.columns as po>
+        <#list po.methodList as me>
+            ${me}
+        </#list>
+    </#list>
     /**
      * 子表新建
      */
@@ -264,6 +273,10 @@ public class ${entityName}Controller {
     public void set${entityName}Service(${entityName}Service ${entityName?uncap_first}Service) {
         this.${entityName?uncap_first}Service = ${entityName?uncap_first}Service;
     }
+    @Resource
+	public void setStoreConnector(com.ibusiness.doc.store.StoreConnector storeConnector) {
+	    this.storeConnector = storeConnector;
+	}
     <#list subTab as sub>
         @Resource
 	    public void set${sub.entityName}Service(${sub.entityName}Service ${sub.entityName?uncap_first}Service) {

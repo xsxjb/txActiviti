@@ -95,12 +95,24 @@ public class CommonUtils {
         return new DecimalFormat("0.0").format(temp);
     }
     /**
-     * Double格式化,返回一位小数
+     * Double格式化,返回2位小数
      * @param temp
      * @return
      */
-    public static String formatDoubleBy2Decimal(double temp) {
+    public static String formatStringBy2Decimal(double temp) {
         return new DecimalFormat("0.00").format(temp);
+    }
+    /**
+     * Double格式化,返回两位小数
+     * @param temp
+     * @return
+     */
+    public static Double formatDoubleBy2Decimal(Double temp) {
+    	if (null == temp) {
+    		return 0.0;
+    	} else {
+    		return Double.parseDouble(new DecimalFormat("0.00").format(temp));
+    	}
     }
     /**
      * 链接JSON字符串，是否加逗号分隔

@@ -46,6 +46,7 @@ import ${bussiPackage}.${entityPackage}.service.${entityName}Service;
 public class ${entityName}Controller {
 
     private MessageHelper messageHelper;
+    private com.ibusiness.doc.store.StoreConnector storeConnector;
     private ${entityName}Service ${entityName?uncap_first}Service;
    /**
      * 列表
@@ -186,10 +187,12 @@ public class ${entityName}Controller {
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
     }
-
     @Resource
     public void set${entityName}Service(${entityName}Service ${entityName?uncap_first}Service) {
         this.${entityName?uncap_first}Service = ${entityName?uncap_first}Service;
     }
-    
+    @Resource
+	public void setStoreConnector(com.ibusiness.doc.store.StoreConnector storeConnector) {
+	    this.storeConnector = storeConnector;
+	}
 }

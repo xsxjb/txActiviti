@@ -47,7 +47,7 @@ $(function() {
 	          <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>
 	          <div class="panel-body">
 		        <div id="cmsArticleSearch" class="content content-inner">
-					  <form name="cmsArticleForm" method="post" action="cms-article-list.do" class="form-inline">
+					  <form name="cmsArticleForm" method="post" action="cms-article-view-list.do" class="form-inline">
 						    <label for="cmsArticle_titlee"><spring:message code='cmsArticle.cmsArticle.list.search.title' text='标题'/>:</label>
 						    <input type="text" id="cmsArticle_title" name="filter_LIKES_title" value="${param.filter_LIKES_title}">
 							<button class="btn btn-primary btn-small" onclick="document.cmsArticleForm.submit()">查询</button>

@@ -87,26 +87,28 @@
 					      <thead>
 						      <tr>
 						          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+						          <th width="30">&nbsp;</th>
 						          <#list columns as column>
 						              <#if column.fcDisplay="1">
 				                          <th class="sorting">${column.filedComment}</th>
 				                      </#if>
 				                  </#list>
-						          <th width="30">&nbsp;</th>
+						          
 						      </tr>
 						    </thead>
 							    <tbody>
 							      <c:forEach items="${'$' + '{page.result}'}" var="item" varStatus="status">
 							      <tr class="${'$' + '{status.index%2==1? \'active\':\'\'}'}">
 							        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${'$' + '{item.id}'}"></td>
+							        <td>
+							          <a href="${entityName?uncap_first}-input.do?id=${'$' + '{item.id}'}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
+							        </td>
 							        <#list columns as column>
 							            <#if column.fcDisplay="1">
 				                            <td>${'$' + '{item.${column.fieldName}}'}</td>
 				                        </#if>
 				                    </#list>
-							        <td>
-							          <a href="${entityName?uncap_first}-input.do?id=${'$' + '{item.id}'}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
-							        </td>
+							        
 							      </tr>
 							      </c:forEach>
 							    </tbody>

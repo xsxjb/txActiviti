@@ -23,11 +23,15 @@ public class FileStoreConnector implements StoreConnector {
         String prefix = new SimpleDateFormat("yyyyMMdd").format(new Date());
         String suffix = this.getSuffix(originName);
         String path = prefix + "/" + UUID.randomUUID() + suffix;
+        
+        // 绝对路径
+        String resourcePath = this.getClass().getResource("/").getPath();
+        resourcePath = resourcePath.replace("WEB-INF/classes/", "");
         // 创建一个目录，它的路径名由当前 File 对象指定，包括任一必须的父路径
-        File dir = new File(baseDir + "/" + model + "/" + prefix);
+        File dir = new File(resourcePath + baseDir + "/" + model + "/" + prefix);
         dir.mkdirs();
 
-        File targetFile = new File(baseDir + "/" + model + "/" + path);
+        File targetFile = new File(resourcePath + baseDir + "/" + model + "/" + path);
         FileOutputStream fos = new FileOutputStream(targetFile);
 
         try {
