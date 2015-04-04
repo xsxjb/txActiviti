@@ -111,7 +111,6 @@ public class WorkbookController {
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
     }
-
     @Resource
     public void setWorkbookService(WorkbookService workbookService) {
         this.workbookService = workbookService;

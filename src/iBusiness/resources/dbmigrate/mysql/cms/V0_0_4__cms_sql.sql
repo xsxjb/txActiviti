@@ -63,3 +63,8 @@ CREATE TABLE IB_CMS_COMMENT(
 		SCOPEID             VARCHAR(64),
         CONSTRAINT PK_CMS_COMMENT PRIMARY KEY(ID)
 ) engine=innodb;
+/*==============================================================*/
+/* 图片管理作品展示表   */
+/*==============================================================*/
+DROP TABLE IF EXISTS IB_INDEXIMGBYWORKS;
+CREATE TABLE IB_INDEXIMGBYWORKS (IMGURL VARCHAR(256), IMGINFO VARCHAR(128), SHOWFLAG VARCHAR(8), ID VARCHAR(64), SCOPEID VARCHAR(64),  PRIMARY KEY (ID)) ENGINE=INNODB;

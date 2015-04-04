@@ -1,4 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     <c:if test="${not empty flashMessages}">
 		<div id="m-success-message" style="display:none;">
 		  <ul>
@@ -74,7 +76,12 @@
 								    	<a href="#"> ${item.menuName}</a>
 								    </c:if>
 								    <c:if test="${item.menuUrl != '#'}">
-								    	<a href="${ctx}${item.menuUrl}"> ${item.menuName}</a>
+									        <c:if test="${fn:indexOf(item.menuUrl, 'http:')>=0}">
+									    	    <a href="${item.menuUrl}">${item.menuName}</a>
+								    	    </c:if>
+								    	    <c:if test="${fn:indexOf(item.menuUrl, 'http:')<0}">
+									    	    <a href="${ctx}${item.menuUrl}">${item.menuName}</a>
+								    	    </c:if>
 								    </c:if>
 						        </li>
 				        </c:if>
@@ -90,7 +97,12 @@
 												    	<a href="#"> ${son.menuName}</a>
 												    </c:if>
 												    <c:if test="${son.menuUrl != '#'}">
-												    	<a href="${ctx}${son.menuUrl}"> ${son.menuName}</a>
+												        <c:if test="${fn:indexOf(son.menuUrl, 'http:')>=0}">
+												    	    <a href="${son.menuUrl}"> ${son.menuName}</a>
+											    	    </c:if>
+											    	    <c:if test="${fn:indexOf(son.menuUrl, 'http:')<0}">
+												    	    <a href="${ctx}${son.menuUrl}">${son.menuName}</a>
+											    	    </c:if>
 												    </c:if>
 												</li>
 											</c:if>
@@ -104,7 +116,12 @@
 															    	<a href="#"><i class="icon-user"></i>${grandson.menuName}</a>
 															    </c:if>
 															    <c:if test="${grandson.menuUrl != '#'}">
-															    	<a href="${ctx}${grandson.menuUrl}"><i class="icon-user"></i>${grandson.menuName}</a>
+															        <c:if test="${fn:indexOf(grandson.menuUrl, 'http:')>=0}">
+															    	    <a href="${grandson.menuUrl}"><i class="icon-user"></i>${grandson.menuName}</a>
+														    	    </c:if>
+														    	    <c:if test="${fn:indexOf(grandson.menuUrl, 'http:')<0}">
+															    	    <a href="${ctx}${grandson.menuUrl}"><i class="icon-user"></i>${grandson.menuName}</a>
+														    	    </c:if>
 															    </c:if>
 															</li>
 														</c:forEach>

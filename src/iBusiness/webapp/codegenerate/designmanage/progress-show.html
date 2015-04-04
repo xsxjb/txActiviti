@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>奇点装饰公司</title>
+    <!-- bootstrap -->
+    <link type="text/css" rel="stylesheet" href="../../plugin/bootstrap/css/bootstrap.min.css" >
+    <!-- jquery -->
+    <script type="text/javascript" src="../../plugin/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../plugin/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+    <div class="panel panel-default col-lg-12">
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">基础信息</h4></div>
+        <div class="panel-body">
+	        <div class="form-group">
+	            <label class="col-lg-2 control-label" for="code-customername">客户名称:</label>
+	            <div class="col-lg-4"><label id="code-customername"></label></div>
+	            <label class="col-lg-2 control-label" for="code-projectname">工程项目名称:</label>
+	            <div class="col-lg-4"><label id="code-projectname"></label></div>
+	        </div>
+	        <div class="form-group">
+	            <label class="col-lg-2 control-label" for="code-designname">设计师名:</label>
+	            <div class="col-lg-4"><label id="code-designname"></label></div>
+	            <label class="col-lg-2 control-label" for="code-worksmanage">工长名字:</label>
+	            <div class="col-lg-4"><label id="code-worksmanage"></label></div>
+	        </div>
+	    </div>
+        <!--  -->
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">进度情况</h4></div>
+        <div class="panel-body">
+            <div class="col-lg-12">
+            <div class="media">
+				<a href="#" onclick="getImgData('design');" class="pull-left"><img id="designflag" src="wait.jpg" height="40" class="media-object"/></a>
+				<div class="media-body">
+					<h4 class="media-heading">
+						 设计图纸
+					</h4> 设计师设计图纸
+					<!-- 拆除工程 -->
+					<div class="media">
+						<a href="#" onclick="getImgData('demolition');" class="pull-left"><img id="demolitionflag" src="wait.jpg" height="40" class="media-object"/></a>
+						<div class="media-body">
+							<h4 class="media-heading">
+								 拆除工程
+							</h4> 拆除, 搬运, 清理
+							<!-- 水电工程 -->
+							<div class="media">
+								<a href="#" onclick="getImgData('water');" class="pull-left"><img id="waterflag" src="wait.jpg" height="40" class="media-object"/></a>
+								<div class="media-body">
+									<h4 class="media-heading">
+										水电工程
+									</h4> 结构材料，水管五金，电气材料，排放线路，水管排线
+									<!-- 泥木工程 -->
+									<div class="media">
+										<a href="#" onclick="getImgData('tile');" class="pull-left"><img id="tileflag" src="wait.jpg" height="40" class="media-object"/></a>
+										<div class="media-body">
+											<h4 class="media-heading">
+												泥木工程
+											</h4> 砌砖，隔墙，门窗，水泥粉刷，铺理石，地砖，瓷砖
+											<!-- 金属工程 -->
+											<div class="media">
+												<a href="#" onclick="getImgData('metal');" class="pull-left"><img id="metalflag" src="wait.jpg" height="40" class="media-object"/></a>
+												<div class="media-body">
+													<h4 class="media-heading">
+														金属工程
+													</h4> 铝合金，塑钢门窗，防盗设施制定，验收按行业标准执行
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<!-- 油漆工程 -->
+									<div class="media">
+										<a href="#" onclick="getImgData('wall');" class="pull-left"><img id="wallflag" src="wait.jpg" height="40" class="media-object"/></a>
+										<div class="media-body">
+											<h4 class="media-heading">
+												油漆工程
+											</h4> 批嵌墙顶面/木质面，验收按行业标准执行
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 木工工程 -->
+							<div class="media">
+								<a href="#" onclick="getImgData('floor');" class="pull-left"><img id="floorflag" src="wait.jpg" height="40" class="media-object"/></a>
+								<div class="media-body">
+									<h4 class="media-heading">
+										木工工程
+									</h4> 铺地板，钉踢脚线
+	
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 表面工程 -->
+					<div class="media">
+						<a href="#" onclick="getImgData('surface');" class="pull-left"><img id="surfaceflag" src="wait.jpg" height="40" class="media-object"/></a>
+						<div class="media-body">
+							<h4 class="media-heading">
+								表面工程
+							</h4> 壁纸，安装卫生洁具，安装镜子玻璃，灯具安装
+						</div>
+					</div>
+				</div>
+				<!--  -->
+				<!-- 竣工验收 -->
+				<div class="media">
+					<a href="#" onclick="getImgData('done');" class="pull-left"><img id="doneflag" src="wait.jpg" height="40" class="media-object"/></a>
+					<div class="media-body">
+						<h4 class="media-heading">
+							竣工验收
+						</h4> 验收按行业标准执行
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- ======================================================================== -->
+			<!-- 模态框 -->
+		    <div id="imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
+			    <div class="modal-dialog modal-lg">
+				    <div class="modal-content" style="text-align: center;height: 500px">
+					    <div class="modal-header">
+				            <a href="#" class="close btn btn-primary btn-sm" onclick="$('#imgModalInput').modal('hide');" ><span >&times;</span><span class="sr-only">Close</span></a>
+				            <h4 class="modal-title glyphicon glyphicon-paperclip">图片列表</h4>
+				        </div>
+						<div class="modal-body">
+							<div id="imgModalDiv" class="row">
+							<!-- ====================================== -->
+								
+							</div>
+						</div>
+				    </div>
+			    </div>
+		    </div>
+			<!-- ======================================================================== -->
+        </div>
+    </div>
+    <!-- JS方法 -->
+    <script>
+	    // 取得参数
+		var LocString = String(window.document.location.href);
+		function GetQueryString(str) {
+			var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
+			if (tmp = rs) {return tmp[2];}
+			return "没有这个参数";
+		}
+        <!-- 数据初始化 -->
+		function initData() {
+			// 调用初始化方法
+			var urlstr = "/portal/rs/html/html-project-progress?progressid="+GetQueryString("id");
+			$.ajax({
+				type: "post",
+			    url: urlstr,
+				dataType: "json",
+				success: function(json){
+					// 客户名称
+					$("#code-customername").text(json.customername);
+					// 工程项目名称
+					$("#code-projectname").text(json.projectname);
+					// 设计师名
+					$("#code-designname").text(json.designname);
+					// 工长名字
+					$("#code-worksmanage").text(json.worksmanage);
+					
+					// 通过是否完成状态设置显示图片
+					if ("1"==json.metalflag) {
+						$("#metalflag").attr("src", "finish.jpg");
+					};
+					if ("1"==json.surfaceflag){
+						$("#surfaceflag").attr("src", "finish.jpg");
+					};
+					if ("1"==json.designflag){
+						$("#designflag").attr("src", "finish.jpg");
+					};
+					if ("1"==json.demolitionflag){
+						$("#demolitionflag").attr("src", "finish.jpg");
+					};
+					if ("1"==json.waterflag){
+						$("#waterflag").attr("src", "finish.jpg");
+					};
+					if ("1"==json.tileflag){
+						$("#tileflag").attr("src", "finish.jpg");
+					};
+					if ("1"==json.wallflag){
+						$("#wallflag").attr("src", "finish.jpg");
+					};
+					if ("1"==json.floorflag){
+						$("#floorflag").attr("src", "finish.jpg");
+					};
+					if ("1"==json.doneflag){
+						$("#doneflag").attr("src", "finish.jpg");
+					};
+					// ===============================================
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					alert("服务器异常请稍后再试。");
+				}
+			});
+		}
+		initData();
+		// 取得图片数据
+		function getImgData(imgtype) {
+			//
+			if ("finish.jpg" == $("#"+imgtype+"flag").attr("src")) {
+				// 完成查看图片
+				var progressid=GetQueryString("id");
+				progressid = progressid.replace("#","");
+				var urlstr = "/portal/rs/html/html-progress-demolitionimg?progressid="+progressid+"&imgtype="+imgtype;
+				$.ajax({
+					type: "post",
+				    url: urlstr,
+					dataType: "json",
+					success: function(json){
+						var content = "";
+						var count = json.length;
+						for(var i=0; i < count; i++){
+							content = content + '<div class="col-md-4">';
+							content = content + '<div class="thumbnail">';
+							content = content + '<img alt="300x200" src="../../ibresources/progress/'+json[i].imgurl+'" />';
+							content = content + '<div class="caption">';
+							content = content + '<p>';
+							content = content + json[i].imginfo;
+							content = content + '</p>';
+							content = content + '</div>';
+							content = content + '</div>';
+							content = content + '</div>';
+						}
+						var carousel_indicators = document.getElementById("imgModalDiv").innerHTML = content;
+						
+						
+						// 通过是否完成状态设置显示图片
+						// ===============================================
+						$('#imgModalInput').modal('show');
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown){
+						alert("服务器异常请稍后再试。");
+					}
+				});
+			} else {
+				
+			};
+		}
+		
+	</script>
+</body>
+
+</html>

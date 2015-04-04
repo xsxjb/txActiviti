@@ -35,6 +35,7 @@ public class CommonUtils {
      * 字符串,日期类型转换用变量
      */
     private SimpleDateFormat ymdhms = new SimpleDateFormat(Constants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS);
+    private SimpleDateFormat ymd = new SimpleDateFormat(Constants.DATE_FORMAT_YYYY_MM_DD);
     /**
      * Log4j
      */
@@ -213,4 +214,10 @@ public class CommonUtils {
     public void setYmdhms(SimpleDateFormat ymdhms) {
         this.ymdhms = ymdhms;
     }
+	public SimpleDateFormat getYmd() {
+		return ymd;
+	}
+	public void setYmd(SimpleDateFormat ymd) {
+		this.ymd = ymd;
+	}
 }

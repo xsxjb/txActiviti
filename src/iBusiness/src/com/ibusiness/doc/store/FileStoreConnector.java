@@ -49,15 +49,21 @@ public class FileStoreConnector implements StoreConnector {
         return storeDto;
     }
 
-    public StoreDTO get(String model, String key) throws Exception {
+    /**
+     * 下载文件取得文件
+     */
+	public StoreDTO get(String model, String key) throws Exception {
         if (key.indexOf("../") != -1) {
             StoreDTO storeDto = new StoreDTO();
             storeDto.setModel(model);
             storeDto.setKey(key);
             storeDto.setInputStream(new ByteArrayInputStream(new byte[0]));
         }
-
-        File file = new File(baseDir + "/" + model + "/" + key);
+        // 绝对路径
+        String pathStr = this.getClass().getResource("/").getPath();
+        pathStr = pathStr.replace("WEB-INF/classes/", "");
+        // 
+        File file = new File(pathStr + baseDir + "/" + model + "/" + key);
         StoreDTO storeDto = new StoreDTO();
         storeDto.setModel(model);
         storeDto.setKey(key);
