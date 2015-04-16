@@ -95,7 +95,7 @@
 							        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 				                    <td>
 							          <a href="project_progress-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
-							          <a href="/portal/codegenerate/designmanage/progress-show.html?id=${item.id}" ><span class="glyphicon glyphicon-eye-open"></span></a>
+							          <a href="/iBusiness/codegenerate/designmanage/progress-show.html?id=${item.id}" ><span class="glyphicon glyphicon-eye-open"></span></a>
 							        </td>
 				                            <td>${item.customername}</td>
 				                            <td>${item.projectname}</td>

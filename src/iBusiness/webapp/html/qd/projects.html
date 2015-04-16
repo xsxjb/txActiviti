@@ -5,7 +5,40 @@
 
 <title>哈尔滨奇点装饰设计有限公司</title>
 <link href="css/css.css" type="text/css" rel="stylesheet">
-
+<!-- bootstrap -->
+<link type="text/css" rel="stylesheet" href="../../plugin/bootstrap/css/bootstrap.min.css">
+    <!-- jquery -->
+    <script type="text/javascript" src="../../plugin/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../plugin/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="dist/css/swiper.min.css">
+    <!-- Swiper JS -->
+    <script src="dist/js/swiper.min.js"></script>
+    <!-- Demo styles -->
+    <style>
+    body {
+        background: #fff;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        margin: 0;
+        padding: 0;
+    }
+    .swiper-container {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 300px;
+        height: 300px;
+    }
+    </style>
+    
+    
+    
 <script language="JavaScript" type="text/JavaScript">
 <!--
 function MM_swapImgRestore() { //v3.0
@@ -150,10 +183,26 @@ html {
 															<td width="940" height="319" align="left" valign="top"><div
 																	style="width: 940px; BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 25px; PADDING-BOTTOM: 14px; BORDER-LEFT: #cccccc 1px solid; PADDING-TOP: 14px; BORDER-BOTTOM: #cccccc 1px solid">
 																	<div align="center">
+																	<!-- 作品图片展示
 																		<iframe valign="top" align="top" id="main" border="0"
 																			name="main" src="ht.html" frameborder="0"
 																			marginheight="0" marginwidth="0" width="900"
 																			scrolling="auto" height="329"></iframe>
+																	 -->
+																	<!-- 左右滑动  -->
+																	<!-- Swiper -->
+																    <div class="swiper-container">
+																        <div id="indeximgdiv" class="swiper-wrapper">
+																            
+																        </div>
+																        <!-- Add Pagination -->
+																        <div class="swiper-pagination"></div>
+																		<!-- 左右箭头 -->
+																		<div class="swiper-button-next"></div>
+																		<div class="swiper-button-prev"></div>
+																    </div>
+																	<!-- 
+																	 -->
 																	</div>
 																</div></td>
 															<td align="center" valign="bottom"><a
@@ -176,7 +225,7 @@ html {
 									<tr>
 										<td width="967" align="right"
 											style="padding-top: 6px; padding-right: 25px" class="hf"><a
-											href="#" class="foot">www.qidian.com</a> &#169;
+											href="#" class="foot">www.qidian2008.com</a> &#169;
 											版权所有:哈尔滨奇点装饰设计有限公司</td>
 									</tr>
 								</tbody>
@@ -186,6 +235,75 @@ html {
 			</tbody>
 		</table>
 	</div>
-
+	<!-- 图片展示 -->
+	<div class="modal fade" id="showImgModal" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button></div>
+		  <div class="modal-body text-center">
+			<img id="showImg" style="width: 100%; height: 100%; display: block;" src="" />
+		  </div>
+		  <div class="modal-footer"></div>
+		</div>
+	  </div>
+	</div>
+	
+	<script>
+    <!-- 数据初始化 -->
+		function initData() {
+			// 调用初始化方法
+			var urlstr = "/iBusiness/rs/html/initdata";
+			var initdata = "{customername:'姜博'}";
+			$.ajax({
+				type: "post",
+			    url: urlstr,
+				dataType: "json",
+			//	data: initdata,
+				success: function(json){
+					// 顶部图片
+					// ===============================================
+					// 作品展示图片
+					var imglist = json.imglist;
+					for(var i=0; i<imglist.length; i++){
+						var imgContent = "";
+						imgContent = imgContent + '<div class="swiper-slide"><a href="#" onClick="setImgModal(\'../../ibresources/imgworks/'+imglist[i].imgurl+'\');return false;"><img class="img-thumbnail" src="../../ibresources/imgworks/'+imglist[i].imgurl+'" height="300px" width="300px"><br>'+imglist[i].imginfo+'</a></div>';
+					    $("#indeximgdiv").append(imgContent);
+					}
+					// 设置图片展示组件
+					setSwiper();
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					$('#waitingModal').modal('hide');
+					alert("服务器异常请稍后再试。");
+				}
+			});
+		}
+		initData();
+		// 设置图片展示组件
+		function setSwiper() {
+		    var swiper = new Swiper('.swiper-container', {
+		        pagination: '.swiper-pagination',
+				nextButton: '.swiper-button-next',
+		        prevButton: '.swiper-button-prev',
+		
+		        effect: 'coverflow',
+		        grabCursor: true,
+		        centeredSlides: true,
+		        slidesPerView: 'auto',
+		        coverflow: {
+		            rotate: 50,
+		            stretch: 0,
+		            depth: 100,
+		            modifier: 1,
+		            slideShadows : true
+		        }
+		    });
+		}
+		// 设置弹出图片modal
+		function setImgModal(url) {
+			$("#showImg").attr("src", url);
+			$('#showImgModal').modal('show');
+		}
+		</script>
 </body>
 </html>

@@ -1,7 +1,11 @@
 /* ================= 菜单管理表  ==================   */
-INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME, MENUORDER,PARENTID) VALUES('ib_indeximgbyworks0001','首页图片配置页面','3','/indeximgbyworks/indeximgbyworks-list.do','URL','2','mTwoindex26');
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME, MENUORDER,PARENTID) VALUES('ib_indeximgbyworks0001','首页','3','/html/webpage/index.html','URL','1','mTwoindex26');
+INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME, MENUORDER,PARENTID) VALUES('ib_indeximgbyworks0002','首页图片','3','/indeximgbyworks/indeximgbyworks-list.do','URL','2','mTwoindex26');
 /*===============   菜单和角色模板关联表  =============================*/
 INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('ib_indeximgbyworks0001','2');
+INSERT INTO IB_MENU_ROLE_DEF(MENU_ID,ROLE_DEF_ID) VALUES('ib_indeximgbyworks0002','2');
+update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Finder.png' where id = 'ib_indeximgbyworks0001';
+update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Pixelmator.png' where id = 'ib_indeximgbyworks0002';
 
 /*==============================================================*/
 /* cms 公告栏目表   */

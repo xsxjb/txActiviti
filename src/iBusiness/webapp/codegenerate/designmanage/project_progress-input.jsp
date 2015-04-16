@@ -302,125 +302,47 @@
                                
                             </div>
 							
-                             <div class="form-group">
+                            <div class="form-group">
 						      <label class="control-label col-lg-2" for="code-designflag">设计图完成:</label>
-                               <div class="col-lg-3">  <label class="radio"><input type="radio" name="designflag" value="1" ${1==model.designflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="designflag" value="2" ${2==model.designflag? 'checked':''} >否</label> </div>
+                               <div class="col-lg-1">  <label class="radio"><input type="radio" name="designflag" value="1" ${1==model.designflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="designflag" value="2" ${1!=model.designflag? 'checked':''} >否</label> </div>
                                
-							
 						      <label class="control-label col-lg-2" for="code-demolitionflag">拆改完成:</label>
-                               <div class="col-lg-3">  <label class="radio"><input type="radio" name="demolitionflag" value="1" ${1==model.demolitionflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="demolitionflag" value="2" ${2==model.demolitionflag? 'checked':''} >否</label> </div>
-                               
-                            </div>
+                               <div class="col-lg-1">  <label class="radio"><input type="radio" name="demolitionflag" value="1" ${1==model.demolitionflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="demolitionflag" value="2" ${1!=model.demolitionflag? 'checked':''} >否</label> </div>
 							
-                             <div class="form-group">
 						      <label class="control-label col-lg-2" for="code-waterflag">水电改造完成:</label>
-                               <div class="col-lg-3">  <label class="radio"><input type="radio" name="waterflag" value="1" ${1==model.waterflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="waterflag" value="2" ${2==model.waterflag? 'checked':''} >否</label> </div>
-                               
+                               <div class="col-lg-1">  <label class="radio"><input type="radio" name="waterflag" value="1" ${1==model.waterflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="waterflag" value="2" ${1!=model.waterflag? 'checked':''} >否</label> </div>
 							
 						      <label class="control-label col-lg-2" for="code-tileflag">泥瓦工程图:</label>
-                               <div class="col-lg-3">  <label class="radio"><input type="radio" name="tileflag" value="1" ${1==model.tileflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="tileflag" value="2" ${2==model.tileflag? 'checked':''} >否</label> </div>
-                               
-                            </div>
+                               <div class="col-lg-1">  <label class="radio"><input type="radio" name="tileflag" value="1" ${1==model.tileflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="tileflag" value="2" ${1!=model.tileflag? 'checked':''} >否</label> </div>
+                           </div>
 							
-                             <div class="form-group">
-						      <label class="control-label col-lg-2" for="code-metalflag">金属工程:</label>
-                               <div class="col-lg-3">  <label class="radio"><input type="radio" name="metalflag" value="1" ${1==model.metalflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="metalflag" value="2" ${2==model.metalflag? 'checked':''} >否</label> </div>
+                            <div class="form-group">
+						       <label class="control-label col-lg-2" for="code-metalflag">金属工程:</label>
+                               <div class="col-lg-1">  <label class="radio"><input type="radio" name="metalflag" value="1" ${1==model.metalflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="metalflag" value="2" ${1!=model.metalflag? 'checked':''} >否</label> </div>
                                
+						       <label class="control-label col-lg-2" for="code-wallflag">油漆工程完成:</label>
+                               <div class="col-lg-1">  <label class="radio"><input type="radio" name="wallflag" value="1" ${1==model.wallflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="wallflag" value="2" ${1!=model.wallflag? 'checked':''} >否</label> </div>
+						       <label class="control-label col-lg-2" for="code-floorflag">木工工程完成:</label>
+                               <div class="col-lg-1">  <label class="radio"><input type="radio" name="floorflag" value="1" ${1==model.floorflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="floorflag" value="2" ${1!=model.floorflag? 'checked':''} >否</label> </div>
 							
-						      <label class="control-label col-lg-2" for="code-wallflag">油漆工程完成:</label>
-                               <div class="col-lg-3">  <label class="radio"><input type="radio" name="wallflag" value="1" ${1==model.wallflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="wallflag" value="2" ${2==model.wallflag? 'checked':''} >否</label> </div>
-                               
-                            </div>
-							
-                             <div class="form-group">
-						      <label class="control-label col-lg-2" for="code-floorflag">木工工程完成:</label>
-                               <div class="col-lg-3">  <label class="radio"><input type="radio" name="floorflag" value="1" ${1==model.floorflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="floorflag" value="2" ${2==model.floorflag? 'checked':''} >否</label> </div>
-                               
-							
-						      <label class="control-label col-lg-2" for="code-surfaceflag">表面工程:</label>
-                               <div class="col-lg-3">  <label class="radio"><input type="radio" name="surfaceflag" value="1" ${1==model.surfaceflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="surfaceflag" value="2" ${2==model.surfaceflag? 'checked':''} >否</label> </div>
-                               
-                            </div>
-							
+						       <label class="control-label col-lg-2" for="code-surfaceflag">表面工程:</label>
+                               <div class="col-lg-1">  <label class="radio"><input type="radio" name="surfaceflag" value="1" ${1==model.surfaceflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="surfaceflag" value="2" ${1!=model.surfaceflag? 'checked':''} >否</label> </div>
+                           
+                               <label class="control-label col-lg-2" for="code-tileflag">竣工验收:</label>
+                               <div class="col-lg-1">  <label class="radio"><input type="radio" name="doneflag" value="1" ${1==model.doneflag? 'checked':''} >是</label>  <label class="radio"><input type="radio" name="doneflag" value="2" ${1!=model.doneflag? 'checked':''} >否</label> </div>
+                           </div>
 				</form>
 		</div>
         </div> 
         
+    <div class="row" >
         <!-- ==================== 子表 ========================================== -->
-        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">拆改图片列表</h4></div>
-	    <div class="panel-body">
-			    <div class="pull-left">
-			        <button class="btn btn-primary btn-sm a-insert" href="pp_demolition_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_demolition_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
-				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_demolition_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
-				    <button class="btn btn-primary btn-sm" onclick="pp_demolition_imgTable.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
-	            
-				</div>
-				<div class="pull-right">
-				  每页显示
-				  <select class="pp_demolition_imgM-page-size">
-				    <option value="10">10</option>
-				    <option value="20">20</option>
-				    <option value="50">50</option>
-				  </select>
-				  条
-				</div>
-			    <div class="m-clear"></div>
-		   </div>
-		   <div class="content">
-				<form id="pp_demolition_imgGridForm" name="pp_demolition_imgGridForm" method='post' action="pp_demolition_img-remove.do" class="m-form-blank">
-				  <table id="pp_demolition_imgCodeGrid" class="table table-hover table-striped">
-				      <thead>
-					      <tr>
-					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			                      <th class="sorting">图片地址</th>
-			                      <th class="sorting">图片信息描述</th>
-					          <th width="30">&nbsp;</th>
-					      </tr>
-					    </thead>
-						    <tbody>
-						      <c:forEach items="${pp_demolition_imgPage.result}" var="item">
-								  <tr>
-								        <td><input type="checkbox" class="pp_demolition_imgSelectedItem a-check" name="pp_demolition_imgSelectedItem" value="${item.id}"></td>
-									            <td>${item.imgurl}</td>
-									            <td>${item.imginfo}</td>
-								        <td>
-								          <a href="pp_demolition_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_demolition_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
-								        </td>
-								  </tr>
-						      </c:forEach>
-						    </tbody>
-						  </table>
-						</form>
-		        </div>
-		        
-		      <!-- 模态框 -->
-			  <div id="pp_demolition_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
-				  <div class="modal-dialog modal-lg">
-					  <div class="modal-content" style="text-align: center;height: 600px">
-					  </div>
-				  </div>
-			  </div>
-			  <div class="panel-body">
-				  <article>
-				    <div class="pp_demolition_imgM-page-info pull-left">
-					  共100条记录 显示1到10条记录
-					</div>
-					<div class="btn-group pp_demolition_imgM-pagination pull-right">
-					  <button class="btn btn-small">&lt;</button>
-					  <button class="btn btn-small">1</button>
-					  <button class="btn btn-small">&gt;</button>
-					</div>
-				    <div class="m-clear"></div>
-			      </article>
-			  </div>
-        <!-- ==================== 子表 ========================================== -->
+        <div class="col-lg-6" >
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">设计图列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
 			        <button class="btn btn-primary btn-sm a-insert" href="pp_design_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_design_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
 				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_design_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
-				    <button class="btn btn-primary btn-sm" onclick="pp_design_imgTable.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
-	            
 				</div>
 				<div class="pull-right">
 				  每页显示
@@ -480,18 +402,18 @@
 				    <div class="m-clear"></div>
 			      </article>
 			  </div>
-        <!-- ==================== 子表 ========================================== -->
-        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">竣工图列表</h4></div>
+	    </div>
+	    <!-- ==================== 子表 ========================================== -->
+        <div class="col-lg-6" >
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">拆改图片列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
-			        <button class="btn btn-primary btn-sm a-insert" href="pp_done_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_done_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
-				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_done_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
-				    <button class="btn btn-primary btn-sm" onclick="pp_done_imgTable.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
-	            
+			        <button class="btn btn-primary btn-sm a-insert" href="pp_demolition_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_demolition_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_demolition_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 				</div>
 				<div class="pull-right">
 				  每页显示
-				  <select class="pp_done_imgM-page-size">
+				  <select class="pp_demolition_imgM-page-size">
 				    <option value="10">10</option>
 				    <option value="20">20</option>
 				    <option value="50">50</option>
@@ -501,8 +423,8 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="pp_done_imgGridForm" name="pp_done_imgGridForm" method='post' action="pp_done_img-remove.do" class="m-form-blank">
-				  <table id="pp_done_imgCodeGrid" class="table table-hover table-striped">
+				<form id="pp_demolition_imgGridForm" name="pp_demolition_imgGridForm" method='post' action="pp_demolition_img-remove.do" class="m-form-blank">
+				  <table id="pp_demolition_imgCodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
 					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -512,13 +434,13 @@
 					      </tr>
 					    </thead>
 						    <tbody>
-						      <c:forEach items="${pp_done_imgPage.result}" var="item">
+						      <c:forEach items="${pp_demolition_imgPage.result}" var="item">
 								  <tr>
-								        <td><input type="checkbox" class="pp_done_imgSelectedItem a-check" name="pp_done_imgSelectedItem" value="${item.id}"></td>
+								        <td><input type="checkbox" class="pp_demolition_imgSelectedItem a-check" name="pp_demolition_imgSelectedItem" value="${item.id}"></td>
 									            <td>${item.imgurl}</td>
 									            <td>${item.imginfo}</td>
 								        <td>
-								          <a href="pp_done_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_done_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
+								          <a href="pp_demolition_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_demolition_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
 								        </td>
 								  </tr>
 						      </c:forEach>
@@ -528,7 +450,7 @@
 		        </div>
 		        
 		      <!-- 模态框 -->
-			  <div id="pp_done_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
+			  <div id="pp_demolition_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
 				  <div class="modal-dialog modal-lg">
 					  <div class="modal-content" style="text-align: center;height: 600px">
 					  </div>
@@ -536,10 +458,10 @@
 			  </div>
 			  <div class="panel-body">
 				  <article>
-				    <div class="pp_done_imgM-page-info pull-left">
+				    <div class="pp_demolition_imgM-page-info pull-left">
 					  共100条记录 显示1到10条记录
 					</div>
-					<div class="btn-group pp_done_imgM-pagination pull-right">
+					<div class="btn-group pp_demolition_imgM-pagination pull-right">
 					  <button class="btn btn-small">&lt;</button>
 					  <button class="btn btn-small">1</button>
 					  <button class="btn btn-small">&gt;</button>
@@ -547,18 +469,21 @@
 				    <div class="m-clear"></div>
 			      </article>
 			  </div>
+	    </div>
+    </div>
+    
+    <div class="row" >
         <!-- ==================== 子表 ========================================== -->
-        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">木工工程图列表</h4></div>
+        <div class="col-lg-6" >
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">水电改造图列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
-			        <button class="btn btn-primary btn-sm a-insert" href="pp_floor_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_floor_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
-				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_floor_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
-				    <button class="btn btn-primary btn-sm" onclick="pp_floor_imgTable.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
-	            
+			        <button class="btn btn-primary btn-sm a-insert" href="pp_water_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_water_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_water_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 				</div>
 				<div class="pull-right">
 				  每页显示
-				  <select class="pp_floor_imgM-page-size">
+				  <select class="pp_water_imgM-page-size">
 				    <option value="10">10</option>
 				    <option value="20">20</option>
 				    <option value="50">50</option>
@@ -568,8 +493,8 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="pp_floor_imgGridForm" name="pp_floor_imgGridForm" method='post' action="pp_floor_img-remove.do" class="m-form-blank">
-				  <table id="pp_floor_imgCodeGrid" class="table table-hover table-striped">
+				<form id="pp_water_imgGridForm" name="pp_water_imgGridForm" method='post' action="pp_water_img-remove.do" class="m-form-blank">
+				  <table id="pp_water_imgCodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
 					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -579,13 +504,13 @@
 					      </tr>
 					    </thead>
 						    <tbody>
-						      <c:forEach items="${pp_floor_imgPage.result}" var="item">
+						      <c:forEach items="${pp_water_imgPage.result}" var="item">
 								  <tr>
-								        <td><input type="checkbox" class="pp_floor_imgSelectedItem a-check" name="pp_floor_imgSelectedItem" value="${item.id}"></td>
+								        <td><input type="checkbox" class="pp_water_imgSelectedItem a-check" name="pp_water_imgSelectedItem" value="${item.id}"></td>
 									            <td>${item.imgurl}</td>
 									            <td>${item.imginfo}</td>
 								        <td>
-								          <a href="pp_floor_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_floor_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
+								          <a href="pp_water_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_water_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
 								        </td>
 								  </tr>
 						      </c:forEach>
@@ -593,9 +518,8 @@
 						  </table>
 						</form>
 		        </div>
-		        
-		      <!-- 模态框 -->
-			  <div id="pp_floor_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
+		        <!-- 模态框 -->
+			  <div id="pp_water_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
 				  <div class="modal-dialog modal-lg">
 					  <div class="modal-content" style="text-align: center;height: 600px">
 					  </div>
@@ -603,10 +527,10 @@
 			  </div>
 			  <div class="panel-body">
 				  <article>
-				    <div class="pp_floor_imgM-page-info pull-left">
+				    <div class="pp_water_imgM-page-info pull-left">
 					  共100条记录 显示1到10条记录
 					</div>
-					<div class="btn-group pp_floor_imgM-pagination pull-right">
+					<div class="btn-group pp_water_imgM-pagination pull-right">
 					  <button class="btn btn-small">&lt;</button>
 					  <button class="btn btn-small">1</button>
 					  <button class="btn btn-small">&gt;</button>
@@ -614,148 +538,15 @@
 				    <div class="m-clear"></div>
 			      </article>
 			  </div>
+		    </div>
+        
         <!-- ==================== 子表 ========================================== -->
-        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">金属工程图列表</h4></div>
-	    <div class="panel-body">
-			    <div class="pull-left">
-			        <button class="btn btn-primary btn-sm a-insert" href="pp_metal_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_metal_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
-				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_metal_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
-				    <button class="btn btn-primary btn-sm" onclick="pp_metal_imgTable.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
-	            
-				</div>
-				<div class="pull-right">
-				  每页显示
-				  <select class="pp_metal_imgM-page-size">
-				    <option value="10">10</option>
-				    <option value="20">20</option>
-				    <option value="50">50</option>
-				  </select>
-				  条
-				</div>
-			    <div class="m-clear"></div>
-		   </div>
-		   <div class="content">
-				<form id="pp_metal_imgGridForm" name="pp_metal_imgGridForm" method='post' action="pp_metal_img-remove.do" class="m-form-blank">
-				  <table id="pp_metal_imgCodeGrid" class="table table-hover table-striped">
-				      <thead>
-					      <tr>
-					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			                      <th class="sorting">图片信息描述</th>
-			                      <th class="sorting">图片地址</th>
-					          <th width="30">&nbsp;</th>
-					      </tr>
-					    </thead>
-						    <tbody>
-						      <c:forEach items="${pp_metal_imgPage.result}" var="item">
-								  <tr>
-								        <td><input type="checkbox" class="pp_metal_imgSelectedItem a-check" name="pp_metal_imgSelectedItem" value="${item.id}"></td>
-									            <td>${item.imginfo}</td>
-									            <td>${item.imgurl}</td>
-								        <td>
-								          <a href="pp_metal_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_metal_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
-								        </td>
-								  </tr>
-						      </c:forEach>
-						    </tbody>
-						  </table>
-						</form>
-		        </div>
-		        
-		      <!-- 模态框 -->
-			  <div id="pp_metal_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
-				  <div class="modal-dialog modal-lg">
-					  <div class="modal-content" style="text-align: center;height: 600px">
-					  </div>
-				  </div>
-			  </div>
-			  <div class="panel-body">
-				  <article>
-				    <div class="pp_metal_imgM-page-info pull-left">
-					  共100条记录 显示1到10条记录
-					</div>
-					<div class="btn-group pp_metal_imgM-pagination pull-right">
-					  <button class="btn btn-small">&lt;</button>
-					  <button class="btn btn-small">1</button>
-					  <button class="btn btn-small">&gt;</button>
-					</div>
-				    <div class="m-clear"></div>
-			      </article>
-			  </div>
-        <!-- ==================== 子表 ========================================== -->
-        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">表面工程图列表</h4></div>
-	    <div class="panel-body">
-			    <div class="pull-left">
-			        <button class="btn btn-primary btn-sm a-insert" href="pp_surface_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_surface_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
-				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_surface_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
-				    <button class="btn btn-primary btn-sm" onclick="pp_surface_imgTable.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
-	            
-				</div>
-				<div class="pull-right">
-				  每页显示
-				  <select class="pp_surface_imgM-page-size">
-				    <option value="10">10</option>
-				    <option value="20">20</option>
-				    <option value="50">50</option>
-				  </select>
-				  条
-				</div>
-			    <div class="m-clear"></div>
-		   </div>
-		   <div class="content">
-				<form id="pp_surface_imgGridForm" name="pp_surface_imgGridForm" method='post' action="pp_surface_img-remove.do" class="m-form-blank">
-				  <table id="pp_surface_imgCodeGrid" class="table table-hover table-striped">
-				      <thead>
-					      <tr>
-					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			                      <th class="sorting">图片地址</th>
-			                      <th class="sorting"> 图片信息描述</th>
-					          <th width="30">&nbsp;</th>
-					      </tr>
-					    </thead>
-						    <tbody>
-						      <c:forEach items="${pp_surface_imgPage.result}" var="item">
-								  <tr>
-								        <td><input type="checkbox" class="pp_surface_imgSelectedItem a-check" name="pp_surface_imgSelectedItem" value="${item.id}"></td>
-									            <td>${item.imgurl}</td>
-									            <td>${item.imginfo}</td>
-								        <td>
-								          <a href="pp_surface_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_surface_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
-								        </td>
-								  </tr>
-						      </c:forEach>
-						    </tbody>
-						  </table>
-						</form>
-		        </div>
-		        
-		      <!-- 模态框 -->
-			  <div id="pp_surface_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
-				  <div class="modal-dialog modal-lg">
-					  <div class="modal-content" style="text-align: center;height: 600px">
-					  </div>
-				  </div>
-			  </div>
-			  <div class="panel-body">
-				  <article>
-				    <div class="pp_surface_imgM-page-info pull-left">
-					  共100条记录 显示1到10条记录
-					</div>
-					<div class="btn-group pp_surface_imgM-pagination pull-right">
-					  <button class="btn btn-small">&lt;</button>
-					  <button class="btn btn-small">1</button>
-					  <button class="btn btn-small">&gt;</button>
-					</div>
-				    <div class="m-clear"></div>
-			      </article>
-			  </div>
-        <!-- ==================== 子表 ========================================== -->
+        <div class="col-lg-6" >
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">泥瓦工程图列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
 			        <button class="btn btn-primary btn-sm a-insert" href="pp_tile_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_tile_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
 				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_tile_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
-				    <button class="btn btn-primary btn-sm" onclick="pp_tile_imgTable.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
-	            
 				</div>
 				<div class="pull-right">
 				  每页显示
@@ -815,14 +606,84 @@
 				    <div class="m-clear"></div>
 			      </article>
 			  </div>
+	    </div>
+    </div>
+    
+    <div class="row" >
         <!-- ==================== 子表 ========================================== -->
+        <div class="col-lg-6" >
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">金属工程图列表</h4></div>
+	    <div class="panel-body">
+			    <div class="pull-left">
+			        <button class="btn btn-primary btn-sm a-insert" href="pp_metal_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_metal_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_metal_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
+				</div>
+				<div class="pull-right">
+				  每页显示
+				  <select class="pp_metal_imgM-page-size">
+				    <option value="10">10</option>
+				    <option value="20">20</option>
+				    <option value="50">50</option>
+				  </select>
+				  条
+				</div>
+			    <div class="m-clear"></div>
+		   </div>
+		   <div class="content">
+				<form id="pp_metal_imgGridForm" name="pp_metal_imgGridForm" method='post' action="pp_metal_img-remove.do" class="m-form-blank">
+				  <table id="pp_metal_imgCodeGrid" class="table table-hover table-striped">
+				      <thead>
+					      <tr>
+					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			                      <th class="sorting">图片信息描述</th>
+			                      <th class="sorting">图片地址</th>
+					          <th width="30">&nbsp;</th>
+					      </tr>
+					    </thead>
+						    <tbody>
+						      <c:forEach items="${pp_metal_imgPage.result}" var="item">
+								  <tr>
+								        <td><input type="checkbox" class="pp_metal_imgSelectedItem a-check" name="pp_metal_imgSelectedItem" value="${item.id}"></td>
+									            <td>${item.imginfo}</td>
+									            <td>${item.imgurl}</td>
+								        <td>
+								          <a href="pp_metal_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_metal_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
+								        </td>
+								  </tr>
+						      </c:forEach>
+						    </tbody>
+						  </table>
+						</form>
+		        </div>
+		        
+		      <!-- 模态框 -->
+			  <div id="pp_metal_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
+				  <div class="modal-dialog modal-lg">
+					  <div class="modal-content" style="text-align: center;height: 600px">
+					  </div>
+				  </div>
+			  </div>
+			  <div class="panel-body">
+				  <article>
+				    <div class="pp_metal_imgM-page-info pull-left">
+					  共100条记录 显示1到10条记录
+					</div>
+					<div class="btn-group pp_metal_imgM-pagination pull-right">
+					  <button class="btn btn-small">&lt;</button>
+					  <button class="btn btn-small">1</button>
+					  <button class="btn btn-small">&gt;</button>
+					</div>
+				    <div class="m-clear"></div>
+			      </article>
+			  </div>
+	    </div>
+        <!-- ==================== 子表 ========================================== -->
+        <div class="col-lg-6" >
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">油漆工程图列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
 			        <button class="btn btn-primary btn-sm a-insert" href="pp_wall_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_wall_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
 				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_wall_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
-				    <button class="btn btn-primary btn-sm" onclick="pp_wall_imgTable.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
-	            
 				</div>
 				<div class="pull-right">
 				  每页显示
@@ -882,18 +743,21 @@
 				    <div class="m-clear"></div>
 			      </article>
 			  </div>
+		  </div>
+    </div>
+    
+    <div class="row" >
         <!-- ==================== 子表 ========================================== -->
-        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">水电改造图列表</h4></div>
+        <div class="col-lg-6" >
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">木工工程图列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
-			        <button class="btn btn-primary btn-sm a-insert" href="pp_water_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_water_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
-				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_water_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
-				    <button class="btn btn-primary btn-sm" onclick="pp_water_imgTable.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
-	            
+			        <button class="btn btn-primary btn-sm a-insert" href="pp_floor_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_floor_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_floor_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 				</div>
 				<div class="pull-right">
 				  每页显示
-				  <select class="pp_water_imgM-page-size">
+				  <select class="pp_floor_imgM-page-size">
 				    <option value="10">10</option>
 				    <option value="20">20</option>
 				    <option value="50">50</option>
@@ -903,8 +767,8 @@
 			    <div class="m-clear"></div>
 		   </div>
 		   <div class="content">
-				<form id="pp_water_imgGridForm" name="pp_water_imgGridForm" method='post' action="pp_water_img-remove.do" class="m-form-blank">
-				  <table id="pp_water_imgCodeGrid" class="table table-hover table-striped">
+				<form id="pp_floor_imgGridForm" name="pp_floor_imgGridForm" method='post' action="pp_floor_img-remove.do" class="m-form-blank">
+				  <table id="pp_floor_imgCodeGrid" class="table table-hover table-striped">
 				      <thead>
 					      <tr>
 					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
@@ -914,13 +778,13 @@
 					      </tr>
 					    </thead>
 						    <tbody>
-						      <c:forEach items="${pp_water_imgPage.result}" var="item">
+						      <c:forEach items="${pp_floor_imgPage.result}" var="item">
 								  <tr>
-								        <td><input type="checkbox" class="pp_water_imgSelectedItem a-check" name="pp_water_imgSelectedItem" value="${item.id}"></td>
+								        <td><input type="checkbox" class="pp_floor_imgSelectedItem a-check" name="pp_floor_imgSelectedItem" value="${item.id}"></td>
 									            <td>${item.imgurl}</td>
 									            <td>${item.imginfo}</td>
 								        <td>
-								          <a href="pp_water_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_water_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
+								          <a href="pp_floor_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_floor_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
 								        </td>
 								  </tr>
 						      </c:forEach>
@@ -930,7 +794,7 @@
 		        </div>
 		        
 		      <!-- 模态框 -->
-			  <div id="pp_water_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
+			  <div id="pp_floor_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
 				  <div class="modal-dialog modal-lg">
 					  <div class="modal-content" style="text-align: center;height: 600px">
 					  </div>
@@ -938,10 +802,10 @@
 			  </div>
 			  <div class="panel-body">
 				  <article>
-				    <div class="pp_water_imgM-page-info pull-left">
+				    <div class="pp_floor_imgM-page-info pull-left">
 					  共100条记录 显示1到10条记录
 					</div>
-					<div class="btn-group pp_water_imgM-pagination pull-right">
+					<div class="btn-group pp_floor_imgM-pagination pull-right">
 					  <button class="btn btn-small">&lt;</button>
 					  <button class="btn btn-small">1</button>
 					  <button class="btn btn-small">&gt;</button>
@@ -949,6 +813,147 @@
 				    <div class="m-clear"></div>
 			      </article>
 			  </div>
+        </div>
+        <!-- ==================== 子表 ========================================== -->
+        <div class="col-lg-6" >
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">表面工程图列表</h4></div>
+	    <div class="panel-body">
+			    <div class="pull-left">
+			        <button class="btn btn-primary btn-sm a-insert" href="pp_surface_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_surface_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_surface_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
+				</div>
+				<div class="pull-right">
+				  每页显示
+				  <select class="pp_surface_imgM-page-size">
+				    <option value="10">10</option>
+				    <option value="20">20</option>
+				    <option value="50">50</option>
+				  </select>
+				  条
+				</div>
+			    <div class="m-clear"></div>
+		   </div>
+		   <div class="content">
+				<form id="pp_surface_imgGridForm" name="pp_surface_imgGridForm" method='post' action="pp_surface_img-remove.do" class="m-form-blank">
+				  <table id="pp_surface_imgCodeGrid" class="table table-hover table-striped">
+				      <thead>
+					      <tr>
+					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			                      <th class="sorting">图片地址</th>
+			                      <th class="sorting"> 图片信息描述</th>
+					          <th width="30">&nbsp;</th>
+					      </tr>
+					    </thead>
+						    <tbody>
+						      <c:forEach items="${pp_surface_imgPage.result}" var="item">
+								  <tr>
+								        <td><input type="checkbox" class="pp_surface_imgSelectedItem a-check" name="pp_surface_imgSelectedItem" value="${item.id}"></td>
+									            <td>${item.imgurl}</td>
+									            <td>${item.imginfo}</td>
+								        <td>
+								          <a href="pp_surface_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_surface_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
+								        </td>
+								  </tr>
+						      </c:forEach>
+						    </tbody>
+						  </table>
+						</form>
+		        </div>
+		        
+		      <!-- 模态框 -->
+			  <div id="pp_surface_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
+				  <div class="modal-dialog modal-lg">
+					  <div class="modal-content" style="text-align: center;height: 600px">
+					  </div>
+				  </div>
+			  </div>
+			  <div class="panel-body">
+				  <article>
+				    <div class="pp_surface_imgM-page-info pull-left">
+					  共100条记录 显示1到10条记录
+					</div>
+					<div class="btn-group pp_surface_imgM-pagination pull-right">
+					  <button class="btn btn-small">&lt;</button>
+					  <button class="btn btn-small">1</button>
+					  <button class="btn btn-small">&gt;</button>
+					</div>
+				    <div class="m-clear"></div>
+			      </article>
+			  </div>
+	    </div>
+	</div>
+	
+	<div class="row" >
+        <!-- ==================== 子表 ========================================== -->
+        <div class="col-lg-6" >
+        <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">竣工图列表</h4></div>
+	    <div class="panel-body">
+			    <div class="pull-left">
+			        <button class="btn btn-primary btn-sm a-insert" href="pp_done_img-input.do?id=${model.id}&subId=&flowId=${flowId}'" data-target="#pp_done_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
+				    <button class="btn btn-primary btn-sm a-remove" onclick="pp_done_imgTable.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
+				</div>
+				<div class="pull-right">
+				  每页显示
+				  <select class="pp_done_imgM-page-size">
+				    <option value="10">10</option>
+				    <option value="20">20</option>
+				    <option value="50">50</option>
+				  </select>
+				  条
+				</div>
+			    <div class="m-clear"></div>
+		   </div>
+		   <div class="content">
+				<form id="pp_done_imgGridForm" name="pp_done_imgGridForm" method='post' action="pp_done_img-remove.do" class="m-form-blank">
+				  <table id="pp_done_imgCodeGrid" class="table table-hover table-striped">
+				      <thead>
+					      <tr>
+					          <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+			                      <th class="sorting">图片地址</th>
+			                      <th class="sorting">图片信息描述</th>
+					          <th width="30">&nbsp;</th>
+					      </tr>
+					    </thead>
+						    <tbody>
+						      <c:forEach items="${pp_done_imgPage.result}" var="item">
+								  <tr>
+								        <td><input type="checkbox" class="pp_done_imgSelectedItem a-check" name="pp_done_imgSelectedItem" value="${item.id}"></td>
+									            <td>${item.imgurl}</td>
+									            <td>${item.imginfo}</td>
+								        <td>
+								          <a href="pp_done_img-input.do?id=${model.id}&subId=${item.id}" class="a-update" data-target="#pp_done_imgModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-pencil"></span></a>
+								        </td>
+								  </tr>
+						      </c:forEach>
+						    </tbody>
+						  </table>
+						</form>
+		        </div>
+		        
+		      <!-- 模态框 -->
+			  <div id="pp_done_imgModalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
+				  <div class="modal-dialog modal-lg">
+					  <div class="modal-content" style="text-align: center;height: 600px">
+					  </div>
+				  </div>
+			  </div>
+			  <div class="panel-body">
+				  <article>
+				    <div class="pp_done_imgM-page-info pull-left">
+					  共100条记录 显示1到10条记录
+					</div>
+					<div class="btn-group pp_done_imgM-pagination pull-right">
+					  <button class="btn btn-small">&lt;</button>
+					  <button class="btn btn-small">1</button>
+					  <button class="btn btn-small">&gt;</button>
+					</div>
+				    <div class="m-clear"></div>
+			      </article>
+			  </div>
+	    </div>
+	</div>
+		      
+	  <!-- ================================================================================================ -->
       </div>
 	<!-- end of main -->
 	</div>

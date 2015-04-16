@@ -43,9 +43,9 @@ INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME,MENUORDER,PARENTID)
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Finder.png' where id = 'mTwo24';
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Numbers.png' where id = 'mThree211';
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Developer.png' where id = 'mThree212';
+update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/PhotoBooth.png' where id = 'mThree233';
 */
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Keynote.png' where id = 'mThree311';
-update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/PhotoBooth.png' where id = 'mThree233';
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Compartments.png' where id = 'mThree333';
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Finder.png' where id = 'mThree334';
 update IB_MENU set desktopIcon = '1' ,iconUrl='imac/img/Numbers.png' where id = 'mTwo34';

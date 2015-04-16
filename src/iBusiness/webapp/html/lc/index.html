@@ -267,7 +267,7 @@
 					<div class="service-desc">
 						<h5>进度工况</h5>
 						<p>施工进度实时跟踪,不用去现场,手机就能看到工况.</p>
-						<a href="#" class="btn btn-skin">更多</a>
+						<a href="/iBusiness/project_progress/project_progress-list.do" class="btn btn-skin">更多</a>
 					</div>
                 </div>
 				</div>
@@ -374,8 +374,8 @@
 						    <a href="#intro" class="totop"><i class="glyphicon glyphicon-chevron-up"></i></a>
 						</div>
 						<div class="col-lg-6" >
-							<p>地址:黑龙江省哈尔滨市道里区<br />
-							<p>电话:0451-88888888 18888888888<br />
+							<p>地址:哈尔滨市南岗区哈尔滨大街93号(金域蓝城)<br />
+							<p>电话:0451-86645005  0451-86645005<br />
 							<p>Q Q:88888888<br />
 						</div>
 						<div class="col-lg-6" >
@@ -406,13 +406,16 @@
 		<div class="modal-content">
 		  <div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span >&times;</span><span class="sr-only">Close</span></button></div>
 		  <div class="modal-body text-center">
-			<img id="showImg" style="width: 100%; height: 200px; display: block;" src="" />
+			<img id="showImg" style="width: 100%; height: 100%; display: block;" src="" />
 		  </div>
 		  <div class="modal-footer"></div>
 		</div>
 	  </div>
 	</div>
 	
+	<!-- 横向滑动 -->
+    <script type="text/javascript" src="js/custom.js"></script>
+    
     <!-- JS方法 -->
     <script>
         <!-- 数据初始化 -->
@@ -460,7 +463,7 @@
 					var imglist = json.imglist;
 					for(var i=0; i<imglist.length; i++){
 						var imgContent = "";
-						imgContent = imgContent + '<div class="swiper-slide"><a href="#" onClick="setImgModal(\'../../ibresources/imgworks/'+imglist[i].imgurl+'\');return false;"><img src="../../ibresources/imgworks/'+imglist[i].imgurl+'" height="300" width="300"></a></div>';
+						imgContent = imgContent + '<div class="swiper-slide"><a href="#" class="img-thumbnail" onClick="setImgModal(\'../../ibresources/imgworks/'+imglist[i].imgurl+'\');return false;"><img src="../../ibresources/imgworks/'+imglist[i].imgurl+'" height="250px" width="250px"></a></div>';
 					    $("#indeximgdiv").append(imgContent);
 					}
 					// 设置图片展示组件

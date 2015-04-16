@@ -7,20 +7,53 @@
     <%@include file="/common/meta.jsp"%>
     <title>编辑文章</title>
     <%@include file="/common/center.jsp"%>
-	<script type="text/javascript" src="${ctx}/plugin/ckeditor/ckeditor.js"></script>
+    <link rel="stylesheet" href="${ctx}/plugin/kindeditor/themes/default/default.css" />
+    <link rel="stylesheet" href="${ctx}/plugin/kindeditor/plugins/code/prettify.css" />
+    <script charset="utf-8" src="${ctx}/plugin/kindeditor/kindeditor.js"></script>
+    <script charset="utf-8" src="${ctx}/plugin/kindeditor/lang/zh_CN.js"></script>
+    <script charset="utf-8" src="${ctx}/plugin/kindeditor/plugins/code/prettify.js"></script>
+    
     <script type="text/javascript">
-$(function() {
-    $("#cmsArticleForm").validate({
-        submitHandler: function(form) {
-			bootbox.animate(false);
-			var box = bootbox.dialog('<div class="progress" ><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"> 60% </div></div>');
-			form.submit();
-        },
-        errorClass: 'validate-error'
-    });
-	var editor = CKEDITOR.replace('cmsArticle_content');
-	editor.config.filebrowserImageUploadUrl = "${ctx}/cms/cms-article-uploadImage.do";
-})
+	$(function() {
+	    $("#cmsArticleForm").validate({
+	        submitHandler: function(form) {
+				bootbox.animate(false);
+				var box = bootbox.dialog('<div class="progress" ><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"> 60% </div></div>');
+				form.submit();
+	        },
+	        errorClass: 'validate-error'
+	    });
+	//    // 富文本编辑器
+	//	var editor = CKEDITOR.replace('cmsArticle_content');
+	//	editor.config.filebrowserImageUploadUrl = "${ctx}/cms/cms-article-uploadImage.do";
+	
+		// KindEditor文本编辑器
+		// options为编辑配置属性
+	    var options = {
+	        cssPath : '${ctx}/plugin/kindeditor/plugins/code/prettify.css',
+	        filterMode : true,
+			uploadJson:'${ctx}/upload.htm',
+			width : '860px',
+			height:'400px',
+			resizeType : 1,
+			allowImageUpload : false,
+			allowFlashUpload : false,
+			allowMediaUpload : false,
+			allowFileManager : false,
+			syncType:"form",
+			afterCreate : function() {var self = this; self.sync();},
+			afterChange : function() {var self = this; self.sync();},
+			afterBlur : function() {var self = this; self.sync();},
+			items:['source', '|', 'fullscreen', 'undo', 'redo', 'print', 'cut', 'copy', 'paste',
+				'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+				'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+				'superscript', '|', 'selectall', 'clearhtml','quickformat','|',
+				'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+				'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image','flash', 'media', 'table', 'hr', 'emoticons', 'link', 'unlink', '|', 'about']
+	    };
+		//
+		KindEditor.create('#goods_details',options);
+	});
     </script>
   </head>
 
@@ -68,13 +101,17 @@ $(function() {
 						  <input id="cms-article_cmsArticlename" type="text" name="subTitle" value="${model.subTitle}" size="40" class="text"  maxlength="50">
 					    </div>
 					  </div>
-					
+					  
 					  <div class="form-group">
-					    <label class="control-label" for="cms-article_cmsArticlename">内容:</label>
-						<div class="controls">
-						  <textarea id="cmsArticle_content" name="content" class="text required"  maxlength="50">${model.content}</textarea>
-					    </div>
+					      <label class="col-lg-2 control-label" for="cms-article_cmsArticlename">内容描述:</label>
+					      <div class="col-lg-10">
+						      
+							  <div class="controls">
+							      <textarea id="goods_details" name="content" class="text required" style="width:100%;height:400px;visibility:hidden;"  maxlength="50">${model.content}</textarea>
+						      </div>
+					      </div>
 					  </div>
+					  
 					<!--
 					  <div class="form-group">
 					    <label class="col-lg-2 control-label" for="cms-article_cmsArticlename">摘要</label>
