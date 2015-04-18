@@ -9,6 +9,7 @@
     <%@include file="/common/center.jsp"%>
     <link rel="stylesheet" href="${ctx}/plugin/kindeditor/themes/default/default.css" />
     <link rel="stylesheet" href="${ctx}/plugin/kindeditor/plugins/code/prettify.css" />
+    <!-- 富文本编辑器 -->
     <script charset="utf-8" src="${ctx}/plugin/kindeditor/kindeditor.js"></script>
     <script charset="utf-8" src="${ctx}/plugin/kindeditor/lang/zh_CN.js"></script>
     <script charset="utf-8" src="${ctx}/plugin/kindeditor/plugins/code/prettify.js"></script>
