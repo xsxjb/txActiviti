@@ -444,10 +444,12 @@ public class CodeTagFactory {
         
 		// JSP ======================================================================
     	String str = "";
-        str = str + "<div class=\"col-lg-10\">";
+        str = str + "<div class=\"col-lg-4\">";
         str = str + "  <input id=\"code_table_"+columnt.getFieldName()+"_text\" type=\"text\" value=\"\">";
         str = str + "  <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#file_"+columnt.getFieldName()+"upload').click()\"><span class=\"glyphicon glyphicon-upload\"></span>上传</a>";
         str = str + "  <input id=\"code_table_"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + "</div>";
+        str = str + "<div class=\"col-lg-4\">";
         str = str + "  <c:if test=\"${model."+columnt.getFieldName()+" != null && model."+columnt.getFieldName()+" !=''}\">";
         str = str + "    <a href=\""+columnt.getFieldName()+"-download.do?filename=${model."+columnt.getFieldName()+"}&path=${model."+columnt.getFieldName()+"}\">${model."+columnt.getFieldName()+"}</a>";
         str = str + "  </c:if>";

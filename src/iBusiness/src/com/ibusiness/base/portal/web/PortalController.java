@@ -1,7 +1,9 @@
 package com.ibusiness.base.portal.web;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -42,11 +44,46 @@ public class PortalController {
         UserBase userBase = CommonBusiness.getInstance().getUserBaseMap().get(userId);
         // 设置当前用户CSS样式
         session.setAttribute("userCSS",userBase.getCss());
+        
+        // 查询菜单
+        List<Menu> menusAll = queryMenus(userId);
         // 设置菜单
-        List<Menu> menus = createMenu(userId);
+        // 桌面图标list
+        List<Menu> deskmenus = new ArrayList<Menu>();
+        Map<String, Menu> menuMap = new HashMap<String, Menu>();
+        Map<String, Menu> menuMap2 = new HashMap<String, Menu>();
+        List<Menu> menus3 = new ArrayList<Menu>();
+        for (Menu menu : menusAll) {
+            if ("1".equals(menu.getMenuLevel())) {
+                menu.getChiledItems().clear();
+                menuMap.put(menu.getId(), menu);
+            } else if ("2".equals(menu.getMenuLevel())) {
+                menu.getChiledItems().clear();
+                menuMap2.put(menu.getId(), menu);
+            } else if ("3".equals(menu.getMenuLevel())) {
+                menus3.add(menu);
+            }
+            // 桌面图标设置, 设置桌面IMCA菜单
+            if ("1".equals(menu.getDesktopIcon())) {
+                // TODO 速度慢先不开启
+                if ("待办任务".equals(menu.getMenuName())) {
+                    // 取得待办任务（个人任务）---指定用户ID的
+                    BpmComBusiness bpmComBusiness = new BpmComBusiness();
+                    List<Task> tasks = bpmComBusiness.listPersonalTasks(SpringSecurityUtils.getCurrentUserId());
+                    menu.setDataCount(String.valueOf(tasks.size()));
+                }
+                if ("公告查看".equals(menu.getMenuName())) {
+                    // 如果有新的公告显示new
+                    menu.setDataCount("NEW~");
+                }
+                deskmenus.add(menu);
+            }
+        }
+        List<Menu> menus = createMenu(menuMap, menuMap2, menus3);
+        // 设置菜单
         session.setAttribute("menuItemList", menus);
+        
         // 设置桌面IMCA菜单
-        List<Menu> deskmenus = createDeskMenu(menus);
         session.setAttribute("deskMenuItems", deskmenus);
         
         // 返回JSP
@@ -54,39 +91,13 @@ public class PortalController {
     }
 
     /**
-     * 设置桌面IMCA菜单
-     * 
-     * @param menus
-     * @return
+     * 查询菜单
      */
-    private List<Menu> createDeskMenu(List<Menu> menus) {
-        List<Menu> deskmenus = new ArrayList<Menu>();
-        for (Menu menu : menus) {
-            if ("1".equals(menu.getDesktopIcon())) {
-                deskmenus.add(menu);
-            }
-            for (Menu menu2 : menu.getChiledItems()) {
-                if ("1".equals(menu2.getDesktopIcon())) {
-                    deskmenus.add(menu2);
-                }
-                for (Menu menu3 : menu2.getChiledItems()) {
-                    if ("1".equals(menu3.getDesktopIcon())) {
-                        if ("待办任务".equals(menu3.getMenuName())) {
-                            // 取得待办任务（个人任务）---指定用户ID的
-                            BpmComBusiness bpmComBusiness = new BpmComBusiness();
-                            List<Task> tasks = bpmComBusiness.listPersonalTasks(SpringSecurityUtils.getCurrentUserId());
-                            menu3.setDataCount(String.valueOf(tasks.size()));
-                        }
-                        if ("公告查看".equals(menu3.getMenuName())) {
-                            // 如果有新的公告显示new
-                            menu3.setDataCount("NEW~");
-                        }
-                        deskmenus.add(menu3);
-                    }
-                }
-            }
-        }
-        return deskmenus;
+    @SuppressWarnings("unchecked")
+    private List<Menu> queryMenus(String userId) {
+        String hqlAll = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND ub.id=? ORDER BY m.menuOrder";
+        List<Menu> menus = menuDao.find(hqlAll, userId);
+        return menus;
     }
 
     /**
@@ -95,32 +106,26 @@ public class PortalController {
      * @param userId
      * @return
      */
-    @SuppressWarnings("unchecked")
-    private List<Menu> createMenu(String userId) {
-        // 菜单设置
-        String hql = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='1' AND ub.id=? ORDER BY m.menuOrder";
-        List<Menu> menus = menuDao.find(hql, userId);
-        
-        String hql2 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='2' AND ub.id=? ORDER BY m.menuOrder";
-        List<Menu> menus2 = menuDao.find(hql2, userId);
-        
-        String hql3 = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND m.menuLevel='3' AND ub.id=? ORDER BY m.menuOrder";
-        List<Menu> menus3 = menuDao.find(hql3, userId);
-        for (Menu menu1 : menus) {
-            menu1.getChiledItems().clear();
-            for (Menu menu2 : menus2) {
-                if(menu1.getId().equals(menu2.getIbMenu().getId())) {
-                    menu1.getChiledItems().add(menu2);
-                }
-                menu2.getChiledItems().clear();
-                for (Menu menu3 : menus3) {
-                    if (menu2.getId().equals(menu3.getIbMenu().getId())) {
-                        menu2.getChiledItems().add(menu3);
-                    }
-                }
+    private List<Menu> createMenu(Map<String, Menu> menuMap, Map<String, Menu> menuMap2, List<Menu> menus3) {
+        List<Menu> menusList = new ArrayList<Menu>();
+        // 三级目录存二级
+        for (Menu menu3 : menus3) {
+            if (menuMap2.containsKey(menu3.getIbMenu().getId())) {
+                menuMap2.get(menu3.getIbMenu().getId()).getChiledItems().add(menu3);
             }
         }
-        return menus;
+        // 二级目录存一级
+        for (Map.Entry<String, Menu> entry : menuMap2.entrySet()) {
+            Menu menu2 = entry.getValue();
+            if(menuMap.containsKey(menu2.getIbMenu().getId())) {
+                menuMap.get(menu2.getIbMenu().getId()).getChiledItems().add(menu2);
+            }
+        }
+        // 一级目录list
+        for(Map.Entry<String, Menu> entry : menuMap.entrySet()) {
+            menusList.add(entry.getValue());
+        }
+        return menusList;
     }
     
     // ==================================================
