@@ -1,9 +1,7 @@
 package com.ibusiness.base.portal.web;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -50,16 +48,16 @@ public class PortalController {
         // 设置菜单
         // 桌面图标list
         List<Menu> deskmenus = new ArrayList<Menu>();
-        Map<String, Menu> menuMap = new HashMap<String, Menu>();
-        Map<String, Menu> menuMap2 = new HashMap<String, Menu>();
+        List<Menu> menus1 = new ArrayList<Menu>();
+        List<Menu> menus2 = new ArrayList<Menu>();
         List<Menu> menus3 = new ArrayList<Menu>();
         for (Menu menu : menusAll) {
             if ("1".equals(menu.getMenuLevel())) {
                 menu.getChiledItems().clear();
-                menuMap.put(menu.getId(), menu);
+                menus1.add(menu);
             } else if ("2".equals(menu.getMenuLevel())) {
                 menu.getChiledItems().clear();
-                menuMap2.put(menu.getId(), menu);
+                menus2.add(menu);
             } else if ("3".equals(menu.getMenuLevel())) {
                 menus3.add(menu);
             }
@@ -79,9 +77,11 @@ public class PortalController {
                 deskmenus.add(menu);
             }
         }
-        List<Menu> menus = createMenu(menuMap, menuMap2, menus3);
         // 设置菜单
-        session.setAttribute("menuItemList", menus);
+        List<Menu> menuList = createMenu(menus1, menus2, menus3);
+        
+        // 向session中设置菜单
+        session.setAttribute("menuItemList", menuList);
         
         // 设置桌面IMCA菜单
         session.setAttribute("deskMenuItems", deskmenus);
@@ -91,6 +91,37 @@ public class PortalController {
     }
 
     /**
+     * 设置菜单
+     * 
+     * @param userId
+     * @return
+     */
+    private List<Menu> createMenu(List<Menu> menus1, List<Menu> menus2, List<Menu> menus3) {
+        // 三级目录存二级
+        for (Menu menu3 : menus3) {
+            // 二级目录存一级
+            for(Menu menu2 : menus2) {
+                if(menu2.getId().equals(menu3.getIbMenu().getId())) {
+                    menu2.getChiledItems().add(menu3);
+                    break;
+                }
+            }
+        }
+        // 二级目录存一级
+        for (Menu menu : menus2) {
+            // 一级目录list
+            for(Menu menu1 : menus1) {
+                if(menu1.getId().equals(menu.getIbMenu().getId())) {
+                    menu1.getChiledItems().add(menu);
+                    break;
+                }
+            }
+        }
+        
+        return menus1;
+    }
+    
+    /**
      * 查询菜单
      */
     @SuppressWarnings("unchecked")
@@ -98,34 +129,6 @@ public class PortalController {
         String hqlAll = "select m from Menu m, MenuRoleDef mrd, UserBase ub where m.id=mrd.menuId AND mrd.roleDefId= ub.roleDef.id AND ub.id=? ORDER BY m.menuOrder";
         List<Menu> menus = menuDao.find(hqlAll, userId);
         return menus;
-    }
-
-    /**
-     * 设置菜单
-     * 
-     * @param userId
-     * @return
-     */
-    private List<Menu> createMenu(Map<String, Menu> menuMap, Map<String, Menu> menuMap2, List<Menu> menus3) {
-        List<Menu> menusList = new ArrayList<Menu>();
-        // 三级目录存二级
-        for (Menu menu3 : menus3) {
-            if (menuMap2.containsKey(menu3.getIbMenu().getId())) {
-                menuMap2.get(menu3.getIbMenu().getId()).getChiledItems().add(menu3);
-            }
-        }
-        // 二级目录存一级
-        for (Map.Entry<String, Menu> entry : menuMap2.entrySet()) {
-            Menu menu2 = entry.getValue();
-            if(menuMap.containsKey(menu2.getIbMenu().getId())) {
-                menuMap.get(menu2.getIbMenu().getId()).getChiledItems().add(menu2);
-            }
-        }
-        // 一级目录list
-        for(Map.Entry<String, Menu> entry : menuMap.entrySet()) {
-            menusList.add(entry.getValue());
-        }
-        return menusList;
     }
     
     // ==================================================

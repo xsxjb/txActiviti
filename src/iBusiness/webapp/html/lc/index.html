@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <title>靓巢装饰公司</title>
-	
+	<script type="text/javascript" src="js/base.js"></script>
 	<!-- bootstrap -->
     <link type="text/css" rel="stylesheet" href="../../plugin/bootstrap/css/bootstrap.min.css">
     
@@ -92,7 +92,7 @@
                             <br><br><br><br><br><br><br>
                             <div class=""><a class="btn btn-default btn-sm btn-min-block" href="#about">关于靓巢</a>
                                 <a class="btn btn-default btn-sm btn-min-block" href="#works">成功案例</a>
-                                <a class="btn btn-default btn-sm btn-min-block" href="http://123.56.86.130:8080/ezShop" target="_Blank">材料主材</a>
+                                <a class="btn btn-default btn-sm btn-min-block" href="http://123.57.210.24:8080/ezShop" target="_Blank">材料主材</a>
                                 <a class="btn btn-default btn-sm btn-min-block" href="#contact">联系我们</a>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                         <br><br><br><br><br><br><br><br><br><br>
                         <div class="col-md-12 text-center">
                             <div class=""><a class="btn btn-default btn-sm btn-min-block" href="#about">关于靓巢</a><a class="btn btn-default btn-sm btn-min-block" href="#works">成功案例</a>
-                                <a class="btn btn-default btn-sm btn-min-block" href="http://123.56.86.130:8080/ezShop" target="_Blank">材料主材</a>
+                                <a class="btn btn-default btn-sm btn-min-block" href="http://123.57.210.24:8080/ezShop" target="_Blank">材料主材</a>
                                 <a class="btn btn-default btn-sm btn-min-block" href="#contact">联系我们</a>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                         <div class="col-md-12 text-center">
                             <div class=""><a class="btn btn-default btn-sm btn-min-block" href="#about">关于靓巢</a>
                                 <a class="btn btn-default btn-sm btn-min-block" href="#works">成功案例</a>
-                                <a class="btn btn-default btn-sm btn-min-block" href="http://123.56.86.130:8080/ezShop" target="_Blank">材料主材</a>
+                                <a class="btn btn-default btn-sm btn-min-block" href="http://123.57.210.24:8080/ezShop" target="_Blank">材料主材</a>
                                 <a class="btn btn-default btn-sm btn-min-block" href="#contact">联系我们</a>
                             </div>
                         </div>
@@ -259,7 +259,7 @@
 					<div class="service-desc">
 						<h5>材料工艺</h5>
 						<p>最环保的材料结合完美的工艺,让你住的安心,住得放心.</p>
-						<a href="http://123.56.86.130:8080/ezShop" target="_Blank" class="btn btn-skin">更多</a>
+						<a href="http://123.57.210.24:8080/ezShop" target="_Blank" class="btn btn-skin">更多</a>
 					</div>
                 </div>
 				</div>
@@ -271,7 +271,7 @@
 					<div class="service-desc">
 						<h5>进度工况</h5>
 						<p>施工进度实时跟踪,不用去现场,手机就能看到工况.</p>
-						<a href="/iBusiness/html/lc/project_progress-list.html" class="btn btn-skin">更多</a>
+						<a href="../webpage/project_progress-list.html" class="btn btn-skin">更多</a>
 					</div>
                 </div>
 				</div>
@@ -331,7 +331,7 @@
 		<div class="container">
 			<div class="row marginbot-80">
 				<div class="col-md-8 col-md-offset-2">
-					<form id="contact-form" action="/iBusiness/rs/html/senddatabyindexhtml" method="post" class="wow bounceInUp" data-wow-offset="10" data-wow-delay="0.2s">
+					<form id="contact-form" action="/" method="post" class="wow bounceInUp" data-wow-offset="10" data-wow-delay="0.2s">
 						<div class="row marginbot-20">
 							<div class="col-md-12">
 						        <label class="col-lg-2 control-label" >姓名:</label>
@@ -422,12 +422,16 @@
     
     <!-- JS方法 -->
     <script>
+	    
         <!-- 数据初始化 -->
 		function initData() {
 			$('#waitingModal').modal({backdrop: false});
 			$('#waitingModal').modal('show');
+			// 设置from提交地址
+			$("#contact-form").attr("action", getRootPath() + "rs/html/senddatabyindexhtml");
+			//
 			// 调用初始化方法
-			var urlstr = "/iBusiness/rs/html/initdata";
+			var urlstr = getRootPath() + "/rs/html/initdata";
 			var initdata = "{customername:'姜博'}";
 			$.ajax({
 				type: "post",
@@ -509,7 +513,7 @@
 			var address=encodeURI(encodeURI($("#address").val()));
 			var remark=encodeURI(encodeURI($("#remark").val()));
 			
-			var urlstr = "/iBusiness/rs/html/senddatabyindexhtml?customername="+customername
+			var urlstr = getRootPath() + "/rs/html/senddatabyindexhtml?customername="+customername
 					+"&customerphone="+customerphone+"&address="+address
 					+"&remark="+remark;
 			$.ajax({

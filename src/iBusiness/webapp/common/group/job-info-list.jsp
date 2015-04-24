@@ -41,8 +41,8 @@ var table = new Table(config);
         <div class="panel-heading"><h4 class="panel-title">职务列表</h4></div>
         <div class="panel-body">
 	        <div class="pull-left">
-			  <button class="btn btn-default a-insert btn-sm" onclick="location.href='job-info-input.do'">新建</button>
-			  <button class="btn btn-default a-remove btn-sm" onclick="table.removeAll()">删除</button>
+			  <button class="btn btn-primary a-insert btn-sm" onclick="location.href='job-info-input.do'">新建</button>
+			  <button class="btn btn-primary a-remove btn-sm" onclick="table.removeAll()">删除</button>
 			</div>
 	        <div class="pull-right">
 			  每页显示
@@ -59,9 +59,8 @@ var table = new Table(config);
 		    <thead>
 		      <tr>
 		        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-		        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
-		        <th class="sorting" name="name">职务名称</th>
 		        <th class="sorting" name="name">职位类型</th>
+		        <th class="sorting" name="name">职务名称</th>
 		        <th width="30">&nbsp;</th>
 		      </tr>
 		    </thead>
@@ -69,9 +68,8 @@ var table = new Table(config);
 		      <c:forEach items="${page.result}" var="item">
 		      <tr>
 		        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-		        <td>${item.id}</td>
-		        <td>${item.jobTitle.name}</td>
 		        <td>${item.jobType.name}</td>
+		        <td>${item.jobTitle.name}</td>
 		        <td>
 		          <a href="job-info-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
 		        </td>
@@ -84,9 +82,9 @@ var table = new Table(config);
 		    共100条记录 显示1到10条记录
 		</div>
 		<div class="btn-group m-pagination pull-right">
-		  <button class="btn btn-default btn-sm">&lt;</button>
-		  <button class="btn btn-default btn-sm">1</button>
-		  <button class="btn btn-default btn-sm">&gt;</button>
+		  <button class="btn btn-primary btn-sm">&lt;</button>
+		  <button class="btn btn-primary btn-sm">1</button>
+		  <button class="btn btn-primary btn-sm">&gt;</button>
 		</div>
 	<!-- end of main -->
 	</div>

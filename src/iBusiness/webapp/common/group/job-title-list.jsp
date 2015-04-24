@@ -67,7 +67,7 @@ $(function() {
 			    <thead>
 			      <tr>
 			        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-			        <th class="sorting" name="id"><spring:message code="org.org.list.id" text="编号"/></th>
+			        <th class="sorting" name="orders">排序</th>
 			        <th class="sorting" name="name">名称</th>
 			        <th width="30">&nbsp;</th>
 			      </tr>
@@ -77,7 +77,7 @@ $(function() {
 			      <c:forEach items="${page.result}" var="item">
 			      <tr>
 			        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-			        <td>${item.id}</td>
+			        <td>${item.orders}</td>
 			        <td>${item.name}</td>
 			        <td>
 			          <a href="job-title-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>

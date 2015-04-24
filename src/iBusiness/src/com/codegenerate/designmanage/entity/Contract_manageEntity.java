@@ -1,15 +1,9 @@
 package com.codegenerate.designmanage.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
@@ -39,8 +33,6 @@ public class Contract_manageEntity implements java.io.Serializable {
 	private java.lang.String id;
 	/**scopeid*/
 	private java.lang.String scopeid;
-	/**typeflag*/
-	private java.lang.String typeflag;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -187,21 +179,5 @@ public class Contract_manageEntity implements java.io.Serializable {
 	 */
 	public void setScopeid(java.lang.String scopeid){
 		this.scopeid = scopeid;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  typeflag
-	 */
-	@Column(name ="TYPEFLAG",nullable=true,length=8)
-	public java.lang.String getTypeflag(){
-		return this.typeflag;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  typeflag
-	 */
-	public void setTypeflag(java.lang.String typeflag){
-		this.typeflag = typeflag;
 	}
 }

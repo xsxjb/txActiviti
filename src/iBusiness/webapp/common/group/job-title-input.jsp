@@ -36,14 +36,22 @@ $(function() {
 			  <c:if test="${model != null}">
 			  <input id="org_id" type="hidden" name="id" value="${model.id}">
 			  </c:if>
-			  <p>
-			      <label class="control-label" for="org_orgname"><spring:message code="org.org.input.orgname" text="名称"/></label>
-				  <input id="org_orgname" type="text" name="name" value="${model.name}"  class="text required"  maxlength="50">
-			  </p>
-			  <p>
-			      <button id="submitButton" class="btn btn-default a-submit"><spring:message code='core.input.save' text='保存'/></button>
-			      <button type="button" onclick="history.back();" class="btn btn-default"><spring:message code='core.input.back' text='返回'/></button>
-			  </p>
+				<div class="form-group">
+					<label class="col-lg-2 control-label" for="code-name">名称:</label>
+					<div class="col-lg-3">
+						<input id="code-name" type="text" name="name" value="${model.name}" class="text form-control input-sm">
+					</div>
+					<label class="col-lg-2 control-label" for="code-orders">排序:</label>
+					<div class="col-lg-3">
+						<input id="code-orders" type="text" name="orders" value="${model.orders}" class="text form-control input-sm number">
+					</div>
+				</div>
+			    <div class="form-group">
+	                  <div class="col-lg-10 col-lg-offset-2">
+	                      <button id="submitButton" class="btn btn-primary btn-sm a-submit"><span class="glyphicon glyphicon-floppy-save"></span>保存</button>
+	                      <button type="button" onclick="history.back();" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-log-out"></span>返回</button>
+	                  </div>
+                </div>
 			</form>
         
         </div>

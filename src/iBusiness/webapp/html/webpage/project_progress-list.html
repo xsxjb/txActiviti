@@ -19,7 +19,7 @@
 			var customername=encodeURI(encodeURI($("#customername").val()));
 			var projectname=encodeURI(encodeURI($("#projectname").val()));
 			
-		    var url = "/iBusiness/rs/androidapp/project_progress-list?customername="+customername+"&projectname="+ projectname;
+		    var url = getRootPath() + "/rs/androidapp/project_progress-list?customername="+customername+"&projectname="+ projectname;
 		    var data = "customername="+customername+"&projectname="+ projectname;
 			$.ajax({
 				type: "post",
@@ -34,7 +34,7 @@
 					for (var i=0; i<progressList.length; i++) {
 						var content = "";
 						content = content + '<tr class="'+(i%2==1? "active":"")+'}">';
-						content = content + '<td><a href="/iBusiness/codegenerate/designmanage/progress-show.html?id='+progressList[i].id+'" ><span class="glyphicon glyphicon-eye-open"></span></a></td>';
+						content = content + '<td><a href="'+getRootPath()+'/codegenerate/designmanage/progress-show.html?id='+progressList[i].id+'" ><span class="glyphicon glyphicon-eye-open"></span></a></td>';
 						content = content + '<td>'+progressList[i].customername+'</td><td>'+progressList[i].projectname+'</td>';
 						content = content + '<td>'+progressList[i].designname+'</td><td>'+progressList[i].worksmanage+'</td><td>'+progressList[i].currentprogress+'</td></tr>';
 						$("#progressBody").append(content);

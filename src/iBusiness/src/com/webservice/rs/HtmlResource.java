@@ -94,9 +94,9 @@ public class HtmlResource {
 				entity.setCustomerphone(URLDecoder.decode(customerphone, "utf-8"));
 				entity.setRemark(URLDecoder.decode(remark, "utf-8"));
 				entity.setId(UUID.randomUUID().toString());
-				entity.setTypeflag("未签");
-
-				getContract_manageService().insert(entity);
+				//
+				Contract_manageService contractManageService = getContract_manageService();
+				contractManageService.insert(entity);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

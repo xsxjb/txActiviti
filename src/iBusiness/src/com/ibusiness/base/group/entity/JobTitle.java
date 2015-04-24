@@ -28,6 +28,8 @@ public class JobTitle implements java.io.Serializable {
 
     /** null. */
     private String scopeid;
+    
+    private Integer orders;
 
     /** . */
     private Set<JobInfo> jobInfos = new HashSet<JobInfo>(0);
@@ -35,10 +37,11 @@ public class JobTitle implements java.io.Serializable {
     public JobTitle() {
     }
 
-    public JobTitle(String name, String scopeId, Set<JobInfo> jobInfos) {
+    public JobTitle(String name, String scopeId, Integer orders, Set<JobInfo> jobInfos) {
         this.name = name;
         this.scopeid = scopeId;
         this.jobInfos = jobInfos;
+        this.orders = orders;
     }
 
     /** @return null. */
@@ -47,35 +50,28 @@ public class JobTitle implements java.io.Serializable {
     public String getId() {
         return this.id;
     }
-
     /**
      * @param id
-     *            null.
      */
     public void setId(String id) {
         this.id = id;
     }
-
     /** @return null. */
     @Column(name = "NAME", length = 50)
     public String getName() {
         return this.name;
     }
-
     /**
      * @param name
-     *            null.
      */
     public void setName(String name) {
         this.name = name;
     }
-
     /** @return null. */
     @Column(name = "SCOPE_ID", length = 50)
     public String getScopeid() {
         return this.scopeid;
     }
-
     /**
      * @param scopeId
      *            null.
@@ -83,18 +79,22 @@ public class JobTitle implements java.io.Serializable {
     public void setScopeid(String scopeid) {
         this.scopeid = scopeid;
     }
-
     /** @return . */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobTitle")
     public Set<JobInfo> getJobInfos() {
         return this.jobInfos;
     }
-
     /**
      * @param jobInfos
-     *            .
      */
     public void setJobInfos(Set<JobInfo> jobInfos) {
         this.jobInfos = jobInfos;
+    }
+    @Column(name = "ORDERS")
+    public Integer getOrders() {
+        return orders;
+    }
+    public void setOrders(Integer orders) {
+        this.orders = orders;
     }
 }

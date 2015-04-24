@@ -22,11 +22,12 @@ import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.core.mapper.BeanMapper;
 import com.ibusiness.core.spring.MessageHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
+
 /**
  * 职务名称
  * 
  * @author JiangBo
- *
+ * 
  */
 @Controller
 @RequestMapping("group")
@@ -35,22 +36,29 @@ public class JobTitleController {
     private MessageHelper messageHelper;
     private BeanMapper beanMapper = new BeanMapper();
 
+    /**
+     * 职务列表
+     */
     @RequestMapping("job-title-list")
-    public String list(@ModelAttribute
-    Page page, @RequestParam
-    Map<String, Object> parameterMap, Model model) {
+    public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         // 添加当前公司(用户范围)ID查询
-    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
+        propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
+        // 设置排序信息
+        page.setOrderBy("orders");
+        page.setOrder("ASC");
         page = jobTitleDao.pagedQuery(page, propertyFilters);
-
         model.addAttribute("page", page);
 
         return "common/group/job-title-list.jsp";
     }
 
+    /**
+     * 职务编辑
+     */
     @RequestMapping("job-title-input")
-    public String input(@RequestParam(value = "id", required = false) String id, Model model) {
+    public String input(@RequestParam(value = "id", required = false)
+    String id, Model model) {
         if (id != null) {
             JobTitle jobTitle = jobTitleDao.get(id);
             model.addAttribute("model", jobTitle);
@@ -58,9 +66,11 @@ public class JobTitleController {
         return "common/group/job-title-input.jsp";
     }
 
+    /**
+     * 职务保存
+     */
     @RequestMapping("job-title-save")
-    public String save(@ModelAttribute
-    JobTitle jobTitle, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute JobTitle jobTitle, RedirectAttributes redirectAttributes) {
         JobTitle dest = null;
         String id = jobTitle.getId();
 
@@ -80,8 +90,12 @@ public class JobTitleController {
         return "redirect:/group/job-title-list.do";
     }
 
+    /**
+     * 职务删除
+     */
     @RequestMapping("job-title-remove")
-    public String remove(@RequestParam("selectedItem") List<String> selectedItem, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("selectedItem")
+    List<String> selectedItem, RedirectAttributes redirectAttributes) {
         List<JobTitle> jobTitles = jobTitleDao.findByIds(selectedItem);
 
         for (JobTitle jobTitle : jobTitles) {

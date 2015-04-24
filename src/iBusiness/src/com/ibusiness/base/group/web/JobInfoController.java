@@ -53,6 +53,9 @@ public class JobInfoController {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         // 添加当前公司(用户范围)ID查询
     	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
+    	// 设置排序信息
+        page.setOrderBy("jobType");
+        page.setOrder("ASC");
         page = jobInfoDao.pagedQuery(page, propertyFilters);
 
         model.addAttribute("page", page);
