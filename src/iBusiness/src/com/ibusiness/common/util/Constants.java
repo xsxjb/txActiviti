@@ -83,4 +83,7 @@ public interface Constants {
     String CODE_UPLOAD = "11";
     // 附件下载组件
     String CODE_DOWNLOAD = "12";
+    // 图片组件
+    String CODE_IMG_LOAD = "13";
+    
 }

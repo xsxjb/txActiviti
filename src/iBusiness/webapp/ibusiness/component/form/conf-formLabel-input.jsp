@@ -76,6 +76,7 @@
                                     <option value="9" ${model.fcType==9 ? 'selected' : ''}>多选按钮</option>
                                     <option value="10" ${model.fcType==10 ? 'selected' : ''}>选择带出</option>
                                     <option value="11" ${model.fcType==11 ? 'selected' : ''}>附件上传组件</option>
+                                    <option value="13" ${model.fcType==13 ? 'selected' : ''}>图片组件</option>
                                </select>
                            </div>
                       </div>

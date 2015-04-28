@@ -58,6 +58,8 @@ public class CodeTagFactory {
         tagComponentMap.put(Constants.CODE_UPLOAD, "uploadParser");
         // 附件下载组件
         tagComponentMap.put(Constants.CODE_DOWNLOAD, "downloadParser");
+        // 图片上传组件
+        tagComponentMap.put(Constants.CODE_IMG_LOAD, "imgUploadParser");
     }
     
     /**
@@ -491,10 +493,71 @@ public class CodeTagFactory {
      */
 	public Columnt downloadParser(Columnt columnt, ConfFormTableColumn formColumn) {
     	// java相关信息
-        // 
     	return columnt;
     }
-	
+	/**
+	 * 图片上传组件
+	 */
+	public Columnt imgUploadParser(Columnt columnt, ConfFormTableColumn formColumn) {
+        String confSelectInfo = formColumn.getConfSelectInfo();
+        JSONObject jsonObject= JSONObject.fromObject(confSelectInfo);
+        String pathName = (null == jsonObject.getString("pathName")? "ibusiness" : jsonObject.getString("pathName"));
+        // java相关信息 ======================================================================
+        String methodStr = "";
+        // 图片上传功能
+        methodStr = methodStr + " @ResponseBody @RequestMapping(\""+columnt.getFieldName()+"-upload\") ";
+        methodStr = methodStr + " public String "+columnt.getFieldName()+"Upload(@org.springframework.beans.factory.annotation.Qualifier(\"attachment\") MultipartFile attachment, HttpServletResponse response) {";
+        methodStr = methodStr + "   com.ibusiness.doc.store.StoreDTO storeDTO = null; ";
+        methodStr = methodStr + "   if (null != attachment && attachment.getSize() > 0) {";
+        methodStr = methodStr + "       try {";
+        methodStr = methodStr + "           storeDTO = storeConnector.save(\""+pathName+"\", attachment.getInputStream(), attachment.getOriginalFilename());";
+        methodStr = methodStr + "       } catch (Exception e) {e.printStackTrace();}}";
+        methodStr = methodStr + "    return null == storeDTO ? \"\" : storeDTO.getKey();}";
+        // 
+        List<String> methodList = columnt.getMethodList();
+        methodList.add(methodStr);
+        columnt.setMethodList(methodList);
+        
+        // JSP ======================================================================
+        String str = "";
+        str = str + "<img id=\"code_img_"+columnt.getFieldName()+"\" height=\"200\" width=\"150\" src=\"../ibresources/"+pathName+"/${model.imgpath}\" />";
+        str = str + "<div class=\"col-lg-4\">";
+        str = str + "  <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#file_"+columnt.getFieldName()+"upload').click()\"><span class=\"glyphicon glyphicon-upload\"></span>上传</a>";
+        str = str + "  <input id=\"code_table_"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
+        str = str + "</div>";
+        columnt.setJspTagInfo(str);
+        
+        // JSP FORM ======================================================================
+        String jspFormStr = "<!-- 上传组件form提交 -->";
+        jspFormStr = jspFormStr + "<form id=\""+columnt.getFieldName()+"UploadForm\" method=\"post\" action=\""+columnt.getFieldName()+"-upload.do\" class=\"form-horizontal\" enctype=\"multipart/form-data\">";
+        jspFormStr = jspFormStr + "    <script type=\"text/javascript\">";
+        jspFormStr = jspFormStr + "     function "+columnt.getFieldName()+"Upload() {";
+        jspFormStr = jspFormStr + "       if( window.confirm(\"您确认要上传吗?\") == true ){";
+        jspFormStr = jspFormStr + "         var $form=$('#"+columnt.getFieldName()+"UploadForm');";
+        jspFormStr = jspFormStr + "         $form.ajaxSubmit({";
+        jspFormStr = jspFormStr + "             url: $form.attr('action'),";
+        jspFormStr = jspFormStr + "             type: 'POST',";
+        jspFormStr = jspFormStr + "             dataType: 'text',";
+        jspFormStr = jspFormStr + "             beforeSubmit: function () {},";
+        jspFormStr = jspFormStr + "             success: function (data) {";
+        jspFormStr = jspFormStr + "                 $('#code_table_"+columnt.getFieldName()+"').attr('value',data);";
+        jspFormStr = jspFormStr + "                 $('#code_table_"+columnt.getFieldName()+"_text').attr('value',data);";
+        jspFormStr = jspFormStr + "                 $('#code_img_"+columnt.getFieldName()+"').attr('src','../ibresources/"+pathName+"/data');";
+        jspFormStr = jspFormStr + "             },";
+        jspFormStr = jspFormStr + "             error: function () {";
+        jspFormStr = jspFormStr + "                 alert('请求数据出错了!');";
+        jspFormStr = jspFormStr + "             }";
+        jspFormStr = jspFormStr + "         });";
+        jspFormStr = jspFormStr + "     }}";
+        jspFormStr = jspFormStr + "  </script>";
+        jspFormStr = jspFormStr + "    <input id=\"file_"+columnt.getFieldName()+"upload\" type=\"file\" name=\"attachment\" style=\"display:none;\" onChange=\""+columnt.getFieldName()+"Upload();\">";
+        jspFormStr = jspFormStr + " </form>";
+        List<String> jspFormList = columnt.getJspFormList();
+        jspFormList.add(jspFormStr);
+        columnt.setJspFormList(jspFormList);
+        // 
+        return columnt;
+    }
 	// =========================================================================
 	// =========================================================================
 	/**
