@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 测试表页面
+ * @Description: 测试练习表页面
  * @author JiangBo
  *
  */
@@ -21,29 +21,15 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_TEST")
 public class TestEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-	/**scopeid*/
-	private java.lang.String scopeid;
 	/**id*/
 	private java.lang.String id;
+	/**scopeid*/
+	private java.lang.String scopeid;
 	/**name*/
 	private java.lang.String name;
+	/**remark*/
+	private java.lang.String remark;
 	
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  scopeid
-	 */
-	@Column(name ="SCOPEID",nullable=true,length=64)
-	public java.lang.String getScopeid(){
-		return this.scopeid;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  scopeid
-	 */
-	public void setScopeid(java.lang.String scopeid){
-		this.scopeid = scopeid;
-	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  id
@@ -64,6 +50,22 @@ public class TestEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  scopeid
+	 */
+	@Column(name ="SCOPEID",nullable=true,length=64)
+	public java.lang.String getScopeid(){
+		return this.scopeid;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  scopeid
+	 */
+	public void setScopeid(java.lang.String scopeid){
+		this.scopeid = scopeid;
+	}
+	/**
+	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  name
 	 */
 	@Column(name ="NAME",nullable=true,length=64)
@@ -77,5 +79,21 @@ public class TestEntity implements java.io.Serializable {
 	 */
 	public void setName(java.lang.String name){
 		this.name = name;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  remark
+	 */
+	@Column(name ="REMARK",nullable=true,length=1024)
+	public java.lang.String getRemark(){
+		return this.remark;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  remark
+	 */
+	public void setRemark(java.lang.String remark){
+		this.remark = remark;
 	}
 }
