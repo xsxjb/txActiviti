@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -45,6 +46,7 @@ import com.codegenerate.operationmanage.service.AirconditionlogService;
 public class AirconditionlogController {
 
     private MessageHelper messageHelper;
+    private com.ibusiness.doc.store.StoreConnector storeConnector;
     private AirconditionlogService airconditionlogService;
    /**
      * 列表
@@ -123,12 +125,19 @@ public class AirconditionlogController {
         return "redirect:/airconditionlog/airconditionlog-list.do";
     }
     /**
+     * 控件添加的方法 ========
+     */
+                 @ResponseBody @RequestMapping("controlinfo-upload")  public String controlinfoUpload(@org.springframework.beans.factory.annotation.Qualifier("attachment") MultipartFile attachment, HttpServletResponse response) {   com.ibusiness.doc.store.StoreDTO storeDTO = null;    if (null != attachment && attachment.getSize() > 0) {       try {           storeDTO = storeConnector.save("ibimg", attachment.getInputStream(), attachment.getOriginalFilename());       } catch (Exception e) {e.printStackTrace();}}    return null == storeDTO ? "" : storeDTO.getKey();}
+    
+    /**
      * excel导出
      */
     @SuppressWarnings("unchecked")
     @RequestMapping("airconditionlog-export")
     public void excelExport(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletResponse response) {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
+        // 根据当前公司(用户范围)ID进行查询
+    	propertyFilters = CommonBusiness.getInstance().editPFByScopeId(propertyFilters);
         page = airconditionlogService.pagedQuery(page, propertyFilters);
         List<AirconditionlogEntity> beans = (List<AirconditionlogEntity>) page.getResult();
 
@@ -169,10 +178,12 @@ public class AirconditionlogController {
     public void setMessageHelper(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
     }
-
     @Resource
     public void setAirconditionlogService(AirconditionlogService airconditionlogService) {
         this.airconditionlogService = airconditionlogService;
     }
-    
+    @Resource
+	public void setStoreConnector(com.ibusiness.doc.store.StoreConnector storeConnector) {
+	    this.storeConnector = storeConnector;
+	}
 }

@@ -37,12 +37,12 @@
                           <div class="col-lg-3">  <fmt:formatDate value="${model.eventtime}" pattern="yyyy-MM-dd HH:mm:ss" />  <input id="code-eventtime" type="hidden" name="eventtime" value="${model.eventtime}" ></div>
                           
                           <label class="col-lg-2 control-label" for="code-controluser">操作人员:</label>
-                          <div class="col-lg-3">   <input id="code-controluser" type="text" name="controluser" value="${model.controluser}" class="text required" ></div>
+                          <div class="col-lg-3">   <input id="code-controluser" type="text" name="controluser" value="${model.controluser}" class="text form-control input-sm required"  ></div>
                           
                             </div>
                           <div class="form-group">
                           <label class="col-lg-2 control-label" for="code-controlinfo">控制内容:</label>
-                          <div class="col-lg-6">    <textarea class="form-control " id="code-controlinfo" name="controlinfo" rows="1" >${model.controlinfo}</textarea></div>
+                          <img id="code_img_controlinfo" height="200" width="150" src="${ctx}/ibresources/ibimg/${model.controlinfo}" /><div class="col-lg-4">  <a href="#" class="btn btn-primary btn-sm" onclick="$('#file_controlinfoupload').click()"><span class="glyphicon glyphicon-upload"></span>上传</a>  <input id="code_table_controlinfo" type="hidden" name="controlinfo" value="${model.controlinfo}"></div>
                           
                             </div>
                   
@@ -53,6 +53,7 @@
 	                  </div>
                   </div>
                 </form>
+			            <!-- 上传组件form提交 --><form id="controlinfoUploadForm" method="post" action="controlinfo-upload.do" class="form-horizontal" enctype="multipart/form-data">    <script type="text/javascript">     function controlinfoUpload() {       if( window.confirm("您确认要上传吗?") == true ){         var $form=$('#controlinfoUploadForm');         $form.ajaxSubmit({             url: $form.attr('action'),             type: 'POST',             dataType: 'text',             beforeSubmit: function () {},             success: function (data) {                 $('#code_table_controlinfo').attr('value',data);                 $('#code_table_controlinfo_text').attr('value',data);                 $('#code_img_controlinfo').attr('src','${ctx}/ibresources/ibimg/'+data);             },             error: function () {                 alert('请求数据出错了!');             }         });     }}  </script>    <input id="file_controlinfoupload" type="file" name="attachment" style="display:none;" onChange="controlinfoUpload();"> </form>
         </div>
     </div>
     <!-- end of main -->

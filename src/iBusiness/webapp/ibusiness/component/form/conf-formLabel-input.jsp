@@ -55,7 +55,9 @@
 										} else if ("10" == str) {
 											$('#form-confSelectInfo').attr('value', "{\"jsplist\":[{\"inputKey\":\"目标属性名\",\"inputValue\":\"查询属性名\",\"inputTitle\":\"标题名称\"},{\"inputKey\":\"materialmodel\",\"inputValue\":\"model\",\"inputTitle\":\"规格型号\"}],\"className\":\"com.codegenerate.productmanage.service.MaterialsService\",\"queryTitle\":\"查询标题名\",\"queryName\":\"查询对象\"}");
 										} else if ("11" == str) {
-											$('#form-confSelectInfo').attr('value', "{\"pathName\":\"存储地址\"}");
+											$('#form-confSelectInfo').attr('value', "{\"pathName\":\"ibfile\"}");
+										} else if ("13" == str) {
+											$('#form-confSelectInfo').attr('value', "{\"pathName\":\"ibimg\"}");
 										}
 									} else {
 										if ("1" == str || "2" == str || "3" == str || "4" == str || "5" == str || "8" == str || "9" == str) {

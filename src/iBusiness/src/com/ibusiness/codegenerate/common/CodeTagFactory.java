@@ -520,7 +520,7 @@ public class CodeTagFactory {
         
         // JSP ======================================================================
         String str = "";
-        str = str + "<img id=\"code_img_"+columnt.getFieldName()+"\" height=\"200\" width=\"150\" src=\"../ibresources/"+pathName+"/${model.imgpath}\" />";
+        str = str + "<img id=\"code_img_"+columnt.getFieldName()+"\" height=\"200\" width=\"150\" src=\"${ctx}/ibresources/"+pathName+"/${model."+columnt.getFieldName()+"}\" />";
         str = str + "<div class=\"col-lg-4\">";
         str = str + "  <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#file_"+columnt.getFieldName()+"upload').click()\"><span class=\"glyphicon glyphicon-upload\"></span>上传</a>";
         str = str + "  <input id=\"code_table_"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
@@ -542,7 +542,7 @@ public class CodeTagFactory {
         jspFormStr = jspFormStr + "             success: function (data) {";
         jspFormStr = jspFormStr + "                 $('#code_table_"+columnt.getFieldName()+"').attr('value',data);";
         jspFormStr = jspFormStr + "                 $('#code_table_"+columnt.getFieldName()+"_text').attr('value',data);";
-        jspFormStr = jspFormStr + "                 $('#code_img_"+columnt.getFieldName()+"').attr('src','../ibresources/"+pathName+"/data');";
+        jspFormStr = jspFormStr + "                 $('#code_img_"+columnt.getFieldName()+"').attr('src','${ctx}/ibresources/"+pathName+"/'+data);";
         jspFormStr = jspFormStr + "             },";
         jspFormStr = jspFormStr + "             error: function () {";
         jspFormStr = jspFormStr + "                 alert('请求数据出错了!');";

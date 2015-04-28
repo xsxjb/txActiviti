@@ -19,6 +19,7 @@
 		    asc: ${page.asc},
 		    params: {
 		        'filter_LIKES_id': '${param.filter_LIKES_id}'
+		                ,'filter_LIKES_controluser': '${param.filter_LIKES_controluser}'
 		    },
 			selectedItemClass: 'selectedItem',
 			gridFormId: 'gridForm',
@@ -79,11 +80,11 @@
 			  <table id="codeGrid" class="table table-hover table-striped">
 			      <thead>
 				      <tr>
-				        <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
+				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 					                <th class="sorting">操作时间</th>
 					                <th class="sorting">操作人员</th>
 					                <th class="sorting">控制内容</th>
-				        <th width="80">&nbsp;</th>
+				        <th width="30">&nbsp;</th>
 				      </tr>
 				    </thead>
 					    <tbody>
