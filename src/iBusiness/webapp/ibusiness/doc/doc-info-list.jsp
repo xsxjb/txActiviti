@@ -86,8 +86,8 @@
 				      <tr>
 				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
 				        <th width="60">&nbsp;</th>
-				        <th class="sorting" ><spring:message code="doc-info.doc-info.list.id" text="编号"/></th>
-				        <th class="sorting" ><spring:message code="doc-info.doc-info.list.name" text="名称"/></th>
+				        <th class="sorting" >类别</th>
+				        <th class="sorting" >名称</th>
 				        <th class="sorting" >创建时间</th>
 				      </tr>
 				    </thead>
@@ -98,9 +98,9 @@
 				        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
 				        <td>
 				          <a href="doc-info-input.do?id=${item.id}" class="a-update"><span class="glyphicon glyphicon-pencil"></span></a>
-				          <a href="doc-info-download.do?id=${item.id}"><span class="glyphicon glyphicon-download"></span></a>
+				          <a href="doc-info-download.do?filename=${item.name}&path=${item.name}"><span class="glyphicon glyphicon-download"></span></a>
 				        </td>
-				        <td>${item.id}</td>
+				        <td>${item.docType}</td>
 				        <td>${item.name}</td>
 				        <td>${item.createTime}</td>
 				      </tr>

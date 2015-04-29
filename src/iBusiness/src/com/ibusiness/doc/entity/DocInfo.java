@@ -18,131 +18,88 @@ import javax.persistence.TemporalType;
 @Table(name = "IB_DOC_INFO")
 public class DocInfo implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
-    /** null. */
+    // ID
     private String id;
-    /** null. */
+    // 逻辑文件名
+    private String docName;
+    // 物理文件名
     private String name;
-    /** null. */
+    // 路径
     private String path;
-    /** null. */
-    private Integer docType;
-    /** null. */
+    // 文件类别
+    private String docType;
+    // 创建时间
     private Date createTime;
-    /** null. */
+    // 上传用户ID
     private String userId;
-    /** null. */
+    // 备注
     private String descn;
     // 范围
     private String scopeid;
 
-    /** @return null. */
     @Id
     @Column(name = "ID", unique = true, nullable = false)
     public String getId() {
         return this.id;
     }
-
-    /**
-     * @param id
-     *            null.
-     */
     public void setId(String id) {
         this.id = id;
     }
-
-    /** @return null. */
     @Column(name = "NAME", length = 200)
     public String getName() {
         return this.name;
     }
-
-    /**
-     * @param name
-     *            null.
-     */
     public void setName(String name) {
         this.name = name;
     }
-
-    /** @return null. */
     @Column(name = "PATH", length = 200)
     public String getPath() {
         return this.path;
     }
-
-    /**
-     * @param path
-     *            null.
-     */
     public void setPath(String path) {
         this.path = path;
     }
-
-    /** @return null. */
     @Column(name = "DOCTYPE")
-    public Integer getDocType() {
+    public String getDocType() {
         return this.docType;
     }
-
-    /**
-     * @param type
-     *            null.
-     */
-    public void setDocType(Integer docType) {
+    public void setDocType(String docType) {
         this.docType = docType;
     }
-
-    /** @return null. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_TIME", length = 26)
     public Date getCreateTime() {
         return this.createTime;
     }
-
-    /**
-     * @param createTime
-     *            null.
-     */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
-    /** @return null. */
     @Column(name = "USER_ID")
     public String getUserId() {
         return this.userId;
     }
-
-    /**
-     * @param userId
-     *            null.
-     */
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
-    /** @return null. */
     @Column(name = "DESCN")
     public String getDescn() {
         return this.descn;
     }
-    /**
-     * @param descn
-     */
     public void setDescn(String descn) {
         this.descn = descn;
     }
-	/**
-	 * @return the scopeid
-	 */
     @Column(name = "SCOPEID")
-	public String getScopeid() {
-		return scopeid;
-	}
-	/**
-	 * @param scopeid the scopeid to set
-	 */
-	public void setScopeid(String scopeid) {
-		this.scopeid = scopeid;
-	}
+    public String getScopeid() {
+        return scopeid;
+    }
+    public void setScopeid(String scopeid) {
+        this.scopeid = scopeid;
+    }
+    @Column(name = "DOCNAME")
+    public String getDocName() {
+        return docName;
+    }
+    public void setDocName(String docName) {
+        this.docName = docName;
+    }
 }

@@ -370,7 +370,8 @@ public class FormController {
             formTableColumn.setPackageName(packageName);
             formTableColumn.setFormName(confForm.getFormName());
             formTableColumn.setFormColumn(tableColumn.getTableName()+"."+tableColumn.getColumnValue());
-            formTableColumn.setFormColumnTitle(confTable.getTableNameComment()+"."+tableColumn.getColumnName());
+            // 表单名标题 confTable.getTableNameComment()+"."+tableColumn.getColumnName()
+            formTableColumn.setFormColumnTitle(tableColumn.getColumnName());
             formTableColumn.setTableName(confTable.getTableName());
             formTableColumn.setTableColumn(tableColumn.getColumnValue());
             formTableColumn.setColumnNo(tableColumn.getColumnNo());
