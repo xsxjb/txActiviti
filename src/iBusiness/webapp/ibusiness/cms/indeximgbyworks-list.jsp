@@ -80,7 +80,6 @@
 			      <thead>
 				      <tr>
 				        <th width="30" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
-					                <th class="sorting">图片地址</th>
 					                <th class="sorting">图片信息描述</th>
 					                <th class="sorting">是否显示标记</th>
 				        <th width="30">&nbsp;</th>
@@ -90,7 +89,6 @@
 					      <c:forEach items="${page.result}" var="item" varStatus="status">  
 					      <tr class="${status.index%2==1? 'active':''}">
 					        <td><input type="checkbox" class="selectedItem a-check" name="selectedItem" value="${item.id}"></td>
-						            <td>${item.imgurl}</td>
 						            <td>${item.imginfo}</td>
 						            <td>${item.showflag}</td>
 					        <td>
