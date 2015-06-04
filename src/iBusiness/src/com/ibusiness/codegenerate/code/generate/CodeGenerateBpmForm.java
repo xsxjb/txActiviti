@@ -56,7 +56,7 @@ public class CodeGenerateBpmForm implements ICallBack {
         createFileProperty.setActionFlag(false);
         createFileProperty.setServiceIFlag(false);
         createFileProperty.setJspFlag(false);
-        createFileProperty.setServiceImplFlag(false);
+        createFileProperty.setResourceFlag(false);
         createFileProperty.setPageFlag(false);
         createFileProperty.setEntityFlag(false);
     }
@@ -276,9 +276,9 @@ public class CodeGenerateBpmForm implements ICallBack {
             codeFactoryOneToMany.invoke("bpm/jspInputOneToMTemplate.ftl", "jsp");
             codeFactoryOneToMany.invoke("bpm/jspListOneToMTemplate.ftl", "jspList");
         }
-        // ServiceImpl文件
-        if (createFileProperty.isServiceImplFlag()) {
-            codeFactoryOneToMany.invoke("bpm/serviceOneToMTemplate.ftl", "serviceImpl");
+        // resource接口文件
+        if (createFileProperty.isResourceFlag()) {
+            codeFactoryOneToMany.invoke("bpm/resourceBpmTemplate.ftl", "resource");
         }
         // ServiceI文件
         if (createFileProperty.isServiceIFlag()) {

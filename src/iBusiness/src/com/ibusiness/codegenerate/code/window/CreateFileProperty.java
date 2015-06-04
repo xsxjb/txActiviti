@@ -12,7 +12,7 @@ public class CreateFileProperty {
     private boolean serviceIFlag;
     private boolean entityFlag;
     private boolean pageFlag;
-    private boolean serviceImplFlag;
+    private boolean resourceFlag;
     private boolean jspFlag;
     private String jspMode;
     /**
@@ -63,17 +63,11 @@ public class CreateFileProperty {
     public void setPageFlag(boolean pageFlag) {
         this.pageFlag = pageFlag;
     }
-    /**
-     * @return the serviceImplFlag
-     */
-    public boolean isServiceImplFlag() {
-        return serviceImplFlag;
+    public boolean isResourceFlag() {
+        return resourceFlag;
     }
-    /**
-     * @param serviceImplFlag the serviceImplFlag to set
-     */
-    public void setServiceImplFlag(boolean serviceImplFlag) {
-        this.serviceImplFlag = serviceImplFlag;
+    public void setResourceFlag(boolean resourceFlag) {
+        this.resourceFlag = resourceFlag;
     }
     /**
      * @return the jspFlag

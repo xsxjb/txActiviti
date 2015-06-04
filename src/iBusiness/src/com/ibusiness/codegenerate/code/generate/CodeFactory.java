@@ -93,24 +93,26 @@ public class CodeFactory extends BaseCodeFactory {
                 // 设置JSP路径
                 jspPath = jspPath.replace("/com", "");
                 str.append(jspPath);
+            } else if (("htmlList".equals(type)) || ("html".equals(type))) {
+                // HTML
+                str.append("webapp/assets/");
             } else {
                 str.append(CodeResourceUtil.CODEPATH);
             }
+            
             // 包名
             str.append(StringUtils.lowerCase(entityPackage));
             str.append("/");
             // 判断相等(忽略大小写)
-            if ("Action".equalsIgnoreCase(codeType)) {
-                str.append(StringUtils.lowerCase("action"));
-            } else if ("ServiceImpl".equalsIgnoreCase(codeType)) {
-                str.append(StringUtils.lowerCase("service/impl"));
-            } else if ("ServiceI".equalsIgnoreCase(codeType)) {
-                str.append(StringUtils.lowerCase("service"));
+            if ("Resource".equalsIgnoreCase(codeType)) {
+                // 接口
+                str.append(StringUtils.lowerCase("rs"));
             } else if (!"List".equalsIgnoreCase(codeType)) {
+                // 如果不是上面几种情况执行下面路径
                 str.append(StringUtils.lowerCase(codeType));
             }
             str.append("/");
-            
+            // JSP文件
             if ("jsp".equals(type) || ("jspList".equals(type))) {
                 String jspName = StringUtils.capitalize(entityName);
                 str.append(CodeStringUtils.getInitialSmall(jspName));
@@ -123,7 +125,20 @@ public class CodeFactory extends BaseCodeFactory {
                     str.append("-list");
                 }
                 str.append(".jsp");
+            } else if ("htmlList".equals(type) || ("html".equals(type))) {
+                // HTML
+                String jspName = StringUtils.capitalize(entityName);
+                str.append(CodeStringUtils.getInitialSmall(jspName));
+                str.append(codeType);
+                // 显示页面 还是插入页面
+                if ("html".equals(type)) {
+                    str.append("-input");
+                } else if ("htmlList".equals(type)) {
+                    str.append("-list");
+                }
+                str.append(".html");
             } else {
+                // JAVA 文件
                 str.append(StringUtils.capitalize(entityName));
                 str.append(codeType);
                 str.append(".java");

@@ -98,8 +98,9 @@ public class CodeController {
             if ("checkboxService".equals(selectedItem)) {
                 createFileProperty.setServiceIFlag(true);
             }
-            if ("checkboxServiceImp".equals(selectedItem)) {
-                createFileProperty.setServiceImplFlag(true);
+            // 生成移动版接口
+            if ("checkboxResource".equals(selectedItem)) {
+                createFileProperty.setResourceFlag(true);
             }
             if ("checkboxEntity".equals(selectedItem)) {
                 createFileProperty.setEntityFlag(true);

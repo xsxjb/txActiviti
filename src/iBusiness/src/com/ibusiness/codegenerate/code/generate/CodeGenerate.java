@@ -60,7 +60,7 @@ public class CodeGenerate implements ICallBack {
         createFileProperty.setActionFlag(true);
         createFileProperty.setServiceIFlag(true);
         createFileProperty.setJspFlag(true);
-        createFileProperty.setServiceImplFlag(true);
+        createFileProperty.setResourceFlag(true);
         createFileProperty.setJspMode("01");
         createFileProperty.setPageFlag(true);
         createFileProperty.setEntityFlag(true);
@@ -248,9 +248,10 @@ public class CodeGenerate implements ICallBack {
                 codeFactory.invoke("bpm/jspSubInputOneToMTemplate.ftl", "jsp");
             }
         }
-        // ServiceImpl文件
-        if (createFileProperty.isServiceImplFlag()) {
-            codeFactory.invoke("serviceImplTemplate.ftl", "serviceImpl");
+        // resource接口文件
+        if (createFileProperty.isResourceFlag()) {
+            codeFactory.invoke("resourceTemplate.ftl", "resource");
+            codeFactory.invoke("htmlListTemplate.ftl", "htmlList");
         }
         // ServiceI文件
         if (createFileProperty.isServiceIFlag()) {

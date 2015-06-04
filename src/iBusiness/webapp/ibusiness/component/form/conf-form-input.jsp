@@ -341,7 +341,7 @@
 									          <label><input type="checkbox" name="selectedItems"  value="checkboxEntity" <tags:contains items="${model.selectedItems}" item="checkboxEntity">checked</tags:contains>> Entity</label>
 									          <label><input type="checkbox" name="selectedItems"  value="checkboxJsp" <tags:contains items="${model.selectedItems}" item="checkboxJsp">checked</tags:contains>> Jsp</label>
 									          <label><input type="checkbox" name="selectedItems"  value="checkboxService" <tags:contains items="${model.selectedItems}" item="checkboxService">checked</tags:contains>> Service</label>
-									          <label><input type="checkbox" name="selectedItems"  value="checkboxServiceImp" <tags:contains items="${model.selectedItems}" item="checkboxServiceImp">checked</tags:contains>> ServiceImp</label>
+									          <label><input type="checkbox" name="selectedItems"  value="checkboxResource" <tags:contains items="${model.selectedItems}" item="checkboxResource">checked</tags:contains>> 接口</label>
 									       </div>
 									  </div>
 									  <div class="form-group">
@@ -398,7 +398,7 @@
 									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxEntity" <tags:contains items="${subModel.selectedItems}" item="checkboxEntity">checked</tags:contains>> Entity</label>
 									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxJsp" <tags:contains items="${subModel.selectedItems}" item="checkboxJsp">checked</tags:contains>> Jsp</label>
 									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxService" <tags:contains items="${subModel.selectedItems}" item="checkboxService">checked</tags:contains>> Service</label>
-									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxServiceImp" <tags:contains items="${subModel.selectedItems}" item="checkboxServiceImp">checked</tags:contains>> ServiceImp</label>
+									          <label><input type="checkbox" name="subCodeGenerateBeans[${status.index}].selectedItems"  value="checkboxResource" <tags:contains items="${subModel.selectedItems}" item="checkboxResource">checked</tags:contains>> 接口</label>
 									       </div>
 									  </div>
 									  

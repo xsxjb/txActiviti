@@ -56,7 +56,7 @@ public class CodeGenerateOneToMany implements ICallBack {
         createFileProperty.setActionFlag(false);
         createFileProperty.setServiceIFlag(false);
         createFileProperty.setJspFlag(false);
-        createFileProperty.setServiceImplFlag(false);
+        createFileProperty.setResourceFlag(false);
         createFileProperty.setPageFlag(false);
         createFileProperty.setEntityFlag(false);
     }
@@ -231,11 +231,11 @@ public class CodeGenerateOneToMany implements ICallBack {
             codeFactoryOneToMany.invoke("onetomany/jspInputOneToMTemplate.ftl", "jsp");
             codeFactoryOneToMany.invoke("onetomany/jspListOneToMTemplate.ftl", "jspList");
         }
-        // ServiceImpl文件
-        if (createFileProperty.isServiceImplFlag()) {
-            codeFactoryOneToMany.invoke("onetomany/serviceOneToMTemplate.ftl", "serviceImpl");
+        // resource接口文件
+        if (createFileProperty.isResourceFlag()) {
+            codeFactoryOneToMany.invoke("onetomany/resourceOneToMTemplate.ftl", "resource");
         }
-        // ServiceI文件
+        // Service文件
         if (createFileProperty.isServiceIFlag()) {
             codeFactoryOneToMany.invoke("onetomany/serviceOneToMTemplate.ftl", "service");
         }

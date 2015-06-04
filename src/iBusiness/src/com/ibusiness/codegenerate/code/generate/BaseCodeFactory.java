@@ -60,12 +60,13 @@ public class BaseCodeFactory {
     /**
      * 枚举类
      * 
-     * @author Administrator
+     * @author JiangBo
      * 
      */
     public enum CodeType {
-        serviceImpl("ServiceImpl"), service("Service"), controller("Controller"), page("Page"), entity("Entity"),
-        jsp(""), jspAdd("jspAdd"), jspEdit("jspEdit"), jspList(""),jspSub("");
+        resource("Resource"),html(""), htmlList(""), 
+        service("Service"), controller("Controller"), entity("Entity"), page("Page"),
+        jsp(""), jspList(""),jspSub("");
         
         // 成员变量
         private String type;

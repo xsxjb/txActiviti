@@ -87,13 +87,10 @@ public class CodeFactoryBpmForm extends BaseCodeFactory  {
             strBuilder.append(StringUtils.lowerCase(entityPackage));
             strBuilder.append("/");
             // 模块名
-            if ("Action".equalsIgnoreCase(codeType)) {
-                strBuilder.append(StringUtils.lowerCase("action"));
-            } else if ("ServiceImpl".equalsIgnoreCase(codeType)) {
-                strBuilder.append(StringUtils.lowerCase("service/impl"));
-            } else if ("ServiceI".equalsIgnoreCase(codeType)) {
-                strBuilder.append(StringUtils.lowerCase("service"));
+            if ("Resource".equalsIgnoreCase(codeType)) {
+                strBuilder.append(StringUtils.lowerCase("rs"));
             } else if (!"jspAdd".equals(type) && !"jspEdit".equals(type) && !"jsp".equals(type)) {
+                // 如果不是上面几种情况执行下面路径
                 strBuilder.append(StringUtils.lowerCase(codeType));
             }
             strBuilder.append("/");

@@ -47,11 +47,13 @@
 	    </div>
 	</div>
 	<!-- end of header bar -->
-	<!--  -->
-		<div class="col-lg-3"></div>
+	<!-- .col-xs-超小屏幕 手机 (<768px),
+	     .col-sm-小屏幕 平板 (≥768px),
+	     .col-md-中等屏幕 桌面显示器 (≥992px)-->
+		<div class="col-xs-1 col-sm-3 col-md-3 col-lg-3"></div>
 
 		<!-- start of main -->
-		<div class="panel panel-default col-lg-6"> 
+		<div class="panel panel-default col-xs-10 col-sm-6 col-md-6 col-lg-6"> 
 	        <div class="panel-heading"><h4 class="panel-title">登录</h4></div>
 	        <div class="panel-body">
 	            <!-- 登录失败返回信息 -->
@@ -64,21 +66,21 @@
 				<!-- 并监听默认的URL  j_spring_security_check 提交登陆信息的URL地址-->
 				<form id="userForm" name="f" method="post" action="${ctx}/j_spring_security_check" class="form-horizontal">
 				    <div class="form-group">
-					    <label class="col-lg-2 control-label" for="username"><spring:message code="core.login.username" text="账号" />:</label>
-					    <div class="col-lg-4">
+					    <label class="col-md-2 col-lg-2 control-label" for="username">账号:</label>
+					    <div class="col-md-4 col-lg-4">
 					       <input type='text' id="username" name='j_username' class="form-control input-sm" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}">
 					    </div>
 					</div>
 					<div class="form-group">
-					    <label class="col-lg-2 control-label" for="password"><spring:message code="core.login.password" text="密码" />:</label>
-					    <div class="col-lg-4">
+					    <label class="col-md-2 col-lg-2 control-label" for="password">密码:</label>
+					    <div class="col-md-4 col-lg-4">
 						    <input type='password' id="password" name='j_password' class="form-control input-sm" value=''>
 					    </div>
 					</div>
 					<!-- 验证码  -->
 					<div class="form-group">
-					     <label class="col-lg-2 control-label" for="codeinput">验证码:</label>
-					     <div class="col-lg-4">
+					     <label class="col-md-2 col-lg-2 control-label" for="codeinput">验证码:</label>
+					     <div class="col-md-4 col-lg-4">
 					         <input name="number" class="form-control input-sm" id="codeinput" onkeyup='checkcode()'/><span STYLE="color: red" id="checkcodemsg"></span><br/>
 					     </div>
 					     <img src="checkcode" id="img1" onclick="document.getElementById('img1').src='${ctx}/common/checkcode?' + Math.random();" />
@@ -91,6 +93,6 @@
 	        </div>
         </div>
 		<!-- end of main -->
-		<div class="col-lg-3"></div>
+		<div class="col-xs-1 col-sm-3 col-md-3 col-lg-3"></div>
 </body>
 </html>
