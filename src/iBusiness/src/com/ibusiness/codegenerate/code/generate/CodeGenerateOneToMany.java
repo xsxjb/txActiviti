@@ -234,6 +234,9 @@ public class CodeGenerateOneToMany implements ICallBack {
         // resource接口文件
         if (createFileProperty.isResourceFlag()) {
             codeFactoryOneToMany.invoke("onetomany/resourceOneToMTemplate.ftl", "resource");
+            // 生成html5页面
+            codeFactoryOneToMany.invoke("onetomany/htmlListTemplate.ftl", "htmlList");
+            codeFactoryOneToMany.invoke("onetomany/htmlInputTemplate.ftl", "html");
         }
         // Service文件
         if (createFileProperty.isServiceIFlag()) {

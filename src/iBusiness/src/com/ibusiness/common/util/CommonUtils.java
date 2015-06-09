@@ -166,6 +166,16 @@ public class CommonUtils {
         return JSONArray.toList(JSONArray.fromObject(jsonStr), clazz);
     }
     /**
+     * JSON字符串转换List对象
+     * @param beanList
+     * @param datePattern
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+    public static Object getBeanFromJson(String jsonStr, Class clazz) {
+        return JSONObject.toBean(JSONObject.fromObject(jsonStr), clazz);
+    }
+    /**
      * 创建JSON配置对象
      * @param excludes
      * @param datePattern

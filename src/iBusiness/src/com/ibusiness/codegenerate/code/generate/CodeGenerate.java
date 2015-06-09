@@ -250,8 +250,11 @@ public class CodeGenerate implements ICallBack {
         }
         // resource接口文件
         if (createFileProperty.isResourceFlag()) {
+            // 生成接口文件
             codeFactory.invoke("resourceTemplate.ftl", "resource");
+            // 生成html5页面
             codeFactory.invoke("htmlListTemplate.ftl", "htmlList");
+            codeFactory.invoke("htmlInputTemplate.ftl", "html");
         }
         // ServiceI文件
         if (createFileProperty.isServiceIFlag()) {

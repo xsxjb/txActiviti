@@ -520,9 +520,9 @@ public class CodeTagFactory {
         
         // JSP ======================================================================
         String str = "";
-        str = str + "<img id=\"code_img_"+columnt.getFieldName()+"\" height=\"200\" width=\"150\" src=\"${ctx}/ibresources/"+pathName+"/${model."+columnt.getFieldName()+"}\" />";
         str = str + "<div class=\"col-lg-4\">";
-        str = str + "  <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#file_"+columnt.getFieldName()+"upload').click()\"><span class=\"glyphicon glyphicon-upload\"></span>上传</a>";
+        str = str + "  <img class=\"col-lg-12\" id=\"code_img_"+columnt.getFieldName()+"\" height=\"200\" width=\"150\" src=\"${ctx}/ibresources/"+pathName+"/${model."+columnt.getFieldName()+"}\" />";
+        str = str + "  <a class=\"col-lg-12\" href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#file_"+columnt.getFieldName()+"upload').click()\"><span class=\"glyphicon glyphicon-upload\"></span>上传</a>";
         str = str + "  <input id=\"code_table_"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
         str = str + "</div>";
         columnt.setJspTagInfo(str);

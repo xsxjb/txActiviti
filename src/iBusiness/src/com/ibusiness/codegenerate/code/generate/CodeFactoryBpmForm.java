@@ -80,6 +80,9 @@ public class CodeFactoryBpmForm extends BaseCodeFactory  {
                 // 设置JSP路径
                 jspPath = jspPath.replace("/com", "");
                 strBuilder.append(jspPath);
+            } else if (("htmlList".equals(type)) || ("html".equals(type))) {
+                // HTML
+                strBuilder.append("webapp/assets/");
             } else {
                 strBuilder.append(CodeResourceUtil.CODEPATH);
             }
@@ -108,6 +111,18 @@ public class CodeFactoryBpmForm extends BaseCodeFactory  {
                     strBuilder.append("-list");
                 }
                 strBuilder.append(".jsp");
+            } else if ("htmlList".equals(type) || ("html".equals(type))) {
+                // HTML
+                String jspName = StringUtils.capitalize(entityName);
+                strBuilder.append(CodeStringUtils.getInitialSmall(jspName));
+                strBuilder.append(codeType);
+                // 显示页面 还是插入页面
+                if ("html".equals(type)) {
+                    strBuilder.append("-input");
+                } else if ("htmlList".equals(type)) {
+                    strBuilder.append("-list");
+                }
+                strBuilder.append(".html");
             } else {
                 strBuilder.append(StringUtils.capitalize(entityName));
                 strBuilder.append(codeType);

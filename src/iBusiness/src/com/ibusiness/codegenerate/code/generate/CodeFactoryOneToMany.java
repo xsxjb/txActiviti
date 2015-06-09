@@ -80,6 +80,9 @@ public class CodeFactoryOneToMany extends BaseCodeFactory  {
                 // 设置JSP路径
                 jspPath = jspPath.replace("/com/ibusiness", "");
                 strBuilder.append(jspPath);
+            } else if (("htmlList".equals(type)) || ("html".equals(type))) {
+                // HTML
+                strBuilder.append("webapp/assets/");
             } else {
                 strBuilder.append(CodeResourceUtil.CODEPATH);
             }
@@ -87,12 +90,9 @@ public class CodeFactoryOneToMany extends BaseCodeFactory  {
             strBuilder.append(StringUtils.lowerCase(entityPackage));
             strBuilder.append("/");
             // 模块名
-            if ("Action".equalsIgnoreCase(codeType)) {
-                strBuilder.append(StringUtils.lowerCase("action"));
-            } else if ("ServiceImpl".equalsIgnoreCase(codeType)) {
-                strBuilder.append(StringUtils.lowerCase("service/impl"));
-            } else if ("ServiceI".equalsIgnoreCase(codeType)) {
-                strBuilder.append(StringUtils.lowerCase("service"));
+            if ("Resource".equalsIgnoreCase(codeType)) {
+                // 接口
+                strBuilder.append(StringUtils.lowerCase("rs"));
             } else if (!"jspAdd".equals(type) && !"jspEdit".equals(type) && !"jsp".equals(type)) {
                 strBuilder.append(StringUtils.lowerCase(codeType));
             }
@@ -111,6 +111,18 @@ public class CodeFactoryOneToMany extends BaseCodeFactory  {
                     strBuilder.append("-list");
                 }
                 strBuilder.append(".jsp");
+            } else if ("htmlList".equals(type) || ("html".equals(type))) {
+                // HTML
+                String jspName = StringUtils.capitalize(entityName);
+                strBuilder.append(CodeStringUtils.getInitialSmall(jspName));
+                strBuilder.append(codeType);
+                // 显示页面 还是插入页面
+                if ("html".equals(type)) {
+                    strBuilder.append("-input");
+                } else if ("htmlList".equals(type)) {
+                    strBuilder.append("-list");
+                }
+                strBuilder.append(".html");
             } else {
                 strBuilder.append(StringUtils.capitalize(entityName));
                 strBuilder.append(codeType);
