@@ -9,6 +9,7 @@
     <link type="text/css" rel="stylesheet" href="../../plugin/bootstrap/css/bootstrap.min.css">
     <script type="text/javascript" src="../../plugin/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/base.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/style.css" >
     
     <script type="text/javascript">
         <!-- 数据初始化 -->
@@ -28,12 +29,23 @@
 				//	$("#datas :last-child").remove();
 					for (var i=0; i<dataList.length; i++) {
 						var content = "";
-						content = content + '<div class="form-group">';
-						content = content + '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">'+dataList[i].name+'</div><div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">'+dataList[i].remark+'</div>';
-						content = content + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"><a href="${entityName?uncap_first}-input.html?id='+dataList[i].id+'" >编辑</a></div>';
-						content = content + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"><a href="${entityName?uncap_first}-remove?id='+dataList[i].id+'" >删除</a></div>';
-						content = content + '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9"></div>';
-						content = content + '</div>';
+						content = content + '<tr>';
+						content = content + '<td class="normal" width="9%"><img src="../images/listpic.jpg" class="list-img" /></td>';
+					    
+			            content = content + '<td class="normal" width="91%">';
+						content = content + '<div class="list-title" onclick="window.location.href=\'test-input.html?id='+dataList[i].id+'\'" >';
+						<#list columns as po>
+				            <#if po.fcDisplay="1">
+						content = content + '<span class="list-title-span">${po.filedComment}:'+dataList[i].${po.fieldName}+'</span>';
+						    </#if>
+				        </#list>
+						content = content + '</div></td>';
+				        
+						content = content + '</tr>';
+						content = content + '<tr>';
+						content = content + '<td class="border-bottom-line"><span class="border-bottom"></span></td>';
+						content = content + '<td class="border-bottom-line"><span class="border-bottom"></span></td>';
+						content = content + '</tr>';
 						$("#datas").append(content);
 					}
 				},
@@ -46,24 +58,19 @@
     </script>
   </head>
 
-  <body>
-    <div class="row">
-    <div class="col-lg-1"></div>
-	<!-- start of main -->
-	<div class="panel panel-default col-lg-10">
-	   <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">${confForm.formTitle}列表</h4></div>
-       <div id="datas" class="panel-body">
-       
-	   </div>
-	</div>
-	  <!-- 模态框 -->
+  <body style="background:#ddd" >
+    <div class="container-fluid">
+	    <table id="datas" width="100%" border="0" class="list-table">
+	    
+	    </table>
+    </div>
+    <!-- 模态框 -->
 	  <div id="modalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">
 		  <div class="modal-dialog modal-lg">
 			  <div class="modal-content" style="text-align: center;height: 600px">
 			  </div>
 		  </div>
 	  </div>
-	<!-- end of main -->
-	</div>
+	  
   </body>
 </html>

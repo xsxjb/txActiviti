@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 测试表页面
+ * @Description: 测试练习表页面
  * @author JiangBo
  *
  */
@@ -21,13 +21,38 @@ import javax.persistence.SequenceGenerator;
 @Table(name = "IB_TEST_S")
 public class Test_sEntity implements java.io.Serializable {
     private static final long serialVersionUID = 0L;
+	/**scopeid*/
+	private java.lang.String scopeid;
 	/**id*/
 	private java.lang.String id;
-	/**parentid*/
 	private java.lang.String parentid;
-	/**email*/
-	private java.lang.String email;
+	/**namea*/
+	private java.lang.String namea;
 	
+	public java.lang.String getParentid() {
+        return parentid;
+    }
+
+    public void setParentid(java.lang.String parentid) {
+        this.parentid = parentid;
+    }
+
+    /**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  scopeid
+	 */
+	@Column(name ="SCOPEID",nullable=true,length=64)
+	public java.lang.String getScopeid(){
+		return this.scopeid;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  scopeid
+	 */
+	public void setScopeid(java.lang.String scopeid){
+		this.scopeid = scopeid;
+	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  id
@@ -48,34 +73,18 @@ public class Test_sEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  parentid
+	 *@return: java.lang.String  namea
 	 */
-	@Column(name ="PARENTID",nullable=true,length=64)
-	public java.lang.String getParentid(){
-		return this.parentid;
+	@Column(name ="NAMEA",nullable=true,length=64)
+	public java.lang.String getNamea(){
+		return this.namea;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  parentid
+	 *@param: java.lang.String  namea
 	 */
-	public void setParentid(java.lang.String parentid){
-		this.parentid = parentid;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  email
-	 */
-	@Column(name ="EMAIL",nullable=true,length=64)
-	public java.lang.String getEmail(){
-		return this.email;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  email
-	 */
-	public void setEmail(java.lang.String email){
-		this.email = email;
+	public void setNamea(java.lang.String namea){
+		this.namea = namea;
 	}
 }

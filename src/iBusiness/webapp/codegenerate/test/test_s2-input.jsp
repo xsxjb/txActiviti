@@ -33,11 +33,8 @@
 					      <input id="code_id" type="hidden" name="id" value="${model.id}">
 					  </c:if>
                              <div class="form-group">
-                              <label class="control-label col-lg-2" for="code-name">名:</label>
-                              <div class="col-lg-3">   <input id="code-name" type="text" name="name" value="${model.name}" class="text " ></div>
-	                        
-                              <label class="control-label col-lg-2" for="code-email">邮件:</label>
-                              <div class="col-lg-3">   <input id="code-email" type="text" name="email" value="${model.email}" class="text " ></div>
+                              <label class="control-label col-lg-2" for="code-namea">namea:</label>
+                              <div class="col-lg-3">   <input id="code-namea" type="text" name="namea" value="${model.namea}" class="text form-control input-sm required"  ></div>
                             </div>
 	                        
 					  

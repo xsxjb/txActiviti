@@ -194,7 +194,7 @@ public class CodeGenerateOneToMany implements ICallBack {
             columnt.setFieldType(confTableColumns.getColumnType());
             columnt.setCharmaxLength(confTableColumns.getColumnSize());
             // 字段名
-            columnt.setFieldName(confTableColumns.getColumnValue().toLowerCase());
+            columnt.setFieldName(DbFiledToJspUtil.formatField(confTableColumns.getColumnValue().toLowerCase()));
             // 字段标题
             columnt.setFiledComment(confTableColumns.getColumnName());
             // 设置表单相关字段信息

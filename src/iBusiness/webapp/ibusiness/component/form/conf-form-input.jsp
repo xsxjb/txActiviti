@@ -18,6 +18,15 @@
 		        },
 		        errorClass: 'validate-error'
 		    });
+		    $("#formForm").validate({
+		        submitHandler: function(form) {
+					bootbox.animate(false);
+					var box = bootbox.dialog('<div class="progress" ><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"> 60% </div></div>');
+					    
+					form.submit();
+		        },
+		        errorClass: 'validate-error'
+		    });
 		})
     </script>
   </head>
@@ -53,10 +62,10 @@
 							    <label class="control-label" id="form_package_name">${model.packageName}</label>
 							  </div>
 							  <div class="form-group">
-							      <label class="col-lg-2 control-label" for="form-formname">表单名称:</label>
+							      <label class="col-lg-2 control-label" for="form-formname">表单名称(英文):</label>
 							      <c:if test="${model.formName == null }">
 								      <div class="col-lg-3">
-									      <input id="form-formname" type="text" name="formName" value="${model.formName}"  class="form-control" >
+									      <input id="form-formname" type="text" name="formName" value="${model.formName}"  class="form-control required" >
 									  </div>
 							      </c:if>
 							      <c:if test="${model.formName != null}">
@@ -67,7 +76,7 @@
 							  <div class="form-group">
 							      <label class="col-lg-2 control-label" for="form-formtitle">表单标题:</label>
 							      <div class="col-lg-3">
-								      <input id="form-formtitle" type="text" name="formTitle" value="${model.formTitle}"  class="form-control" >
+								      <input id="form-formtitle" type="text" name="formTitle" value="${model.formTitle}"  class="form-control required" >
 								  </div>
 							  </div>
 							  

@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 测试表页面
+ * @Description: 测试练习表页面
  * @author JiangBo
  *
  */
@@ -25,10 +25,8 @@ public class Test_s2Entity implements java.io.Serializable {
 	private java.lang.String id;
 	/**parentid*/
 	private java.lang.String parentid;
-	/**name*/
-	private java.lang.String name;
-	/**email*/
-	private java.lang.String email;
+	/**namea*/
+	private java.lang.String namea;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -66,34 +64,18 @@ public class Test_s2Entity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  name
+	 *@return: java.lang.String  namea
 	 */
-	@Column(name ="NAME",nullable=true,length=64)
-	public java.lang.String getName(){
-		return this.name;
+	@Column(name ="NAMEA",nullable=true,length=64)
+	public java.lang.String getNamea(){
+		return this.namea;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  name
+	 *@param: java.lang.String  namea
 	 */
-	public void setName(java.lang.String name){
-		this.name = name;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  email
-	 */
-	@Column(name ="EMAIL",nullable=true,length=64)
-	public java.lang.String getEmail(){
-		return this.email;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  email
-	 */
-	public void setEmail(java.lang.String email){
-		this.email = email;
+	public void setNamea(java.lang.String namea){
+		this.namea = namea;
 	}
 }

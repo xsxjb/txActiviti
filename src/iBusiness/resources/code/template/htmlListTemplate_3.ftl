@@ -29,23 +29,23 @@
 				//	$("#datas :last-child").remove();
 					for (var i=0; i<dataList.length; i++) {
 						var content = "";
-						content = content + '<tr>';
-						content = content + '<td class="normal" width="9%"><img src="../images/listpic.jpg" class="list-img" /></td>';
-					    
-			            content = content + '<td class="normal" width="91%">';
-						content = content + '<div class="list-title" onclick="window.location.href=\'test-input.html?id='+dataList[i].id+'\'" >';
-						<#list columns as po>
-				            <#if po.fcDisplay="1">
-						content = content + '<span class="list-title-span">${po.filedComment}:'+dataList[i].${po.fieldName}+'</span>';
-						    </#if>
-				        </#list>
-						content = content + '</div></td>';
-				        
-						content = content + '</tr>';
-						content = content + '<tr>';
-						content = content + '<td class="border-bottom-line"><span class="border-bottom"></span></td>';
-						content = content + '<td class="border-bottom-line"><span class="border-bottom"></span></td>';
-						content = content + '</tr>';
+						  content = content + '<li class="share-info"><img class="share-head" src="../images/4.jpg" />';
+					      content = content + '<div class="share-title"><span class="share-nicheng">错叔</span></div>';
+					      content = content + '<div class="share-comment">';
+					      content = content + '<span class="share-zan"><img class="share-zan-img" src="../images/zan.png" /></span>';
+					      content = content + '<span class="share-pinglun">3</span>';
+					      content = content + '</div>';
+					      content = content + '<div class="share-comment">';
+					      content = content + '<span class="share-zan"><img class="share-zan-img" src="../images/pinglun.png" /></span>';
+					      content = content + '<span class="share-pinglun">3</span>';
+					      content = content + '</div>';
+					      content = content + '<div class="share-picture"><img class="share-pictrue-img" src="../images/listpic.jpg" /></div>';
+					      <#list columns as po>
+					          <#if po.fcDisplay="1">
+					      content = content + '<div class="share-text">${po.filedComment}:'+dataList[i].${po.fieldName}+'</div>';
+					          </#if>
+					      </#list>
+					      content = content + '</li>';
 						$("#datas").append(content);
 					}
 				},
@@ -58,11 +58,11 @@
     </script>
   </head>
 
-  <body style="background:#ddd" >
-    <div class="container-fluid">
-	    <table id="datas" width="100%" border="0" class="list-table">
+  <body style="background:#d1d4db">
+	 <div class="container-fluid1">
+	    <ul id="datas" class="share-list">
 	    
-	    </table>
+	    </ul>
     </div>
     <!-- 模态框 -->
 	  <div id="modalInput" class="modal fade" tabindex="-1" style="display: none;" data-backdrop="static">

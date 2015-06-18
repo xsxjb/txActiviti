@@ -197,7 +197,7 @@ public class CodeGenerate implements ICallBack {
             // 长度
             columnt.setCharmaxLength(confTableColumns.getColumnSize());
             // 字段名
-            columnt.setFieldName(confTableColumns.getColumnValue().toLowerCase());
+            columnt.setFieldName(DbFiledToJspUtil.formatField(confTableColumns.getColumnValue().toLowerCase()));
             // 字段标题
             columnt.setFiledComment(confTableColumns.getColumnName());
             // 设置表单相关字段信息
@@ -243,8 +243,11 @@ public class CodeGenerate implements ICallBack {
                 codeFactory.invoke("jspListTemplate.ftl", "jspList");
                 codeFactory.invoke("jspInputTemplate.ftl", "jsp");
             } else if ("sub".equals(createFileProperty.getJspMode())) {
+                // 子表生成
                 codeFactory.invoke("onetomany/jspSubInputOneToMTemplate.ftl", "jsp");
+                codeFactory.invoke("onetomany/htmlSubInputOneToMTemplate.ftl", "html");
             } else if ("bpmSub".equals(createFileProperty.getJspMode())) {
+                // 流程子表生成
                 codeFactory.invoke("bpm/jspSubInputOneToMTemplate.ftl", "jsp");
             }
         }
