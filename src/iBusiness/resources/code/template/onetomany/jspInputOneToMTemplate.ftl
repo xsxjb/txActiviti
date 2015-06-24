@@ -112,8 +112,10 @@
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
+			    <c:if test="${'$' + '{model != null && model.id != null}'}">
 			        <button class="btn btn-primary btn-sm a-insert" href="${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=&flowId=${'$' + '{flowId}'}'" data-target="#${sub.entityName?uncap_first}ModalInput" data-toggle="modal" data-database="true"><span class="glyphicon glyphicon-tasks"></span>新建</button>
 				    <button class="btn btn-primary btn-sm a-remove" onclick="${sub.entityName?uncap_first}Table.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
+			    </c:if>
 			    <#if  confForm.isExcelExport=1 >
 				    <button class="btn btn-primary btn-sm" onclick="${sub.entityName?uncap_first}Table.exportExcel()"><span class="glyphicon glyphicon-export"></span>导出Excel</button>
 				</#if>
