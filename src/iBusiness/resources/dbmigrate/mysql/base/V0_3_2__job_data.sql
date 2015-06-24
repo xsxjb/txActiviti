@@ -1,5 +1,5 @@
 /*===============  IB_COMPANY 公司表  =============================*/
-INSERT INTO IB_COMPANY(ID,NAME,STATUS,SCOPE_ID) VALUES(1,'天翔软件有限公司',1,'1');
+INSERT INTO IB_COMPANY(ID,NAME,STATUS,SCOPE_ID) VALUES(1,'力硕科技有限公司',1,'1');
 /*===============  IB_DEPARTMENT 部门表  =============================*/
 INSERT INTO IB_DEPARTMENT(ID,NAME,COMPANYID,STATUS,SCOPE_ID) VALUES(1,'市场部',1,1,'1');
 INSERT INTO IB_DEPARTMENT(ID,NAME,COMPANYID,STATUS,SCOPE_ID) VALUES(2,'财务部',1,1,'1');
