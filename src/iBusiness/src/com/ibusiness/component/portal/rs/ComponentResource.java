@@ -69,7 +69,7 @@ public class ComponentResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Map<String, Object>> tree(@QueryParam("packageName") String packageName, @QueryParam("typeId") String strTypeId,
             @QueryParam("parentId") String parentId) {
-        String hql = "from ConfComponent where parentid = '0' ";
+        String hql = "from ConfComponent where parentid = '0' order by modulename ";
         List<ConfComponent> entities = componentDao.find(hql);
         // 制造一个根节点,用于对业务模块进行 增删改
         Map<String, Object> map = new HashMap<String, Object>();
@@ -162,7 +162,7 @@ public class ComponentResource {
                     isBpmTable = "1";
                     typeId = "bpmTables";
                 }
-                String hql = "from ConfTable where packageName = ? AND isBpmTable=" + isBpmTable;
+                String hql = "from ConfTable where packageName = ? AND isBpmTable=" + isBpmTable + " order by tableNameComment ";
                 List<ConfTable> tables = tableDao.find(hql, component.getPackagename());
                 // 循环
                 List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -191,7 +191,7 @@ public class ComponentResource {
                     typeId = "bpmForms";
                 }
                 // 子节点--表单
-                String hql = "from ConfForm where packageName =? AND isBpmForm=" + isBpmForm;
+                String hql = "from ConfForm where packageName =? AND isBpmForm=" + isBpmForm + " order by formTitle ";
                 List<ConfForm> forms = confFormDao.find(hql, component.getPackagename());
                 // 循环
                 List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -210,7 +210,7 @@ public class ComponentResource {
                 }
                 map.put("children", list);
             } else if ("Bpm".equals(component.getTypeid())) {
-                String hql = "from BpmProcess where packageName = ? ";
+                String hql = "from BpmProcess where packageName = ? order by flowTitle ";
                 List<BpmProcess> flows = cpmProcessDao.find(hql, component.getPackagename());
                 // 循环
                 List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();

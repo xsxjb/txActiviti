@@ -54,6 +54,7 @@ public class TableService {
         if (!CommonUtils.isNull(isBpmTable)) {
             sql = sql + " AND isBpmTable=" + isBpmTable;
         }
+        sql = sql + " order by tablenamecomment ";
         return dao.queryConfTableList(sql);
     }
     /**

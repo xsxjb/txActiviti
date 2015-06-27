@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.common.page.Page;
@@ -28,6 +29,7 @@ import com.ibusiness.component.table.dao.TableColumnsDao;
 import com.ibusiness.component.table.dao.TableDao;
 import com.ibusiness.component.table.entity.ConfTable;
 import com.ibusiness.component.table.entity.ConfTableColumns;
+import com.ibusiness.component.table.service.ConfTableColumnsService;
 import com.ibusiness.core.spring.MessageHelper;
 
 /**
@@ -45,6 +47,7 @@ public class FormController {
     private TableColumnsDao tableColumnsDao;
     private ConfFormTableColumnDao confFormTableColumnDao;
     private TableDao tableDao;
+    private ConfTableColumnsService confTableColumnsService;
     private MessageHelper messageHelper;
 
     /**
@@ -442,6 +445,27 @@ public class FormController {
         return "redirect:/form/conf-formTables-input.do?packageName=" + packageName + "&formId="+formId;
     }
     
+    
+    /**
+     * 查询表列表
+     */
+    @ResponseBody
+    @RequestMapping("ajax-tablelist")
+    public String ajaxTablelist() {
+    	List<ConfTable> tableList = tableDao.getAll();
+        return CommonUtils.getJsonFromList(tableList, null).toString();
+    }
+    /**
+     * 查询表字段列表 TODO
+     */
+    @SuppressWarnings("unchecked")
+    @ResponseBody
+    @RequestMapping("ajax-tablecolumnlist")
+    public String ajaxTablecolumnlist(@RequestParam String tablename) {
+		List<ConfTableColumns> tableColumnsList = confTableColumnsService.find("from ConfTableColumns where tableName=? order by columnName ", tablename);
+        return CommonUtils.getJsonFromList(tableColumnsList, null).toString();
+    }
+    
     /**
      * 注入 
      */
@@ -452,6 +476,10 @@ public class FormController {
     @Resource
     public void setTableDao(TableDao tableDao) {
         this.tableDao = tableDao;
+    }
+    @Resource
+    public void setConfTableColumnsService(ConfTableColumnsService confTableColumnsService) {
+        this.confTableColumnsService = confTableColumnsService;
     }
     @Resource
     public void setConfFormTableDao(ConfFormTableDao confFormTableDao) {

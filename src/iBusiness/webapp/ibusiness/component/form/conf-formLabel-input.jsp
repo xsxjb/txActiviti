@@ -13,6 +13,56 @@
 		function defailtChange(str){
 			$("#form-fcDefault").val($("#form-fcDefault").val() + str);
 		}
+	    
+	    // 保存下来数据字典选择信息
+	    function saveDataSelect() {
+			$('#form-confSelectInfo').attr('value', "{\"sql\":\"select "+$("#tablecolumnKeyAdd").val()+" vKey, "+$("#tablecolumnNameAdd").attr('value')+" vValue from "+$("#tablelistAdd").val()+" \"}");
+			$('#dataSelectDiv').modal('hide');
+		}
+	    // 查询表名列表
+		function selectTableList() {
+			$.ajax({type : "POST",
+					url : "/"+ window.location.pathname.split("/")[1]+ "/"+ "form/ajax-tablelist.do",
+					dataType : "json",
+					success : function(jsonData) {
+						// 清空
+						$("#tablelistAdd option").remove();
+						var newRow = '<option value="">请选择.....</option>';
+						$('#tablelistAdd').append(newRow);
+						$.each(jsonData, function(i, item) {
+							newRow = '<option value="'+ item.tableName +'">' + item.tableNameComment + '</option>';
+							$('#tablelistAdd').append(newRow);
+						});
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						alert('请求数据出错了!');
+					}
+			});
+		}
+		// 根据表名查询 字段列表
+	    function selectTableColumn(tablename) {
+	    	$.ajax({type : "POST",
+				url : "/"+ window.location.pathname.split("/")[1]+ "/"+ "form/ajax-tablecolumnlist.do?tablename="+tablename,
+				dataType : "json",
+				success : function(jsonData) {
+					// 清空key值
+					$("#tablecolumnKeyAdd option").remove();
+					$.each(jsonData, function(i, item) {
+							var newRow = '<option value="'+ item.columnValue +'">' + item.columnName + '</option>';
+							$('#tablecolumnKeyAdd').append(newRow);
+					});
+					// 清空value值
+					$("#tablecolumnNameAdd option").remove();
+					$.each(jsonData, function(i, item) {
+							var newRow = '<option value="'+ item.columnValue +'">' + item.columnName + '</option>';
+							$('#tablecolumnNameAdd').append(newRow);
+					});
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('请求数据出错了!');
+				}
+			});
+	    }
     </script>
   </head>
   <body>
@@ -51,7 +101,9 @@
 										if ("6" == str) {
 											$('#form-confSelectInfo').attr('value', "[{\"key\":\"1\",\"value\":\"男\"},{\"key\":\"2\",\"value\":\"女\"}]");
 										} else if ("7" == str) {
-											$('#form-confSelectInfo').attr('value', "[{\"sql\":\"select id vKey, name vValue from ib_job_title\"}]");
+											// 下拉数据字典
+											selectTableList();
+											$('#dataSelectDiv').modal('show');
 										} else if ("10" == str) {
 											$('#form-confSelectInfo').attr('value', "{\"jsplist\":[{\"inputKey\":\"目标属性名\",\"inputValue\":\"查询属性名\",\"inputTitle\":\"标题名称\"},{\"inputKey\":\"materialmodel\",\"inputValue\":\"model\",\"inputTitle\":\"规格型号\"}],\"className\":\"com.codegenerate.productmanage.service.MaterialsService\",\"queryTitle\":\"查询标题名\",\"queryName\":\"查询对象\"}");
 										} else if ("11" == str) {
@@ -62,6 +114,10 @@
 									} else {
 										if ("1" == str || "2" == str || "3" == str || "4" == str || "5" == str || "8" == str || "9" == str) {
 											$('#form-confSelectInfo').attr('value', "");
+										} else if ("7" == str) {
+											// 下拉数据字典
+											selectTableList();
+											$('#dataSelectDiv').modal('show');
 										}
 									}
 								}
@@ -175,8 +231,83 @@
                     </div>
                   </div>
                 </form>
+                
         </div>
       </div>
+           <!-- 下拉数据字典__弹出modal 
+           <div id="dataSelectDiv" class="modal fade" tabindex="-1" style="top: 20%;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<a href="#" class="close btn btn-primary btn-sm" onclick="$('#dataSelectDiv').modal('hide');"><span>&times;</span><span class="sr-only">Close</span></a>
+						<h4 class="modal-title glyphicon glyphicon-paperclip">下拉数据字典</h4>
+						<div class="form-group">
+							<label>查询表名:</label>
+							<input type="text" id="code_table_select" name="filter_LIKES_select" value="${param.filter_LIKES_select}">
+							<a class="btn btn-primary btn-sm" href="#" onclick="selectTableList()"><span class="glyphicon glyphicon-search"></span>查询</a>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="content">
+							<table id="codeGrid" class="table table-hover table-bordered">
+								<thead>
+									<tr>
+										<th width="80">&nbsp;</th>
+										<th class="sorting">表名</th>
+										<th class="sorting">字段名</th>
+									</tr>
+								</thead>
+								<tbody id='dataSelectRowadd'>
+									<c:forEach items="${dataSelectPage.result}" var="item">
+										<tr>
+											<td><a href="#" class="btn btn-primary btn-sm" onClick="changeValue('${item.tableName}','${item.columnName}')">选择</a></td>
+											<td>${item.tableName}</td>
+											<td>${item.columnName}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn btn-primary btn-sm" onclick="$('#dataSelectDiv').modal('hide');">关闭</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		-->
+		<!-- 下拉数据字典__弹出modal -->
+           <div id="dataSelectDiv" class="modal fade" tabindex="-1" style="top: 20%;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+					    <div>
+						    <a href="#" class="btn btn-primary btn-sm" onclick="saveDataSelect()">确定</a>
+							<a href="#" class="btn btn-primary btn-sm" onclick="$('#dataSelectDiv').modal('hide');">关闭</a>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="col-lg-4">
+						  <label>表名:</label>
+						  <select id="tablelistAdd" name="tablename"  class="form-control input-sm required" onChange="selectTableColumn(this.value);" >
+                          </select>
+						</div>
+						<div class="col-lg-4">
+                          <label>key字段:</label>
+						  <select id="tablecolumnKeyAdd" name="tablecolumnKey"  class="form-control input-sm required" >
+                          </select>
+						</div>
+						<div class="col-lg-4">
+                          <label>显示字段:</label>
+						  <select id="tablecolumnNameAdd" name="tablecolumnname"  class="form-control input-sm required" >
+                          </select>
+						</div>
+					</div>
+					<div class="modal-footer">
+					</div>
+				</div>
+			</div>
+		</div>
     <!-- end of main -->
   </body>
 </html>
