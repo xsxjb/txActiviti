@@ -22,6 +22,7 @@ import com.ibusiness.component.form.dao.ConfFormTableColumnDao;
 import com.ibusiness.component.form.entity.ConfForm;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
 import com.ibusiness.component.table.dao.TableColumnsDao;
+import com.ibusiness.component.table.dao.TableDao;
 import com.ibusiness.component.table.entity.ConfTableColumns;
 import com.ibusiness.core.spring.ApplicationContextHelper;
 import com.ibusiness.security.api.scope.ScopeHolder;
@@ -269,5 +270,9 @@ public class CommonBusiness {
     // 菜单
     public MenuDao getMenuDao() {
         return ApplicationContextHelper.getBean(MenuDao.class);
+    }
+    // 表结构
+    public TableDao getTableDao() {
+        return ApplicationContextHelper.getBean(TableDao.class);
     }
 }

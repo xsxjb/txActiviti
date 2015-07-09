@@ -61,6 +61,9 @@ public class FormController {
         List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
         propertyFilters.add(new PropertyFilter("EQS_packageName", packageName));
         propertyFilters.add(new PropertyFilter("NEQI_isBpmForm", "1"));
+        // 设置排序信息
+        page.setOrderBy("formTitle");
+        page.setOrder("ASC");
         page = confFormDao.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("packageName", packageName);
@@ -155,7 +158,7 @@ public class FormController {
         List<ConfFormTable> formTableList = confFormTableDao.find(hql, confForm.getFormName());
         for (ConfFormTable confFormTable : formTableList) {
             // 取得表标题名
-            String tableHql = "from ConfTable where packageName=? AND tableName=?";
+            String tableHql = "from ConfTable where packageName=? AND tableName=? order by tableNameComment";
             List<ConfTable> confTables = tableDao.find(tableHql, confFormTable.getPackageName(), confFormTable.getTableName());
             if (null != confTables && confTables.size() > 0) {
                 confFormTable.setTableTitle(confTables.get(0).getTableNameComment());
@@ -204,11 +207,11 @@ public class FormController {
         model.addAttribute("formId", formId);
         model.addAttribute("formName", confForm.getFormName());
         // 主表列表下拉框. 流程表单只能关联流程表,非流程表单只能关联非流程表
-        String tableHql = "from ConfTable WHERE packageName=? AND isBpmTable=? AND tableType='1' ";
+        String tableHql = "from ConfTable WHERE packageName=? AND isBpmTable=? AND tableType='1' order by tableNameComment ";
         List<ConfTable> confTableList = tableDao.find(tableHql, packageName, confForm.getIsBpmForm());
         model.addAttribute("mainTable", confTableList);
         // 子表下拉框
-        String subTableHql = "from ConfTable WHERE packageName=? AND isBpmTable=? AND tableType='2' ";
+        String subTableHql = "from ConfTable WHERE packageName=? AND isBpmTable=? AND tableType='2' order by tableNameComment ";
         List<ConfTable> confSubTableList = tableDao.find(subTableHql, packageName, confForm.getIsBpmForm());
         model.addAttribute("subTable", confSubTableList);
 
@@ -268,13 +271,28 @@ public class FormController {
     @SuppressWarnings("unchecked")
     @RequestMapping("conf-formLabel-input")
     public String formLabelInput(@RequestParam(value = "formName", required = false) String formName, @RequestParam(value = "formColumn", required = false) String formColumn, @RequestParam("packageName") String packageName, Model model) {
+        List<ConfTableColumns> tableColumns = null;
         // 表单对应字段组件管理
         String hql = "from ConfFormTableColumn WHERE formName=? AND formColumn=? AND packageName=?";
         List<ConfFormTableColumn> formTableColumnList = confFormTableColumnDao.find(hql, formName, formColumn, packageName);
         if (null != formTableColumnList && formTableColumnList.size() > 0) {
             ConfFormTableColumn bean = formTableColumnList.get(0);
             model.addAttribute("model", bean);
+            // 取得当前表对应的字段
+            tableColumns = tableColumnsDao.find("from ConfTableColumns WHERE tableName=? ", bean.getTableName());
+            
+            // 取得数据库表信息 
+            if (null != tableColumns && tableColumns.size() > 0) {
+                String newRow = "";
+                newRow = newRow + "<select name='tablecolumninputKey' class='form-control input-sm required' >";
+                for (ConfTableColumns tableColumn : tableColumns) {
+                    newRow = newRow + "<option value='"+tableColumn.getColumnValue().toLowerCase()+"'>"+tableColumn.getColumnName()+"</option>";
+                }
+                newRow = newRow + "</select>";
+                model.addAttribute("tableColumnsStr", newRow);
+            }
         }
+        
         return "ibusiness/component/form/conf-formLabel-input.jsp";
     }
     /**
@@ -445,16 +463,16 @@ public class FormController {
         return "redirect:/form/conf-formTables-input.do?packageName=" + packageName + "&formId="+formId;
     }
     
-    
     /**
      * 查询表列表
      */
     @ResponseBody
     @RequestMapping("ajax-tablelist")
     public String ajaxTablelist() {
-    	List<ConfTable> tableList = tableDao.getAll();
+        List<ConfTable> tableList = tableDao.getAll("tableNameComment", true);
         return CommonUtils.getJsonFromList(tableList, null).toString();
     }
+    
     /**
      * 查询表字段列表 TODO
      */
@@ -462,7 +480,10 @@ public class FormController {
     @ResponseBody
     @RequestMapping("ajax-tablecolumnlist")
     public String ajaxTablecolumnlist(@RequestParam String tablename) {
-		List<ConfTableColumns> tableColumnsList = confTableColumnsService.find("from ConfTableColumns where tableName=? order by columnName ", tablename);
+        List<ConfTableColumns> tableColumnsList = confTableColumnsService.find("from ConfTableColumns where tableName=? order by columnName ", tablename);
+        for (ConfTableColumns bean : tableColumnsList) {
+            bean.setColumnValue(bean.getColumnValue().toLowerCase());
+        }
         return CommonUtils.getJsonFromList(tableColumnsList, null).toString();
     }
     

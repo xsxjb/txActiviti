@@ -14,6 +14,7 @@
 			$("#form-fcDefault").val($("#form-fcDefault").val() + str);
 		}
 	    
+	    // ===================================== 数据字典 ====================================================
 	    // 保存下来数据字典选择信息
 	    function saveDataSelect() {
 			$('#form-confSelectInfo').attr('value', "{\"sql\":\"select "+$("#tablecolumnKeyAdd").val()+" vKey, "+$("#tablecolumnNameAdd").attr('value')+" vValue from "+$("#tablelistAdd").val()+" \"}");
@@ -33,6 +34,8 @@
 							newRow = '<option value="'+ item.tableName +'">' + item.tableNameComment + '</option>';
 							$('#tablelistAdd').append(newRow);
 						});
+						// 
+						$('#dataSelectDiv').modal('show');
 					},
 					error : function(XMLHttpRequest, textStatus, errorThrown) {
 						alert('请求数据出错了!');
@@ -63,6 +66,99 @@
 				}
 			});
 	    }
+	    // ===================================== 选择带出 ====================================================
+	    function editSelectInput() {
+	    	$.ajax({type : "POST",
+				url : "/"+ window.location.pathname.split("/")[1]+ "/"+ "form/ajax-tablelist.do",
+				dataType : "json",
+				success : function(jsonData) {
+					// 清空
+					$("#selectInputTablelist option").remove();
+					var newRow = '<option value="">请选择.....</option>';
+					$('#selectInputTablelist').append(newRow);
+					$.each(jsonData, function(i, item) {
+						newRow = '<option value="'+ item.tableName +'">' + item.tableNameComment + '</option>';
+						$('#selectInputTablelist').append(newRow);
+					});
+					// 显示
+					$('#selectInputDiv').modal('show');
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('请求数据出错了!');
+				}
+		    });
+	    }
+	    // =============================================
+    	// 选择带出   根据表名查询 字段列表
+    	var columnTableRow=''; 
+	    function selectInputTableColumn(tablename) {
+	    	$.ajax({type : "POST",
+				url : "/"+ window.location.pathname.split("/")[1]+ "/"+ "form/ajax-tablecolumnlist.do?tablename="+tablename,
+				dataType : "json",
+				success : function(jsonData) {
+					// 清空key值
+					$('select[name="tablecolumnname"] option').remove();
+					columnTableRow = "";
+					// 改变表名重新设置对应字段
+					$.each(jsonData, function(i, item) {
+						columnTableRow = columnTableRow + '<option value="'+ item.columnValue +'">' + item.columnName + '</option>';
+					});
+					$('select[name="tablecolumnname"]').append(columnTableRow);
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('请求数据出错了!');
+				}
+			});
+	    }
+	    // 添加一个字段
+	    function addSelectInput() {
+	    	var newRow = '<div class="col-lg-12">';
+			newRow = newRow + '<div class="col-lg-4">';
+			newRow = newRow + $("#tableColumnsStrId").val();
+			newRow = newRow + '</div>';
+			// 
+			newRow = newRow + '<div class="col-lg-4">';
+	    	newRow = newRow + '<select name="tablecolumnname" class="form-control input-sm required" >';
+            newRow = newRow + columnTableRow;
+			newRow = newRow + '</select>';
+			newRow = newRow + '</div>';
+			newRow = newRow + '</div>';
+	    	$('#selsctedColumnNames').append(newRow);
+	    }
+	    // 选择带出确定按钮
+	    function saveSelectInput() {
+	        var str = "";
+	        // 目标属性名
+	        var inputKey=[];
+	        $('select[name="tablecolumninputKey"]').each(function() {
+	        	inputKey.push($(this).val());
+	        });
+	        // 查询属性名
+	        var columnname=[];
+	        // 查询标题名称
+	        var titlename=[];
+	        $('select[name="tablecolumnname"]').each(function() {
+	        	columnname.push($(this).val());
+	        	titlename.push($(this ).find("option:selected").text());
+	        });
+	        
+	        // 选择带出值
+	        str = "{\"jsplist\":[";
+		        for(var i=0;i<$('select[name="tablecolumninputKey"]').size();i++){
+		        	if( i > 0 ) {
+		        		str = str + ",";
+		        	}
+		        	str = str + "{\"inputKey\":\""+inputKey[i]+"\",\"inputValue\":\""+columnname[i]+"\",\"inputTitle\":\""+titlename[i]+"\"}";
+		        }
+		    // className:service名及全路径 queryTitle:查询标题名 queryName:查询对象
+            var queryTitle = $('#findcolumn option:selected').text();
+		    var queryName = $('#findcolumn option:selected').val();
+            str = str + "],\"className\":\""+$("#selectInputTablelist").val()+"\",\"queryTitle\":\""+queryTitle+"\",\"queryName\":\""+queryName+"\"}";
+	        // 
+	        $('#form-confSelectInfo').attr('value', str);
+			// 确定按钮隐藏弹出页面
+			$('#selectInputDiv').modal('hide');
+		}
     </script>
   </head>
   <body>
@@ -79,9 +175,11 @@
                         <input type="hidden" name="formColumn" value="${model.formColumn}">
                         <input type="hidden" name="packageName" value="${model.packageName}">
                         <input type="hidden" name="tableName" value="${model.tableName}">
-                        <input type="hidden" name="tableColumn" value="${model.tableColumn}">
+                        <input id="tableColumnId" type="hidden" name="tableColumn" value="${model.tableColumn}">
                     </c:if>
-                    
+                      <!-- java传递 -->
+                      <input id="tableColumnsStrId" type="hidden" value="${tableColumnsStr}">
+                      
                       <div class="form-group">
                           <label class="control-label col-lg-2" for="form-column">字段:</label>
                           <div class="col-lg-3">
@@ -97,29 +195,24 @@
                           <div class="col-lg-2">
                           <script type="text/javascript">
 								function setConfSelectInfo(str) {
-									if ("" == $('#form-confSelectInfo').attr('value') || null==$('#form-confSelectInfo').attr('value')) {
 										if ("6" == str) {
 											$('#form-confSelectInfo').attr('value', "[{\"key\":\"1\",\"value\":\"男\"},{\"key\":\"2\",\"value\":\"女\"}]");
 										} else if ("7" == str) {
 											// 下拉数据字典
 											selectTableList();
-											$('#dataSelectDiv').modal('show');
 										} else if ("10" == str) {
-											$('#form-confSelectInfo').attr('value', "{\"jsplist\":[{\"inputKey\":\"目标属性名\",\"inputValue\":\"查询属性名\",\"inputTitle\":\"标题名称\"},{\"inputKey\":\"materialmodel\",\"inputValue\":\"model\",\"inputTitle\":\"规格型号\"}],\"className\":\"com.codegenerate.productmanage.service.MaterialsService\",\"queryTitle\":\"查询标题名\",\"queryName\":\"查询对象\"}");
+											// 选择带出
+											editSelectInput();
 										} else if ("11" == str) {
 											$('#form-confSelectInfo').attr('value', "{\"pathName\":\"ibfile\"}");
 										} else if ("13" == str) {
 											$('#form-confSelectInfo').attr('value', "{\"pathName\":\"ibimg\"}");
-										}
-									} else {
-										if ("1" == str || "2" == str || "3" == str || "4" == str || "5" == str || "8" == str || "9" == str) {
+										} else {
 											$('#form-confSelectInfo').attr('value', "");
-										} else if ("7" == str) {
-											// 下拉数据字典
-											selectTableList();
-											$('#dataSelectDiv').modal('show');
 										}
-									}
+								//		if ("1" == str || "2" == str || "3" == str || "4" == str || "5" == str || "8" == str || "9" == str) {
+								//			$('#form-confSelectInfo').attr('value', "");
+								//		}
 								}
 							</script>
                               <select id="form-fcType" name="fcType"  class="form-control" onChange="setConfSelectInfo(this.value);" >
@@ -147,10 +240,7 @@
               *组件类型:选择组件类型后如果下面框中内容为空,会自动在框中提示参数写法,如果已有内容则不提示。<br/>
                   1.输入范围Check：{"maxlength":"30","minlength":"2"}<br/>
                   2.设置下拉列表固定值：[{"key":"1","value":"男"},{"key":"2","value":"女"}]<br/>
-                  3.设置数据字典值：是一句SQL文,只能返回名字为vKey,和vValue两个返回值。<br/>
-                  4.选择带出值：inputKey:目标属性名  inputValue:查询属性名  inputTitle:显示标题 <br/>
-                               className:service名及全路径 queryTitle:查询标题名  queryName:查询对象<br/>
-                  5.单附件上传组件：{"pathName":"存储文件夹名"}<br/>
+                  3.单附件上传组件：{"pathName":"存储文件夹名"}<br/>
                           </p>
                      
                           </label>
@@ -234,49 +324,49 @@
                 
         </div>
       </div>
-           <!-- 下拉数据字典__弹出modal 
-           <div id="dataSelectDiv" class="modal fade" tabindex="-1" style="top: 20%;">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<a href="#" class="close btn btn-primary btn-sm" onclick="$('#dataSelectDiv').modal('hide');"><span>&times;</span><span class="sr-only">Close</span></a>
-						<h4 class="modal-title glyphicon glyphicon-paperclip">下拉数据字典</h4>
-						<div class="form-group">
-							<label>查询表名:</label>
-							<input type="text" id="code_table_select" name="filter_LIKES_select" value="${param.filter_LIKES_select}">
-							<a class="btn btn-primary btn-sm" href="#" onclick="selectTableList()"><span class="glyphicon glyphicon-search"></span>查询</a>
+           <!-- 选择带出__弹出modal -->
+           <div id="selectInputDiv" class="modal fade" tabindex="-1" style="top: 20%;">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div>
+							    <a href="#" class="btn btn-primary btn-sm" onclick="addSelectInput()">添加</a>
+							    <a href="#" class="btn btn-primary btn-sm" onclick="saveSelectInput()">确定</a>
+								<a href="#" class="btn btn-primary btn-sm" onclick="$('#selectInputDiv').modal('hide');">关闭</a>
+							    <a href="#" class="close btn btn-primary btn-sm" onclick="$('#selectInputDiv').modal('hide');"><span>&times;</span><span class="sr-only">Close</span></a>
+						    </div>
 						</div>
-					</div>
-					<div class="modal-body">
-						<div class="content">
-							<table id="codeGrid" class="table table-hover table-bordered">
-								<thead>
-									<tr>
-										<th width="80">&nbsp;</th>
-										<th class="sorting">表名</th>
-										<th class="sorting">字段名</th>
-									</tr>
-								</thead>
-								<tbody id='dataSelectRowadd'>
-									<c:forEach items="${dataSelectPage.result}" var="item">
-										<tr>
-											<td><a href="#" class="btn btn-primary btn-sm" onClick="changeValue('${item.tableName}','${item.columnName}')">选择</a></td>
-											<td>${item.tableName}</td>
-											<td>${item.columnName}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+						<div class="modal-body">
+							<div class="col-lg-6">
+							    <label>${model.tableName}:</label>
+							</div>
+							<div class="col-lg-6">
+							    <label class="col-lg-4" >表名：</label>
+							    <div class="col-lg-8">
+							        <select id="selectInputTablelist" name="tablename"  class="form-control input-sm required" onChange="selectInputTableColumn(this.value);" >
+	                                </select>
+							    </div>
+							</div>
+							<div class="col-lg-5">
+							</div>
+							<div class="col-lg-7 form-group">
+						        <label class="col-lg-5" >查询字段:</label>
+							    <div class="col-lg-7">
+	                                <select name="tablecolumnname" id="findcolumn" class="col-lg-8 form-control input-sm required" >
+	                                </select>
+	                            </div>
+							</div>
+							<div class="col-lg-12" id="selsctedColumnNames" >
+							    
+							</div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<a href="#" class="btn btn-primary btn-sm" onclick="$('#dataSelectDiv').modal('hide');">关闭</a>
+						<div class="modal-footer">
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		-->
-		<!-- 下拉数据字典__弹出modal -->
+		
+		   <!-- 下拉数据字典__弹出modal -->
            <div id="dataSelectDiv" class="modal fade" tabindex="-1" style="top: 20%;">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -308,6 +398,10 @@
 				</div>
 			</div>
 		</div>
-    <!-- end of main -->
+        <!-- end of main -->
+        <script type="text/javascript">
+            // 
+            
+        </script>
   </body>
 </html>

@@ -1,7 +1,9 @@
 package com.ibusiness.base.portal.web;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -53,9 +55,11 @@ public class PortalController {
         List<Menu> menus3 = new ArrayList<Menu>();
         for (Menu menu : menusAll) {
             if ("1".equals(menu.getMenuLevel())) {
-                menu.getChiledItems().clear();
+            	menu.setChiledItems(new ArrayList<Menu>());
+            	menu.getChiledItems().clear();
                 menus1.add(menu);
             } else if ("2".equals(menu.getMenuLevel())) {
+            	menu.setChiledItems(new ArrayList<Menu>());
                 menu.getChiledItems().clear();
                 menus2.add(menu);
             } else if ("3".equals(menu.getMenuLevel())) {
@@ -97,15 +101,16 @@ public class PortalController {
      * @return
      */
     private List<Menu> createMenu(List<Menu> menus1, List<Menu> menus2, List<Menu> menus3) {
+    	// 实例化二级目录map
+    	Map<String, Menu> menus2Map = new HashMap<String, Menu>();
+    	for (Menu menu : menus2) {
+    		menus2Map.put(menu.getId(), menu);
+    	}
         // 三级目录存二级
         for (Menu menu3 : menus3) {
-            // 二级目录存一级
-            for(Menu menu2 : menus2) {
-                if(menu2.getId().equals(menu3.getIbMenu().getId())) {
-                    menu2.getChiledItems().add(menu3);
-                    break;
-                }
-            }
+        	if (menus2Map.containsKey(menu3.getIbMenu().getId())) {
+        		menus2Map.get(menu3.getIbMenu().getId()).getChiledItems().add(menu3);
+        	}
         }
         // 二级目录存一级
         for (Menu menu : menus2) {

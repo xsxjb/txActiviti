@@ -11,9 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ibusiness.codegenerate.code.Columnt;
+import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
 import com.ibusiness.common.util.Constants;
 import com.ibusiness.component.form.entity.ConfFormTableColumn;
+import com.ibusiness.component.table.entity.ConfTable;
+import com.ibusiness.core.util.StringUtils;
 
 
 /**
@@ -284,6 +287,15 @@ public class CodeTagFactory {
 	public Columnt selectInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
     	String confSelectInfo = formColumn.getConfSelectInfo();
     	JSONObject jsonObject= JSONObject.fromObject(confSelectInfo);
+    	// 根据表名取得className
+    	List<ConfTable> confTableList = CommonBusiness.getInstance().getTableDao().find("from ConfTable where tableName=?",jsonObject.getString("className"));
+    	String tableService = "";
+    	if (null != confTableList && confTableList.size() > 0) {
+    	 // 实体类名(首字母大写)
+    	    tableService = "com.codegenerate."+confTableList.get(0).getPackageName()+".service."
+            + StringUtils.capitalize(confTableList.get(0).getTableName().replace("IB_", "").toLowerCase()) + "Service";
+            
+    	}
     	// ===============================================================================
     	// java相关信息
     	List<SelectInputBean> list = ((List<SelectInputBean>) CommonUtils.getListFromJson(jsonObject.get("jsplist").toString(), SelectInputBean.class));
@@ -295,7 +307,7 @@ public class CodeTagFactory {
         // 查询条件Filter过滤器
         controllerInfo = controllerInfo + "List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);";
         // 根据条件查询数据
-        controllerInfo = controllerInfo + "page = com.ibusiness.core.spring.ApplicationContextHelper.getBean("+jsonObject.getString("className")+".class).pagedQuery(page, propertyFilters);";
+        controllerInfo = controllerInfo + "page = com.ibusiness.core.spring.ApplicationContextHelper.getBean("+tableService+".class).pagedQuery(page, propertyFilters);";
         controllerInfo = controllerInfo + "List list = (java.util.ArrayList)page.getResult();";
         controllerInfo = controllerInfo + "return CommonUtils.getJsonFromList(list, null).toString();}";
         
@@ -520,9 +532,9 @@ public class CodeTagFactory {
         
         // JSP ======================================================================
         String str = "";
+        str = str + "<img id=\"code_img_"+columnt.getFieldName()+"\" height=\"200\" width=\"150\" src=\"${ctx}/ibresources/"+pathName+"/${model."+columnt.getFieldName()+"}\" />";
         str = str + "<div class=\"col-lg-4\">";
-        str = str + "  <img class=\"col-lg-12\" id=\"code_img_"+columnt.getFieldName()+"\" height=\"200\" width=\"150\" src=\"${ctx}/ibresources/"+pathName+"/${model."+columnt.getFieldName()+"}\" />";
-        str = str + "  <a class=\"col-lg-12\" href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#file_"+columnt.getFieldName()+"upload').click()\"><span class=\"glyphicon glyphicon-upload\"></span>上传</a>";
+        str = str + "  <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#file_"+columnt.getFieldName()+"upload').click()\"><span class=\"glyphicon glyphicon-upload\"></span>上传</a>";
         str = str + "  <input id=\"code_table_"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
