@@ -204,7 +204,7 @@ public class ${entityName}Controller {
         tableModel.setExcelName("${ftl_description}"+CommonUtils.getInstance().getCurrentDateTime());
         // 列名
         tableModel.addHeaders(<#list sub.originalColumns as subItem><#if subItem_index!=0>, </#if>"${subItem.fieldName}"</#list>);
-        tableModel.setTableName("${tableName}");
+        tableModel.setTableName("${sub.tableName}");
         tableModel.setData(beans);
         try {
             new ExcelCommon().exportExcel(response, tableModel);

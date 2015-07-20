@@ -27,7 +27,7 @@ import org.apache.poi2.poifs.filesystem.POIFSFileSystem;
 import com.ibusiness.common.service.CommonBaseService;
 import com.ibusiness.common.service.CommonBusiness;
 import com.ibusiness.common.util.CommonUtils;
-import com.ibusiness.component.form.entity.ConfFormTableColumn;
+import com.ibusiness.component.table.entity.ConfTableColumns;
 import com.ibusiness.core.spring.ApplicationContextHelper;
 import com.ibusiness.core.util.ReflectUtils;
 import com.ibusiness.core.util.StringUtils;
@@ -105,17 +105,18 @@ public class ExcelCommon {
             HSSFRow row = sheet.createRow(0);  
             row.setHeight( (short) 400 );
             
+            // 取得表字段信息
+            Map<String, ConfTableColumns> tableColumnsMap = CommonBusiness.getInstance().getTableColumnsMap(CommonUtils.toUpperCase(tableModel.getTableName()));
+            
             // 循环创建单元格信息
             for (int i = 0; i < tableModel.getHeaderCount(); i++) {
                 HSSFCell cell = row.createCell(i);
                 cell.setCellStyle(style);
                 // excel显示列标题
-                Map<String, ConfFormTableColumn> formTableColumnMap = CommonBusiness.getInstance().getFormTableColumnMapByFormColumn();
-                String key = CommonUtils.toUpperCase(tableModel.getTableName())+"."+CommonUtils.toUpperCase(tableModel.getHeader(i));
-                if (formTableColumnMap.containsKey(key)) {
+                String key = CommonUtils.toUpperCase(tableModel.getHeader(i));
+                if (tableColumnsMap.containsKey(key)) {
                     // Excel导出文件显示字段信息
-//                    String tableColumnTitle = formTableColumnMap.get(key).getFormColumnTitle().replaceAll("<", "").replaceAll(">", "")+"<"+tableModel.getHeader(i)+">";
-                    cell.setCellValue( new HSSFRichTextString(formTableColumnMap.get(key).getFormColumnTitle()));
+                    cell.setCellValue( new HSSFRichTextString(tableColumnsMap.get(key).getColumnName()));
                 } else {
                     cell.setCellValue( new HSSFRichTextString(tableModel.getHeader(i)));
                 }
@@ -209,22 +210,8 @@ public class ExcelCommon {
                 }
                 colName = colName + ")";
                 colValue = colValue + ")";
-//                ReflectUtils.setMethodValue(entity, "id", UUID.randomUUID().toString());
-                // 先判断,如果存在就删除 TODO
-//                if (false) {
-//                    getCommonBaseService().remove(entity);
-//                }
                 getCommonBaseService().saveInsert(entity);
-//                String sql = "insert into "+tableModel.getTableName()+colValue+" values " + colValue;
-//                getCommonBaseService().getJdbcTemplate().update(sql);
             }
-            //里程碑-->测试Excel中的数据
-//            //循环Excel中的数据
-//            for (Object[] values : valuesList) {
-//                //插入数据库
-//                getCommonBaseService().saveInsert(entity);
-//                
-//            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("{'success':true,'msg':'导入数据失败!'}");

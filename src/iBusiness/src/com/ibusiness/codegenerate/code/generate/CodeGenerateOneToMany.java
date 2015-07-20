@@ -147,6 +147,14 @@ public class CodeGenerateOneToMany implements ICallBack {
             
             // 读取指定表名的表字段(原值)List
             this.originalColumns = this.dbFiledToJspUtil.readOriginalTableColumn(tableName);
+            if (tableColumnsMap.size() > 0) {
+                for (Columnt columnt : this.originalColumns) {
+                    String key = columnt.getFieldDbName();
+                    if (tableColumnsMap.containsKey(key)) {
+                        columnt.setFiledComment(tableColumnsMap.get(key).getColumnName());
+                    }
+                }
+            }
             localHashMap.put("originalColumns", this.originalColumns);
             // 设置值
             for (Columnt columnt : originalColumns) {
@@ -160,8 +168,17 @@ public class CodeGenerateOneToMany implements ICallBack {
                 // 取得表字段list 根据表名
                 List<Columnt> subColumlist = getColumListByTableName(codeParamBean.getTableName(), formName);
                 codeParamBean.setColumns(subColumlist);
-                // 表对应全字段信息 TODO
-                codeParamBean.setOriginalColumns(this.dbFiledToJspUtil.readOriginalTableColumn(codeParamBean.getTableName()));
+                // 表对应全字段信息
+                List<Columnt> subOriginalColumns = this.dbFiledToJspUtil.readOriginalTableColumn(codeParamBean.getTableName());
+                if (tableColumnsMap.size() > 0) {
+                    for (Columnt columnt : subOriginalColumns) {
+                        String key = columnt.getFieldDbName();
+                        if (tableColumnsMap.containsKey(key)) {
+                            columnt.setFiledComment(tableColumnsMap.get(key).getColumnName());
+                        }
+                    }
+                }
+                codeParamBean.setOriginalColumns(subOriginalColumns);
             }
             // 将子表内容存入
             localHashMap.put("subTab", subTabParamList);

@@ -158,6 +158,14 @@ public class CodeGenerate implements ICallBack {
             // 读取指定表名的表字段(原值)List
             if (null == this.originalColumns || this.originalColumns.size() < 1) {
             	this.originalColumns = this.dbFiledToJspUtil.readOriginalTableColumn(tableName);
+            	if (tableColumnsMap.size() > 0) {
+                    for (Columnt columnt : this.originalColumns) {
+                        String key = columnt.getFieldDbName();
+                        if (tableColumnsMap.containsKey(key)) {
+                            columnt.setFiledComment(tableColumnsMap.get(key).getColumnName());
+                        }
+                    }
+                }
             }
             localHashMap.put("originalColumns", this.originalColumns);
             // 设置值

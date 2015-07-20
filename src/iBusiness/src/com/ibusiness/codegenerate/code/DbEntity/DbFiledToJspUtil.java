@@ -159,8 +159,7 @@ public class DbFiledToJspUtil {
         ArrayList<Columnt> arraylist = new ArrayList<Columnt>();
         try {
             Class.forName(CodeResourceUtil.DIVER_NAME);
-            connection = DriverManager.getConnection(CodeResourceUtil.URL, CodeResourceUtil.USERNAME,
-                    CodeResourceUtil.PASSWORD);
+            connection = DriverManager.getConnection(CodeResourceUtil.URL, CodeResourceUtil.USERNAME, CodeResourceUtil.PASSWORD);
             statement = connection.createStatement(1005, 1007);
             if (CodeResourceUtil.DATABASE_TYPE.equals("mysql"))
                 sqlStr = MessageFormat
@@ -179,10 +178,11 @@ public class DbFiledToJspUtil {
             int j = i;
             if (j > 0) {
                 Columnt columnt = new Columnt();
-                if (CodeResourceUtil.CG_FILED_CONVERT)
-                    columnt.setFieldName(formatField(resultSet.getString(1).toLowerCase()));
-                else
-                    columnt.setFieldName(resultSet.getString(1).toLowerCase());
+                if (CodeResourceUtil.CG_FILED_CONVERT) {
+                	columnt.setFieldName(formatField(resultSet.getString(1).toLowerCase()));
+                } else {
+                	columnt.setFieldName(resultSet.getString(1).toLowerCase());
+                }
                 columnt.setFieldDbName(resultSet.getString(1).toUpperCase());
                 columnt.setPrecision(TableConvert.getNullString(resultSet.getString(4)));
                 columnt.setScale(TableConvert.getNullString(resultSet.getString(5)));
@@ -197,10 +197,11 @@ public class DbFiledToJspUtil {
                 Columnt columnt2;
                 for (; resultSet.previous(); arraylist.add(columnt2)) {
                     columnt2 = new Columnt();
-                    if (CodeResourceUtil.CG_FILED_CONVERT)
+                    if (CodeResourceUtil.CG_FILED_CONVERT) {
                         columnt2.setFieldName(formatField(resultSet.getString(1).toLowerCase()));
-                    else
-                        columnt2.setFieldName(resultSet.getString(1).toLowerCase());
+                    } else {
+                    	columnt2.setFieldName(resultSet.getString(1).toLowerCase());
+                    }
                     columnt2.setFieldDbName(resultSet.getString(1).toUpperCase());
                     columnt2.setPrecision(TableConvert.getNullString(resultSet.getString(4)));
                     columnt2.setScale(TableConvert.getNullString(resultSet.getString(5)));
