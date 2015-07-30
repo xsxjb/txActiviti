@@ -85,5 +85,7 @@ public interface Constants {
     String CODE_DOWNLOAD = "12";
     // 图片组件
     String CODE_IMG_LOAD = "13";
+    // 日期--年月
+    String CODE_DATE_YM = "14";
     
 }

@@ -26,8 +26,9 @@
     <script type="text/javascript" src="${ctx}/plugin/bootbox/bootbox.min.js"></script>
     
     <!-- datepicker -->
-    <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap-datepicker/datepicker.css">
+    <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap-datepicker/bootstrap-datepicker.css">
     <script type="text/javascript" src="${ctx}/plugin/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="${ctx}/plugin/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
     
     <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" >
     <script type="text/javascript" src="${ctx}/plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
@@ -59,13 +60,24 @@
 			    });
 			}
 		    // 日期控件
-		    $('.datepicker').datepicker({format:'yyyy-mm-dd'});
+		    $('.datepicker').datepicker({
+		    	format:'yyyy-mm-dd',
+		    	language:'zh-CN',
+		    	autoclose: true
+	    	});
+		    // 日期控件--年月
+		    $('.datepicker_yyyymm').datepicker({
+		    	format:'yyyy-mm',
+	    		minViewMode:1,
+	    		language:'zh-CN',
+			    autoclose: true
+		    });
 		    // 日期时间控件
 		    $('.datetimepicker').datetimepicker({
 		    	language: 'zh-CN',
 		    	weekStart:1, 
 		    	todayBtn:1, 
-		    	autoclose:1, 
+		    	autoclose:true, 
 		    	todayHighlight:1, 
 		    	startView:2,
 		    	minView:2,

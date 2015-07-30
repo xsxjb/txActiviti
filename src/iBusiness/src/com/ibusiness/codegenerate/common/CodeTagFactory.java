@@ -43,6 +43,8 @@ public class CodeTagFactory {
         tagComponentMap.put(Constants.CODE_MULTI_INPUT, "multiInputParser");
         // 数值
         tagComponentMap.put(Constants.CODE_NUMBER_INPUT, "numberInputParser");
+        // 日期--年月
+        tagComponentMap.put(Constants.CODE_DATE_YM, "dateYMParser");
         // 日期
         tagComponentMap.put(Constants.CODE_DATE, "dateParser");
         // 日期时间
@@ -164,6 +166,23 @@ public class CodeTagFactory {
         String str ="";
         str = str + "<div class=\"col-lg-3\">";
         str = str + "  <div class=\"input-append datepicker date\">";
+        str = str + "  <span class=\"add-on\">";
+        str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" placeholder=\"点击选择\" class=\"form-control input-sm "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" readonly >";
+        str = str + "  </span>";
+        str = str + "  </div>";
+        str = str + "</div>";
+        columnt.setJspTagInfo(str);
+        return columnt;
+    }
+    /**
+     * 日期---年月
+     * TODO
+     */
+    public Columnt dateYMParser(Columnt columnt, ConfFormTableColumn formColumn) {
+        String str ="";
+        str = str + "<script type=\"text/javascript\">$(\".form_datetime\").datepicker({format: 'yyyy-mm'});</script>";
+        str = str + "<div class=\"col-lg-3\">";
+        str = str + "  <div class=\"input-append datepicker_yyyymm date\">";
         str = str + "  <span class=\"add-on\">";
         str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" placeholder=\"点击选择\" class=\"form-control input-sm "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" readonly >";
         str = str + "  </span>";

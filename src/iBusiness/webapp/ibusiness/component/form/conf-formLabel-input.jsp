@@ -219,6 +219,7 @@
                                     <option value="1" ${model.fcType==1 ? 'selected' : ''}>单行</option>
                                     <option value="2" ${model.fcType==2 ? 'selected' : ''}>多行</option>
                                     <option value="3" ${model.fcType==3 ? 'selected' : ''}>日期</option>
+                                    <option value="14" ${model.fcType==14 ? 'selected' : ''}>日期年月</option>
                                     <option value="4" ${model.fcType==4 ? 'selected' : ''}>时间</option>
                                     <option value="5" ${model.fcType==5 ? 'selected' : ''}>数值</option>
                                     <option value="6" ${model.fcType==6 ? 'selected' : ''}>下拉列表</option>
