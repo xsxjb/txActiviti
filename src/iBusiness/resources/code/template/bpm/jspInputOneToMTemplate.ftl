@@ -153,7 +153,7 @@
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">列表</h4></div>
 	    <div class="panel-body">
 			    <div class="pull-left">
-			    <c:if test="${'$' + '{model != null && model.id != null}'}">
+			    <c:if test="${'$' + '{model != null && model.id != null && model.datetime != null}'}">
 				    <button class="btn btn-primary btn-sm a-insert" onclick="location.href='${sub.entityName?uncap_first}-input.do?id=${'$' + '{model.id}'}&subId=&flowId=${'$' + '{flowId}'}'"><span class="glyphicon glyphicon-tasks"></span>新建</button>
 				    <button class="btn btn-primary btn-sm a-remove" onclick="${sub.entityName?uncap_first}Table.removeAll()"><span class="glyphicon glyphicon-trash"></span>删除</button>
 			    </c:if>

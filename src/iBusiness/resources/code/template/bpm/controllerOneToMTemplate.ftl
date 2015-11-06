@@ -73,6 +73,8 @@ public class ${entityName}Controller {
         propertyFilters.add(new PropertyFilter("EQI_doneflag", flowType));
         propertyFilters.add(new PropertyFilter("EQS_assigneeuser", SpringSecurityUtils.getCurrentUserId()));
         // 根据条件查询数据
+        page.setOrderBy("createdatebpm");
+        page.setOrder("DESC");
         page = ${entityName?uncap_first}Service.pagedQuery(page, propertyFilters);
         model.addAttribute("page", page);
         model.addAttribute("flowId", flowId);

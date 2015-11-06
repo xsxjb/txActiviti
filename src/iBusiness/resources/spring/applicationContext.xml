@@ -54,9 +54,9 @@
 	<!-- 把一些bean导出成jmx 
 	<import resource="applicationContext-jmx.xml"/>
 	-->
-	<!-- 基于spring的定时任务 
+	<!-- 基于spring的定时任务
 	<import resource="applicationContext-scheduler.xml"/>
-	-->
+	 -->
 	<!-- 权限配置 -->
 	<import resource="applicationContext-security-extend.xml"/>
 	<!-- 权限配置 -->

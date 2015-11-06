@@ -47,7 +47,7 @@
 	</if>
 
     <!-- 控制台日志输出 输出日志级别 info warn error -->
-    <root level="info">
+    <root level="error">
         <appender-ref ref="CONSOLE" />
 		<if condition='${log.file.enable}'>
 			<then>

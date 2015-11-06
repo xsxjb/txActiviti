@@ -3,7 +3,6 @@ package com.ibusiness.plccontrol.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.codegenerate.test.entity.TestEntity;
 import com.ibusiness.common.page.HibernateEntityDao;
 import com.ibusiness.plccontrol.entity.PlcDrawConfEntity;
 
@@ -26,7 +25,7 @@ public class PlcDrawConfService extends HibernateEntityDao<PlcDrawConfEntity> {
      * 删除
      * @param entity
      */
-    public void remove(TestEntity entity) {
+    public void remove(PlcDrawConfEntity entity) {
         super.remove(entity);
     }
 }
