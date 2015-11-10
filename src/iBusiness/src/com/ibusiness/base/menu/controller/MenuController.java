@@ -1,5 +1,6 @@
 package com.ibusiness.base.menu.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -16,10 +17,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibusiness.base.auth.dao.AccessDao;
 import com.ibusiness.base.auth.dao.PermDao;
+import com.ibusiness.base.auth.dao.RoleDefDao;
 import com.ibusiness.base.auth.entity.Access;
 import com.ibusiness.base.auth.entity.Perm;
+import com.ibusiness.base.auth.entity.RoleDef;
 import com.ibusiness.base.menu.dao.MenuDao;
+import com.ibusiness.base.menu.dao.MenuRoleDefDao;
 import com.ibusiness.base.menu.entity.Menu;
+import com.ibusiness.base.menu.entity.MenuRoleDef;
 import com.ibusiness.common.page.Page;
 import com.ibusiness.common.page.PropertyFilter;
 import com.ibusiness.common.util.CommonUtils;
@@ -37,6 +42,8 @@ import com.ibusiness.core.spring.MessageHelper;
 public class MenuController {
 
     private MenuDao menuDao;
+    private RoleDefDao roleDefDao;
+    private MenuRoleDefDao menuRoleDefDao;
     private BeanMapper beanMapper = new BeanMapper();
     // 权限相关
     private AccessDao accessDao;
@@ -140,28 +147,50 @@ public class MenuController {
      * @param redirectAttributes
      * @return
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("menu-save")
     public String save(@ModelAttribute Menu menu, @RequestParam("parentId") String parentId, RedirectAttributes redirectAttributes) {
         // copy
         Menu dest = null;
         String id = menu.getId();
+        // 更新
         if (id != null && !"".equals(id)) {
             dest = menuDao.get(id);
+            List<MenuRoleDef> menuRoleDefList = menuRoleDefDao.find("from MenuRoleDef where menuId=?", dest.getId());
+            List<RoleDef> roleDefList = new ArrayList<RoleDef>();
+            for (MenuRoleDef menuRoleDef : menuRoleDefList) {
+                RoleDef roleDef = roleDefDao.get(menuRoleDef.getRoleDefId());
+                roleDefList.add(roleDef);
+            }
+            
+            // 设置权限
+            dest.getRoleDefs();
             beanMapper.copy(menu, dest);
+            // 
+            dest.setMenuIframe("URL");
+            if (CommonUtils.isNull(dest.getIconUrl())) {
+                dest.setIconUrl("imac/img/Appstore.png");
+            }
+            if (roleDefList.size() > 0) {
+                for (RoleDef roleDef : roleDefList) {
+                    dest.getRoleDefs().add(roleDef);
+                }
+            }
+            menuDao.update(dest);
+            
         } else {
+            // 新建
             dest = menu;
-        }
-        // 
-        if (CommonUtils.isNull(id)) {
             dest.setId(UUID.randomUUID().toString());
             dest.setIbMenu(menuDao.get(parentId));
+            // 
+            dest.setMenuIframe("URL");
+            if (CommonUtils.isNull(dest.getIconUrl())) {
+                dest.setIconUrl("imac/img/Appstore.png");
+            }
+            // save
+            menuDao.save(dest);
         }
-        dest.setMenuIframe("URL");
-        if (CommonUtils.isNull(dest.getIconUrl())) {
-            dest.setIconUrl("imac/img/Appstore.png");
-        }
-        // save
-        menuDao.save(dest);
         
         messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
         
@@ -224,9 +253,19 @@ public class MenuController {
         }
     }
     // ======================================================================
+    // 菜单
     @Resource
     public void setMenuDao(MenuDao menuDao) {
         this.menuDao = menuDao;
+    }
+    // 菜单权限
+    @Resource
+    public void setMenuRoleDefDao(MenuRoleDefDao menuRoleDefDao) {
+        this.menuRoleDefDao = menuRoleDefDao;
+    }
+    @Resource
+    public void setRoleDefDao(RoleDefDao roleDefDao) {
+        this.roleDefDao = roleDefDao;
     }
     // 权限相关
     @Resource
