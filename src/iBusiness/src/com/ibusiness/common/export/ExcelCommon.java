@@ -9,6 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
@@ -275,6 +277,19 @@ public class ExcelCommon {
         } else if (returnType == Boolean.class) {
             Method setMethod = target.getClass().getDeclaredMethod(setMethodName, Boolean.class);
             setMethod.invoke(target, methodValue);
+        } else if (returnType == java.util.Date.class) {
+            Method setMethod = target.getClass().getDeclaredMethod(setMethodName, java.util.Date.class);
+            if (null != methodValue && !CommonUtils.isNull(methodValue.toString())) {
+                Date date = new Date();
+                try {
+                    date = CommonUtils.getInstance().getYmdhms().parse(methodValue.toString().replaceAll(".0", "").replaceAll("/", "-").replaceAll("  ", " "));
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                setMethod.invoke(target, date);
+            }
         } else {
             Method setMethod = target.getClass().getDeclaredMethod(setMethodName, String.class);
             setMethod.invoke(target, methodValue.toString());

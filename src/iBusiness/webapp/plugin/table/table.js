@@ -181,8 +181,8 @@ Table.prototype = {
 		$.extend(targetParams, this.config.params, params);
 
 		var separator = url.indexOf('?') == -1 ? '?' : '&';
-		for (var key in params) {
-			var value = params[key];
+		for (var key in targetParams) {
+			var value = targetParams[key];
 			if (typeof value == 'undefined' || value == null || value == '') {
 				continue;
 			}

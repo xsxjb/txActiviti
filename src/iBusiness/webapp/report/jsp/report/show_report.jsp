@@ -11,7 +11,7 @@
  -->
 <script type="text/javascript" src="<%=request.getContextPath() %>/report/jsp/report/js/show_report.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/report/jsp/report/js/date_operation.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/report/js/My97DatePicker/WdatePicker.js"></script>
 <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
 <script src="http://libs.baidu.com/jquerymobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
 
@@ -54,9 +54,8 @@
 	if(reportName.indexOf("stock")>=0){
 //		window.location.href = "http://123.57.131.196:8080/jumierp/";
 		window.location.href = "http://192.168.50.250:8080/jumierp/";
-
 	}else{
-		window.location.href = "<%=request.getContextPath() %>/jsp/allPage.jsp";
+		window.location.href = "<%=request.getContextPath() %>";
 	}
  }
  function printorder(id){

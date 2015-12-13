@@ -111,5 +111,16 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="webapp/lib/ibusiness-core-v0.1.3.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/barcode.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/datetimeformat.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/itext2_rq.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/iTextAsian.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/jai_codec.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/jai_core.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/log4j_128.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/parser.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/report4.jar"/>
+	<classpathentry kind="lib" path="webapp/lib/report/report4StaticHtml.jar"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
