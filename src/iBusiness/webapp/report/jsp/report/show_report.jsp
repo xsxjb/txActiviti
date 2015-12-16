@@ -1,19 +1,20 @@
 <%@ page contentType="text/html;charset=utf-8" %>
+<%@include file="/common/taglibs.jsp"%>
 <%@ taglib uri="/WEB-INF/runqianReport4.tld" prefix="report" %>
-<% String url = "http://192.168.50.252:8080/shopReport/jsp/allPage.jsp";  %>
+
 <%@ page import="java.io.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.runqian.report4.usermodel.Context"%>
 
 <html>
+<%@include file="/common/meta.jsp"%>
+<%@include file="/common/center.jsp"%>
 <!-- 
-<script type="text/javascript" src="<%=request.getContextPath() %>/report/jsp/report/js/calendar.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/jsp/report/js/calendar.js"></script>
  -->
-<script type="text/javascript" src="<%=request.getContextPath() %>/report/jsp/report/js/show_report.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/report/jsp/report/js/date_operation.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/report/js/My97DatePicker/WdatePicker.js"></script>
-<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
-<script src="http://libs.baidu.com/jquerymobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/jsp/report/js/show_report.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/jsp/report/js/date_operation.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/My97DatePicker/WdatePicker.js"></script>
 
 <script>
 
@@ -52,15 +53,16 @@
   
  function jumpPage(){
 	if(reportName.indexOf("stock")>=0){
-//		window.location.href = "http://123.57.131.196:8080/jumierp/";
-		window.location.href = "http://192.168.50.250:8080/jumierp/";
+		window.location.href = "http://123.57.131.196:8080/jumierp/";
+//		window.location.href = "http://192.168.50.250:8080/jumierp/";
+
 	}else{
-		window.location.href = "<%=request.getContextPath() %>";
+		window.location.href = "<%=request.getContextPath() %>/jsp/allPage.jsp";
 	}
  }
  function printorder(id){
 	 if(id != null && id != '' ){
-		 window.location.href = "<%=request.getContextPath() %>/report/jsp/report/show_report.jsp?reportName=ehomeExpress.raq&order_id="+id;
+		 window.location.href = "<%=request.getContextPath() %>/jsp/report/show_report.jsp?reportName=ehomeExpress.raq&order_id="+id;
 	 }else{
 		 alert("请正确选择订单");
 	 }
@@ -70,7 +72,7 @@
  var inBackdate ="reportName=stockinbackdateRepot.raq&reportTitleName=stockinbackdateRepot_arg.raq";
  function jumpDatePage(term){
 	 
-		 window.location.href = "<%=request.getContextPath() %>/report/jsp/report/show_report.jsp?"+term;
+		 window.location.href = "<%=request.getContextPath() %>/jsp/report/show_report.jsp?"+term;
 	
  }
  </Script>
@@ -81,6 +83,7 @@
 	}
 </style>
 <body topmargin=0 leftmargin=0 rightmargin=0 bottomMargin=0>
+<%@include file="/ibusiness/header/header-portal.jsp"%>
 <%
 	request.setCharacterEncoding( "utf-8" );
 	String report = request.getParameter( "reportName" );
@@ -133,8 +136,8 @@
 		</report:param>
 		
 	</td>
-	<td><a href="javascript:_submit( form1 )"><img src="<%=request.getContextPath() %>/report/jsp/report/images/query.jpg" border=no style="vertical-align:middle"></a></td>
-	<td><a href="javascript:void(0)" onclick = "jumpPage()"><img src="<%=request.getContextPath() %>/report/jsp/report/images/back.jpg" border=no style="vertical-align:middle"></a></td>
+	<td><a href="javascript:_submit( form1 )"><img src="<%=request.getContextPath() %>/jsp/report/images/query.jpg" border=no style="vertical-align:middle"></a></td>
+	<td><a href="javascript:void(0)" onclick = "jumpPage()"><img src="<%=request.getContextPath() %>/jsp/report/images/back.jpg" border=no style="vertical-align:middle"></a></td>
 	</tr></table>
 	<% }
 %>
@@ -152,7 +155,7 @@
 			displayNoLinkPageMark="yes" needSelectPrinter="yes"
 			needScroll="no" scrollWidth="800" scrollHeight="400" width="-1"
 			height="700" excelPageStyle="0" pdfExportStyle="text,0"
-			exceptionPage="/report/jsp/report/reportError.jsp"
+			exceptionPage="/jsp/report/reportError.jsp"
 			params="<%=param.toString()%>" />
 	</td></tr>
 </table>

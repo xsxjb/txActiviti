@@ -1,6 +1,7 @@
 <%@page language="java" pageEncoding="UTF-8" %>
     <!-- bootstrap支持响应式CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- bootstrap -->
     <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="${ctx}/plugin/bootstrap/css/bootstrap-responsive.min.css">
@@ -92,3 +93,6 @@
         td {word-break:break-all;overflow:hidden;} 
     </style>
     -->
+    <!--[if lte IE 9]>
+	<script src="${ctx}/ibusiness/plc-control/skin/js/html5shiv.js"></script>
+	<![endif]-->

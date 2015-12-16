@@ -132,14 +132,14 @@ public class ExportTableController {
         ConfForm confForm = confFormDao.get(formId);
         String formName = confForm.getFormName();
         String formSql = "/*======= 表单 ==========*/\r\n";
+        formSql = formSql + " delete from ib_conf_form where FORMNAME='" + confForm.getFormName() + "';\r\n";
         formSql = formSql + " insert into ib_conf_form(ID,PACKAGENAME,FORMNAME,FORMTITLE,FORMURL, ISEDIT,ISADD,ISDELETE,ISQUERY,ISEXCELEXPORT"
                 + ",ISIMPORTEXPORT,ISBPMFORM) values ("; 
         formSql = formSql + "'" + confForm.getId() + "','" + confForm.getPackageName() + "','" + confForm.getFormName() + "','" + confForm.getFormTitle() + "','" + confForm.getFormURL();
         formSql = formSql +  "'," + confForm.getIsEdit() + "," + confForm.getIsAdd() + "," + confForm.getIsDelete() + "," + confForm.getIsQuery() + "," + confForm.getIsExcelExport();
         formSql = formSql +  "," + confForm.getIsImportExport() + "," + confForm.getIsBpmForm();
         formSql = formSql + ");\r\n";
-        // 写文件
-        fileInputByStr(formSql.replaceAll("'null'", "''"), filePath);
+        
         if (CommonUtils.isNull(menuurl)) {
             menuurl = confForm.getFormURL();
         }
@@ -147,17 +147,17 @@ public class ExportTableController {
         // 2.表单对应数据表
         List<ConfFormTable> formTableList = confFormTableDao.find("from ConfFormTable where formName=?", formName);
         String formTableSql = "/*======= 表单对应表 ==========*/\r\n";
+        formTableSql = formTableSql + " delete from ib_conf_form_table where FORMNAME='" + formName + "';\r\n";
         for (ConfFormTable formTable : formTableList) {
             formTableSql = formTableSql + "insert into ib_conf_form_table(PACKAGENAME,FORMNAME,TABLENAME,TABLETYPE) values (";
             formTableSql = formTableSql + "'" + formTable.getPackageName() + "','" + formTable.getFormName() + "','" + formTable.getTableName() + "','" + formTable.getTableType();
             formTableSql = formTableSql + "');\r\n";
         }
-        // 写文件
-        fileInputByStr(formTableSql, filePath);
         
         // 3.导出 表单字段
         List<ConfFormTableColumn> formTableColumnList = confFormTableColumnDao.find("from ConfFormTableColumn where formName=? ORDER BY tablename, columnno ", formName);
         String formTableColumsSql = "/*======= 表单字段 ==========*/\r\n";
+        formTableColumsSql = formTableColumsSql + " delete from ib_conf_form_table_colums where FORMNAME='" + formName + "';\r\n";
         for (ConfFormTableColumn bean : formTableColumnList) {
             formTableColumsSql = formTableColumsSql + "insert into ib_conf_form_table_colums(PACKAGENAME,FORMNAME,FORMCOLUMN,FORMCOLUMNTITLE,TABLECOLUMN, TABLENAME,COLUMNNO,FCTYPE,FCWIDTH,FCHEIGHT,"
                     + "FCDISPLAY,FCEDIT,FCQUERY,FCMUST,FCDEFAULT, CONFSELECTINFO) values (";
@@ -166,27 +166,25 @@ public class ExportTableController {
             formTableColumsSql = formTableColumsSql + "','" + bean.getFcDisplay() + "','" + bean.getFcEdit() + "','" + bean.getFcQuery() + "','" + bean.getFcMust() + "','" + bean.getFcDefault();
             formTableColumsSql = formTableColumsSql + "','" + bean.getConfSelectInfo() + "');\r\n";
         }
-        // 写文件
-        fileInputByStr(formTableColumsSql.replaceAll("'null'", "''"), filePath);
         
         // 4.导出 表
         String tableSql = "/*======= 表 ==========*/\r\n";
         for (ConfFormTable formTable : formTableList) {
             List<ConfTable> tableList = confTableService.find("from ConfTable where tableName=?", formTable.getTableName());
+            tableSql = tableSql + " delete from ib_conf_table where TABLENAME='" + formTable.getTableName() + "';\r\n";
             for (ConfTable table : tableList) {
                 tableSql = tableSql + "insert into ib_conf_table(ID,PACKAGENAME,TABLENAME,TABLENAMECOMMENT,TABLETYPE, PARENTTABLEID,ISBPMTABLE) values (";
                 tableSql = tableSql + "'" + table.getId() + "','" + table.getPackageName() + "','" + table.getTableName() + "','" + table.getTableNameComment() + "','" + table.getTableType();
                 tableSql = tableSql + "','" + table.getParentTableId() + "'," + table.getIsBpmTable() + ");\r\n";
             }
         }
-        // 写文件
-        fileInputByStr(tableSql, filePath);
         
         // 5.导出 表字段
         String tableColumnsSql = "/*======= 表字段 ==========*/\r\n";
         String createSql ="/*======= 创建表 ==========*/\r\n";
         for (ConfFormTable formTable : formTableList) {
             List<ConfTableColumns> tableColumnsList = confTableColumnsService.find("from ConfTableColumns where tableName=? ORDER BY columnno", formTable.getTableName());
+            tableColumnsSql = tableColumnsSql + " delete from ib_conf_table_columns where TABLENAME='"+formTable.getTableName()+"';\r\n";
             for (ConfTableColumns bean : tableColumnsList) {
                 tableColumnsSql = tableColumnsSql + "insert into ib_conf_table_columns(tableName,columnValue,columnName,columnType,columnSize, isNull,defaultValue,columnNo) values (";
                 tableColumnsSql = tableColumnsSql + "'" + bean.getTableName() + "','" + bean.getColumnValue() + "','" + bean.getColumnName() + "','" + bean.getColumnType() + "','" + bean.getColumnSize();
@@ -205,13 +203,24 @@ public class ExportTableController {
                 createSql = createSql +  " PRIMARY KEY (ID)) ENGINE=INNODB;\r\n";
             }
         }
-        // 写文件
-        fileInputByStr(tableColumnsSql.replaceAll("'null'", "''"), filePath);
+        // 写文件 == 创建表 ===
         fileInputByStr(createSql, filePath);
+        // 写文件 == 表单 ===
+        fileInputByStr(formSql.replaceAll("'null'", "''"), filePath);
+        // 写文件 === 表单对应表 ===
+        fileInputByStr(formTableSql, filePath);
+        // 写文件 === 表单字段 ==
+        fileInputByStr(formTableColumsSql.replaceAll("'null'", "''"), filePath);
+        // 写文件 == 表 ==
+        fileInputByStr(tableSql, filePath);
+        // 写文件 == 表字段 =
+        fileInputByStr(tableColumnsSql.replaceAll("'null'", "''"), filePath);
+        
         // 菜单
         List<Menu> menuList = menuDao.find("from Menu where menuUrl=?", menuurl);
         String menuSql = "/*======= 菜单 ==========*/\r\n";
         for (Menu menu : menuList) {
+            menuSql = menuSql + "delete from IB_MENU where ID='"+menu.getId()+"';\r\n";
             menuSql = menuSql + "INSERT INTO IB_MENU(ID,MENUNAME,MENULEVEL,MENUURL,MENUIFRAME, MENUORDER,PARENTID) VALUES(";
             menuSql = menuSql + "'" + menu.getId() + "','" + menu.getMenuName() + "','" + menu.getMenuLevel() + "','" + menu.getMenuUrl() + "','" + menu.getMenuIframe();
             menuSql = menuSql + "','" + menu.getMenuOrder() + "','" + menu.getIbMenu().getId() + "');\r\n";
