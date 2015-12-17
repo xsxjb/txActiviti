@@ -24,7 +24,7 @@
 		})
     </script>
 	<!-- start of main -->
-    <div class="panel panel-default col-lg-12">
+    <div class="panel panel-default col-lg-12 col-md-12 col-sm-12">
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">编辑子表</h4></div>
         <div class="panel-body">
 			<div class="content content-inner">
@@ -37,7 +37,7 @@
 	                       <#if po_index%2==0>
                              <div class="form-group">
                            </#if>
-                              <label class="control-label col-lg-2" for="code-${po.fieldName}">${po.filedComment}:</label>
+                              <label class="control-label col-lg-2 col-md-2 col-sm-2" for="code-${po.fieldName}">${po.filedComment}:</label>
                               ${po.jspTagInfo}
                         <#if po_index%2 ==1 || (po_index+1==columns?size)>
                             </div>

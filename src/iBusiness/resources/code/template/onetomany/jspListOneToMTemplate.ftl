@@ -42,9 +42,9 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
-    <div class="col-lg-1"></div>
+    <div class="col-lg-1 col-md-1 col-sm-1"></div>
 	<!-- start of main -->
-	<div class="panel panel-default col-lg-10 ">
+	<div class="panel panel-default col-lg-10 col-md-10 col-sm-10 ">
 	    <!-- 查询条件 -->
 	    <#if  confForm.isQuery=1 >
 	          <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">查询</h4></div>

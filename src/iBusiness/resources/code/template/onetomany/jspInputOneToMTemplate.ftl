@@ -66,9 +66,9 @@
   <body>
     <%@include file="/ibusiness/header/header-portal.jsp"%>
     <div class="row">
-	<div class="col-lg-1"></div>
+	<div class="col-lg-1 col-md-1 col-sm-1"></div>
 	<!-- start of main -->
-	<div class="panel panel-default col-lg-10"> 
+	<div class="panel panel-default col-lg-10 col-md-10 col-sm-10"> 
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">${confForm.formTitle}流程</h4></div>
         <div class="panel-body">
 		<div class="content content-inner">
@@ -87,7 +87,7 @@
 				          <#if po_index%2==0>
                              <div class="form-group">
                           </#if>
-						      <label class="control-label col-lg-2" for="code-${po.fieldName}">${po.filedComment}:</label>
+						      <label class="control-label col-lg-2 col-md-2 col-sm-2" for="code-${po.fieldName}">${po.filedComment}:</label>
                                ${po.jspTagInfo}
                                
 	                    <#if po_index%2 ==1 || (po_index+1==columns?size)>

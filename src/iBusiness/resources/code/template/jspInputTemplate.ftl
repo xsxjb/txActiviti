@@ -22,9 +22,9 @@
 		    });
 		})
     </script>
-    <div class="col-lg-1"></div>
+    <div class="col-lg-1 col-md-1 col-sm-1"></div>
     <!-- start of main -->
-    <div class="panel panel-default col-lg-12"> 
+    <div class="panel panel-default col-lg-12 col-md-12 col-sm-12"> 
         <div class="panel-heading"><h4 class="panel-title glyphicon glyphicon-paperclip">${confForm.formTitle}编辑</h4></div>
         <div class="panel-body">
                 <form id="cgForm" method="post" action="${entityName?uncap_first}-save.do" class="form-horizontal">
@@ -37,7 +37,7 @@
                         <#if po_index%2==0>
                           <div class="form-group">
                         </#if>
-                          <label class="col-lg-2 control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
+                          <label class="col-lg-2 col-md-2 col-sm-2 control-label" for="code-${po.fieldName}">${po.filedComment}:</label>
                           ${po.jspTagInfo}
                           
                       <#if po_index%2 ==1 || (po_index+1==columns?size)>
@@ -47,7 +47,7 @@
                   </#list>
                   
                   <div class="form-group">
-	                  <div class="col-lg-10 col-lg-offset-2">
+	                  <div class="col-lg-10 col-md-10 col-sm-10 col-lg-offset-2">
 	                      <button id="submitButton" class="btn btn-primary btn-sm a-submit"><span class="glyphicon glyphicon-floppy-save"></span>保存</button>
 	                      <button type="button" onclick="location.href='${entityName?uncap_first}-list.do'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-log-out"></span> 关闭</button>
 	                  </div>

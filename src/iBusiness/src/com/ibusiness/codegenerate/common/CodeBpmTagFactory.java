@@ -83,7 +83,7 @@ public class CodeBpmTagFactory {
                 } else {
                     // 不可编辑
                     String str = "";
-                    str = str + "<div class=\"col-lg-3\">";
+                    str = str + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
                     // 日期时间
                     if (Constants.CODE_DATE.equals(formColumn.getFcType()) || Constants.CODE_DATE_TIME.equals(formColumn.getFcType())) {
                         str = str + "  <fmt:formatDate value=\"${model."+columnt.getFieldName()+"}\" pattern=\"yyyy-MM-dd HH:mm:ss\" />";
@@ -121,7 +121,7 @@ public class CodeBpmTagFactory {
         String maxlength = getMaxlength(formColumn.getConfSelectInfo());
         String minlength = getMinlength(formColumn.getConfSelectInfo());
         String str = "";
-        str = str + "<div class=\"col-lg-3\">";
+        str = str + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
         str = str + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
         str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text form-control input-sm "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" "+(null==maxlength? "":" maxlength=\""+maxlength+"\"")+(null==minlength? "":" minlength=\""+minlength+"\"")+" >";
         str = str + "  </c:if>";
@@ -138,7 +138,7 @@ public class CodeBpmTagFactory {
      */
     public Columnt multiInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "<!-- 编辑类型     多行 -->";
-        str = str + "<div class=\"col-lg-6\">";
+        str = str + "<div class=\"col-lg-6 col-md-6 col-sm-6\">";
         str = str + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
         str = str + "    <textarea class=\"form-control\" id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" rows=\"1\" >${model."+columnt.getFieldName()+"}</textarea>";
         str = str + "  </c:if>";
@@ -155,7 +155,7 @@ public class CodeBpmTagFactory {
      */
     public Columnt numberInputParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
-        str = str + "<div class=\"col-lg-3\">";
+        str = str + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
         str = str + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
         str = str + "    <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text number required\" >";
         str = str + "  </c:if>";
@@ -172,7 +172,7 @@ public class CodeBpmTagFactory {
      */
     public Columnt dateParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
-        str = str + "<div class=\"col-lg-3\">";
+        str = str + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
         str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
         str = str + "  <div class=\"input-append datepicker date\">";
         str = str + "  <span class=\"add-on\">";
@@ -194,7 +194,7 @@ public class CodeBpmTagFactory {
     public Columnt dateTimeParser(Columnt columnt, ConfFormTableColumn formColumn) {
         // TODO 未实现
         String str = "";
-        str = str + "<div class=\"col-lg-3\">";
+        str = str + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
         str = str + "<c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
         str = str + "  <div class=\"input-append datepicker date\">";
         str = str + "  <span class=\"add-on\">";
@@ -228,7 +228,7 @@ public class CodeBpmTagFactory {
         // ============================================================================
         // 生成JSP显示组件
         String jspTagInfo = "";
-        jspTagInfo = jspTagInfo + "<div class=\"col-lg-3\">";
+        jspTagInfo = jspTagInfo + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
         jspTagInfo = jspTagInfo + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
         jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\" >";
         jspTagInfo = jspTagInfo + "          <option value=\"\" >请选择</option>";
@@ -273,7 +273,7 @@ public class CodeBpmTagFactory {
         // ============================================================================
         // 生成JSP显示组件
         String jspTagInfo = "";
-        jspTagInfo = jspTagInfo + "<div class=\"col-lg-3\">";
+        jspTagInfo = jspTagInfo + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
         jspTagInfo = jspTagInfo + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
         jspTagInfo = jspTagInfo + "    <select id=\"code-"+columnt.getFieldName()+"\" name=\""+columnt.getFieldName()+"\" class=\"form-control\" >";
         jspTagInfo = jspTagInfo + "          <option value=\"\" >请选择</option>";
@@ -296,7 +296,7 @@ public class CodeBpmTagFactory {
      */
     public Columnt radioBoxParser(Columnt columnt, ConfFormTableColumn formColumn) {
         String str = "";
-        str = str + "<div class=\"col-lg-3\">";
+        str = str + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
         str = str + "  <c:if test=\"${nodeColumsMap."+columnt.getFieldName()+".fcEdit=='1'}\">";
         str = str + "    <label class=\"radio\"><input type=\"radio\" name=\""+columnt.getFieldName()+"\" value=\"1\" ${1==model."+columnt.getFieldName()+"? 'checked':''} >是</label>";
         str = str + "    <label class=\"radio\"><input type=\"radio\" name=\""+columnt.getFieldName()+"\" value=\"2\" ${2==model."+columnt.getFieldName()+"? 'checked':''} >否</label>";
@@ -316,7 +316,7 @@ public class CodeBpmTagFactory {
     public Columnt checkBoxParser(Columnt columnt, ConfFormTableColumn formColumn) {
         // TODO 未实现
         String str = "";
-        str = str + "<div class=\"col-lg-3\">";
+        str = str + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
         str = str + "  <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\"  class=\"text\" >";
         str = str + "</div>";
         columnt.setJspTagInfo(str);
@@ -361,7 +361,7 @@ public class CodeBpmTagFactory {
         // JSP相关信息
         // 生成JSP显示组件
         String str = "";
-        str = str + "<div class=\"col-lg-3\">";
+        str = str + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
         str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
         str = str + "   <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#"+columnt.getFieldName()+"SInputDiv').modal('show');\" >选择</a>";
         // ===================================
@@ -500,12 +500,12 @@ public class CodeBpmTagFactory {
         
         // JSP ======================================================================
         String str = "";
-        str = str + "<div class=\"col-lg-4\">";
+        str = str + "<div class=\"col-lg-4 col-md-4 col-sm-4\">";
         str = str + "  <input id=\"code_table_"+columnt.getFieldName()+"_text\" type=\"text\" value=\"\">";
         str = str + "  <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#file_"+columnt.getFieldName()+"upload').click()\"><span class=\"glyphicon glyphicon-upload\"></span>上传</a>";
         str = str + "  <input id=\"code_table_"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
         str = str + "</div>";
-        str = str + "<div class=\"col-lg-4\">";
+        str = str + "<div class=\"col-lg-4 col-md-4 col-sm-4\">";
         str = str + "  <c:if test=\"${model."+columnt.getFieldName()+" != null && model."+columnt.getFieldName()+" !=''}\">";
         str = str + "    <a href=\""+columnt.getFieldName()+"-download.do?filename=${model."+columnt.getFieldName()+"}&path=${model."+columnt.getFieldName()+"}\">${model."+columnt.getFieldName()+"}</a>";
         str = str + "  </c:if>";
@@ -575,7 +575,7 @@ public class CodeBpmTagFactory {
         // JSP ======================================================================
         String str = "";
         str = str + "<img id=\"code_img_"+columnt.getFieldName()+"\" height=\"200\" width=\"150\" src=\"${ctx}/ibresources/"+pathName+"/${model."+columnt.getFieldName()+"}\" />";
-        str = str + "<div class=\"col-lg-4\">";
+        str = str + "<div class=\"col-lg-4 col-md-4 col-sm-4\">";
         str = str + "  <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#file_"+columnt.getFieldName()+"upload').click()\"><span class=\"glyphicon glyphicon-upload\"></span>上传</a>";
         str = str + "  <input id=\"code_table_"+columnt.getFieldName()+"\" type=\"hidden\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\">";
         str = str + "</div>";
