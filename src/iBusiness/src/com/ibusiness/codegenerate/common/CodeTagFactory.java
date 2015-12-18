@@ -362,6 +362,7 @@ public class CodeTagFactory {
         str = str + " 	 type: \"POST\", ";
         str = str + "	 url: \"/\"+window.location.pathname.split(\"/\")[1]+\"/\"+urlStr +$(\"#code_table_"+jsonObject.getString("queryName")+"\").val(), ";
         str = str + "	 dataType:\"json\", ";
+        str = str + "    data:\"filter_LIKES_"+jsonObject.getString("queryName")+"=\"+$(\"#code_table_"+jsonObject.getString("queryName")+"\").val(), ";
         str = str + "	 success: function(jsonData){ ";
         str = str + "	   $(\"#"+columnt.getFieldName()+"Rowadd tr\").remove();  ";
         str = str + "	   $.each(jsonData, function(i, item) { ";
@@ -398,7 +399,7 @@ public class CodeTagFactory {
         str = str + "           <div class=\"form-group\"> ";
         str = str + "             <label for=\"code_table_"+jsonObject.getString("queryName")+"\">"+jsonObject.getString("queryTitle")+":</label> ";
         str = str + "             <input type=\"text\" id=\"code_table_"+jsonObject.getString("queryName")+"\" name=\"filter_LIKES_"+jsonObject.getString("queryName")+"\" value=\"${param.filter_LIKES_"+jsonObject.getString("queryName")+"}\"> ";
-        str = str + "             <a class=\"btn btn-primary btn-sm\" href=\"#\" onclick=\"searchOwnername('"+CommonUtils.toLowerCase(formColumn.getTableName()).replace("ib_", "")+"/"+jsonObject.getString("queryName")+"-list.do?filter_LIKES_"+jsonObject.getString("queryName")+"=')\"><span class=\"glyphicon glyphicon-search\"></span>查询</a> ";
+        str = str + "             <a class=\"btn btn-primary btn-sm\" href=\"#\" onclick=\"searchOwnername('"+CommonUtils.toLowerCase(formColumn.getTableName()).replace("ib_", "")+"/"+jsonObject.getString("queryName")+"-list.do')\"><span class=\"glyphicon glyphicon-search\"></span>查询</a> ";
         str = str + "           </div> ";
         str = str + "         </div>";
         str = str + "         <div class=\"modal-body\">";
