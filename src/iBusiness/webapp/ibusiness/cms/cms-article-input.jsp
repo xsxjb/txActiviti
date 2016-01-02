@@ -33,11 +33,10 @@
 	    var options = {
 	        cssPath : '${ctx}/plugin/kindeditor/plugins/code/prettify.css',
 	        filterMode : true,
-			uploadJson:'${ctx}/upload.htm',
+			uploadJson:'${ctx}/common/upload.do',
 			width : '860px',
 			height:'400px',
 			resizeType : 1,
-			allowImageUpload : false,
 			allowFlashUpload : false,
 			allowMediaUpload : false,
 			allowFileManager : false,
@@ -106,7 +105,6 @@
 					  <div class="form-group">
 					      <label class="col-lg-2 control-label" for="cms-article_cmsArticlename">内容描述:</label>
 					      <div class="col-lg-10">
-						      
 							  <div class="controls">
 							      <textarea id="goods_details" name="content" class="text required" style="width:100%;height:400px;visibility:hidden;"  maxlength="50">${model.content}</textarea>
 						      </div>
