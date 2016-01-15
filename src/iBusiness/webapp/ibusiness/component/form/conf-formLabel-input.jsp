@@ -97,13 +97,13 @@
 				dataType : "json",
 				success : function(jsonData) {
 					// 清空key值
-					$('select[name="tablecolumnname"] option').remove();
+					$('select[name="querytablecolumnname"] option').remove();
 					columnTableRow = "";
 					// 改变表名重新设置对应字段
 					$.each(jsonData, function(i, item) {
 						columnTableRow = columnTableRow + '<option value="'+ item.columnValue +'">' + item.columnName + '</option>';
 					});
-					$('select[name="tablecolumnname"]').append(columnTableRow);
+					$('select[name="querytablecolumnname"]').append(columnTableRow);
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					alert('请求数据出错了!');
@@ -141,7 +141,9 @@
 	        	columnname.push($(this).val());
 	        	titlename.push($(this ).find("option:selected").text());
 	        });
-	        
+	        // 
+	        alert("   tablecolumninputKeySize:"+ $('select[name="tablecolumninputKey"]').size() +"   tablecolumnnameSize:"+$('select[name="tablecolumnname"]').size());
+	        alert("inputKey:"+ inputKey + "   columnname:"+columnname);
 	        // 选择带出值
 	        str = "{\"jsplist\":[";
 		        for(var i=0;i<$('select[name="tablecolumninputKey"]').size();i++){
@@ -155,6 +157,7 @@
 		    var queryName = $('#findcolumn option:selected').val();
             str = str + "],\"className\":\""+$("#selectInputTablelist").val()+"\",\"queryTitle\":\""+queryTitle+"\",\"queryName\":\""+queryName+"\"}";
 	        // 
+	        alert("str:" + str);
 	        $('#form-confSelectInfo').attr('value', str);
 			// 确定按钮隐藏弹出页面
 			$('#selectInputDiv').modal('hide');
@@ -353,7 +356,7 @@
 							<div class="col-lg-7 form-group">
 						        <label class="col-lg-5" >查询字段:</label>
 							    <div class="col-lg-7">
-	                                <select name="tablecolumnname" id="findcolumn" class="col-lg-8 form-control input-sm required" >
+	                                <select name="querytablecolumnname" id="findcolumn" class="col-lg-8 form-control input-sm required" >
 	                                </select>
 	                            </div>
 							</div>

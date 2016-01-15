@@ -339,7 +339,7 @@ public class CodeTagFactory {
         // 生成JSP显示组件
         String str = "";
         str = str + "<div class=\"col-lg-3 col-md-3 col-sm-3\">";
-        str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" >";
+        str = str + "   <input id=\"code-"+columnt.getFieldName()+"\" type=\"text\" name=\""+columnt.getFieldName()+"\" value=\"${model."+columnt.getFieldName()+"}\" class=\"text form-control input-sm "+("1".equals(formColumn.getFcMust())? "required" : "")+"\" readonly >";
         str = str + "   <a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"$('#"+columnt.getFieldName()+"SInputDiv').modal('show');\" >选择</a>";
         // ===================================
         str = str + "   <script type=\"text/javascript\">";
